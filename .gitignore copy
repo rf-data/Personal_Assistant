@@ -1,0 +1,56 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.env
+**/.env**
+!.env.example
+.gitignore
+**/.dvc/cache/**
+
+# ignore data files (incl. exceptions)
+*.csv
+*.db
+*.zip
+*.pt
+*.parquet
+*.json
+!**/report/*.json
+*.png
+!**/images/*.png
+!*.dvc
+*.db
+*.sqlite
+*.parquet
+
+# ignore folder (incl. exceptions)
+# **/analysis/**
+**/logs/**
+**/mlflow/**
+**/.cursor/**
+**/src_agentic/**
+# **/mlflow.db
+**/mlruns/**
+**/catboost_info/**
+**/data/**
+! **/data/plots/
+
+**/data/plots/**
+! **/data/plots/*.png
+! **/data/plots/*.html
+!**/data/*.dvc
+
+**/_dev_**
+**/__orga/**
+# pyproject.toml
+# uv.lock
+**/__init__.py
+road_map.md
+**/None/**
+

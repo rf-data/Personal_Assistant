@@ -1,0 +1,50 @@
+# ------------------------------
+# GENERAL
+# ------------------------------
+general_args:
+  name_log: structure_gmp
+  name_logfile: structure_gmp
+  file_name:
+    - GMP_part0_Intro.pdf
+    # - GMP_part1_chap1.pdf
+    # - GMP_part1_chap2.pdf
+    # - GMP_part1_chap3.pdf
+    # - GMP_part1_chap4.pdf
+    # - GMP_part1_chap5.pdf
+    # - GMP_part1_chap6.pdf
+    # - GMP_part1_chap7.pdf
+    # - GMP_part1_chap8.pdf
+    # - GMP_part1_chap9.pdf
+
+extraction:
+  extraction_model: pymupdf
+  y_tol_words: 3                   # 3-8
+
+  # noise_pattern: 
+  #   - 'doi:\s*10\.\s*\d+/\S+'
+  #   - 'doi:.*'
+  #   - '©.*'
+  #   - 'BRAINSTORMS-Clinical'
+  #   - 'https?://\S+'
+  #   - 'https?\s*:\s*/\s*/\S+'
+  #   - '\bPublished online\b.*'
+  #   - '\bCitation:\b.*'
+  #   - '\bCopyright:\b.*'
+  #   - 'Cambridge\bUniversity\bPress'
+  #   - '^\d+$'  # Seitenzahlen
+  
+ 
+  # # spacy_language: en_core_web_sm
+  # model_name: gpt-4o-mini
+  # column_assignment: heuristic  # kmeans
+  # y_tol_words: 3                   # 3-8
+  # y_tol_line: 10                   # 10-25
+  # x_tol_line: 35
+  # max_cols: 3
+  # n_init: 10
+  # random_state: 42
+  # # max_tokens: 300
+  # max_words: 80
+  # overlap: 1
+  # min_words_chunk: 40
+  
