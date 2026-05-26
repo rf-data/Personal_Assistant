@@ -1,6 +1,6 @@
-
-
-def image_GRADCAM(image, model, layer_name, target_class_idx=None, return_overlay=False):
+def image_GRADCAM(
+    image, model, layer_name, target_class_idx=None, return_overlay=False
+):
     """Computes Grad-CAM heatmap for given image and layer."""
     resnet = model.get_layer("resnet50")
     resnet.trainable = True
@@ -59,8 +59,11 @@ def image_GRADCAM(image, model, layer_name, target_class_idx=None, return_overla
     heatmap = tf.maximum(heatmap, 0)
     heatmap /= tf.reduce_max(heatmap) + 1e-8
     heatmap = heatmap.numpy()
-    heatmap_resized = tf.image.resize(heatmap[..., np.newaxis], (image.shape[1], image.shape[2])).numpy()
+    heatmap_resized = tf.image.resize(
+        heatmap[..., np.newaxis], (image.shape[1], image.shape[2])
+    ).numpy()
     return np.squeeze(heatmap_resized), target_class_idx
+
 
 def image_SHAP(image, model, class_names, save_path=None, verbose=False):
     """Compute SHAP values for a single image."""
@@ -78,7 +81,12 @@ def image_SHAP(image, model, class_names, save_path=None, verbose=False):
     explainer = shap.Explainer(cpu_model, masker, output_names=class_names)
 
     img_exp = np.expand_dims(image, axis=0)
-    shap_values = explainer(img_exp, max_evals=1000, batch_size=16, outputs=shap.Explanation.argsort.flip[:4])
+    shap_values = explainer(
+        img_exp,
+        max_evals=1000,
+        batch_size=16,
+        outputs=shap.Explanation.argsort.flip[:4],
+    )
 
     shap.image_plot(shap_values, show=False)
     if save_path is not None:

@@ -1,5 +1,7 @@
-import streamlit as st
 from pathlib import Path
+
+import streamlit as st
+
 
 # ===== MAIN FUNCTION =====
 def show():
@@ -11,9 +13,11 @@ def show():
 
         col1, col2 = st.columns(2)
 
-        with col1:        
+        with col1:
             st.markdown("**Image**")
-            st.image(img_path, caption=img_path.name, use_container_width=True) #"Uploaded image") 
+            st.image(
+                img_path, caption=img_path.name, use_container_width=True
+            )  # "Uploaded image")
 
-        with col2:        
+        with col2:
             st.markdown("**GradCam**")

@@ -5,21 +5,53 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "browser-cookie3>=0.20.1",
     "bs4>=0.0.2",
     "docx>=0.2.4",
     "fastapi>=0.136.1",
+    "httpx>=0.28.1",
     "markdown-it-py>=4.0.0",
     "numpy>=2.4.4",
     "openpyxl>=3.1.5",
     "pandas>=3.0.2",
-    "playwright>=1.59.0",
     "pydantic>=2.13.3",
+    "pydantic-settings>=2.14.1",
+    "pyinputplus>=0.2.12",
     "pymupdf>=1.27.2.2",
+    "pypdf>=6.11.0",
     "python-dotenv>=1.2.2",
     "pyyaml>=6.0.3",
     "scikit-learn>=1.8.0",
-    "spacy>=3.8.14",
     "streamlit>=1.56.0",
     "tiktoken>=0.12.0",
 ]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.1.0",
+    "ruff>=0.15.14",
+    "pytest>=9.0.3",
+]
+
+nlp = [
+    "spacy>=3.8.14",
+    ]
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+target-version = "py312"
+
+[tool.ruff.format]
+quote_style = "double"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = []
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"

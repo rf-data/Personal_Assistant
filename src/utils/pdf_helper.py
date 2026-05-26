@@ -1,20 +1,71 @@
-# ## extract_helper.py
+## pdf_helper.py
 # # import
-# from pathlib import Path
-# import re
-# from typing import List, Tuple
-# from tiktoken import encoding_for_model
-# # import pdfplumber
-# import fitz  # PyMuPDF
+from pathlib import Path
 
-# from src.core.feature_enricher import FeatureEnricher
-# from src.core.base_data import PageExtract
-# # from src.utils.file_helper import make_json_safe
+from pypdf import PdfReader, PdfWriter
+
+from src.core.memory import session_state
+
+
+def check_pdf_split(file_names: list) -> list:
+
+    logger = session_state.logger
+
+    pdf_files = []
+    fit = []
+    for f in file_names:
+        if Path(f).suffix == ".pdf":
+            pdf_files.append(f)
+        else:
+            fit.append(f)
+
+    logger.info("Checking size of %s pdf files.", len(pdf_files))
+
+    too_long = []
+    for file in pdf_files:
+        reader = PdfReader(file)
+
+        if len(reader.pages) > 10:
+            too_long.append(file)
+
+        else:
+            fit.append(file)
+
+    if len(too_long) > 0:
+        for pdf in too_long:
+            fit.extend(split_pdf(pdf))
+
+    return fit
+
+
+def split_pdf(pdf_path: str, pages_per_file: int = 10) -> list[str]:
+
+    f_name = Path(pdf_path).stem
+    folder = Path(pdf_path).parent
+
+    reader = PdfReader(pdf_path)
+    n_pages = len(reader.pages)
+
+    pdf_new = []
+    for start in range(0, n_pages, pages_per_file):
+        writer = PdfWriter()
+        end = min(start + pages_per_file, n_pages)
+
+        for page_no in range(start, end):
+            writer.add_page(reader.pages[page_no])
+
+        save_name = f"{folder}/{f_name}_p{start}_{end}.pdf"
+        with open(save_name, "wb") as output_file:
+            writer.write(output_file)
+
+        pdf_new.append(save_name)
+
+    return pdf_new
 
 
 # BULLETS = {"•", "▪", "●", "‣", "◦", "–"}    # , "-"
 
-# # def extract_blocks(page, f_name, page_num):  
+# # def extract_blocks(page, f_name, page_num):
 # #     preprocessor = session.preprocessor
 
 # #     height = page.rect.height
@@ -29,13 +80,13 @@
 # #                 "page": page_num,
 # #                 "block": k
 # #                 })
-                
+
 # #     return block_info
 
 
 # def extract_text_pymupdf(path):
-#     from src.core.memory import session 
-    
+#     from src.core.memory import session
+
 #     # get Text_preprocessor
 #     extractor = session.extractor
 #     # extract_config = session.model_config
@@ -50,8 +101,8 @@
 #     # text_records = []
 #     for i, page in enumerate(doc):
 #         # etxract text
-#         # text_raw = page.get_text("text")  
-        
+#         # text_raw = page.get_text("text")
+
 #         # text_clean = " ".join([w[4] for w in text_raw.split()])
 
 #         # # count tokens in text_clean
@@ -69,8 +120,8 @@
 #         model_name = general_config["llm_model"]
 #         encoder = encoding_for_model(model_name)
 
-#         page_height = page.rect.height 
-#         page_width = page.rect.width 
+#         page_height = page.rect.height
+#         page_width = page.rect.width
 #         text_prep_config = config.get("text_preparation", {})
 
 #         feat_enricher = FeatureEnricher(
@@ -100,10 +151,9 @@
 #     return records    # , texts
 
 
-
 # def extract_grafics(path: str | Path) -> dict:
-    
-#     # from src.core.memory import session 
+
+#     # from src.core.memory import session
 
 #     doc = fitz.open(path)
 
@@ -115,13 +165,12 @@
 
 #         non_text["graphs"].append({
 #                                 "type": "pdf",
-#                                 "page": i, 
+#                                 "page": i,
 #                                 "drawings": _extract_drawings(page),
 #                                 "bullets": _extract_bullet_chars(page)
 #                                 })
-                   
-#     return non_text
 
+#     return non_text
 
 
 # def _extract_drawings(page):
@@ -143,7 +192,7 @@
 
 
 # def _extract_bullet_chars(page):
-    
+
 #     raw = page.get_text("rawdict")
 #     bullets = []
 
@@ -154,7 +203,7 @@
 #                     if char["c"] in BULLETS:
 
 #                 # text = span["text"]
-                
+
 #                 # for i, char in enumerate(text):
 #                 #     if char in BULLETS:
 #                         bullets.append({
@@ -174,10 +223,10 @@
 
 # def _is_bullet_drawing(d: dict) -> bool:
 #     x0, y0, x1, y1 = d["bbox"]
-    
+
 #     width = x1 - x0
 #     height = y1 - y0
-    
+
 #     return (
 #         width < 10 and
 #         height < 10 and
@@ -185,7 +234,7 @@
 #     )
 
 # # {
-# #         # "pages": pages_records, 
+# #         # "pages": pages_records,
 # #         "words": ,
 # #         # "text": text_records
 # #         }
@@ -193,12 +242,12 @@
 
 # # def extract_text_plumber(file_path: str, preprocess_config: dict) -> dict:
 # #     model_name = preprocess_config["model_name"]
-    
+
 # #     pages = []
 # #     with pdfplumber.open(file_path) as pdf:
 # #         for i, page in enumerate(pdf.pages):
-# #             text = page.extract_text(x_tolerance=2, y_tolerance=2)  # layout=True) 
-            
+# #             text = page.extract_text(x_tolerance=2, y_tolerance=2)  # layout=True)
+
 # #             enc = encoding_for_model(model_name)
 # #             n_tokens = len(enc.encode(text))
 # #             pages.append({
@@ -210,7 +259,6 @@
 # #         "pages": pages,
 # #         "n_tokens": n_tokens
 # #         }
-
 
 
 # """

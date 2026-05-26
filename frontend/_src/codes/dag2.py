@@ -5,7 +5,6 @@ with DAG(
     catchup=False,
     tags=["mlops", "mlflow"],
 ) as dag:
-
     train_knn = DockerOperator(
         task_id="train_knn",
         image="mymlops-knn_trainer",

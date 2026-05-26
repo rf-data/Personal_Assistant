@@ -1,22 +1,27 @@
-import streamlit as st
 from pathlib import Path
+
+import streamlit as st
 from PIL import Image
-import shutil
 
 # ===== CONFIG =====
 UPLOAD_DIR = Path("/workspaces/may25_bds_covid19/streamlit/app/static_files/uploads")
 
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
+
 # ===== MAIN FUNCTION =====
 def show():
     st.header("🖼️ Upload & Select X-ray Image")
-    st.write("**Upload an image, browse available files, and select one for prediction and/or visualization.**")
+    st.write(
+        "**Upload an image, browse available files, and select one for prediction and/or visualization.**"
+    )
 
     types_allowed = [".jpg", ".jpeg", ".png"]
 
     # --- File browser section ---
-    image_files = sorted([f for f in UPLOAD_DIR.iterdir() if f.suffix.lower() in types_allowed])
+    image_files = sorted(
+        [f for f in UPLOAD_DIR.iterdir() if f.suffix.lower() in types_allowed]
+    )
 
     st.markdown("#### 📂 Available Images in Folder")
     if image_files:
@@ -48,7 +53,9 @@ def show():
         else:
             # --- 2️⃣ Doppelte Dateien verhindern ---
             if file_path.exists():
-                st.warning(f"⚠️ File '{uploaded_file.name}' already exists in upload folder.")
+                st.warning(
+                    f"⚠️ File '{uploaded_file.name}' already exists in upload folder."
+                )
             else:
                 # --- 3️⃣ Datei speichern ---
                 with open(file_path, "wb") as f:
@@ -56,17 +63,17 @@ def show():
                 st.success(f"✅ File '{uploaded_file.name}' saved successfully!")
 
                 # Vorschau anzeigen
-                st.image(file_path, caption="Uploaded image") # use_column_width=True)
+                st.image(file_path, caption="Uploaded image")  # use_column_width=True)
 
         if Path(uploaded_file.name).suffix.lower() in types_allowed:
             if Path(uploaded_file.name) not in image_files:
                 save_path = UPLOAD_DIR / uploaded_file.name
                 with open(save_path, "wb") as f:
                     f.write(uploaded_file.getbuffer())
-                
+
         #         st.success(f"✅ File '{uploaded_file.name}' saved.")
         #         st.image(save_path, caption="Uploaded Image Preview", use_container_width=False)
-            
+
         #     else:
         #         st.warning(f"⚠️ **This image has already been uploaded.") # uploaded file has not the right format
         # else:
@@ -76,16 +83,16 @@ def show():
 
     # --- Selection section ---
     selected_file = st.selectbox(
-            "🎯 Choose an image for prediction:",
-            options=[f.name for f in image_files],
-            index=None,
-            placeholder="Select a file..."
-        )
+        "🎯 Choose an image for prediction:",
+        options=[f.name for f in image_files],
+        index=None,
+        placeholder="Select a file...",
+    )
 
     if selected_file:
         chosen_path = UPLOAD_DIR / selected_file
         st.success(f"✅ Selected file: {selected_file}")
-        st.image(chosen_path, caption="Selected image") #, use_column_width=True)
+        st.image(chosen_path, caption="Selected image")  # , use_column_width=True)
 
         # Placeholder for downstream processing
         st.session_state["selected_image_path"] = str(chosen_path)
@@ -114,10 +121,8 @@ def show():
 # def show():
 #     st.header("Upload and select an image")
 
-#     
+#
 
-    
-    
 
 #     uploaded_files = st.file_uploader(
 #     "Upload data", accept_multiple_files=False, type=types_allowed

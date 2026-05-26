@@ -1,7 +1,6 @@
 ## word_helper.py
-# import 
+# import
 from docx import Document
-
 
 
 def extract_docx(path):
@@ -11,4 +10,4 @@ def extract_docx(path):
     for para in doc.paragraphs:
         doc_para.append(para.text)
 
-    return doc_para 
+    return doc_para

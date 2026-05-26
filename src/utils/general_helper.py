@@ -1,70 +1,132 @@
 # imports
-from dotenv import load_dotenv, find_dotenv
-import subprocess
-
-# import numpy as np
-import os
-from typing import Callable, Iterable, List
-# from src.schema.aggregation_schema import (AggregatedResult, 
-#                                            LLMAggregatedResult)
-import inspect
 import hashlib
 
-from src.core.memory import session
+# from src.schema.aggregation_schema import (AggregatedResult,
+#                                            LLMAggregatedResult)
+import inspect
+
+# import numpy as np
+import json
+import os
+import subprocess
+from collections.abc import Callable, Iterable
+from datetime import datetime
+from pathlib import Path
+
+from dotenv import find_dotenv, load_dotenv
+
+from src.core.memory import session_state
+from src.utils.path_helper import ensure_dir
 
 
-def pretty_print(result):
+def make_cache_key(url: str, params: dict) -> str:
 
-    if isinstance(result, AggregatedResult):
-        data = result.model_dump()
-    elif isinstance(result, dict):  
-        data = result
+    payload = {"url": url, "params": params}
 
-    for key, value in data.items():
+    serialized = json.dumps(payload, sort_keys=True, ensure_ascii=False)
 
-        print(f"\n=== {key.upper()} ===")
+    # h =
+    # h.update(url.encode("utf-8"))
 
-        if isinstance(value, list):
-            for i, item in enumerate(value, 1):
-                print(f"{i}. {item}")
+    # for key, value in params.items():
+    #     dict_text = f"{key}_{value}"
+    #     h.update(dict_text.encode("utf-8"))
 
-        else:
-            print(value)
-        
-        print()
-
-    return 
+    # h.update(namespace.encode("utf-8"))
+    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
 
 
-def pretty_logging(result):
-    logger = session.logger 
+def save_to_cache(key: str, folder: str | Path, data: dict):
 
-    if isinstance(result, (AggregatedResult, 
-                           LLMAggregatedResult)):
-        data = result.model_dump()
-    elif isinstance(result, dict):  
-        data = result
-    else:
-        raise ValueError("Unknown dtype of 'result':", type(result))
+    cache_dir = os.getenv("CACHE_DIR")
 
-    for key, value in data.items():
+    data["created_at"] = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        logger.info("\n=== %s ===",
-                    key.upper())
+    fn = Path(cache_dir) / folder / f"{key}.json"
 
-        if isinstance(value, list):
-            for i, item in enumerate(value, 1):
-                logger.info("value #%s: %s",
-                            i,
-                            item)
+    ensure_dir(fn)
 
-        else:
-            logger.info("value: %s", 
-                        value)
-            
-        logger.info("")
-    
-    return 
+    with open(fn, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+    logger = session_state.logger
+    logger.info("Saved cached data (key=%s).", key)
+
+    return
+
+
+def load_from_cache(key: str, folder: str | Path):
+
+    cache_dir = os.getenv("CACHE_DIR")
+
+    fn = Path(cache_dir) / folder / f"{key}.json"
+
+    ensure_dir(fn)
+
+    if fn.exists():
+        logger = session_state.logger
+        logger.info("Loaded cached data (key=%s).", key)
+
+        with open(fn) as f:
+            return json.load(f)
+
+    return None
+
+
+# def pretty_print(result):
+
+#     if isinstance(result, AggregatedResult):
+#         data = result.model_dump()
+#     elif isinstance(result, dict):
+#         data = result
+
+#     for key, value in data.items():
+
+#         print(f"\n=== {key.upper()} ===")
+
+#         if isinstance(value, list):
+#             for i, item in enumerate(value, 1):
+#                 print(f"{i}. {item}")
+
+#         else:
+#             print(value)
+
+#         print()
+
+#     return
+
+
+# def pretty_logging(result):
+#     from src.core.memory import session
+
+#     logger = session.logger
+
+#     if isinstance(result, (AggregatedResult,
+#                            LLMAggregatedResult)):
+#         data = result.model_dump()
+#     elif isinstance(result, dict):
+#         data = result
+#     else:
+#         raise ValueError("Unknown dtype of 'result':", type(result))
+
+#     for key, value in data.items():
+
+#         logger.info("\n=== %s ===",
+#                     key.upper())
+
+#         if isinstance(value, list):
+#             for i, item in enumerate(value, 1):
+#                 logger.info("value #%s: %s",
+#                             i,
+#                             item)
+
+#         else:
+#             logger.info("value: %s",
+#                         value)
+
+#         logger.info("")
+
+#     return
 
 
 def snapshot_single_function(fn: Callable) -> dict:
@@ -112,7 +174,7 @@ def iter_chunks(df, chunk_size=25):
         yield df.iloc[start : start + chunk_size]
 
 
-def load_env_vars(name: List | str=".env"):
+def load_env_vars(name: list | str = ".env"):
     """
     Load environment variables from .env files if available.
     """
@@ -120,23 +182,23 @@ def load_env_vars(name: List | str=".env"):
     # if session_path and os.path.exists(session_path):
     #     load_dotenv(session_path, override=True)
     #     print("Variables from .env.session loaded")
-    
+
     if isinstance(name, str):
         name = [name]
 
-    env_loaded = session.state.env_loaded
+    env_loaded = session_state.env_loaded
     name_clear = [n for n in name if n not in env_loaded]
 
-    for env in name_clear: 
+    for env in name_clear:
         env_path = find_dotenv(filename=env)
-        if env_path:    #  and not session.env_loaded:
+        if env_path:  #  and not session.env_loaded:
             load_dotenv(env_path)
             print(f"Variables loaded from '{env}'")
             env_loaded.append(env)
 
-    session.state.env_loaded = env_loaded
+    session_state.env_loaded = env_loaded
 
-    return 
+    return
 
 
 def get_git_commit():

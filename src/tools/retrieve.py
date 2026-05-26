@@ -1,19 +1,20 @@
 ## retrieve.py
 # imports
-from tiktoken import encoding_for_model
 import numpy as np
 import pandas as pd
+from tiktoken import encoding_for_model
 
+import src.utils.dict_helper as dh
+import src.utils.general_helper as gh
 from src.core.memory import session
 
-import src.utils.general_helper as gh
-import src.utils.dict_helper as dh
+TEST_QUERIES = [
+    "Was isr GMP?",
+    "Wie werden Wirkstoffe geprüft?",
+    "Was sind Anforderungen an Hersteller?",
+    "Was steht in Kapitel %?",
+]
 
-
-TEST_QUERIES = ["Was isr GMP?",
-                "Wie werden Wirkstoffe geprüft?",
-                "Was sind Anforderungen an Hersteller?",
-                "Was steht in Kapitel %?"]
 
 def retrieve():
     # load env variables and config
@@ -23,7 +24,7 @@ def retrieve():
     config = dh.get_yaml_config(config_name)
     session.model_config = config
 
-    return run_retrieve()       # configs
+    return run_retrieve()  # configs
 
 
 def run_retrieve():
@@ -31,21 +32,19 @@ def run_retrieve():
     n_retrieve = config["n_retireve"]
 
     # load df
-    file_path = f""
+    file_path = ""
     df = pd.read_parquet(file_path)
 
-    # 
+    #
     q_emb = _embed_query()
 
-    df["score"] = df["text_embed"].apply(lambda x: 
-                                         _cosine_sim(q_emb, a))
+    df["score"] = df["text_embed"].apply(lambda x: _cosine_sim(q_emb, a))
 
     top_k = df.sort_values("score", ascending=False).head(n_retrieve)
     context = "\n\n".join(top_k["text"])
 
     context_exp = _expand_context(df, top_k)
-    return 
-
+    return
 
 
 def _embed_query(query=None):
@@ -53,7 +52,7 @@ def _embed_query(query=None):
 
     general_config = config.get("general", {})
     model_name = general_config["llm_model"]
-    
+
     encoder = encoding_for_model(model_name)
 
     if not query:
@@ -62,7 +61,6 @@ def _embed_query(query=None):
     q_emb = encoder.encode(query)
 
     return q_emb
-
 
 
 def _cosine_sim(a, b):
@@ -88,7 +86,9 @@ def _expand_context(df, top_k):
 
     return pd.DataFrame(expanded).drop_duplicates()
 
+
 """ CHROMA * FAISS INTEGRATION """
+
 
 def _evaluate_rag():
     """
@@ -96,4 +96,4 @@ def _evaluate_rag():
     Precision@k
     qualitative Bewertung
     """
-    return 
+    return

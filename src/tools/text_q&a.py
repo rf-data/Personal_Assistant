@@ -4,14 +4,12 @@
 
 def score_doc(doc, query):
     """
-    Scores aggregated info which was extracted from several texts 
-    in terms of a questions entered as prompt. 
+    Scores aggregated info which was extracted from several texts
+    in terms of a questions entered as prompt.
     """
-    text = " ".join([
-        doc.summary,
-        " ".join(doc.key_findings),
-        " ".join(doc.key_entities)
-    ]).lower()
+    text = " ".join(
+        [doc.summary, " ".join(doc.key_findings), " ".join(doc.key_entities)]
+    ).lower()
 
     query = query.lower()
 
@@ -22,7 +20,7 @@ def score_doc(doc, query):
 
 def retrieve_docs(docs, query, top_k=3):
     """
-    Gather scores from all available/provided documents and 
+    Gather scores from all available/provided documents and
     returns top_k documents as list
     """
     scored = [(doc, score_doc(doc, query)) for doc in docs]

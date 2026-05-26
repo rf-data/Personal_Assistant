@@ -1,5 +1,5 @@
 import streamlit as st
-from pathlib import Path
+
 
 def show():
     st.header("📑 Take home message and future plans)")
@@ -25,4 +25,3 @@ def show():
         - Efficient exploration of model configuration spaces   
         - Experiment tracking and comparison of optimization trials
                         """)
-  

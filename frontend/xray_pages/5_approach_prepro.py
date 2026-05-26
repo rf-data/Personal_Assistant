@@ -2,9 +2,7 @@
 
 import streamlit as st
 
-tab1, tab2, tab3 = st.tabs(["General Approach", 
-                            "Preprocessing", 
-                            "Training steps"])
+tab1, tab2, tab3 = st.tabs(["General Approach", "Preprocessing", "Training steps"])
 
 with tab1:
     st.markdown("""
@@ -41,7 +39,8 @@ with tab2:
     """)
 
 with tab3:
-    st.markdown("""
+    st.markdown(
+        """
     #### **Initial Training**
     > We trained a frozen ResNet50 model with a custom dense classification head on a limited dataset. Hyperparameter tuning was applied to the dense layer
     > size (???), dropout rate (???), and initial learning rate (). Batch sizes of 16, and 32 were tested after the data set has been divided 80:20 and
@@ -124,5 +123,6 @@ with tab3:
     TABLE_WITH_SETTINGS
     These strategies were applied subsequently to the same model setup to isolate the effect of input variability and .
     
-    """, unsafe_allow_html=True)
-    
+    """,
+        unsafe_allow_html=True,
+    )

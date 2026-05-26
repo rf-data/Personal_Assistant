@@ -1,5 +1,5 @@
 import streamlit as st
-from pathlib import Path
+
 
 def show():
     st.header("📑 Conclusion")
@@ -7,11 +7,7 @@ def show():
     #### What is the Status Quo of our project?
     """)
 
-    size = st.slider("image size", 
-                    min_value = 500, 
-                    max_value = 5000, 
-                    value = 2500,
-                    step = 100) 
+    size = st.slider("image size", min_value=500, max_value=5000, value=2500, step=100)
     # path_img_infra = "/workspaces/oct25_bmlops_int_rakuten/streamlit/src/screenshots/Infra_complete.png"
     # st.image(path_img_infra,
     #         caption="Overview infrastructure, made with Mermaid",
@@ -23,13 +19,12 @@ def show():
         ✅ Can be triggered by API   
         🟡 Adding a FileSensor or similar (--> increase automation)
         """)
-        
+
     with st.expander("**(2) User interactions possible**"):
         st.markdown("""
         ✅ API endpoints 'etl_trigger', 'create SimMatrix' and 'recommendation' available   
         🔴 Basic Auth or OAuth2 no yet implemented
         """)
-        
 
     with st.expander("**(3) File and Data storage**"):
         st.markdown("""
@@ -38,7 +33,6 @@ def show():
         🔜 MLflow: SQLite or PotsgreSQL possible   
         🔜 use additional and more specialised/optimised DBs (e.g. SQL, vector DB)
         """)
-        
 
     with st.expander("**(4) 'Best' Model available and ensured**"):
         st.markdown("""
@@ -51,7 +45,7 @@ def show():
         🔴 Adding AI generated data on 'customers', 'baskets' and/or 'orders'   
         --> creating an hybrid-approach recommendation system
         """)
-       
+
     with st.expander("**(5) Monitoring & Maintenance**"):
         st.markdown("""
         ✅ Prometheus, Node-exporter and Grafana are available and interconnected   
@@ -59,7 +53,6 @@ def show():
         🔜 centralised logging to faciliate debugging and troubleshooting    
         🔜 connect to other tools, e.g. MLflow, Airflow 
         """)
-
 
     with st.expander("**(6) Reliability**"):
         st.markdown("""
@@ -74,7 +67,6 @@ def show():
         🔴 not yet started   
         🔴 supposed to be triggered by change in tag 'version' (version: v1.* --> v2.0)
     """)
-
 
     with st.expander("**(7) Availability, Portability and Scalability**"):
         st.markdown("""   

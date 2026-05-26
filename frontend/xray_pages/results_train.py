@@ -1,26 +1,34 @@
-
-import streamlit as st
-import pandas as pd
 from pathlib import Path
 
+import pandas as pd
+import streamlit as st
 from app.utils.loader import find_files, load_df, load_image
 
 ## FOLDER PATHS
 METRICS = Path("/workspaces/may25_bds_covid19/streamlit/app/static_files/best_hp_df")
-CLASS_REPORTS = Path("/workspaces/may25_bds_covid19/streamlit/app/static_files/ClassReport")
-CONF_MATRICES = Path("/workspaces/may25_bds_covid19/streamlit/app/static_files/ConfMatrix")
+CLASS_REPORTS = Path(
+    "/workspaces/may25_bds_covid19/streamlit/app/static_files/ClassReport"
+)
+CONF_MATRICES = Path(
+    "/workspaces/may25_bds_covid19/streamlit/app/static_files/ConfMatrix"
+)
 GRADCAM = Path("/workspaces/may25_bds_covid19/streamlit/app/static_files/GradCam")
 SHAP = Path("/workspaces/may25_bds_covid19/streamlit/app/static_files/SHAP")
+
 
 ## FUNCTIONS
 def show():
     st.header("📊 Describing Data")
     # st.write("Welcome to the COVID-19 X-Ray Classification app!")
 
-    tab1, tab2, tab3, tab4 = st.tabs(["📉 Metrics from runs",
-                                    "📏 Classification Report / 🔢 Confusion Matrix",
-                                    "🌈 GradCam",
-                                    "🔍 SHAP"])
+    tab1, tab2, tab3, tab4 = st.tabs(
+        [
+            "📉 Metrics from runs",
+            "📏 Classification Report / 🔢 Confusion Matrix",
+            "🌈 GradCam",
+            "🔍 SHAP",
+        ]
+    )
 
     with tab1:
         st.markdown("""
@@ -31,20 +39,28 @@ def show():
         with st.popover("Choose a stage"):
             opt_1 = st.multiselect(
                 "The run metrics from what stage do you want to see?",
-                ["Initial", "Fine_0", "Fine_20", "Fine_50", "Fine_100",
-                "Fine_complete", "DataAug_None", "DataAug_smooth", "DataAug_enhanced"],
-                default=None, 
+                [
+                    "Initial",
+                    "Fine_0",
+                    "Fine_20",
+                    "Fine_50",
+                    "Fine_100",
+                    "Fine_complete",
+                    "DataAug_None",
+                    "DataAug_smooth",
+                    "DataAug_enhanced",
+                ],
+                default=None,
                 # max_selections=1,
-                placeholder="Choose at least one stage."
+                placeholder="Choose at least one stage.",
             )
-        
-        
+
         # st.divider()
         st.write("You selected:", opt_1)
         st.divider()
 
         if opt_1:
-            my_table = st.empty()        # Platzhalter für Tabelle
+            my_table = st.empty()  # Platzhalter für Tabelle
             my_table.dataframe(pd.DataFrame())  # Start (optional)
             for stage in opt_1:
                 files = find_files(METRICS, stage)
@@ -53,7 +69,9 @@ def show():
                     for df in dfs:
                         if df is not None:
                             df.columns = df.columns.get_level_values(0)
-                            df.rename(columns={"Unnamed: 0_level_0": "trial_id"}, inplace=True)
+                            df.rename(
+                                columns={"Unnamed: 0_level_0": "trial_id"}, inplace=True
+                            )
                             df["stage"] = stage
                         else:
                             st.warning(f"{stage} - File has invalid extension.")
@@ -63,7 +81,7 @@ def show():
                     # stage_best_hp[f"{stage}"])
 
         else:
-            st.warning("No selection made so far.")    
+            st.warning("No selection made so far.")
             # st.table(my_table)
 
     with tab2:
@@ -72,17 +90,25 @@ def show():
         with st.popover("Choose a stage"):
             opt_2 = st.multiselect(
                 "The classification report and confusion matrix from what stage do you want to see?",
-                ["Initial", "Fine_0", "Fine_20", "Fine_50", "Fine_100",
-                "Fine_complete", "DataAug_None", "DataAug_smooth", "DataAug_enhanced"],
-                default=None, 
+                [
+                    "Initial",
+                    "Fine_0",
+                    "Fine_20",
+                    "Fine_50",
+                    "Fine_100",
+                    "Fine_complete",
+                    "DataAug_None",
+                    "DataAug_smooth",
+                    "DataAug_enhanced",
+                ],
+                default=None,
                 max_selections=1,
-                placeholder="Choose a stage (max. 1)"
+                placeholder="Choose a stage (max. 1)",
             )
-        
-        
+
         # st.divider()
-        #st.write("You selected:", options)
-        #st.divider()
+        # st.write("You selected:", options)
+        # st.divider()
         st.markdown(f"""
         **Selected Stage:**\t{None if not opt_2 else opt_2}
         """)
@@ -129,16 +155,24 @@ def show():
                     all_files.extend(files)
 
                 if all_files is not None:
-                    file_train = [f for f in all_files if ("_train_" in f.name) and ("_ClassReport" in f.name)]
-                    file_val = [f for f in all_files if ("_val_" in f.name) and ("_ClassReport" in f.name)]
-        
+                    file_train = [
+                        f
+                        for f in all_files
+                        if ("_train_" in f.name) and ("_ClassReport" in f.name)
+                    ]
+                    file_val = [
+                        f
+                        for f in all_files
+                        if ("_val_" in f.name) and ("_ClassReport" in f.name)
+                    ]
+
                     col1, col2 = st.columns(2)
 
                     with col1:
                         st.subheader("Training Dataset")
-                        table = st.empty()       
-                        table.dataframe(pd.DataFrame())  
-                        
+                        table = st.empty()
+                        table.dataframe(pd.DataFrame())
+
                         if file_train:
                             for file in file_train:
                                 df = load_df(file)
@@ -153,15 +187,15 @@ def show():
                                 # st.text(text)
                                 st.markdown("<pre style='font-size:13px; font-family:Courier New;'>"+text+"</pre>", unsafe_allow_html=True)
                                 '''
-                                table.add_rows(df)   
+                                table.add_rows(df)
                         else:
-                            st.write("Found no matching file")  
-                        
+                            st.write("Found no matching file")
+
                     with col2:
                         st.subheader("Validation Dataset")
-                        table = st.empty()       
-                        table.dataframe(pd.DataFrame())  
-                        
+                        table = st.empty()
+                        table.dataframe(pd.DataFrame())
+
                         if file_val:
                             for file in file_val:
                                 df = load_df(file)
@@ -177,14 +211,14 @@ def show():
                                 st.text(text)
                                 '''
 
-                                table.add_rows(df)   
+                                table.add_rows(df)
                         else:
                             st.write("Found no matching file")
 
                 else:
                     st.warning(f"{opt_2} - Found no matching file(s)")
             else:
-                st.warning("No selection made so far.")    
+                st.warning("No selection made so far.")
 
         with st.expander("**Confusion Matrices**"):
             if opt_2:
@@ -195,8 +229,16 @@ def show():
                     # find_files(CONF_MATRICS, opt_2)
 
                 if files_cm:
-                    train_cm = [f for f in files_cm if ("_train_" in f.name) and ("_ConfMatrix" in f.name)]
-                    val_cm = [f for f in files_cm if ("_val_" in f.name) and ("_ConfMatrix" in f.name)]
+                    train_cm = [
+                        f
+                        for f in files_cm
+                        if ("_train_" in f.name) and ("_ConfMatrix" in f.name)
+                    ]
+                    val_cm = [
+                        f
+                        for f in files_cm
+                        if ("_val_" in f.name) and ("_ConfMatrix" in f.name)
+                    ]
 
                     col1, col2 = st.columns(2)
 
@@ -206,33 +248,37 @@ def show():
                             images_train = load_image(train_cm)
                             if images_train:
                                 for name, img in images_train:
-                                    # cm = [load_image(file) for file in train_cm] 
-                                    # img = 
-                                    st.image(img, caption=name, use_container_width=True)
+                                    # cm = [load_image(file) for file in train_cm]
+                                    # img =
+                                    st.image(
+                                        img, caption=name, use_container_width=True
+                                    )
                         else:
-                            st.write("No Training confusion matrices found.")  
-                    
+                            st.write("No Training confusion matrices found.")
+
                     with col2:
                         st.subheader("Validation Dataset")
                         if val_cm:
                             images_val = load_image(val_cm)
                             if images_val:
                                 for name, img in images_val:
-                                    # cm = [load_image(file) for file in val_cm] 
+                                    # cm = [load_image(file) for file in val_cm]
                                     # img = load_image(img_path)
-                                    st.image(img, caption=name, use_container_width=True)
-                            
+                                    st.image(
+                                        img, caption=name, use_container_width=True
+                                    )
+
                         else:
-                            st.write("No validation confusion matrices found.")  
+                            st.write("No validation confusion matrices found.")
 
                 else:
-                    st.write(f"{opt_2} - Found no matching .png file")                
+                    st.write(f"{opt_2} - Found no matching .png file")
             else:
-                st.warning("No selection made so far.")  
+                st.warning("No selection made so far.")
 
         st.divider()
         st.subheader("**_Further Info_**")
-        col1, col2, col3 = st.columns(3) 
+        col1, col2, col3 = st.columns(3)
 
         with col1:
             with st.popover("**_INFO: Classification Metrics_**"):
@@ -242,7 +288,7 @@ def show():
                 > It's the model's ability to correctly identify positive instances.    
                 """)
                 st.latex(r"Recall = \frac{TP}{TP + FN}")
-                
+
                 st.markdown("""
                 **Specificity:**  
                 > Measures the proportion of true negatives among negative samples. <br>
@@ -256,7 +302,7 @@ def show():
                 > It's the model's ability to avoid false positives.   
                 """)
                 st.latex(r"Precision = \frac{TP}{TP + FP}")
-                
+
                 st.markdown("""
                 **Accuracy:**  
                 > Measures the proportion of all correct predictions (true positives and <br>
@@ -272,8 +318,10 @@ def show():
                 > - **F1-Score:** β = 1 → equal weight for precision and recall  
                 > - **F2-Score:** β = 2 → recall is weighted four times higher  
                 """)
-                st.latex(r"F_\beta = (1+\beta^2) \cdot \frac{\text{Precision} \cdot \text{Recall}}{\beta^2 \cdot \text{Precision} + \text{Recall}}")
-                
+                st.latex(
+                    r"F_\beta = (1+\beta^2) \cdot \frac{\text{Precision} \cdot \text{Recall}}{\beta^2 \cdot \text{Precision} + \text{Recall}}"
+                )
+
         with col2:
             with st.popover("**_INFO: Multi-Class Metrics_**"):
                 st.markdown("""
@@ -303,7 +351,7 @@ def show():
                 > $$
                 > </span>
                 """)
-        
+
         with col3:
             with st.popover("**_INFO: Confusion Matrix_**"):
                 st.markdown("""
@@ -322,7 +370,6 @@ def show():
                 """)
 
     with tab3:
-        
         col1, col2 = st.columns(2)
 
         with col1:
@@ -331,7 +378,8 @@ def show():
 
         with col2:
             with st.popover("**_INFO: GradCAM_**"):
-                st.markdown("""
+                st.markdown(
+                    """
                 #### **(B) Grad-CAM heatmaps per image**
                 > **📷 What is Grad-CAM?**  
                 > <span style="font-size:85%">
@@ -344,8 +392,10 @@ def show():
                 > - Warmer colors (red/yellow) indicate regions with stronger influence on the model’s decision.  
                 > - Cooler colors (blue) indicate less relevant areas.  
                 > </span>
-                """, unsafe_allow_html=True)
-            
+                """,
+                    unsafe_allow_html=True,
+                )
+
             with st.popover("**_INFO 'Sparsity Score'_**"):
                 st.markdown("""
                 
@@ -376,62 +426,72 @@ def show():
                 ---
                 """)
                 # st.divider()
-                st.markdown("""
+                st.markdown(
+                    """
                 **How it is used here:**  
                 Because many images often show homogeneous pixel distributions, and meaningful  
                 comparison across thresholds is required during training, the formula above has been slightly adapted.  
                 In our implementation, sparsity scores are additionally **divided by the applied threshold**,  
                 making it easier to compare values at a glance.
-                """, )
+                """,
+                )
 
         with st.popover("Choose a stage"):
             opt_3 = st.multiselect(
                 "The GradCAM images from what stage do you want to see?",
-                ["Initial", "Fine_0", "Fine_20", "Fine_50", "Fine_100",
-                "Fine_complete", "DataAug_None", "DataAug_smooth", "DataAug_enhanced"],
-                default=None, 
+                [
+                    "Initial",
+                    "Fine_0",
+                    "Fine_20",
+                    "Fine_50",
+                    "Fine_100",
+                    "Fine_complete",
+                    "DataAug_None",
+                    "DataAug_smooth",
+                    "DataAug_enhanced",
+                ],
+                default=None,
                 max_selections=1,
-                placeholder="Choose a stage (max. 1)."
+                placeholder="Choose a stage (max. 1).",
             )
-        
+
         option_map = {
             0: "COVID",
             1: "Lung Opacity",
             2: "Normal",
             3: "Viral Pneumonia",
-                    }
+        }
 
         select_3 = st.segmented_control(
-                                    "**Choose a label**",
-                                    options=option_map.keys(),
-                                    format_func=lambda option: option_map[option],
-                                    selection_mode="single",
-                                    key="GradCAM"
-                                    )
+            "**Choose a label**",
+            options=option_map.keys(),
+            format_func=lambda option: option_map[option],
+            selection_mode="single",
+            key="GradCAM",
+        )
 
         if not opt_3:
-            st.warning("Please select a training stage.") 
-        
+            st.warning("Please select a training stage.")
+
         if select_3 is None:
-            st.warning("Please select a label") 
+            st.warning("Please select a label")
             # st.write(f"You selected the stage ")
         if opt_3 and select_3:
-            st.write(f"You selected the label **{option_map[select_3]}** at the stage **{opt_3}**")
+            st.write(
+                f"You selected the label **{option_map[select_3]}** at the stage **{opt_3}**"
+            )
 
         # st.divider()
         # st.write(f"")
         # st.divider()
 
-        sel_dict = {
-            0: "covid",
-            1: "lung",
-            2: "normal",
-            3: "viral"
-                    }
+        sel_dict = {0: "covid", 1: "lung", 2: "normal", 3: "viral"}
 
         with st.expander("**GradCAM images**"):
             if opt_3 and (select_3 is not None):
-                imgs = find_files(GRADCAM, opt_3, extension=".png")                   # adapt if extended/incresed (see above)
+                imgs = find_files(
+                    GRADCAM, opt_3, extension=".png"
+                )  # adapt if extended/incresed (see above)
                 img = [img for img in imgs if sel_dict[select_3] in img.name]
                 # st.write(f"DEBUG: {imgs}")
                 # st.write(f"DEBUG: {img}")
@@ -442,14 +502,14 @@ def show():
                 if image:
                     for name, img in image:
                         st.image(img, caption=name, use_container_width=True)
-        
+
             else:
                 st.warning("Please complete your selection.")
                 # st.write(f"DEBUG:  {opt_3} and {select_3}")
-    
+
         with st.expander("**Sparsity scores**"):
             if opt_3 and (select_3 is not None):
-                '''
+                """
                 imgs = find_files(GRADCAM, opt_3, extension=".png")                   # adapt if extended/incresed (see above)
                 img = [img for img in imgs if sel_dict[select_3] in img.name]
                 # st.write(f"DEBUG: {imgs}")
@@ -461,20 +521,19 @@ def show():
                 if image:
                     for name, img in image:
                         st.image(img, caption=name, use_container_width=True)
-                '''
+                """
                 st.write("to be added")
             else:
                 st.warning("Please complete your selection.")
                 # st.write(f"DEBUG:  {opt_3} and {select_3}")
-        ''' 
+        """ 
         my_df = pd.DataFrame()
             for stage in options:
                 df = load_df(stage_best_hp[f"{stage}"])
                 my_table.add_rows(df)
 
             st.table(my_df)
-        '''
-
+        """
 
     with tab4:
         st.subheader("SHAP images")
@@ -483,54 +542,59 @@ def show():
         with st.popover("Choose a stage"):
             opt_4 = st.multiselect(
                 "The run metrics from what stages you want to see?",
-                ["Initial", "Fine_0", "Fine_20", "Fine_50", "Fine_100",
-                "Fine_complete", "DataAug_None", "DataAug_smooth", "DataAug_enhanced"],
-                default=None, 
-                max_selections=1,                            # maybe increase!?
-                placeholder="Choose a stage (max. 1)."     
+                [
+                    "Initial",
+                    "Fine_0",
+                    "Fine_20",
+                    "Fine_50",
+                    "Fine_100",
+                    "Fine_complete",
+                    "DataAug_None",
+                    "DataAug_smooth",
+                    "DataAug_enhanced",
+                ],
+                default=None,
+                max_selections=1,  # maybe increase!?
+                placeholder="Choose a stage (max. 1).",
             )
-        
+
         if not opt_4:
             st.warning("Please, select a training stage.")
         else:
             st.write(f"You selected the stage **{opt_4}**")
 
-        option_map = {
-            0: "COVID",
-            1: "Lung Opacity",
-            2: "Normal",
-            3: "Viral Pneumonia"
-                    }
+        option_map = {0: "COVID", 1: "Lung Opacity", 2: "Normal", 3: "Viral Pneumonia"}
 
         select_4 = st.segmented_control(
-                                    "Choose a label",
-                                    options=option_map.keys(),
-                                    format_func=lambda option: option_map[option],
-                                    selection_mode="single",                        # maybe extend to 'multiple'!?
-                                    key="SHAP"
-                                    )
-        
+            "Choose a label",
+            options=option_map.keys(),
+            format_func=lambda option: option_map[option],
+            selection_mode="single",  # maybe extend to 'multiple'!?
+            key="SHAP",
+        )
+
         st.divider()
         # st.write(f"You selected:\t{None if select_4 is None else option_map[select_4]}.")
-        #st.divider()
+        # st.divider()
 
-        sel_dict = {
-            0: "covid",
-            1: "lung",
-            2: "normal",
-            3: "viral"
-                    }
-        
+        sel_dict = {0: "covid", 1: "lung", 2: "normal", 3: "viral"}
+
         if select_4 is None:
             st.warning("Please, choose a label.")
         else:
             st.write(f"You selected the label **{option_map[select_4]} ({select_4})**")
-        
+
         img_width = st.slider("Image width", 200, 600, 400)
 
         if (select_4 is not None) and opt_4:
-            img_found = find_files(SHAP, opt_4, extension=".png")                   # adapt if extended/incresed (see above)
-            img_list = [img for img in img_found if sel_dict[select_4].lower() in img.name.lower()]
+            img_found = find_files(
+                SHAP, opt_4, extension=".png"
+            )  # adapt if extended/incresed (see above)
+            img_list = [
+                img
+                for img in img_found
+                if sel_dict[select_4].lower() in img.name.lower()
+            ]
             # st.write(f"DEBUG: {img_found}")
             # st.write(f"DEBUG: {img_list.count()}")
             if not img_found:
@@ -538,13 +602,13 @@ def show():
 
             cols = st.columns(2)
 
-            good_img = [f for f in img_list if "_good_" in f.name] 
-            bad_img = [f for f in img_list if "_bad_" in f.name] 
+            good_img = [f for f in img_list if "_good_" in f.name]
+            bad_img = [f for f in img_list if "_bad_" in f.name]
             # st.write(f"DEBUG: {bad_img}")
             # st.write(f"DEBUG: {good_img}")
 
             g_images = load_image(good_img)
-            b_images = load_image(bad_img) 
+            b_images = load_image(bad_img)
 
             if g_images and b_images:
                 with cols[0]:
@@ -557,8 +621,7 @@ def show():
                     for img in b_images:
                         st.image(img, width=img_width)
 
-
-            '''
+            """
             for img in enumerate(image):
                 with cols[i % 2]:
                     st.image(img, use_container_width=True)
@@ -571,17 +634,18 @@ def show():
                         with cols[i]:
                             # image = load_image(img)
                             st.image(str(img), caption=label, use_container_width=True)
-            '''
+            """
         else:
             st.warning("Please complete your selection.")
-        '''
+        """
         my_df = pd.DataFrame()
         for stage in options:
             df = load_df(stage_best_hp[f"{stage}"])
             my_table.add_rows(df)
 
         st.table(my_df)
-        '''
+        """
+
 
 ######
 # START HERE

@@ -1,12 +1,14 @@
-import streamlit as st
 from pathlib import Path
+
+import streamlit as st
 
 from src.utils import live_command_demo
 
 LOGS = Path("/workspaces/oct25_bmlops_int_rakuten/streamlit/logs")
 LOGS.mkdir(parents=True, exist_ok=True)
-    
+
 log_api = LOGS / "build_api"
+
 
 def show():
     st.header("📡 Monitoring & Maintenance")
@@ -40,30 +42,19 @@ def show():
     """)
     url_graf = "https://localhost:3000"
     url_prom = "https://localhost:9090"
-    
+
     top_left, top_right = st.columns(2)
     left, middle, right_1, right_2 = st.columns(4)
 
-    status = top_left.status("Waiting...", 
-                        state="complete",
-                        expanded=True)
-    
+    status = top_left.status("Waiting...", state="complete", expanded=True)
+
     with top_right.popover("log 'API'"):
         st.write()
-        
-    left.link_button("Prometheus UI", 
-                    url_prom,
-                    width="stretch")
-    middle.link_button("Grafana UI", 
-                    url_graf,
-                    width="stretch")
 
-    if right_1.button(
-                "Build API container",
-                width="stretch",
-                key="api_container"                
-                    ):
-        
+    left.link_button("Prometheus UI", url_prom, width="stretch")
+    middle.link_button("Grafana UI", url_graf, width="stretch")
+
+    if right_1.button("Build API container", width="stretch", key="api_container"):
         cmd = ["make", "api_docker"]
 
         status.update(label="Buidling API container...", state="running")
@@ -72,42 +63,35 @@ def show():
 
         if exit_code == 0:
             status.update(
-                label="Buidling API container finished successfully.", 
+                label="Buidling API container finished successfully.",
                 state="complete",
-                expanded=False
-                )
+                expanded=False,
+            )
 
         else:
             status.update(
-                label=f"Buidling API container failed (exit code {exit_code}).", 
+                label=f"Buidling API container failed (exit code {exit_code}).",
                 state="error",
-                expanded=True
-                )
+                expanded=True,
+            )
 
-    if right_2.button(
-            "generate API traffic", 
-            width="stretch", 
-            key="traffic_gen"
-                ):
-
+    if right_2.button("generate API traffic", width="stretch", key="traffic_gen"):
         cmd = ["make", "traffic"]
 
         status.update(label="Generating traffic on API...", state="running")
 
-        exit_code = live_command_demo(cmd, log_api, mode="a")     
+        exit_code = live_command_demo(cmd, log_api, mode="a")
 
         if exit_code == 0:
             status.update(
-                label="Generating traffic on API finished successfully.", 
+                label="Generating traffic on API finished successfully.",
                 state="complete",
-                expanded=False
-                )
-            
+                expanded=False,
+            )
+
         else:
             status.update(
-                label=f"Generating traffic on API failed (exit code {exit_code}).", 
+                label=f"Generating traffic on API failed (exit code {exit_code}).",
                 state="error",
                 expanded=True,
-                )
-            
-    
+            )

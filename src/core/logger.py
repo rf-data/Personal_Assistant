@@ -1,25 +1,26 @@
 # src/core/mlflow_logger.py
-from pathlib import Path
+import logging
+
 # from dataclasses import dataclass, field
 # from typing import Dict, List
 import os
-import logging
 import sys
 from datetime import datetime
+from pathlib import Path
+
 # import numpy as np
 # import pandas as pd
 # import json
 # import time
 # import mlflow
-
 # from utils.experiment_logger_impl import ExperimentLogger
 import src.utils.general_helper as gh
+
 # import src.core.ml_manager as log
 # from src.core.session import session
 # import src.utils.file_helper as fh
 # import src.utils.df_helper as dfh
 import src.utils.path_helper as ph
-
 
 
 def has_file_handler(logger, log_path):
@@ -358,14 +359,13 @@ def create_logger(
 #     return _experiment_logger
 
 
-
 # class ModelLogger:
-    
+
 #     def __init__(self, base_path):  # , run_name
 #         self.folder = Path(base_path)
 #         # self.run_name = run_name # or f"run_{int(time.time())}"
 #         # self.run_path = self.base_path / self.run_name
-        
+
 #         self.folder.mkdir(parents=True, exist_ok=True)
 
 #     # =========================
@@ -386,32 +386,32 @@ def create_logger(
 #         extra_params=None
 #     ):
 #         framework = self._detect_framework(model)
-        
+
 #         model_class = model.__class__.__name__
 #         session.model_class = model_class
 
 #         # Calculate predictions
 #         if y_pred is None:
 #             y_pred = model.predict(X_test)
-            
+
 #         if y_proba is None and hasattr(model, "predict_proba"):
 #             y_proba = model.predict_proba(X_test)[:, 1]
-        
+
 #         # ===== Save predictions =====
 #         df_pred = self._build_prediction_df(
-#                                         X_test, 
-#                                         y_test, 
-#                                         y_pred, 
+#                                         X_test,
+#                                         y_test,
+#                                         y_pred,
 #                                         y_proba,
 #                                         y_val_pred,
-#                                         y_val_proba, 
+#                                         y_val_proba,
 #                                         framework
 #                                         )
-        
+
 #         if add_idx:
 #             if isinstance(add_idx, str):
 #                 add_idx = [add_idx]
-            
+
 #             for idx in add_idx:
 #                 df_pred[idx] = X_test[idx]
 
@@ -437,52 +437,52 @@ def create_logger(
 
 #         if extra_params:
 #             metadata["extra"] = extra_params
-        
+
 #         meta_path = f"{self.folder}/{timestamp}_{model_class}_meta.json"
 #         fh.save_dict(metadata, meta_path)
 #         print("saved meta_data")
-        
+
 #         return  # self.run_path
 
 #     # =========================
 #     # INTERNAL
 #     # =========================
 
-#     def _build_prediction_df(self, 
-#                              X_test, 
-#                              y_test, 
-#                              y_pred, 
+#     def _build_prediction_df(self,
+#                              X_test,
+#                              y_test,
+#                              y_pred,
 #                              y_proba,
 #                              y_val_pred,
 #                             y_val_proba,
 #                             framework
 #                             ):
-        
+
 #         df = pd.DataFrame({
 #                     "y_true": y_test,
 #                     "y_pred": y_pred
 #                     })
-        
+
 #         if y_proba is not None:
 #             df["y_proba"] = y_proba
-        
+
 #         if y_val_pred is not None:
 #             df["y_val_pred"] = y_val_pred
-        
+
 #         if y_val_proba is not None:
 #             df["y_val_proba"] = y_val_proba
 
-#         # save index 
+#         # save index
 #         if hasattr(X_test, "index")and (framework != "pytorch"):
 #             df["index"] = X_test.index
-        
+
 #         return df
-    
+
 
 #     def _detect_framework(self, model):
-        
+
 #         module = model.__class__.__module__
-        
+
 #         if "sklearn" in module:
 #             return "sklearn"
 #         elif "xgboost" in module:
@@ -499,24 +499,24 @@ def create_logger(
 #             return "tensorflow"
 #         else:
 #             return f"unspecified - ({module})"
-        
-    
+
+
 #     def _extract_params(self, model):
-        
+
 #         # sklearn / xgboost / lightgbm
 #         if hasattr(model, "get_params"):
 #             try:
 #                 return model.get_params()
 #             except:
 #                 pass
-        
+
 #         # catboost
 #         if hasattr(model, "get_all_params"):
 #             try:
 #                 return model.get_all_params()
 #             except:
 #                 pass
-        
+
 #         # pytorch fallback
 #         return {
 #             "model_class": model.__class__.__name__,

@@ -1,23 +1,22 @@
+import os
+from pathlib import Path
 
-import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 import pandas as pd
 import seaborn as sns
-
-from pathlib import Path
+import streamlit as st
 from PIL import Image
 
 EDA = Path("/workspaces/may25_bds_covid19/streamlit/app/static_files/eda_files")
-    
+
+
 def show():
-    
+
     st.header("📊 Approach and EDA")
     st.write("Welcome to the COVID-19 X-Ray Classification app!")
 
-    tab1, tab2 = st.tabs(["Methodical approach", 
-                           "EDA"])
+    tab1, tab2 = st.tabs(["Methodical approach", "EDA"])
 
     with tab1:
         st.subheader("Balanced Sampling and Experimental Design")
@@ -36,18 +35,26 @@ def show():
     with tab2:
         # st.subheader("📊 Explore Data")
 
-        ## preparation: 
+        ## preparation:
         # load images
         img = Image.open(os.path.join(EDA, "img_covid_1.png"))
         mask = Image.open(os.path.join(EDA, "mask_covid_1.png"))
         img_array = np.array(img)
         mask_array = np.array(mask)
-        
+
         # load metadata as df
-        covid_df = pd.read_excel(os.path.join(EDA, "COVID.metadata.xlsx"), sheet_name="Sheet1")
-        lung_opacity_df = pd.read_excel(os.path.join(EDA, "Lung_Opacity.metadata.xlsx"), sheet_name="Sheet1")
-        normal_df = pd.read_excel(os.path.join(EDA, "Normal.metadata.xlsx"), sheet_name="Sheet1")
-        viral_pneumonia_df = pd.read_excel(os.path.join(EDA, "Viral Pneumonia.metadata.xlsx"), sheet_name="Sheet1")
+        covid_df = pd.read_excel(
+            os.path.join(EDA, "COVID.metadata.xlsx"), sheet_name="Sheet1"
+        )
+        lung_opacity_df = pd.read_excel(
+            os.path.join(EDA, "Lung_Opacity.metadata.xlsx"), sheet_name="Sheet1"
+        )
+        normal_df = pd.read_excel(
+            os.path.join(EDA, "Normal.metadata.xlsx"), sheet_name="Sheet1"
+        )
+        viral_pneumonia_df = pd.read_excel(
+            os.path.join(EDA, "Viral Pneumonia.metadata.xlsx"), sheet_name="Sheet1"
+        )
 
         # Add new columns for grouping purposes
         covid_df["dataset"] = "COVID"
@@ -56,19 +63,19 @@ def show():
         viral_pneumonia_df["dataset"] = "Viral Pneumonia"
 
         data = pd.concat(
-                    [covid_df, lung_opacity_df, normal_df, viral_pneumonia_df],
-                    ignore_index=True
-                    )
+            [covid_df, lung_opacity_df, normal_df, viral_pneumonia_df],
+            ignore_index=True,
+        )
 
         num_images = {
-                "COVID": len(covid_df),
-                "Lung Opacity": len(lung_opacity_df),
-                "Normal": len(normal_df),
-                "Viral Pneumonia": len(viral_pneumonia_df),
-                    }
+            "COVID": len(covid_df),
+            "Lung Opacity": len(lung_opacity_df),
+            "Normal": len(normal_df),
+            "Viral Pneumonia": len(viral_pneumonia_df),
+        }
 
         ### PART 1
-        with st.popover("**(A) Dataset analysis**"):        
+        with st.popover("**(A) Dataset analysis**"):
             st.markdown(f"""
         - **COVID dataset:**\t--> {covid_df.shape[0]} x-ray images\t ({covid_df.isna().sum().sum()} null-values) 
         - **Lung Opacity dataset:**\t-->{lung_opacity_df.shape[0]} x-ray images\t ({lung_opacity_df.isna().sum().sum()} null-values)
@@ -86,7 +93,7 @@ def show():
                 order=num_images.keys(),
                 palette="viridis",
                 hue="dataset",
-                )
+            )
             plt.xlabel("")
             plt.ylabel("Number of Images")
             st.pyplot(fig_1)
@@ -104,7 +111,7 @@ def show():
 
         Exemple image and mask:
                     """)
-        
+
             # Display example image + mask
             fig_2 = plt.figure(figsize=(12, 12))
 
@@ -128,9 +135,8 @@ def show():
                 order=num_images.keys(),
                 palette="viridis",
                 hue="dataset",
-                    )
+            )
             plt.xlabel("")
             plt.ylabel("Number of Images")
             # fig.tight_layout()
             st.pyplot(fig_3)
-            

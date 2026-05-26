@@ -1,6 +1,7 @@
 import streamlit as st
 
-st.markdown(""" 
+st.markdown(
+    """ 
 > We used the ResNet50 architecture as the backbone of our classification models. ResNet50 is a deep convolutional neural network with 50 layers,
 > originally introduced by He et al. in 2015. It is well known for its residual connections, which allow the neural network to learn identity mappings
 > via skip connections, and helps by doing so mitigating the vanishing gradient problem. The ResNet50 framework allows gradients to flow more directly
@@ -31,7 +32,9 @@ st.markdown("""
     </small>
   </td></tr>
 </table>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 st.markdown(""" 
 

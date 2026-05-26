@@ -1,14 +1,15 @@
 # imports
-from dotenv import load_dotenv, find_dotenv
-import subprocess
+import hashlib
 
-# import numpy as np
-import os
-from typing import Callable, Iterable, List
-# from src.schema.aggregation_schema import (AggregatedResult, 
+# from src.schema.aggregation_schema import (AggregatedResult,
 #                                            LLMAggregatedResult)
 import inspect
-import hashlib
+
+# import numpy as np
+import subprocess
+from collections.abc import Callable, Iterable
+
+from dotenv import find_dotenv, load_dotenv
 
 from src.core.memory import session
 
@@ -17,11 +18,10 @@ def pretty_print(result):
 
     if isinstance(result, AggregatedResult):
         data = result.model_dump()
-    elif isinstance(result, dict):  
+    elif isinstance(result, dict):
         data = result
 
     for key, value in data.items():
-
         print(f"\n=== {key.upper()} ===")
 
         if isinstance(value, list):
@@ -30,41 +30,35 @@ def pretty_print(result):
 
         else:
             print(value)
-        
+
         print()
 
-    return 
+    return
 
 
 def pretty_logging(result):
-    logger = session.logger 
+    logger = session.logger
 
-    if isinstance(result, (AggregatedResult, 
-                           LLMAggregatedResult)):
+    if isinstance(result, (AggregatedResult, LLMAggregatedResult)):
         data = result.model_dump()
-    elif isinstance(result, dict):  
+    elif isinstance(result, dict):
         data = result
     else:
         raise ValueError("Unknown dtype of 'result':", type(result))
 
     for key, value in data.items():
-
-        logger.info("\n=== %s ===",
-                    key.upper())
+        logger.info("\n=== %s ===", key.upper())
 
         if isinstance(value, list):
             for i, item in enumerate(value, 1):
-                logger.info("value #%s: %s",
-                            i,
-                            item)
+                logger.info("value #%s: %s", i, item)
 
         else:
-            logger.info("value: %s", 
-                        value)
-            
+            logger.info("value: %s", value)
+
         logger.info("")
-    
-    return 
+
+    return
 
 
 def snapshot_single_function(fn: Callable) -> dict:
@@ -112,7 +106,7 @@ def iter_chunks(df, chunk_size=25):
         yield df.iloc[start : start + chunk_size]
 
 
-def load_env_vars(name: List | str=".env"):
+def load_env_vars(name: list | str = ".env"):
     """
     Load environment variables from .env files if available.
     """
@@ -120,23 +114,23 @@ def load_env_vars(name: List | str=".env"):
     # if session_path and os.path.exists(session_path):
     #     load_dotenv(session_path, override=True)
     #     print("Variables from .env.session loaded")
-    
+
     if isinstance(name, str):
         name = [name]
 
     env_loaded = session.state.env_loaded
     name_clear = [n for n in name if n not in env_loaded]
 
-    for env in name_clear: 
+    for env in name_clear:
         env_path = find_dotenv(filename=env)
-        if env_path:    #  and not session.env_loaded:
+        if env_path:  #  and not session.env_loaded:
             load_dotenv(env_path)
             print(f"Variables loaded from '{env}'")
             env_loaded.append(env)
 
     session.state.env_loaded = env_loaded
 
-    return 
+    return
 
 
 def get_git_commit():

@@ -1,0 +1,68 @@
+# ------------------------------------
+# RUN_CONFIGURATION "TEXT_EXTRACTION"
+# ------------------------------------
+
+# extract from file
+llm_model: gpt-4o-mini
+name_log: extract_file
+name_logfile: extract_file
+timestamp: 2026-05-22_11-01-57 
+url:
+  # - 
+file_names: 
+  # - GMP_part0_Intro.pdf
+    # - DockerDeepDive.pdf
+    # - GMP_part1_chap1.pdf
+    # - GMP_part1_chap2.pdf
+    # - GMP_part1_chap3.pdf
+    # - GMP_part1_chap4.pdf
+    # - GMP_part1_chap5.pdf
+    # - GMP_part1_chap6.pdf
+    # - GMP_part1_chap7.pdf
+    # - GMP_part1_chap8.pdf
+    # - GMP_part1_chap9.pdf
+    # - spacy_p1.json
+    # - spacy_p2.json
+    # - spacy_p3.json
+    # - spacy_p4.json
+    # - spacy_p5.json                 # 35
+    # - exam_web_scraping.json
+    # - weight_biases_p1.html
+    # - weight_biases_p2.html
+    # - weight_biases_p3.html
+    # - weight_biases_p4.html
+    # - weight_biases_p5.html
+    # - weight_biases_p6.html
+
+
+# HTML
+html:
+  assemble_as_md: True
+  scrape_images: True
+  save: 
+    - info
+    - html
+    - md
+
+# WIKIPEDIA_QUERIES
+wiki:
+  query: Partial_least # turing
+  query_time: 2026-05-18_13-08-12
+  article_to_parse:
+    - 314204 
+  language: en        # Literal["en", "de"]
+  max_retries: 3
+  assemble_as_md: True
+  # scrape_images: True
+  save: 
+    - info
+    - html
+    - md
+
+# PDF
+pdf:
+  extract_source: 
+      - raw_dict
+      - words
+  extraction_model: pymupdf
+  

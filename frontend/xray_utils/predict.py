@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def image_classification(model, image_path, class_names=None, target_size=(224, 224)):
     """
     Classify a single image and return a DataFrame with predictions and probabilities.
@@ -38,17 +39,20 @@ def image_classification(model, image_path, class_names=None, target_size=(224, 
     #     true_label = None
 
     # Build result DataFrame
-    df_clf = pd.DataFrame([{
-        "filename": image_path.name,
-        "true_label": true_label,
-        "pred_label": pred_label,
-        "pred_idx": pred_idx,
-        "pred_proba": pred_proba,
-        "proba_vector": proba.tolist()
-    }])
+    df_clf = pd.DataFrame(
+        [
+            {
+                "filename": image_path.name,
+                "true_label": true_label,
+                "pred_label": pred_label,
+                "pred_idx": pred_idx,
+                "pred_proba": pred_proba,
+                "proba_vector": proba.tolist(),
+            }
+        ]
+    )
 
     return df_clf
-
 
 
 # def predict_image(model, image_array):

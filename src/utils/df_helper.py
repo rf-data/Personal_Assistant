@@ -1,21 +1,18 @@
 ## df_helper.py
 # imports
-import pandas as pd
-from typing import List
 import ast
-
 import gc
-import pyarrow as pa
-import pyarrow.parquet as pq
 import os
 from pathlib import Path
 
-import src.utils.general_helper as gh
+import pandas as pd
+import pyarrow as pa
+import pyarrow.parquet as pq
+
 import src.utils.path_helper as ph
 
 # import src.feature_engineering.time_columns as time_col
 from src.core.memory import session
-
 
 # -----------------
 # DATAFRAME METHODS
@@ -23,7 +20,8 @@ from src.core.memory import session
 # (A) LOAD DFS
 # -----------------
 
-def load_dfs(paths: List[str | Path] | str | Path, index_col: str | None = None):
+
+def load_dfs(paths: list[str | Path] | str | Path, index_col: str | None = None):
     if isinstance(paths, (Path, str)):
         paths = [paths]
 
@@ -44,7 +42,7 @@ def read_french_csv_smart(path: str, nrows=None) -> pd.DataFrame:
         decimal=",",
         engine="python",
         on_bad_lines="skip",
-        nrows=nrows
+        nrows=nrows,
         # low_memory=False
     )
 
@@ -52,57 +50,54 @@ def read_french_csv_smart(path: str, nrows=None) -> pd.DataFrame:
 
 
 def load_files_from_folder(
-                        folder, 
-                        df_names: List | None=None,
-                        timestamp: str | None=None, 
-                        suffix: str | None=None,
-                        f_type: str | None=None
-                        ):
+    folder,
+    df_names: list | None = None,
+    timestamp: str | None = None,
+    suffix: str | None = None,
+    f_type: str | None = None,
+):
     # setup logger
     logger = session.logger
     logger.info("Start loading files")
-    
+
     if df_names:
         folder = [Path(f"{folder}/{name}") for name in df_names]
         files = list(folder)
-    
+
     else:
         folder = Path(folder)
         files = list(folder.iterdir())
 
     if timestamp:
         files = [f for f in files if Path(f).stem.startswith(timestamp)]
-        
+
     df_dict = {}
     for file in files:
-        
-        f_name =  str(file.name)
+        f_name = str(file.name)
 
         if f_type is None:
             f_type = str(file.suffix)
-            
+
         stem_clean = file.stem.strip()
-        
+
         suffix_adapt = f"_{suffix}" if suffix else ""
         file_path = file.with_name(f"{stem_clean}{suffix_adapt}.{f_type}")
-        
 
         if "-" in f_name:
             f_new = f_name.replace("-", "_").replace(" ", "")
-        else: 
+        else:
             f_new = f_name
 
         if f_type == "csv":
             df = read_french_csv_smart(str(file_path))
             df_fixed = fix_single_column_df(df)
-            
+
             df_dict[f_new] = df_fixed
 
         if f_type == "parquet":
             df_dict[f_new] = pd.read_parquet(file_path)
 
-        logger.info("Loaded file:\t%s", 
-                    ph.shorten_path(file_path))  
+        logger.info("Loaded file:\t%s", ph.shorten_path(file_path))
         # df_re = df.rename(columns={"Accident_Id": "Num_Acc", "accident_id": "Num_Acc"})
 
         # logger.info("shape:\t%s", df_re.shape)
@@ -110,14 +105,13 @@ def load_files_from_folder(
         # logger.info("head:\n%s", df_re.head(3))
         # logger.info("")
 
-
     return df_dict
 
 
 def detect_delimiter(path: str) -> str:
     with open(path, encoding="latin1") as f:
         header = f.readline()
-        
+
         if "\t" in header:
             return "\t"
         elif ";" in header:
@@ -128,38 +122,38 @@ def detect_delimiter(path: str) -> str:
             raise ValueError(f"Unknown delimiter in {path}")
 
 
-
 def load_processed_files(
-                    config,
-                    data_folder: str | Path = None,  
-                    suffixes: dict = None, 
-                    prefix: str = None,
-                    from_report: bool=True
-                    ):
-    
+    config,
+    data_folder: str | Path = None,
+    suffixes: dict = None,
+    prefix: str = None,
+    from_report: bool = True,
+):
+
     # setup logger
     logger = session.logger
 
-    # 
+    #
     data_processed = os.getenv("PATH_PROCESSED")
 
     # arg_dict = config.get("general_args", {})
     if data_folder is None:
         data_folder = Path(config.get("data_folder", None))
-    
+
     if suffixes is None or not isinstance(suffixes, dict):
         suffixes = config["suffix_dict"]
-    
+
     # file_suffix = list()
     # if isinstance(file_suffix.keys, str):
     #     file_suffix = [file_suffix]
-    
+
     df_folder = Path(f"{data_processed}/{data_folder}")
 
     # create list of files (as path)
     if from_report:
         # lazy import
         from src.agentic_AI.report.raw_data_report import load_eda_summary
+
         report = load_eda_summary(config)
         files = report.get("files", [])
 
@@ -167,40 +161,36 @@ def load_processed_files(
         files = []
 
     dfs = {}
-    prefix = prefix if prefix is not None else "" 
+    prefix = prefix if prefix is not None else ""
     for file in files:
         f_name = Path(file).stem
-        
+
         df_list = []
-        for f_suf, cols_to_keep in suffixes.items(): 
+        for f_suf, cols_to_keep in suffixes.items():
             df_name = f"{prefix}{str(f_name).strip()}_{f_suf}"
 
             f_path = f"{df_folder}/{df_name}.parquet"
-            logger.info("Start loading files from %s)", 
-                        ph.shorten_path(f_path))
+            logger.info("Start loading files from %s)", ph.shorten_path(f_path))
 
             # cols_to_keep = suffixes.get(f_suf, None)
 
             try:
                 df = pd.read_parquet(f_path)
-                logger.info("Shape of df before filtering: %s", 
-                                df.shape)
-                
+                logger.info("Shape of df before filtering: %s", df.shape)
+
                 if len(cols_to_keep) == 0:
                     df_list.append(df)
-                    logger.info("df not filtered") 
-                    
+                    logger.info("df not filtered")
+
                 else:
                     df_filt = df[cols_to_keep]
                     df_list.append(df_filt)
 
-                    logger.info("Shape of df after filtering: %s", 
-                                df_filt.shape)
-                    
+                    logger.info("Shape of df after filtering: %s", df_filt.shape)
+
                 # print("[DEBUG] NaN count in df:\n", df.isna().sum())
             except FileNotFoundError:
-                logger.error("File not found: %s", 
-                             f_path)
+                logger.error("File not found: %s", f_path)
                 # print("Adding empty dummy df")
 
                 # df = pd.DataFrame(columns=cols_to_keep)
@@ -216,11 +206,12 @@ def load_processed_files(
 # (B) MERGE DFS
 # -----------------
 
+
 def load_merge_processed_files(config):
 
     cols_needed = config.get("necessary_cols", [])
     merge_col = config["merge_col"]
-    
+
     df_dict = load_processed_files(config)
 
     dfs_merged = {}
@@ -229,22 +220,20 @@ def load_merge_processed_files(config):
         if len(df_list) < 2:
             print(f"Invalid count of dfs ({f_name}):", len(df_list))
             continue
-        
+
         elif len(df_list) == 2:
             print(f"Start merging df_list ({f_name}; n={len(df_list)})")
-            df_merge = df_list[0].merge(df_list[1], 
-                                        on=merge_col, 
-                                        how="inner")
+            df_merge = df_list[0].merge(df_list[1], on=merge_col, how="inner")
             # print("[DEBUG] unique in 'target_col' (df_1):", df_list[0][merge_col].nunique())
             # print("[DEBUG] unique in 'target_col' (df_2):", df_list[1][merge_col].nunique())
             # print("[DEBUG] unique in 'target_col' (df_merged):", df_merge[merge_col].nunique())
-            
+
         else:
             print(f"Start merging df_list ({f_name}; n={len(df_list)})")
             for i, df in enumerate(df_list):
                 if i == 0:
                     df_merge = df.copy()
-                else: 
+                else:
                     df_merge = df_merge.merge(df)
                     # print(f"[DEBUG] unique in 'target_col' (df_{i}):", df[merge_col].nunique())
                     # print(f"[DEBUG] unique in 'target_col' (df_merge):", df_merge[merge_col].nunique())
@@ -260,12 +249,11 @@ def load_merge_processed_files(config):
     return dfs_merged
 
 
-
 def merge_dfs(
-    df_list: List[pd.DataFrame],
-    on_cols: List[str] | str,
+    df_list: list[pd.DataFrame],
+    on_cols: list[str] | str,
     suffix_col: str | None = None,
-    drop_cols: List[str] | str | None = None,
+    drop_cols: list[str] | str | None = None,
     how: str = "inner",
 ) -> pd.DataFrame:
 
@@ -306,9 +294,11 @@ def merge_dfs(
 
     return df_merged
 
+
 # -----------------
 # (D) REPAIR DFS
 # -----------------
+
 
 def enforce_datetime(df, col="datetime"):
     # setup logger
@@ -319,6 +309,7 @@ def enforce_datetime(df, col="datetime"):
         logger.info("Changed '%s' dtype from '%s' to 'datetime64'.", col, df[col].dtype)
 
     return df
+
 
 def fix_single_column_df(df: pd.DataFrame) -> pd.DataFrame:
     if df.shape[1] != 1:
@@ -362,20 +353,20 @@ def fix_single_column_df(df: pd.DataFrame) -> pd.DataFrame:
     return data
 
 
-
 # ------------------------------
 # (E) INFLATE
 # ------------------------------
+
 
 def inflate_df(df, config):
     # lazy import
     import src.feature_engineering.time_columns as time_col
 
-    h3_col = config["h3_col"]        # , "h3_index")
-    freq = config["period"]     # , "W")
-    period_col = config["period_col"]       # , "time_bin")
-    target_prelim = config["target_prelim"] # , "n_accidents")
-    min_events = config["min_events"]   # , 2)
+    h3_col = config["h3_col"]  # , "h3_index")
+    freq = config["period"]  # , "W")
+    period_col = config["period_col"]  # , "time_bin")
+    target_prelim = config["target_prelim"]  # , "n_accidents")
+    min_events = config["min_events"]  # , 2)
 
     # Aggregate event-level rows first to guarantee unique (h3, time_bin) pairs.
     df_counts = (
@@ -385,9 +376,7 @@ def inflate_df(df, config):
     )
 
     cell_activity = df_counts.groupby(h3_col)[target_prelim].sum()
-    active_cells = cell_activity[
-                            cell_activity >= min_events
-                            ].index
+    active_cells = cell_activity[cell_activity >= min_events].index
 
     freq_clean = time_col.check_translate_freq(freq)
     lower, upper = time_col.get_datetime_limits(df, config)
@@ -399,16 +388,16 @@ def inflate_df(df, config):
     time_index = df_counts[period_col].unique()
 
     df_full = create_complete_grid(
-                                df_counts, 
-                                idx_name=h3_col, 
-                                idx_values=active_cells, 
-                                col_name=period_col,
-                                col_values=time_index
-                                    )
-    
-    # create_complete_grid(df, h3_col, active_cells, period_col, time_index) 
+        df_counts,
+        idx_name=h3_col,
+        idx_values=active_cells,
+        col_name=period_col,
+        col_values=time_index,
+    )
 
-    return df_full 
+    # create_complete_grid(df, h3_col, active_cells, period_col, time_index)
+
+    return df_full
 
 
 # def inflate_time_h3(df, time_col, h3_col, freq="W"):
@@ -439,33 +428,32 @@ def inflate_df(df, config):
 
 
 # # --- active cells ---
-    
-    
-    # # --- complete grid ---
-    # # all_nodes = list(h3_to_node.keys())
-    # all_times = df[period_col].sort_values().unique()
 
-    # df_grid = dfh.create_complete_grid(
-    #                                 df, 
-    #                                 idx_name=h3_col, 
-    #                                 idx_values=active_cells, 
-    #                                 col_name=period_col,
-    #                                 col_values=all_times
-    #                                 )
+
+# # --- complete grid ---
+# # all_nodes = list(h3_to_node.keys())
+# all_times = df[period_col].sort_values().unique()
+
+# df_grid = dfh.create_complete_grid(
+#                                 df,
+#                                 idx_name=h3_col,
+#                                 idx_values=active_cells,
+#                                 col_name=period_col,
+#                                 col_values=all_times
+#                                 )
 
 # ------------------------------
 # (F) AGGREGATE
 # ------------------------------
 
+
 def create_complete_grid(df, idx_name, idx_values, col_name, col_values):
     full_index = pd.MultiIndex.from_product(
-        [idx_values, col_values],
-        names=[idx_name, col_name]
+        [idx_values, col_values], names=[idx_name, col_name]
     )
-    
+
     df_full = (
-        df
-        .set_index([idx_name, col_name])
+        df.set_index([idx_name, col_name])
         .reindex(full_index, fill_value=0)
         .reset_index()
     )
@@ -473,36 +461,30 @@ def create_complete_grid(df, idx_name, idx_values, col_name, col_values):
     return df_full
 
 
-
 def aggregate_all(df):
 
     df_agg = (
-        df
-        .groupby(["h3_index", "time_bin"])      # "resolution", "freq", 
+        df.groupby(["h3_index", "time_bin"])  # "resolution", "freq",
         .size()
         .reset_index(name="n_accidents")
-        )
+    )
 
     return df_agg
 
 
 def aggregate_single(df, config):
-                     
+
     res_col = config.get("res", "h3_index")
     freq_col = config.get("freq_col", "time_bin")
     target_col = config.get("target_col", "n_accidents")
-    
-    df_agg = (
-        df
-        .groupby([res_col, freq_col])
-        .size()
-        .reset_index(name=target_col)
-        )
-    
+
+    df_agg = df.groupby([res_col, freq_col]).size().reset_index(name=target_col)
+
     # if events_only:
     #     df_agg = df_agg[df_agg[target_col] > 0]
 
     return df_agg
+
 
 # ------------------------------
 # (G) MELT
@@ -515,14 +497,14 @@ def melt_h3(df, res_range, freq_range):
         id_vars=["ID_accident"] + freq_range,
         value_vars=res_cols,
         var_name="resolution",
-        value_name="h3_index"
+        value_name="h3_index",
     )
 
     # clean 'resolution': "h3res6" → 6
     df_long["resolution"] = df_long["resolution"].str.replace("h3_res", "").astype(int)
 
     return df_long
-   
+
 
 def melt_time(df_long, freq_range):
 
@@ -530,8 +512,8 @@ def melt_time(df_long, freq_range):
         id_vars=["ID_accident", "resolution", "h3_index"],
         value_vars=freq_range,
         var_name="freq",
-        value_name="time_bin"
-        )
+        value_name="time_bin",
+    )
 
     return df_time
 
@@ -545,14 +527,13 @@ def save_df_to_parquet(df, f_name, folder=None, chunked=False):
 
     if folder is None:
         folder = os.getenv("PATH_PROCESSED")
-    
+
     file_path = Path(folder) / f"{f_name}.parquet"
 
     ph.ensure_dir(file_path)
     # Path(output_dir)
     # output_path.mkdir(parents=True, exist_ok=True)
 
-    
     if chunked:
         if isinstance(df, pd.DataFrame):
             save_df_chunkwise(df, file_path, chunk_size=200)
@@ -567,12 +548,12 @@ def save_df_to_parquet(df, f_name, folder=None, chunked=False):
         df.to_parquet(file_path, index=False)
 
     logger.info(
-            "Saved %s → %s (%s)",
-            f_name,
-            ph.shorten_path(file_path),
-            "chunked" if chunked else "full",
-        )
-    
+        "Saved %s → %s (%s)",
+        f_name,
+        ph.shorten_path(file_path),
+        "chunked" if chunked else "full",
+    )
+
 
 def save_df_chunkwise(df, file_path, chunk_size):
     # setup logger
@@ -591,10 +572,8 @@ def save_df_chunkwise(df, file_path, chunk_size):
 
         chunk_idx = i // chunk_size
         if chunk_idx % 10 == 0:
-            logger.info("Saved chunk %s (total: %s)", 
-                    chunk_idx,
-                    len(df)/chunk_size)
-        
+            logger.info("Saved chunk %s (total: %s)", chunk_idx, len(df) / chunk_size)
+
         del chunk
         del table
         gc.collect()
@@ -622,7 +601,7 @@ def save_df_list_chunkwise(df_list, file_path):
 
         if i % 10 == 0:
             logger.info("Saved chunk %s to %s", i + 1, ph.shorten_path(file_path))
-    
+
         del chunk
         del table
         gc.collect()
@@ -685,4 +664,3 @@ def parse_list_str(x):
         return [v.strip() for v in x.split(",") if v.strip()]
 
     return []
-

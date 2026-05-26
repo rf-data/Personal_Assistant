@@ -1,9 +1,11 @@
 ## page 3
 import streamlit as st
 
+
 def show():
     st.header("🏠 Objectives")
     st.write("Welcome to the COVID-19 X-Ray Classification app!")
+
 
 st.title("Objectives for the model development")
 

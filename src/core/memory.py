@@ -1,83 +1,89 @@
 # memory.py
-from pathlib import Path
-from pydantic import BaseModel, Field   # , ConfigDict
-from typing import Any, Optional      # Callable, List, Dict
-# from dataclasses import 
 import logging
 from datetime import datetime
+from pathlib import Path
+from typing import Any, ClassVar
+
 # from dataclasses import dataclass, field
-
-from src.core.pdf_extractor import PDFCleanExtractor
-from src.core.text_structure_builder import TextStructureBuilder
-from src.core.feature_enricher import FeatureEnricher
-from src.core.pdf_classifier import PDFClassifier
-from src.core.text_classifier import TXTClassifier
-# from src.core._dev_block_classifier import BlockClassifier
-from src.core.pdf_cleaner import PDFCleaner
-from src.core.document_assembler import DocumentAssembler
-
+# from src.core.pdf_extractor import PDFCleanExtractor
+# # from gmp_compliance.src.core._dev_text_structure_builder import TextStructureBuilder
+# from src.core.feature_enricher import FeatureEnricher
+# from src.core.pdf_classifier import PDFClassifier
+# from src.core.text_classifier import TXTClassifier
+# # from src.core._dev_block_classifier import BlockClassifier
+# from src.core.pdf_cleaner import PDFCleaner
+# from src.core.document_assembler import DocumentAssembler
 from tiktoken import encoding_for_model
+
 # import json
 
 # import utils.general_helper as ph
 
-class SessionState(BaseModel):
-    timestamp: datetime|str|None = Field(default=None)
-    env_loaded: list[str] = Field(default_factory=list)
-    suffix: str = Field(default_factory=str)
-    save_folder: str | Path = Field(default_factory=str)
-    save_name: str | Path = Field(default_factory=str)
-    
+# class SessionState(BaseModel):
+#     timestamp: datetime|str|None = Field(default=None)
+#     env_loaded: list[str] = Field(default_factory=list)
+#     suffix: str = Field(default_factory=str)
+#     save_folder: str | Path = Field(default_factory=str)
+#     save_name: str | Path = Field(default_factory=str)
 
-class Session():
 
-    # def __init__(self):
-    state = SessionState()
-    logger = logging.getLogger(__name__)
-    extractor: Optional[PDFCleanExtractor]
-    builder: Optional[TextStructureBuilder]
-    enricher: Optional[FeatureEnricher]      # field(default_factory=)
-    cleaner: Optional[PDFCleaner]
-    classifier: Optional[PDFClassifier, TXTClassifier]
-    assembler: Optional[DocumentAssembler]
-    model_config: dict={}
+class Session:
     encoder = encoding_for_model
-    # ConfigDict(arbitrary_types_allowed=True)
+    env_loaded: list[str] = []
+    general_config: dict = {}
+    logger: ClassVar = logging.getLogger(__name__)
+    page_id: int | None = None
+    run_config: dict = {}
+    text_type: str = ""
+    save_folder: str | Path = ""
+    save_name: str | Path = ""
+    suffix: str = ""
+    timestamp: datetime | str | None = None
 
-session = Session()
+    # ConfigDict(arbitrary_types_allowed=True)
+    # extractor: Optional[PDFCleanExtractor]
+    # builder: Optional[TextStructureBuilder]
+    # enricher: Optional[FeatureEnricher]      # field(default_factory=)
+    # cleaner: Optional[PDFCleaner]
+    # classifier: Optional[PDFClassifier | TXTClassifier]
+    # assembler: Optional[DocumentAssembler]
+
+
+session_state = Session()
 
 
 class SimpleMemory:
     def __init__(self):
         self._store = {}
- 
+
     def save(self, key: str, value: Any):
         self._store[key] = value
- 
+
     def load(self, key: str) -> Any:
         return self._store.get(key)
-    
+
     def keys(self):
         return list(self._store.keys())
-    
+
     # as lazy import to prevent circular imports
     # import src.utils.path_helper as ph
     # root = ph.find_project_root()
 
-    # model_config = 
+    # model_config =
 
     # logger: logging.Logger = Field(default_factory=lambda: logging.getLogger(__name__))
     # preprocessor: "TextPreprocessor" = Field(default_factory=TextPreprocessor)
     # now: datetime = Field(default_factory=datetime.now)
     # env_loaded: Optional[List[str]] = Field(default_factory=list)
 
-# class LLM_State(BaseModel):
-#     logger: 
-#     preprocessor:  
-#     now = 
 
-    
-    #############
+# class LLM_State(BaseModel):
+#     logger:
+#     preprocessor:
+#     now =
+
+
+#############
 
 
 #     def __init__(self):
@@ -91,7 +97,7 @@ class SimpleMemory:
 #         self.venv = None
 #         self.url_repo = None
 #         self.backup_dir: str | Path | None = None
-        
+
 #         self.logger = None
 #         self.cleaner = None
 #         self.now = None

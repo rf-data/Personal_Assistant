@@ -1,12 +1,12 @@
-import time
 import subprocess
-import streamlit as st
+import time
 from datetime import datetime
 from pathlib import Path
 
+import streamlit as st
 
 
-def load_env_vars(name: List | str=".env"):
+def load_env_vars(name: List | str = ".env"):
     """
     Load environment variables from .env files if available.
     """
@@ -14,28 +14,27 @@ def load_env_vars(name: List | str=".env"):
     # if session_path and os.path.exists(session_path):
     #     load_dotenv(session_path, override=True)
     #     print("Variables from .env.session loaded")
-    
+
     if isinstance(name, str):
         name = [name]
 
     env_loaded = session.state.env_loaded
     name_clear = [n for n in name if n not in env_loaded]
 
-    for env in name_clear: 
+    for env in name_clear:
         env_path = find_dotenv(filename=env)
-        if env_path:    #  and not session.env_loaded:
+        if env_path:  #  and not session.env_loaded:
             load_dotenv(env_path)
             print(f"Variables loaded from '{env}'")
             env_loaded.append(env)
 
     session.state.env_loaded = env_loaded
 
-    return 
-
+    return
 
 
 def ensure_dir(f_path: Union[str | Path]) -> Path:
-    
+
     p = Path(f_path)
 
     target_dir = p.parent if p.suffix else p
@@ -52,9 +51,8 @@ def shorten_path(path, n=3):
 def live_command_demo(cmd, log_name, mode="a"):
     placeholder = st.empty()
     start_time = datetime.now()
-    
+
     log_file = Path(f"{log_name}.log")
-   
 
     with open(log_file, mode, buffering=1) as log:
         # log.write("")
@@ -63,20 +61,14 @@ def live_command_demo(cmd, log_name, mode="a"):
         log.write("=" * 80 + "\n")
         log.flush()
 
-        process = subprocess.Popen(
-            cmd,
-            stdout=log, 
-            stderr=subprocess.STDOUT,
-            text=True
-            )
+        process = subprocess.Popen(cmd, stdout=log, stderr=subprocess.STDOUT, text=True)
 
     while True:
         if log_file.exists():
-            placeholder.code(log_file.read_text(), 
-                            language="text")
+            placeholder.code(log_file.read_text(), language="text")
         else:
             placeholder.info("Waiting for log output...")
-        
+
         exit_code = process.poll()
 
         if exit_code is not None:
@@ -94,9 +86,8 @@ def live_command_demo(cmd, log_name, mode="a"):
                 log.write("-" * 80 + "\n")
                 log.flush()
 
-                placeholder.code(log_file.read_text(), 
-                            language="text")
-                            
+                placeholder.code(log_file.read_text(), language="text")
+
             break
 
         time.sleep(1)
@@ -108,4 +99,3 @@ def clear_others(active_key):
     for key in ["presentation", "demo", "extra"]:
         if key != active_key and key in st.session_state:
             st.session_state[key] = None
-

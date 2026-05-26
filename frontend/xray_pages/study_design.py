@@ -1,12 +1,13 @@
-
 import streamlit as st
+
 
 def show():
     st.header("📊 Study design")
     st.write("Welcome to the COVID-19 X-Ray Classification app!")
 
     # ======== STYLE ADAPTION ========
-    st.markdown("""
+    st.markdown(
+        """
         <style>
         /* Breitere Popover-Fenster */
         [data-testid="stPopoverContent"] {
@@ -27,13 +28,14 @@ def show():
             padding: 0.8em;
         }
         </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     # ======== CONTENT ========
-    tab1, tab2 = st.tabs(["Preprocessing", 
-                          "Training design"])
+    tab1, tab2 = st.tabs(["Preprocessing", "Training design"])
 
-    with tab1:    
+    with tab1:
         st.subheader("Preprocessing")
         st.markdown("""
             Before feeding images into the ResNet50 model, we applied the preprocessing function `keras.applications.resnet50.preprocess_input()`. This function is
@@ -52,20 +54,23 @@ def show():
 
         st.divider()
         col1, col2 = st.columns(2)
-            
+
         with col1:
             st.markdown("""
                         #### *(A) Preparing the dataset*
                         """)
             with st.expander("**build_ds(??)**"):
-                st.code("""
+                st.code(
+                    """
 def build_ds:
     '''Builds a frozen ResNet50 model for initial hyperparameter tuning.'''
                 ??
                 Insert the correct function
                 ???
                         return model
-                    """, language="python")
+                    """,
+                    language="python",
+                )
 
         with col2:
             st.markdown("""
@@ -73,7 +78,8 @@ def build_ds:
                             """)
 
             with st.popover("setup_kt_model(config, mode)"):
-                st.code("""
+                st.code(
+                    """
                             def setup_kt_model(config, mode):
                                 '''Sets up a KerasTuner model and logging environment.'''
                                 from configuration.paths import TUNER, LOGS
@@ -127,8 +133,8 @@ def build_ds:
 
                                 return tuner, param_log, now
                             """
-                            # , language="python"
-                            )
+                    # , language="python"
+                )
             with st.popover("build_model_init(hp)"):
                 st.code("""
                     def build_model_init(hp):
@@ -151,10 +157,11 @@ def build_ds:
                             metrics=['accuracy']
                                 )
                         return model
-                        """) 
-            
+                        """)
+
             with st.popover("build_model_fine(hp)"):
-                st.markdown("""
+                st.markdown(
+                    """
                             '''
                             def build_model_fine(hp):
                                 '''Builds a fine-tunable ResNet50 model with loaded checkpoint support.'''
@@ -200,8 +207,8 @@ def build_ds:
                                 )
                                 return model
                             """
-                            # , language="python"
-                            )
+                    # , language="python"
+                )
     with tab2:
         st.subheader("Training Stages")
         st.markdown("""
@@ -241,7 +248,7 @@ def build_ds:
             - **Dropout rate: _??_**
             - **Initial learnings rate: _??_**
                 """)
-            
+
         with st.expander("Fine tuning - Part 1"):
             st.markdown("""
                 #### __Part 1: Increased Data, Still Frozen__ 
@@ -251,9 +258,10 @@ def build_ds:
                 using KerasTuner. 
                 [...]
                 """)
-        
+
         with st.expander("Fine tuning - Part 2"):
-            st.markdown("""
+            st.markdown(
+                """
                 #### __Part 2: Last 20 Layers Unfrozen__
 
                 We partially unfroze the ResNet50 model, training the top 20 layers in addition to the classification head. Callbacks for early stopping and reducing
@@ -266,11 +274,14 @@ def build_ds:
                 These layers are part of the deeper stages of the network and contribute significantly to high-level feature extraction, which is especially relevant
                 when adapting to domain-specific patterns in chest X-ray images.
                 [...]
-                """, unsafe_allow_html=True)
+                """,
+                unsafe_allow_html=True,
+            )
 
         with st.expander("Fine tuning - Part 3"):
-                #st.subheader("Fine tuning - Part 3 (Last 50 Layers Unfrozen)")
-            st.markdown("""
+            # st.subheader("Fine tuning - Part 3 (Last 50 Layers Unfrozen)")
+            st.markdown(
+                """
                 #### __Part 3: Last 50 Layers Unfrozen__
 
                 This experiment extended fine-tuning further by unfreezing the last 50 layers of the ResNet50 model. In this configuration, most of the deeper
@@ -284,11 +295,14 @@ def build_ds:
                 
                 This strategy allowed for more complex adaptation, though it increased the risk of overfitting and required careful regularization and learning rate
                 scheduling.
-                """, unsafe_allow_html=True)
-            
+                """,
+                unsafe_allow_html=True,
+            )
+
         with st.expander("Fine tuning - Part 4"):
-                # st.subheader("Fine tuning - Part 4 (Last 100 Layers Unfrozen)")
-            st.markdown("""
+            # st.subheader("Fine tuning - Part 4 (Last 100 Layers Unfrozen)")
+            st.markdown(
+                """
                 #### __Part 4: Last 100 Layers Unfrozen__
                 
                 To push the adaptation further, the final 100 layers were set to trainable. This allowed more than a half of all convolutional blocks from the
@@ -302,10 +316,13 @@ def build_ds:
                 - `conv5_block3_3_conv` _(previously unfrozen)_
                 
                 This deeper unfreezing made the model more flexible and expressive but also required longer training time and stronger regularization.
-                """, unsafe_allow_html=True)
+                """,
+                unsafe_allow_html=True,
+            )
 
         with st.expander("Fine tuning - Part 5"):
-            st.markdown("""
+            st.markdown(
+                """
                 #### __Part 5:  All layers unfrozen__
 
                 In this final fine-tuning variant, the entire ResNet50 model was unfrozen—including the early convolutional layers in the last 75 layers. This allows
@@ -322,8 +339,10 @@ def build_ds:
                 
                 While full unfreezing maximizes representational power, it also increases the risk of catastrophic forgetting of pretrained features and requires the
                 most careful training configuration among all strategies.
-                """, unsafe_allow_html=True)
-            
+                """,
+                unsafe_allow_html=True,
+            )
+
         with st.expander("Data Augmentation"):
             # st.subheader("Data Augmentation Experiments")
             st.markdown("""

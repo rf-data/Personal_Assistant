@@ -1,31 +1,88 @@
-## txt_md_helper.py
+## txt_file_helper.py
 # import
+import html
 from pathlib import Path
 
-
 # import src.utils.general_helper as gh
-import src.utils.path_helper as ph
+from src.utils.path_helper import ensure_dir, shorten_path
 
-def read_text_file(path):
 
-    txt_file = Path(path).read_text(encoding="utf-8")
+def read_text_file(f_path):
+
+    txt_file = Path(f_path).read_text(encoding="utf-8")
 
     return txt_file
 
 
+def read_html_file(f_path: str):
+
+    file = read_text_file(f_path)
+
+    # unicode escapes decoden
+    # try:
+    #     file = codecs.decode(file, "unicode_escape")
+    # except Exception:
+    #     pass
+    file = file.replace('\\"', '"')
+    # file = file.replace('\\n', '\n')
+    # file = re.sub(r'\\(?!n|t|"|u)', '', file)
+
+    # HTML entities decoden (&amp; etc.)
+    file = html.unescape(file)
+
+    # print(repr(file[:5000]))
+    # sys.exit()
+
+    return file
+
+
+# def _flat_sort_nb_elements(extract):
+#     cells = extract.get("elements")
+#     cells_sorted = sorted(
+#                         cells,
+#                         key=lambda c: c.get("meta",
+#                                             {}).get("cell_id",
+#                                                     0)
+#                                         #             ,
+#                                         # c.get("elements",
+#                                         #       {}).get("meta",
+#                                         #               {}).get("element_id",
+#                                         #                       0)
+#                                         )
+
+
+#     elements_flat = []
+#     for cell in cells_sorted:
+#         cell_type = cell.get("meta", {}).get("cell_type")
+
+#         if cell_type == "code_block":
+#             elements_flat.extend(cell.get("elements"))
+
+#         elif cell_type == "md_block":
+#             elements_sorted = sorted(cell.get("elements"),
+#                                      key=lambda e: e.get("meta",
+#                                                         {}).get("element_id",
+#                                                                 0)
+#                                     )
+#             for element in elements_sorted:
+#                 elements_flat.extend(element.get("elements"))
+#         else:
+#             print("Invalid 'cell_type' found:", cell_type)
+
+
+#     return elements_flat
+
 
 def save_text_file(data, file_name, folder, suffix="md"):
     from src.core.memory import session
+
     logger = session.logger
 
-    folder= ph.ensure_dir(folder)
+    folder = ensure_dir(folder)
     f_path = Path(f"{folder}/{file_name}.{suffix}")
-    with open(f_path, "w", 
-                encoding="utf-8", 
-                newline="\n") as f:
+    with open(f_path, "w", encoding="utf-8", newline="\n") as f:
         f.write(data)
 
-    logger.info("File saved as %s",
-                ph.shorten_path(f_path))
+    logger.info("File saved as %s", shorten_path(f_path))
 
-    return 
+    return
