@@ -1,8 +1,8 @@
 import logging
 from dataclasses import dataclass, field
 
-from src.core.memory import session_state
-from src.model_parsing.data_classes_parsing import LineGroup, TextBlock
+from src.core.memory import app_session
+# from gmp_compliance.src.model_parsing.classes_html_parsing import LineGroup, TextBlock
 from src.model_tools.feature_enricher import FeatureEnricher
 
 

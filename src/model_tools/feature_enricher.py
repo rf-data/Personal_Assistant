@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 # from tiktoken import encoding_for_model
-from src.model_parsing.data_classes_parsing import (
+from src.model_parsing.base_classes_parsing import (
     Line,
     LineGroup,
     LineSplit,
@@ -30,12 +30,7 @@ from src.model_parsing.data_classes_parsing import (
 
 @dataclass
 class FeatureEnricher:
-    encoder: Callable = field(default=Callable)  #  encoding_for_model
-    page_height: int = field(default_factory=int)
-    page_width: int = field(default_factory=int)
-    text_prep_config: dict = field(default_factory=dict)
-    logger = logging.getLogger(__name__)
-
+    
     # structure_dict = {
     #             "line" : Line,
     #              "line_group": LineGroup,
@@ -43,14 +38,21 @@ class FeatureEnricher:
 
     structure_dict = {"line": Line, "line_group": LineGroup, "line_split": LineSplit}
 
-    def __post_init__(self):
-        from src.core.memory import session_state
+    def __init__(self, 
+                 run_context,
+                 page_height=0, 
+                 page_width=0):
+        self.page_height = page_height
+        self.page_width = page_width
+        
+        self.logger = run_context.logger
 
-        self.logger = session_state.logger
+        self.encoder = run_context.encoder
 
-        self.encoder = session_state.encoder
+        self.text_prep_config = run_context.run_settings
 
         return
+    
 
     def enrich_pages(
         self, pages: list[PageExtract | PDFPageExtract]

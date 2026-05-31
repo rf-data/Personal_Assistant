@@ -5,7 +5,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any
 
-from src.model_parsing.data_classes_parsing import DocumentExtract, LineGroup
+# from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract, LineGroup
 
 # import pprint
 # import sys

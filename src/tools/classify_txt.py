@@ -8,7 +8,7 @@
 # from src.core.logger import create_logger
 # from src.core.feature_enricher import FeatureEnricher
 import src.utils.general_helper as gh
-from src.model_parsing.data_classes_parsing import DocumentExtract
+# from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract
 from src.model_tools.text_classifier import TXTClassifier
 
 # import src.utils.dict_helper as dh

@@ -3,6 +3,8 @@
 from typing import (
     Annotated,  #
     Literal,
+    List,
+    Dict
 )
 
 from pydantic import BaseModel, Field
@@ -56,29 +58,29 @@ class BaseMeta(BaseModel):
 
 
 class ElementMeta(BaseMeta):
-    element_type: str = Field(default_factory=str)
-    token_id: int | list[int] = Field(default_factory=int)
-    element_id: int = Field(default_factory=int)
+    # element_type: str = Field(default_factory=str)
+    # token_id: int | list[int] = Field(default_factory=int)
+    # element_id: int = Field(default_factory=int)
     context: dict = Field(default_factory=dict)
 
 
 class HeadingMeta(ElementMeta):
-    element_type: str = "heading"
+    # element_type: str = "heading"
     level: int = Field(default_factory=int)
 
 
 class ListMeta(ElementMeta):
-    element_type: str = "list"
+    # element_type: str = "list"
     list_type: str = Field(default_factory=str)
 
 
 class CodeMeta(ElementMeta):
-    element_type: str = "code"
+    # element_type: str = "code"
     language: str = Field(default_factory=str)
 
 
 class ImageMeta(ElementMeta):
-    element_type: str = "image"
+    # element_type: str = "image"
     src: str = Field(default_factory=str)
     downloadable: bool | None = Field(default=None)
     alt: str = Field(default_factory=str)
@@ -89,8 +91,6 @@ class ImageMeta(ElementMeta):
 
 
 class CellMeta(BaseMeta):
-    cell_type: Literal["code_block", "md_block", ""] = ""  # Field(default=tr)
-    cell_id: int = Field(default_factory=int)
     language: str | list[str] = Field(default_factory=str)
 
 
@@ -126,8 +126,8 @@ class DocumentMeta(BaseMeta):
 class LineMeta(BaseMeta):
     column: int | None = Field(default=None)
     line_type: str | None = Field(default_factory=str)
-    text_body_id: int | None = Field(default=None)
-    bullet_id: int | None = Field(default=None)
+    # text_body_id: int | None = Field(default=None)
+    # bullet_id: int | None = Field(default=None)
 
     x_start_min: float = Field(default_factory=float)
     y_start_min: float = Field(default_factory=float)
@@ -159,7 +159,7 @@ class TextBlockMeta(LineMeta):
 
 
 class BulletMeta(BaseModel):
-    bullet_id: int = Field(default_factory=int)
+    # bullet_id: int = Field(default_factory=int)
     char: str = Field(default_factory=str)
     bbox: list = Field(default_factory=list)
     origin: str = Field(default_factory=str)
@@ -177,7 +177,7 @@ class PageMeta(BaseModel):
 
 
 class DrawingMeta(BaseModel):
-    drawing_id: int = Field(default_factory=int)
+    # drawing_id: int = Field(default_factory=int)
     fill: str = Field(default_factory=str)
     color: str = Field(default_factory=str)
     width: float = Field(default_factory=float)
@@ -187,7 +187,7 @@ class DrawingMeta(BaseModel):
 
 
 class WikiPageMeta(BaseModel):
-    page_id: int = Field(default_factory=int)
+    # page_id: int = Field(default_factory=int)
     wordcount: int = Field(default_factory=int)
     timestamp: str = Field(default_factory=str)
 
@@ -203,8 +203,11 @@ class WikiPageMeta(BaseModel):
 # LEAF_ELEMENTS
 # -------------------------
 class BaseLeaf(BaseModel):
+    leaf_id: int|None = None 
     leaf_type: str
     text: str = Field(default_factory=str)
+    meta: ElementMeta
+    markups: List[dict] = Field(default_factory=list)
 
 
 class TextNode(BaseLeaf):
@@ -221,10 +224,16 @@ class LinkNode(TextNode):
     href: str
 
 
+class LinkPreviewNode(TextNode):
+    leaf_type: Literal["link_preview_node"] = "link_preview_node"
+
+
 class ImageNode(TextNode):
     leaf_type: Literal["image_node"] = "image_node"
-    src: str
-    alt: str
+    src: str = ""
+    alt: str = ""
+    meta: ImageMeta
+    meta_from_html: Dict = {}
 
 
 class CiteNode(TextNode):
@@ -234,6 +243,10 @@ class CiteNode(TextNode):
 
 class BulletNode(TextNode):
     leaf_type: Literal["bullet_node"] = "bullet_node"
+
+
+class BlockQuoteNode(TextNode):
+    leaf_type: Literal["block_quote"] = "block_quote" 
 
 
 class OtherNode(TextNode):
@@ -258,11 +271,6 @@ class Bullet(BaseLeaf):
 class Drawing(BaseLeaf):
     leaf_type: Literal["drawing"] = "drawing"
     meta: DrawingMeta | None = Field(default_factory=DrawingMeta)
-
-
-class Image(BaseLeaf):
-    leaf_type: Literal["image"] = "image"
-    meta: ImageMeta | None = Field(default_factory=ImageMeta)
 
 
 class ResultItem(BaseModel):
@@ -300,6 +308,7 @@ class ResultItem(BaseModel):
 # -------------------------
 class BaseContainer(BaseModel):
     container_type: str
+    container_id: int|None = None
     text: str = Field(default_factory=str)
     elements: list[Word] = Field(default_factory=list)
     meta: BaseMeta = Field(default_factory=BaseMeta)
@@ -333,9 +342,18 @@ class TextLine(BaseContainer):
 class Element(BaseContainer):
     container_type: Literal["element"] = "element"
     meta: ElementMeta | None = Field(default_factory=ElementMeta)
-    elements: list[Word | Image] = Field(default_factory=list)
+    elements: list[Word] = Field(default_factory=list)
+    #  | Image
     inline_elements: list = Field(default_factory=list)
     # language: str  = Field(default_factory=str)
+
+
+class Paragraph(Element):
+    container_type: Literal["paragraph"] = "paragraph"
+
+
+class BulletList(Element):
+    container_type: Literal["bullet_list"] = "bullet_list"
 
 
 class Heading(Element):
@@ -343,6 +361,14 @@ class Heading(Element):
     meta: HeadingMeta | None = Field(default_factory=HeadingMeta)
 
 
+class Image(Element):
+    container_type: Literal["image"] = "image"
+    meta: ImageMeta | None = Field(default_factory=ImageMeta)
+
+
+class Link(Element):
+    container_type: Literal["link"] = "link"
+    extern: bool = Field(default=False)
 # class Paragraph(Element):
 #     container_type: Literal["paragraph"] = "paragraph"
 #     meta: Optional[HeadingMeta]  = Field(default_factory=HeadingMeta)
@@ -363,6 +389,8 @@ class Graphics(BaseContainer):
 
 class Cell(BaseContainer):
     container_type: Literal["cell"] = "cell"
+    cell_type: Literal["code_block", "md_block", ""] = ""  # Field(default=tr)
+    cell_id: int = Field(default_factory=int)
     meta: CellMeta = Field(default_factory=CellMeta)
     elements: list[Word | Element] = Field(default_factory=list)
     # language: str  = Field(default_factory=str)
@@ -413,12 +441,18 @@ class SearchResult(BaseContainer):
 
 
 class DocumentExtract(BaseModel):
-    doc_type: str  #  = "txt",
+    doc_type: Literal["",
+                      "md",
+                      "html",
+                      "html_apollo",
+                      "pdf",
+                      "txt",
+                      "json_nb"] = Field(default="")
     doc_name: str
     text: str  #  = text,
-    elements: list = Field(default_factory=list)
+    elements: List = Field(default_factory=list)
     meta: DocumentMeta = Field(default_factory=DocumentMeta)
-    non_text: list = Field(default_factory=list)
+    non_text: List = Field(default_factory=list)
     # foot_notes: List  = Field(default_factory=list)
     # headings: List  = Field(default_factory=list)
 
@@ -447,7 +481,8 @@ class PDFPageExtract(PageExtract):
     text_bodies: list = Field(default_factory=list)
 
 
-line_types = Annotated[LineSplit | Line | LineGroup, Field(discriminator="meta_type")]
+line_types = Annotated[LineSplit | Line | LineGroup, 
+                       Field(discriminator="meta_type")]
 
 container_types = Annotated[
     Document | Line | LineSplit | Element | Heading | TextBlock | Code,

@@ -6,10 +6,10 @@
 # from datetime import datetime
 # from tiktoken import encoding_for_model
 
-from src.core.memory import session_state
+from src.core.memory import app_session
 
 # from src.core.logger import create_logger
-from src.model_parsing.data_classes_parsing import PDFPageExtract
+# from gmp_compliance.src.model_parsing.classes_html_parsing import PDFPageExtract
 
 # from gmp_compliance.src.tools.__dev__extraction import extract_text_per_page
 from src.model_tools.pdf_extractor import PDFCleanExtractor
@@ -44,7 +44,7 @@ def extract_pdf_file(
     # load env variables and config
     # gh.load_env_vars()
 
-    logger = session_state.logger
+    logger = app_session.logger
     logger.info("Starting extracting PDF-FILE.")
 
     # name_short = Path(f_path).name.split(".")[0]

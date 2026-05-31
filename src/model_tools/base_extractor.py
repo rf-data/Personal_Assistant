@@ -1,19 +1,32 @@
 ## base_extractor.py
 # import
-import logging
+# import logging
 import re
 import unicodedata
-from dataclasses import dataclass, field
+from dataclasses import dataclass   # , field
 
 from src.model_tools.feature_enricher import FeatureEnricher
+from src.core.memory import RunContext
 
 
 @dataclass
 class BaseExtractor:
-    enricher: FeatureEnricher = field(default_factory=FeatureEnricher())
-    extract_config: dict = field(default_factory=dict)
-    logger = logging.getLogger(__name__)
-    doc_name: str = field(default_factory=str)
+    # enricher: FeatureEnricher = field(default_factory=FeatureEnricher())
+    # extract_config: dict = field(default_factory=dict)
+    # logger = logging.getLogger(__name__)
+    # doc_name: str = field(default_factory=str)
+
+    def __init__(self, 
+                 enricher: FeatureEnricher, 
+                 run_context: RunContext):
+        self.enricher = enricher
+
+        self.extract_config = run_context.run_settings
+        self.logger = run_context.logger
+        
+
+        return 
+
 
     def extract(self):
 

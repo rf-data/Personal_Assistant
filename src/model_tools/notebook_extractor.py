@@ -14,15 +14,16 @@ from pathlib import Path
 import markdown
 from bs4 import BeautifulSoup as bs
 
-from src.model_parsing.data_classes_parsing import (
-    Cell,
-    CellMeta,
-    Document,
-    DocumentExtract,
-    Word,
-)
+# from gmp_compliance.src.model_parsing.classes_html_parsing import (
+#     Cell,
+#     CellMeta,
+#     Document,
+#     DocumentExtract,
+#     Word,
+# )
 from src.model_tools.html_extractor import HTMLCleanExtractor
 
+from src.core.memory import RunContext
 # Element, ElementMeta,
 # from src.utils.text_file_helper import read_html_file
 # from src.utils.path_helper import shorten_path
@@ -31,15 +32,20 @@ from src.utils.dict_helper import load_dict
 
 @dataclass
 class NoteBookCleanExtractor(HTMLCleanExtractor):
+
     nb_language: str = field(default_factory=str)
+    
+    def __init__(self, run_context: RunContext):
+
+        self.logger = run_context.logger
+        self.parser = run_context.run_settings.json_nb.parser
+
+        return 
+
 
     def extract(self, f_path: str = None):
-        from src.core.memory import session
 
-        self.logger = session.logger
         self.logger.info("Starting extraction by NotebookCleanExtractor")
-
-        self.relevant_tags = self.extract_config["extraction_tags"]
 
         nb = load_dict(f_path)
 
@@ -76,8 +82,10 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
 
         text_clean = "\n\n".join([cell.text for cell in cells_clean])
         doc_info = self.enricher._add_basic_metadata(
-            text_clean, cells_clean, Document()
-        )
+                                            text_clean, 
+                                            cells_clean, 
+                                            Document()
+                                        )
 
         return DocumentExtract(
             doc_type="nb_json",
@@ -113,15 +121,17 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
         return cell_new
 
     def _prepare_md_cell(self, cell):
-
-        parser = "html.parser"  # "lxml"
+         # "lxml"
 
         # md = MarkdownIt()
 
         html = markdown.markdown(
-            cell.text, extensions=["fenced_code", "tables", "nl2br"]
+            cell.text, 
+            extensions=["fenced_code", 
+                        "tables", 
+                        "nl2br"]
         )
-        soup = bs(html, parser)
+        soup = bs(html, self.parser)
 
         # elements = self._differentiate_text(tokens)
 

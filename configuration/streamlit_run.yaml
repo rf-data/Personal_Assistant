@@ -1,0 +1,64 @@
+# ------------------------------
+# GENERAL
+# ------------------------------
+# general_args:
+name_log: streamlit_demo
+name_logfile: streamlit_demo
+llm_model: gpt-4o-mini
+
+url_path: 
+file_names:
+
+# HTML
+html:
+  parser: html.parser
+  assemble:   # Literal["txt", "md"]
+  scrape_images: True
+  save: 
+    - info
+    - html
+    - md
+
+
+# Jupyter Notebooks
+json_nb:
+  assemble:     # Literal["txt", "md"]
+
+  
+# PDF
+pdf:
+  extract_source: 
+      - raw_dict
+      - words
+  extraction_model: pymupdf
+
+  extract_text_info: True
+  extract_grafics: False
+  
+  assemble:     # Literal["txt", "md"]
+  percentiles: 
+    - 0.01
+    - 0.05
+    - 0.10
+    - 0.25
+    - 0.50
+    - 0.75
+    - 0.90
+    - 0.95
+    - 0.99
+
+
+# WIKIPEDIA_QUERIES
+wiki:
+  parser: html.parser
+  query:      # Partial_least # turing
+  query_time:     # 2026-05-18_13-08-12
+  article_to_parse:
+    # - 314204 
+  language: en        # Literal["en", "de"]
+  max_retries: 3
+  assemble:   # Literal["txt", "md"]
+  save: 
+    - info
+    - html
+    - md

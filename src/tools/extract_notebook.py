@@ -5,7 +5,7 @@
 from pathlib import Path
 
 # # from src.core.feature_enricher import FeatureEnricher
-from src.model_parsing.data_classes_parsing import DocumentExtract
+# from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract
 
 # # from datetime import datetime
 # # import pprint

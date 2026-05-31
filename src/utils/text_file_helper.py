@@ -1,39 +1,16 @@
 ## txt_file_helper.py
 # import
-import html
 from pathlib import Path
 
 # import src.utils.general_helper as gh
 from src.utils.path_helper import ensure_dir, shorten_path
-
+from src.core.memory import app_session
 
 def read_text_file(f_path):
 
     txt_file = Path(f_path).read_text(encoding="utf-8")
 
     return txt_file
-
-
-def read_html_file(f_path: str):
-
-    file = read_text_file(f_path)
-
-    # unicode escapes decoden
-    # try:
-    #     file = codecs.decode(file, "unicode_escape")
-    # except Exception:
-    #     pass
-    file = file.replace('\\"', '"')
-    # file = file.replace('\\n', '\n')
-    # file = re.sub(r'\\(?!n|t|"|u)', '', file)
-
-    # HTML entities decoden (&amp; etc.)
-    file = html.unescape(file)
-
-    # print(repr(file[:5000]))
-    # sys.exit()
-
-    return file
 
 
 # def _flat_sort_nb_elements(extract):
@@ -74,9 +51,8 @@ def read_html_file(f_path: str):
 
 
 def save_text_file(data, file_name, folder, suffix="md"):
-    from src.core.memory import session
 
-    logger = session.logger
+    logger = app_session.logger
 
     folder = ensure_dir(folder)
     f_path = Path(f"{folder}/{file_name}.{suffix}")

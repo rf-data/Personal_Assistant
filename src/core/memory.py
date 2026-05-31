@@ -2,55 +2,61 @@
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Any, ClassVar
+from typing import Any, Dict, ClassVar, Literal, List
+from dataclasses import dataclass, field
 
-# from dataclasses import dataclass, field
-# from src.core.pdf_extractor import PDFCleanExtractor
-# # from gmp_compliance.src.core._dev_text_structure_builder import TextStructureBuilder
-# from src.core.feature_enricher import FeatureEnricher
-# from src.core.pdf_classifier import PDFClassifier
-# from src.core.text_classifier import TXTClassifier
-# # from src.core._dev_block_classifier import BlockClassifier
-# from src.core.pdf_cleaner import PDFCleaner
-# from src.core.document_assembler import DocumentAssembler
 from tiktoken import encoding_for_model
 
-# import json
 
-# import utils.general_helper as ph
+from src.core.config import (RunSettings, 
+                             RunSettings_all, 
+                             GeneralSettings)
 
-# class SessionState(BaseModel):
-#     timestamp: datetime|str|None = Field(default=None)
-#     env_loaded: list[str] = Field(default_factory=list)
-#     suffix: str = Field(default_factory=str)
-#     save_folder: str | Path = Field(default_factory=str)
-#     save_name: str | Path = Field(default_factory=str)
-
-
-class Session:
+@dataclass
+class AppSession:
     encoder = encoding_for_model
-    env_loaded: list[str] = []
-    general_config: dict = {}
+    env_loaded: list[str] = field(default_factory=list)
+    general_settings: GeneralSettings = field(default_factory=GeneralSettings)
     logger: ClassVar = logging.getLogger(__name__)
-    page_id: int | None = None
-    run_config: dict = {}
-    text_type: str = ""
-    save_folder: str | Path = ""
-    save_name: str | Path = ""
-    suffix: str = ""
-    timestamp: datetime | str | None = None
+    run_settings: RunSettings = field(default_factory=RunSettings)
+    # timestamp: str = field(default_factory=str)
 
-    # ConfigDict(arbitrary_types_allowed=True)
-    # extractor: Optional[PDFCleanExtractor]
-    # builder: Optional[TextStructureBuilder]
-    # enricher: Optional[FeatureEnricher]      # field(default_factory=)
-    # cleaner: Optional[PDFCleaner]
-    # classifier: Optional[PDFClassifier | TXTClassifier]
-    # assembler: Optional[DocumentAssembler]
+    # frontend_config: FrontendConfig
+
+app_session = AppSession()
 
 
-session_state = Session()
+@dataclass
+class RunContext:    
+    encoder = encoding_for_model
+    general_settings: GeneralSettings = field(default_factory=GeneralSettings)
+    run_settings: RunSettings_all = field(default_factory=RunSettings_all)
+    text_type: Literal["txt", "md", "pdf", 
+                       "json_nb", "wiki",
+                       "html",
+                       "url", None] = field(default=None)
+    save_folder: str | Path = field(default_factory=str)
+    save_name: str | Path = field(default_factory=str)
+    timestamp: datetime | str | None = field(default=None)
+    run_id: str = field(default_factory=str)
+    logger: ClassVar = logging.getLogger(__name__)
+    header: Dict = field(default_factory=dict)
+    
+    # TO-DO: replace 'suffix' with text_type + suffix_dict
+    # suffix: str = field(default_factory=str)
 
+    # query: str = field(default_factory=str)
+    # file_path: str | List[str] = field(default_factory=str)
+    # url: str | List[str] = field(default_factory=str)
+    # language: str = field(default_factory=str)
+    # save: List[
+    #         Literal[
+    #             True, 
+    #             False, 
+    #             "info", 
+    #             "md", 
+    #             "html"]
+    #         ] = field(default_factory=list)
 
 class SimpleMemory:
     def __init__(self):
@@ -64,6 +70,12 @@ class SimpleMemory:
 
     def keys(self):
         return list(self._store.keys())
+
+simple_memory = SimpleMemory()
+
+
+
+
 
     # as lazy import to prevent circular imports
     # import src.utils.path_helper as ph

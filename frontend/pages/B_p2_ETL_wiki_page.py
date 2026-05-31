@@ -1,18 +1,7 @@
-##
+## B_p2_ETL_wiki_page
 # imports 
 import streamlit as st
 from datetime import datetime
-# from pathlib import Path
-# import os
-# # import shutil
-# import pyinputplus as pyip
-# from tiktoken import encoding_for_model
-# import fitz # pymupdf
-
-from src.core.memory import session_state
-# from src.run_text_extraction import run_text_file_extraction
-# from src.utils.general_helper import load_env_vars
-# import src.utils.path_helper as ph
 
 
 def show():
@@ -51,8 +40,8 @@ def show():
                                        )
 
 
-event_time = st.datetime_input("Schedule your event", value=None)
-st.write("Event scheduled for", event_time)
+    event_time = st.datetime_input("Schedule your event", value=None)
+    st.write("Event scheduled for", event_time)
 
     if page_id and query and query_time:
         st.error("Provide either Page_ID(s) or query + query_time")
@@ -104,7 +93,7 @@ st.write("Event scheduled for", event_time)
                     index=None
                 )
     
-    session_state.run_config = run_config
+    # session_state.run_config = run_config
 
     st.divider()
 

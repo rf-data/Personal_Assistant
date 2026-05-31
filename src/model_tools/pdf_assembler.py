@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.model_parsing.data_classes_parsing import CollectionItem, PDFPageExtract
+# from gmp_compliance.src.model_parsing.classes_html_parsing import CollectionItem, PDFPageExtract
 from src.model_tools.base_assembler import BaseAssembler
 from src.utils.dict_helper import save_dict
 from src.utils.text_file_helper import save_text_file
@@ -19,6 +19,8 @@ from src.utils.text_file_helper import save_text_file
 
 @dataclass
 class PDFAssembler(BaseAssembler):
+
+
     def collect(self, page_info: PDFPageExtract) -> None:
 
         headings = page_info.headings
@@ -136,7 +138,7 @@ class PDFAssembler(BaseAssembler):
 
     #         return
 
-    def assemble_document(self, save: bool = False) -> dict:
+    def assemble_document(self) -> dict:
         # percents = self.assemble_config["percentiles"]
 
         f_infos = self.infos
@@ -262,7 +264,7 @@ class PDFAssembler(BaseAssembler):
         #                         ))
         self.logger.info("DF_BLOCK HEAD:\n%s", df_block.head(5))
 
-        if save:
+        if self.save and "info" in str(self.save):
             dict_path = f"{self.save_folder}/{self.save_name}_info"
 
             save_dict(page_info, Path(dict_path))

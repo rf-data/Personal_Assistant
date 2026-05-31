@@ -16,22 +16,23 @@ import pandas as pd
 class DocumentAssembler:
     # gh.load_env_vars()
     # data_processed = os.getenv("DATA")
-    assemble_config: dict = field(default_factory=dict)
     infos: list = field(default_factory=list)
     doc_name: str = field(default_factory=str)
-    save_folder: str = field(default_factory=str)
-    logger = logging.getLogger(__name__)
 
     last_heading: list = field(default_factory=list)
-    # pages: List = field(default_factory=list)
-    # text_bodies: List = field(default_factory=list)
-    # headings: List = field(default_factory=list)
-    # foot_notes: List = field(default_factory=list)
+
+
+    def __init__(self, run_context):
+
+        self.logger = run_context.logger
+
+        self.save_folder = run_context.save_folder
+        self.assemble_config = run_context.run_settings
+        
+        return 
+
 
     def collect(self, page_info, f_name):
-        from src.core.memory import session
-
-        self.logger = session.logger
 
         (timestamp, _, _, gmp_part, chapter, _, page, _) = f_name.split("_")
 

@@ -7,11 +7,11 @@
 # import pandas as pd
 # from datetime import datetime
 # from tiktoken import encoding_for_model
-from src.core.memory import session_state
+from src.core.memory import app_session
 
 # from src.core.logger import create_logger
 # from src.core.document_assembler import DocumentAssembler
-from src.model_parsing.data_classes_parsing import PDFPageExtract
+# from gmp_compliance.src.model_parsing.classes_html_parsing import PDFPageExtract
 from src.model_tools.pdf_classifier import PDFClassifier
 from src.model_tools.pdf_cleaner import PDFCleaner
 from src.model_tools.pdf_merger import PDFMerger

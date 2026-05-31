@@ -12,11 +12,11 @@ import subprocess
 from collections.abc import Callable, Iterable
 from datetime import datetime
 from pathlib import Path
-
 from dotenv import find_dotenv, load_dotenv
 
-from src.core.memory import session_state
-from src.utils.path_helper import ensure_dir
+from src.core.memory import app_session
+from src.utils.path_helper import ensure_dir    # , shorten_path
+
 
 
 def make_cache_key(url: str, params: dict) -> str:
@@ -49,7 +49,7 @@ def save_to_cache(key: str, folder: str | Path, data: dict):
     with open(fn, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    logger = session_state.logger
+    logger = app_session.logger
     logger.info("Saved cached data (key=%s).", key)
 
     return
@@ -64,7 +64,7 @@ def load_from_cache(key: str, folder: str | Path):
     ensure_dir(fn)
 
     if fn.exists():
-        logger = session_state.logger
+        logger = app_session.logger
         logger.info("Loaded cached data (key=%s).", key)
 
         with open(fn) as f:
@@ -186,7 +186,7 @@ def load_env_vars(name: list | str = ".env"):
     if isinstance(name, str):
         name = [name]
 
-    env_loaded = session_state.env_loaded
+    env_loaded = app_session.env_loaded
     name_clear = [n for n in name if n not in env_loaded]
 
     for env in name_clear:
@@ -196,7 +196,7 @@ def load_env_vars(name: list | str = ".env"):
             print(f"Variables loaded from '{env}'")
             env_loaded.append(env)
 
-    session_state.env_loaded = env_loaded
+    app_session.env_loaded = env_loaded
 
     return
 

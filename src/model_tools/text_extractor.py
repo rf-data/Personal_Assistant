@@ -11,16 +11,16 @@ from pathlib import Path
 from markdown_it import MarkdownIt
 
 # from tiktoken import encoding_for_model
-from src.model_parsing.data_classes_parsing import (
-    Document,
-    DocumentExtract,
-    Element,
-    ElementMeta,
-    TextBlock,
-    TextLine,
-    TextWordMeta,
-    Word,
-)
+# from gmp_compliance.src.model_parsing.classes_html_parsing import (
+#     Document,
+#     DocumentExtract,
+#     Element,
+#     ElementMeta,
+#     TextBlock,
+#     TextLine,
+#     TextWordMeta,
+#     Word,
+# )
 from src.model_tools.base_extractor import BaseExtractor
 from src.utils.text_file_helper import read_text_file
 

@@ -6,9 +6,9 @@
 llm_model: gpt-4o-mini
 name_log: extract_file
 name_logfile: extract_file
-timestamp: 2026-05-22_11-01-57 
-url:
-  # - 
+# timestamp: 2026-05-22_11-01-57 
+url_path:
+  - https://medium.com/algomart/how-to-structure-python-projects-in-2026-without-regretting-it-later-dcf388a108c6
 file_names: 
   # - GMP_part0_Intro.pdf
     # - DockerDeepDive.pdf
@@ -37,7 +37,8 @@ file_names:
 
 # HTML
 html:
-  assemble_as_md: True
+  parser: html.parser
+  assemble: # True
   scrape_images: True
   save: 
     - info
@@ -46,6 +47,7 @@ html:
 
 # WIKIPEDIA_QUERIES
 wiki:
+  parser: html.parser
   query: Partial_least # turing
   query_time: 2026-05-18_13-08-12
   article_to_parse:
@@ -65,4 +67,18 @@ pdf:
       - raw_dict
       - words
   extraction_model: pymupdf
+
+  extract_text_info: True
+  extract_grafics: False
   
+  assemble_as_md: True
+  percentiles: 
+    - 0.01
+    - 0.05
+    - 0.10
+    - 0.25
+    - 0.50
+    - 0.75
+    - 0.90
+    - 0.95
+    - 0.99

@@ -1,0 +1,64 @@
+# ------------------------------
+# GENERAL
+# ------------------------------
+# general_args:
+#   name_log: streamlit_demo
+#   name_logfile: streamlit_demo
+#   llm_model: gpt-4o-mini
+  # timestamp: 2026-05-04_09-00-51 # 2026-04-30_20-54-3
+
+
+html:
+  extraction_tags:
+  - h1
+  - h2
+  - h3
+  - p
+  - ul
+  - ol
+  - pre
+  - table
+  - img
+
+
+json_nb:  # _extraction:
+  extraction_tags:
+  - h1
+  - h2
+  - h3
+  - p
+  - ul
+  - ol
+  - pre
+  - table
+  - img
+
+
+pdf:
+  y_gap_words: 3                   # 3-8
+  x_gap_words: 20 
+  y_gap_words: 3                   # 3-8
+  x_gap_words: 20 
+
+  width_thresh: 0.45 
+  y_gap_line: 20                
+  up_down_thresh: 0.08
+  left_right_thresh: 0.2
+  heading_threshold: 3
+  foot_note_thresh: 3
+  start_tol: 5
+
+
+wiki:
+  header_referer: https://en.wikipedia.org/
+  header_accept: 'header_accept: image/svg+xml,image/*,*/*'
+  extraction_tags:
+  - h1
+  - h2
+  - h3
+  - p
+  - ul
+  - ol
+  - pre
+  - table
+  - img

@@ -2,9 +2,11 @@
 # GENERAL_CONFIGURATION "EXTRACT_TEXT"
 # -------------------------------------
 
-wiki_extraction:
-  llm_model: gpt-4o-mini
-  parser: html.parser
+wiki:
+  # _extraction:
+  header_referer: https://en.wikipedia.org/
+  header_accept: 'header_accept: image/svg+xml,image/*,*/*'
+  # llm_model: gpt-4o-mini
   extraction_tags:
   - h1
   - h2
@@ -16,45 +18,13 @@ wiki_extraction:
   - table
   - img
 
-pdf_extraction:
+pdf:  # _extraction:
   # extract_graphics: True
   # extract_images: True
   
   y_gap_words: 3                   # 3-8
   x_gap_words: 20 
 
-
-json_nb_extraction:
-  parser: html.parser
-  extraction_tags:
-  - h1
-  - h2
-  - h3
-  - p
-  - ul
-  - ol
-  - pre
-  - table
-  - img
-
-
-html_extraction:
-  parser: html.parser
-  extraction_tags:
-  - h1
-  - h2
-  - h3
-  - p
-  - ul
-  - ol
-  - pre
-  - table
-  - img
-
-  
-pdf_text_preparation:
-  extract_text_info: True
-  extract_grafics: False
   width_thresh: 0.45 
   # start_tol: 80 
   # start_tol_rel: 0.2
@@ -67,20 +37,61 @@ pdf_text_preparation:
   start_tol: 5
 
 
-pdf_assembly:
-  assemble_as_md: True
-  # file_folder: classified
-  # file_timestamp: 2026-05-04_09-00-51
-  percentiles: 
-    - 0.01
-    - 0.05
-    - 0.10
-    - 0.25
-    - 0.50
-    - 0.75
-    - 0.90
-    - 0.95
-    - 0.99
+json_nb:  # _extraction:
+  extraction_tags:
+  - h1
+  - h2
+  - h3
+  - p
+  - ul
+  - ol
+  - pre
+  - table
+  - img
+
+
+html: # _extraction:
+  extraction_tags:
+  - h1
+  - h2
+  - h3
+  - p
+  - ul
+  - ol
+  - pre
+  - table
+  - img
+
+  
+# pdf_text_preparation:
+#   extract_text_info: True
+#   extract_grafics: False
+#   width_thresh: 0.45 
+#   # start_tol: 80 
+#   # start_tol_rel: 0.2
+#   y_gap_line: 20                   # 10-25
+#   # left_right_tolerance: 0.05
+#   up_down_thresh: 0.08
+#   left_right_thresh: 0.2
+#   heading_threshold: 3
+#   foot_note_thresh: 3
+#   start_tol: 5
+
+
+# pdf_assembly:
+#   assemble_as_md: True
+#   # file_folder: classified
+#   # file_timestamp: 2026-05-04_09-00-51
+#   percentiles: 
+#     - 0.01
+#     - 0.05
+#     - 0.10
+#     - 0.25
+#     - 0.50
+#     - 0.75
+#     - 0.90
+#     - 0.95
+#     - 0.99
 
 # chunking:
 #   max_tokens: 80

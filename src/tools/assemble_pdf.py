@@ -5,7 +5,7 @@
 # from collections import defaultdict
 
 
-from src.model_parsing.data_classes_parsing import PDFPageExtract
+# from gmp_compliance.src.model_parsing.classes_html_parsing import PDFPageExtract
 
 # from src.core.logger import create_logger
 from src.model_tools.pdf_assembler import PDFAssembler

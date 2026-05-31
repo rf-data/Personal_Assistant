@@ -1,0 +1,140 @@
+services:
+  alert_manager:
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yaml"
+    container_name: alertmanager
+    image: prom/alertmanager:latest # v0.28.x
+    ports:
+      - "9093:9093"
+    restart: unless-stopped
+    volumes:
+      - ../monitoring/alertmanager/config:/etc/alertmanager
+      - ../monitoring/alertmanager/data:/alertmanager
+      # sudo chown -R 65534:65534 monitoring/alertmanager/data
+
+  cAdvisor:
+    container_name: c_advisor
+    devices:
+      - /dev/kmsg
+    image: gcr.io/cadvisor/cadvisor@sha256:3de2bd5203120b866d74a9b283b2ffb8ec382fbf9dc321814700c6ea6f44ec57
+    ports:
+      - "8080:8080"
+    privileged: false # true
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro # docker: root_file_system
+      - /var/run:/var/run:ro # docker: run_time
+      - /sys:/sys:ro # docker: kernel_statistics
+      - /var/lib/docker:/var/lib/docker:ro # docker: metadata
+      - /dev/disk:/dev/disk:ro # docker: root_file_system
+
+  # evidently:
+  #   command: evidently ui --host 0.0.0.0 --port 8000
+  #   container_name: evidently
+  #   image: evidentlyai/evidently-service:latest
+  #   ports:
+  #     - "8000:8000"
+  #   restart: always
+
+  # Wofür willst du Evidently nutzen?
+  # Bei deinen Projekten sehe ich zwei sinnvolle Szenarien:
+  # (A)
+  # Monitoring von ML-Modellen
+  # Drift
+  # Data Quality
+  # Prediction Quality
+
+  # (B)
+  # Monitoring deiner Road-Accidents-Modelle
+  # Feature Drift
+  # Distribution Drift
+
+  grafana:
+    container_name: grafana
+    depends_on:
+      - prometheus
+    # health_check:
+    image: grafana/grafana:12.1.0
+    ports:
+      - "3000:3000"
+    restart: always
+    volumes:
+      - ../monitoring/grafana/data:/var/lib/grafana
+      # sudo chown -R 472:472 monitoring/grafana/data
+
+      # loki:
+      #   command: -config.file=/etc/loki/loki.yaml
+      #   container_name: loki
+      #   image: grafana/loki:3.5.1
+      #   ports:
+      #     - "3100:3100"
+      #   restart: always
+      #   volumes:
+      #     - ../monitoring/loki/loki.yaml:/etc/loki/loki.yaml
+      #     - ../monitoring/loki/data:/loki
+      #   # depends_on:
+      #   #   - prometheus
+
+
+  node-exporter:
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - '--collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/run/docker/netns/.+)$'
+    container_name: node-exporter
+    image: prom/node-exporter:latest # v1.9.1
+    ports:
+      - "9100:9100"
+    restart: always
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+
+  portainer:
+    image: portainer/portainer-ce:lts
+    container_name: portainer
+    ports:
+      - "9443:9443"
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../monitoring/portainer/data:/data
+
+  prometheus:
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    container_name: prometheus
+    image: prom/prometheus:v3.5.0
+    ports:
+      - "9090:9090"
+    restart: always
+    volumes:
+      - ../monitoring/prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - ../monitoring/prometheus/rules:/etc/prometheus/rules
+      - ../monitoring/prometheus/data:/prometheus
+      # sudo chown -R 65534:65534 monitoring/prometheus/data
+
+
+      # promtail:
+      #   command: -config.file=/etc/promtail/promtail.yaml
+      #   container_name: promtail
+      #   depends_on:
+      #     - loki
+      #   image: grafana/promtail:3.5.1
+      #   restart: always
+      #   volumes:
+      #     - /var/log:/var/log:ro
+      #     - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      #     # - /etc/promtail:/etc/promtail
+      #     - /var/run/docker.sock:/var/run/docker.sock
+      #     - ../monitoring/loki/promtail.yaml:/etc/promtail/promtail.yaml
+      # volumes:
+      #   grafana-data:
+      #   loki_data:
+      # portainer_data:
+      #   prometheus_data:

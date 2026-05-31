@@ -10,24 +10,24 @@ from pathlib import Path
 import fitz  # PyMuPDF
 
 # from src.utils.pdf_helper import extract_text_pymupdf
-from src.model_parsing.data_classes_parsing import (
-    Bullet,
-    BulletMeta,
-    Drawing,
-    DrawingMeta,
-    Graphics,
-    Image,
-    ImageMeta,
-    Line,
-    LineGroup,
-    LineSplit,
-    PageMeta,
-    PDFPageExtract,
-    Span,
-    SpanMeta,
-    Word,
-    WordMeta,
-)
+# from gmp_compliance.src.model_parsing.classes_html_parsing import (
+#     Bullet,
+#     BulletMeta,
+#     Drawing,
+#     DrawingMeta,
+#     Graphics,
+#     Image,
+#     ImageMeta,
+#     Line,
+#     LineGroup,
+#     LineSplit,
+#     PageMeta,
+#     PDFPageExtract,
+#     Span,
+#     SpanMeta,
+#     Word,
+#     WordMeta,
+# )
 
 # from tiktoken import encoding_for_model
 # from src.core.feature_enricher import FeatureEnricher

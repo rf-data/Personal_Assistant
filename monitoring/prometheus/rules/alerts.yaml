@@ -1,0 +1,57 @@
+# alerts.yaml
+groups:
+  - name: infrastructure
+    rules: 
+    - alert: HostHighCPU
+      expr: 100 -(avg by(instance) 
+            (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: CPU > 90%
+    
+    - alert: HostHighMemory
+      expr: (
+        (1 -
+        node_memory_MemAvailable_bytes
+        /
+        node_memory_MemTotal_bytes)
+        * 100
+        ) > 90
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: RAM > 90%
+
+    - alert: HostLowDisk
+      expr: (
+        node_filesystem_avail_bytes
+        /
+        node_filesystem_size_bytes
+        * 100
+        ) < 10
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: Disk < 10%
+
+    - alert: ContainerDown
+      expr: up == 0
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        summary: Target unavailable
+
+  # PDF Parsing fehlgeschlagen
+
+  # Embedding Queue > 1000
+
+  # Retrieval Fehlerquote > 10%
+
+  # Wikipedia Crawl gestoppt
+
+  # Agent Laufzeit > 30 Minuten

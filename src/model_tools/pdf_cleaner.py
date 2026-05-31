@@ -3,7 +3,7 @@
 import re
 from dataclasses import dataclass, field
 
-from src.model_parsing.data_classes_parsing import TextBlock
+# from gmp_compliance.src.model_parsing.classes_html_parsing import TextBlock
 
 
 @dataclass

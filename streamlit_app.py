@@ -1,61 +1,88 @@
 ## streamlit_app.py
 # imports
-import os
+# import os
 from datetime import datetime
 
 import streamlit as st
+from tiktoken import encoding_for_model
 
-import src.utils.dict_helper as dh
-from gmp_compliance.frontend.pages import (
-                                        A_p0_wiki_search, A_p1_file_upload,
-                                        B_p0_ETL_plain_text
-                                        )
+from src.utils.dict_helper import get_yaml_config
+from frontend.pages import ( 
+                        A_p0_wiki_search,
+                        A_p1_file_system,
+                        A_p2_process_by_LLM, 
+                        A_p3_transcribe,
+                        A_p4_emails, 
+                        A_p5_monitoring, 
+                        B_p0_ETL_html,
+                        B_p1_ETL_pdf,
+                        B_p2_ETL_wiki_page,
+                        B_p3_ETL_json_nb,
+                        B_p4_ETL_word,
+                        B_p5_ETL_md,
+                        B_p6_ETL_OCR_text,
+                        B_p7_ETL_plain_text,
+                        C_p0_ETL_excel,
+                        C_p1_ETL_csv_parquet,
+                        C_p2_ETL_matlab,
+                        D_p0_EDA_dash,
+                        D_p1_eval_dash,
+                        E_p0_portfolio_home
+                        )
+
 from src.core.logger import create_logger
 
 # import sys
 # from pathlib import Path
-from src.core.memory import session_state
-from src.core.config import Settings
+from src.core.memory import app_session
+from src.core.config import GeneralSettings, RunSettings
 from src.utils.general_helper import load_env_vars
 
 
-# st_settings = Settings(
-#             env_name=".env.frontend",
-#             config_name="streamlit_app"
-# )
+load_env_vars() # (name=".env.frontend")
 
-load_env_vars(name=".env.frontend")
-config_name = os.getenv("CONFIG_NAME")
-config = dh.get_yaml_config(config_name)
 
-general_config = config.get("general_args", {})
-log_name = general_config["name_log"]
-name_logfile = general_config["name_logfile"]
+general_config = get_yaml_config("streamlit_general", 
+                                 model=GeneralSettings)
 
-session_state.general_config = config  # str(selected_file)
+run_config = get_yaml_config("streamlit_run", 
+                                 model=RunSettings)
+
+# general_config = config.get("general_args", {})
+log_name = run_config.name_log
+name_logfile = run_config.name_logfile
+
+model_name = run_config.llm_model
+encoder = encoding_for_model(model_name)
+app_session.encoder = encoder
+
+app_session.general_settings = general_config  # str(selected_file)
+app_session.run_settings = run_config
 
 # setup logger
-today = datetime.now().strftime("%Y-%m-%d")
-logger = create_logger(name=log_name, file_name=f"{today}_{name_logfile}")
-session_state.logger = logger
+# now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+# app_session.timestamp = now
 
+today = datetime.today().strftime("%Y-%m-%d")
+logger = create_logger(name=log_name, file_name=f"{today}_{name_logfile}")
+app_session.logger = logger
 
 
 # === STATE INIT ===
 if "page" not in st.session_state:
-    st.session_state.page = "general_tools"
+    st.session_state.page = "General Features"
 
 if "subpage" not in st.session_state:
-    st.session_state.subpage = None
+    st.session_state.subpage = "WikiQuery"
 
 if "navigate_to" not in st.session_state:
     st.session_state.navigate_to = None
 
 
-# === SIDEBAR LOGIC ===
-# Session-State
-if "page" not in st.session_state:
-    st.session_state.page = "general_tools"
+# # === SIDEBAR LOGIC ===
+# # Session-State
+# if "page" not in st.session_state:
+#     st.session_state.page = "General Tools"
     # hide_sidebar()   
 
 
@@ -63,30 +90,35 @@ if "page" not in st.session_state:
 st.sidebar.markdown("#### 🎥 Personal assistent")
 
 with st.sidebar:        # Page Switching
-    st.header("📁 Tools")
+    st.header("📁 Division")
     if st.session_state.navigate_to is not None:
         st.session_state.tool = st.session_state.navigate_to
         st.session_state.navigate_to = None
 
-    tools = st.radio(
-                "Tools",
-                options=[
-                    "general_tools",
-                    "Extract text",
-                    "Extract data"
-                    ],
-                key="tool",
-                label_visibility="collapsed"
+    st.radio(
+            "Division",
+            options=[
+                "General Features",
+                "Extract Text",
+                "Extract Data",
+                "DataViz & Dashboards",
+                # "Portfolio",
+                ],
+            key="page",
+            label_visibility="collapsed"
             )
 
     st.markdown("---")
 
 PROJECT_MAP = {
-    "General Tools": ("general_tools", "query"),
-    "Extract text": ("extract_text", None),
-    "Extract data": ("extract_data", None)
-}
-page, default_sub = PROJECT_MAP[st.session_state.project]
+    "General Features": ("General Features", "WikiQuery"),
+    "Extract Text": ("Extract Text", "ETL HTML"),
+    "Extract Data": ("Extract Data", "ETL Excel"),
+    "DataViz & Dashboards": ("DataViz & Dashboards", "EDA_dash"),
+    # "Portfolio": ("Portfolio", None)
+    }
+
+page, default_sub = PROJECT_MAP[st.session_state.page]
 if st.session_state.page != page:
     st.session_state.page = page
     st.session_state.subpage = default_sub
@@ -94,71 +126,120 @@ if st.session_state.page != page:
 
 # ------ SIDEBAR: PROJECT-SPECIFIC ELEMENTS ------
 with st.sidebar:
-    if st.session_state.page == "general_tools":
-        st.subheader("General Tools")
+    if st.session_state.page == "General Features":
+        st.subheader("General Features")
 
         st.radio(
                 "Choose a tool",
                 options=[
                     "WikiQuery",
-                    "File Upload",
-                    # "Chat with files"
+                    "File System",
+                    "LLM processing",
+                    "Transcription",
+                    "E-Mail & Calender",
+                    "Monitoring"
                     ],
                 key="subpage",
                 label_visibility="collapsed"
             )
-    
-    elif st.session_state.page == "extract_text":
-        st.subheader("Extract text")
+  
+    elif st.session_state.page == "Extract Text":
+        st.subheader("Extract Text")
 
         st.radio(
                 "Abschnitt",
                 options=[
-                    "ETL plain_text",
-                    "ETL HTML",
-                    "ETL JSON_notebook",
+                    "ETL html_file",
                     "ETL pdf_file",
-                    "ETL URL",
-                    "ETL MS Word"
+                    "ETL wiki_page",
+                    "ETL json_notebook",
+                    "ETL word"
+                    "ETL md_file",
+                    "ETL OCR text",
+                    "ETL plain_text",
+                    # "ETL URL",
                     ],
                 key="subpage",
                 label_visibility="collapsed"
             )
-
-    elif st.session_state.page == "extract_data":
-        st.subheader("Extract data")
+ 
+    elif st.session_state.page == "Extract Data":
+        st.subheader("Extract Data")
 
         st.radio(
                 "Abschnitt",
                 options=[
-                    "ETL csv parquet",
-                    "ETL excel"
+                    "ETL Excel",
+                    "ETL CSV & Parquet",
+                    "ETL MatLab"
                     ],
                 key="subpage",
                 label_visibility="collapsed"
             )
 
+    elif st.session_state.page == "DataViz & Dashboards":
+        st.subheader("DataViz & Dashboards")
 
+        st.radio(
+                "Abschnitt",
+                options=[
+                    "EDA Dashboard",
+                    "Evaluation Dashboard",
+                    ],
+                key="subpage",
+                label_visibility="collapsed"
+            )
+     
+    elif st.session_state.page == "Portfolio":
+        st.subheader("Portfolio")
 
+        st.radio(
+                "Abschnitt",
+                options=[
+                    "Overview",
+                    # "Markowitz",
+                    # "Recommendation"
+                    ],
+                key="subpage",
+                label_visibility="collapsed"
+            )
+        
 # === ROUTING ===
 
 page = st.session_state.page
 sub = st.session_state.subpage
 
-if page == "general_tools":
+if page == "General Features":
     if sub == "WikiQuery": A_p0_wiki_search.show()
-    elif sub == "File Upload": A_p1_file_upload.show()
-    # elif sub == "File Chat": A_p2_file_chat.show()
-    
+    elif sub == "File System": A_p1_file_system.show()
+    elif sub == "LLM processing": A_p2_process_by_LLM.show()
+    elif sub == "Transcription": A_p3_transcribe.show()
+    elif sub == "E-Mails & Calender": A_p4_emails.show()
+    elif sub == "Monitoring": A_p5_monitoring.show()
 
-elif page == "extract text":
-    if sub == "ETL plain_text": B_p0_ETL_plain_text.show()
-    # elif sub == "ETL HTML": A_p1_file_upload.show()
-    # elif sub == "ETL JSON_notebook": A_p1_file_upload.show()
-    # elif sub == "ETL pdf_file": A_p1_file_upload.show()
+elif page == "Extract Text":
+    if sub == "ETL html_file": B_p0_ETL_html.show()
+    elif sub == "ETL pdf_file": B_p1_ETL_pdf.show()
+    elif sub == "ETL wiki_page": B_p2_ETL_wiki_page.show()
+    elif sub == "ETL json_notebook": B_p3_ETL_json_nb.show()
+    elif sub == "ETL word": B_p4_ETL_word.show()
+    elif sub== "ETL md_file": B_p5_ETL_md.show()
+    elif sub== "ETL OCR text": B_p6_ETL_OCR_text.show()
+    elif sub == "ETL plain_text": B_p7_ETL_plain_text.show()
+  
     # elif sub == "ETL URL": A_p1_file_upload.show()
-    # elif sub == "ETL MS Word": A_p1_file_upload.show()
 
+elif page == "Extract Data":
+    if sub == "ETL Excel": C_p0_ETL_excel.show()
+    elif sub == "ETL CSV & Parquet": C_p1_ETL_csv_parquet.show()
+    elif sub == "ETL MatLab": C_p2_ETL_matlab.show()
+
+elif page == "DataViz & Dashboards":
+    if sub == "EDA Dashboard": D_p0_EDA_dash.show()
+    elif sub == "Evaluation Dashboard": D_p1_eval_dash.show()
+
+elif page == "Portfolio":
+    if sub == "Overview": E_p0_portfolio_home.show()
 
 
 # PAGES_PRESENTATION[presentation]()

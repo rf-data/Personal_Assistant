@@ -9,7 +9,7 @@ import pyinputplus as pyip
 from tiktoken import encoding_for_model
 
 from src.core.logger import create_logger
-from src.core.memory import session_state
+from src.core.memory import app_session, RunContext
 from src.model_tools.base_assembler import BaseAssembler
 from src.model_tools.feature_enricher import FeatureEnricher
 from src.model_tools.html_extractor import HTMLCleanExtractor
@@ -34,7 +34,7 @@ from src.tools.extract_md import extract_md_file
 from src.tools.extract_notebook import extract_notebook_json
 from src.tools.extract_pdf import extract_pdf_file
 from src.tools.extract_txt import extract_txt_file
-from src.tools.extract_url import extract_url
+# from src.tools.extract_medium import extract_url
 from src.tools.extract_wiki import extract_wiki_article
 from src.tools.post_extract_processing_pdf import process_pdf
 from src.utils.dict_helper import get_yaml_config
@@ -77,8 +77,8 @@ def text_file_extraction():
     # def text_file_extraction():
     # load env variables and config
 
-    general_config = session_state.general_config
-    run_config = session_state.run_config
+    general_config = session_state.general_settings
+    run_config = session_state.run_settings
 
     now = general_config.get("timestamp", datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     session_state.timestamp = now
@@ -139,7 +139,15 @@ def run_text_file_extraction(
     # session.enricher = feat_enricher
 
     if url and text_type == "url":
-        extract_url(url, enricher=feat_enricher, save=True)
+
+        # session_state.save_folder = Path(f"{data_processed}/url/extracted")
+
+        # extractor = HTMLCleanExtractor(enricher=feat_enricher)
+
+        # extract_url(url, extractor=extractor, save=True)
+
+        logger.error("Scripts for scraping from url are still to be created.")
+        sys.exit()
 
     if query and text_type == "wiki":
         extract = extract_wiki_article(
@@ -162,9 +170,11 @@ def run_text_file_extraction(
         logger.info("No file_names available")
         sys.exit()
 
+    now = app_session.timestamp
+
     for file in file_names:
         suffix = Path(file).suffix[1:]
-        session_state.suffix = suffix
+        app_session.suffix = suffix
 
         f_path = f"{data_raw}/{file}"
         f_name = Path(f_path).stem
@@ -176,8 +186,8 @@ def run_text_file_extraction(
 
         if suffix == "txt":
             # EXTRACTION
-            session_state.save_folder = Path(f"{data_processed}/txt_files/extracted")
-            session_state.save_name = f"{now}_{f_name}_extracted"
+            app_session.save_folder = Path(f"{data_processed}/txt_files/extracted")
+            app_session.save_name = f"{now}_{f_name}_extracted"
 
             txt_extractor = TXTCleanExtractor(
                 extract_config=config.get("txt_extraction", {}), enricher=feat_enricher
@@ -188,37 +198,39 @@ def run_text_file_extraction(
             txt_classifier = TXTClassifier(classify_config=classify_config)
 
             # CLASSIFICATION
-            session.state.save_folder = Path(f"{data_processed}/txt_files/classified")
-            session.state.save_name = f"{now}_{f_name}_classified"
+            app_session.save_folder = Path(f"{data_processed}/txt_files/classified")
+            app_session.save_name = f"{now}_{f_name}_classified"
 
             text_class = classify_txt_file(txt_extract, txt_classifier, save=True)
 
         elif suffix == "md":
-            session.state.save_folder = Path(f"{data_processed}/md_files/extracted")
-            session.state.save_name = f"{now}_{f_name}_extracted"
+            app_session.save_folder = Path(f"{data_processed}/md_files/extracted")
+            app_session.save_name = f"{now}_{f_name}_extracted"
 
             md_extractor = MDCleanExtractor(
-                extract_config=config.get("md_extraction", {}), enricher=feat_enricher
-            )
+                                extract_config=config.get("md_extraction", {}), 
+                                enricher=feat_enricher
+                                )
 
             md_extract_ = extract_md_file(f_path, md_extractor, save=True)
 
         elif suffix == "pdf":
-            session.state.save_folder = Path(
+            app_session.save_folder = Path(
                 f"{data_processed}/pdf_files/extract_from_text"
             )
-            session.state.save_name = f"{now}_{f_name}"
+            app_session.save_name = f"{now}_{f_name}"
 
             # TODO: include table/column_detection
             # TODO: improve header_footer detection
 
             pdf_extractor = PDFCleanExtractor(
-                extract_config=config.get("pdf_extraction", {}), enricher=feat_enricher
+                extract_config=config.get("pdf_extraction", {}), 
+                enricher=feat_enricher
             )
 
             pdf_extract_raw = extract_pdf_file(f_path, pdf_extractor, save=True)
 
-            session.state.save_folder = Path(f"{data_processed}/pdf_files/processed")
+            app_session.save_folder = Path(f"{data_processed}/pdf_files/processed")
             # session.state.save_name = f"{now}_{f_name}"
             pdf_extract_fin = process_pdf(
                 pdf_extract_raw,
@@ -231,8 +243,8 @@ def run_text_file_extraction(
             assemble_pdf_config = config.get("pdf_assembly", {})
 
             if assemble_pdf_config.get("assemble_as_md") is True:
-                session.state.save_name = f"{now}_{f_name}"
-                session.state.save_folder = f"{data_processed}/pdf_files/assembled"
+                app_session.save_name = f"{now}_{f_name}"
+                app_session.save_folder = f"{data_processed}/pdf_files/assembled"
 
                 # assembler = PDFPageAssembler()
 
@@ -249,12 +261,24 @@ def run_text_file_extraction(
             #                                     assemble_pdf_config)
 
         elif suffix == "html":
-            session.state.save_folder = Path(f"{data_processed}/html_files/extracted")
-            session.state.save_name = f"{now}_{f_name}_extracted"
-
+            # session_state.save_folder = Path(f"{data_processed}/html_files/extracted/{now}_{f_name}")
+            # session_state.save_name = f"{f_name}_extracted"
+            
+            run_context = RunContext(
+                        # encoder=app_session.encoder,
+                        run_settings=run_config,
+                        save_folder=Path(f"{data_processed}/html_files/extracted/{now}_{f_name}"),
+                        save_name=f"{f_name}_extracted",
+                        text_type="html",
+                        timestamp=now
+                        )
+            
             html_extractor = HTMLCleanExtractor(
-                extract_config=config.get("html_extraction", {}), enricher=feat_enricher
+                                    run_context=run_context
             )
+
+            #     extract_config=config.get("html_extraction", {}), enricher=feat_enricher
+            # )
 
             html_extract = extract_html_file(
                 extractor=html_extractor, f_path=f_path, save=True
@@ -262,7 +286,7 @@ def run_text_file_extraction(
 
             assemble_config = config.get("assemble_html", {})
 
-            if assemble_config.get("assemble_as_md", None):
+            if assemble_config.get("assemble_as_md") is not None:
                 # text = html_extract.text
 
                 save_name = ""

@@ -15,9 +15,10 @@ import numpy as np
 # import ast
 import yaml
 from pydantic import BaseModel
+from src.core.config import GeneralSettings, RunSettings
 
 # import src.core.logger as log
-from src.core.memory import session_state
+from src.core.memory import app_session
 
 # import hashlib
 from src.utils.general_helper import snapshot_single_function
@@ -27,23 +28,39 @@ from src.utils.path_helper import ensure_dir, shorten_path
 # -----------------------
 # CONFIGURATION METHODS
 # -----------------------
-def load_yaml_config(path):
+def load_yaml_config(path: str|Path):
     with open(path) as f:
         return yaml.safe_load(f)
 
 
-def get_yaml_config(name):
+def load_yaml_as_base_model(path: str|Path,
+                              model: GeneralSettings | RunSettings):
+    cfg_dict = load_yaml_config(path)
+    
+    return model.model_validate(cfg_dict)
+    
+
+
+def get_yaml_config(name: str,
+                    model: GeneralSettings|RunSettings|None=None):
     # (1) load config + logger
     # gh.load_env_vars()
     # logger = session.logger
 
     config_folder = os.getenv("CONFIG_PATH")
 
+    assert config_folder is not None
+
     config_path = Path(config_folder) / f"{name}.yaml"
 
     print(f"Loading config_file: {shorten_path(config_path)}")
 
-    config = load_yaml_config(config_path)
+    if model is None:
+        config = load_yaml_config(config_path)
+
+    else: 
+        config = load_yaml_as_base_model(path=config_path,
+                                         model=model)
 
     return config
 
@@ -56,7 +73,7 @@ def safe_json_loads(text: str):
         return json.loads(text)
     except json.JSONDecodeError:
         # try extracting text from JSON
-        match = re.search(r"\{.*\}", ext, re.DOTALL)
+        match = re.search(r"\{.*\}", text, re.DOTALL)
         if match:
             return json.loads(match.group())
 
@@ -89,7 +106,8 @@ def make_json_safe(obj):
     return str(obj)
 
 
-def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
+def save_base_model_as_dict(data: BaseModel, 
+                            path: Path) -> None:
 
     data_dict = data.model_dump()
 
@@ -97,7 +115,7 @@ def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
 
 
 def save_dict(data: dict, path: Path) -> None:
-    logger = session_state.logger
+    logger = app_session.logger
 
     f_path = Path(f"{path}.json")
     f_path = ensure_dir(f_path)
@@ -134,7 +152,7 @@ def append_json(data: dict, path: Path) -> None:
 
 
 def load_dict(path: Path | str) -> dict:
-    logger = session_state.logger
+    logger = app_session.logger
 
     path = ensure_dir(path)
 
@@ -145,7 +163,8 @@ def load_dict(path: Path | str) -> dict:
     return data
 
 
-def load_base_model_from_dict(path: Path | str, model_class: BaseModel):
+def load_base_model_from_dict(path: Path | str, 
+                              model_class: BaseModel):
 
     data_dict = load_dict(path)
 

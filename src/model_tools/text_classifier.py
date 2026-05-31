@@ -9,7 +9,7 @@ from dataclasses import dataclass  # , field
 # import pprint
 # import sys
 # import logging
-from src.model_parsing.data_classes_parsing import DocumentExtract
+# from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract
 from src.model_tools.base_classifier import BaseClassifier
 
 

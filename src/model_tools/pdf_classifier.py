@@ -5,7 +5,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any
 
-from src.model_parsing.data_classes_parsing import LineGroup
+# from gmp_compliance.src.model_parsing.classes_html_parsing import LineGroup
 
 # import pprint
 # import sys
@@ -14,14 +14,21 @@ from src.model_tools.text_classifier import BaseClassifier
 
 @dataclass
 class PDFClassifier(BaseClassifier):
-    page_attributes: dict[str, Any] = field(default_factory=dict)
+    # page_attributes: dict[str, Any] = field(default_factory=dict)
 
-    def classify_line(self, lines: list[LineGroup], page_attributes: dict):
-        from src.core.memory import session
+    def __init__(self, 
+                 run_context, 
+                 page_attributes: dict):
+        
+        self.page_attributes = page_attributes
+        self.logger = run_context.logger
 
-        self.logger = session.logger
+        return 
 
-        self.page_attributes.update(page_attributes)
+    def classify_line(self, 
+                      lines: list[LineGroup]):
+
+        # self.page_attributes.update(page_attributes)
         # head_foot, other = self._separate_header_footer(lines)
         # text_rows, non_text_rows = self._filter_text(segments)
         class_dict = self._differentiate_text(lines)
@@ -61,6 +68,7 @@ class PDFClassifier(BaseClassifier):
 
         return False  # header_footer, other
 
+
     def _heading_score(self, line):
         median_size = self.page_attributes["median_size"]
 
@@ -87,6 +95,7 @@ class PDFClassifier(BaseClassifier):
         # line["heading_score"] = heading_score
 
         return heading_score
+
 
     def _subdivide_heading(self, heading):
 
@@ -158,15 +167,18 @@ class PDFClassifier(BaseClassifier):
 
         return score >= foot_note_thresh
 
+
     def _is_column(self, lines):
 
         inter_word_gap = ""
 
         return
 
+
     def _is_table(self, lines):
 
         return
+
 
     def _differentiate_text(self, lines: list[LineGroup]):
 

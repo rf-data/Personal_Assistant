@@ -68,6 +68,8 @@ def extract_wiki_article(
         # extract WikiPage_info by API-request
         page_extract = wiki.parse_article(item, save=save)
 
+        # -->  run_context.page_id = page_id
+
         page_text = page_extract.text
 
         # info_extract.append(page_extract)

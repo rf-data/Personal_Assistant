@@ -1,6 +1,6 @@
 ## wiki_client.py
 # import
-import logging
+# import logging
 import os
 import random
 import sys
@@ -12,10 +12,12 @@ import time
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Literal
+# from typing import Literal
 
 import requests
 
+# from src.core.config import RunWikiSettings
+from src.core.memory import RunContext
 from src.model_parsing.data_classes_wiki import (
     ResultItem,
     SearchResult,
@@ -31,37 +33,43 @@ from src.utils.text_file_helper import save_text_file
 
 @dataclass
 class WikipediaClient:
-    header: dict = field(default_factory=dict)
-    logger = logging.getLogger(__name__)
-    now: str | None = field(init=False)
-    query: str | None = field(default=None)
-    save_folder: Path | None = field(init=False)
+    # header: dict = field(default_factory=dict)
+    # logger = logging.getLogger(__name__)
+    # now: str | None = field(init=False)
+    # query: str | None = field(default=None)
+    # save_folder: Path | None = field(init=False)
     url: str | None = field(default=None)
-    wiki_config: dict = field(default_factory=dict)
+    # wiki_config: RunWikiSettings = field(default_factory=RunWikiSettings)
     req_session: requests.Session | None = field(default=None)
 
     # from requests.adapters import HTTPAdapter
     # from urllib3.util.retry import Retry
 
-    def __post_init__(self):
-        from src.core.memory import session_state
+    def __init__(self, run_context: RunContext):
 
-        self.now = self.wiki_config.get(
-            "query_time", datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        )
+        self.now = (run_context.run_settings.wiki.query_time 
+                    or run_context.timestamp
+                    or datetime.now()\
+                        .strftime("%Y-%m-%d_%H-%M-%S"))
+        
+        self.wiki_config = run_context.run_settings.wiki
 
-        self.save_folder = Path(os.getenv("DATA_WIKI"))
+        self.query_param = run_context.query_param
+        self.header = run_context.header
+        # .get(
+        #     "query_time", datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        # )
+        save_dir = os.getenv("DATA_WIKI")
+        assert save_dir is not None
 
-        self.logger = session_state.logger
+        self.save_folder = Path(save_dir)
+        self.save = run_context.save
+        self.logger = run_context.logger
 
         return
 
-    def search_article(
-        self,
-        query,
-        # parse: bool=False,
-        save: bool = False,
-    ):
+
+    def search_article(self, query):
 
         # self.query = query
 
@@ -89,9 +97,13 @@ class WikipediaClient:
             )
 
             self.logger.info(
-                "[Result #%s] Title:\t%s (pageid=%s)", idx, hit["title"], hit["pageid"]
+                "[Result #%s] Title:\t%s (pageid=%s)", 
+                idx, 
+                hit["title"], 
+                hit["pageid"]
             )
-            self.logger.info("snippet:\n%s\n\n", hit["snippet"])
+            self.logger.info("snippet:\n%s\n\n", 
+                             hit["snippet"])
 
         s_info = data.get("query", {}).get("searchinfo", {})
         s_results = SearchResult(
@@ -102,7 +114,7 @@ class WikipediaClient:
             suggestion_hits=s_info.get("totalhits"),
         )
 
-        if save:
+        if self.save:
             raw_path = Path(f"{self.save_folder}/query/{self.now}_{query}_raw")
             norm_path = Path(f"{self.save_folder}/query/{self.now}_{query}_norm")
 
@@ -136,10 +148,10 @@ class WikipediaClient:
     def parse_article(
         self,
         page_info: dict,
-        query_param: Literal["page_title", "page_id"] = "page_id",
-        save: Literal["info"] | list | None = None,
+        # query_param: Literal["page_title", "page_id"] = "page_id",
+        # save: Literal["info"] | list | None = None,
     ) -> WikiPage | None:
-        from src.core.memory import session_state
+        # from src.core.memory import session_state
 
         self.logger.info(
             "Start parsing page (title=%s | id=%s)",
@@ -165,10 +177,10 @@ class WikipediaClient:
             # # 'wikitext' --> text
         }
 
-        if query_param == "page_title":
+        if self.query_param == "page_title":
             params["page"] = page_info.get("title")
 
-        elif query_param == "page_id":
+        elif self.query_param == "page_id":
             params["pageid"] = page_info.get("page_id")
 
         else:
@@ -188,18 +200,20 @@ class WikipediaClient:
 
         art_text = data.get("parse", {}).get("text", "").get("*", "")
 
-        session_state.page_id = page_info.get("page_id")
+        page_id = page_info.get("page_id")
+
+        assert page_id is not None
 
         article = WikiPage(
             text=art_text,
             title=page_info.get("title", ""),
             meta=WikiPageMeta(
-                page_id=session_state.page_id,
-                wordcount=page_info.get("word_count"),
+                page_id=page_id,
+                wordcount=page_info.get("word_count", 0),
                 timestamp=page_info.get("timestamp", ""),
             ),
         )
-        if save and "info" in save:
+        if self.save and "info" in str(self.save):
             f_name = f"{self.now}_{article.title}_info"
             folder = f"{self.save_folder} / {article.title}_{article.meta.page_id}"
 
@@ -256,7 +270,7 @@ class WikipediaClient:
         return
 
     def _get_wiki_url(self) -> str:
-        language = self.wiki_config["language"]
+        language = self.wiki_config.language
 
         if language == "en":
             base_url = os.getenv("WIKI_EN_API")
@@ -297,8 +311,11 @@ class WikipediaClient:
             self.req_session = requests.Session()
 
         response = self.req_session.get(
-            self.url, headers=self.header, timeout=10, params=params
-        )
+                                    self.url, 
+                                    headers=self.header, 
+                                    timeout=10, 
+                                    params=params
+                                )
         try:
             response.raise_for_status()
 
@@ -308,12 +325,16 @@ class WikipediaClient:
             return data
 
         except requests.exceptions.HTTPError as e:
-            self.logger.error("HTTP ERROR:\t%s\n", e, response.text[:1000])
+            self.logger.error("HTTP ERROR:\t%s\n", 
+                              e, 
+                              response.text[:1000])
 
             raise
 
         except requests.exceptions.JSONDecodeError as e:
-            self.logger.error("JSON ERROR:\t%s\n", e, response.text[:1000])
+            self.logger.error("JSON ERROR:\t%s\n", 
+                              e, 
+                              response.text[:1000])
 
             raise
         # print(response.status_code)
