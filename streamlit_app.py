@@ -26,8 +26,9 @@ from frontend.pages import (
                         C_p1_ETL_csv_parquet,
                         C_p2_ETL_matlab,
                         D_p0_EDA_dash,
-                        D_p1_eval_dash,
-                        E_p0_portfolio_home
+                        D_p1_pca, 
+                        D_p2_eval_dash,
+                        E_p0_develop_area
                         )
 
 from src.core.logger import create_logger
@@ -35,7 +36,7 @@ from src.core.logger import create_logger
 # import sys
 # from pathlib import Path
 from src.core.memory import app_session
-from src.core.config import GeneralSettings, RunSettings
+from src.core.config import GeneralSettings, ParseSettings
 from src.utils.general_helper import load_env_vars
 
 
@@ -45,25 +46,27 @@ load_env_vars() # (name=".env.frontend")
 general_config = get_yaml_config("streamlit_general", 
                                  model=GeneralSettings)
 
-run_config = get_yaml_config("streamlit_run", 
-                                 model=RunSettings)
+parse_config = get_yaml_config("streamlit_run", 
+                                 model=ParseSettings)
 
 # general_config = config.get("general_args", {})
-log_name = run_config.name_log
-name_logfile = run_config.name_logfile
+log_name = parse_config.name_log
+name_logfile = parse_config.name_logfile
 
-model_name = run_config.llm_model
+model_name = parse_config.llm_model
 encoder = encoding_for_model(model_name)
 app_session.encoder = encoder
 
 app_session.general_settings = general_config  # str(selected_file)
-app_session.run_settings = run_config
+app_session.parse_settings = parse_config
 
 # setup logger
 # now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 # app_session.timestamp = now
 
 today = datetime.today().strftime("%Y-%m-%d")
+app_session.timestamp = today
+
 logger = create_logger(name=log_name, file_name=f"{today}_{name_logfile}")
 app_session.logger = logger
 
@@ -102,7 +105,7 @@ with st.sidebar:        # Page Switching
                 "Extract Text",
                 "Extract Data",
                 "DataViz & Dashboards",
-                # "Portfolio",
+                "Development",
                 ],
             key="page",
             label_visibility="collapsed"
@@ -115,7 +118,7 @@ PROJECT_MAP = {
     "Extract Text": ("Extract Text", "ETL HTML"),
     "Extract Data": ("Extract Data", "ETL Excel"),
     "DataViz & Dashboards": ("DataViz & Dashboards", "EDA_dash"),
-    # "Portfolio": ("Portfolio", None)
+    "Development": ("Development", "Development_Area")
     }
 
 page, default_sub = PROJECT_MAP[st.session_state.page]
@@ -184,19 +187,20 @@ with st.sidebar:
                 "Abschnitt",
                 options=[
                     "EDA Dashboard",
-                    "Evaluation Dashboard",
+                    "PCA",
+                    # "Evaluation Dashboard",
                     ],
                 key="subpage",
                 label_visibility="collapsed"
             )
-     
-    elif st.session_state.page == "Portfolio":
-        st.subheader("Portfolio")
+     # "Development": ("Development_Area", None)
+    elif st.session_state.page == "Development":
+        st.subheader("Development")
 
         st.radio(
                 "Abschnitt",
                 options=[
-                    "Overview",
+                    "Development_Area",
                     # "Markowitz",
                     # "Recommendation"
                     ],
@@ -236,10 +240,11 @@ elif page == "Extract Data":
 
 elif page == "DataViz & Dashboards":
     if sub == "EDA Dashboard": D_p0_EDA_dash.show()
-    elif sub == "Evaluation Dashboard": D_p1_eval_dash.show()
+    elif sub == "PCA": D_p1_pca.show()
+    elif sub == "Evaluation Dashboard": D_p2_eval_dash.show()
 
-elif page == "Portfolio":
-    if sub == "Overview": E_p0_portfolio_home.show()
+elif page == "Development":
+    if sub == "Development_Area": E_p0_develop_area.show()
 
 
 # PAGES_PRESENTATION[presentation]()

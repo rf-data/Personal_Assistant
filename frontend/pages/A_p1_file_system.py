@@ -7,8 +7,9 @@ import fitz  # pymupdf
 import streamlit as st
 
 from src.utils.streamlit_helper import show_tree
-from src.utils.path_helper import ensure_dir
+from src.utils.path_helper import ensure_dir, shorten_path  
 from src.utils.general_helper import load_env_vars
+from src.utils.zipfile_helper import unpack_entire_zipfolder
 
 load_env_vars()
 
@@ -130,7 +131,38 @@ def show():
         st.subheader("**Unzip files**")
 
         st.divider()
-        st.markdown("**Under Construction**")
+
+        input_data = FOLDER_DICT["Input Folder"]
+        zip_files = st.multiselect(
+                label="Which zip file(s) should be unpacked?",
+                options=[shorten_path(f, n=1) for f in Path(input_data).iterdir()
+                        if f.suffix == ".zip"],
+                key="files_zip"
+                    )
+        
+        assert zip_files is not None
+
+        if "unzip_files" not in st.session_state:
+            st.session_state["unzip_files"] = "ready"
+    
+        st.markdown(f"Status 'unzip_files': {st.session_state['unzip_files']}")
+
+        left, right = st.columns(2)
+        if (left.button("Reset", type="primary")
+            and st.session_state["unzip_files"] is not None):
+            st.session_state["unzip_files"] = "ready"
+
+        if (right.button("Start unzipping") 
+            and st.session_state["unzip_files"] in ["ready", None]):
+                # st.session_state["parsed"] = None
+            for f_path in zip_files:
+                
+                unpack_entire_zipfolder(
+                            src_path=f"{input_data}/{f_path}",
+                            dst_folder=str(input_data)
+                )
+
+
         
     with list_files:
         st.subheader("**List Folder Files**")

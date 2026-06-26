@@ -23,6 +23,20 @@ import src.utils.general_helper as gh
 import src.utils.path_helper as ph
 
 
+from collections import defaultdict
+'''
+errors = defaultdict(int)
+
+with open("app.log") as f:
+    for line in f:
+        if "ERROR" in line:
+            key = line.split(":")[0]
+            errors[key] += 1
+
+for err, count in sorted(errors.items(), key=lambda x: x[1], reverse=True):
+    print(err, count)
+'''
+
 def has_file_handler(logger, log_path):
     for h in logger.handlers:
         if isinstance(h, logging.FileHandler):
@@ -63,6 +77,33 @@ def log_section(logger, title):
     #     print(f"--- {title} --- {datetime.now():%Y-%m-%d %H:%M:%S} ---\n")
     #     print("=" * 50 + "\n")
 
+
+import re
+
+def get_errors_from_log():
+    with open("app.log") as f:
+        errors = [line for line in f if re.search("ERROR|WARNING", line)]
+
+    print("\n".join(errors[:20]))
+
+
+# from collections import Counter
+
+# baseline = Counter()
+
+# with open("logs.txt") as f:
+#     for line in f:
+#         baseline[line.split()[0]] += 1
+
+# def detect(log):
+#     event = log.split()[0]
+#     if baseline[event] < 2:
+#         print("Rare event detected:", log)
+
+# with open("new_logs.txt") as f:
+#     for line in f:
+#         detect(line)
+        
 
 def create_logger(
     name: str, file_name: str, folder: str | Path | None = None, level: str = "info"

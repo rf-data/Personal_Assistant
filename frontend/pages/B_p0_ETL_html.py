@@ -1,28 +1,35 @@
-## B_p1_ETL_html.py
+## B_p0_ETL_html.py
 # imports
 import os
 from pathlib import Path
 from datetime import datetime
 import streamlit as st
 
-from src.core.memory import app_session, RunContext 
+from src.core.memory import app_session, ParseContext 
 
-from src.model_tools.feature_enricher import FeatureEnricher
-from src.model_tools.html_extractor import HTMLCleanExtractor
-from src.model_tools.apollo_extractor import ApolloCleanExtractor
-from src.model_tools.base_assembler import BaseAssembler
+from src.model_tools_parsing.feature_enricher import FeatureEnricher
+from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
+from src.model_tools_parsing.apollo_extractor import ApolloCleanExtractor
+from src.model_tools_parsing.base_assembler import BaseAssembler
 
-from src.tools.extract_html import extract_html_file
+from src.tools_parsing.extract_html import extract_html_file
 
 from src.utils.path_helper import shorten_path  
 # from src.utils.text_file_helper import save_text_file
 from src.utils.html_helper import read_html_file
 
 
+"""
+TO-DOs:
+- move file after processing
+- allow preview on processed file(s)
+
+"""
+
 def show():
-    st.header("ETL HTML text")
+    st.header("**ETL HTML text**")
     
-    run_config = app_session.run_settings
+    parse_config = app_session.parse_settings
     st.divider()
 
     file_select, file_preview = st.columns(2)
@@ -33,13 +40,15 @@ def show():
         input_data = os.getenv("DATA_INPUT")
         assert input_data is not None
 
-        files_html = st.multiselect(
+        files_html = st.selectbox(       # multiselect(
                     label="Which html file(s) should be parsed?",
-                    options=[shorten_path(f, n=1) for f in Path(input_data).iterdir()
-                            if f.suffix == ".html"],
+                    options=list(Path(input_data).rglob("*.html")), 
+                    format_func=lambda p: shorten_path(p, n=1), 
+                    # for f in Path(input_data).iterdir()
+                    #         if f.suffix == ".html"],
                     key="files_html"
                     )
-        run_config.file_names = st.session_state["files_html"] # html_select
+        parse_config.file_names = st.session_state["files_html"] # html_select
 
         st.write(f"You selected {len(files_html)} files:")
         for idx, file in enumerate(files_html): 
@@ -75,7 +84,7 @@ def show():
         if st.session_state["parser_html"] in ["lxml", "html5lib"]:
             st.error("Selected parser is most likely not yet installed.")
 
-        run_config.html.parser = st.session_state["parser_html"]
+        parse_config.html.parser = st.session_state["parser_html"]
 
 
         st.pills(
@@ -85,32 +94,33 @@ def show():
             key="save_html"
             )
 
-        run_config.html.save = st.session_state["save_html"]
+        parse_config.html.save = st.session_state["save_html"]
         
     with col2:    
-        # st.pills(
-        #     label="Assemble format", 
-        #     options=["md", "txt"], 
-        #     selection_mode="multi",
-        #     key="assemble_html"
-        #     )
+        st.pills(
+            label="Assemble format", 
+            options=["md", "txt"], 
+            default=["md", "txt"], 
+            selection_mode="multi",
+            key="assemble_html"
+            )
         
-        # run_config.html.assemble = st.session_state["assemble_html"]
+        parse_config.html.assemble = st.session_state["assemble_html"]
 
         st.toggle(label="Apollo",
                   key="apollo_html")
-        run_config.html.apollo = st.session_state["apollo_html"]
+        parse_config.html.apollo = st.session_state["apollo_html"]
 
         st.toggle(label="Scrape_images",
               key="image_html")
-        run_config.html.scrape_images = st.session_state["image_html"]
+        parse_config.html.scrape_images = st.session_state["image_html"]
 
     if "html_parsed" not in st.session_state:
         st.session_state["html_parsed"] = "ready"
 
 
     data_processed = os.getenv("DATA_PROCESSED")
-    now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") 
+    now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     st.divider()
     st.subheader("Start Run")
@@ -132,38 +142,45 @@ def show():
 
             f_name = Path(f_path).stem
 
-            run_context = RunContext(
-                                    run_settings=run_config,
-                                    save_folder=Path(f"{data_processed}/html_files/extracted/{now}_{f_name}"),
+            t_stamp = app_session.timestamp 
+            save_folder = Path(f"{data_processed}/html_files/extracted/{t_stamp}_{f_name}")        
+
+            parse_context = ParseContext(
+                                    parse_settings=parse_config,
+                                    save_folder=save_folder,
                                     save_name=f"{f_name}_extracted",
                                     text_type="html",
                                     timestamp=now
                                     )
-            run_context.encoder=app_session.encoder
-                # if st.session_state["apollo_html"]:
-                #     st.write("Under Construction ")
-                #     # html_extractor = ApolloCleanExtractor(
-                #     #                             run_context=run_context
-                #     #     )
-                #     # html_assembler=ApolloCleanExtractor(
-                #     #                         run_context=run_context
-                #     #                             )
+            parse_context.encoder=app_session.encoder
+            
 
             feat_enricher = FeatureEnricher(
-                                    run_context=run_context,
+                                    parse_context=parse_context,
                                     # encoder=app_session.encoder
                                     )
-                # else:
-            html_extractor = HTMLCleanExtractor(
-                                                run_context=run_context,
+            if st.session_state["apollo_html"]:
+                # st.write("Under Construction ")
+                html_extractor = ApolloCleanExtractor(
+                                                parse_context=parse_context,
                                                 enricher=feat_enricher
                         )
-            html_assembler = BaseAssembler(run_context=run_context)
+                    # html_assembler=ApolloCleanExtractor(
+                    #                         run_context=run_context
+                    #                             )
+            else:
+                html_extractor = HTMLCleanExtractor(
+                                                parse_context=parse_context,
+                                                enricher=feat_enricher
+                        )
+
+              
+            html_assembler = BaseAssembler(parse_context=parse_context)
                     
                 # html_extract = 
             extract_html_file(
                         extractor=html_extractor, 
-                        run_context=run_context
+                        parse_context=parse_context
                         ).bind(html_assembler.render_text_file)
             
         st.session_state["html_parsed"] = "done"

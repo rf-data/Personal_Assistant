@@ -41,7 +41,7 @@ pdf:
   x_gap_words: 20 
 
   width_thresh: 0.45 
-  y_gap_line: 20                
+  y_gap_line: 15  # 20                
   up_down_thresh: 0.08
   left_right_thresh: 0.2
   heading_threshold: 3

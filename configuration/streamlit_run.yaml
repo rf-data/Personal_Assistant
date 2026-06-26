@@ -28,12 +28,18 @@ json_nb:
 # PDF
 pdf:
   extract_source: 
-      - raw_dict
-      - words
+    - raw_dict
+    - words
   extraction_model: pymupdf
 
   extract_text_info: True
-  extract_grafics: False
+  extract_graphics: False
+  scrape_images: False
+  
+  save: 
+    - info
+    - html
+    - md
   
   assemble:     # Literal["txt", "md"]
   percentiles: 

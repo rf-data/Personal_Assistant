@@ -4,12 +4,19 @@ from pathlib import Path
 
 from pypdf import PdfReader, PdfWriter
 
-from src.core.memory import session_state
+from src.core.memory import app_session
+
+
+def pdf_page_count(f_path: str):
+
+    reader = PdfReader(f_path)
+    
+    return len(reader.pages)
 
 
 def check_pdf_split(file_names: list) -> list:
 
-    logger = session_state.logger
+    logger = app_session.logger
 
     pdf_files = []
     fit = []
@@ -23,9 +30,9 @@ def check_pdf_split(file_names: list) -> list:
 
     too_long = []
     for file in pdf_files:
-        reader = PdfReader(file)
+        n_pages = pdf_page_count(file)
 
-        if len(reader.pages) > 10:
+        if n_pages > 10:
             too_long.append(file)
 
         else:
@@ -38,7 +45,8 @@ def check_pdf_split(file_names: list) -> list:
     return fit
 
 
-def split_pdf(pdf_path: str, pages_per_file: int = 10) -> list[str]:
+def split_pdf(pdf_path: str, 
+              pages_per_file: int = 10) -> list[str]:
 
     f_name = Path(pdf_path).stem
     folder = Path(pdf_path).parent

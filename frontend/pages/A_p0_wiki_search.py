@@ -2,8 +2,8 @@
 # imports
 import streamlit as st
 
-from src.core.memory import app_session, RunContext
-from src.tools.search_wiki import wiki_article_search
+from src.core.memory import app_session, ParseContext
+from src.tools_parsing.search_wiki import wiki_article_search
 
 
 def show():
@@ -27,16 +27,16 @@ def show():
 
         # from src.core.memory import app_session
 
-        run_context = RunContext()
-        run_context.run_settings = app_session.run_settings
-        run_context.run_settings.wiki.query = query
-        run_context.logger = app_session.logger
+        parse_context = ParseContext()
+        parse_context.parse_settings = app_session.parse_settings
+        parse_context.parse_settings.wiki.query = query
+        parse_context.logger = app_session.logger
 
         # query_cmd = ["python", "-u", "-m", "src.tools.search_wiki"]
 
         # live_command_demo(query_cmd)
         results = wiki_article_search(
-                            run_context=run_context
+                            run_context=parse_context
                             )
 
     if results:

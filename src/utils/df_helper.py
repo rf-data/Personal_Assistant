@@ -12,7 +12,7 @@ import pyarrow.parquet as pq
 import src.utils.path_helper as ph
 
 # import src.feature_engineering.time_columns as time_col
-from src.core.memory import session
+from src.core.memory import app_session
 
 # -----------------
 # DATAFRAME METHODS
@@ -21,7 +21,8 @@ from src.core.memory import session
 # -----------------
 
 
-def load_dfs(paths: list[str | Path] | str | Path, index_col: str | None = None):
+def load_dfs(paths: list[str | Path] | str | Path, 
+             index_col: str | None = None):
     if isinstance(paths, (Path, str)):
         paths = [paths]
 
@@ -57,7 +58,7 @@ def load_files_from_folder(
     f_type: str | None = None,
 ):
     # setup logger
-    logger = session.logger
+    logger = app_session.logger
     logger.info("Start loading files")
 
     if df_names:
@@ -131,7 +132,7 @@ def load_processed_files(
 ):
 
     # setup logger
-    logger = session.logger
+    logger = app_session.logger
 
     #
     data_processed = os.getenv("PATH_PROCESSED")
@@ -302,7 +303,7 @@ def merge_dfs(
 
 def enforce_datetime(df, col="datetime"):
     # setup logger
-    logger = session.logger
+    logger = app_session.logger
 
     if not pd.api.types.is_datetime64_any_dtype(df[col]):
         df[col] = pd.to_datetime(df[col], errors="raise")
@@ -523,7 +524,7 @@ def melt_time(df_long, freq_range):
 # ---------------------
 def save_df_to_parquet(df, f_name, folder=None, chunked=False):
     # setup logger
-    logger = session.logger
+    logger = app_session.logger
 
     if folder is None:
         folder = os.getenv("PATH_PROCESSED")
@@ -557,7 +558,7 @@ def save_df_to_parquet(df, f_name, folder=None, chunked=False):
 
 def save_df_chunkwise(df, file_path, chunk_size):
     # setup logger
-    logger = session.logger
+    logger = app_session.logger
 
     writer = None
 
@@ -587,7 +588,7 @@ def save_df_chunkwise(df, file_path, chunk_size):
 
 def save_df_list_chunkwise(df_list, file_path):
     # setup logger
-    logger = session.logger
+    logger = app_session.logger
 
     writer = None
 

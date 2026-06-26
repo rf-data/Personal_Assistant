@@ -6,6 +6,7 @@ from pathlib import Path
 from src.utils.path_helper import ensure_dir, shorten_path
 from src.core.memory import app_session
 
+
 def read_text_file(f_path):
 
     txt_file = Path(f_path).read_text(encoding="utf-8")
@@ -62,3 +63,22 @@ def save_text_file(data, file_name, folder, suffix="md"):
     logger.info("File saved as %s", shorten_path(f_path))
 
     return
+
+
+
+
+#####################
+# BINARY_FILE_PARSER
+#####################
+
+# import struct
+
+# with open("data.bin", "rb") as f:
+#     header = f.read(8)
+
+# magic, version = struct.unpack(
+#     ">4sI",
+#     header
+# )
+
+# print(magic, version)

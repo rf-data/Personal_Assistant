@@ -6,16 +6,21 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "bs4>=0.0.2",
+    "chromadb>=1.5.9",
     "docx>=0.2.4",
     "fastapi>=0.136.1",
+    "faster-whisper>=1.2.1",
+    "ffmpeg>=1.4",
     "httpx>=0.28.1",
     "json5>=0.14.0",
     "markdown>=3.10.2",
     "markdown-it-py>=4.0.0",
+    "matplotlib>=3.10.9",
     "numpy>=2.4.4",
     "openpyxl>=3.1.5",
     "pandas>=3.0.2",
     "pydantic>=2.13.3",
+    "pydub>=0.25.1",
     "pyinputplus>=0.2.12",
     "pymupdf>=1.27.2.2",
     "pypdf>=6.11.0",
@@ -23,8 +28,14 @@ dependencies = [
     "pyyaml>=6.0.3",
     "returns>=0.27.0",
     "scikit-learn>=1.8.0",
-    "streamlit>=1.56.0",
+    "scipy>=1.17.1",
+    "sounddevice>=0.5.5",
+    "spacy>=3.8.14",
+    "streamlit-pdf-viewer>=0.0.29",
+    "streamlit[pdf]>=1.56.0",
     "tiktoken>=0.12.0",
+    "tokenizers>=0.23.1",
+    "yt-dlp>=2026.3.17",
 ]
 
 [dependency-groups]

@@ -7,7 +7,7 @@
 from datetime import datetime
 # from tiktoken import encoding_for_model
 
-from src.core.memory import session_tate
+from src.core.memory import session_state
 from src.core.logger import create_logger
 # from src.core.text_extractor import TXTCleanExtractor, MDCleanExtractor
 # from src.core.pdf_extractor import PDFCleanExtractor
@@ -19,7 +19,7 @@ from src.core.logger import create_logger
 
 # from src.tools.build_structure import build_structure_from_lines
 # # from src.tools.extraction import  extraction_per_page
-from gmp_compliance.src.model_tools.feature_enricher import FeatureEnricher
+from src.model_tools.feature_enricher import FeatureEnricher
 # # from gmp_compliance.src.core._dev_block_classifier import BlockClassifier
 # from src.core.text_cleaner import TextCleaner
 # # from src.core.tbl_col_detector import TableColumnDetector
@@ -27,8 +27,8 @@ from gmp_compliance.src.model_tools.feature_enricher import FeatureEnricher
 # from src.core.text_merger import TextMerger
 # # text_clean_extractor import TextCleanExtractor
 
-from src.tools.extract_wiki import extract_wiki_article
-from src.tools.post_extract_processing_wiki import process_wiki
+from src.tools_parsing.extract_wiki import extract_wiki_article
+from src.tools_parsing.post_extract_processing_wiki import process_wiki
 # from src.tools.extract_html import extract_html_file
 # from src.tools.extract_pdf import extract_pdf_file
 # from src.tools.post_extract_processing_pdf import process_pdf

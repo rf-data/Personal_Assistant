@@ -1,9 +1,11 @@
 # imports
 import hashlib
-
+import ast
 # from src.schema.aggregation_schema import (AggregatedResult,
 #                                            LLMAggregatedResult)
+import re
 import inspect
+from typing import Any
 
 # import numpy as np
 import json
@@ -18,6 +20,136 @@ from src.core.memory import app_session
 from src.utils.path_helper import ensure_dir    # , shorten_path
 
 
+######################
+# DEPENDENCY_ANALYZER
+######################
+
+# import ast
+
+# with open("module.py") as f:
+#     tree = ast.parse(f.read())
+
+# for node in ast.walk(tree):
+#     if isinstance(node, ast.Import):
+#         for name in node.names:
+#             print(name.name)
+
+# ######################
+# # RETRY_FRAMEWORK
+# ######################
+
+# import time
+
+# def retry(func, attempts=3):
+#     for i in range(attempts):
+#         try:
+#             return func()
+#         except Exception:
+#             if i == attempts - 1:
+#                 raise
+
+#             time.sleep(2 ** i)
+
+# ######################
+
+# def extract_functions(file_path):
+#     with open(file_path, "r") as f:
+#         tree = ast.parse(f.read())
+#     return [node.name for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
+
+# functions = extract_functions("app.py")
+# for fn in functions:
+#     print(f"Explain what `{fn}` does and why it exists.")
+
+
+
+def get_file_config(
+            config_root: Any, 
+            file_type: str
+            ) -> Any:
+    try:
+        return getattr(config_root, file_type)
+    except AttributeError as exc:
+        raise ValueError(
+                f"No config found for file_type='{file_type}' "
+                f"in {type(config_root).__name__}"
+                ) from exc
+
+
+def get_git_difference():
+    diff = subprocess.check_output(["git", "diff", "--stat"])
+    print(diff.decode())
+    return 
+
+
+def git_stats():
+    commits = subprocess.check_output(
+        ["git", "rev-list", "--count", "HEAD"]
+    ).decode().strip()
+    return {"commits": commits}
+print(git_stats())
+
+
+import ast
+import os
+'''
+def find_unused_imports(path):
+    for file in os.listdir(path):
+        if file.endswith(".py"):
+            tree = ast.parse(open(os.path.join(path, file)).read())
+            imports = {n.name for n in ast.walk(tree) if isinstance(n, ast.Import)}
+            names = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name)}
+            unused = imports - names
+            if unused:
+                print(file, unused)
+
+find_unused_imports("src")
+'''
+def find_unused_imports(file_path):
+    with open(file_path, "r",
+              encoding="utf-8") as f:
+        tree = ast.parse(f.read())
+    
+    imports = set()
+    
+    used = set()
+    
+    for node in ast.walk(tree):
+        
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                imports.add(alias.name)
+        elif isinstance(node, ast.Name):
+            used.add(node.id)
+    return imports - used
+
+# print(find_unused_imports("app.py"))
+
+
+patterns = {
+    "AWS Key":
+        r"AKIA[0-9A-Z]{16}",
+    "OpenAI Key":
+        r"sk-[A-Za-z0-9]{20,}",
+    "Generic Token":
+        r"(?i)(api|secret|token).{0,20}[=:].+"
+}
+
+def scan_file(file_path):
+    
+    with open(file_path,
+              encoding="utf-8",
+              errors="ignore") as f:
+        content = f.read()
+    
+    for name, pattern in patterns.items():
+        if re.search(pattern, content):
+            print(
+                f"Potential {name} found "
+                f"in {file_path}"
+            )
+
+# scan_file("config.py")
 
 def make_cache_key(url: str, params: dict) -> str:
 
@@ -200,6 +332,48 @@ def load_env_vars(name: list | str = ".env"):
 
     return
 
+import subprocess
+import sys
+'''
+checks = [
+    ["python", "-m", "compileall", "."],
+    ["pytest"],
+]
+
+for cmd in checks:
+    if subprocess.call(cmd) != 0:
+        print("❌ Check failed:", cmd)
+        sys.exit(1)
+
+print("✅ All checks passed.")
+'''
+
+
+'''
+import hashlib
+
+def calculate_hash(filename):
+
+    sha256 = hashlib.sha256()
+
+    with open(filename, "rb") as f:
+        while chunk := f.read(4096):
+            sha256.update(chunk)
+
+    return sha256.hexdigest()
+
+def verify_file(file_path, expected_hash):
+
+    current_hash = calculate_hash(file_path)
+
+    if current_hash == expected_hash:
+        print("File integrity verified")
+        return True
+
+    else:
+        print("File corrupted")
+        return False
+'''
 
 def get_git_commit():
     try:

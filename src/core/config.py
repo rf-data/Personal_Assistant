@@ -12,9 +12,9 @@ from typing import List, Literal, Annotated    # Dict,
 
 
 # ------------------------------------
-# FILE_TYPE SPECIFIC RUN SETTINGS
+# FILE_TYPE SPECIFIC PARSING SETTINGS
 # ------------------------------------
-class RunFileSettings(BaseModel):
+class ParseFileSettings(BaseModel):
     save: List[
             Literal[
                 False,
@@ -29,36 +29,36 @@ class RunFileSettings(BaseModel):
     scrape_images: bool = False
 
 
-class RunHTMLSettings(RunFileSettings):
+class ParseHTMLSettings(ParseFileSettings):
     apollo: bool = Field(default_factory=bool)
     parser: str = Field(default_factory=str)
 
 
-class RunMDSettings(RunFileSettings):
+class ParseMDSettings(ParseFileSettings):
     pass
 
 
-class RunNotebookSettings(RunFileSettings):
-    pass
+class ParseNotebookSettings(ParseFileSettings):
+    parser: str = Field(default_factory=str)
 
 
-class RunPDFSettings(RunFileSettings):
+class ParsePDFSettings(ParseFileSettings):
     extract_source: List[str] = Field(default_factory=list)
     extraction_model: str = ""
     extract_text_info: bool = False
-    extract_grafics: bool = False 
+    extract_graphics: bool = False 
     percentiles: List[float] = Field(default_factory=list)
 
 
-class RunPlainTextSettings(RunFileSettings):
+class ParsePlainTextSettings(ParseFileSettings):
     pass
 
 
-class RunURLSettings(RunFileSettings):
+class ParseURLSettings(ParseFileSettings):
     pass
 
 
-class RunWikiSettings(RunFileSettings):
+class ParseWikiSettings(ParseFileSettings):
     query: str|None = None
     query_time: str|None = None
     query_param: Literal["page_title", "page_id"] = Field(default="page_id")
@@ -74,7 +74,7 @@ class RunWikiSettings(RunFileSettings):
 # FILE_TYPE SPECIFIC GENERAL SETTINGS
 # ------------------------------------
 class GeneralFileSettings(BaseModel):
-    parser: str = ""
+    # parser: str = ""
     extraction_tags: List[str] = Field(default_factory=list)
     # assemble_as_md: bool = Field(default_factory=bool)
     # scrape_images: bool = Field(default_factory=bool)
@@ -128,6 +128,33 @@ class GenWikiSettings(GeneralFileSettings):
 # ------------------------------------
 # TOP_LEVEL SETTINGS
 # ------------------------------------
+
+class ChunkSettings(BaseModel):
+    container_types: List = Field(default_factory=list) 
+    # [
+    #                         "heading",
+    #                         "paragraph",
+    #                         "code",
+    #                         "bullet_list"
+    #                         ]
+    spacy_language: Literal[
+                        "de_core_news_sm", 
+                        None
+                        ] = Field(default=None)
+    # "",
+    max_tokens: int = Field(default_factory=int)
+    overlap_sentences: int = Field(default_factory=int)
+    batch_size: int = Field(default_factory=int)
+    transformer_model: Literal[
+                        "all-MiniLM-L6-v2", 
+                        None
+                        ] = Field(default=None)
+
+    model_config = ConfigDict(
+        extra="forbid"
+    )
+
+
 class GeneralSettings(BaseModel):
     txt_elements: List[str] = Field(default_factory=list)
     md_elements: List[str] = Field(default_factory=list)
@@ -149,22 +176,32 @@ class GeneralSettings(BaseModel):
     # general_config: Dict = Field(default_factory=dict)
     # extract_config: Dict = Field(default_factory=dict)
 
+
+class NIRSettigs(BaseModel):
+    n_pca_comps: int = Field(default_factory=int)
+    q_quantile: float = Field(default_factory=float)
+    t2_quantile: float = Field(default_factory=float)
+
+    sg_deriv: int = Field(default_factory=int)
+    sg_poly: int = Field(default_factory=int)
+    sg_window_len: int = Field(default_factory=int)
     
 
-class RunSettings(BaseModel):
+
+class ParseSettings(BaseModel):
     name_log: str = Field(default_factory=str)
     name_logfile: str = Field(default_factory=str)
     llm_model: str = Field(default_factory=str)
     url_path: List[str] | None = Field(default=None)
     file_names: List[str] | None = Field(default=None)
 
-    html: RunHTMLSettings = Field(default_factory=RunHTMLSettings)
-    json_nb: RunNotebookSettings = Field(default_factory=RunNotebookSettings)
-    md: RunMDSettings = Field(default_factory=RunMDSettings)
-    pdf: RunPDFSettings = Field(default_factory=RunPDFSettings)
-    plain_text: RunPlainTextSettings = Field(default_factory=RunPlainTextSettings)
-    url: RunURLSettings = Field(default_factory=RunURLSettings)
-    wiki: RunWikiSettings = Field(default_factory=RunWikiSettings)
+    html: ParseHTMLSettings = Field(default_factory=ParseHTMLSettings)
+    json_nb: ParseNotebookSettings = Field(default_factory=ParseNotebookSettings)
+    md: ParseMDSettings = Field(default_factory=ParseMDSettings)
+    pdf: ParsePDFSettings = Field(default_factory=ParsePDFSettings)
+    plain_text: ParsePlainTextSettings = Field(default_factory=ParsePlainTextSettings)
+    url: ParseURLSettings = Field(default_factory=ParseURLSettings)
+    wiki: ParseWikiSettings = Field(default_factory=ParseWikiSettings)
 
     model_config = ConfigDict(
         extra="forbid"
@@ -172,13 +209,16 @@ class RunSettings(BaseModel):
 
 
 
-RunSettings_all = Annotated[
-            RunHTMLSettings | RunNotebookSettings | \
-            RunMDSettings | RunPDFSettings | \
-            RunPlainTextSettings | RunURLSettings | \
-            RunWikiSettings,
-            Field(discriminator="meta_type"),
+ParseSettings_all = Annotated[
+            ParseHTMLSettings | ParseNotebookSettings | \
+            ParseMDSettings | ParsePDFSettings | \
+            ParsePlainTextSettings | ParseURLSettings | \
+            ParseWikiSettings,
+            Field(discriminator="meta_type")
             ]
+
+RunSettings = Annotated[ParseSettings_all | ChunkSettings,
+                        Field(discriminator="meta_type")]
     # def __post_init__(self):
 
     #     load_env_vars(name=self.env_name)

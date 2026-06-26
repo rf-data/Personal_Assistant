@@ -8,39 +8,74 @@ from dataclasses import dataclass, field
 from tiktoken import encoding_for_model
 
 
-from src.core.config import (RunSettings, 
-                             RunSettings_all, 
-                             GeneralSettings)
+from src.core.config import (
+                        ChunkSettings,
+                        GeneralSettings,
+                        # NIRSettings,
+                        ParseSettings, 
+                        # ParseSettings_all 
+                        )
 
-@dataclass
-class AppSession:
-    encoder = encoding_for_model
-    env_loaded: list[str] = field(default_factory=list)
-    general_settings: GeneralSettings = field(default_factory=GeneralSettings)
-    logger: ClassVar = logging.getLogger(__name__)
-    run_settings: RunSettings = field(default_factory=RunSettings)
-    # timestamp: str = field(default_factory=str)
-
-    # frontend_config: FrontendConfig
-
-app_session = AppSession()
 
 
 @dataclass
-class RunContext:    
+class ParseContext:    
+    chunk_settings: ChunkSettings = field(
+                    default_factory=ChunkSettings
+                    )
     encoder = encoding_for_model
     general_settings: GeneralSettings = field(default_factory=GeneralSettings)
-    run_settings: RunSettings_all = field(default_factory=RunSettings_all)
-    text_type: Literal["txt", "md", "pdf", 
-                       "json_nb", "wiki",
-                       "html",
-                       "url", None] = field(default=None)
+    parse_settings: ParseSettings = field(
+                            default_factory=ParseSettings   # _all
+                            )
+    text_type: Literal[
+                    "txt", 
+                    "md", 
+                    "pdf", 
+                    "json_nb", 
+                    "wiki",
+                    "html",
+                    "url", 
+                    None
+                    ] = field(default=None)
     save_folder: str | Path = field(default_factory=str)
     save_name: str | Path = field(default_factory=str)
     timestamp: datetime | str | None = field(default=None)
     run_id: str = field(default_factory=str)
     logger: ClassVar = logging.getLogger(__name__)
     header: Dict = field(default_factory=dict)
+
+
+@dataclass
+class AppSession:
+    chunk_settings: ChunkSettings = field(
+                                default_factory=ChunkSettings
+                                )
+    encoder = encoding_for_model
+    env_loaded: list[str] = field(default_factory=list)
+    general_settings: GeneralSettings = field(default_factory=GeneralSettings)
+    logger: ClassVar = logging.getLogger(__name__)
+    parse_settings: ParseSettings = field(default_factory=ParseSettings)
+    run_context: ParseContext = field(default_factory=ParseContext)
+    timestamp: str = field(default_factory=str)
+
+
+    # frontend_config: FrontendConfig
+
+app_session = AppSession()
+
+
+# @dataclass
+# class NIRContext:  
+#     nir_settings: NIRSettings = field(
+#                     default_factory=NIRSettings
+#                     )
+#     save_folder: str | Path = field(default_factory=str)
+#     save_name: str | Path = field(default_factory=str)
+#     timestamp: datetime | str | None = field(default=None)
+#     logger: ClassVar = logging.getLogger(__name__)
+
+
     
     # TO-DO: replace 'suffix' with text_type + suffix_dict
     # suffix: str = field(default_factory=str)

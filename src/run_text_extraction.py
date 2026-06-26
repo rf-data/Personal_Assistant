@@ -27,16 +27,16 @@ from src.model_tools.text_extractor import MDCleanExtractor, TXTCleanExtractor
 # from src.core.document_classifier import DocumentClassifier
 # from src.core.text_merger import TextMerger
 # # text_clean_extractor import TextCleanExtractor
-from src.tools.assemble_pdf import assemble_single_pdf
-from src.tools.classify_txt import classify_txt_file
-from src.tools.extract_html import extract_html_file
-from src.tools.extract_md import extract_md_file
-from src.tools.extract_notebook import extract_notebook_json
-from src.tools.extract_pdf import extract_pdf_file
-from src.tools.extract_txt import extract_txt_file
+from src.tools_parsing.assemble_pdf import assemble_single_pdf
+from src.tools_parsing.classify_txt import classify_txt_file
+from src.tools_parsing.extract_html import extract_html_file
+from src.tools_parsing.extract_md import extract_md_file
+from src.tools_parsing.extract_notebook import extract_notebook_json
+from src.tools_parsing.extract_pdf import extract_pdf_file
+from src.tools_parsing.extract_txt import extract_txt_file
 # from src.tools.extract_medium import extract_url
-from src.tools.extract_wiki import extract_wiki_article
-from src.tools.post_extract_processing_pdf import process_pdf
+from src.tools_parsing.extract_wiki import extract_wiki_article
+from src.tools_parsing.post_extract_processing_pdf import process_pdf
 from src.utils.dict_helper import get_yaml_config
 
 # from src.tools.post_extract_processing_wiki import process_wiki
@@ -60,7 +60,7 @@ def text_file_extraction():
 
     # config_name = input("Enter 'config_file' name (no suffix): ")
     general_config = get_yaml_config("extract_text")
-    session_state.general_config = general_config
+    app_session.general_config = general_config
 
     run_config = get_yaml_config("run_args")
     session_state.run_config = run_config
@@ -87,7 +87,7 @@ def text_file_extraction():
 
     model_name = run_config["llm_model"]
     encoder = encoding_for_model(model_name)
-    session_state.encoder = encoder
+    app_session.encoder = encoder
 
     file_names = run_config.get("file_names")
     url = run_config.get("url")
@@ -228,7 +228,9 @@ def run_text_file_extraction(
                 enricher=feat_enricher
             )
 
-            pdf_extract_raw = extract_pdf_file(f_path, pdf_extractor, save=True)
+            pdf_extract_raw = extract_pdf_file(f_path, 
+                                               pdf_extractor, 
+                                               save=True)
 
             app_session.save_folder = Path(f"{data_processed}/pdf_files/processed")
             # session.state.save_name = f"{now}_{f_name}"
