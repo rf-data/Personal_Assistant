@@ -1,21 +1,30 @@
 ## retrieve.py
 # imports
-import numpy as np
-import pandas as pd
-from tiktoken import encoding_for_model
+# import numpy as np
+# import pandas as pd
+# from tiktoken import encoding_for_model
 
-import src.utils.dict_helper as dh
-import src.utils.general_helper as gh
-from src.core.memory import session
+# import src.utils.dict_helper as dh
+# import src.utils.general_helper as gh
+# from src.core.memory import session
 
-TEST_QUERIES = [
-    "Was isr GMP?",
-    "Wie werden Wirkstoffe geprüft?",
-    "Was sind Anforderungen an Hersteller?",
-    "Was steht in Kapitel %?",
-]
+# TEST_QUERIES = [
+#     "Was ist GMP?",
+#     "Wie werden Wirkstoffe geprüft?",
+#     "Was sind Anforderungen an Hersteller?",
+#     "Was steht in Kapitel %?",
+# ]
 
 
+def normalise_chroma_results(results: dict) -> list[dict]:
+
+    chunks_norm = results
+
+    return chunks_norm
+
+
+
+'''
 def retrieve():
     # load env variables and config
     gh.load_env_vars()
@@ -29,7 +38,7 @@ def retrieve():
 
 def run_retrieve():
     config = session.model_config
-    n_retrieve = config["n_retireve"]
+    n_retrieve = config["n_retrieve"]
 
     # load df
     file_path = ""
@@ -97,3 +106,4 @@ def _evaluate_rag():
     qualitative Bewertung
     """
     return
+'''

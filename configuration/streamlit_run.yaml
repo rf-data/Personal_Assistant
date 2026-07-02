@@ -7,7 +7,7 @@ name_logfile: streamlit_demo
 llm_model: gpt-4o-mini
 
 url_path: 
-file_names:
+file_name:
 
 # HTML
 html:

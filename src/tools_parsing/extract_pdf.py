@@ -16,7 +16,7 @@ from src.core.memory import ParseContext
 
 # from gmp_compliance.src.tools.__dev__extraction import extract_text_per_page
 from src.model_tools_parsing.pdf_extractor import PDFCleanExtractor
-from src.model_classes_parsing.classes_pdf_parsing import PDFPageExtract
+from src.model_classes_parsing.base_classes_parsing import PDFPageExtract
 # from src.core.feature_enricher import FeatureEnricher
 
 # import src.utils.general_helper as gh
@@ -47,13 +47,13 @@ def extract_pdf_file(
     logger = app_session.logger
     logger.info("Starting extracting PDF-FILE.")
 
-    input_data = os.getenv("DATA_INPUT")
-    assert input_data is not None
+    # input_data = os.getenv("DATA_INPUT")
+    # assert input_data is not None
 
     # name_short = Path(f_path).name.split(".")[0]
 
     # extract content from file
-    f_name = parse_context.parse_settings.file_names
+    f_name = parse_context.parse_settings.file_name
     # f_path = f"{input_data}/{f_name}"
     extract_results = extractor.extract_text_per_page(f_name)
 

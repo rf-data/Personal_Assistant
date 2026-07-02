@@ -3,10 +3,13 @@
 # import logging
 import re
 import unicodedata
-from dataclasses import dataclass   # , field
+import logging
+from dataclasses import dataclass, field
+# from typing import Any
 
 from src.model_tools_parsing.feature_enricher import FeatureEnricher
 from src.core.memory import ParseContext
+from src.utils.general_helper import get_file_config
 
 
 @dataclass
@@ -15,17 +18,41 @@ class BaseExtractor:
     # extract_config: dict = field(default_factory=dict)
     # logger = logging.getLogger(__name__)
     # doc_name: str = field(default_factory=str)
+    parse_context: ParseContext = field(init=False)
+    text_type: str = field(init=False)
 
-    def __init__(self, 
-                 enricher: FeatureEnricher, 
-                 parse_context: ParseContext):
-        self.enricher = enricher
+    enricher: FeatureEnricher   #  = field(init=False)
+    # extract_config:  = parse_context.parse_settings
+    logger: logging.Logger = field(init=False)
+    
+                #  enricher: FeatureEnricher, 
+                #  parse_context: ParseContext
 
-        self.extract_config = parse_context.parse_settings
-        self.logger = parse_context.logger
-        
+    def __post_init__(self):
+
+        self.logger = self.parse_context.logger
+        # self.enricher = enricher
+
+        self.save_folder = self.parse_context.save_folder
+        self.save_name = self.parse_context.save_name
+        self.doc_name = self.parse_context.run_id
+
+        self.extract_config = get_file_config(
+                                    self.parse_context.parse_settings,
+                                    self.text_type
+                                    )
+        self.general_config = get_file_config(
+                                    self.parse_context.general_settings,
+                                    self.text_type
+                                    )
+        self.setup()
 
         return 
+
+
+    def setup(self):
+        """Hook für Subklassen."""
+        pass
 
 
     def extract(self):

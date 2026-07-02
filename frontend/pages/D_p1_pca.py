@@ -28,10 +28,14 @@ def show():
         input_data = os.getenv("DATA_INPUT")
         assert input_data is not None
 
+        st.warning("ADAPT TO NEW FILE SYSTEM")
+
         pca_file = st.selectbox(
                     label="Which data file(s) should be used?",
-                    options=[shorten_path(f, n=1) for f in Path(input_data).iterdir()
-                            if f.suffix == ".csv"],
+                    options=list(Path(input_data).rglob("*.csv")), 
+                    format_func=lambda p: shorten_path(p, n=1), 
+                    # options=[shorten_path(f, n=1) for f in Path(input_data).iterdir()
+                    #         if f.suffix == ".csv"],
                     key="files_pca"
                     )
         

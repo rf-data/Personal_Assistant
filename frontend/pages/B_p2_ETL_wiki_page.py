@@ -3,9 +3,55 @@
 import streamlit as st
 from datetime import datetime
 
+from src.core.memory import app_session, ParseContext
+from src.tools_parsing.search_wiki import wiki_article_search
+
+
 
 def show():
     # st.header("🏠 Startseite ")
+
+    st.subheader("**Wikipedia Query**")
+
+    st.divider()
+
+    # st.markdown("Enter your ")
+
+    st.markdown("**Enter a query**")
+    query = st.text_input(
+                        label="Enter the query",
+                        placeholder=""
+                        )
+    
+    results = None
+    # general_cfg = session_state.general_settings
+    if st.button("Start query"):
+        # st.write("Why hello there")
+
+        # from src.core.memory import app_session
+
+        parse_config = app_session.parse_settings
+        parse_config.wiki.query = query
+
+        parse_context = ParseContext(
+                            parse_settings = app_session.parse_settings
+                            )
+
+        parse_context.logger = app_session.logger
+
+        # query_cmd = ["python", "-u", "-m", "src.tools.search_wiki"]
+
+        # live_command_demo(query_cmd)
+        results = wiki_article_search(
+                            parse_context=parse_context
+                            )
+
+    if results:
+        with st.popover("**Results**"):      
+            st.json(results.model_dump())
+
+    st.divider()
+
     st.subheader("**'Extracting content from Wikipedia'**")
 
     st.divider()
@@ -16,8 +62,10 @@ def show():
     col1, col2 = st.columns(2, border=True)
 
     with col1:
-        st.markdown("**Enter Page_ID(s)**")
-        page_id = st.number_input()
+        # st.markdown("")
+        page_id = st.number_input(
+                        label="**Enter Page_ID(s)**"
+        )
 
     with col2:
         st.markdown("**Enter a query and the corresponding query_time**")

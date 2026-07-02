@@ -27,13 +27,15 @@ def show():
     with file_select:
         st.subheader("🖼️ Select an JSON file")
 
-        input_data = os.getenv("DATA_INPUT")
-        assert input_data is not None
+        nb_data = os.getenv("DATA_JSON_NB")
+        assert nb_data is not None
+
+        input_data = f"{nb_data}/input"
 
         files_json = st.multiselect(
                     label="Which html file(s) should be parsed?",
-                    options=[shorten_path(f, n=1) for f in Path(input_data).iterdir()
-                            if f.suffix == ".json"],
+                    options=list(Path(input_data).rglob("*.json")), 
+                    format_func=lambda p: shorten_path(p, n=1), 
                     key="files_json"
                     )
         parse_config.file_names = st.session_state["files_json"] # html_select
@@ -106,8 +108,7 @@ def show():
     if "json_parsed" not in st.session_state:
         st.session_state["json_parsed"] = "ready"
 
-
-    data_processed = os.getenv("DATA_PROCESSED")
+    data_processed = f"{nb_data}/processed"
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     st.divider()

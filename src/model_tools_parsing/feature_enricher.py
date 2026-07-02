@@ -29,6 +29,7 @@ from src.model_classes_parsing.base_classes_parsing import (
 )
 
 
+
 @dataclass
 class FeatureEnricher:
     
@@ -312,6 +313,7 @@ class FeatureEnricher:
         # info_obj["inter_word_gap"] = self._get_inter_word_gaps(leaf_info)
 
         return info_obj
+
 
     def _get_inter_word_gaps(self, leaf_info: list[Word]):
 

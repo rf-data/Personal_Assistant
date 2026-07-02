@@ -193,7 +193,9 @@ class ParseSettings(BaseModel):
     name_logfile: str = Field(default_factory=str)
     llm_model: str = Field(default_factory=str)
     url_path: List[str] | None = Field(default=None)
-    file_names: List[str] | None = Field(default=None)
+    file_name: str | None = Field(default=None)
+    file_id: int = Field(default_factory=int)
+    page_range: list[int] | Literal["all"] = Field(default="all")
 
     html: ParseHTMLSettings = Field(default_factory=ParseHTMLSettings)
     json_nb: ParseNotebookSettings = Field(default_factory=ParseNotebookSettings)

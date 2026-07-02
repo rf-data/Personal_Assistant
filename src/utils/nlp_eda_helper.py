@@ -82,7 +82,7 @@ def describe_text_metrics(df_in, group_col, metrics=None):
     if group_col:
         print("\n(2) per group:")
         col_no = 1
-            for col in metrics:
+        for col in metrics:
             print(f"(2_{col_no}) '{col}':\n",
                     df_metrics.groupby(group_col)[col].describe().round(3))
             print()

@@ -2,11 +2,12 @@
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, ClassVar, Literal, List
+from pydantic import Field
+from typing import Any, Dict, ClassVar, Literal, List, Annotated
 from dataclasses import dataclass, field
 
+from openai import OpenAI
 from tiktoken import encoding_for_model
-
 
 from src.core.config import (
                         ChunkSettings,
@@ -15,6 +16,20 @@ from src.core.config import (
                         ParseSettings, 
                         # ParseSettings_all 
                         )
+
+LLMClient = Annotated[
+                OpenAI,
+                Field(discriminator="meta_type")
+                ]
+
+@dataclass
+class RAGContext: 
+    client: LLMClient = field(default_factory=LLMClient)
+    query: str = field(default_factory=str)
+    results: Dict = field(default_factory=dict)
+    save_folder: str = field(default_factory=str)
+    save_name : str = field(default_factory=str)
+
 
 
 

@@ -10,7 +10,7 @@ def show():
     st.divider()
 
     summary, merge = st.tabs(["Summarize file(s)",
-                              "Merge file cotent"])
+                              "Merge file content"])
 
     with summary:
         st.markdown("**Under Construction**")

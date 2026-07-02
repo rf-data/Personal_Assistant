@@ -16,7 +16,7 @@ from src.tools_parsing.extract_html import extract_html_file
 
 from src.utils.path_helper import shorten_path  
 # from src.utils.text_file_helper import save_text_file
-from src.utils.html_helper import read_html_file
+from src.utils.streamlit_helper import st_file_preview
 
 
 """
@@ -37,8 +37,10 @@ def show():
     with file_select:
         st.subheader("🖼️ Select an html file")
 
-        input_data = os.getenv("DATA_INPUT")
-        assert input_data is not None
+        html_data = os.getenv("DATA_HTML")
+        assert html_data is not None
+
+        input_data = f"{html_data}/input"
 
         files_html = st.selectbox(       # multiselect(
                     label="Which html file(s) should be parsed?",
@@ -48,7 +50,7 @@ def show():
                     #         if f.suffix == ".html"],
                     key="files_html"
                     )
-        parse_config.file_names = st.session_state["files_html"] # html_select
+        parse_config.file_name = st.session_state["files_html"] # html_select
 
         st.write(f"You selected {len(files_html)} files:")
         for idx, file in enumerate(files_html): 
@@ -57,13 +59,10 @@ def show():
     with file_preview:
         st.subheader("File Preview")
         for idx, file in enumerate(files_html):
+            st_file_preview(file)
             # st.markdown(f"**File #{idx}: '{Path(file).stem}'**\n",
             #             unsafe_allow_html=True)
             
-            html_str = read_html_file(f"{input_data}/{file}")
-
-            with st.expander(f"**File #{idx}: '{Path(file).stem}'**"):
-                st.html(html_str[:500])
 
             st.divider()
 
@@ -119,7 +118,7 @@ def show():
         st.session_state["html_parsed"] = "ready"
 
 
-    data_processed = os.getenv("DATA_PROCESSED")
+    data_processed = f"{html_data}/processed"# os.getenv("DATA_PROCESSED")
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     st.divider()

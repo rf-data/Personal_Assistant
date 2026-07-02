@@ -26,13 +26,16 @@ def show():
     # with file_select:
     st.subheader("🖼️ Select a CSV file")
 
-    input_data = os.getenv("DATA_INPUT")
+    input_data = os.getenv("DATA_DIR")
     assert input_data is not None
 
+    st.warning("ADAPT TO NEW FILE SYSTEM")
+    
     file_eda = st.selectbox(
                     label="Which csv file should be explored?",
-                    options=[shorten_path(f, n=1) for f in Path(input_data).iterdir()
-                            if f.suffix == ".csv"],
+                    options=list(Path(input_data).rglob("*.csv")),
+                    # [shorten_path(f, n=1) for f in Path(input_data).iterdir()
+                    #         if f.suffix == ".csv"],
                     key="file_eda"
                     )
         

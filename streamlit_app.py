@@ -7,10 +7,10 @@ import streamlit as st
 from tiktoken import encoding_for_model
 
 from src.utils.dict_helper import get_yaml_config
-from frontend.pages import ( 
-                        A_p0_wiki_search,
-                        A_p1_file_system,
-                        A_p2_process_by_LLM, 
+from frontend.pages import (
+                        A_p0_rag_system, 
+                        A_p1_simple_LLM_actions, 
+                        A_p2_file_system,
                         A_p3_transcribe,
                         A_p4_emails, 
                         A_p5_monitoring, 
@@ -76,7 +76,7 @@ if "page" not in st.session_state:
     st.session_state.page = "General Features"
 
 if "subpage" not in st.session_state:
-    st.session_state.subpage = "WikiQuery"
+    st.session_state.subpage = "RAG System"
 
 if "navigate_to" not in st.session_state:
     st.session_state.navigate_to = None
@@ -114,7 +114,7 @@ with st.sidebar:        # Page Switching
     st.markdown("---")
 
 PROJECT_MAP = {
-    "General Features": ("General Features", "WikiQuery"),
+    "General Features": ("General Features", "RAG System"),
     "Extract Text": ("Extract Text", "ETL HTML"),
     "Extract Data": ("Extract Data", "ETL Excel"),
     "DataViz & Dashboards": ("DataViz & Dashboards", "EDA_dash"),
@@ -135,9 +135,9 @@ with st.sidebar:
         st.radio(
                 "Choose a tool",
                 options=[
-                    "WikiQuery",
+                    "RAG System",
+                    "simple LLM actions",
                     "File System",
-                    "LLM processing",
                     "Transcription",
                     "E-Mail & Calender",
                     "Monitoring"
@@ -145,7 +145,7 @@ with st.sidebar:
                 key="subpage",
                 label_visibility="collapsed"
             )
-  
+
     elif st.session_state.page == "Extract Text":
         st.subheader("Extract Text")
 
@@ -156,7 +156,7 @@ with st.sidebar:
                     "ETL pdf_file",
                     "ETL wiki_page",
                     "ETL json_notebook",
-                    "ETL word"
+                    "ETL word",
                     "ETL md_file",
                     "ETL OCR text",
                     "ETL plain_text",
@@ -214,9 +214,9 @@ page = st.session_state.page
 sub = st.session_state.subpage
 
 if page == "General Features":
-    if sub == "WikiQuery": A_p0_wiki_search.show()
-    elif sub == "File System": A_p1_file_system.show()
-    elif sub == "LLM processing": A_p2_process_by_LLM.show()
+    if sub == "RAG System": A_p0_rag_system.show()
+    elif sub == "simple LLM actions": A_p1_simple_LLM_actions.show()
+    elif sub == "File System": A_p2_file_system.show()
     elif sub == "Transcription": A_p3_transcribe.show()
     elif sub == "E-Mails & Calender": A_p4_emails.show()
     elif sub == "Monitoring": A_p5_monitoring.show()

@@ -89,7 +89,7 @@ def add_chroma_data(coll_name: str,
 
     logger = app_session.logger
 
-    f_text = list(data[["text"]])
+    f_text = list(data[["chunk_text"]])
     assert len(f_text) > 0
 
     f_meta = meta_data.get("meta", {})
@@ -116,7 +116,7 @@ def add_chroma_data(coll_name: str,
 
 # collection.upsert()       -> update + insert data
 
-def run_chroma_similarity(chroma_coll: Collection, 
+def run_chroma_query(chroma_coll: Collection, 
                           query: str, 
                           n_results: int=1):
 
@@ -125,6 +125,12 @@ def run_chroma_similarity(chroma_coll: Collection,
                     n_results=n_results
                 )
     
+#     collection.query(
+#     query_embeddings=[[11.1, 12.1, 13.1], [1.1, 2.3, 3.2]],
+#     n_results=100,
+#     where={"page": 10}, # query records with metadata field 'page' equal to 10
+#     where_document={"$contains": "search string"} # query records with the search string in the records' document
+# )
     app_session.logger.info("Result from query '%s':\n%s",
                             query,
                             results)

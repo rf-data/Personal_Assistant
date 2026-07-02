@@ -1,10 +1,24 @@
 ## txt_file_helper.py
 # import
 from pathlib import Path
+from docx import Document
 
 # import src.utils.general_helper as gh
 from src.utils.path_helper import ensure_dir, shorten_path
 from src.core.memory import app_session
+
+
+
+def read_docx_text(path):
+    doc = Document(path)
+    lines = []
+
+    for p in doc.paragraphs:
+        if p.text.strip():
+            lines.append(p.text.strip())
+
+    return "\n\n".join(lines)
+
 
 
 def read_text_file(f_path):

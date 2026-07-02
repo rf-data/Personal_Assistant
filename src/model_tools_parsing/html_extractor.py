@@ -15,7 +15,7 @@ from bs4 import NavigableString  # , Tag
 from src.model_classes_parsing.base_classes_parsing import (
     Code, 
     CodeMeta,
-    Document,
+    RawDocument,
     DocumentExtract,
     Element,
     ElementMeta,
@@ -78,27 +78,30 @@ class HTMLCleanExtractor(BaseExtractor):
         "image/gif": ".gif",
     }
 
-    def __init__(self, 
-                 enricher: FeatureEnricher, 
-                 parse_context: ParseContext):
+    # def __init__(self, 
+    #              enricher: FeatureEnricher, 
+    #              parse_context: ParseContext):
         
-        self.doc_name = parse_context.run_id
-        self.enricher = enricher
-        self.extract_config = parse_context.run_settings.html
-        self.extraction_tags = parse_context.general_settings.html.extraction_tags
-        self.header = parse_context.header
+    #     self.enricher = enricher
+    #     self.extract_config = parse_context.parse_settings.html
 
-        self.logger = parse_context.logger
-        self.parser = self.extract_config.parser
-        self.save_folder = parse_context.save_folder
-        self.save_name = parse_context.save_name
-        self.text_type = parse_context.text_type
+    #     self.logger = parse_context.logger
+    #     self.save_folder = parse_context.save_folder
+    #     self.save_name = parse_context.save_name
+    #     self.text_type = parse_context.text_type
 
-        return 
+    #     return 
 
     # def __post_init__(self, run_context: RunContext):
         
     #     return
+
+    def setup(self):
+        self.parser = self.extract_config.parser
+        self.extraction_tags = self.general_config.extraction_tags
+        self.header = self.parse_context.header
+
+        return 
 
 
     def extract(
@@ -143,7 +146,7 @@ class HTMLCleanExtractor(BaseExtractor):
 
         text_clean = "\n\n".join([ele.text for ele in elements_clean])
         doc_info = self.enricher._add_basic_metadata(
-            text_clean, elements_clean, Document()
+            text_clean, elements_clean, RawDocument()
         )
         
         f_path = Path(f"{self.save_folder}/{self.save_name}")

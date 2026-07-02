@@ -17,7 +17,7 @@ from src.model_tools_parsing.pdf_classifier import PDFClassifier
 from src.model_tools_parsing.pdf_cleaner import PDFCleaner
 from src.model_tools_parsing.pdf_merger import PDFMerger
 from src.model_tools_parsing.feature_enricher import FeatureEnricher
-from src.model_classes_parsing.classes_pdf_parsing import PDFPageExtract
+from src.model_classes_parsing.base_classes_parsing import PDFPageExtract
 
 # from src.tools.chunk import prepare_chunk_df
 # import src.utils.general_helper as gh
@@ -65,7 +65,11 @@ def post_process_pdf(
     merger = PDFMerger(parse_context=parse_context, 
                        enricher=feat_enricher)
     
-    
+    save = parse_context.parse_settings.pdf.save
+    # if self.save and "assembled" in self.save:
+    #         save_path = f"{self.save_folder}/{self.save_name}_assembled"
+    #         save_dict(f_infos, save_path)
+
     for p_extract in extracts:
 
         if isinstance(p_extract, Success):
@@ -95,30 +99,39 @@ def post_process_pdf(
         class_dict = classifier.classify_line(groups_sorted, 
                                               page_attributes)
         # logger.info("Length 'text_segments' (after detect):\t%s", len(text_segments))
-        save_dict(class_dict, f"{save_path}_class")
+        
+        if save and "class" in save:
+            save_dict(class_dict, f"{save_path}_class")
 
         blocks_text = merger.merge_text_lines(
                                         class_dict["text"],
+                                        class_dict["headings"],
                                         page_attributes
                                         )
-        save_dict(class_dict, f"{save_path}_merge")
+        
+        if save and "merge" in save:
+            save_dict(class_dict, f"{save_path}_merge")
 
-        blocks_text = cleaner.handle_body_text_hyphens(blocks_text)
+        blocks_text_clean = cleaner.handle_body_text_hyphens(blocks_text)
 
-        p_extract.text_bodies = blocks_text
+        p_extract.text_bodies = blocks_text_clean["text_bodies"]
+        p_extract.bullets = blocks_text_clean["bullets"]
         p_extract.header_footer = class_dict["header_footer"]
-        p_extract.headings = class_dict["heading"]
+        p_extract.headings = blocks_text["headings"]    # class_dict["headings"] 
         p_extract.foot_notes = class_dict["foot_notes"]
+        p_extract.content_table = class_dict["content_table"]
         p_extract.non_text = class_dict["other"]
 
-    save = parse_context.parse_settings.pdf
+        if save and "info" in save:
+            save_base_model_as_dict(p_extract, f"{save_path}_info")
+    # save = parse_context.parse_settings.pdf
 
-    if save and "info" in save:
+    # if save and "info" in save:
 
         # self.save_folder = self.
         # self.save_name = self.parse_context.save_name
         
-        save_base_model_as_dict(p_extract, f"{save_path}_post_all")
+        # save_base_model_as_dict(p_extract, f"{save_path}_post_all")
 
         # full_text = [block.text for block in blocks_text]
         # full_text = "\n\n".join(full_text)

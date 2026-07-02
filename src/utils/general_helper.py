@@ -20,136 +20,84 @@ from src.core.memory import app_session
 from src.utils.path_helper import ensure_dir    # , shorten_path
 
 
-######################
-# DEPENDENCY_ANALYZER
-######################
+## USE STANDARD_LIBRARIES --> csv, json, configparser, ipaddress, sqlite3, heapq, bisect...
 
-# import ast
+# def inspect_function(fn: Callable):
+#     print(inspect.getsource(fn))
 
-# with open("module.py") as f:
-#     tree = ast.parse(f.read())
-
-# for node in ast.walk(tree):
-#     if isinstance(node, ast.Import):
-#         for name in node.names:
-#             print(name.name)
-
-# ######################
-# # RETRY_FRAMEWORK
-# ######################
-
-# import time
-
-# def retry(func, attempts=3):
-#     for i in range(attempts):
-#         try:
-#             return func()
-#         except Exception:
-#             if i == attempts - 1:
-#                 raise
-
-#             time.sleep(2 ** i)
-
-# ######################
-
-# def extract_functions(file_path):
-#     with open(file_path, "r") as f:
-#         tree = ast.parse(f.read())
-#     return [node.name for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
-
-# functions = extract_functions("app.py")
-# for fn in functions:
-#     print(f"Explain what `{fn}` does and why it exists.")
+#     return 
 
 
 
-def get_file_config(
-            config_root: Any, 
-            file_type: str
-            ) -> Any:
-    try:
-        return getattr(config_root, file_type)
-    except AttributeError as exc:
-        raise ValueError(
-                f"No config found for file_type='{file_type}' "
-                f"in {type(config_root).__name__}"
-                ) from exc
+def iter_chunks(df, chunk_size=25):
+    for start in range(0, len(df), chunk_size):
+        yield df.iloc[start : start + chunk_size]
 
 
-def get_git_difference():
-    diff = subprocess.check_output(["git", "diff", "--stat"])
-    print(diff.decode())
-    return 
+def load_env_vars(name: list | str = ".env"):
+    """
+    Load environment variables from .env files if available.
+    """
+    # session_path = find_dotenv(filename=".env.session")
+    # if session_path and os.path.exists(session_path):
+    #     load_dotenv(session_path, override=True)
+    #     print("Variables from .env.session loaded")
+
+    if isinstance(name, str):
+        name = [name]
+
+    env_loaded = app_session.env_loaded
+    name_clear = [n for n in name if n not in env_loaded]
+
+    for env in name_clear:
+        env_path = find_dotenv(filename=env)
+        if env_path:  #  and not session.env_loaded:
+            load_dotenv(env_path)
+            print(f"Variables loaded from '{env}'")
+            env_loaded.append(env)
+
+    app_session.env_loaded = env_loaded
+
+    return
 
 
-def git_stats():
-    commits = subprocess.check_output(
-        ["git", "rev-list", "--count", "HEAD"]
-    ).decode().strip()
-    return {"commits": commits}
-print(git_stats())
+
+####################
+# ANALYZE_FUNCTIONS
+####################
+
+def inspect_single_function(fn: Callable) -> dict:
+    src = inspect.getsource(fn)
+    return {
+        "all": src,
+        "name": fn.__name__,
+        "qualname": fn.__qualname__,
+        "module": fn.__module__,
+        "source": src,
+        "sha256": hashlib.sha256(src.encode("utf-8")).hexdigest(),
+    }
 
 
-import ast
-import os
-'''
-def find_unused_imports(path):
-    for file in os.listdir(path):
-        if file.endswith(".py"):
-            tree = ast.parse(open(os.path.join(path, file)).read())
-            imports = {n.name for n in ast.walk(tree) if isinstance(n, ast.Import)}
-            names = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name)}
-            unused = imports - names
-            if unused:
-                print(file, unused)
+def snapshot_dependent_functions(
+    root_fn: Callable,
+    dependencies: Iterable[Callable] | None = None,
+) -> dict:
+    snapshot = {
+        "root": inspect_single_function(root_fn),
+        "dependencies": {},
+    }
 
-find_unused_imports("src")
-'''
-def find_unused_imports(file_path):
-    with open(file_path, "r",
-              encoding="utf-8") as f:
-        tree = ast.parse(f.read())
-    
-    imports = set()
-    
-    used = set()
-    
-    for node in ast.walk(tree):
-        
-        if isinstance(node, ast.Import):
-            for alias in node.names:
-                imports.add(alias.name)
-        elif isinstance(node, ast.Name):
-            used.add(node.id)
-    return imports - used
+    if dependencies:
+        for dep in dependencies:
+            snapshot["dependencies"][dep.__name__] = inspect_single_function(dep)
 
-# print(find_unused_imports("app.py"))
+    return snapshot
 
 
-patterns = {
-    "AWS Key":
-        r"AKIA[0-9A-Z]{16}",
-    "OpenAI Key":
-        r"sk-[A-Za-z0-9]{20,}",
-    "Generic Token":
-        r"(?i)(api|secret|token).{0,20}[=:].+"
-}
 
-def scan_file(file_path):
-    
-    with open(file_path,
-              encoding="utf-8",
-              errors="ignore") as f:
-        content = f.read()
-    
-    for name, pattern in patterns.items():
-        if re.search(pattern, content):
-            print(
-                f"Potential {name} found "
-                f"in {file_path}"
-            )
-
-# scan_file("config.py")
+###################
+# CACHING
+###################
 
 def make_cache_key(url: str, params: dict) -> str:
 
@@ -204,6 +152,52 @@ def load_from_cache(key: str, folder: str | Path):
 
     return None
 
+
+
+
+def get_file_config(
+            config_root: Any, 
+            file_type: str
+            ) -> Any:
+    try:
+        return getattr(config_root, file_type)
+    except AttributeError as exc:
+        raise ValueError(
+                f"No config found for file_type='{file_type}' "
+                f"in {type(config_root).__name__}"
+                ) from exc
+
+
+###################
+# GIT_FUNCTIONS
+###################
+
+def get_git_difference():
+    diff = subprocess.check_output(["git", "diff", "--stat"])
+    print(diff.decode())
+    return 
+
+
+def git_stats():
+    commits = subprocess.check_output(
+        ["git", "rev-list", "--count", "HEAD"]
+    ).decode().strip()
+    return {"commits": commits}
+
+# print(git_stats())
+
+
+def get_git_commit():
+    try:
+        return (
+            subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], stderr=subprocess.DEVNULL
+            )
+            .decode("utf-8")
+            .strip()
+        )
+    except Exception:
+        return "unknown"
 
 # def pretty_print(result):
 
@@ -261,17 +255,6 @@ def load_from_cache(key: str, folder: str | Path):
 #     return
 
 
-def snapshot_single_function(fn: Callable) -> dict:
-    src = inspect.getsource(fn)
-    return {
-        "name": fn.__name__,
-        "qualname": fn.__qualname__,
-        "module": fn.__module__,
-        "source": src,
-        "sha256": hashlib.sha256(src.encode("utf-8")).hexdigest(),
-    }
-
-
 # def describe_function(fn):
 #     return {
 #         "module": fn.__module__,
@@ -280,57 +263,10 @@ def snapshot_single_function(fn: Callable) -> dict:
 #     }
 
 
-def snapshot_dependent_functions(
-    root_fn: Callable,
-    dependencies: Iterable[Callable] | None = None,
-) -> dict:
-    snapshot = {
-        "root": snapshot_single_function(root_fn),
-        "dependencies": {},
-    }
-
-    if dependencies:
-        for dep in dependencies:
-            snapshot["dependencies"][dep.__name__] = snapshot_single_function(dep)
-
-    return snapshot
-
-
 # def hash_function_source(fn) -> str:
 #     src = inspect.getsource(fn)
 #     return src, hashlib.sha256(src.encode("utf-8")).hexdigest()
 
-
-def iter_chunks(df, chunk_size=25):
-    for start in range(0, len(df), chunk_size):
-        yield df.iloc[start : start + chunk_size]
-
-
-def load_env_vars(name: list | str = ".env"):
-    """
-    Load environment variables from .env files if available.
-    """
-    # session_path = find_dotenv(filename=".env.session")
-    # if session_path and os.path.exists(session_path):
-    #     load_dotenv(session_path, override=True)
-    #     print("Variables from .env.session loaded")
-
-    if isinstance(name, str):
-        name = [name]
-
-    env_loaded = app_session.env_loaded
-    name_clear = [n for n in name if n not in env_loaded]
-
-    for env in name_clear:
-        env_path = find_dotenv(filename=env)
-        if env_path:  #  and not session.env_loaded:
-            load_dotenv(env_path)
-            print(f"Variables loaded from '{env}'")
-            env_loaded.append(env)
-
-    app_session.env_loaded = env_loaded
-
-    return
 
 import subprocess
 import sys
@@ -348,41 +284,3 @@ for cmd in checks:
 print("✅ All checks passed.")
 '''
 
-
-'''
-import hashlib
-
-def calculate_hash(filename):
-
-    sha256 = hashlib.sha256()
-
-    with open(filename, "rb") as f:
-        while chunk := f.read(4096):
-            sha256.update(chunk)
-
-    return sha256.hexdigest()
-
-def verify_file(file_path, expected_hash):
-
-    current_hash = calculate_hash(file_path)
-
-    if current_hash == expected_hash:
-        print("File integrity verified")
-        return True
-
-    else:
-        print("File corrupted")
-        return False
-'''
-
-def get_git_commit():
-    try:
-        return (
-            subprocess.check_output(
-                ["git", "rev-parse", "HEAD"], stderr=subprocess.DEVNULL
-            )
-            .decode("utf-8")
-            .strip()
-        )
-    except Exception:
-        return "unknown"

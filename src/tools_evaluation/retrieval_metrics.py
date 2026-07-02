@@ -1,4 +1,4 @@
-## rag_metrcis.py
+## retrieval_metrics.py
 # import
 
 

@@ -18,6 +18,8 @@ def show():
     data_processed = os.getenv("DATA_PROCESSED")
     data_embed = os.getenv("DATA_EMBED")
 
+    st.warning("ADAPT TO NEW FILE SYSTEM")
+    
     st.divider()
 
     # parse_settings = {
@@ -44,9 +46,9 @@ def show():
 
     
     folder_path = f"{data_processed}/{st.session_state["chunk_folder"]}"
-    files = list(Path(folder_path).rglob("*.json"))
+    files = list(Path(folder_path).rglob("*_info.json"))
 
-    selected_file = st.selectbox(
+    selected_file = st.multiselect(
         label="Which json file should be chunked?",
         options=files,
         key="chunk_files", 
@@ -55,36 +57,41 @@ def show():
 
     # f_path = str(selected_file)
 
-    st.selectbox(       # multiselect(
-            label="Which json file should be chunked?",
-            options=[shorten_path(f, n=1) for f in Path(folder_path).rglob("*.json")],
-            key="chunk_files"
-            )
-
-    chunk_context = ParseContext(
-                save_name = Path(selected_file).stem,
-                save_folder = data_embed,
-                chunk_settings = ChunkSettings(
-                                container_types = [
-                                        "heading",
-                                        "paragraph",
-                                        "code",
-                                        "bullet_list"
-                                        ],
-                                spacy_language = "de_core_news_sm",
-                                max_tokens = 80,
-                                overlap_sentences=1,
-                                transformer_model = "all-MiniLM-L6-v2",
-                                batch_size=43 
-                                )
-                )
-    chunk_context.encoder=app_session.encoder
+    # st.selectbox(       # multiselect(
+    #         label="Which json file should be chunked?",
+    #         options=[shorten_path(f, n=1) for f in Path(folder_path).rglob("*.json")],
+    #         key="chunk_files"
+    #         )
+    if selected_file is not None:
+        chunk_context = ParseContext(
+                    # save_name = Path(selected_file).stem,
+                    save_folder = data_embed,
+                    chunk_settings = ChunkSettings(
+                                    container_types = [
+                                            "body_text",
+                                            "heading",
+                                            "paragraph",
+                                            "code",
+                                            "line_group",
+                                            "bullet_list",
+                                            "lvl_1_bullet",
+                                            "lvl_2_bullet"
+                                            ],
+                                    spacy_language = "de_core_news_sm",
+                                    max_tokens = 80,
+                                    overlap_sentences=1,
+                                    transformer_model = "all-MiniLM-L6-v2",
+                                    batch_size=43 
+                                    )
+                    )
+        chunk_context.encoder=app_session.encoder
     
     # f_path = f"{folder_path}/{str(selected_file)}"
-    st.markdown(f"Status 'chunk_status': {st.session_state['chunk_status']}")
     if "chunk_status" not in st.session_state:
         st.session_state["chunk_status"] = "ready"
-     
+    
+    st.markdown(f"Status 'chunk_status': {st.session_state['chunk_status']}")
+    
     left, right = st.columns(2)
 
     if (left.button("Reset", type="primary")
@@ -94,17 +101,25 @@ def show():
     if (right.button("Start run") 
         and st.session_state["chunk_status"] in ["ready", None]):
 
-        df_chunk = chunk_text(
-                        f_path=str(selected_file), 
-                        parse_context=chunk_context
-                        )
+        for file in selected_file:
+            
+            chunk_context.save_name = Path(file).stem
+            
+            df_chunk = chunk_text(
+                            f_path=str(file), 
+                            parse_context=chunk_context
+                            )
 
-        with st.expander("Preview df"): 
-            st_df_profile(df_chunk)
+            with st.expander(f"Preview df '{Path(file).stem}'"): 
+                st_df_profile(df_chunk)
 
         st.session_state["chunk_status"] = "done"
 
-    st.markdown("**TEXT EMBEDDINGS MUST BE CREATED IN GOOGLE COLAB**")
+    st.divider()
+    st.error('\n**TEXT EMBEDDINGS MUST BE CREATED IN GOOGLE COLAB**', 
+             icon="🚨")
+    # st.markdown("")
+    st.divider()
             
     # st.markdown("**Under Construction**")
 

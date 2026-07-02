@@ -42,7 +42,7 @@ pdf:
 
   width_thresh: 0.45 
   y_gap_line: 15  # 20                
-  up_down_thresh: 0.08
+  up_down_thresh: 0.06    # 0.10    # 0,15
   left_right_thresh: 0.2
   heading_threshold: 3
   foot_note_thresh: 3

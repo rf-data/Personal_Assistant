@@ -1,8 +1,10 @@
 ## text_cleaner.py
 # import
+import re
 from collections import defaultdict
 from dataclasses import dataclass  # , field
 from pathlib import Path
+from typing import Literal
 from returns.result import Result, Success, Failure
 
 # import numpy as np
@@ -11,24 +13,26 @@ from returns.result import Result, Success, Failure
 import fitz  # PyMuPDF
 
 # from src.utils.pdf_helper import extract_text_pymupdf
-from src.model_classes_parsing.classes_pdf_parsing import (
-    Bullet,
-    BulletMeta,
-    Drawing,
-    DrawingMeta,
-    Graphics,
-    Image,
-    ImageMeta,
-    Line,
-    LineGroup,
-    LineSplit,
-    PageMeta,
-    PDFPageExtract,
-    Span,
-    SpanMeta,
-    Word,
-    WordMeta
-)
+
+from src.model_classes_parsing.base_classes_parsing import (
+                                            Bullet,
+                                            BulletMeta,
+                                            Drawing,
+                                            DrawingMeta,
+                                            Graphics,
+                                            Image,
+                                            ImageMeta,
+                                            Line,
+                                            LineGroup,
+                                            LineSplit,
+                                            PageMeta,
+                                            PDFPageExtract,
+                                            Span,
+                                            SpanMeta,
+                                            Word,
+                                            WordMeta
+                                                )
+
 
 # from tiktoken import encoding_for_model
 from src.model_tools_parsing.feature_enricher import FeatureEnricher
@@ -46,6 +50,13 @@ from src.core.memory import ParseContext
 @dataclass
 class PDFCleanExtractor(BaseExtractor):
     bullets = {"•", "▪", "●", "‣", "◦", "–"}
+    heading_prefix = (
+                r"^("
+                r"(?:[IVXLCDM]+)"
+                r"|(?:[A-Z](?:\.\d+)*)"
+                r"|(?:\d+(?:\.\d+)*)"
+                r")(?:\.|\)|\])?\s+"
+                )
     
     def __init__(self, 
                  enricher: FeatureEnricher, 
@@ -54,6 +65,7 @@ class PDFCleanExtractor(BaseExtractor):
         self.doc_name = parse_context.run_id
         self.enricher = enricher
         self.extract_config = parse_context.parse_settings.pdf
+        self.page_range = parse_context.parse_settings.page_range
         self.general_config = parse_context.general_settings.pdf
         # self.extraction_tags = run_context.general_settings.html.extraction_tags
         # self.header = run_context.header
@@ -87,10 +99,24 @@ class PDFCleanExtractor(BaseExtractor):
         # extract_results = extract_fn(f_path)
         doc = fitz.open(f_path)
 
+
+        pages = [(idx, page) for idx, page in enumerate(doc)
+                if (self.page_range == "all" 
+                    or idx in self.page_range)]
+        # if self.page_range == "all":
+        #     pages = [(idx, page) in range(len(doc))]
+
+        # else:
+        #     for idx, page in enumerate(doc):
+        #         if idx in self.page_range:
+        #             # page = doc[page_num]
+        #             pages.append((idx, page))
+
+
         records = []
         # graphs = []
         # images = []
-        for idx, page in enumerate(doc):
+        for (idx, page) in pages:     # enumerate(doc):
             if idx % 5 == 0:
                 self.logger.info("Start extracting page #%s", idx)
 
@@ -220,6 +246,7 @@ class PDFCleanExtractor(BaseExtractor):
 
         return extract  # , texts
 
+
     def _extract_grafics(self, page) -> Graphics:
 
         # from src.core.memory import session
@@ -316,6 +343,7 @@ class PDFCleanExtractor(BaseExtractor):
 
         return lines  # result, text_comb
 
+
     def _extract_images(self, page, page_no: int):
         # from src.core.memory import session
 
@@ -406,6 +434,7 @@ class PDFCleanExtractor(BaseExtractor):
 
         return reduced  # make_json_safe(drawings)
 
+
     def _extract_bullet_chars(self, page):
         self.logger.info("Start extracting bullet chars.")
 
@@ -431,6 +460,7 @@ class PDFCleanExtractor(BaseExtractor):
 
         return bullets
 
+
     def _is_bullet_drawing(self, d: dict) -> bool:
         x0, y0, x1, y1 = d["bbox"]
 
@@ -440,6 +470,7 @@ class PDFCleanExtractor(BaseExtractor):
         return (
             width < 10 and height < 10 and abs(width - height) < 2  # ~kreisförmig
         )
+
 
     def _extract_spans_from_rawdict(self, page) -> list[Span]:
 
@@ -541,6 +572,7 @@ class PDFCleanExtractor(BaseExtractor):
 
         return merged
 
+
     def _group_words_to_lines(self, words: list[Word]) -> list[Line]:
         y_tol = self.general_config.y_gap_words  # 3
         # x_tol = self.extract_config["x_gap_words"]
@@ -568,7 +600,8 @@ class PDFCleanExtractor(BaseExtractor):
             # elif abs(w["x0"] - prev_w["x1"]) < x_tol:
 
             else:
-                lin_sort = sorted(current_line, key=lambda w: w.meta.x_start)
+                lin_sort = sorted(current_line, 
+                                  key=lambda w: w.meta.x_start)
                 # print("lin_sort:\t", lin_sort)
 
                 lines.append(Line(elements=lin_sort))
@@ -621,44 +654,73 @@ class PDFCleanExtractor(BaseExtractor):
 
         return line_splits
 
+
+
+    def is_numbered_heading(self, text: str) -> bool:
+        
+        return bool(
+                re.match(
+                    self.heading_prefix, 
+                    text.strip()
+                    )
+                    )
+        #     r"^(I|II|III|IV|V|VI|VII|VIII|IX|X)\s+\S+",
+        # ))
+
+
     def _group_splitted_lines(
         self, splitted_lines_sorted: list[list[LineSplit]]
     ) -> list[LineGroup]:
 
-        y_tol = self.general_config.y_gap_words
+        paragraph_y_gap = self.general_config.y_gap_words
 
         # line_dict = {
         line_group = []
         current = []
 
-        prev_bottom = None
+        prev_top = None
         # pending = segments[0]
 
         for line in splitted_lines_sorted:
             # seg = s["segment"]
             # for line in line_split:
             top = min(l.meta.y_start_min for l in line)
-            bottom = max(l.meta.y_end_max for l in line)
+            # bottom = max(l.meta.y_end_max for l in line)
 
-            if prev_bottom is None:
+
+
+            if prev_top is None:
                 current.append(line)
-            else:
-                gap = top - prev_bottom
+            
+            elif current and self.is_numbered_heading(
+                                " ".join(l.text for l in current[-1])
+                                ):
+                line_group.append(self._finalize_splitted_lines(current))
+                current = [line]
+                prev_top = top
+                continue
 
-                if gap < y_tol:
+            else:
+                y_delta = top - prev_top
+                
+                if y_delta < paragraph_y_gap:
                     current.append(line)
 
                 else:
-                    line_group.append(self._finalize_splitted_lines(current))
-
+                    line_group.append(
+                            self._finalize_splitted_lines(
+                                current
+                                )
+                                )
                     current = [line]
 
-            prev_bottom = bottom
+            prev_top = top
 
         if current:
             line_group.append(self._finalize_splitted_lines(current))
 
         return line_group
+
 
     def _sort_reading_order(
         self, splitted_lines: list[list[LineSplit]]

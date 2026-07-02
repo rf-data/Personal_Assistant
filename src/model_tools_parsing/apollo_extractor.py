@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup as bs
 from src.model_classes_parsing.base_classes_parsing import (
     Code, 
     CodeMeta,
-    Document,
+    RawDocument,
     DocumentExtract,
     Element,
     ElementMeta,
@@ -111,7 +111,7 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
 
         text_clean = "\n\n".join([ele.text for ele in elements_clean])
         doc_info = self.enricher._add_basic_metadata(
-            text_clean, elements_clean, Document()
+            text_clean, elements_clean, RawDocument()
         )
         
         f_path = Path(f"{self.save_folder}/{self.save_name}")

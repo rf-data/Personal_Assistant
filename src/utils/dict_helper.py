@@ -21,7 +21,7 @@ from src.core.config import GeneralSettings, RunSettings
 from src.core.memory import app_session
 
 # import hashlib
-from src.utils.general_helper import snapshot_single_function
+from src.utils.general_helper import inspect_single_function
 from src.utils.path_helper import ensure_dir, shorten_path
 
 
@@ -98,7 +98,7 @@ def make_json_safe(obj):
     if isinstance(obj, Path):
         return str(obj)
     if inspect.isfunction(obj):
-        return snapshot_single_function(obj)
+        return inspect_single_function(obj)
     # if isinstance(obj, torch.Tensor):           # Tensor handling
     #     return obj.detach().cpu().numpy().tolist()
     # if isinstance(obj, torch.device):

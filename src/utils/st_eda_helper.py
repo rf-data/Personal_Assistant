@@ -28,5 +28,8 @@ def st_df_profile(df):
 ### Head
 """)    
     df_head = df.head(5).T  # if config["df_transponse"] else df.head(5)
+    for col in df_head.columns:
+        df_head[col] = df_head[col].astype(str)
+    
     st.dataframe(df_head)
     # st.markdown("\n### Summary """)

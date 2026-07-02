@@ -8,10 +8,12 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.model_classes_parsing.classes_pdf_parsing import (CollectionItem, 
-                                                   PDFPageExtract)
+from src.model_classes_parsing.base_classes_parsing import (
+                                                    CollectionItem, 
+                                                    PDFPageExtract
+                                                    )
 from src.model_tools_parsing.base_assembler import BaseAssembler
-from src.utils.dict_helper import save_dict
+from src.utils.dict_helper import save_dict, save_base_model_as_dict
 from src.utils.text_file_helper import save_text_file
 
 # from src.utils.df_helper import save_df_to_parquet
@@ -26,6 +28,10 @@ class PDFAssembler(BaseAssembler):
 
         headings = page_info.headings
         block_texts = page_info.text_bodies
+        bullets = (
+                getattr(page_info, "bullet_lists", None)
+                or getattr(page_info, "bullets", [])
+            )
 
         # head_infos = list()
 
@@ -63,6 +69,21 @@ class PDFAssembler(BaseAssembler):
                     "text": block.text,
                 }
             )
+        for bullet in bullets:
+            meta = bullet.meta
+            blocks_all.append(
+                {
+                    "x0_min": meta.x_start_min,
+                    "y0_min": meta.y_start_min,
+                    "page": page_info.page_no,
+                    "text_type": getattr(bullet, "line_type", None)
+                         or getattr(meta, "line_type", None)
+                         or "bullet",
+                    "ends_sentence": meta.ends_sentence,
+                    "text": bullet.text,
+                }
+            )
+
 
         # block_texts = page_info["text_bodies"]
 
@@ -146,6 +167,10 @@ class PDFAssembler(BaseAssembler):
         f_infos = self.infos
         assert f_infos is not None and len(f_infos) > 0, \
             "Provide data to 'info' in 'assembler'"
+
+        if self.save and "assembled" in self.save:
+            save_path = f"{self.save_folder}/{self.save_name}_assembled"
+            save_dict(f_infos, save_path)
 
         f_info_sorted = sorted(f_infos, 
                                key=lambda info: info.page)
@@ -274,7 +299,7 @@ class PDFAssembler(BaseAssembler):
         self.logger.info("DF_BLOCK HEAD:\n%s", df_block.head(5))
 
         # if self.save and "info" in self.save:
-        #     dict_path = f"{self.save_folder}/{self.save_name}_collect"
+        #     dict_path = f"{self.save_folder}/{self.save_name}_info"
 
         #     save_dict(page_info, Path(dict_path))
 
@@ -316,7 +341,7 @@ class PDFAssembler(BaseAssembler):
 
                 t_bodies = info.text_bodies
                 if isinstance(t_bodies, list):
-                    headings.extend(t_bodies)
+                    text_bodies.extend(t_bodies)
 
                 else:
                     # if len(heads) >= 2:
@@ -333,15 +358,51 @@ class PDFAssembler(BaseAssembler):
         # text_bodies = self._check_multi_page_text(text_bodies)
 
         elements = text_bodies + headings
-
+        elements_sorted = sorted(
+            elements, 
+            key=lambda e: (
+                e.get("page", 0), 
+                e.get("y0_min", e.get("y_start_min", 0)),
+                e.get("x0_min")
+                )
+            )
+        
         text = ""
-        for ele in sorted(
-            elements, key=lambda e: (e.get("page"), e.get("y_start_min"))
-        ):
-            if ele.get("text_type") == "block":
+        prev_type = None
+        for ele in elements_sorted:
+            # if ele.get("text_type") == "block":
+                # text += "\n"
+
+            text_type = ele.get("text_type", "")
+            line = ele.get("text", "").strip()
+
+            if not line:
+                continue
+
+            if text_type in ["bullet", "lvl_1_bullet"]:
+                text += f"- {line}\n"
+                prev_type = "bullet"
+                continue
+
+            elif text_type == "lvl_2_bullet":
+                text += f"\t- {line}\n"
+                prev_type = "bullet"
+                continue
+
+            if prev_type == "bullet":
                 text += "\n"
 
-            text += f"{ele.get('text')}\n"
+            if text_type == "block":
+                text += f"{line}\n\n"
+
+            elif text_type.startswith("_lvl_"):
+                level = int(text_type.split("_lvl_")[-1])
+                text += f"{'#' * level} {line}\n"
+
+            prev_type = text_type
+            # else:
+            #     text += f"{line}\n\n"
+            #         # text += f"{ele.get('text')}\n"
 
         if self.save and "md" in str(self.save):
             
@@ -370,7 +431,9 @@ class PDFAssembler(BaseAssembler):
 
     #     return
 
-    def _rebuild_text(self, text_blocks: list[dict], headings: list[dict]) -> dict:
+    def _rebuild_text(self, 
+                      text_blocks: list[dict], 
+                      headings: list[dict]) -> dict:
 
         # self.logger.info("Length of text_blocks | text_blocks[0]:\t%s  | %s",
         #                  len(text_blocks),
@@ -379,8 +442,10 @@ class PDFAssembler(BaseAssembler):
         # self.logger("Keys of text_block[0][0]:\t%s",
         #             text_blocks[0][0].keys())
 
-        text_blocks_sorted = sorted(text_blocks, key=lambda b: b["y0_min"])
-        headings_sorted = sorted(headings, key=lambda h: h["y0_min"])
+        text_blocks_sorted = sorted(text_blocks, 
+                                    key=lambda b: b["y0_min"])
+        headings_sorted = sorted(headings, 
+                                 key=lambda h: h["y0_min"])
         # block["x0_min"],
         #                 block["y0_min"],
         #                 block["text"]
@@ -407,7 +472,7 @@ class PDFAssembler(BaseAssembler):
                 if not head_lvl or heading_lvl.split("_")[-1] <= head_lvl:
                     relevant_heads = []
 
-                head_text = headings_sorted[idx]["text"]
+                head_text = headings_sorted[idx]["text"] 
                 text.append(head_text)
                 relevant_heads.append(head_text)
 
@@ -425,4 +490,10 @@ class PDFAssembler(BaseAssembler):
 
             idx += 1
 
-        return {"text": "\n\n".join(text), "blocks": text_blocks_sorted}
+        return {
+            "text": "\n\n".join(text), 
+            "blocks": text_blocks_sorted
+            }
+
+
+

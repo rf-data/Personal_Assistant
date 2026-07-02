@@ -18,7 +18,7 @@ from bs4 import BeautifulSoup as bs
 from src.model_classes_parsing.base_classes_parsing import (
     Cell,
     CellMeta,
-    Document,
+    RawDocument,
     DocumentExtract,
     Word,
 )
@@ -103,7 +103,7 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
         doc_info = self.enricher._add_basic_metadata(
                                             text_clean, 
                                             cells_clean, 
-                                            Document()
+                                            RawDocument()
                                         )
 
         save_path = Path(f"{self.save_folder}/{self.save_name}")

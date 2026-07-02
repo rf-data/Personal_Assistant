@@ -1,6 +1,8 @@
 # imports
 from pathlib import Path
+import shutil
 
+from src.core.memory import app_session
 # from src.core.session import session
 
 
@@ -26,6 +28,27 @@ def ensure_dir(f_path: str | Path) -> Path:
 def shorten_path(path, n=3):
     p = Path(path).parts
     return "/".join(p[-n:])
+
+
+def move_file(src_path: Path, dst_path: Path):
+
+    dst_path = ensure_dir(dst_path)
+    src_path = ensure_dir(src_path)
+
+    if dst_path.exists():
+        try:
+            app_session.logger.error("File already exists at destination path. Hence, file will not be moved.")
+        except TypeError:
+            print("File already exists at destination path. Hence, file will not be moved.")
+            return 
+        
+    shutil.move(src_path, dst_path)
+    app_session.logger.info(
+                        "File '%s' has been moved to '%s'",
+                        shorten_path(src_path),
+                        shorten_path(dst_path)
+                        )
+    return 
 
 
 def create_save_path(name_suffix, file_suffix):  # folder_name,

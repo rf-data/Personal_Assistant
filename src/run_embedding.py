@@ -69,7 +69,7 @@ def chunk_text(
     #        datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     # app_session.timestamp = now
 
-    chunk_config = parse_context.chunk_settings
+    # chunk_config = parse_context.chunk_settings
     # config.get("chunking", {})
 
     # embed_config = config.get("embedding", {})
@@ -82,13 +82,13 @@ def chunk_text(
     doc_json = load_dict(f_path)
     df_blocks = document_json_to_blocks(
                                     doc_json["elements"], 
-                                    chunk_config
+                                    parse_context
                                     )
 
     logger.info("Start preparing chunk_df")
     df_chunk = prepare_chunk_df(
                             df_blocks, 
-                            chunk_config,
+                            parse_context,
                             encoder=parse_context.encoder
                             )
 
@@ -103,6 +103,11 @@ def chunk_text(
     logger.info("Saved chunk_df as %s",
                 f"{parse_context.save_name}_chunked")
 
+
+    # f_name = parse_context.parse_settings.file_name
+    # dst_path = f"{raw_data}/{Path(f_name).stem}.pdf"
+    
+    # move_file(f_name, dst_path)
     return df_chunk
 
 

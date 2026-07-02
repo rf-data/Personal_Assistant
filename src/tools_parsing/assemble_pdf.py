@@ -1,7 +1,7 @@
 ## assemble_pdf.py
 # import
 # import click
-
+import streamlit as st
 # from collections import defaultdict
 
 from returns.result import Result, Success, Failure
@@ -69,6 +69,8 @@ def assemble_single_pdf(
     ) -> dict:
 
     parse_context = app_session.run_context
+    assemble = parse_context.parse_settings.pdf.assemble
+
     logger = parse_context.logger
 
     assembler = PDFAssembler(parse_context=parse_context)
@@ -82,11 +84,21 @@ def assemble_single_pdf(
 
     doc_dict = assembler.assemble_document()
 
-    assembler.create_md_from_extract(
-                                doc_dict["info_dict"]
-                                )
+    if assemble:
+        if "md" in assemble:
+            md_file = assembler.create_md_from_extract(
+                                    doc_dict["info_dict"]
+                                    )
 
-    return {}
+        if "txt" in assemble:
+            logger.info("'Text assembling' script has not been build yet.")
+
+            try: 
+                st.warning("'Text assembling' script has not been build yet.")
+            except ImportError: 
+                pass
+
+    return ""
 
 
 # def assemble_related_pdf(file_names: List[str],

@@ -1,11 +1,12 @@
 ## chunk.py
 # import
 # import re
+import streamlit as st
 from collections.abc import Callable
 from typing import List
 import pandas as pd
 
-from src.core.memory import app_session
+from src.core.memory import ParseContext
 
 # from collections import Counter
 from src.utils.spacy_helper import load_spacy_model
@@ -26,12 +27,13 @@ CHUNK TECHNIQUES
 
 def document_json_to_blocks(
                     doc_elements: List,
-                    chunk_config: dict
+                    parse_context: ParseContext
                     ):
 
     blocks = []
     # → filter: paragraph, heading, code, bullets_list
-    # → one row per block
+    # → one row per bloc
+    chunk_config = parse_context.chunk_settings
     c_types_to_filter = chunk_config.container_types
     # ["heading",
     #                             "paragraph",
@@ -40,8 +42,17 @@ def document_json_to_blocks(
     #                             ]
 
     for element in doc_elements:
-        if element["container_type"] in c_types_to_filter:
-            blocks.append({
+        c_type = element.get("container_type")
+
+        if c_type not in c_types_to_filter:
+            parse_context.logger.info("[C_TYPE_MISMATCH]: %s", c_type)
+            continue
+
+        text = element.get("text", "").strip()
+        if not text:
+            continue
+        # if element["container_type"] in c_types_to_filter:
+        blocks.append({
                     "doc_id": 0,
                     "container_id": element["container_id"],
                     "container_type": element["container_type"],
@@ -50,6 +61,15 @@ def document_json_to_blocks(
                     "text": element["text"],
                     # "n_tokens": element.meta.n_tokens
                 })
+
+    parse_context.logger.info("Length 'blocks': %s", 
+                              len(blocks))
+    
+    try: 
+        st.write("Length 'blocks': %s", 
+                              len(blocks))
+    except ImportError:
+        pass
 
     return blocks   # pd.DataFrame()
 
@@ -68,11 +88,13 @@ chunk_end
 
 def prepare_chunk_df(
                 blocks: List[dict], 
-                chunk_config,
+                parse_context: ParseContext,
                 encoder
                 ):
-    logger = app_session.logger
-    # config = session.model_config
+
+    logger = parse_context.logger
+
+    chunk_config = parse_context.chunk_settings
     spacy_lang = chunk_config.spacy_language
 
     nlp = load_spacy_model(spacy_lang)
@@ -94,6 +116,11 @@ def prepare_chunk_df(
                                 encoder=encoder, 
                                 nlp=nlp
                                 )
+        try: 
+            st.write("Length 'chunks': %s", 
+                    len(chunks))
+        except ImportError:
+            pass
 
         for chunk in chunks:
             # text = ""

@@ -9,43 +9,28 @@ from typing import (
 
 from pydantic import BaseModel, Field
 
-# class WikiLink(BaseModel):
-#     # pass
-#     text: str
-#     url: str
-#     link_type: Literal
-
-
-# class WikiInfoBox(BaseModel):
-#     # pass
-#     title: str
-#     fields: Dict
-
-
-# class WikiTable(BaseModel):
-#     # pass
-#     rows: List
-#     header: List
-#     captions: List
-#     raw_html: str
-
-
-# class WikiCitationReference(BaseModel):
-#     id: int
-#     target: str
-
-
-# class WikiSection(BaseLeaf):
-#     text: str
-#     title: str
-#     level: int
-#     parent: str
-#     meta: Dict
-
+from src.model_classes_parsing.base_classes_parsing import (
+                                                BaseLeaf,
+                                                BaseContainer,
+                                                PageExtract,
+                                                Graphics,
+                                                Image
+                                                )
 
 # -------------------------
 # METADATA
 # -------------------------
+
+
+# -------------------------
+# LEAF_ELEMENTS
+# -------------------------
+
+# -------------------------
+# CONTAINER_ELEMENTS
+# -------------------------
+
+"""
 class BaseMeta(BaseModel):
     n_words: int = Field(default_factory=int)  # "n.a."
     n_chars: int = Field(default_factory=int)
@@ -289,7 +274,7 @@ class ResultItem(BaseModel):
     #
     # list
 
-
+"""
 # class WikiPage(BaseModel):
 #     title: str = Field(default_factory=str)
 #     text:  str = Field(default_factory=str)
@@ -307,7 +292,7 @@ class ResultItem(BaseModel):
 #     # elements: List[Word]  = Field(default_factory=list)
 #     meta: ImageMeta  = Field(default_factory=ImageMeta)
 
-
+"""
 # -------------------------
 # CONTAINER_ELEMENTS
 # -------------------------
@@ -425,7 +410,7 @@ class SearchResult(BaseContainer):
     suggestion: str | None = Field(default_factory=str)
     suggestion_hits: int | None = Field(default_factory=int)
 
-
+"""
 # class Blocks()
 
 
@@ -438,7 +423,7 @@ class SearchResult(BaseContainer):
 #     elements: List = []
 #     meta: LineMeta
 
-
+"""
 class DocumentExtract(BaseModel):
     doc_type: Literal["",
                       "md",
@@ -467,19 +452,8 @@ class PageExtract(DocumentExtract):
     # header_footer: List  = Field(default_factory=list)
     # text_bodies: List  = Field(default_factory=list)
 
-
-class PDFPageExtract(PageExtract):
-    # page_no: int  = Field(default_factory=int)
-    # meta: PageMeta  = Field(default_factory=PageMeta)
-    graphics: Graphics = Field(default_factory=Graphics)
-    images: list[Image] = Field(default_factory=list)
-    non_text: list = Field(default_factory=list)
-    foot_notes: list = Field(default_factory=list)
-    headings: list = Field(default_factory=list)
-    header_footer: list = Field(default_factory=list)
-    text_bodies: list = Field(default_factory=list)
-
-
+"""
+"""
 line_types = Annotated[LineSplit | Line | LineGroup, 
                        Field(discriminator="meta_type")]
 
@@ -487,5 +461,5 @@ container_types = Annotated[
     Document | Line | LineSplit | Element | Heading | TextBlock | Code,
     Field(discriminator="meta_type"),
 ]
-
+"""
 #

@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 
 from src.core.memory import ParseContext    #  app_session, 
 
-from src.model_classes_parsing.classes_pdf_parsing import TextBlock
+from src.model_classes_parsing.base_classes_parsing import TextBlock
 
 
 @dataclass
@@ -65,6 +65,7 @@ class PDFCleaner:
         # left_segs = [seg["left"] for seg in tbl_col_segments]
         # right_segs = [seg["right"] for seg in tbl_col_segments]
 
+
     def _fix_column_hyphens(self, text_list: list[dict]):
 
         cleaned = []
@@ -120,8 +121,8 @@ class PDFCleaner:
 
     def handle_body_text_hyphens(
                             self, 
-                            blocks: list[TextBlock]
-                            ) -> list[TextBlock]:
+                            blocks: dict,   # list[TextBlock]
+                            ) -> dict:       # list[TextBlock]:
 
         # blocks_sorted = sorted(
         #                     blocks,
@@ -132,16 +133,38 @@ class PDFCleaner:
         #     words = line["words"] # [w["text"] for w in line["words"]]
         #     words_sort = sorted(words, key=lambda w: w["x0"])
         #     line["text"] = " ".join([w["text"] for w in words_sort])
+        bullets = blocks.get("bullets", []) 
+        text_bodies = blocks.get("text_bodies", [])
+        cleaned = {
+                "bullets": [],
+                "text_bodies": [],
+            }
 
-        cleaned = []
+        if bullets and len(bullets) > 0: 
+            for i, block in enumerate(bullets):
+                text = block.text
 
-        for i, block in enumerate(blocks):
+                if re.search(r"\w-\s+\w", text):
+                    # if "-" in text:
+                    block.text = self._fix_inline_hyphen(text)
+
+                cleaned["bullets"].append(block)
+
+        if text_bodies and len(text_bodies) > 0: 
+            for i, block in enumerate(text_bodies):
+                text = block.text
+
+                if re.search(r"\w-\s+\w", text):
+                    # if "-" in text:
+                    block.text = self._fix_inline_hyphen(text)
+
+                cleaned["text_bodies"].append(block)
+
             # print("length of 'block':\t", len(block))
             # for i, b in enumerate(block):
             # print(f"block # {i} keys:\t", block.keys())
             # sys.exit()
 
-            text = block.text
 
             # letzter Segment?
             # if i < len(lines_sorted) - 1:
@@ -152,11 +175,7 @@ class PDFCleaner:
             #     # if text.endswith("-") and next_text[0].islower():
             #     #     line["text"], next_line["text"] = self._fix_end_hyphen(line, next_line)
 
-            if "-" in text:
-                block.text = self._fix_inline_hyphen(text)
-
-            cleaned.append(block)
-
+        
         return cleaned
 
 
@@ -196,7 +215,7 @@ class PDFCleaner:
 
                 else:
                     merged = left + right
-                    i += 1
+                    i += 2
 
                 self.logger.info(
                     "Fix split between '%s' \nand \n'%s'. \n-> '%s'",
@@ -232,7 +251,7 @@ class PDFCleaner:
             next_y0_mean = next_line["y0_mean"]
         else:
             curr_y0_mean = curr_info["y0_mean"]
-            next_y0_mean = curr_info["y0_mean"]
+            next_y0_mean = next_line["y0_mean"]
 
         y_gap = abs(curr_y0_mean - next_y0_mean)
         left = re.findall(r"(\w+)-$", curr_text)
