@@ -53,7 +53,8 @@ def document_json_to_blocks(
             continue
         # if element["container_type"] in c_types_to_filter:
         blocks.append({
-                    "doc_id": 0,
+                    "doc_id": parse_context.doc_id,
+                    "f_name": parse_context.save_name, 
                     "container_id": element["container_id"],
                     "container_type": element["container_type"],
                     "heading_context": element.get("meta", 
@@ -65,11 +66,11 @@ def document_json_to_blocks(
     parse_context.logger.info("Length 'blocks': %s", 
                               len(blocks))
     
-    try: 
-        st.write("Length 'blocks': %s", 
-                              len(blocks))
-    except ImportError:
-        pass
+    # try: 
+    #     st.write("Length 'blocks': %s", 
+    #                           len(blocks))
+    # except ImportError:
+    #     pass
 
     return blocks   # pd.DataFrame()
 
@@ -116,11 +117,11 @@ def prepare_chunk_df(
                                 encoder=encoder, 
                                 nlp=nlp
                                 )
-        try: 
-            st.write("Length 'chunks': %s", 
-                    len(chunks))
-        except ImportError:
-            pass
+        # try: 
+        #     st.write("Length 'chunks': %s", 
+        #             len(chunks))
+        # except ImportError:
+        #     pass
 
         for chunk in chunks:
             # text = ""
@@ -134,11 +135,12 @@ def prepare_chunk_df(
             # chunk["chunk_text"] = text
 
             chunk.update({
-                    "doc_id": 0,
+                    "doc_id": row["doc_id"],
+                    "f_name": row["f_name"],
                     "container_id": row["container_id"],
                     "container_type": row["container_type"],
                     "heading_context": row["heading_context"],
-            })
+                    })
 
             chunks_all.append(chunk)
 

@@ -29,6 +29,10 @@ class ParseFileSettings(BaseModel):
     scrape_images: bool = False
 
 
+class ParseDOCXSettings(ParseFileSettings):
+    tbl_text_mode: Literal["long", "brief"] = "brief"
+
+
 class ParseHTMLSettings(ParseFileSettings):
     apollo: bool = Field(default_factory=bool)
     parser: str = Field(default_factory=str)
@@ -78,6 +82,10 @@ class GeneralFileSettings(BaseModel):
     extraction_tags: List[str] = Field(default_factory=list)
     # assemble_as_md: bool = Field(default_factory=bool)
     # scrape_images: bool = Field(default_factory=bool)
+
+
+class GenDOCXSettings(GeneralFileSettings):
+    pass
 
 
 class GenHTMLSettings(GeneralFileSettings):
@@ -158,7 +166,8 @@ class ChunkSettings(BaseModel):
 class GeneralSettings(BaseModel):
     txt_elements: List[str] = Field(default_factory=list)
     md_elements: List[str] = Field(default_factory=list)
-    
+
+    docx: GenDOCXSettings = Field(default_factory=GenDOCXSettings)    
     html: GenHTMLSettings = Field(default_factory=GenHTMLSettings)
     json_nb: GenNotebookSettings = Field(default_factory=GenNotebookSettings)
     md: GenMDSettings = Field(default_factory=GenMDSettings)
@@ -197,6 +206,7 @@ class ParseSettings(BaseModel):
     file_id: int = Field(default_factory=int)
     page_range: list[int] | Literal["all"] = Field(default="all")
 
+    docx: ParseDOCXSettings = Field(default_factory=ParseDOCXSettings)    
     html: ParseHTMLSettings = Field(default_factory=ParseHTMLSettings)
     json_nb: ParseNotebookSettings = Field(default_factory=ParseNotebookSettings)
     md: ParseMDSettings = Field(default_factory=ParseMDSettings)

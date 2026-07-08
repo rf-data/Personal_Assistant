@@ -9,6 +9,9 @@ llm_model: gpt-4o-mini
 url_path: 
 file_name:
 
+# docx:
+#   tbl_text_mode: brief, "long"
+
 # HTML
 html:
   parser: html.parser

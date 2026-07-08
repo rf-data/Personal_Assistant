@@ -4,8 +4,9 @@
 import logging
 import re
 import sys
-from collections.abc import Callable  # , , Any
-from dataclasses import dataclass, field
+# from collections.abc import Callable  # , , Any
+from dataclasses import dataclass   #, field
+from typing import List
 
 # # import pandas as pd
 # # from sklearn.cluster import KMeans
@@ -22,9 +23,10 @@ from src.model_classes_parsing.base_classes_parsing import (
     PageExtract,
     PDFPageExtract,
     TextBlock,  # TextBlockMeta,
+    TableCell, 
     Word,
     container_types,
-    document_leafs,
+    doc_container,
     line_types,
 )
 
@@ -110,6 +112,7 @@ class FeatureEnricher:
         # bullet_level
 
         return pages
+
 
     def enrich_blocks(self, 
                       blocks: list[TextBlock],
@@ -211,15 +214,44 @@ class FeatureEnricher:
 
         return lines
 
+
+    def enrich_table_cell(
+                        self, 
+                        cell_info: TableCell
+                        ) -> TableCell:
+
+        # for idx, cell in enumerate(cell_info):
+            # if not cell:
+            #     continue
+
+        return self._add_basic_metadata(
+                                text = cell_info.text, 
+                                leaf_info = cell_info.elements,
+                                # : list, # [document_leafs], 
+                                info_obj = cell_info
+                                )
+        
+            # container_types | None
+            # if isinstance(line, list):
+            #     words= line
+            # else:
+            
+            # content = cell.text
+
+            # if isinstance(line, list):
+            # text = " ".join([w.text for w in words])
+
+
+        
+
+
     # Document|Line|LineSplit|Element
     def _add_basic_metadata(
         self, 
         text: str, 
-        leaf_info: list[document_leafs], 
+        leaf_info: list, # [document_leafs], 
         info_obj: container_types | None
     ):
-
-
 
         if info_obj is None:
             self.logger.info(
@@ -266,10 +298,11 @@ class FeatureEnricher:
 
         return info_obj
 
+
     def _add_metadata(
         self, 
         text: str, 
-        leaf_info: list[document_leafs], 
+        leaf_info: list[doc_container], 
         info_obj: Line | LineSplit | TextBlock
     ):
 
@@ -277,8 +310,8 @@ class FeatureEnricher:
         # left_indent =
         # left_thresh = self.text_prep_config["left_right_thresh"]
 
-        assert float(self.page_height) is not 0.0
-        assert float(self.page_width) is not 0.0
+        assert float(self.page_height) != 0.0
+        assert float(self.page_width) != 0.0
 
         info_obj = self._add_basic_metadata(text, 
                                             leaf_info, 

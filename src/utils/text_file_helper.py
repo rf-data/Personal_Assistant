@@ -1,13 +1,107 @@
 ## txt_file_helper.py
 # import
+import subprocess 
+import shutil
+import os
 from pathlib import Path
+import pandas as pd
 from docx import Document
+from typing import Iterator
 
 # import src.utils.general_helper as gh
 from src.utils.path_helper import ensure_dir, shorten_path
 from src.core.memory import app_session
 
 
+def get_soffice() -> str:
+    soffice = shutil.which("soffice")
+    if soffice is None:
+        raise RuntimeError(
+            "LibreOffice (soffice) wurde nicht gefunden."
+            )
+        # sudo apt update 
+        # sudo apt install libreoffice-writer
+    
+    return soffice
+
+
+def convert_docx(
+            f_path: str | Path,
+            out_format: str,
+            overwrite: bool = False,
+            ) -> Path:
+
+    f_path = Path(f_path)
+
+    if not f_path.exists():
+        raise FileNotFoundError(f_path)
+
+    if f_path.suffix.lower() != ".docx":
+        raise ValueError("Input file must be a DOCX file.")
+
+    save_path = f_path.with_suffix(f".{out_format}")
+
+    if save_path.exists() and not overwrite:
+        return save_path
+
+    subprocess.run(
+        [
+            get_soffice(),
+            "--headless",
+            "--convert-to",
+            out_format,
+            "--outdir",
+            str(f_path.parent),
+            str(f_path),
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    if not save_path.exists():
+        raise RuntimeError("LibreOffice did not create the ODT file.")
+
+    print(
+        f"Saved converted file (docx -> {out_format}): "
+        f"'{shorten_path(save_path)}'"
+    )
+
+    return save_path
+
+# def convert_docx_to_odt(f_path: str|Path, save=False) -> aw.Document:
+#     f_path = Path(f_path)
+
+#     doc = aw.Document(f_path)
+
+#     if save:
+#         # Als OpenOffice ODT speichern
+#         save_path = f"{f_path.parent}/{f_path.stem}.odt"
+#         doc.save(save_path)
+#         print(f"Konvertierte Datei gespeichert: '{shorten_path(save_path)}")
+
+#     return doc
+
+
+def read_docx_tables(path: str) -> Iterator[tuple[int, pd.DataFrame]]:
+
+    doc = Document(path)
+    for idx, tbl in enumerate(doc.tables, start=1):
+        rows = [
+            [cell.text.strip() for cell in row.cells]
+            for row in tbl.rows
+            ]
+            
+        if not rows:
+            continue
+
+        header = rows[0]
+        data = rows[1:]
+        df = pd.DataFrame(data, 
+                          columns=header)
+
+        yield idx, df
+    
 
 def read_docx_text(path):
     doc = Document(path)
@@ -96,3 +190,24 @@ def save_text_file(data, file_name, folder, suffix="md"):
 # )
 
 # print(magic, version)
+
+
+
+if __name__ == "__main__":
+
+    from src.utils.general_helper import load_env_vars
+
+    load_env_vars()
+
+    folder = os.getenv("DATA_QMS")
+    assert folder is not None
+
+    files = [f for f in Path(folder).iterdir() if f.suffix == ".docx"]
+    print(f"Length 'files': {len(files)}")
+
+    for file in files:
+        convert_docx(
+            f_path=file,
+            out_format="odt",
+            overwrite=False,
+            )

@@ -15,13 +15,16 @@ from bs4 import NavigableString  # , Tag
 from src.model_classes_parsing.base_classes_parsing import (
     Code, 
     CodeMeta,
+    BulletList,
     RawDocument,
     DocumentExtract,
     Element,
     ElementMeta,
+    Heading,
     HeadingMeta,
     Image,
     ImageMeta,
+    Link, 
     ListMeta,
     Word
     )
@@ -29,13 +32,9 @@ from src.model_classes_parsing.classes_html_parsing import (
     BulletNode,
     CiteNode,
     CodeNode,
-    Heading,
     ImageNode,
-    Link, 
     LinkNode,
-    BulletList,
     OtherNode,
-    Paragraph,
     TextNode
 )
 from src.model_tools_parsing.base_extractor import BaseExtractor
@@ -338,15 +337,14 @@ class HTMLCleanExtractor(BaseExtractor):
                     continue
 
                 extract.append(
-                    Paragraph(
+                    TextBlock(
                         text=p_text,
                         container_id=idx,
                         # tag.decode_contents(),
                         # get_text(" ", strip=True),
                         inline_elements=p_elements,
-                        meta=ElementMeta(
-                            context=dict(current_headings),
-                        ),
+                        meta=ElementMeta(),
+                        context=dict(current_headings)
                     )
                 )
                 idx += 1

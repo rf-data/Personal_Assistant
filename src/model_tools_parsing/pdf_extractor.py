@@ -15,7 +15,7 @@ import fitz  # PyMuPDF
 # from src.utils.pdf_helper import extract_text_pymupdf
 
 from src.model_classes_parsing.base_classes_parsing import (
-                                            Bullet,
+                                            BulletItem,
                                             BulletMeta,
                                             Drawing,
                                             DrawingMeta,
@@ -447,7 +447,7 @@ class PDFCleanExtractor(BaseExtractor):
                     for idx, char in enumerate(span.get("chars", [])):
                         if char["c"] in self.bullets:
                             bullets.append(
-                                Bullet(
+                                BulletItem(
                                     text=char,
                                     meta=BulletMeta(
                                         bullet_id=idx,

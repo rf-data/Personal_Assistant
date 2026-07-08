@@ -54,27 +54,5 @@ class OtherNode(TextNode):
 # -------------------------
 # CONTAINER_ELEMENTS
 # -------------------------
-class Paragraph(Element):
-    container_type: Literal["paragraph"] = "paragraph"
 
-
-class BulletList(Element):
-    container_type: Literal["bullet_list"] = "bullet_list"
-
-
-class Heading(Element):
-    container_type: Literal["heading"] = "heading"
-    meta: HeadingMeta | None = Field(default_factory=HeadingMeta)
-
-
-class Link(Element):
-    container_type: Literal["link"] = "link"
-    extern: bool = Field(default=False)
-
-
-class LinkPreview(Link):
-    container_type: Literal["link_preview_node"] = "link_preview_node"
-
-
-class BlockQuote(Element):
-    container_type: Literal["block_quote"] = "block_quote" 
+ 

@@ -29,8 +29,8 @@ class ElementMeta(BaseMeta):
     # element_type: str = Field(default_factory=str)
     # token_id: int | list[int] = Field(default_factory=int)
     # element_id: int = Field(default_factory=int)
-    context: dict = Field(default_factory=dict)
-
+    # context: dict = Field(default_factory=dict)
+    pass
 
 class DrawingMeta(BaseModel):
     # drawing_id: int = Field(default_factory=int)
@@ -59,14 +59,23 @@ class CodeMeta(ElementMeta):
 
 class ImageMeta(ElementMeta):
     # element_type: str = "image"
+    img_id: int = Field(default_factory=int)
+    img_suffix: str = Field(default_factory=str)
     src: str = Field(default_factory=str)
     downloadable: bool | None = Field(default=None)
     alt: str = Field(default_factory=str)
     style: str = Field(default_factory=str)
     text_file: str = Field(default_factory=str)
     folder: str = Field(default_factory=str)
-    image_file: str = Field(default_factory=str)
+    img_name: str = Field(default_factory=str)
 
+
+class DOCXImageMeta(ImageMeta):
+    byte_size: int = Field(default_factory=int)
+    relationship_id: int = Field(default_factory=int)
+    width_cm: float | None = Field(default_factory=float)
+    height_cm: float | None = Field(default_factory=float)
+    
 
 class CellMeta(BaseMeta):
     language: str | list[str] = Field(default_factory=str)
@@ -157,6 +166,17 @@ class WikiPageMeta(BaseModel):
     wordcount: int = Field(default_factory=int)
     timestamp: str = Field(default_factory=str)
 
+class TableMeta(BaseModel):
+    n_rows: int = Field(default_factory=int)
+    n_cols: int = Field(default_factory=int)
+    has_header: bool = Field(default_factory=bool)
+    has_empty_cells: bool = Field(default_factory=bool)
+    has_merged_cells: bool = Field(default_factory=bool)
+    col_names: List[str] = Field(default_factory=list)
+    title: str = Field(default_factory=str)
+    source: Literal["docx", "tba"] = Field(default="tba")
+    layout: Literal["grid", "tba"] = Field(default="tba")
+
 
 # class WikiPageMeta(BaseModel):
 #     source: str = "wikipedia"
@@ -172,18 +192,13 @@ class BaseLeaf(BaseModel):
     leaf_id: int|None = None 
     leaf_type: str
     text: str = Field(default_factory=str)
-    meta: ElementMeta
+    meta: ElementMeta = Field(default_factory=ElementMeta)
     markups: List[dict] = Field(default_factory=list)
 
 
 class Word(BaseLeaf):
     leaf_type: Literal["word"] = "word"
     meta: WordMeta | TextWordMeta | None = Field(default_factory=WordMeta)
-
-
-class Bullet(BaseLeaf):
-    leaf_type: Literal["bullet"] = "bullet"
-    meta: BulletMeta | None = Field(default_factory=BulletMeta)
 
 
 class ResultItem(BaseModel):
@@ -232,7 +247,7 @@ class Span(BaseLeaf):
 # -------------------------
 class BaseContainer(BaseModel):
     container_type: str
-    container_id: int|None = None
+    container_id: int = Field(default_factory=int)
     text: str = Field(default_factory=str)
     elements: list[Word] = Field(default_factory=list)
     meta: BaseMeta = Field(default_factory=BaseMeta)
@@ -255,8 +270,12 @@ class Element(BaseContainer):
     # language: str  = Field(default_factory=str)
 
 
-class Paragraph(Element):
-    container_type: Literal["paragraph"] = "paragraph"
+# class Paragraph(Element):
+#     container_type: Literal["paragraph"] = "paragraph"
+
+
+class Quote(Element):
+    container_type: Literal["quote"] = "quote"
 
 
 class Line(BaseContainer):
@@ -278,10 +297,16 @@ class LineGroup(BaseContainer):
     meta: LineMeta = Field(default_factory=LineMeta)
 
 
+class BulletItem(Element):
+    container_type: Literal["bullet"] = "bullet"
+    bullet_id: int = Field(default_factory=int)
+    elements: list[LineGroup | Word] = Field(default_factory=list)
+    meta: BulletMeta | WordMeta | None = Field(default_factory=BulletMeta)
+
+
 class BulletList(Element):
     container_type: Literal["bullet_list"] = "bullet_list"
-    bullet_id: int = Field(default_factory=int)
-    elements: list[Bullet | LineGroup | Word] = Field(default_factory=list)
+    elements: list[BulletItem] = Field(default_factory=list)
     meta: TextBlockMeta = Field(default_factory=TextBlockMeta)
 
 
@@ -293,27 +318,30 @@ class Heading(Element):
 class Image(Element):
     container_type: Literal["image"] = "image"
     meta: ImageMeta | None = Field(default_factory=ImageMeta)
+    img_idx: int = Field(default_factory=int)
 
 
 class Link(Element):
     container_type: Literal["link"] = "link"
     extern: bool = Field(default=False)
-# class Paragraph(Element):
-#     container_type: Literal["paragraph"] = "paragraph"
-#     meta: Optional[HeadingMeta]  = Field(default_factory=HeadingMeta)
+
+
+class LinkPreview(Link):
+    container_type: Literal["link_preview_node"] = "link_preview_node"
 
 
 class Code(Element):
     container_type: Literal["code"] = "code"
     # elements: List[Word]  = Field(default_factory=list)
     meta: CodeMeta = Field(default_factory=CodeMeta)
+    context: list[str] = Field(default_factory=list)
 
 
 class Graphics(BaseContainer):
     container_type: Literal["graphics"] = "graphics"
     # elements: List[Word]  = Field(default_factory=list)
     drawings: list[Drawing] = Field(default_factory=list)
-    bullets: list[Bullet] = Field(default_factory=list)
+    bullets: BulletList = Field(default_factory=BulletList)
 
 
 class Cell(BaseContainer):
@@ -328,13 +356,70 @@ class Cell(BaseContainer):
 class TextBlock(BaseContainer):
     container_type: Literal["text_block"] = "text_block"
     text_body_id: int = Field(default_factory=int)
+    context: list[str] = Field(default_factory=list)
     meta: TextBlockMeta = Field(default_factory=TextBlockMeta)
-    elements: list[LineGroup] = Field(default_factory=list)
+    elements: list[LineGroup | Word] = Field(default_factory=list)
+
+
+class TableCell(BaseContainer):
+    container_type: Literal["table_cell"] = "table_cell"
+    # cell_type: Literal["digit_only", ""]
+    text: str = Field(default_factory=str)
+    col_name: str = Field(default_factory=str)
+    row_name: str = Field(default_factory=str)
+    col_idx: int = Field(default_factory=int)
+    row_idx: int = Field(default_factory=int)
+    row_span: int = Field(default=1)
+    col_span: int = Field(default=1)
+
+    """
+3. rowspan
+Hier wird es unschön.
+python-docx besitzt keine öffentliche API, um rowspan auszulesen.
+
+Man muss auf das XML zugreifen:
+cell._tc.tcPr.vMerge
+bzw.
+cell._tc.tcPr.find(qn("w:vMerge"))
+
+Die Werte sind ungefähr
+None          -> keine vertikale Fusion
+restart       -> Beginn einer Fusion
+continue      -> Fortsetzung
+Daraus muss man anschließend selbst die Höhe berechnen.
+
+4. colspan
+Ähnlich:
+cell._tc.tcPr.gridSpan
+oder
+cell._tc.tcPr.find(qn("w:gridSpan"))
+
+liefert
+<w:gridSpan w:val="3"/>
+→ colspan = 3
+    """
+
+
+class TableRow(BaseContainer):
+    container_type: Literal["table_row"] = "table_row"
+    row_id: int = Field(default_factory=int)
+    is_header: bool = Field(default_factory=bool)
+    has_empty_cells: bool = Field(default_factory=bool)
+    elements: list[TableCell] = Field(default_factory=list)
+
+
+class TableObject(BaseContainer):
+    container_type: Literal["table"] = "table"
+    # table_id: int = Field(default_factory=int)
+    context: list[str] = Field(default_factory=list)
+    meta: TableMeta = Field(default_factory=TableMeta)
+    elements: list[TableRow] = Field(default_factory=list)
+    caption: str = Field(default_factory=str)
 
 
 class RawDocument(BaseContainer):
     container_type: Literal["document"] = "document"
-    elements: list[Word] = Field(default_factory=list)
+    elements: list = Field(default_factory=list)
     meta: DocumentMeta = Field(default_factory=DocumentMeta)
 
 
@@ -360,6 +445,7 @@ class SearchResult(BaseContainer):
 # class Blocks()
 
 
+
 # -------------------------
 # SUMMARIES
 # -------------------------
@@ -378,10 +464,12 @@ class DocumentExtract(BaseModel):
                     "html_apollo",
                     "pdf",
                     "txt",
-                    "json_nb"
+                    "json_nb",
+                    "docx"
                     ] = Field(default="")
     doc_name: str
     text: str  #  = text,
+    tables: List[TableObject] = Field(default_factory=list)
     elements: List = Field(default_factory=list)
     meta: DocumentMeta = Field(default_factory=DocumentMeta)
     non_text: List = Field(default_factory=list)
@@ -427,10 +515,6 @@ class PDFPageExtract(PageExtract):
 #     text_bodies: list = Field(default_factory=list)
 
 
-document_leafs = Annotated[Heading | Element | Code | List | Image, 
-                       Field(discriminator="meta_type")]
-
-
 line_types = Annotated[LineSplit | Line | LineGroup, 
                        Field(discriminator="meta_type")]
 
@@ -439,4 +523,14 @@ container_types = Annotated[
     Field(discriminator="meta_type"),
 ]
 
-#
+doc_container = Annotated[
+                (BulletList|
+                 Code|
+                 Element|
+                 Heading|
+                 Image|
+                 List|
+                 TableObject|
+                 TextBlock), 
+                Field(discriminator="meta_type")
+                ]

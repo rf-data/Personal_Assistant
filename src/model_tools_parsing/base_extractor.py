@@ -18,7 +18,7 @@ class BaseExtractor:
     # extract_config: dict = field(default_factory=dict)
     # logger = logging.getLogger(__name__)
     # doc_name: str = field(default_factory=str)
-    parse_context: ParseContext = field(init=False)
+    parse_context: ParseContext #  = field(init=False)
     text_type: str = field(init=False)
 
     enricher: FeatureEnricher   #  = field(init=False)
@@ -31,6 +31,7 @@ class BaseExtractor:
     def __post_init__(self):
 
         self.logger = self.parse_context.logger
+        self.text_type = self.parse_context.text_type
         # self.enricher = enricher
 
         self.save_folder = self.parse_context.save_folder

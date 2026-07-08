@@ -3,11 +3,13 @@
 import re
 # import logging
 from dataclasses import dataclass, field
+import streamlit as st
 
 from src.core.memory import app_session, ParseContext 
 from src.model_classes_parsing.base_classes_parsing import (
-                                                    LineGroup, 
+                                                    BulletItem,
                                                     BulletList,
+                                                    LineGroup, 
                                                     TextBlock
                                                     )
 from src.model_tools_parsing.feature_enricher import FeatureEnricher
@@ -161,18 +163,35 @@ class PDFMerger:
 
         bullets_new = []
         bullet_id = 1
-        for bul in bullets:
+        for idx, bul in enumerate(bullets):
             
+            # try:
+            #     print(f"Bullet #{idx}:\n", bul) # .model_dump())
+            # except: 
+            #     pass
+
             bullets_new.append(
                     BulletList(
-                        bullet_id = bullet_id,
+                        container_id = bullet_id,
                         text= bul.text,
                         meta = bul.meta,
                         # : ElementMeta | None = Field(default_factory=ElementMeta)
-                        elements = bul.elements
-                        # : list[Word] = Field(default_factory=list)
-                    )
+                        elements = [
+                                BulletItem(
+                                    bullet_id=i,
+                                    text=line.text.lstrip("- ") if line.text.startswith("- ") else line.text,
+                                    meta=line.meta,
+                                    # elements=line.elements,   # hier dürfen vermutlich Word rein
+                                )
+                                for i, line in enumerate(bul.elements, 
+                                                         start=1)
+                                ]
+                        )
             )
+            #             bul.elements
+            #             # : list[Word] = Field(default_factory=list)
+            #         )
+            # )
 
             bullet_id += 1
 

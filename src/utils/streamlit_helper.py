@@ -2,6 +2,7 @@
 # imports
 from pathlib import Path
 import os
+import json
 import streamlit as st
 from streamlit_pdf_viewer import pdf_viewer
 import time
@@ -10,10 +11,12 @@ import subprocess
 
 from src.utils.html_helper import read_html_file
 from src.utils.general_helper import load_env_vars
-from src.utils.text_file_helper import read_docx_text, read_text_file 
+from src.utils.text_file_helper import (read_docx_text, 
+                                        read_text_file, 
+                                        read_docx_tables) 
 
 
-def st_file_preview(f_path: str|Path):
+def st_file_preview(f_path: str|Path, table: bool=False):
 
     match Path(f_path).suffix:
         case ".pdf":
@@ -31,17 +34,28 @@ def st_file_preview(f_path: str|Path):
                 st.html(html_str[:500])
 
         case ".json": 
-            st.warning("not yet implemented")
-        
-        case ".docx": 
-            # with open("temp.docx", "wb") as f:
-            #     f.write(f_path.getbuffer())
-
-            text = read_docx_text(f_path)
-            st.markdown(text)
-                    
+            data = json.loads(
+                        Path(f_path).read_text(
+                                        encoding="utf-8"
+                                        ))
+            st.json(data)
             # st.warning("not yet implemented")
+        
+        case ".docx":
+            if table is False: 
+                text = read_docx_text(f_path)
+                st.markdown(text)
+            
+            else:   
+                for tbl_idx, df in read_docx_tables(f_path):
 
+                    st.subheader(f"\n--- Table {tbl_idx} ---")
+                    st.dataframe(
+                            df,
+                            width="stretch",
+                            hide_index=True
+                            )
+                    
         case ".md" | ".txt": 
             txt_content = read_text_file(f_path)
             st.markdown(txt_content)

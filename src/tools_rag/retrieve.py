@@ -3,10 +3,16 @@
 # import numpy as np
 # import pandas as pd
 # from tiktoken import encoding_for_model
+import streamlit as st
+from enum import Enum
+from dataclasses import dataclass, field
+from typing import Any, Literal, List
 
 # import src.utils.dict_helper as dh
 # import src.utils.general_helper as gh
-# from src.core.memory import session
+from src.utils.chroma_helper import get_chroma_collection
+from src.core.memory import SOPGenContext
+from src.model_rag.chunks_retrieval import RetrievedChunk, RetrievalResult
 
 # TEST_QUERIES = [
 #     "Was ist GMP?",
@@ -15,12 +21,451 @@
 #     "Was steht in Kapitel %?",
 # ]
 
+# def normalise_chroma_results(results: dict) -> list[dict]:
 
-def normalise_chroma_results(results: dict) -> list[dict]:
+#     chunks_norm = results
 
-    chunks_norm = results
+#     return chunks_norm
 
-    return chunks_norm
+
+# def build_retrieval_queries(
+#                         topic: str,
+#                         template_chapters: list[str] | None = None,
+#                     ) -> list[str]:
+#     """
+#     Erstmal simple Query-Expansion.
+#     Später kann hier ein LLM oder Regelset rein.
+#     """
+
+#     queries = [topic]
+
+#     if template_chapters:
+#         for chapter in template_chapters:
+#             queries.append(f"{topic} {chapter}")
+
+#     return queries
+
+@dataclass
+class SOPChapter:
+    name: str
+    kind: Literal["core", "support"] = "core"
+    text: str = field(default_factory=str)
+    order: int = field(default_factory=int)
+    level: int = field(default_factory=int)
+    required: bool = False
+    condition: str | None = None
+    depends_on: List = field(default_factory=list)
+    knowledge_source: Literal[
+                        "retrieval",
+                        "template",
+                        "core_chapters",
+                        "existing_document"
+                        ] = "retrieval"
+    # llm_generation: bool
+
+
+class SOPType(Enum):
+    GENERAL = "general"
+    MANUFACTURING = "manufacturing"
+    CLEANING = "cleaning"
+    QC = "quality_control"
+
+
+@dataclass
+class SOPTemplate:   
+    sop_type: SOPType = field(default=SOPType.GENERAL)  # GENERAL     #  "general" 
+    version: str = "1.0"
+    # core_chapter: List[SOPChapter] = field(default_factory=list)
+    chapters: List[SOPChapter] = field(default_factory=list)
+
+# @dataclass
+# class SOPChapter:
+#     ch_title: str
+#     
+#     ch_
+#     
+#     # 
+#     # table: List = []
+
+
+# @dataclass
+# class SOPTemplate:
+#     general_sop: bool=True 
+#     core_chapter: List[SOPChapter] = field(default_factory=list)
+#     support_chapter: List[SOPChapter] = field(default_factory=list)
+
+SOP_BASE_TEMPLATE = SOPTemplate(
+                        sop_type=SOPType.GENERAL,
+                        chapters=[
+                        SOPChapter(
+                            order=5,
+                            # level=1,
+                            kind="core", 
+                            name="Durchführung"
+                            # etreten des Herstellungsraumes",
+                            # text="Der Anreicher hat beim Betreten des Herstellungsraumes die Arbeitsanweisungen AA Hygieneplan und AA Ein- und Ausschleusen von Personal einzuhalten.",
+                        ),
+                        SOPChapter(
+                            name="Ziel",
+                            order=1,
+                            text=""
+                            # Beschreibung der Tätigkeiten am Arbeitsplatz des Anreichers im Herstellungsraum",
+                            ),
+                        SOPChapter(
+                            name="Geltungsbereich",
+                            order=2,
+                            text=""
+                            # Abteilung Sterilherstellung",
+                            ),  
+                        SOPChapter(
+                            name="Zuständigkeit",
+                            order=3,
+                            text=""
+                            ),
+                        SOPChapter(
+                            name="Begriffe",
+                            order=4,
+                            text=""
+                            ),  
+                        SOPChapter(
+                            name="Mitgeltende Unterlagen",
+                            order=6,
+                            text=""
+                            ),  
+                        SOPChapter(
+                            name="Änderungshistorie",
+                            order=7,
+                            text=""
+                            ),  
+                    ]
+                    )
+
+
+SOP_REVISE_TEMPLATE = SOPTemplate(
+                    sop_type=SOPType.GENERAL,
+                    chapters=[
+                        SOPChapter(
+                            order=5,
+                            level=1,
+                            kind="core", 
+                            name="Betreten des Herstellungsraumes",
+                            text="Der Anreicher hat beim Betreten des Herstellungsraumes die Arbeitsanweisungen AA Hygieneplan und AA Ein- und Ausschleusen von Personal einzuhalten.",
+                        ),
+                        SOPChapter(
+                            order=5,
+                            level=2,
+                            kind="core", 
+                            name="Vorbereitung der Herstellung",
+                            text="""
+[Row #0]:	
+[Row #1]:		|	Der Anreicher schaltet nach Betreten des Herstellungsraumes die Lüftung der LAF-Bank ein.	|	D
+[Row #2]:		|	Der Anreicher desinfiziert seinen Arbeitsplatz im Herstellungsraum und den Arbeitsplatz des Herstellers in der LAF-Bank gemäß AA Hygieneplan.	|	D
+[Row #3]:		|	Sobald die LAF-Bank betriebsbereit ist, startet der Anreicher den Partikelzähler.	|	D
+[Row #4]:		|	Der Anreicher entnimmt die Materialien unter Einhaltung der AA Ein- und Ausschleusen aus der Materialschleuse und ordnet AA Herstellungsanweisung / protokoll und zugehörige Materialien auf seinem Arbeitsplatz.
+Bei der Zuordnung prüft er alle Materialien auf Übereinstimmung von Verfall und Chargenbezeichnung mit den jeweiligen Herstellungsprotokollen.	|	D
+[Row #5]:		|	Der Anreicher stellt gemäß AA Mikrobiologisches Monitoring vor Beginn der Herstellung Sedimentationsplatten in der LAF-Bank auf.	|	D
+"""
+                            ),
+                        SOPChapter(
+                            order=5,
+                            level=3,
+                            name="Herstellung",
+                            text="""
+[Row #0]:	
+[Row #1]:		|	Der Anreicher übergibt dem Hersteller sterile Verbrauchsmaterialien, indem er sie ausgepeelt anreicht.	|	D, B
+[Row #2]:		|	Der Anreicher übergibt dem Hersteller Hilfsstoffe und Arzneistoffe für die jeweilige Herstellung.	|	D, B
+[Row #3]:		|	Bei Arzneimitteln und Hilfsstoffen nennt der Anreicher die jeweilige vollständige Bezeichnung und die benötigte Menge gemäß AA Herstellungsanweisung /-protokoll.	|	D, B
+[Row #4]:		|	Der Anreicher überprüft die vom Hersteller wiederholten Bezeichnungen und Mengen und bestätigt diese mündlich sowie im Herstellungsprotokoll.	|	D, B
+[Row #5]:		|	Vom Hersteller fertiggestellte Beutel werden vom Anreicher entgegengenommen und am Arbeitsplatz des Anreichers den Herstellungsdokumenten zugeordnet und etikettiert.
+Dabei bestätigt der Anreicher die erfolgten Inprozesskontrollen im Herstellungsprotokoll.	|	D, B
+[Row #6]:		|	Der Anreicher nimmt die Abfälle aus der LAF-Bank vom Hersteller entgegen und sammelt diese in einem Transportkorb.	|	D, B
+[Row #7]:		|	Wiederholung der Schritte 1 bis 6 für weitere Herstellungen	|	D, B
+"""
+                            ),
+                        SOPChapter(
+                            order=5,
+                            level=4,
+                            name="Nachbereitung der Herstellung",
+                            text="""
+[Row #0]:	
+[Row #1]:		|	Hergestellte Beutel werden am Arbeitsplatz des Anreichers in Folienschläuche eingeschweißt.	|	D
+[Row #2]:		|	Die hergestellten und eingeschweißten Beutel werden zusammen mit den Herstellungsdokumenten unter Einhaltung der AA Ein- und Ausschleusen von Material aus dem Herstellungsraum in den Vorbereitungsraum geschleust.	|	D, I
+[Row #3]:		|	Anschließend werden die Abfälle aus dem Herstellungsraum unter Einhaltung der AA Ein- und Ausschleusen von Material aus dem Herstellungsraum in den Vorbereitungsraum überführt.	|	D, I
+[Row #4]:		|	Am Ende jeder Arbeitssitzung werden die Fingerprinttests gemäß AA Mikrobiologisches Monitoring durchgeführt sowie die Sedimentationsplatten verschlossen und beschriftet.	|	D
+[Row #5]:		|	Die LAF-Bank und der Partikelzähler werden ausgeschaltet.	|	D
+"""
+                            ),
+                    # ],
+                    # support_chapter = [
+                        SOPChapter(
+                            name="Ziel",
+                            order=1,
+                            text="Beschreibung der Tätigkeiten am Arbeitsplatz des Anreichers im Herstellungsraum",
+                            ),
+                        SOPChapter(
+                            name="Geltungsbereich",
+                            order=2,
+                            text="Abteilung Sterilherstellung",
+                            ),  
+                        SOPChapter(
+                            name="Zuständigkeit",
+                            order=3,
+                            text="""
+[Row #0]:	
+[Row #1]:	prozessverantwortlich	|	PV	|	Apothekenleitung
+[Row #2]:	führt durch	|	D	|	Anreicher
+[Row #3]:	ist beteiligt	|	B	|	Hersteller
+[Row #4]:	wird informiert	|	I	|	Vorbereiter
+[Row #5]:	vertritt	|	V	|	-
+"""
+                            ),
+                        SOPChapter(
+                            name="Begriffe",
+                            order=4,
+                            text="""
+- AA: Arbeitsanweisung
+"""
+                            ),  
+                        SOPChapter(
+                            name="Mitgeltende Unterlagen",
+                            order=6,
+                            text="""
+- AA Hygieneplan
+- AA Ein- und Ausschleusen von Personal
+- AA Ein- und Ausschleusen von Material
+- AA Herstellungsanweisung / -protokoll Schmerzbeutel
+- AA Mikrobiologisches Monitoring
+"""
+                            ),  
+                        SOPChapter(
+                            name="Änderungshistorie",
+                            order=7,
+                            text="""
+[Row #0]:	
+[Row #1]:		|		|	
+[Row #2]:		|		|	
+"""
+                            ),  
+                    ]
+                    )
+
+def get_templates(sop_context: SOPGenContext):
+    f_type = sop_context.q_doc_type
+    work_mode = sop_context.work_mode
+    
+#     # : Literal[
+#             #         "SOP_general",
+#             #         "SOP_specific", 
+#             #         "record", 
+#             #         "risk_analysis"
+#             #         ] = "SOP_general", 
+#             # chapters: List[int] | str = "all"
+#             # ):
+
+    match f_type:
+        case "SOP":
+            if work_mode == "create":
+                return SOP_BASE_TEMPLATE
+
+            else:
+                # return SOP_BASE_TEMPLATE
+                raise NotImplementedError("SOP update not yet implemented.")
+        
+        # case "SOP_specific":
+        #     hi = ""
+        
+        case "risk_analysis":
+            raise NotImplementedError("SOP update not yet implemented.")
+
+        case _:
+            raise ValueError(f"Unknown document type: {f_type}")
+
+    # return templates
+
+
+def retrieve_for_template(
+                    # collection,
+                    sop_context: SOPGenContext,
+                    # topic: str,
+                    template_chapters: SOPTemplate, # list[str],
+                    # n_results_per_query: int = 5,
+                ) -> dict[str, RetrievalResult]:
+    """
+    Kapitelweises Retrieval.
+    Das passt zu eurer neuen Template-getriebenen Pipeline.
+    """
+
+    collection = sop_context.collection
+    topic = sop_context.topic
+    n_results =  sop_context.n_results
+    
+    chapter_results = {}
+
+    templates_sorted = sorted(
+                        template_chapters.chapters,
+                        key=lambda c: c.order
+                            )
+
+    for chapter in templates_sorted:
+        query = f"{topic}. SOP-Kapitel: {chapter.name}. {chapter.text}"
+        # {chapter.name}"
+
+        chapter_results[chapter.name] = retrieve_chunks(
+            collection=collection,
+            query=query,
+            n_results=n_results,
+            )
+
+    return chapter_results
+
+
+def retrieve_chunks(
+            collection: List[str], # : Collection,
+            query: str,
+            n_results: int = 8,
+            where: dict | None = None,
+        ) -> RetrievalResult:
+    """
+    Minimaler Retrieval-Wrapper für Chroma.
+    """
+
+    kwargs = {
+        "query_texts": [query],
+        "n_results": n_results,
+        "include": ["documents", "metadatas", "distances"],
+    }
+
+    if where:
+        kwargs["where"] = where
+
+    results = []
+    
+    for coll in collection:
+
+        chroma_coll = get_chroma_collection(coll)
+        results.append(chroma_coll.query(**kwargs))
+
+    return normalise_chroma_results(
+        results=results,
+        query=query,
+    )
+
+
+def normalise_chroma_results(
+                        results: List[dict], 
+                        query: str = ""
+                        ) -> RetrievalResult:
+    """
+    Normalisiert Chroma-Query-Output in eine flache Chunk-Liste.
+    Erwartet typischen Chroma-Output:
+    {
+        "ids": [[...]],
+        "documents": [[...]],
+        "metadatas": [[...]],
+        "distances": [[...]]
+    }
+    """
+
+    ids = _first_result_list(results[0].get("ids"))
+    docs = _first_result_list(results[0].get("documents"))
+    metas = _first_result_list(results[0].get("metadatas"))
+    distances = _first_result_list(results[0].get("distances"))
+
+    chunks: list[RetrievedChunk] = []
+
+    for idx, text in enumerate(docs):
+        meta = metas[idx] if idx < len(metas) and metas[idx] else {}
+        chunk_id = ids[idx] if idx < len(ids) else str(idx)
+        distance = distances[idx] if idx < len(distances) else None
+
+        retrieved_chunk = RetrievedChunk(
+                chunk_id=str(chunk_id),
+                text=text or "",
+                source=meta.get("source", "")
+                    or meta.get("doc_name", "")
+                    or meta.get("file_name", ""),
+                section=meta.get("section", "")
+                    or meta.get("heading", "")
+                    or meta.get("context", ""),
+                page=meta.get("page"),
+                score=_distance_to_score(distance),
+                metadata=meta,
+            )
+        chunks.append(retrieved_chunk)
+
+        try: 
+            st.json(retrieved_chunk.model_dump())
+        except:
+            pass
+
+    return RetrievalResult(
+        query=query,
+        chunks=[c for c in chunks if c.text.strip()],
+        n_results=len(chunks),
+    )
+
+
+def _first_result_list(value: Any) -> list:
+    """
+    Chroma liefert meist verschachtelte Listen:
+    [["a", "b", "c"]]
+
+    Diese Funktion macht daraus:
+    ["a", "b", "c"]
+    """
+    if value is None:
+        return []
+
+    if value and isinstance(value, list) and isinstance(value[0], list):
+        return value[0]
+
+    if value and isinstance(value, list):
+        return value
+
+    return []
+
+
+def _distance_to_score(
+                    distance: float | None,
+                    # dist_mode: ""
+                    ) -> float | None:
+    """
+    Chroma gibt oft Distanzen zurück.
+    Kleinere Distanz = besser.
+    Für die Pipeline reicht zunächst eine einfache Umrechnung.
+    """
+    if distance is None:
+        return None
+
+    try:
+        return 1 / (1 + float(distance))
+    except Exception:
+        return None
+
+
+
+
+def flatten_retrieval_results(
+                    retrieval_results: dict[str, 
+                                            RetrievalResult],
+                ) -> list[RetrievedChunk]:
+    """
+    Macht aus kapitelweisen Ergebnissen eine deduplizierte Chunk-Liste.
+    """
+
+    seen = set()
+    chunks_flat: list[RetrievedChunk] = []
+
+    for result in retrieval_results.values():
+        for chunk in result.chunks:
+            if chunk.chunk_id in seen:
+                continue
+
+            seen.add(chunk.chunk_id)
+            chunks_flat.append(chunk)
+
+    return chunks_flat
+
 
 
 

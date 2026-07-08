@@ -1,7 +1,15 @@
 ## extract_word.py
 # import
+import re
+from docx import Document
 
-
+from src.model_classes_parsing.base_classes_parsing import (
+                Bullet, 
+                BulletList,
+                Heading,
+                HeadingMeta,
+                TextBlock,
+)
 """
 ZIEL:
 Für dein Projekt würde ich sogar einen Schritt weitergehen
@@ -27,7 +35,7 @@ Image
 CodeBlock (optional)
 """
 
-def extract_word(f_path: str):
+def extract_docx(f_path: str):
 
     # doc = read_docx()
     doc = Document(f_path)
@@ -57,7 +65,7 @@ def extract_word(f_path: str):
                                                     )[0]
                                         ),
                             text = p.text,
-                            container_id = idx
+                            container_id = container_id
                             )
                         )
                 container_id += 1
@@ -72,13 +80,12 @@ def extract_word(f_path: str):
                             #                             )[0]
                             #             ),
                             text = p.text,
-                            container_id = idx
+                            container_id = container_id
                             )
                         )
                 container_id += 1
 
             case "Aufzählung":
-
                 bullets.append(
                         Bullet(text = p.text)
                         )
@@ -88,7 +95,7 @@ def extract_word(f_path: str):
                             BulletList(
                                 elements = bullets,
                                 text = "- " + "\n- ".join([b.text for b in bullets]),
-                                container_id = idx
+                                container_id = container_id
                                 )
                             )
                     

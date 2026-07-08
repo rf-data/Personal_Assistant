@@ -50,7 +50,7 @@ def show():
                     #         if f.suffix == ".html"],
                     key="files_html"
                     )
-        parse_config.file_name = st.session_state["files_html"] # html_select
+        parse_config.file_name = files_html # st.session_state["files_html"] # html_select
 
         st.write(f"You selected {len(files_html)} files:")
         for idx, file in enumerate(files_html): 

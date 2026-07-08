@@ -6,7 +6,7 @@ from pathlib import Path
 import fitz  # pymupdf
 import streamlit as st
 
-from src.tools_parsing.extract_word import extract_word 
+# from src.tools_parsing.extract_docx import extract_docx
 from src.utils.streamlit_helper import show_tree, st_file_preview
 from src.utils.path_helper import ensure_dir, shorten_path  
 from src.utils.general_helper import load_env_vars
@@ -51,17 +51,21 @@ def show():
 
     with preview:
 
-        left, right = st.columns(2)
+        # left, right = st.columns(2)
 
-        preview_suffix = left.pills(
+        preview_suffix = st.pills(
             label="Select file type(s)", 
-            options=["txt_md", "txt", "html", "pdf", "json"], 
+            options=["txt_md", 
+                     "docx", 
+                     "html",
+                     "pdf", 
+                     "json"], 
             default=["txt_md"], 
             selection_mode="single",
             # key="file_preview"
             )
         
-        rag_ready = right.toggle(
+        rag_ready = st.toggle(
                     label="Filter out RAG-ready extracts",
                     # key="pdf_image"
                 )
@@ -84,7 +88,7 @@ def show():
         st.divider()
 
         file_options = [f for f in Path(preview_folder).rglob("*")
-                        if f.is_file() and Path(f).stem.startswith(f"{'ready_' if rag_ready else 'test_'}")]
+                        if f.is_file() and f.parent.name.startswith(f"{'ready_' if rag_ready else 'test_'}")]
         # [f for f in Path(preview_folder[0]).rglob(preview_suffix)]
                             #  if f.suffix in preview_suffix]
         

@@ -6,7 +6,7 @@ import os
 import pandas as pd
 
 from src.utils.general_helper import load_env_vars
-from src.core.memory import app_session
+from src.core.memory import app_session, SOPGenContext
 
 import chromadb
 from chromadb.api import ClientAPI
@@ -116,13 +116,16 @@ def add_chroma_data(coll_name: str,
 
 # collection.upsert()       -> update + insert data
 
-def run_chroma_query(chroma_coll: Collection, 
-                          query: str, 
-                          n_results: int=1):
+def run_chroma_query(
+        context: SOPGenContext
+        # chroma_coll: Collection, 
+        #                   query: str, 
+        #                   n_results: int=1
+                          ):
 
-    results = chroma_coll.query(
-                    query_texts=["Was ist Chroma?"],
-                    n_results=n_results
+    results = context.collection.query(
+                    query_texts=context.query, #["Was ist Chroma?"],
+                    n_results=context.n_results
                 )
     
 #     collection.query(

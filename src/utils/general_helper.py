@@ -94,6 +94,19 @@ def snapshot_dependent_functions(
     return snapshot
 
 
+def make_doc_id(file_path: str) -> str:
+    stem = Path(file_path).stem.lower().strip()
+    return hashlib.sha256(stem.encode("utf-8")).hexdigest()  # [:16]
+
+
+def make_doc_id_by_content(file_path: str) -> str:
+    h = hashlib.sha256()
+
+    with open(file_path, "rb") as f:
+        while chunk := f.read(8192):
+            h.update(chunk)
+
+    return h.hexdigest()        # [:16]
 
 ###################
 # CACHING

@@ -5,6 +5,7 @@ from pathlib import Path
 from pydantic import Field
 from typing import Any, Dict, ClassVar, Literal, List, Annotated
 from dataclasses import dataclass, field
+from chromadb.api.models.Collection import Collection
 
 from openai import OpenAI
 from tiktoken import encoding_for_model
@@ -23,14 +24,38 @@ LLMClient = Annotated[
                 ]
 
 @dataclass
-class RAGContext: 
-    client: LLMClient = field(default_factory=LLMClient)
-    query: str = field(default_factory=str)
+class SOPGenContext: 
+    client: LLMClient = field(default=LLMClient)
+    topic: str = field(default_factory=str)
+    q_doc_type: Literal[
+                    "SOP",
+                    # "SOP_specific", 
+                    "record", 
+                    "risk_analysis"
+                    ] = field(default="SOP")
+    work_mode: Literal["create", "revise"] = "create"    
+    template_id: int = field(default_factory=int)  
+    style: Literal["gmp_oriented"]  = "gmp_oriented" 
+    output_format: Literal["markdown"] = "markdown"
+    allowed_sources: Literal["retrieved_context_only"] = "retrieved_context_only"
+    # # "merge", "split"
+    chapter_mode: Literal["full", "chapterwise"] = "chapterwise"
+    chapters: List[str] | str | Literal["n.a."] = "n.a."
+    collection: List[str] = field(default_factory=list) 
+    # | Collection
     results: Dict = field(default_factory=dict)
+    n_results: int = field(default_factory=int)
     save_folder: str = field(default_factory=str)
     save_name : str = field(default_factory=str)
 
 
+
+# @dataclass
+# class UserRequest:
+#     query: str
+    
+# @dataclass
+# class ParseContext: 
 
 
 @dataclass
@@ -49,12 +74,14 @@ class ParseContext:
                     "pdf", 
                     "json_nb", 
                     "wiki",
+                    "docx",
                     "html",
                     "url", 
                     None
                     ] = field(default=None)
     save_folder: str | Path = field(default_factory=str)
     save_name: str | Path = field(default_factory=str)
+    doc_id: str = field(default_factory=str)
     timestamp: datetime | str | None = field(default=None)
     run_id: str = field(default_factory=str)
     logger: ClassVar = logging.getLogger(__name__)

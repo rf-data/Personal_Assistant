@@ -6,9 +6,10 @@ from datetime import datetime
 import streamlit as st
 from tiktoken import encoding_for_model
 
+
 from src.utils.dict_helper import get_yaml_config
 from frontend.pages import (
-                        A_p0_rag_system, 
+                        A_p0_cockpit, 
                         A_p1_simple_LLM_actions, 
                         A_p2_file_system,
                         A_p3_transcribe,
@@ -18,7 +19,7 @@ from frontend.pages import (
                         B_p1_ETL_pdf,
                         B_p2_ETL_wiki_page,
                         B_p3_ETL_json_nb,
-                        B_p4_ETL_word,
+                        B_p4_ETL_docx,
                         B_p5_ETL_md,
                         B_p6_ETL_OCR_text,
                         B_p7_ETL_plain_text,
@@ -28,7 +29,8 @@ from frontend.pages import (
                         D_p0_EDA_dash,
                         D_p1_pca, 
                         D_p2_eval_dash,
-                        E_p0_develop_area
+                        E_p0_rag_system,
+                        F_p0_develop_area
                         )
 
 from src.core.logger import create_logger
@@ -105,6 +107,7 @@ with st.sidebar:        # Page Switching
                 "Extract Text",
                 "Extract Data",
                 "DataViz & Dashboards",
+                "RAG System",
                 "Development",
                 ],
             key="page",
@@ -114,10 +117,11 @@ with st.sidebar:        # Page Switching
     st.markdown("---")
 
 PROJECT_MAP = {
-    "General Features": ("General Features", "RAG System"),
+    "General Features": ("General Features", "Cockpit"),
     "Extract Text": ("Extract Text", "ETL HTML"),
     "Extract Data": ("Extract Data", "ETL Excel"),
     "DataViz & Dashboards": ("DataViz & Dashboards", "EDA_dash"),
+    "RAG System": ("RAG System", "Query & Retrieve"),
     "Development": ("Development", "Development_Area")
     }
 
@@ -135,7 +139,7 @@ with st.sidebar:
         st.radio(
                 "Choose a tool",
                 options=[
-                    "RAG System",
+                    "Cockpit",
                     "simple LLM actions",
                     "File System",
                     "Transcription",
@@ -194,6 +198,20 @@ with st.sidebar:
                 label_visibility="collapsed"
             )
      # "Development": ("Development_Area", None)
+
+    elif st.session_state.page == "RAG System":
+        st.subheader("RAG System")
+
+        st.radio(
+                "Abschnitt",
+                options=[
+                    "Query & Retrieve"
+                    # "Evaluation Dashboard",
+                    ],
+                key="subpage",
+                label_visibility="collapsed"
+            )
+        
     elif st.session_state.page == "Development":
         st.subheader("Development")
 
@@ -214,7 +232,7 @@ page = st.session_state.page
 sub = st.session_state.subpage
 
 if page == "General Features":
-    if sub == "RAG System": A_p0_rag_system.show()
+    if sub == "Cockpit": A_p0_cockpit.show()
     elif sub == "simple LLM actions": A_p1_simple_LLM_actions.show()
     elif sub == "File System": A_p2_file_system.show()
     elif sub == "Transcription": A_p3_transcribe.show()
@@ -226,7 +244,7 @@ elif page == "Extract Text":
     elif sub == "ETL pdf_file": B_p1_ETL_pdf.show()
     elif sub == "ETL wiki_page": B_p2_ETL_wiki_page.show()
     elif sub == "ETL json_notebook": B_p3_ETL_json_nb.show()
-    elif sub == "ETL word": B_p4_ETL_word.show()
+    elif sub == "ETL word": B_p4_ETL_docx.show()
     elif sub== "ETL md_file": B_p5_ETL_md.show()
     elif sub== "ETL OCR text": B_p6_ETL_OCR_text.show()
     elif sub == "ETL plain_text": B_p7_ETL_plain_text.show()
@@ -243,8 +261,11 @@ elif page == "DataViz & Dashboards":
     elif sub == "PCA": D_p1_pca.show()
     elif sub == "Evaluation Dashboard": D_p2_eval_dash.show()
 
+elif page == "RAG System":
+    if sub == "Query & Retrieve": E_p0_rag_system.show()
+
 elif page == "Development":
-    if sub == "Development_Area": E_p0_develop_area.show()
+    if sub == "Development_Area": F_p0_develop_area.show()
 
 
 # PAGES_PRESENTATION[presentation]()

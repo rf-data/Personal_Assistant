@@ -25,7 +25,6 @@ class BaseAssembler:
     last_heading: list = field(default_factory=list)
     
 
-
     def __post_init__(self):        # , parse_context: ParseContext
         # from src.core.memory import session
 
@@ -182,8 +181,10 @@ class BaseAssembler:
         
         if (filter_elements is not None 
             and len(filter_elements) > 0): 
-            elements_filt = [ele for ele in elements
-                            if ele.container_type in filter_elements]
+            elements_filt = [
+                        ele for ele in elements
+                        if ele.container_type in filter_elements
+                        ]
         
         else:
             elements_filt = elements
@@ -227,14 +228,16 @@ class BaseAssembler:
                     or "")
             assert e_type is not None
             
-            c_type = getattr(element, "cell_type", None) or ""
+            c_type = getattr(element, 
+                             "cell_type", 
+                             None) or ""
             assert c_type is not None
 
             if e_type == "heading":
                 level = meta.level or 1
                 text_final.append(f"{'#' * level} {text}\n")
 
-            elif e_type == "paragraph":
+            elif e_type ==  "text_block":#  in ["paragraph",
                 if text.endswith(":"):
                     text_final.append(text)
 
@@ -250,13 +253,19 @@ class BaseAssembler:
                 else:
                     text_final.append(f"{text}\n")
 
-            elif e_type == "bullets_list":
+            # elif e_type ==  "quote":
+            #     text_final.append(f"'{text}'\n")
+
+            # elif e_type ==  "image":
+            #     text_final.append(f"{text} \n")
+
+            elif e_type == "bullet_list":
                 lines = text.split("\n")
 
                 # for text in text_splits:
                 #     text = "- " + text + "\n"
 
-                bullet_text = "\n".join(
+                bullet_text = "- " + "\n- ".join(
                     [line.strip() for line in lines 
                      if line.strip()]
                 )
@@ -317,12 +326,14 @@ class BaseAssembler:
                     or "")
             assert e_type is not None
             
-            c_type = getattr(element, "cell_type", None) or ""
+            c_type = getattr(element, 
+                             "cell_type", None) or ""
             assert c_type is not None
 
-            if e_type == "paragraph":
+            if e_type in ["paragraph", 
+                          "text_block"]:
                 if text.endswith(":"):
-                    text_final += f"{text}\n\n"
+                    text_final += f"{text}\n"
 
                 elif ":" in text:
                     text = re.sub(
@@ -342,7 +353,7 @@ class BaseAssembler:
                 # for text in text_splits:
                 #     text = "- " + text + "\n"
 
-                bullet_text = "\n".join(
+                bullet_text = "- " + "\n- ".join(
                     [line.strip() for line in lines 
                      if line.strip()]
                 )

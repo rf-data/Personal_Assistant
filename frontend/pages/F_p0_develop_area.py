@@ -6,17 +6,24 @@ import streamlit as st
 
 from src.core.memory import app_session, ParseContext
 from src.core.config import ChunkSettings
-from src.utils.path_helper import shorten_path 
+from src.utils.path_helper import shorten_path, ensure_dir 
 from src.utils.st_eda_helper import st_df_profile
 
 from src.run_embedding import chunk_text
+
+
+
 
 def show():
     st.header("🏠 Startseite ")
     st.subheader("**Development Area**")
 
-    data_processed = os.getenv("DATA_PROCESSED")
-    data_embed = os.getenv("DATA_EMBED")
+    # data_processed = os.getenv("DATA_PROCESSED")
+    # data_embed = os.getenv("DATA_EMBED")
+    data = os.getenv("DATA_DIR")
+    assert data is not None
+
+    data = Path(ensure_dir(data))
 
     st.warning("ADAPT TO NEW FILE SYSTEM")
     
@@ -33,20 +40,21 @@ def show():
     #     "max_tokens": ""                    
     # }
 
-    st.pills(
+    chunk_folder = st.pills(
             label="Select folder (processed files)", 
-            options=[
-                "notebooks", 
-                "html_files", 
-                "pdf_files"
-                ], 
+            options=["txt_md", 
+                     "docx", 
+                     "html",
+                     "pdf", 
+                     "json"], 
             selection_mode="single",
-            key="chunk_folder"
+            # key="chunk_folder"
             )
 
     
-    folder_path = f"{data_processed}/{st.session_state["chunk_folder"]}"
-    files = list(Path(folder_path).rglob("*_info.json"))
+    folder_path = f"{data}/{chunk_folder}/processed"
+    files = [f for f in Path(folder_path).rglob("*_info.json")
+             if f.parent.name.startswith("ready_")]
 
     selected_file = st.multiselect(
         label="Which json file should be chunked?",
@@ -65,7 +73,7 @@ def show():
     if selected_file is not None:
         chunk_context = ParseContext(
                     # save_name = Path(selected_file).stem,
-                    save_folder = data_embed,
+                    # save_folder = data_embed,
                     chunk_settings = ChunkSettings(
                                     container_types = [
                                             "body_text",

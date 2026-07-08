@@ -1,6 +1,7 @@
 ##
 # imports
 import os
+from pathlib import Path
 from datetime import datetime
 from typing import List
 import numpy as np
@@ -14,7 +15,7 @@ from rich.progress import Progress
 # from src.core.logger import create_logger
 from src.core.memory import app_session, ParseContext
 
-# from src.utils.general_helper import load_env_vars
+from src.utils.general_helper import make_doc_id    # load_env_vars
 from src.utils.dict_helper import load_dict     # , get_yaml_config
 from src.utils.df_helper import save_df_to_parquet
 from src.utils.chroma_helper import add_chroma_data
@@ -79,6 +80,11 @@ def chunk_text(
 
     logger = app_session.logger
 
+    parse_context.save_name = Path(f_path).stem.replace("info", "chunked")
+    parse_context.save_folder = Path(f_path).parent
+    # parse_context.f_name = save_name
+    parse_context.doc_id = make_doc_id(f_path)
+
     doc_json = load_dict(f_path)
     df_blocks = document_json_to_blocks(
                                     doc_json["elements"], 
@@ -93,10 +99,11 @@ def chunk_text(
                             )
 
     # logger.info("")
+
     
     save_df_to_parquet(
                 df=df_chunk, 
-                f_name=f"{parse_context.save_name}_chunked",
+                f_name=parse_context.save_name, # f"{}_chunked",
                 folder=parse_context.save_folder
                 )
     
