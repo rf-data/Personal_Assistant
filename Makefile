@@ -1,12 +1,21 @@
 ROOT := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT := personal_assistence
 
-.PHONY: all fmt lint type_check monitoring_docker monitoring_stop
+.PHONY: all fmt lint type_check monitoring_docker monitoring_stop mlflow_fingerprint mlflow_start mlflow_stop
 # mlflow_local n8n_quick text_prepare text_extract rag_prepare  # test
 # all stop evaluation fire-alert reports  
 
 all: fmt lint type_check
 
+mlflow_fingerprint: 
+	bash scripts/create_experiment.sh
+
+mlflow_start:
+	bash scripts/0_setup_mlflow.sh
+	
+mlflow_stop:
+	pkill -f "mlflow server" || true
+	
 clean_linux:
 	bash scripts/clean_linux.sh
 

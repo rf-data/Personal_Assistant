@@ -31,8 +31,8 @@ LOGFILE="$PROJECT_ROOT/logs/0_mlflow_setup.log"
 # ----------------------------
 # Defaults (only for SERVER)
 # ----------------------------
-MLFLOW_DB=${MLFLOW_DB:-"sqlite:///mlflow/mlflow.db"} 
-ARTIFACT_DIR=${MLFLOW_ARTIFACTS:-"./mlflow/artifacts"}
+MLFLOW_DB=${MLFLOW_DB:-"sqlite:///$PROJECT_ROOT/mlflow/mlflow.db"} 
+ARTIFACT_DIR=${MLFLOW_ARTIFACTS:-"$PROJECT_ROOT/mlflow/artifacts"}
 
 # Kürzen auf die letzten 2–3 Teile des Pfads
 short_db=$(echo "$MLFLOW_DB" | awk -F'/' '{print $(NF-2)"/"$(NF-1)"/"$NF}')
@@ -47,8 +47,8 @@ short_artifacts=$(echo "$ARTIFACT_DIR" | awk -F'/' '{print $(NF-1)"/"$NF}')
 
   # SQLite --> only local + one user access possible
   mlflow server \
-    --backend-store-uri $MLFLOW_DB \
-    --default-artifact-root $ARTIFACT_DIR \
+    --backend-store-uri "$MLFLOW_DB" \
+    --default-artifact-root "$ARTIFACT_DIR" \
     --host 127.0.0.1 \
     --port 5000 \
      >> "$LOGFILE" 2>&1 &
@@ -64,7 +64,14 @@ short_artifacts=$(echo "$ARTIFACT_DIR" | awk -F'/' '{print $(NF-1)"/"$NF}')
   echo ""
   echo "===== START MLFLOW_SERVER_CHECK [$(date '+%Y-%m-%d %H:%M:%S')] ===="
   echo "Waiting for MLflow server to become available..."
+  MLFLOW_PID=$!
   
+  sleep 2
+  if ! kill -0 "$MLFLOW_PID" 2>/dev/null; then
+    echo "MLflow server crashed during startup. See log above."
+    exit 1
+  fi
+
   until ss -ltn | grep -q ':5000'; do sleep 1; done
   echo ""
   echo "Port is open."
@@ -83,8 +90,8 @@ short_artifacts=$(echo "$ARTIFACT_DIR" | awk -F'/' '{print $(NF-1)"/"$NF}')
 # ----------------------------
 {
   echo ""
-  echo "Check #1: Python test module (src.mlflow_setup_test)"
-  python3 -m src.mlflow_setup_test
+  echo "Check #1: Python test module (src.run_mlflow_setup_test)"
+  python3 -m src.run_mlflow_setup_test
 } >> "$LOGFILE" 2>&1
 
 # ----------------------------

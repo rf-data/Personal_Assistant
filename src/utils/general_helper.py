@@ -94,9 +94,16 @@ def snapshot_dependent_functions(
     return snapshot
 
 
-def make_doc_id(file_path: str) -> str:
+def make_doc_id(file_path: str, 
+                short: bool=True) -> str:
     stem = Path(file_path).stem.lower().strip()
-    return hashlib.sha256(stem.encode("utf-8")).hexdigest()  # [:16]
+
+    doc_id = hashlib.sha256(stem.encode("utf-8")).hexdigest()
+
+    if short: 
+        return doc_id[:16]
+    
+    return doc_id
 
 
 def make_doc_id_by_content(file_path: str) -> str:

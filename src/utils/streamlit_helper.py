@@ -3,6 +3,8 @@
 from pathlib import Path
 import os
 import json
+import pandas as pd
+
 import streamlit as st
 from streamlit_pdf_viewer import pdf_viewer
 import time
@@ -55,7 +57,11 @@ def st_file_preview(f_path: str|Path, table: bool=False):
                             width="stretch",
                             hide_index=True
                             )
-                    
+
+        case ".parquet": 
+            txt_content = pd.read_parquet(f_path)
+            st.dataframe(txt_content)
+
         case ".md" | ".txt": 
             txt_content = read_text_file(f_path)
             st.markdown(txt_content)

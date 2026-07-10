@@ -26,7 +26,7 @@ CHUNK TECHNIQUES
 """
 
 def document_json_to_blocks(
-                    doc_elements: List,
+                    info_obj: dict,
                     parse_context: ParseContext
                     ):
 
@@ -41,6 +41,11 @@ def document_json_to_blocks(
     #                             "bullet_list"
     #                             ]
 
+    doc_elements = info_obj["elements"]
+    page = info_obj.get("page_no", "n.a.")
+    doc_kind = info_obj.get("doc_kind", "tba")
+    doc_name = info_obj.get("doc_name", "tba")
+
     for element in doc_elements:
         c_type = element.get("container_type")
 
@@ -54,14 +59,17 @@ def document_json_to_blocks(
         # if element["container_type"] in c_types_to_filter:
         blocks.append({
                     "doc_id": parse_context.doc_id,
-                    "f_name": parse_context.save_name, 
+                    "doc_name": doc_name, 
                     "container_id": element["container_id"],
                     "container_type": element["container_type"],
                     "heading_context": element.get("meta", 
                                                    {}).get("context"),
                     "text": element["text"],
+                    "page": page, 
+                    "document_kind": doc_kind
                     # "n_tokens": element.meta.n_tokens
                 })
+    
 
     parse_context.logger.info("Length 'blocks': %s", 
                               len(blocks))
@@ -136,7 +144,7 @@ def prepare_chunk_df(
 
             chunk.update({
                     "doc_id": row["doc_id"],
-                    "f_name": row["f_name"],
+                    "doc_name": row["doc_name"],
                     "container_id": row["container_id"],
                     "container_type": row["container_type"],
                     "heading_context": row["heading_context"],

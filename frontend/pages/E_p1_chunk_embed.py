@@ -1,7 +1,8 @@
-## E_p0_develop_area.py
+## E_p1_chunk_embed.py
 # imports
 import os
 from pathlib import Path
+import pandas as pd
 import streamlit as st
 
 from src.core.memory import app_session, ParseContext
@@ -9,14 +10,12 @@ from src.core.config import ChunkSettings
 from src.utils.path_helper import shorten_path, ensure_dir 
 from src.utils.st_eda_helper import st_df_profile
 
-from src.run_embedding import chunk_text
-
-
+from src.run_embedding import chunk_text, embed_text, load_chunks_to_chroma
 
 
 def show():
     st.header("🏠 Startseite ")
-    st.subheader("**Development Area**")
+    st.subheader("**Chunk & Embed**")
 
     # data_processed = os.getenv("DATA_PROCESSED")
     # data_embed = os.getenv("DATA_EMBED")
@@ -56,10 +55,10 @@ def show():
     files = [f for f in Path(folder_path).rglob("*_info.json")
              if f.parent.name.startswith("ready_")]
 
-    selected_file = st.multiselect(
+    files_to_chunk = st.multiselect(
         label="Which json file should be chunked?",
         options=files,
-        key="chunk_files", 
+        # key="chunk_files", 
         format_func=lambda p: shorten_path(p, n=1)
     )
 
@@ -70,20 +69,20 @@ def show():
     #         options=[shorten_path(f, n=1) for f in Path(folder_path).rglob("*.json")],
     #         key="chunk_files"
     #         )
-    if selected_file is not None:
+    if files_to_chunk is not None:
         chunk_context = ParseContext(
                     # save_name = Path(selected_file).stem,
                     # save_folder = data_embed,
                     chunk_settings = ChunkSettings(
                                     container_types = [
-                                            "body_text",
+                                            # "body_text",
                                             "heading",
                                             "paragraph",
                                             "code",
                                             "line_group",
                                             "bullet_list",
-                                            "lvl_1_bullet",
-                                            "lvl_2_bullet"
+                                            # "lvl_1_bullet",
+                                            # "lvl_2_bullet"
                                             ],
                                     spacy_language = "de_core_news_sm",
                                     max_tokens = 80,
@@ -109,26 +108,58 @@ def show():
     if (right.button("Start run") 
         and st.session_state["chunk_status"] in ["ready", None]):
 
-        for file in selected_file:
+        for f_path in files_to_chunk:
             
-            chunk_context.save_name = Path(file).stem
+            chunk_context.save_name = Path(f_path).stem
             
             df_chunk = chunk_text(
-                            f_path=str(file), 
+                            f_path=str(f_path), 
                             parse_context=chunk_context
                             )
 
-            with st.expander(f"Preview df '{Path(file).stem}'"): 
+            with st.expander(f"Preview df '{Path(f_path).stem}'"): 
                 st_df_profile(df_chunk)
+
+            df_embed = embed_text(df_chunk, chunk_context)
+
+            load_chunks_to_chroma(
+                    coll_name="QMS_apo", # : str,
+                    data=df_embed, # : pd.DataFrame | str, 
+                    # meta_data: dict = {}
+                        )
 
         st.session_state["chunk_status"] = "done"
 
     st.divider()
-    st.error('\n**TEXT EMBEDDINGS MUST BE CREATED IN GOOGLE COLAB**', 
+    st.error('\n**TEXT EMBEDDINGS MUST BE CREATED IN CODESPACE OR GOOGLE COLAB**', 
              icon="🚨")
     # st.markdown("")
     st.divider()
-            
+
+    st.subheader("Upload Data to ChromaDB")
+
+    dfs_embed = [
+            f for f in Path(folder_path).rglob("*_info.parquet")
+            if f.parent.name.startswith("ready_")
+            ]
+    files_to_load = st.multiselect(
+                        label="Which files should be uploaded?",
+                        options=dfs_embed,
+                        format_func=lambda p: shorten_path(p, n=1)
+                        )
+    
+    start_upload = st.toggle("Start Upload")
+
+    if start_upload:
+        for f_path in files_to_load:
+            df_upload = pd.read_parquet(f_path)
+            load_chunks_to_chroma(
+                            coll_name="QMS_apo", # : str,
+                            data=df_upload, # : pd.DataFrame | str, 
+                            # meta_data: dict = {}
+                                )  
+        start_upload = False
+
     # st.markdown("**Under Construction**")
 
 # from sentence_transformers import SentenceTransformer

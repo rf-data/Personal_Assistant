@@ -1,8 +1,10 @@
 ## chroma_helper.py
 # import
 # import subprocess
+from typing import Any
 from datetime import datetime
 import os
+import numpy as np
 import pandas as pd
 
 from src.utils.general_helper import load_env_vars
@@ -69,7 +71,7 @@ def get_chroma_collection(
                                         embedding_function=None,
                                         metadata={
                                             "description": "",
-                                            "creatred": str(datetime.now())
+                                            "created": str(datetime.now())
                                         }
                                         )
 
@@ -83,38 +85,240 @@ def get_chroma_collection(
 # 		)
 # 	return _collection
 
-def add_chroma_data(coll_name: str, 
-                    data: pd.DataFrame,
-                    meta_data: dict):
+
+def _to_chroma_scalar(
+                value: Any
+                ) -> str | int | float | bool | None:
+    """Konvertiert Werte in Chroma-kompatible Metadata-Typen."""
+
+    if value is None:
+        return None
+
+    if isinstance(value, (str, int, float, bool)):
+        return value
+
+    if isinstance(value, np.integer):
+        return int(value)
+
+    if isinstance(value, np.floating):
+        return float(value)
+
+    if isinstance(value, np.bool_):
+        return bool(value)
+
+    if isinstance(value, pd.Timestamp):
+        return value.isoformat()
+
+    if isinstance(value, pd.Series):
+        raise TypeError(
+            "Chroma metadata received a pandas Series. "
+            f"Series name: {value.name!r}. "
+            "Use the value from the current row instead."
+        )
+
+    if isinstance(value, (list, tuple, set, dict, np.ndarray)):
+        return str(value)
+
+    try: 
+        if pd.isna(value):
+            return None
+    except (TypeError, ValueError):
+        pass
+
+    return str(value)
+
+
+# def _create_metadata(data):
+    
+#     heading_context = data["heading_context"].tolist()
+
+#     metadata = {
+#             "doc_id": data["doc_id"],
+#             "container_id": data["container_id"],
+#             "chunk_id": data["chunk_id"],
+#             "doc_name": data["f_name"], 
+#             # "page": 1,
+#             "chapter": heading_context[0], 
+#             "section": heading_context[-1],
+#             # "document_group": "guideline",
+#         }
+    
+#     return metadata
+
+    # for col in data.columns: 
+
+
+#     
+    # return 
+
+    
+def _create_or_update_metadata(
+                    data: pd.DataFrame, 
+                    excluded_columns: set[str], 
+                    meta_data: dict | None = None
+                    ):
+    
+    meta_data = meta_data or {}
+
+    # if len(meta_data) == 0:
+    #     meta_data = _create_metadata(data)
+        
+    metadata_columns = [
+        column
+        for column in data.columns
+        if column not in excluded_columns
+        ]
+
+    metadatas = []
+    for _, row in data.iterrows():
+        chunk_metadata = {}
+        
+        for key, value in meta_data.items():
+            if key == "meta": 
+                continue
+           
+            if isinstance(value, pd.Series):
+                raise TypeError(
+                    f"meta_data[{key!r}] is a pandas Series. "
+                    "Pass a global scalar or read the value from row[key]."
+                )
+
+            converted = _to_chroma_scalar(value)
+
+            if converted is not None:
+                chunk_metadata[key] = converted
+
+        shared_meta = meta_data.get("meta", {})
+        
+        if shared_meta:
+            if not isinstance(shared_meta, dict):
+                raise TypeError(
+                    "meta_data['meta'] must be a dictionary."
+                )
+
+            for key, value in shared_meta.items():
+                converted = _to_chroma_scalar(value)
+
+                if converted is not None:
+                    chunk_metadata[key] = converted  
+    
+        for column in metadata_columns:
+            converted = _to_chroma_scalar(row[column])
+
+            if converted is not None:
+                chunk_metadata[column] = converted  
+        
+        # Praktisch für Filter und Debugging
+        chunk_metadata["chunk_global_id"] = str(
+                row["chunk_global_id"]
+            )
+
+        # None-Werte entfernen, da Chroma je nach Version
+        # damit Probleme machen kann.
+        chunk_metadata = {
+                key: value
+                for key, value in chunk_metadata.items()
+                if value is not None
+            }
+
+        metadatas.append(chunk_metadata)
+
+    return metadatas
+
+
+def add_chroma_data(
+                coll_name: str, 
+                data: pd.DataFrame,
+                meta_data: dict | None = None
+                ) -> None:
 
     logger = app_session.logger
+    meta_data = meta_data or {}
 
-    f_text = list(data[["chunk_text"]])
-    assert len(f_text) > 0
+    required_columns = {
+        "chunk_text",
+        "chunk_global_id",
+        # "f_name", 
+        "text_embed",
+    }
 
-    f_meta = meta_data.get("meta", {})
-    f_id = meta_data.get("id", "")
-    f_embeds = list(data[["text_embed"]])
+    missing_columns = required_columns - set(data.columns)
+    if missing_columns:
+        raise ValueError(
+            f"Missing required columns: {sorted(missing_columns)}"
+        )
+    
+    if data.empty:
+        raise ValueError("No chunk data supplied.")
+    
+    documents = data["chunk_text"].fillna("").astype(str).tolist()
+    ids = data["chunk_global_id"].astype(str).tolist()
+    embeddings = [
+            emb.tolist() if hasattr(emb, "tolist") else emb
+            for emb in data["text_embed"]
+            ]
+    
+    if not all(doc.strip() for doc in documents):
+        raise ValueError("At least one chunk has empty text.")
 
+    if len(set(ids)) != len(ids):
+        duplicate_ids = (
+            pd.Series(ids)
+            .loc[lambda s: s.duplicated(keep=False)]
+            .unique()
+            .tolist()
+        )
+        raise ValueError(
+            f"Duplicate chunk IDs found: {duplicate_ids[:10]}"
+        )
+
+    embedding_dimensions = {
+        len(embedding)
+        for embedding in embeddings
+    }
+
+    if len(embedding_dimensions) != 1:
+        raise ValueError(
+            f"Inconsistent embedding dimensions: {embedding_dimensions}"
+        )
+
+    metadatas = _create_or_update_metadata(data, required_columns, meta_data)
+
+    n_records = len(documents)
+
+    if not (
+        len(ids)
+        == len(embeddings)
+        == len(metadatas)
+        == n_records
+    ):
+        raise ValueError(
+            "Lengths of documents, ids, embeddings and metadatas differ."
+        )
+    
     chroma_coll = get_chroma_collection(coll_name=coll_name)
+    
     chroma_coll.add(
-        documents=f_text,
-        # ["Das ist ein lokales Dokument.", "Chroma ist eine Vektordatenbank."],
-        embeddings=f_embeds,
-        metadatas=f_meta,
-        # [{
-        # "source": "notiz",
-        # "chapter": "",
-        # "scores": int,...}, {"source": "wiki", ....}],
-        ids=f_id
-        # ["doc1", "doc2"]
-    )
+        ids=ids, 
+        documents=documents,
+        embeddings=embeddings,
+        metadatas=metadatas
+        )
 
-    logger.info("Added new data to ChromaDB collection '%s'",
-                coll_name)
+    # logger.info("Added new data to ChromaDB collection '%s'",
+    #             coll_name)
+    logger.info(
+        "Added %s chunks to ChromaDB collection '%s' "
+        "with embedding dimension %s",
+        n_records,
+        coll_name,
+        next(iter(embedding_dimensions)),
+        )
+
     return 
 
 # collection.upsert()       -> update + insert data
+
 
 def run_chroma_query(
         context: SOPGenContext
@@ -123,8 +327,14 @@ def run_chroma_query(
         #                   n_results: int=1
                           ):
 
-    results = context.collection.query(
-                    query_texts=context.query, #["Was ist Chroma?"],
+    results = []
+    
+    for chrom_coll in context.collection:
+        coll = get_chroma_collection(chrom_coll)
+        query = context.query
+
+        q_results = coll.query(
+                    query_texts=query, #["Was ist Chroma?"],
                     n_results=context.n_results
                 )
     
@@ -134,9 +344,10 @@ def run_chroma_query(
 #     where={"page": 10}, # query records with metadata field 'page' equal to 10
 #     where_document={"$contains": "search string"} # query records with the search string in the records' document
 # )
-    app_session.logger.info("Result from query '%s':\n%s",
-                            query,
-                            results)
+        results.append(q_results)
+        app_session.logger.info("Result from query '%s':\n%s",
+                                query,
+                                results)
     
     return results
 
@@ -174,20 +385,20 @@ docker run -d -p 8000:8000 -v \
 """
 
 # VARIANTE C (Cloud)
-def start_chroma_cloud(config):
+# def start_chroma_cloud(config):
 
-    API_KEY = os.getenv("CHROMA_API_KEY")
-    # subprocess.run(["chroma", "login", "--api-key", f"{API_KEY}"])
+#     API_KEY = os.getenv("CHROMA_API_KEY")
+#     # subprocess.run(["chroma", "login", "--api-key", f"{API_KEY}"])
     
-    client = chromadb.CloudClient(
-                    cloud_port=config.get("cloud_port"),
-                    cloud_host=config.get("cloud_host"),
-                    api_key=API_KEY,
-                    tenant=config.get("tenant"),
-                    database=config.get("database")
-                    )
+#     client = chromadb.CloudClient(
+#                     cloud_port=config.get("cloud_port"),
+#                     cloud_host=config.get("cloud_host"),
+#                     api_key=API_KEY,
+#                     tenant=config.get("tenant"),
+#                     database=config.get("database")
+#                     )
                         
-    return client
+#     return client
 
 
 # def get_chroma_collection(client: ClientAPI = Depends(get_chroma_client)) -> Collection:

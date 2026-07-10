@@ -24,7 +24,7 @@ from src.tools_rag.chunk import (
                             document_json_to_blocks,
                             prepare_chunk_df
                             )
-
+from src.core.config import ChunkSettings
 # importlib.reload(sh)
 # importlib.reload(dbh)
 
@@ -87,7 +87,7 @@ def chunk_text(
 
     doc_json = load_dict(f_path)
     df_blocks = document_json_to_blocks(
-                                    doc_json["elements"], 
+                                    doc_json, 
                                     parse_context
                                     )
 
@@ -100,10 +100,13 @@ def chunk_text(
 
     # logger.info("")
 
+    parse_context.save_name = Path(f_path).stem
+    parse_context.save_folder = Path(f_path).parent
+    save_name = parse_context.save_name.replace("info", "chunked")
     
     save_df_to_parquet(
                 df=df_chunk, 
-                f_name=parse_context.save_name, # f"{}_chunked",
+                f_name=save_name, # f"{}_chunked",
                 folder=parse_context.save_folder
                 )
     
@@ -122,60 +125,87 @@ def chunk_text(
 ####################################################
 ### FUNCTION IN COLAB
 
-# def embed_text(df, chunk_settings):
-#     from  import SentenceTransformer
-#     logger = app_session.logger
+def embed_text(
+            df_embed: pd.DataFrame, 
+            parse_context: ParseContext
+            ):
+    logger = app_session.logger
 
-#     logger.info("Start creating embeddings from 'text' chunks")
+    from sentence_transformers import SentenceTransformer
+
+    logger.info("Start creating embeddings from 'text' chunks")
     
-#     ## using SBERT for text embeddings
-#     transformer_model = chunk_settings.transformer_model
+    ## using SBERT for text embeddings
 
-#     model = SentenceTransformer(transformer_model)
-#     texts = df["chunk_text"].tolist()
+    chunk_settings = parse_context.chunk_settings
+    transformer_model = chunk_settings.transformer_model
 
-#     embeddings = []
-#     batch_size = chunk_settings.batch_size  # 256
+    model = SentenceTransformer(transformer_model)
+    texts = df_embed["chunk_text"].tolist()
 
-#     with Progress() as progress:
-#         task = progress.add_task(
-#             f"Start embedding with {len(texts)} texts...", total=len(texts)
-#         )
-#         for i in range(0, len(texts), batch_size):
-#             batch = texts[i : i + batch_size]
-#             emb = model.encode(
-#                             batch, 
-#                             convert_to_numpy=True, 
-#                             normalize_embeddings=True
-#                             )
-#             embeddings.append(emb)
-#             progress.update(task, advance=len(batch))
+    embeddings = []
+    batch_size = chunk_settings.batch_size  # 256
 
-#     embeddings = np.vstack(embeddings)
+    with Progress() as progress:
+        task = progress.add_task(
+            f"Start embedding with {len(texts)} texts...", total=len(texts)
+        )
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i : i + batch_size]
+            emb = model.encode(
+                            batch, 
+                            convert_to_numpy=True, 
+                            normalize_embeddings=True
+                            )
+            embeddings.append(emb)
+            progress.update(task, advance=len(batch))
 
-#     logger.info("Finished creating embeddings\n--> embeddings shape:\t", embeddings.shape)
+    embeddings = np.vstack(embeddings)
 
-#     df["text_embed"] = list(embeddings)
+    logger.info("Finished creating embeddings\n--> embeddings shape:\t", 
+                embeddings.shape)
 
-#     # load_chunks_to_chroma(df, coll_name="apo_qms")
+    df_embed["text_embed"] = list(embeddings)
 
-#     return df
+    # load_chunks_to_chroma(df, coll_name="apo_qms")
+    save_name = parse_context.save_name.replace("info", "embed")
+    
+    save_df_to_parquet(
+                df=df_embed, 
+                f_name=save_name, # f"{}_chunked",
+                folder=parse_context.save_folder
+                )
+
+    # save_path = f"{f_directory}/{f_stem.replace("chunked", "embed")}{f_suffix}"
+
+    # df_embed.to_parquet(save_path, index=False)
+
+    return df_embed
 
 
-def load_chunks_to_chroma(coll_name: str,
-                          data: pd.DataFrame | str, 
-                          meta_data: dict = {}
+def load_chunks_to_chroma(
+                    coll_name: str,
+                    data: pd.DataFrame, #  | str, 
+                    meta_data: dict = {}
                         ):
 
-    if isinstance(data, str):
+    # if isinstance(data, str):
 
-        folder = os.getenv("DATA_EMBED")
-        # f_name = data
-        data = pd.read_parquet(f"{folder}/{data}.parquet")
+    #     folder = os.getenv("DATA_EMBED")
+    #     # f_name = data
+    #     data = pd.read_parquet(f"{folder}/{data}.parquet")
+    for key, value in meta_data.items():
+        print(
+            key,
+            type(value),
+            getattr(value, "shape", None),
+        )
 
-    add_chroma_data(coll_name=coll_name,
-                    data=data,
-                    meta_data=meta_data)
+    add_chroma_data(
+                coll_name=coll_name,
+                data=data,
+                meta_data=meta_data
+                )
 
     return 
 

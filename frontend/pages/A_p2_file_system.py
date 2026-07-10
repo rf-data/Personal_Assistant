@@ -3,14 +3,14 @@
 import os
 from pathlib import Path
 
-import fitz  # pymupdf
+# import fitz  # pymupdf
 import streamlit as st
 
 # from src.tools_parsing.extract_docx import extract_docx
-from src.utils.streamlit_helper import show_tree, st_file_preview
+from src.utils.streamlit_helper import st_file_preview   # show_tree
 from src.utils.path_helper import ensure_dir, shorten_path  
 from src.utils.general_helper import load_env_vars
-from src.utils.zipfile_helper import unpack_entire_zipfolder
+# from src.utils.zipfile_helper import unpack_entire_zipfolder
 
 load_env_vars()
 
@@ -74,7 +74,7 @@ def show():
             f"{data}/{preview_suffix}/raw",
             f"{data}/_QMS_apo",
             f"{data}/{preview_suffix}/processed",
-            f"{data}/{preview_suffix}/embedded"
+            # f"{data}/{preview_suffix}/embedded"
             ]
 
 
@@ -84,7 +84,7 @@ def show():
                                 format_func=lambda p: shorten_path(p, n=2)
                                 # selection_mode="single"
                                 )
-        st.markdown(f"Your selected files of type '{preview_suffix}' in folder '{shorten_path(preview_folder, 1)}'.")
+        st.markdown(f"Your selected files of origin type '{preview_suffix}' in folder '{shorten_path(preview_folder, 1)}'.")
         st.divider()
 
         file_options = [f for f in Path(preview_folder).rglob("*")
@@ -92,14 +92,27 @@ def show():
         # [f for f in Path(preview_folder[0]).rglob(preview_suffix)]
                             #  if f.suffix in preview_suffix]
         
+        file_suffix = st.multiselect(
+                        label="Suffix (preview files)",
+                        options = [
+                                ".json",
+                                ".parquet"
+                                ]    
+                        )
+
+        file_filtered = [f for f in file_options
+                         if f.suffix in file_suffix]
         preview_file = st.selectbox(       # selectbox, multiselect(
                     label="Which file should be rendered?",
-                    options=file_options, 
-                    format_func=lambda p: shorten_path(p, n=2) 
+                    options=file_filtered, 
+                    format_func=lambda p: shorten_path(p, n=1) 
                     # key="pdf_files"
                     )
         
-        if preview_file and preview_folder:
+        preview = st.toggle(
+                    label="Start file preview"
+                    )
+        if preview: # _file and preview_folder:
             with st.expander(f"Preview on '{Path(preview_file).stem}'"):
                 st_file_preview(preview_file)
 

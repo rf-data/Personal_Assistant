@@ -29,8 +29,10 @@ from frontend.pages import (
                         D_p0_EDA_dash,
                         D_p1_pca, 
                         D_p2_eval_dash,
-                        E_p0_rag_system,
-                        F_p0_develop_area
+                        E_p0_rag_status,
+                        E_p1_chunk_embed,
+                        E_p2_sop_generation,
+                        F_p0_development
                         )
 
 from src.core.logger import create_logger
@@ -121,7 +123,7 @@ PROJECT_MAP = {
     "Extract Text": ("Extract Text", "ETL HTML"),
     "Extract Data": ("Extract Data", "ETL Excel"),
     "DataViz & Dashboards": ("DataViz & Dashboards", "EDA_dash"),
-    "RAG System": ("RAG System", "Query & Retrieve"),
+    "RAG System": ("RAG System", "RAG_Status"),
     "Development": ("Development", "Development_Area")
     }
 
@@ -205,7 +207,9 @@ with st.sidebar:
         st.radio(
                 "Abschnitt",
                 options=[
-                    "Query & Retrieve"
+                    "RAG_Status",
+                    "Chunk & Embed",
+                    "SOP_Generation"
                     # "Evaluation Dashboard",
                     ],
                 key="subpage",
@@ -262,10 +266,12 @@ elif page == "DataViz & Dashboards":
     elif sub == "Evaluation Dashboard": D_p2_eval_dash.show()
 
 elif page == "RAG System":
-    if sub == "Query & Retrieve": E_p0_rag_system.show()
+    if sub == "RAG_Status": E_p0_rag_status.show()
+    elif sub == "Chunk & Embed": E_p1_chunk_embed.show()
+    elif sub == "SOP_Generation": E_p2_sop_generation.show()
 
 elif page == "Development":
-    if sub == "Development_Area": F_p0_develop_area.show()
+    if sub == "Development_Area": E_p1_chunk_embed.show()
 
 
 # PAGES_PRESENTATION[presentation]()
