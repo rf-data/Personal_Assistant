@@ -14,7 +14,7 @@ from src.model_tools_parsing.base_assembler import BaseAssembler
 
 from src.tools_parsing.extract_html import extract_html_file
 
-from src.utils.path_helper import shorten_path  
+from src.utils.path_helper import shorten_path, move_file
 # from src.utils.text_file_helper import save_text_file
 from src.utils.streamlit_helper import st_file_preview
 
@@ -42,7 +42,7 @@ def show():
 
         input_data = f"{html_data}/input"
 
-        files_html = st.selectbox(       # multiselect(
+        files_html = st.multiselect(       # multiselect(
                     label="Which html file(s) should be parsed?",
                     options=list(Path(input_data).rglob("*.html")), 
                     format_func=lambda p: shorten_path(p, n=1), 
@@ -50,22 +50,23 @@ def show():
                     #         if f.suffix == ".html"],
                     key="files_html"
                     )
-        parse_config.file_name = files_html # st.session_state["files_html"] # html_select
-
-        st.write(f"You selected {len(files_html)} files:")
-        for idx, file in enumerate(files_html): 
-            st.write(f"({idx}) ",files_html)
+         # st.session_state["files_html"] # html_select
 
     with file_preview:
         st.subheader("File Preview")
-        for idx, file in enumerate(files_html):
-            st_file_preview(file)
-            # st.markdown(f"**File #{idx}: '{Path(file).stem}'**\n",
-            #             unsafe_allow_html=True)
+        st.write(f"You selected {len(files_html)if len(files_html) > 0 else "0"} files:")
+        
+        for idx, file in enumerate(files_html, start=1):
+            st.write(f"({idx}) {shorten_path(file, 1)}")
             
+    for idx, file in enumerate(files_html):
+        # with st.expander(f"({idx}) {shorten_path(file, 1)}"):
+        st_file_preview(file)
+                # st.markdown(f"**File #{idx}: '{Path(file).stem}'**\n",
+                #             unsafe_allow_html=True)
+                
 
-            st.divider()
-
+                # st.divider()
 
     st.divider()
     st.subheader("Run Settings")
@@ -114,6 +115,11 @@ def show():
               key="image_html")
         parse_config.html.scrape_images = st.session_state["image_html"]
 
+    rag_ready = st.toggle(
+                    label="Perform RAG-ready extraction",
+                    # key="pdf_image"
+                )
+    
     if "html_parsed" not in st.session_state:
         st.session_state["html_parsed"] = "ready"
 
@@ -140,14 +146,15 @@ def show():
         for f_path in files_html:
 
             f_name = Path(f_path).stem
+            parse_config.file_name = f_name
 
             t_stamp = app_session.timestamp 
-            save_folder = Path(f"{data_processed}/html_files/extracted/{t_stamp}_{f_name}")        
+            save_folder = Path(f"{data_processed}/{'ready' if rag_ready else 'test'}_{t_stamp}_{f_name}")        
 
             parse_context = ParseContext(
                                     parse_settings=parse_config,
                                     save_folder=save_folder,
-                                    save_name=f"{f_name}_extracted",
+                                    save_name=f_name,
                                     text_type="html",
                                     timestamp=now
                                     )
@@ -182,6 +189,12 @@ def show():
                         parse_context=parse_context
                         ).bind(html_assembler.render_text_file)
             
+            
+            # f_name = parse_context.parse_settings.file_name
+            dst_path = f"{html_data}/raw/{f_name}.html"
+            
+            move_file(f_path, dst_path)
+
         st.session_state["html_parsed"] = "done"
 
         # if "md" in run_config.html.assemble:

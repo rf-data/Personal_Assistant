@@ -24,6 +24,15 @@ import src.utils.path_helper as ph
 
 
 from collections import defaultdict
+
+'''
+!!! - logfire --> observability platform (logs, traces, exceptions, and
+        performance data )
+
+        - Loguru / structlog --> Ersatz für logging ??
+
+        '''
+
 '''
 errors = defaultdict(int)
 

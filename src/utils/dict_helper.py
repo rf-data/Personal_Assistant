@@ -47,7 +47,7 @@ def get_yaml_config(name: str,
     # gh.load_env_vars()
     # logger = session.logger
 
-    config_folder = os.getenv("CONFIG_PATH")
+    config_folder = os.getenv("CONFIG_DIR")
 
     assert config_folder is not None
 

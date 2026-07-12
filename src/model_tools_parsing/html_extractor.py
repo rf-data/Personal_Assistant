@@ -26,6 +26,9 @@ from src.model_classes_parsing.base_classes_parsing import (
     ImageMeta,
     Link, 
     ListMeta,
+    TableObject, 
+    TextBlock,
+    TextBlockMeta,
     Word
     )
 from src.model_classes_parsing.classes_html_parsing import (
@@ -148,7 +151,7 @@ class HTMLCleanExtractor(BaseExtractor):
             text_clean, elements_clean, RawDocument()
         )
         
-        f_path = Path(f"{self.save_folder}/{self.save_name}")
+        f_path = Path(f"{self.save_folder}/{self.save_name}_info")
         save_dict(data=doc_info.model_dump(
                             mode="json",
                             serialize_as_any=True,
@@ -343,7 +346,7 @@ class HTMLCleanExtractor(BaseExtractor):
                         # tag.decode_contents(),
                         # get_text(" ", strip=True),
                         inline_elements=p_elements,
-                        meta=ElementMeta(),
+                        meta=TextBlockMeta(),
                         context=dict(current_headings)
                     )
                 )
@@ -414,7 +417,7 @@ class HTMLCleanExtractor(BaseExtractor):
                 tab_text, tab_elements = self._parse_inline(tag)
 
                 extract.append(
-                    Element(
+                    TableObject(
                         text=tab_text,
                         container_type="table", 
                         container_id=idx,

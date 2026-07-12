@@ -49,7 +49,7 @@ class HeadingMeta(ElementMeta):
 
 class ListMeta(ElementMeta):
     # element_type: str = "list"
-    list_type: str = Field(default_factory=str)
+    list_type: Literal["unordered", "ordered"] = Field(default="unordered")
 
 
 class CodeMeta(ElementMeta):
@@ -166,7 +166,7 @@ class WikiPageMeta(BaseModel):
     wordcount: int = Field(default_factory=int)
     timestamp: str = Field(default_factory=str)
 
-class TableMeta(BaseModel):
+class TableMeta(BaseMeta):
     n_rows: int = Field(default_factory=int)
     n_cols: int = Field(default_factory=int)
     has_header: bool = Field(default_factory=bool)
@@ -307,7 +307,7 @@ class BulletItem(Element):
 class BulletList(Element):
     container_type: Literal["bullet_list"] = "bullet_list"
     elements: list[BulletItem] = Field(default_factory=list)
-    meta: TextBlockMeta = Field(default_factory=TextBlockMeta)
+    meta: TextBlockMeta|ListMeta = Field(default_factory=TextBlockMeta)
 
 
 class Heading(Element):
@@ -356,9 +356,10 @@ class Cell(BaseContainer):
 class TextBlock(BaseContainer):
     container_type: Literal["text_block"] = "text_block"
     text_body_id: int = Field(default_factory=int)
-    context: list[str] = Field(default_factory=list)
+    context: dict = Field(default_factory=dict)
     meta: TextBlockMeta = Field(default_factory=TextBlockMeta)
     elements: list[LineGroup | Word] = Field(default_factory=list)
+    inline_elements: List = Field(default_factory=list)
 
 
 class TableCell(BaseContainer):
@@ -409,11 +410,13 @@ class TableRow(BaseContainer):
 
 
 class TableObject(BaseContainer):
+    container_id: int = Field(default_factory=int)
     container_type: Literal["table"] = "table"
     # table_id: int = Field(default_factory=int)
     context: list[str] = Field(default_factory=list)
     meta: TableMeta = Field(default_factory=TableMeta)
     elements: list[TableRow] = Field(default_factory=list)
+    inline_elements: List = Field(default_factory=list)
     caption: str = Field(default_factory=str)
 
 

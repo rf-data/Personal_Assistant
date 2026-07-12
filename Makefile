@@ -7,6 +7,10 @@ PROJECT := personal_assistence
 
 all: fmt lint type_check
 
+litellm_start:
+	litellm --config /workspaces/gmp_compliance/configuration/litellm_config.yaml
+	# --detailed_debug
+
 mlflow_fingerprint: 
 	bash scripts/create_experiment.sh
 

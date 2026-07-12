@@ -35,21 +35,21 @@ def extract_html_file(
 
     logger = parse_context.logger
 
-    input_data = os.getenv("DATA_INPUT")
-    assert input_data is not None
+    html_data = os.getenv("DATA_HTML")
+    assert html_data is not None
     
-    file_names = parse_context.parse_settings.file_names
-    if isinstance(file_names, list) and len(file_names) > 0:
-        for idx, f_name in enumerate(file_names):
-            
-            f_path = f"{input_data}/{f_name}"
-            logger.info("Starting extracting HTML-FILE #%s (%s)",
-                        idx,
-                        shorten_path(f_path))
-
-            html_extract = extractor.extract(
-                f_path=f_path
+    if parse_context.parse_settings.file_name is not None:
+        f_name = parse_context.parse_settings.file_name
+        f_path = f"{html_data}/input/{f_name}.html"
+        
+        logger.info(
+                "Starting extracting HTML-FILE: %s",
+                shorten_path(f_path)
                 )
+
+        html_extract = extractor.extract(
+                    f_path=f_path
+                    )
 
     elif parse_context.parse_settings.url_path is not None:
         html_extract = extractor.extract(

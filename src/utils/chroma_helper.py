@@ -52,7 +52,7 @@ def get_chroma_client() -> ClientAPI:
     load_env_vars()
 
     # if db_path is None:
-    db_path = os.getenv("CHROMA_PATH")
+    db_path = os.getenv("CHROMA_DIR")
     assert db_path is not None
 
     client = chromadb.PersistentClient(path=db_path)
