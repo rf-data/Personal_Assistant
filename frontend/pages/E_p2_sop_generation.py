@@ -61,6 +61,7 @@ def show():
         
         sop_context = SOPGenContext(
                             # query=rag_query,
+                            work_mode="create",
                             n_results=n_results,
                             collection=rag_colls,
                             topic=sop_topic,

@@ -332,7 +332,9 @@ def retrieve_chunks(
     kwargs = {
         "query_texts": [query],
         "n_results": n_results,
-        "include": ["documents", "metadatas", "distances"],
+        "include": ["documents", 
+                    "metadatas", 
+                    "distances"],
     }
 
     if where:
@@ -441,8 +443,6 @@ def _distance_to_score(
         return 1 / (1 + float(distance))
     except Exception:
         return None
-
-
 
 
 def flatten_retrieval_results(

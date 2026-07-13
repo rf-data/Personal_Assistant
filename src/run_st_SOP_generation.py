@@ -4,7 +4,7 @@ from pathlib import Path
 import streamlit as st
 
 from src.core.memory import SOPGenContext
-from src.tools_rag.retrieve import normalise_chroma_results
+# from src.tools_rag.retrieve import normalise_chroma_results
 # from src.tools_rag.generate import (
 #                                 build_context, 
 #                                 build_sop_prompt,

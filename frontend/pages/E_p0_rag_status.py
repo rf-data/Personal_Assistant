@@ -44,14 +44,24 @@ first 10 records:
                     meta = coll.get(include=["metadatas"]).get("metadatas")
                     
                     seen_before = set()
+                    null_name = set()
+                    null_id = 0
+
                     for f_meta in meta: 
-                        f_name = f_meta.get("f_name", "null")
+                        f_name = f_meta.get("doc_name", None) or f_meta.get("fname", None) or "null"
                         
+                        if f_name == "null":
+                            null_name.add(f"id {null_id}: {f_meta.get("doc_id", 
+                                                                      "null")}")
+                            null_id += 1
+
                         if f_name not in seen_before:
                             st.markdown(f"- {f_name}")
     
                         seen_before.add(f_name)
 
+                    st.write(f"null_count: ", null_id)
+    
                 except Exception as e:
                     st.error(f"Could not preview collection: {e}") 
 

@@ -71,7 +71,7 @@ class EnvVariables(BaseSettings):
     data_qms: str
 
     # other folder_paths
-    folder_report: str
+    report_dir: str
     config_dir: str
     cache_dir: str
     chroma_dir: str
