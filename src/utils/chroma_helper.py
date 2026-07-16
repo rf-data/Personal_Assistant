@@ -60,19 +60,24 @@ def get_chroma_client() -> ClientAPI:
     return client
 
 
+
 def get_chroma_collection(
                     coll_name: str,
                     # client: ClientAPI = Depends(get_chroma_client)
                     ) -> Collection:
     
     client = get_chroma_client()
+    
     chroma_coll = client.get_or_create_collection(
                                         name=coll_name,
                                         embedding_function=None,
                                         metadata={
                                             "description": "",
-                                            "created": str(datetime.now())
-                                        }
+                                            "created": str(datetime.now()),
+                                            "hnsw:space": "cosine",
+                                            # "embedding_model": "",
+                                            # "embedding_dim"
+                                            }
                                         )
 
     return chroma_coll
@@ -239,7 +244,7 @@ def add_chroma_data(
         "chunk_text",
         "chunk_global_id",
         # "f_name", 
-        "text_embed",
+        "embed_text",
     }
 
     missing_columns = required_columns - set(data.columns)
@@ -255,7 +260,7 @@ def add_chroma_data(
     ids = data["chunk_global_id"].astype(str).tolist()
     embeddings = [
             emb.tolist() if hasattr(emb, "tolist") else emb
-            for emb in data["text_embed"]
+            for emb in data["embed_text"]
             ]
     
     if not all(doc.strip() for doc in documents):

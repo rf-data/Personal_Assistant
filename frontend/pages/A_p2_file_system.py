@@ -88,7 +88,8 @@ def show():
         st.divider()
 
         file_options = [f for f in Path(preview_folder).rglob("*")
-                        if f.is_file() and f.parent.name.startswith(f"{'ready_' if rag_ready else 'test_'}")]
+                        if f.is_file() and f.parent.name.startswith(f"{'ready_' if rag_ready else 'test_'}")
+                        or f.parent.name == "Q_Dokumente"]
         # [f for f in Path(preview_folder[0]).rglob(preview_suffix)]
                             #  if f.suffix in preview_suffix]
         
@@ -96,12 +97,19 @@ def show():
                         label="Suffix (preview files)",
                         options = [
                                 ".json",
-                                ".parquet"
+                                ".parquet",
+                                ".docx",
+                                ".odt"
                                 ]    
                         )
 
         file_filtered = [f for f in file_options
                          if f.suffix in file_suffix]
+        
+        with st.expander(f"{len(file_filtered)} files available"):
+            for file in file_filtered:
+                st.write(f"- {shorten_path(file, 1)}")
+
         preview_file = st.selectbox(       # selectbox, multiselect(
                     label="Which file should be rendered?",
                     options=file_filtered, 

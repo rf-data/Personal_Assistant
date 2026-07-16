@@ -79,6 +79,7 @@ def run_st_sop_generation(
     
     with st.expander("Preview 'retrieved chunks'"):
         st.json(chunks)
+        
     # template = load_sop_template(q_f_type)
     # retrieve_plan = create_retrieval_plan()
 

@@ -80,6 +80,12 @@ class EnvVariables(BaseSettings):
     wiki_en_api: str
     header_agent: str
 
+    # llm token
+    hf_token: str
+    # openai_token: str
+    # claude_token: str
+    # gemini_token: str
+    
     # MLflow relevance
     mlflow_artifacts: str
     mlflow_db: str
@@ -234,6 +240,8 @@ class ChunkSettings(BaseModel):
     batch_size: int = Field(default_factory=int)
     transformer_model: Literal[
                         "all-MiniLM-L6-v2", 
+                        "paraphrase-multilingual-MiniLM-L12-v2",
+                        "intfloat/multilingual-e5-base",
                         None
                         ] = Field(default=None)
 

@@ -48,11 +48,11 @@ first 10 records:
                     null_id = 0
 
                     for f_meta in meta: 
-                        f_name = f_meta.get("doc_name", None) or f_meta.get("fname", None) or "null"
+                        f_name = f_meta.get("doc_name", None) or f_meta.get("f_name", None) or "null"
                         
                         if f_name == "null":
-                            null_name.add(f"id {null_id}: {f_meta.get("doc_id", 
-                                                                      "null")}")
+                            null_name.add(f"id {null_id}: {f_meta}")
+                            # .get('doc_id',                                           'null')}")
                             null_id += 1
 
                         if f_name not in seen_before:
@@ -60,7 +60,8 @@ first 10 records:
     
                         seen_before.add(f_name)
 
-                    st.write(f"null_count: ", null_id)
+                    with st.expander(f"null_count: {null_id}"):
+                        st.json(null_name)
     
                 except Exception as e:
                     st.error(f"Could not preview collection: {e}") 

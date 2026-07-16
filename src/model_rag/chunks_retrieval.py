@@ -14,7 +14,9 @@ class RetrievedChunk:
     source: str = ""
     section: str = ""
     page: int | None = None
-    score: float | None = None
+    distance: float | None = None
+    similarity: float | None = None
+    metric: Literal["cosine"] = "cosine"
     metadata: dict[str, Any] = field(default_factory=dict)
 
 

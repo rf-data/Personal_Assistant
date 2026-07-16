@@ -26,24 +26,26 @@ LLMClient = Annotated[
 @dataclass
 class SOPGenContext: 
     client: LLMClient = field(default=LLMClient)
-    topic: str = field(default_factory=str)
+    title: str = field(default_factory=str)
+    topics: List = field(default_factory=list) 
     q_doc_type: Literal[
                     "SOP",
                     # "SOP_specific", 
                     "record", 
                     "risk_analysis"
                     ] = field(default="SOP")
-    work_mode: Literal["create", "revise"] = "create"    
+    work_mode: Literal["create", "revise", "merge"] = "create"    
     template_id: int = field(default_factory=int)  
     style: Literal["gmp_oriented"]  = "gmp_oriented" 
     output_format: Literal["markdown"] = "markdown"
+    where: str|None = None
     allowed_sources: Literal["retrieved_context_only"] = "retrieved_context_only"
     # # "merge", "split"
     chapter_mode: Literal["full", "chapterwise"] = "chapterwise"
     chapters: List[str] | str | Literal["n.a."] = "n.a."
     collection: List[str] = field(default_factory=list) 
     # | Collection
-    results: Dict = field(default_factory=dict)
+    # results: Dict = field(default_factory=dict)
     n_results: int = field(default_factory=int)
     save_folder: str = field(default_factory=str)
     save_name : str = field(default_factory=str)
@@ -82,6 +84,11 @@ class ParseContext:
     save_folder: str | Path = field(default_factory=str)
     save_name: str | Path = field(default_factory=str)
     doc_id: str = field(default_factory=str)
+    doc_kind: Literal[
+                "regulatory", 
+                "comment"
+                "SOP"
+                ] = field(default="regulatory")
     timestamp: datetime | str | None = field(default=None)
     run_id: str = field(default_factory=str)
     logger: ClassVar = logging.getLogger(__name__)

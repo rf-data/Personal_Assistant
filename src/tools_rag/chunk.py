@@ -1,9 +1,10 @@
 ## chunk.py
 # import
 # import re
+import numpy as np
 import streamlit as st
 from collections.abc import Callable
-from typing import List
+from typing import List, Any
 import pandas as pd
 
 from src.core.memory import ParseContext
@@ -57,13 +58,13 @@ def document_json_to_blocks(
         if not text:
             continue
         # if element["container_type"] in c_types_to_filter:
+        
         blocks.append({
                     "doc_id": parse_context.doc_id,
                     "doc_name": doc_name, 
                     "container_id": element["container_id"],
                     "container_type": element["container_type"],
-                    "heading_context": element.get("meta", 
-                                                   {}).get("context"),
+                    "heading_context": element.get("meta", {}).get("context"),
                     "text": element["text"],
                     "page": page, 
                     "document_kind": doc_kind
@@ -95,6 +96,69 @@ chunk_start
 chunk_end
 """
 
+def merge_small_blocks(
+    blocks: list[dict],
+    encoder,
+    target_tokens: int = 180,
+    max_tokens: int = 260,
+) -> list[dict]:
+
+    merged: list[dict] = []
+    current: dict | None = None
+
+    for block in blocks:
+        text = block["text"].strip()
+        if not text:
+            continue
+
+        if current is None:
+            current = block.copy()
+            current["source_container_ids"] = [block["container_id"]]
+            continue
+
+        candidate_text = f"{current['text'].rstrip()} {text}"
+        candidate_tokens = len(encoder.encode(candidate_text))
+
+        same_document = block["doc_id"] == current["doc_id"]
+        same_page = block.get("page") == current.get("page")
+
+        if same_document and same_page and candidate_tokens <= max_tokens:
+            current["text"] = candidate_text
+            current["source_container_ids"].append(block["container_id"])
+        else:
+            merged.append(current)
+            current = block.copy()
+            current["source_container_ids"] = [block["container_id"]]
+
+    if current is not None:
+        merged.append(current)
+
+    return merged
+
+
+def _normalize_text_value(value: Any) -> str:
+    if value is None:
+        return ""
+
+    if isinstance(value, str):
+        return value.strip()
+
+    if isinstance(value, np.ndarray):
+        value = value.tolist()
+
+    if isinstance(value, (list, tuple, set)):
+        return " > ".join(
+            _normalize_text_value(item)
+            for item in value
+            if _normalize_text_value(item)
+        )
+
+    if pd.isna(value):
+        return ""
+
+    return str(value).strip()
+
+
 def prepare_chunk_df(
                 blocks: List[dict], 
                 parse_context: ParseContext,
@@ -110,8 +174,15 @@ def prepare_chunk_df(
 
     # df_dict = df.to_dict(orient="index")  # .copy()
 
+    blocks_merged = merge_small_blocks(
+                blocks=blocks,
+                encoder=encoder,
+                target_tokens=180,
+                max_tokens=260
+                )
+    
     chunks_all = []
-    for idx, row in enumerate(blocks):
+    for idx, row in enumerate(blocks_merged):
 
         # "doc_id": 0,
         # "block_id / container_id": element.container_id,
@@ -142,12 +213,28 @@ def prepare_chunk_df(
             # row_new.update(chunk)
             # chunk["chunk_text"] = text
 
+            
+            heading = (chunk.get("heading_context") or "").strip()
+            # _normalize_text_value(
+            text = (chunk["chunk_text"]).strip()    
+            # _normalize_text_value
+
+            embed_text = np.where(
+                            (heading is not None 
+                             and text is not None),
+                            f"Abschnitt: {heading}\n\n{text}",
+                            heading or text
+                            )
+            
             chunk.update({
                     "doc_id": row["doc_id"],
                     "doc_name": row["doc_name"],
                     "container_id": row["container_id"],
                     "container_type": row["container_type"],
-                    "heading_context": row["heading_context"],
+                    "heading_context": heading,
+                    "embed_text": embed_text,
+                    "page": row.get("page"),
+                    "doc_kind": row.get("doc_kind")
                     })
 
             chunks_all.append(chunk)
@@ -165,6 +252,14 @@ def prepare_chunk_df(
                         + "::"
                         + df_chunk["chunk_id"].astype(str)
                         )
+    
+    df_chunk["embed_text"] = df_chunk["embed_text"].map(
+                        _normalize_text_value
+                    )
+    assert df_chunk["embed_text"].map(
+                            lambda value: isinstance(value, str)
+                        ).all()
+    
     # columns:
     # timestamp, gmp_part,
     # chapter, page, block_id,

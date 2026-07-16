@@ -101,41 +101,49 @@ SOP_BASE_TEMPLATE = SOPTemplate(
                             order=5,
                             # level=1,
                             kind="core", 
-                            name="Durchführung"
+                            name="Durchführung",
+                            knowledge_source="retrieval"
                             # etreten des Herstellungsraumes",
-                            # text="Der Anreicher hat beim Betreten des Herstellungsraumes die Arbeitsanweisungen AA Hygieneplan und AA Ein- und Ausschleusen von Personal einzuhalten.",
+                            # text="Der Anreicher hat ,
+                            # beim Betreten des Herstellungsraumes die Arbeitsanweisungen AA Hygieneplan und AA Ein- und Ausschleusen von Personal einzuhalten.",
                         ),
                         SOPChapter(
                             name="Ziel",
                             order=1,
-                            text=""
+                            text="",
+                            knowledge_source="core_chapters"
                             # Beschreibung der Tätigkeiten am Arbeitsplatz des Anreichers im Herstellungsraum",
                             ),
                         SOPChapter(
                             name="Geltungsbereich",
                             order=2,
-                            text=""
+                            text="",
+                            knowledge_source="core_chapters"
                             # Abteilung Sterilherstellung",
                             ),  
                         SOPChapter(
                             name="Zuständigkeit",
                             order=3,
-                            text=""
+                            text="",
+                            knowledge_source="core_chapters"
                             ),
                         SOPChapter(
                             name="Begriffe",
                             order=4,
-                            text=""
+                            text="",
+                            knowledge_source="core_chapters"
                             ),  
                         SOPChapter(
                             name="Mitgeltende Unterlagen",
                             order=6,
-                            text=""
+                            text="",
+                            knowledge_source="core_chapters"
                             ),  
                         SOPChapter(
                             name="Änderungshistorie",
                             order=7,
-                            text=""
+                            text="",
+                            knowledge_source="core_chapters"
                             ),  
                     ]
                     )
@@ -295,9 +303,9 @@ def retrieve_for_template(
     Das passt zu eurer neuen Template-getriebenen Pipeline.
     """
 
-    collection = sop_context.collection
-    topic = sop_context.topic
-    n_results =  sop_context.n_results
+    # collection = sop_context.collection
+    # topic_text = "; ".join(sop_context.topics)
+    # n_results =  sop_context.n_results
     
     chapter_results = {}
 
@@ -307,53 +315,69 @@ def retrieve_for_template(
                             )
 
     for chapter in templates_sorted:
-        query = f"{topic}. SOP-Kapitel: {chapter.name}. {chapter.text}"
+        query = f"{sop_context.topics}. SOP-Kapitel: {chapter.name}. {chapter.text}"
         # {chapter.name}"
 
-        chapter_results[chapter.name] = retrieve_chunks(
-            collection=collection,
-            query=query,
-            n_results=n_results,
-            )
+        # context = SOPGenContext(
+        #                 collection=collection,
+        #                 query=query,
+        #                 n_results=n_results,
+        #                 )
+
+        chapter_results[chapter.name] = retrieve_chunks(sop_context, query)
 
     return chapter_results
 
 
 def retrieve_chunks(
-            collection: List[str], # : Collection,
+            context,
+            # collection: List[str], # : Collection,
             query: str,
-            n_results: int = 8,
-            where: dict | None = None,
+            # n_results: int = 8,
+            # where: dict | None = None,
         ) -> RetrievalResult:
     """
     Minimaler Retrieval-Wrapper für Chroma.
     """
 
+    from sentence_transformers import SentenceTransformer
+
+    transformer_model=context.transformer_model    
+    # "paraphrase-multilingual-MiniLM-L12-v2" oder "intfloat/multilingual-e5-base"
+    embed_model = SentenceTransformer(transformer_model)
+
+    query_embedding = embed_model.encode(
+                    query,
+                    normalize_embeddings=True
+                    )
     kwargs = {
-        "query_texts": [query],
-        "n_results": n_results,
+        # "query_texts": [query],
+        "query_embeddings": [query_embedding],
+        "n_results": context.n_results,
         "include": ["documents", 
                     "metadatas", 
                     "distances"],
     }
 
-    if where:
-        kwargs["where"] = where
+    if context.where:
+        kwargs["where"] = context.where
 
     results = []
     
-    for coll in collection:
+    for coll in context.collection:
 
         chroma_coll = get_chroma_collection(coll)
         results.append(chroma_coll.query(**kwargs))
 
     return normalise_chroma_results(
+        context=context,
         results=results,
         query=query,
     )
 
 
 def normalise_chroma_results(
+                        context,
                         results: List[dict], 
                         query: str = ""
                         ) -> RetrievalResult:
@@ -368,41 +392,65 @@ def normalise_chroma_results(
     }
     """
 
-    ids = _first_result_list(results[0].get("ids"))
-    docs = _first_result_list(results[0].get("documents"))
-    metas = _first_result_list(results[0].get("metadatas"))
-    distances = _first_result_list(results[0].get("distances"))
-
     chunks: list[RetrievedChunk] = []
 
-    for idx, text in enumerate(docs):
-        meta = metas[idx] if idx < len(metas) and metas[idx] else {}
-        chunk_id = ids[idx] if idx < len(ids) else str(idx)
-        distance = distances[idx] if idx < len(distances) else None
+    for coll_results in results:
+        ids = _first_result_list(coll_results.get("ids"))
+        docs = _first_result_list(coll_results.get("documents"))
+        metas = _first_result_list(coll_results.get("metadatas"))
+        distances = _first_result_list(coll_results.get("distances"))
 
-        retrieved_chunk = RetrievedChunk(
-                chunk_id=str(chunk_id),
-                text=text or "",
-                source=meta.get("source", "")
-                    or meta.get("doc_name", "")
-                    or meta.get("file_name", ""),
-                section=meta.get("section", "")
-                    or meta.get("heading", "")
-                    or meta.get("context", ""),
-                page=meta.get("page"),
-                score=_distance_to_score(distance),
-                metadata=meta,
+        for idx, text in enumerate(docs):
+            if not text or not text.strip():
+                continue
+
+            meta = metas[idx] if idx < len(metas) and metas[idx] else {}
+            chunk_id = ids[idx] if idx < len(ids) else str(idx)
+            distance = distances[idx] if idx < len(distances) else None
+            # cosine_dist = _distance_to_score(distance)
+
+            chunks.append(
+                    RetrievedChunk(
+                        chunk_id=str(chunk_id),
+                        text=text or "",
+                        source=(
+                            meta.get("source")
+                            or meta.get("doc_name")
+                            or meta.get("file_name")
+                            or ""
+                            ),
+                        section=(
+                            meta.get("section")
+                            or meta.get("heading_context")
+                            or meta.get("heading")
+                            or meta.get("context")
+                            or ""
+                            ),
+                        page=meta.get("page"),
+                        distance=distance,
+                        similarity=1 - distance if distance is not None else None,
+                        metric="cosine",
+                        metadata=meta
+                        )
             )
-        chunks.append(retrieved_chunk)
+    
+    chunks.sort(
+            key=lambda chunk: (
+                chunk.distance is not None,
+                chunk.distance if chunk.distance is not None else float("-inf"),
+                ),
+                reverse=True
+            )        
+            # try: 
+            #     st.json(retrieved_chunk.model_dump())
+            # except:
+            #     pass
+    chunks = chunks[:context.n_results]
 
-        try: 
-            st.json(retrieved_chunk.model_dump())
-        except:
-            pass
-
+    # context.results
     return RetrievalResult(
         query=query,
-        chunks=[c for c in chunks if c.text.strip()],
+        chunks=chunks, # [c for c in chunks if c.text.strip()],
         n_results=len(chunks),
     )
 
@@ -492,7 +540,7 @@ def run_retrieve():
     #
     q_emb = _embed_query()
 
-    df["score"] = df["text_embed"].apply(lambda x: _cosine_sim(q_emb, a))
+    df["score"] = df["embed_text"].apply(lambda x: _cosine_sim(q_emb, a))
 
     top_k = df.sort_values("score", ascending=False).head(n_retrieve)
     context = "\n\n".join(top_k["text"])

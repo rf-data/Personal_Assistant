@@ -3,12 +3,14 @@
 import os
 from pathlib import Path
 import pandas as pd
+import gc
+
 import streamlit as st
 
 from src.core.memory import app_session, ParseContext
 from src.core.config import ChunkSettings
 from src.utils.path_helper import shorten_path, ensure_dir 
-from src.utils.st_eda_helper import st_df_profile
+# from src.utils.st_eda_helper import st_df_profile
 
 from src.run_embedding import chunk_text, embed_text, load_chunks_to_chroma
 
@@ -24,20 +26,20 @@ def show():
 
     data = Path(ensure_dir(data))
 
-    st.warning("ADAPT TO NEW FILE SYSTEM")
+    # st.warning("ADAPT TO NEW FILE SYSTEM")
     
-    st.divider()
+    # st.divider()
 
-    # parse_settings = {
-    #     "c_types_to_filter": [
-    #                         "heading",
-    #                         "paragraph",
-    #                         "code",
-    #                         "bullet_list"
-    #                         ],
-    #     "spacy_language": "",
-    #     "max_tokens": ""                    
-    # }
+    # # parse_settings = {
+    # #     "c_types_to_filter": [
+    # #                         "heading",
+    # #                         "paragraph",
+    # #                         "code",
+    # #                         "bullet_list"
+    # #                         ],
+    # #     "spacy_language": "",
+    # #     "max_tokens": ""                    
+    # # }
 
     chunk_folder = st.pills(
             label="Select folder (processed files)", 
@@ -52,83 +54,120 @@ def show():
 
     
     folder_path = f"{data}/{chunk_folder}/processed"
-    files = [f for f in Path(folder_path).rglob("*_info.json")
-             if f.parent.name.startswith("ready_")]
+    # # files = [f for f in Path(folder_path).rglob("*_info.json")
+    # #          if f.parent.name.startswith("ready_")]
 
-    files_to_chunk = st.multiselect(
-        label="Which json file should be chunked?",
-        options=files,
-        # key="chunk_files", 
-        format_func=lambda p: shorten_path(p, n=1)
-    )
+    # files_to_chunk = st.multiselect(
+    #     label="Which json file should be chunked?",
+    #     options=files,
+    #     # key="chunk_files", 
+    #     format_func=lambda p: shorten_path(p, n=1)
+    # )
 
-    # f_path = str(selected_file)
+    # f_kind = st.selectbox(
+    #                 label="Kind of document",
+    #                 options=["regulatory", "comment", "SOP"],
+    #                 # index="regulatory",
+    #                 accept_new_options=True
+    #                 )
+    # # f_path = str(selected_file)
 
-    # st.selectbox(       # multiselect(
-    #         label="Which json file should be chunked?",
-    #         options=[shorten_path(f, n=1) for f in Path(folder_path).rglob("*.json")],
-    #         key="chunk_files"
-    #         )
-    if files_to_chunk is not None:
-        chunk_context = ParseContext(
-                    # save_name = Path(selected_file).stem,
-                    # save_folder = data_embed,
-                    chunk_settings = ChunkSettings(
-                                    container_types = [
-                                            # "body_text",
-                                            "heading",
-                                            "paragraph",
-                                            "code",
-                                            "line_group",
-                                            "bullet_list",
-                                            # "lvl_1_bullet",
-                                            # "lvl_2_bullet"
-                                            ],
-                                    spacy_language = "de_core_news_sm",
-                                    max_tokens = 80,
-                                    overlap_sentences=1,
-                                    transformer_model = "all-MiniLM-L6-v2",
-                                    batch_size=43 
-                                    )
-                    )
-        chunk_context.encoder=app_session.encoder
+    # # st.selectbox(       # multiselect(
+    # #         label="Which json file should be chunked?",
+    # #         options=[shorten_path(f, n=1) for f in Path(folder_path).rglob("*.json")],
+    # #         key="chunk_files"
+    # #         )
+    # if files_to_chunk is not None:
+    #     chunk_context = ParseContext(
+    #                 # save_name = Path(selected_file).stem,
+    #                 # save_folder = data_embed,
+    #                 doc_kind=f_kind, 
+    #                 chunk_settings = ChunkSettings(
+    #                                 container_types = [
+    #                                         # "body_text",
+    #                                         "heading",
+    #                                         "paragraph",
+    #                                         "code",
+    #                                         "line_group",
+    #                                         "bullet_list",
+    #                                         # "lvl_1_bullet",
+    #                                         # "lvl_2_bullet"
+    #                                         ],
+    #                                 spacy_language = "de_core_news_sm",
+    #                                 max_tokens = 80,
+    #                                 overlap_sentences=1,
+    #                                 transformer_model="intfloat/multilingual-e5-base",
+    #                                 # "paraphrase-multilingual-MiniLM-L12-v2",
+    #                                 # "all-MiniLM-L6-v2",
+    #                                 batch_size=43 
+    #                                 )
+    #                 )
+    #     chunk_context.encoder=app_session.encoder
     
-    # f_path = f"{folder_path}/{str(selected_file)}"
-    if "chunk_status" not in st.session_state:
-        st.session_state["chunk_status"] = "ready"
+    # # f_path = f"{folder_path}/{str(selected_file)}"
+    # if "chunk_status" not in st.session_state:
+    #     st.session_state["chunk_status"] = "ready"
     
-    st.markdown(f"Status 'chunk_status': {st.session_state['chunk_status']}")
+    # st.markdown(f"Status 'chunk_status': {st.session_state['chunk_status']}")
     
-    left, right = st.columns(2)
+    # left, right = st.columns(2)
 
-    if (left.button("Reset", type="primary")
-        and st.session_state["chunk_status"] is not None):
-        st.session_state["chunk_status"] = "ready"
+    # if (left.button("Reset", type="primary")
+    #     and st.session_state["chunk_status"] is not None):
+    #     st.session_state["chunk_status"] = "ready"
 
-    if (right.button("Start run") 
-        and st.session_state["chunk_status"] in ["ready", None]):
+    # if (right.button("Start run") 
+    #     and st.session_state["chunk_status"] in ["ready", None]):
 
-        for f_path in files_to_chunk:
+    #     for idx, f_path in enumerate(files_to_chunk):
             
-            chunk_context.save_name = Path(f_path).stem
+    #         chunk_context.save_name = Path(f_path).stem
             
-            df_chunk = chunk_text(
-                            f_path=str(f_path), 
-                            parse_context=chunk_context
-                            )
+    #         df_chunk = chunk_text(
+    #                         f_path=str(f_path), 
+    #                         parse_context=chunk_context
+    #                         )
 
-            with st.expander(f"Preview df '{Path(f_path).stem}'"): 
-                st_df_profile(df_chunk)
+    #         st.write(f"""
+    #             File #{idx}
+    #             {Path(f_path).name}: 
+    #             {len(df_chunk)} chunks
+    #             """)
+    #         # st.info(f"Chunking file #{idx}")
 
-            df_embed = embed_text(df_chunk, chunk_context)
+    #         """
+    #         import streamlit as st
+    #         import time
 
-            load_chunks_to_chroma(
-                    coll_name="QMS_apo", # : str,
-                    data=df_embed, # : pd.DataFrame | str, 
-                    # meta_data: dict = {}
-                        )
+    #         progress_text = "Chunking files... Please wait."
+    #         my_bar = st.progress(0, text=progress_text)
 
-        st.session_state["chunk_status"] = "done"
+    #         for i in range(0, len(files_to_chunk)):
+    #             time.sleep(0.01)
+    #             my_bar.progress(percent_complete + 1, text=progress_text)
+    #         time.sleep(1)
+    #         my_bar.empty()
+
+    #         st.button("Rerun")
+    #         """
+    #         # with st.expander(f"Preview df '{Path(f_path).stem}'"): 
+    #         #     st_df_profile(df_chunk)
+
+    #         df_embed = embed_text(df_chunk, chunk_context)
+
+    #         load_chunks_to_chroma(
+    #                 coll_name="QMS_apo", # : str,
+    #                 data=df_embed, # : pd.DataFrame | str, 
+    #                 # meta_data: dict = {}
+    #                     )
+
+    #         del df_chunk
+    #         del df_embed
+    #         # del embeddings
+
+    #         gc.collect()
+            
+    #     st.session_state["chunk_status"] = "done"
 
     st.divider()
     st.error('\n**TEXT EMBEDDINGS MUST BE CREATED IN CODESPACE OR GOOGLE COLAB**', 

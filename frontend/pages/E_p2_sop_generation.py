@@ -9,7 +9,7 @@ import streamlit as st
 # from src.utils.path_helper import shorten_path, ensure_dir 
 # from src.utils.st_eda_helper import st_df_profile
 
-from src.utils.chroma_helper import get_chroma_client, run_chroma_query
+from src.utils.chroma_helper import get_chroma_client   #, run_chroma_query
 from src.core.memory import SOPGenContext
 from src.run_st_SOP_generation import run_st_sop_generation
 
@@ -32,11 +32,33 @@ def show():
                     # key="pdf_files"
                     )
 
-    sop_topic = st.text_input(
+    sop_title = st.text_input(
                         label = "Enter name of SOP to be written", 
                         # max_chars = 100
                         )
-    st.write(f"The current query is:\n{sop_topic}")
+    sop_topics = st.text_area(
+                        label="which topics to be covered (Provide bullets of enumerated key words and / or short phrases)",
+                        value=" "
+                        )
+    # topic_list = sop_topics.split("-")
+    topic_list = [
+            line.removeprefix("-").strip()
+            for line in sop_topics.splitlines()
+            if line.removeprefix("-").strip()
+            ]
+
+    st.info(f"You provided a list with {len(topic_list)} topics")
+    # with st.expander()
+#     "Text to analyze",
+#     "It was the best of times, it was the worst of times, it was the age of "
+#     "wisdom, it was the age of foolishness, it was the epoch of belief, it "
+#     "was the epoch of incredulity, it was the season of Light, it was the "
+#     "season of Darkness, it was the spring of hope, it was the winter of "
+#     "despair, (...)",
+# )
+
+    st.write(f"Name of SOP to be written:\t {sop_title}")
+    st.write(f"You wrote {len(sop_topics)} characters in 'topics'.")
 
     n_results = st.slider(
                         "n_results",
@@ -64,7 +86,8 @@ def show():
                             work_mode="create",
                             n_results=n_results,
                             collection=rag_colls,
-                            topic=sop_topic,
+                            title=sop_title,
+                            topics=topic_list, 
                             q_doc_type="SOP"
                                 )
 
