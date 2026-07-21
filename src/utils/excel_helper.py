@@ -4,7 +4,6 @@ import pandas as pd
 
 
 def extract_xls_data(path):
-
     xls = pd.ExcelFile(path)
 
     xls_tbl = []
@@ -14,7 +13,7 @@ def extract_xls_data(path):
     return xls_tbl
 
 
-'''
+"""
 from openpyxl import Workbook
 from openpyxl.styles import Font
 wb = Workbook()
@@ -34,9 +33,9 @@ for row in data:
     ws.append(row)
 wb.save("sales_report.xlsx")
 print("Report generated")
-'''
+"""
 
-'''
+"""
 from openpyxl import load_workbook
 
 workbook = load_workbook("sales.xlsx")
@@ -47,7 +46,8 @@ sheet.append(new_data)
 
 workbook.save("sales.xlsx")
 print("Excel updated!")
-'''
+"""
+
 
 def extract_xls_format(path):
     """
@@ -63,6 +63,7 @@ def extract_xls_format(path):
 
 from openpyxl import load_workbook
 
+
 def update_excel(path):
     wb = load_workbook(path)
     ws = wb.active
@@ -71,5 +72,6 @@ def update_excel(path):
     ws.append(["John Doe", 500, "Completed"])
 
     wb.save("updated.xlsx")
+
 
 update_excel("template.xlsx")

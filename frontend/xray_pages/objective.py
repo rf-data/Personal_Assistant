@@ -16,7 +16,7 @@ LUNG_OPACITY, NORMAL, and VIRAL_PNEUMONIA.
 In addition to the main objective of training a deep learning model, the following secondary goals were defined:
 - **_Enable future improvements of ResNet-based pipelines:_**
   * Identify "Good" and "Bad Performers" early on for targeted refinement.
-  * Search for differences between both groups 
+  * Search for differences between both groups
 - **_Apply the principle of minimal input:_**
   * Achieve satisfactory results with as few training samples as possible.
   * Smaller training subsets allow more experiments and longer training per run.

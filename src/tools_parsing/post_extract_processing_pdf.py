@@ -4,11 +4,14 @@
 
 # from collections import defaultdict
 
-from returns.result import Result, Success, Failure
+from returns.result import Result, Success
+
 # import pandas as pd
 # from datetime import datetime
 # from tiktoken import encoding_for_model
 from src.core.memory import app_session
+from src.model_classes_parsing.base_classes_parsing import PDFPageExtract
+from src.model_tools_parsing.feature_enricher import FeatureEnricher
 
 # from src.core.logger import create_logger
 # from src.core.document_assembler import DocumentAssembler
@@ -16,8 +19,6 @@ from src.core.memory import app_session
 from src.model_tools_parsing.pdf_classifier import PDFClassifier
 from src.model_tools_parsing.pdf_cleaner import PDFCleaner
 from src.model_tools_parsing.pdf_merger import PDFMerger
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
-from src.model_classes_parsing.base_classes_parsing import PDFPageExtract
 
 # from src.tools.chunk import prepare_chunk_df
 # import src.utils.general_helper as gh
@@ -46,11 +47,10 @@ from src.utils.dict_helper import save_base_model_as_dict, save_dict
 
 
 def post_process_pdf(
-    extracts: Result, 
-    # prepare_config: dict, 
+    extracts: Result,
+    # prepare_config: dict,
     # enricher
 ) -> Result[list[PDFPageExtract], str]:
-
     parse_context = app_session.run_context
     logger = parse_context.logger
 
@@ -59,27 +59,24 @@ def post_process_pdf(
     cleaner = PDFCleaner(parse_context=parse_context)
 
     feat_enricher = FeatureEnricher(
-                            parse_context=parse_context,
-                            # encoder=app_session.encoder
-                                    )
-    merger = PDFMerger(parse_context=parse_context, 
-                       enricher=feat_enricher)
-    
+        parse_context=parse_context,
+        # encoder=app_session.encoder
+    )
+    merger = PDFMerger(parse_context=parse_context, enricher=feat_enricher)
+
     save = parse_context.parse_settings.pdf.save
     # if self.save and "assembled" in self.save:
     #         save_path = f"{self.save_folder}/{self.save_name}_assembled"
     #         save_dict(f_infos, save_path)
 
     for p_extract in extracts:
-
         if isinstance(p_extract, Success):
-            p_extract = p_extract.unwrap()    # list[PDFPageExtract]
+            p_extract = p_extract.unwrap()  # list[PDFPageExtract]
 
         line_groups = p_extract.elements
         page_no = p_extract.page_no
 
-        logger.info("\n\nStart preparating text from page %s", 
-                    page_no)
+        logger.info("\n\nStart preparating text from page %s", page_no)
 
         save_path = f"{parse_context.save_folder}/{parse_context.save_name}_p{page_no}"
 
@@ -92,23 +89,19 @@ def post_process_pdf(
 
         groups_sorted = sorted(
             line_groups,
-            key=lambda group: (group.meta.y_start_min, 
-                               group.meta.x_start_min),
+            key=lambda group: (group.meta.y_start_min, group.meta.x_start_min),
         )
 
-        class_dict = classifier.classify_line(groups_sorted, 
-                                              page_attributes)
+        class_dict = classifier.classify_line(groups_sorted, page_attributes)
         # logger.info("Length 'text_segments' (after detect):\t%s", len(text_segments))
-        
+
         if save and "class" in save:
             save_dict(class_dict, f"{save_path}_class")
 
         blocks_text = merger.merge_text_lines(
-                                        class_dict["text"],
-                                        class_dict["headings"],
-                                        page_attributes
-                                        )
-        
+            class_dict["text"], class_dict["headings"], page_attributes
+        )
+
         if save and "merge" in save:
             save_dict(class_dict, f"{save_path}_merge")
 
@@ -117,7 +110,7 @@ def post_process_pdf(
         p_extract.text_bodies = blocks_text_clean["text_bodies"]
         p_extract.bullets = blocks_text_clean["bullets"]
         p_extract.header_footer = class_dict["header_footer"]
-        p_extract.headings = blocks_text["headings"]    # class_dict["headings"] 
+        p_extract.headings = blocks_text["headings"]  # class_dict["headings"]
         p_extract.foot_notes = class_dict["foot_notes"]
         p_extract.content_table = class_dict["content_table"]
         p_extract.non_text = class_dict["other"]
@@ -128,18 +121,18 @@ def post_process_pdf(
 
     # if save and "info" in save:
 
-        # self.save_folder = self.
-        # self.save_name = self.parse_context.save_name
-        
-        # save_base_model_as_dict(p_extract, f"{save_path}_post_all")
+    # self.save_folder = self.
+    # self.save_name = self.parse_context.save_name
 
-        # full_text = [block.text for block in blocks_text]
-        # full_text = "\n\n".join(full_text)
+    # save_base_model_as_dict(p_extract, f"{save_path}_post_all")
 
-        # save_text_file(full_text,
-        #                        file_name=f"{now}_{f_name}_p{page_no}_class",
-        #                        folder=session.state.save_folder)
-        # CLASSIFICATION etc. --> 'run_text_preparation.py'
+    # full_text = [block.text for block in blocks_text]
+    # full_text = "\n\n".join(full_text)
+
+    # save_text_file(full_text,
+    #                        file_name=f"{now}_{f_name}_p{page_no}_class",
+    #                        folder=session.state.save_folder)
+    # CLASSIFICATION etc. --> 'run_text_preparation.py'
 
     return Success(extracts)
 
@@ -149,7 +142,7 @@ def post_process_pdf(
 
 
 #     # load env variables and config
-#     data_processed = os.getenv("DATA_PROCESSED")
+#     data_processed = env_variables("DATA_PROCESSED")
 
 #     # if not session.model_config:
 #     config = session.model_config

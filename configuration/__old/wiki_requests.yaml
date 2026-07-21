@@ -5,15 +5,15 @@
 #   # search_API: search/page
 #   name_log: extract_wiki
 #   name_logfile: extract_wiki
-#   timestamp: 2026-05-18_13-08-12 
+#   timestamp: 2026-05-18_13-08-12
 
-article_parsing: 
+article_parsing:
   language: en        # Literal["en", "de"]
   max_retries: 3
   header_agent: 'GMPComplianceBot/0.1 (private educational project; User: nirvana941@gmx.net)'
   header_referer: https://en.wikipedia.org/
   header_accept: image/svg+xml,image/*,*/*
-  
+
   article_to_parse:
     # - 1208
   llm_model: gpt-4o-mini

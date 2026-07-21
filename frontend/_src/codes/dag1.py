@@ -15,7 +15,6 @@ def _any_file_exists(**context):
     default_args={"retries": 1, "retry_delay": timedelta(seconds=10)},
 )
 def data_processing_pipeline():
-
     # sensor checks for new files
     wait_for_file = PythonSensor(
         task_id="wait_for_file",

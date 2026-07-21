@@ -11,7 +11,7 @@ from src.model_classes_parsing.base_classes_parsing import LineGroup
 # import sys
 from src.model_tools_parsing.text_classifier import BaseClassifier
 
-    
+
 @dataclass
 class PDFClassifier(BaseClassifier):
     page_attributes: dict[str, Any] = field(default_factory=dict)
@@ -21,14 +21,12 @@ class PDFClassifier(BaseClassifier):
     # r"^((?:[IVXLCDM]+)|(?:\d+(?:\.\d+)*))\s+"
     toc_dots = r"\.{5,}\s*\d+\s*$"
 
-
-    def classify_line(self, 
-                      lines: list[LineGroup],
-                      page_attributes: dict|None=None):
-
+    def classify_line(
+        self, lines: list[LineGroup], page_attributes: dict | None = None
+    ):
         if page_attributes is not None:
             self.page_attributes.update(page_attributes)
-    
+
         # head_foot, other = self._separate_header_footer(lines)
         # text_rows, non_text_rows = self._filter_text(segments)
         class_dict = self._differentiate_text(lines)
@@ -59,11 +57,11 @@ class PDFClassifier(BaseClassifier):
         # header_footer = []
         # other = []
 
-        if line.meta.n_words <= 20 and (            # 3
+        if line.meta.n_words <= 20 and (  # 3
             line.meta.rel_height < up_down_edge
             or line.meta.rel_height > 1 - up_down_edge
-            ): 
-            #  and (line.meta.n_chars < 100 or 
+        ):
+            #  and (line.meta.n_chars < 100 or
             # line.meta.n_words < 20):
             return True
 
@@ -71,7 +69,6 @@ class PDFClassifier(BaseClassifier):
             #     other.append(l)
 
         return False  # header_footer, other
-
 
     def _heading_score(self, line):
         median_size = self.page_attributes["median_size"]
@@ -84,9 +81,9 @@ class PDFClassifier(BaseClassifier):
         # else:
         #     logger.warning("Line has more than one font size:\t", font_sizes)
 
-        if re.match(self.toc_prefix, line.text): 
+        if re.match(self.toc_prefix, line.text):
             heading_score += 2
-        
+
         if line.meta.is_bold_rel > 0.5:
             heading_score += 2
 
@@ -103,9 +100,7 @@ class PDFClassifier(BaseClassifier):
 
         return heading_score
 
-
     def _subdivide_heading(self, heading):
-
         font_span = defaultdict(list)
 
         for head in heading:
@@ -132,9 +127,7 @@ class PDFClassifier(BaseClassifier):
 
         return head_fin
 
-
     def _is_foot_note(self, line, prev_type):
-
         foot_note_thresh = self.general_config.foot_note_thresh
 
         median_size = self.page_attributes["median_size"]
@@ -175,31 +168,25 @@ class PDFClassifier(BaseClassifier):
 
         return score >= foot_note_thresh
 
-
     def _is_column(self, lines):
-
         inter_word_gap = ""
 
         return
-    
-    
+
     def _is_content_table(self, line) -> bool:
         text = line.text.strip()
-        
-        if (text.lower().split(" ")[0] 
-            in self.toc_keywords):
+
+        if text.lower().split(" ")[0] in self.toc_keywords:
             return True
 
         if "................................................................" in text:
             return True
 
-        if (re.match(self.toc_prefix, text) 
-            and re.search(self.toc_dots, text)):
-                # re.search(r"\.{5,}\s*\d+\s*$", text):
-                return True
+        if re.match(self.toc_prefix, text) and re.search(self.toc_dots, text):
+            # re.search(r"\.{5,}\s*\d+\s*$", text):
+            return True
 
         return False
-
 
     def _is_bullet_like(self, line) -> bool:
         text = line.text.strip()
@@ -217,17 +204,14 @@ class PDFClassifier(BaseClassifier):
 
         return False
 
-
     def _is_table(self, lines):
-
         return
-
 
     def _is_continuation_line(self, line, prev_line) -> bool:
         if prev_line is None:
             return False
 
-        # if (prev_line.line_type in ["lvl_1_bullet", "lvl_2_bullet"] 
+        # if (prev_line.line_type in ["lvl_1_bullet", "lvl_2_bullet"]
         #     and line.meta.x_start_min >= prev_line.meta.x_start_min - 5):
         if prev_line.line_type not in [
             "body_text",
@@ -238,38 +222,25 @@ class PDFClassifier(BaseClassifier):
 
         y_gap = abs(line.meta.y_start_mean - prev_line.meta.y_start_mean)
 
-        same_indent_or_deeper = (
-            line.meta.x_start_min >= prev_line.meta.x_start_min - 5
-        )
+        same_indent_or_deeper = line.meta.x_start_min >= prev_line.meta.x_start_min - 5
 
-        return (
-            y_gap < self.general_config.y_gap_line * 1.5
-            and same_indent_or_deeper
-        )
-
+        return y_gap < self.general_config.y_gap_line * 1.5 and same_indent_or_deeper
 
     def _is_numbered_paragraph(self, text: str) -> bool:
         return bool(re.match(r"^\s*\d+\.\d+\s+", text))
 
-
     def _is_real_bullet(self, line) -> bool:
         text = line.text.strip()
 
-        if re.match(r"^(?:[-–•▪●]|[a-z]\)|\([ivxlcdm]+\))\s+", 
-                    text, 
-                    re.I):
+        if re.match(r"^(?:[-–•▪●]|[a-z]\)|\([ivxlcdm]+\))\s+", text, re.I):
             return True
 
-        if re.match(r"^[ivxlcdm]+\s+", 
-                    text, 
-                    re.I):
+        if re.match(r"^[ivxlcdm]+\s+", text, re.I):
             return line.meta.x_start_min > self.page_attributes["left_indent"] + 15
 
         return False
 
-
     def _differentiate_text(self, lines: list[LineGroup]):
-
         left_indent = self.page_attributes["left_indent"]
 
         start_tol = self.general_config.start_tol
@@ -320,13 +291,16 @@ class PDFClassifier(BaseClassifier):
             elif self._is_real_bullet(line):
                 # or ):
                 # if bullet_start_x == 0 or line.meta.x_start_min < bullet_start_x:
-                if bullet_start_x == 0 or abs(line.meta.x_start_min - bullet_start_x) <= 3:
+                if (
+                    bullet_start_x == 0
+                    or abs(line.meta.x_start_min - bullet_start_x) <= 3
+                ):
                     line.line_type = "lvl_1_bullet"
                 elif line.meta.x_start_min > bullet_start_x + 10:
                     line.line_type = "lvl_2_bullet"
                 else:
                     line.line_type = "lvl_1_bullet"
-                
+
                 line.container_id = container_id
                 text_lines.append(line)
 
@@ -334,13 +308,7 @@ class PDFClassifier(BaseClassifier):
                 # bullet_start_y = line.meta.y_start_mean
                 container_id += 1
 
-            elif (
-                idx > 0 and 
-                self._is_continuation_line(
-                                        line, 
-                                        lines_sorted[idx - 1]
-                                        )
-                ):
+            elif idx > 0 and self._is_continuation_line(line, lines_sorted[idx - 1]):
                 line.line_type = lines_sorted[idx - 1].line_type
                 line.container_id = container_id
                 text_lines.append(line)
@@ -398,7 +366,7 @@ class PDFClassifier(BaseClassifier):
 
                 line.line_type = "heading"
                 self.logger.info("HEADING:\t%s", line.text)
-                
+
                 line.container_id = container_id
                 headings.append(line)
                 container_id += 1
@@ -407,7 +375,7 @@ class PDFClassifier(BaseClassifier):
                 line.line_type = "table_of_content"
 
                 line.container_id = container_id
-                toc.append(line)   # oder toc_lines.append(line)
+                toc.append(line)  # oder toc_lines.append(line)
                 container_id += 1
 
             elif line.meta.ends_sentence:
@@ -456,7 +424,7 @@ class PDFClassifier(BaseClassifier):
 
                     elif gap < y_tol:
                         line.line_type = "body_text"
-                    
+
                         line.container_id = container_id
                         text_lines.append(line)
                         container_id += 1
@@ -466,7 +434,7 @@ class PDFClassifier(BaseClassifier):
                     #     or line["n_chars"] < 60)
                     #     and line["line_width"]):
                     line.line_type = "heading"
-        
+
                     line.container_id = container_id
                     headings.append(line)
                     self.logger.info("HEADING:\t%s", line.text)

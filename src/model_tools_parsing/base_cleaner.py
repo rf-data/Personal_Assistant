@@ -14,5 +14,4 @@ class BaseCleaner:
     doc_name: str = field(default_factory=str)
 
     def extract(self):
-
         return

@@ -7,8 +7,8 @@ def show():
     st.header("🔌 FastAPI")
     st.subheader("General Purpose")
     st.markdown("""
-    - Python framework for quickly building web APIs   
-    - Lightweight HTTP interface   
+    - Python framework for quickly building web APIs
+    - Lightweight HTTP interface
     - Decouples UI from orchestration
     """)
 

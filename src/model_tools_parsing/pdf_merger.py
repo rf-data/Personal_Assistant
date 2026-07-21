@@ -1,36 +1,33 @@
 ## pdf_merger
 # import
 import re
+
 # import logging
 from dataclasses import dataclass, field
-import streamlit as st
 
-from src.core.memory import app_session, ParseContext 
+from src.core.memory import ParseContext
 from src.model_classes_parsing.base_classes_parsing import (
-                                                    BulletItem,
-                                                    BulletList,
-                                                    LineGroup, 
-                                                    TextBlock
-                                                    )
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
+    BulletItem,
+    BulletList,
+    LineGroup,
+    TextBlock,
+)
 
 
 @dataclass
 class PDFMerger:
     # headings: list = field(init=False)
 
-    def __init__(self, 
-                 parse_context:ParseContext, 
-                 enricher):
-        
+    def __init__(self, parse_context: ParseContext, enricher):
         self.merge_config = parse_context.parse_settings.pdf
         self.general_config = parse_context.general_settings.pdf
         self.enricher = enricher
         # FeatureEnricher = field(default_factory=FeatureEnricher())
         self.logger = parse_context.logger
 
-        self.page_heigth: float = field(default_factory = float)
-        self.page_width: float = field(default_factory = float)        
+        self.page_heigth: float = field(default_factory=float)
+        self.page_width: float = field(default_factory=float)
+
     # def merge_table_columns(self, table_groups: List[dict]):
 
     #     blocks = []
@@ -66,19 +63,17 @@ class PDFMerger:
 
     def _starts_new_bullet(self, line: LineGroup) -> bool:
         text = line.text.strip()
-        return bool(re.match(
-            r"^(?:[-–•▪●]|[a-z]\)|\([ivxlcdm]+\)|[ivxlcdm]+)\s+",
-            text,
-            re.I,
-        ))
-
+        return bool(
+            re.match(
+                r"^(?:[-–•▪●]|[a-z]\)|\([ivxlcdm]+\)|[ivxlcdm]+)\s+",
+                text,
+                re.I,
+            )
+        )
 
     def merge_text_lines(
-                    self, 
-                    lines: list[LineGroup],
-                    headings: list[LineGroup],
-                    page_attributes: dict
-                    ) -> dict:
+        self, lines: list[LineGroup], headings: list[LineGroup], page_attributes: dict
+    ) -> dict:
         # setup logger
         # self.logger = session_state.logger
 
@@ -87,9 +82,7 @@ class PDFMerger:
         # .get("height")
         # self.page_width = page_attributes.get("width")
 
-        lines_sorted = sorted(lines, 
-                              key=lambda l: 
-                              l.meta.y_start_mean)
+        lines_sorted = sorted(lines, key=lambda l: l.meta.y_start_mean)
         # blocks = []
         # bullets = []
         bullet_items = []
@@ -98,9 +91,8 @@ class PDFMerger:
         for line in lines_sorted:
             if line.line_type in ["body_text", "tba"]:
                 text_bodies.append(line)
-        
-            elif line.line_type in ["lvl_1_bullet", 
-                                    "lvl_2_bullet"]:
+
+            elif line.line_type in ["lvl_1_bullet", "lvl_2_bullet"]:
                 bullet_items.append(line)
 
             elif line.line_type == "heading":
@@ -121,25 +113,20 @@ class PDFMerger:
         )
 
         return {
-            # "blocks": 
+            # "blocks":
             "bullets": self._merge_bullets(bullet_items),
-            "text_bodies": self._merge_text_bodies(text_bodies), 
-            "headings": headings
-            }
-
+            "text_bodies": self._merge_text_bodies(text_bodies),
+            "headings": headings,
+        }
 
     def _merge_text_bodies(
-                    self, 
-                    text_bodies: list[LineGroup],
-                    headings: list[LineGroup] | None = None,
-                    ) -> list[TextBlock]:
-
+        self,
+        text_bodies: list[LineGroup],
+        headings: list[LineGroup] | None = None,
+    ) -> list[TextBlock]:
         self.logger.info("Start merging text bodies")
 
-        text_bodies = self._merge_text_groups(
-                        lines = text_bodies,
-                        headings = headings
-                        )
+        text_bodies = self._merge_text_groups(lines=text_bodies, headings=headings)
 
         text_bodies = self._finalize_body_text(text_bodies)
 
@@ -147,13 +134,8 @@ class PDFMerger:
             t_body.text_body_id = text_body_id
 
         return text_bodies
-    
 
-    def _merge_bullets(
-                    self, 
-                    bullets: list[LineGroup]
-                    ) -> list[TextBlock]:
-
+    def _merge_bullets(self, bullets: list[LineGroup]) -> list[TextBlock]:
         bullets = self._merge_text_groups(bullets)
 
         bullets = self._finalize_body_text(bullets)
@@ -164,29 +146,29 @@ class PDFMerger:
         bullets_new = []
         bullet_id = 1
         for idx, bul in enumerate(bullets):
-            
             # try:
             #     print(f"Bullet #{idx}:\n", bul) # .model_dump())
-            # except: 
+            # except:
             #     pass
 
             bullets_new.append(
-                    BulletList(
-                        container_id = bullet_id,
-                        text= bul.text,
-                        meta = bul.meta,
-                        # : ElementMeta | None = Field(default_factory=ElementMeta)
-                        elements = [
-                                BulletItem(
-                                    bullet_id=i,
-                                    text=line.text.lstrip("- ") if line.text.startswith("- ") else line.text,
-                                    meta=line.meta,
-                                    # elements=line.elements,   # hier dürfen vermutlich Word rein
-                                )
-                                for i, line in enumerate(bul.elements, 
-                                                         start=1)
-                                ]
+                BulletList(
+                    container_id=bullet_id,
+                    text=bul.text,
+                    meta=bul.meta,
+                    # : ElementMeta | None = Field(default_factory=ElementMeta)
+                    elements=[
+                        BulletItem(
+                            bullet_id=i,
+                            text=line.text.lstrip("- ")
+                            if line.text.startswith("- ")
+                            else line.text,
+                            meta=line.meta,
+                            # elements=line.elements,   # hier dürfen vermutlich Word rein
                         )
+                        for i, line in enumerate(bul.elements, start=1)
+                    ],
+                )
             )
             #             bul.elements
             #             # : list[Word] = Field(default_factory=list)
@@ -236,71 +218,51 @@ class PDFMerger:
 
         # return blocks
 
-
     def _has_heading_between(
-                        self,
-                        prev: LineGroup,
-                        curr: LineGroup,
-                        headings: list[LineGroup],
-                    ) -> bool:
+        self,
+        prev: LineGroup,
+        curr: LineGroup,
+        headings: list[LineGroup],
+    ) -> bool:
         y_prev = prev.meta.y_start_min
         y_curr = curr.meta.y_start_min
 
         if y_prev > y_curr:
             y_prev, y_curr = y_curr, y_prev
 
-        return any(
-            y_prev < h.meta.y_start_min < y_curr
-            for h in headings
-        )
-
+        return any(y_prev < h.meta.y_start_min < y_curr for h in headings)
 
     def _merge_text_groups(
-                        self, 
-                        lines: list[LineGroup],
-                        headings: list[LineGroup] | None = None
-                        ) -> list[TextBlock]:
-
+        self, lines: list[LineGroup], headings: list[LineGroup] | None = None
+    ) -> list[TextBlock]:
         # y_tol = self.text_prep_config["y_gap_line"]
 
         headings = headings or []
         headings_sorted = sorted(
-                    headings,
-                    key=lambda h: h.meta.y_start_min,
-                )
+            headings,
+            key=lambda h: h.meta.y_start_min,
+        )
 
         lines_sorted = sorted(
-            lines, key=lambda l: (
-                            l.meta.y_start_min, 
-                            l.meta.x_start_min
-                            )
-                            )
+            lines, key=lambda l: (l.meta.y_start_min, l.meta.x_start_min)
+        )
         # , l["x0_min"]))
         is_bullet_mode = any(
-                    l.line_type in ["lvl_1_bullet", 
-                                    "lvl_2_bullet"]
-                    for l in lines_sorted
-                )
+            l.line_type in ["lvl_1_bullet", "lvl_2_bullet"] for l in lines_sorted
+        )
         current = []
         final = []
         for curr_line in lines_sorted:
-            
             words_sort = self._word_reading_order(curr_line.elements)
             curr_line.text = " ".join(w.text.strip() for w in words_sort)
 
-            if (
-                current 
-                and is_bullet_mode 
-                and self._starts_new_bullet(curr_line)
-                ):
-            # print("curr_type:\t", type(current[0]))
+            if current and is_bullet_mode and self._starts_new_bullet(curr_line):
+                # print("curr_type:\t", type(current[0]))
 
                 final.append(
-                    TextBlock(
-                        text=self._merge_text(current), 
-                        elements=current)
-                        )
-                
+                    TextBlock(text=self._merge_text(current), elements=current)
+                )
+
                 current = [curr_line]
                 continue
             # text = " ".join([w.text.strip() for w in words_sort])
@@ -313,13 +275,11 @@ class PDFMerger:
             # is_last = i == len(lines_sorted) - 1
             prev_line = current[-1] if current else None
             # None if i == 0 else lines_sorted[i - 1]
-            
+
             if prev_line is None:
                 current = [curr_line]
-            
-            elif self._has_heading_between(prev_line, 
-                                           curr_line, 
-                                           headings_sorted):
+
+            elif self._has_heading_between(prev_line, curr_line, headings_sorted):
                 final.append(
                     TextBlock(
                         text=self._merge_text(current),
@@ -333,10 +293,7 @@ class PDFMerger:
 
             else:
                 final.append(
-                    TextBlock(
-                        text=self._merge_text(current), 
-                        elements=current
-                        )
+                    TextBlock(text=self._merge_text(current), elements=current)
                 )
 
                 current = [curr_line]
@@ -349,12 +306,9 @@ class PDFMerger:
                 )
             )
 
-
         return final
 
-
     def _merge_text(self, lines: list[LineGroup]) -> str:
-
         text = ""
 
         for i, line in enumerate(lines):
@@ -406,27 +360,20 @@ class PDFMerger:
     #         )
     #     )
 
-
     def _word_reading_order(self, words):
         return sorted(
             words,
             key=lambda w: (
                 round(w.meta.y_start / 2) * 2,  # kleine y-Abweichungen gruppieren
-                w.meta.x_start
-            )
+                w.meta.x_start,
+            ),
         )
 
-
-    def _finalize_body_text(
-                        self, 
-                        blocks: list[TextBlock]
-                        ) -> list[TextBlock]:
-
+    def _finalize_body_text(self, blocks: list[TextBlock]) -> list[TextBlock]:
         # enricher = session.enricher
         # text_bodies = enricher.enrich(text_bodies)
 
-        return self.enricher.enrich_blocks(blocks, 
-                                           self.page_attributes)
+        return self.enricher.enrich_blocks(blocks, self.page_attributes)
 
     # def merge_segments_to_blocks(
     #                         self,

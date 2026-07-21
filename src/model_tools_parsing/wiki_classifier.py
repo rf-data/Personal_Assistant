@@ -6,7 +6,6 @@ from dataclasses import dataclass, field
 from typing import Any
 
 # from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract, LineGroup
-
 # import pprint
 # import sys
 from src.model_tools_parsing.text_classifier import BaseClassifier
@@ -17,7 +16,6 @@ class WikiClassifier(BaseClassifier):
     page_attributes: dict[str, Any] = field(default_factory=dict)
 
     def classify_links(self, extract_elements: list[dict]) -> DocumentExtract:
-
         paragraphs = []
         for element in extract_elements:
             e_type = element.get("meta", {}).get("element_type")
@@ -100,7 +98,6 @@ class WikiClassifier(BaseClassifier):
         return heading_score
 
     def _subdivide_heading(self, heading):
-
         font_span = defaultdict(list)
 
         for head in heading:
@@ -128,7 +125,6 @@ class WikiClassifier(BaseClassifier):
         return head_fin
 
     def _is_foot_note(self, line, prev_type):
-
         foot_note_thresh = self.classify_config["foot_note_thresh"]
 
         median_size = self.page_attributes["median_size"]
@@ -170,17 +166,14 @@ class WikiClassifier(BaseClassifier):
         return score >= foot_note_thresh
 
     def _is_column(self, lines):
-
         inter_word_gap = ""
 
         return
 
     def _is_table(self, lines):
-
         return
 
     def _differentiate_text(self, lines: list[LineGroup]):
-
         left_indent = self.page_attributes["left_indent"]
 
         start_tol = self.classify_config["start_tol"]

@@ -3,7 +3,6 @@
 
 from pydantic import BaseModel, Field
 
-
 # class WikiLink(BaseModel):
 #     # pass
 #     text: str
@@ -36,7 +35,6 @@ from pydantic import BaseModel, Field
 #     level: int
 #     parent: str
 #     meta: Dict
-
 
 
 # -------------------------
@@ -130,5 +128,5 @@ class WikiPage(BaseLeaf):
     text: str
     sections: List[WikiSection]
     meta: Optional[WikiPageMeta]
-    
+
 """

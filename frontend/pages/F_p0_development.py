@@ -1,33 +1,22 @@
 ## F_p0_development.py
 # imports
-import os
-from pathlib import Path
+
 import streamlit as st
 
-from src.core.memory import app_session, ParseContext
-from src.core.config import ChunkSettings
-from src.utils.path_helper import shorten_path, ensure_dir 
-from src.utils.st_eda_helper import st_df_profile
-
-from src.run_embedding import chunk_text, embed_text, load_chunks_to_chroma
+# from _run_embedding import chunk_text, embed_text, load_chunks_to_chroma
 
 
 def show():
     st.header("🏠 Startseite ")
     st.subheader("**Development Area**")
 
-          
     st.markdown("**Under Construction**")
 
-    # data_processed = os.getenv("DATA_PROCESSED")
-    # data_embed = os.getenv("DATA_EMBED")
-#     data = os.getenv("DATA_DIR")
-#     assert data is not None
 
 #     data = Path(ensure_dir(data))
 
 #     st.warning("ADAPT TO NEW FILE SYSTEM")
-    
+
 #     st.divider()
 
 #     # parse_settings = {
@@ -38,21 +27,21 @@ def show():
 #     #                         "bullet_list"
 #     #                         ],
 #     #     "spacy_language": "",
-#     #     "max_tokens": ""                    
+#     #     "max_tokens": ""
 #     # }
 
 #     chunk_folder = st.pills(
-#             label="Select folder (processed files)", 
-#             options=["txt_md", 
-#                      "docx", 
+#             label="Select folder (processed files)",
+#             options=["txt_md",
+#                      "docx",
 #                      "html",
-#                      "pdf", 
-#                      "json"], 
+#                      "pdf",
+#                      "json"],
 #             selection_mode="single",
 #             # key="chunk_folder"
 #             )
 
-    
+
 #     folder_path = f"{data}/{chunk_folder}/processed"
 #     files = [f for f in Path(folder_path).rglob("*_info.json")
 #              if f.parent.name.startswith("ready_")]
@@ -60,7 +49,7 @@ def show():
 #     selected_file = st.multiselect(
 #         label="Which json file should be chunked?",
 #         options=files,
-#         key="chunk_files", 
+#         key="chunk_files",
 #         format_func=lambda p: shorten_path(p, n=1)
 #     )
 
@@ -90,54 +79,54 @@ def show():
 #                                     max_tokens = 80,
 #                                     overlap_sentences=1,
 #                                     transformer_model = "all-MiniLM-L6-v2",
-#                                     batch_size=43 
+#                                     batch_size=43
 #                                     )
 #                     )
 #         chunk_context.encoder=app_session.encoder
-    
+
 #     # f_path = f"{folder_path}/{str(selected_file)}"
 #     if "chunk_status" not in st.session_state:
 #         st.session_state["chunk_status"] = "ready"
-    
+
 #     st.markdown(f"Status 'chunk_status': {st.session_state['chunk_status']}")
-    
+
 #     left, right = st.columns(2)
 
 #     if (left.button("Reset", type="primary")
 #         and st.session_state["chunk_status"] is not None):
 #         st.session_state["chunk_status"] = "ready"
 
-#     if (right.button("Start run") 
+#     if (right.button("Start run")
 #         and st.session_state["chunk_status"] in ["ready", None]):
 
 #         for file in selected_file:
-            
+
 #             chunk_context.save_name = Path(file).stem
-            
+
 #             df_chunk = chunk_text(
-#                             f_path=str(file), 
+#                             f_path=str(file),
 #                             parse_context=chunk_context
 #                             )
 
-#             with st.expander(f"Preview df '{Path(file).stem}'"): 
+#             with st.expander(f"Preview df '{Path(file).stem}'"):
 #                 st_df_profile(df_chunk)
 
 #             df_embed = embed_text(df_chunk, chunk_context)
 
 #             load_chunks_to_chroma(
 #                     coll_name="QMS_apo", # : str,
-#                     data=df_embed, # : pd.DataFrame | str, 
+#                     data=df_embed, # : pd.DataFrame | str,
 #                     # meta_data: dict = {}
 #                         )
 
 #         st.session_state["chunk_status"] = "done"
 
 #     st.divider()
-#     st.error('\n**TEXT EMBEDDINGS MUST BE CREATED IN CODESPACE OR GOOGLE COLAB**', 
+#     st.error('\n**TEXT EMBEDDINGS MUST BE CREATED IN CODESPACE OR GOOGLE COLAB**',
 #              icon="🚨")
 #     # st.markdown("")
 #     st.divider()
-  
+
 
 # # from sentence_transformers import SentenceTransformer
 
@@ -151,8 +140,8 @@ def show():
 #     show_progress_bar=True,
 #     normalize_embeddings=True,
 # )
-# def _chunk_by_sentences(block_text: str, 
-#                         chunk_config: dict, 
+# def _chunk_by_sentences(block_text: str,
+#                         chunk_config: dict,
 #                         nlp) -> list[dict]:
 #     max_tokens = chunk_config["max_tokens"]
 #     overlap_sentences = chunk_config.get("overlap_sentences", 1)

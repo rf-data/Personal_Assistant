@@ -2,22 +2,22 @@
 # import
 
 # import urllib.request as u_req       # pathlib,os,uuid
-from urllib.parse import urljoin
 import html
+from urllib.parse import urljoin
+
 import requests
 from bs4 import BeautifulSoup as bs
 
 from src.core.memory import app_session
-
 from src.utils.text_file_helper import read_text_file
+
 # def read_html_file(f_path):
 
 #     soup =
 #     return soup
 
 
-def read_html_file(f_path: str, unescaped: bool=False):
-
+def read_html_file(f_path: str, unescaped: bool = False):
     file = read_text_file(f_path)
 
     # unicode escapes decoden
@@ -25,7 +25,7 @@ def read_html_file(f_path: str, unescaped: bool=False):
     #     file = codecs.decode(file, "unicode_escape")
     # except Exception:
     #     pass
-    
+
     # file = file.replace('\\n', '\n')
     # file = re.sub(r'\\(?!n|t|"|u)', '', file)
 
@@ -41,7 +41,6 @@ def read_html_file(f_path: str, unescaped: bool=False):
 
 
 def scrape_source_code(url):
-
     page = requests.get(url)
 
     soup = bs(page.content, "html.parser")
@@ -62,7 +61,6 @@ def scrape_source_code(url):
 
 
 def show_element_attributes(soup, element_tag: str):
-
     logger = app_session.logger
     all_elements = soup.findall(element_tag)
 
@@ -73,7 +71,6 @@ def show_element_attributes(soup, element_tag: str):
 
 
 def normalize_url(url: str, base_url: str = "https:"):
-
     if url.startswith("//"):
         return urljoin(
             base_url,  # "https://en.wikipedia.org",
@@ -84,7 +81,6 @@ def normalize_url(url: str, base_url: str = "https:"):
 
 
 def check_and_get_elements(soup, elements: str | list[str]) -> list:
-
     logger = app_session.logger
 
     if isinstance(elements, str):

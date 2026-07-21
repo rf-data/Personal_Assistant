@@ -6,7 +6,7 @@ name_log: streamlit_demo
 name_logfile: streamlit_demo
 llm_model: gpt-4o-mini
 
-url_path: 
+url_path:
 file_name:
 
 # docx:
@@ -17,7 +17,7 @@ html:
   parser: html.parser
   assemble:   # Literal["txt", "md"]
   scrape_images: True
-  save: 
+  save:
     - info
     - html
     - md
@@ -27,10 +27,10 @@ html:
 json_nb:
   assemble:     # Literal["txt", "md"]
 
-  
+
 # PDF
 pdf:
-  extract_source: 
+  extract_source:
     - raw_dict
     - words
   extraction_model: pymupdf
@@ -38,14 +38,14 @@ pdf:
   extract_text_info: True
   extract_graphics: False
   scrape_images: False
-  
-  save: 
+
+  save:
     - info
     - html
     - md
-  
+
   assemble:     # Literal["txt", "md"]
-  percentiles: 
+  percentiles:
     - 0.01
     - 0.05
     - 0.10
@@ -63,11 +63,11 @@ wiki:
   query:      # Partial_least # turing
   query_time:     # 2026-05-18_13-08-12
   article_to_parse:
-    # - 314204 
+    # - 314204
   language: en        # Literal["en", "de"]
   max_retries: 3
   assemble:   # Literal["txt", "md"]
-  save: 
+  save:
     - info
     - html
     - md

@@ -1,21 +1,21 @@
 ##
 # imports
-import os
+
 import shutil
-from pathlib import Path
 
 from fastapi import FastAPI
 
 from src.core.memory import session
 from src.run_text_extraction import run_text_extraction
-from src.utils.general_helper import load_env_vars
+
+# from src.utils.general_helper import load_env_vars
 
 # --- FastAPI App Initialization ---
 app = FastAPI()
 
-load_env_vars(name=".env.frontend")
+# load_env_vars(name=".env.frontend")
 
-FILE_FOLDER = Path(os.getenv("FOLDER_FILES"))
+# FILE_FOLDER = Path(env_variables)env_variables("FOLDER_FILES"))
 
 # --- Logging Configuration ---
 # logging.basicConfig(level=logging.DEBUG)

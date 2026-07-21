@@ -1,6 +1,4 @@
-
-
-'''
+"""
 class ResearchPipeline:
 def collect_articles(self):
         pass
@@ -10,4 +8,4 @@ def collect_articles(self):
         pass
     def generate_report(self):
         pass
-'''
+"""

@@ -1,32 +1,28 @@
 # imports
 import hashlib
-import ast
-# from src.schema.aggregation_schema import (AggregatedResult,
-#                                            LLMAggregatedResult)
-import re
 import inspect
-from typing import Any
 
 # import numpy as np
 import json
-import os
+
+# from src.schema.aggregation_schema import (AggregatedResult,
+#                                            LLMAggregatedResult)
 import subprocess
 from collections.abc import Callable, Iterable
 from datetime import datetime
 from pathlib import Path
-from dotenv import find_dotenv, load_dotenv
+from typing import Any
 
+from src.core.config import env_variables
 from src.core.memory import app_session
-from src.utils.path_helper import ensure_dir    # , shorten_path
-
+from src.utils.path_helper import ensure_dir  # , shorten_path
 
 ## USE STANDARD_LIBRARIES --> csv, json, configparser, ipaddress, sqlite3, heapq, bisect...
 
 # def inspect_function(fn: Callable):
 #     print(inspect.getsource(fn))
 
-#     return 
-
+#     return
 
 
 def iter_chunks(df, chunk_size=25):
@@ -34,6 +30,7 @@ def iter_chunks(df, chunk_size=25):
         yield df.iloc[start : start + chunk_size]
 
 
+'''
 def load_env_vars(name: list | str = ".env"):
     """
     Load environment variables from .env files if available.
@@ -59,12 +56,13 @@ def load_env_vars(name: list | str = ".env"):
     app_session.env_loaded = env_loaded
 
     return
-
+'''
 
 
 ####################
 # ANALYZE_FUNCTIONS
 ####################
+
 
 def inspect_single_function(fn: Callable) -> dict:
     src = inspect.getsource(fn)
@@ -94,15 +92,14 @@ def snapshot_dependent_functions(
     return snapshot
 
 
-def make_doc_id(file_path: str, 
-                short: bool=True) -> str:
+def make_doc_id(file_path: str, short: bool = True) -> str:
     stem = Path(file_path).stem.lower().strip()
 
     doc_id = hashlib.sha256(stem.encode("utf-8")).hexdigest()
 
-    if short: 
+    if short:
         return doc_id[:16]
-    
+
     return doc_id
 
 
@@ -113,15 +110,27 @@ def make_doc_id_by_content(file_path: str) -> str:
         while chunk := f.read(8192):
             h.update(chunk)
 
-    return h.hexdigest()        # [:16]
+    return h.hexdigest()  # [:16]
+
 
 ###################
 # CACHING
 ###################
 
-def make_cache_key(url: str, params: dict) -> str:
 
-    payload = {"url": url, "params": params}
+def make_cache_key(
+    url: str = None, params: dict = None, message: str = None, model: str = None
+) -> str:
+    payload = {}
+
+    for arg_name, arg in [
+        ("url", url),
+        ("params", params),
+        ("message", message),
+        ("model", model),
+    ]:
+        if arg is not None:
+            payload.update({arg_name: arg})
 
     serialized = json.dumps(payload, sort_keys=True, ensure_ascii=False)
 
@@ -137,8 +146,7 @@ def make_cache_key(url: str, params: dict) -> str:
 
 
 def save_to_cache(key: str, folder: str | Path, data: dict):
-
-    cache_dir = os.getenv("CACHE_DIR")
+    cache_dir = env_variables.cache_dir
 
     data["created_at"] = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
@@ -156,11 +164,9 @@ def save_to_cache(key: str, folder: str | Path, data: dict):
 
 
 def load_from_cache(key: str, folder: str | Path):
-
-    cache_dir = os.getenv("CACHE_DIR")
+    cache_dir = env_variables.cache_dir
 
     fn = Path(cache_dir) / folder / f"{key}.json"
-
     ensure_dir(fn)
 
     if fn.exists():
@@ -173,36 +179,33 @@ def load_from_cache(key: str, folder: str | Path):
     return None
 
 
-
-
-def get_file_config(
-            config_root: Any, 
-            file_type: str
-            ) -> Any:
+def get_file_config(config_root: Any, file_type: str) -> Any:
     try:
         return getattr(config_root, file_type)
     except AttributeError as exc:
         raise ValueError(
-                f"No config found for file_type='{file_type}' "
-                f"in {type(config_root).__name__}"
-                ) from exc
+            f"No config found for file_type='{file_type}' "
+            f"in {type(config_root).__name__}"
+        ) from exc
 
 
 ###################
 # GIT_FUNCTIONS
 ###################
 
+
 def get_git_difference():
     diff = subprocess.check_output(["git", "diff", "--stat"])
     print(diff.decode())
-    return 
+    return
 
 
 def git_stats():
-    commits = subprocess.check_output(
-        ["git", "rev-list", "--count", "HEAD"]
-    ).decode().strip()
+    commits = (
+        subprocess.check_output(["git", "rev-list", "--count", "HEAD"]).decode().strip()
+    )
     return {"commits": commits}
+
 
 # print(git_stats())
 
@@ -218,6 +221,7 @@ def get_git_commit():
         )
     except Exception:
         return "unknown"
+
 
 # def pretty_print(result):
 
@@ -288,9 +292,7 @@ def get_git_commit():
 #     return src, hashlib.sha256(src.encode("utf-8")).hexdigest()
 
 
-import subprocess
-import sys
-'''
+"""
 checks = [
     ["python", "-m", "compileall", "."],
     ["pytest"],
@@ -302,5 +304,4 @@ for cmd in checks:
         sys.exit(1)
 
 print("✅ All checks passed.")
-'''
-
+"""

@@ -20,7 +20,7 @@ extraction:
   extraction_model: pymupdf
   y_tol_words: 3                   # 3-8
 
-  # noise_pattern: 
+  # noise_pattern:
   #   - 'doi:\s*10\.\s*\d+/\S+'
   #   - 'doi:.*'
   #   - '©.*'
@@ -32,8 +32,8 @@ extraction:
   #   - '\bCopyright:\b.*'
   #   - 'Cambridge\bUniversity\bPress'
   #   - '^\d+$'  # Seitenzahlen
-  
- 
+
+
   # # spacy_language: en_core_web_sm
   # model_name: gpt-4o-mini
   # column_assignment: heuristic  # kmeans
@@ -47,4 +47,3 @@ extraction:
   # max_words: 80
   # overlap: 1
   # min_words_chunk: 40
-  

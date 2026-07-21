@@ -31,7 +31,6 @@ def retrieve_docs(docs, query, top_k=3):
 
 
 def build_qa_input(docs):
-
     return [
         {
             "id": i,

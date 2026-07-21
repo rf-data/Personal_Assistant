@@ -8,14 +8,12 @@ from src.core.memory import app_session
 
 
 def pdf_page_count(f_path: str):
-
     reader = PdfReader(f_path)
-    
+
     return len(reader.pages)
 
 
 def check_pdf_split(file_names: list) -> list:
-
     logger = app_session.logger
 
     pdf_files = []
@@ -45,9 +43,7 @@ def check_pdf_split(file_names: list) -> list:
     return fit
 
 
-def split_pdf(pdf_path: str, 
-              pages_per_file: int = 10) -> list[str]:
-
+def split_pdf(pdf_path: str, pages_per_file: int = 10) -> list[str]:
     f_name = Path(pdf_path).stem
     folder = Path(pdf_path).parent
 

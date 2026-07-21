@@ -100,7 +100,6 @@ class MDCleanExtractor(BaseExtractor):
     # TODO: Tabellen
 
     def extract(self, f_path: str) -> DocumentExtract:
-
         md_text = read_text_file(f_path)
 
         md = MarkdownIt()
@@ -139,7 +138,6 @@ class MDCleanExtractor(BaseExtractor):
         )
 
     def _differentiate_text(self, tokens) -> list[Element]:
-
         elements = []
         for idx, t in enumerate(tokens):
             # print("type:\t", t.type)

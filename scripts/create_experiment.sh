@@ -24,7 +24,7 @@ LOGFILE="$PROJECT_ROOT/logs/0_mlflow_setup.log"
     set +o allexport
   else
     echo ""
-    echo "No .env file found - relying on defaults"  
+    echo "No .env file found - relying on defaults"
   fi
 
   mlflow experiments create \

@@ -1,21 +1,6 @@
 ## data_classes_parsing.py
 # import
-from typing import (
-    Annotated,  #
-    Literal,
-    List,
-    Dict
-)
 
-from pydantic import BaseModel, Field
-
-from src.model_classes_parsing.base_classes_parsing import (
-                                                BaseLeaf,
-                                                BaseContainer,
-                                                PageExtract,
-                                                Graphics,
-                                                Image
-                                                )
 
 # -------------------------
 # METADATA
@@ -188,7 +173,7 @@ class WikiPageMeta(BaseModel):
 # LEAF_ELEMENTS
 # -------------------------
 class BaseLeaf(BaseModel):
-    leaf_id: int|None = None 
+    leaf_id: int|None = None
     leaf_type: str
     text: str = Field(default_factory=str)
     meta: ElementMeta
@@ -231,7 +216,7 @@ class BulletNode(TextNode):
 
 
 class BlockQuoteNode(TextNode):
-    leaf_type: Literal["block_quote"] = "block_quote" 
+    leaf_type: Literal["block_quote"] = "block_quote"
 
 
 class OtherNode(TextNode):
@@ -454,7 +439,7 @@ class PageExtract(DocumentExtract):
 
 """
 """
-line_types = Annotated[LineSplit | Line | LineGroup, 
+line_types = Annotated[LineSplit | Line | LineGroup,
                        Field(discriminator="meta_type")]
 
 container_types = Annotated[

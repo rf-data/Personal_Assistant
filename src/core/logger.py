@@ -3,10 +3,14 @@ import logging
 
 # from dataclasses import dataclass, field
 # from typing import Dict, List
-import os
 import sys
 from datetime import datetime
 from pathlib import Path
+
+# from src.core.session import session
+# import src.utils.file_helper as fh
+# import src.utils.df_helper as dfh
+import src.utils.path_helper as ph
 
 # import numpy as np
 # import pandas as pd
@@ -14,8 +18,10 @@ from pathlib import Path
 # import time
 # import mlflow
 # from utils.experiment_logger_impl import ExperimentLogger
-import src.utils.general_helper as gh
+# import src.utils.general_helper as gh
+from src.core.config import env_variables
 
+<<<<<<< HEAD
 # import src.core.ml_manager as log
 # from src.core.session import session
 # import src.utils.file_helper as fh
@@ -53,14 +59,17 @@ Speaking of information, let’s organize data that humans actually care about.
 '''
 
 '''
+=======
+"""
+>>>>>>> 5881b02 (Refactor code structure for improved readability and maintainability)
 !!! - logfire --> observability platform (logs, traces, exceptions, and
         performance data )
 
         - Loguru / structlog --> Ersatz für logging ??
 
-        '''
+        """
 
-'''
+"""
 errors = defaultdict(int)
 
 with open("app.log") as f:
@@ -71,7 +80,8 @@ with open("app.log") as f:
 
 for err, count in sorted(errors.items(), key=lambda x: x[1], reverse=True):
     print(err, count)
-'''
+"""
+
 
 def has_file_handler(logger, log_path):
     for h in logger.handlers:
@@ -116,6 +126,7 @@ def log_section(logger, title):
 
 import re
 
+
 def get_errors_from_log():
     with open("app.log") as f:
         errors = [line for line in f if re.search("ERROR|WARNING", line)]
@@ -139,10 +150,10 @@ def get_errors_from_log():
 # with open("new_logs.txt") as f:
 #     for line in f:
 #         detect(line)
-        
+
 
 def create_logger(
-    name: str, file_name: str, folder: str | Path | None = None, level: str = "info"
+    name: str, file_name: str, folder: str | Path = None, level: str = "info"
 ) -> logging.Logger:
     """
     Create a configured logger with stdout + optional file logging.
@@ -184,11 +195,10 @@ def create_logger(
     logger.addHandler(stream_handler)
 
     # --- file handler (optional) ---
-    if file_name:
-        if not folder:
-            gh.load_env_vars()
-            folder = os.getenv("LOGS", "logs")
+    if folder is None:
+        folder = env_variables.log_dir
 
+    if file_name:
         log_path = ph.ensure_dir(folder)
         log_file = log_path / f"{file_name}.log"
 
@@ -222,7 +232,7 @@ def create_logger(
 
 #     def __post_init__(self):
 #         root = ph.find_project_root()
-#         project_name = os.getenv("PROJECT_NAME", "default_project")
+#         project_name = env_variables("PROJECT_NAME", "default_project")
 #         folder = f"{root}/mlflow/logs"
 
 #         self.logger = log.create_logger(
@@ -342,7 +352,7 @@ def create_logger(
 
 #     def setup_experiment(self):
 #         gh.load_env_vars()
-#         mlflow_uri = os.getenv("MLFLOW_TRACKING_URI")
+#         mlflow_uri = env_variables("MLFLOW_TRACKING_URI")
 #         mlflow.set_tracking_uri(mlflow_uri)
 
 #         exp = mlflow.get_experiment_by_name(self.experiment_name)

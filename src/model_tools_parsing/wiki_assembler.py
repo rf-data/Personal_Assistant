@@ -3,7 +3,7 @@
 import re
 from dataclasses import dataclass
 
-# import os
+#
 # import src.utils.general_helper as gh
 from src.model_tools_parsing.base_assembler import BaseAssembler
 
@@ -23,7 +23,6 @@ class WikiPageAssembler(BaseAssembler):
     #     return
 
     def create_md_from_extract(self, extract: dict):
-
         # HEAD_DICT = {
         #     "1": "# "
         # }
@@ -46,7 +45,6 @@ class WikiPageAssembler(BaseAssembler):
         return text_final
 
     def _render_markdown(self, node):
-
         if isinstance(node, TextNode):
             return node.text
 
@@ -54,7 +52,6 @@ class WikiPageAssembler(BaseAssembler):
             return f"[{node.text}]({node.href})"
 
     def _state_text_type(self, elements):
-
         text_final = []
         for element in elements:
             # if element["text"] in ["", "\n \n"]:

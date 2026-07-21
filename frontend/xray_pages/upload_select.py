@@ -20,8 +20,7 @@ def show():
 
     # --- File browser section ---
     image_files = sorted(
-        [f for f in UPLOAD_DIR.iterdir() 
-         if f.suffix.lower() in types_allowed]
+        [f for f in UPLOAD_DIR.iterdir() if f.suffix.lower() in types_allowed]
     )
 
     st.markdown("#### 📂 Available Images in Folder")
@@ -34,9 +33,7 @@ def show():
             for i, file in enumerate(image_files):
                 with cols[i % 3]:
                     img = Image.open(file)
-                    st.image(img, 
-                             caption=file.name, 
-                             use_container_width=True)
+                    st.image(img, caption=file.name, use_container_width=True)
 
     else:
         st.info("No X ray image available so far.")

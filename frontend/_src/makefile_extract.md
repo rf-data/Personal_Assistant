@@ -3,7 +3,7 @@
 ROOT := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT := rakuten
 
-.PHONY: airflow_docker airflow_stop api_docker api_stop ml_docker ml_stop monitoring_docker monitoring_stop 
+.PHONY: airflow_docker airflow_stop api_docker api_stop ml_docker ml_stop monitoring_docker monitoring_stop
 
 all_stop:
 	docker stop $(docker ps -a -q)

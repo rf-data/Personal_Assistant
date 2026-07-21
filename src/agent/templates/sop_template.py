@@ -2,7 +2,7 @@
 # import
 
 
-'''
+"""
 ## YAML
 title:
 purpose:
@@ -17,7 +17,7 @@ references / sources:
     section
 attachments:
 revision_history:
-'''
+"""
 
 SOP_TEMPLATE = """
 # SOP: {title}
@@ -39,7 +39,7 @@ SOP_TEMPLATE = """
 ## 8. Referenzen
 """
 
-'''
+"""
 ## MARKDOWN
 # Purpose
 
@@ -56,4 +56,4 @@ SOP_TEMPLATE = """
 ## Step 3
 
 # References
-'''
+"""

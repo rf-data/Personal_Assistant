@@ -1,74 +1,64 @@
 ## streamlit_helper.py
 # imports
-from pathlib import Path
-import os
 import json
-import pandas as pd
-
-import streamlit as st
-from streamlit_pdf_viewer import pdf_viewer
+import subprocess
 import time
 from datetime import datetime
-import subprocess
+from pathlib import Path
 
+import pandas as pd
+import streamlit as st
+from streamlit_pdf_viewer import pdf_viewer
+
+from src.core.config import env_variables
 from src.utils.html_helper import read_html_file
-from src.utils.general_helper import load_env_vars
-from src.utils.text_file_helper import (read_docx_text, 
-                                        read_text_file, 
-                                        read_docx_tables) 
+
+# from src.utils.general_helper import load_env_vars
+from src.utils.text_file_helper import read_docx_tables, read_docx_text, read_text_file
 
 
-def st_file_preview(f_path: str|Path, table: bool=False):
-
+def st_file_preview(f_path: str | Path, table: bool = False):
     match Path(f_path).suffix:
         case ".pdf":
             with open(f_path, "rb") as f:
                 pdf_bytes = f.read()
 
             pdf_viewer(
-                    input=pdf_bytes, 
-                    # width=300
-                    )
-            
+                input=pdf_bytes,
+                # width=300
+            )
+
         case ".html":
             html_str = read_html_file(f_path)
             with st.expander(f"**File: '{Path(f_path).stem}'**"):
                 st.html(html_str[:500])
 
-        case ".json": 
-            data = json.loads(
-                        Path(f_path).read_text(
-                                        encoding="utf-8"
-                                        ))
+        case ".json":
+            data = json.loads(Path(f_path).read_text(encoding="utf-8"))
             st.json(data)
             # st.warning("not yet implemented")
-        
+
         case ".docx":
-            if table is False: 
+            if table is False:
                 text = read_docx_text(f_path)
                 st.markdown(text)
-            
-            else:   
+
+            else:
                 for tbl_idx, df in read_docx_tables(f_path):
-
                     st.subheader(f"\n--- Table {tbl_idx} ---")
-                    st.dataframe(
-                            df,
-                            width="stretch",
-                            hide_index=True
-                            )
+                    st.dataframe(df, width="stretch", hide_index=True)
 
-        case ".parquet": 
+        case ".parquet":
             txt_content = pd.read_parquet(f_path)
             st.dataframe(txt_content)
 
-        case ".md" | ".txt": 
+        case ".md" | ".txt":
             txt_content = read_text_file(f_path)
             st.markdown(txt_content)
 
             # st.warning("not yet implemented")
-            
-    return 
+
+    return
 
 
 def live_command_demo(cmd):
@@ -77,16 +67,12 @@ def live_command_demo(cmd):
     start_time = datetime.now()
 
     process = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE, 
-            stderr=subprocess.STDOUT,
-            text=True,
-            bufsize=1
-            )
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1
+    )
 
     start_txt = f"""
 {"=" * 80}
-[START] {start_time.isoformat()} | CMD: {' '.join(cmd)}
+[START] {start_time.isoformat()} | CMD: {" ".join(cmd)}
 {"=" * 80}
 
 """
@@ -94,18 +80,13 @@ def live_command_demo(cmd):
     output.append(start_txt)
 
     while True:
-
         line = process.stdout.readline()
         exit_code = process.poll()
 
         if line:
             output.append(line)
 
-            placeholder.code(
-                    "".join(output),
-                    language="text"
-                    )
-
+            placeholder.code("".join(output), language="text")
 
         elif exit_code is not None:
             end_time = datetime.now()
@@ -116,47 +97,36 @@ def live_command_demo(cmd):
 [END] {end_time.isoformat()} | EXIT CODE: {exit_code} | DURATION: {duration:.1f}s
 {"=" * 80}
 
-"""     
-            
+"""
+
             output.append(end_txt)
-            placeholder.code(
-                    "".join(output),
-                    language="text"
-                    )
-            
+            placeholder.code("".join(output), language="text")
+
             break
 
         time.sleep(0.1)
-    
+
     return process.returncode
 
 
-
-def show_tree(path: str|Path=None, 
-              level = 0, 
-              max_depth=2):
-
+def show_tree(path: str | Path = None, level=0, max_depth=2):
     if not path:
         st.write("Please, select a folder to browse.")
 
-        load_env_vars()
-        data = os.getenv("DATA_DIR")
-
+        # load_env_vars()
+        data = env_variables.data_dir
+        """
         if data is None:
             st.write("No default folder ('DATA_DIR') in '.env'.")
             return None
-        
+        """
         path = data
 
-    
     indent = "    " * level
 
     for item in sorted(Path(path).iterdir()):
-
         if item.is_dir() and level <= max_depth:
-
             with st.expander(f"{indent}📁 {item.name}"):
-
                 show_tree(item, level + 1)
 
         else:

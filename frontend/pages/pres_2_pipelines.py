@@ -4,13 +4,12 @@ import streamlit as st
 
 
 def show():
-
     st.header("🛠️ Pipeline and Orchestration with Airflow")
     st.subheader("Purposes")
     st.markdown("""
     - Orchestrates and automates data preprocessing and feature pipelines via DAGs
-    - Handles scheduling and retries of ML processes 
-    - Ensures reproducibility and traceability   
+    - Handles scheduling and retries of ML processes
+    - Ensures reproducibility and traceability
     """)
 
     col1, col2 = st.columns(2, border=True)
@@ -28,7 +27,7 @@ def show():
     ).read_text(encoding="utf-8")
     with col1:
         st.markdown("""
-        #### ETL (extract - transform - load) 
+        #### ETL (extract - transform - load)
         """)
 
         st.divider()
@@ -83,33 +82,33 @@ def show():
     st.markdown("""
     - Collects raw data files (CSV or ZIP) from an input directory (data_input)
     - Moves the files to a centralized storage location (data lake)
-    - Ensures that only supported file types are passed to downstream tasks   
+    - Ensures that only supported file types are passed to downstream tasks
     """)
     st.caption("run_fetch_files")
     st.markdown("""
     - Controls pipeline start with error and skip handling
-    - Skips next task if no new data was found  
+    - Skips next task if no new data was found
     """)
     st.caption("new_file_check")
     st.markdown("""
     - Compares newly ingested files (CSV/ZIP) with existing data
     - Detects whether the current data is already up-to-date or outdated
-    - Returns signal if downstream tasks should run or not  
+    - Returns signal if downstream tasks should run or not
     """)
     st.caption("run_image_etl and run_text_general_etl")
     st.markdown("""
     - Extracting relevant data from CSV (texts) and ZIP (images)
-    - Storing the information in a MongoDB collection  
+    - Storing the information in a MongoDB collection
     """)
     st.caption("run_image_embed and run_text_embed")
     st.markdown("""
     - Extracts data from MongoDB
-    - Calculate Embeddings for texts (SentenceTransfomer) and images (CLIP-Model)  
+    - Calculate Embeddings for texts (SentenceTransfomer) and images (CLIP-Model)
     - Adding embeddings to MongoDB
     """)
     st.caption("train_knn (1)")
     st.markdown("""
-    - Extracts embeddings from MongoDB and combines them 
+    - Extracts embeddings from MongoDB and combines them
     - Creates Similarity Matrix with KNN
     - Stores Mappings and Top-K-Neighbours locally
     - Logs Parameters in MLflow

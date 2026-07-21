@@ -13,29 +13,29 @@ log_api = LOGS / "build_api"
 def show():
     st.header("📡 Monitoring & Maintenance")
     st.markdown("""
-    
-    **What is the use of 'Prometheus'?**   
-    - Collection of system and application metrics via HTTP endpoints   
-    - Time-series storage for on-going monitoring of infrastructure, application and model    
+
+    **What is the use of 'Prometheus'?**
+    - Collection of system and application metrics via HTTP endpoints
+    - Time-series storage for on-going monitoring of infrastructure, application and model
     - Basis for alerting and operational observability
 
-    **What is the use of 'Grafana'?**   
-    - Visualization of metrics from Prometheus and other data sources   
-    - Interactive dashboards for monitoring data   
-    - Support for trend analysis and anomaly inspection   
-    - dashboards = IaC: portable/exchangable, versionable, less human errors,... 
+    **What is the use of 'Grafana'?**
+    - Visualization of metrics from Prometheus and other data sources
+    - Interactive dashboards for monitoring data
+    - Support for trend analysis and anomaly inspection
+    - dashboards = IaC: portable/exchangable, versionable, less human errors,...
 
 
-    **What is the use of 'Node-exporter'?**   
-    - Centralized aggregation of application and service logs   
-    - Lightweight log indexing optimized for metric correlation   
-    - Integrated log exploration within Grafana dashboards  
+    **What is the use of 'Node-exporter'?**
+    - Centralized aggregation of application and service logs
+    - Lightweight log indexing optimized for metric correlation
+    - Integrated log exploration within Grafana dashboards
 
-    **How we used these monitoring tools?**   
+    **How we used these monitoring tools?**
     - Prometheus --> scraping metrics (infrastructure, application, model)
     - Grafana --> visualizing dashboards from scraped data
     - Node-exporter --> infrastructure monitoring
-    
+
     ---
 
     ⚡ **Live Demos**

@@ -1,10 +1,10 @@
 ## config.py
 # import
-from pydantic import BaseModel
+from typing import Annotated, Literal  # Dict,
+
+#
+from pydantic import BaseModel, ConfigDict, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
-# import os
-from pydantic import Field, ConfigDict
-from typing import List, Literal, Annotated    # Dict, 
 
 # from src.core.memory import session_state
 # from src.utils.general_helper import load_env_vars
@@ -37,11 +37,19 @@ class DateRange(BaseModel):
             raise ValueError("start_date cannot be in the past")
         return v
 
-# Clean, structured validation error - not a Python exception buried in a traceback
-range_query = DateRange(start_date=date(2025, 1, 10), end_date=date(2025, 1, 5))
+# Clean, structured validation error - not a Python exception buried in a
+# traceback
+range_query = DateRange(start_date=date(2025, 1, 10),
+end_date=date(2025, 1, 5))
 # ValidationError: end_date must be after start_date
 
-The mode="after" argument on model_validator is the critical detail — it means the validator runs after all individual fields are validated and coerced to their types, so self.start_date and self.end_date are actual date objects by the time you compare them, not raw strings. Using mode="before" runs against raw input instead. This distinction is the kind of thing that only surfaces when you've tried to write a cross-field validator and gotten confusing type errors at runtime.
+The mode="after" argument on model_validator is the critical detail —
+it means the validator runs after all individual fields are validated
+and coerced to their types, so self.start_date and self.end_date are
+actual date objects by the time you compare them, not raw strings.
+Using mode="before" runs against raw input instead. This distinction is
+the kind of thing that only surfaces when you've tried to write a
+cross-field validator and gotten confusing type errors at runtime.
 
 """
 
@@ -49,15 +57,16 @@ The mode="after" argument on model_validator is the critical detail — it means
 # GENERAL SETTINGS (from .env files)
 # # ------------------------------------
 
+
 class EnvVariables(BaseSettings):
     model_config = SettingsConfigDict(
-                env_file=".env",
-                env_file_encoding="utf-8",
-                # env_ignore_case=False
-                # env_nested_delimiter="__"
-                )
+        env_file=".env",
+        env_file_encoding="utf-8",
+        # env_ignore_case=False
+        # env_nested_delimiter="__"
+    )
     app_name: str = "gmp_compliance"
-    
+
     # raw data
     data_dir: str
     data_audio: str
@@ -85,7 +94,7 @@ class EnvVariables(BaseSettings):
     # openai_token: str
     # claude_token: str
     # gemini_token: str
-    
+
     # MLflow relevance
     mlflow_artifacts: str
     mlflow_db: str
@@ -93,24 +102,17 @@ class EnvVariables(BaseSettings):
     mlflow_backup: str
     fingerprint_exp: str
     fingerprint_run: str
-    
+
+
 env_variables = EnvVariables()
+
 
 # ------------------------------------
 # FILE_TYPE SPECIFIC PARSING SETTINGS
 # ------------------------------------
 class ParseFileSettings(BaseModel):
-    save: List[
-            Literal[
-                False,
-                "html",
-                "info",
-                "md",
-                True,
-                "txt" 
-                ]
-            ] = [False]
-    assemble: List[Literal["md", "txt"]]|None = None
+    save: list[Literal[False, "html", "info", "md", True, "txt"]] = [False]
+    assemble: list[Literal["md", "txt"]] | None = None
     scrape_images: bool = False
 
 
@@ -132,11 +134,11 @@ class ParseNotebookSettings(ParseFileSettings):
 
 
 class ParsePDFSettings(ParseFileSettings):
-    extract_source: List[str] = Field(default_factory=list)
+    extract_source: list[str] = Field(default_factory=list)
     extraction_model: str = ""
     extract_text_info: bool = False
-    extract_graphics: bool = False 
-    percentiles: List[float] = Field(default_factory=list)
+    extract_graphics: bool = False
+    percentiles: list[float] = Field(default_factory=list)
 
 
 class ParsePlainTextSettings(ParseFileSettings):
@@ -148,14 +150,14 @@ class ParseURLSettings(ParseFileSettings):
 
 
 class ParseWikiSettings(ParseFileSettings):
-    query: str|None = None
-    query_time: str|None = None
+    query: str | None = None
+    query_time: str | None = None
     query_param: Literal["page_title", "page_id"] = Field(default="page_id")
-    
-    page_id: List[int] = Field(default_factory=list)
-    page_title: List[str] = Field(default_factory=list)
+
+    page_id: list[int] = Field(default_factory=list)
+    page_title: list[str] = Field(default_factory=list)
     # article_to_parse: List[int] = Field(default_factory=list)
-    language: Literal["en", "de"] = Field(default="en")        # Literal["en", "de"]
+    language: Literal["en", "de"] = Field(default="en")  # Literal["en", "de"]
     max_retries: int = Field(default=3)
 
 
@@ -164,7 +166,7 @@ class ParseWikiSettings(ParseFileSettings):
 # ------------------------------------
 class GeneralFileSettings(BaseModel):
     # parser: str = ""
-    extraction_tags: List[str] = Field(default_factory=list)
+    extraction_tags: list[str] = Field(default_factory=list)
     # assemble_as_md: bool = Field(default_factory=bool)
     # scrape_images: bool = Field(default_factory=bool)
 
@@ -222,39 +224,35 @@ class GenWikiSettings(GeneralFileSettings):
 # TOP_LEVEL SETTINGS
 # ------------------------------------
 
+
 class ChunkSettings(BaseModel):
-    container_types: List = Field(default_factory=list) 
+    container_types: list = Field(default_factory=list)
     # [
     #                         "heading",
     #                         "paragraph",
     #                         "code",
     #                         "bullet_list"
     #                         ]
-    spacy_language: Literal[
-                        "de_core_news_sm", 
-                        None
-                        ] = Field(default=None)
+    spacy_language: Literal["de_core_news_sm", None] = Field(default=None)
     # "",
     max_tokens: int = Field(default_factory=int)
     overlap_sentences: int = Field(default_factory=int)
     batch_size: int = Field(default_factory=int)
     transformer_model: Literal[
-                        "all-MiniLM-L6-v2", 
-                        "paraphrase-multilingual-MiniLM-L12-v2",
-                        "intfloat/multilingual-e5-base",
-                        None
-                        ] = Field(default=None)
+        "all-MiniLM-L6-v2",
+        "paraphrase-multilingual-MiniLM-L12-v2",
+        "intfloat/multilingual-e5-base",
+        None,
+    ] = Field(default=None)
 
-    model_config = ConfigDict(
-        extra="forbid"
-    )
+    model_config = ConfigDict(extra="forbid")
 
 
 class GeneralSettings(BaseModel):
-    txt_elements: List[str] = Field(default_factory=list)
-    md_elements: List[str] = Field(default_factory=list)
+    txt_elements: list[str] = Field(default_factory=list)
+    md_elements: list[str] = Field(default_factory=list)
 
-    docx: GenDOCXSettings = Field(default_factory=GenDOCXSettings)    
+    docx: GenDOCXSettings = Field(default_factory=GenDOCXSettings)
     html: GenHTMLSettings = Field(default_factory=GenHTMLSettings)
     json_nb: GenNotebookSettings = Field(default_factory=GenNotebookSettings)
     md: GenMDSettings = Field(default_factory=GenMDSettings)
@@ -263,10 +261,8 @@ class GeneralSettings(BaseModel):
     url: GenURLSettings = Field(default_factory=GenURLSettings)
     wiki: GenWikiSettings = Field(default_factory=GenWikiSettings)
 
-    model_config = ConfigDict(
-        extra="forbid"
-    )
-    
+    model_config = ConfigDict(extra="forbid")
+
     # env_name: str = Field(default_factory=str)
     # config_name: str = Field(default_factory=str)
     # general_config: Dict = Field(default_factory=dict)
@@ -281,19 +277,18 @@ class NIRSettigs(BaseModel):
     sg_deriv: int = Field(default_factory=int)
     sg_poly: int = Field(default_factory=int)
     sg_window_len: int = Field(default_factory=int)
-    
 
 
 class ParseSettings(BaseModel):
     name_log: str = Field(default_factory=str)
     name_logfile: str = Field(default_factory=str)
     llm_model: str = Field(default_factory=str)
-    url_path: List[str] | None = Field(default=None)
+    url_path: list[str] | None = Field(default=None)
     file_name: str | None = Field(default=None)
     file_id: int = Field(default_factory=int)
     page_range: list[int] | Literal["all"] = Field(default="all")
 
-    docx: ParseDOCXSettings = Field(default_factory=ParseDOCXSettings)    
+    docx: ParseDOCXSettings = Field(default_factory=ParseDOCXSettings)
     html: ParseHTMLSettings = Field(default_factory=ParseHTMLSettings)
     json_nb: ParseNotebookSettings = Field(default_factory=ParseNotebookSettings)
     md: ParseMDSettings = Field(default_factory=ParseMDSettings)
@@ -302,54 +297,54 @@ class ParseSettings(BaseModel):
     url: ParseURLSettings = Field(default_factory=ParseURLSettings)
     wiki: ParseWikiSettings = Field(default_factory=ParseWikiSettings)
 
-    model_config = ConfigDict(
-        extra="forbid"
-    )
-
+    model_config = ConfigDict(extra="forbid")
 
 
 ParseSettings_all = Annotated[
-            ParseHTMLSettings | ParseNotebookSettings | \
-            ParseMDSettings | ParsePDFSettings | \
-            ParsePlainTextSettings | ParseURLSettings | \
-            ParseWikiSettings,
-            Field(discriminator="meta_type")
-            ]
+    ParseHTMLSettings
+    | ParseNotebookSettings
+    | ParseMDSettings
+    | ParsePDFSettings
+    | ParsePlainTextSettings
+    | ParseURLSettings
+    | ParseWikiSettings,
+    Field(discriminator="meta_type"),
+]
 
-RunSettings = Annotated[ParseSettings_all | ChunkSettings,
-                        Field(discriminator="meta_type")]
-    # def __post_init__(self):
+RunSettings = Annotated[
+    ParseSettings_all | ChunkSettings, Field(discriminator="meta_type")
+]
+# def __post_init__(self):
 
-    #     load_env_vars(name=self.env_name)
-    #     raw_config = get_yaml_config(self.config_name)
+#     load_env_vars(name=self.env_name)
+#     raw_config = get_yaml_config(self.config_name)
 
-    #     self.general_config = raw_config.get("general_args", {})
-    #     self.extract_config = raw_config.get("extraction", {})
-    #     # self.config_name 
-    #     # c_path = os.getenv("CONFIG_PATH")
+#     self.general_config = raw_config.get("general_args", {})
+#     self.extract_config = raw_config.get("extraction", {})
+#     # self.config_name
+#     # c_path = env_variables("CONFIG_PATH")
 
-    #     return 
-    
-
-    # def load_from_yaml(self):
-        
-    #     self._create_general_config()
-        
-
-    #     return 
+#     return
 
 
-    # def _create_general_config(self):
-        
-    #     self.name_log = self.general_config.get("name_log")
-    #     self.name_logfile = self.general_config.get("name_logfile")
-    #     # self.
+# def load_from_yaml(self):
 
-    #     return 
-    
-
-    # def _create_extraction_config(self):
+#     self._create_general_config()
 
 
-    #     return 
+#     return
 
+
+# def _create_general_config(self):
+
+#     self.name_log = self.general_config.get("name_log")
+#     self.name_logfile = self.general_config.get("name_logfile")
+#     # self.
+
+#     return
+
+
+# def _create_extraction_config(self):
+
+
+#     return

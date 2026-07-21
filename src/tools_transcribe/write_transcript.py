@@ -1,6 +1,3 @@
-
-
-
 '''
 def generate_meeting_summary(transcript):
 prompt = f"""

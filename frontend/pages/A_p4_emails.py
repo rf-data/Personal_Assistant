@@ -2,7 +2,7 @@
 # imports
 import streamlit as st
 
-'''
+"""
 Calender
 
 import markdown
@@ -11,7 +11,8 @@ md_content = "# Daily Plan\n- Task 1\n- Task 2"
 html_content = markdown.markdown(md_content)
 pdfkit.from_string(html_content, "daily_plan.pdf")
 
-'''
+"""
+
 
 def show():
     st.header("🏠 Startseite ")
@@ -19,8 +20,8 @@ def show():
 
     st.divider()
 
-
     st.markdown("**Under Construction**")
+
 
 '''
 from openai import OpenAI
@@ -66,7 +67,7 @@ with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
 print("Email sent successfully")
 '''
 
-'''
+"""
 import openai
 import whisper
 import smtplib
@@ -110,7 +111,7 @@ with smtplib.SMTP("smtp.gmail.com", 587) as server:
     server.send_message(msg)
 
 print("Summary sent successfully.")
-'''
+"""
 
 
 '''
@@ -149,7 +150,7 @@ print(response.choices[0].message.content)
 '''
 
 
-'''
+"""
 # step 1
 import imaplib
 import email
@@ -163,14 +164,14 @@ email_ids = messages[0].split()
 for email_id in email_ids:
     _, data = mail.fetch(email_id, "(RFC822)")
     raw_email = data[0][1]
-    
+
     message = email.message_from_bytes(raw_email)
     print(message["Subject"])
 
 # step 3
-'''
+"""
 
-'''
+"""
 Libraries:
 
 imaplib
@@ -185,7 +186,7 @@ sender = message["From"]
 subject = message["Subject"]
 print(sender)
 print(subject)
-'''
+"""
 
 '''
     from openai import OpenAI

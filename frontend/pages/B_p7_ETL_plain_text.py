@@ -1,6 +1,5 @@
 # ## B_p1_ETL_html.py
 # # imports
-# import os
 # from pathlib import Path
 
 # import fitz  # pymupdf
@@ -8,24 +7,17 @@
 # # import shutil
 # import pyinputplus as pyip
 import streamlit as st
+
 # from tiktoken import encoding_for_model
 
 # from src.utils.path_helper import ensure_dir
 # from src.core.memory import app_session
 # # from src.run_text_extraction import run_text_file_extraction
-# from src.utils.general_helper import load_env_vars
-
-# load_env_vars(".env.frontend")
-
-# FILE_FOLDER = Path(os.getenv("FOLDER_FILES"))
-# # INPUT_FOLDER = Path(os.getenv("FOLDER_INPUT"))
-
-# ensure_dir(Path(FILE_FOLDER))
-# # ph.ensure_dir(Path(INPUT_FOLDER))
 
 # types_allowed = [".pdf", ".txt", ".md", ".json"]
 # # , ".doc", ".docx", ".xls", ".xlsx"]
 # # types_allowed = [".jpg", ".jpeg", ".png"]
+
 
 def show():
     st.header("🏠 Startseite ")
@@ -33,8 +25,8 @@ def show():
 
     st.divider()
 
-
     st.markdown("**Under Construction**")
+
 
 # def show():
 #     st.header("🏠 Startseite ")
@@ -45,8 +37,8 @@ def show():
 #     st.subheader("🖼️ Wähle eine Datenquelle")
 
 #     action = st.menu_button(
-#         "Datenquelle", options=["Ordner", 
-#                                 "Upload", 
+#         "Datenquelle", options=["Ordner",
+#                                 "Upload",
 #                                 "URL", "Page_ID"]
 #     )
 

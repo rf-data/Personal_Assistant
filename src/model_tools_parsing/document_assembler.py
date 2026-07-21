@@ -1,10 +1,9 @@
 ## document_assembler.py
 # imports
-import logging
 import re
 from dataclasses import dataclass, field
 
-# import os
+#
 from pathlib import Path
 
 import pandas as pd
@@ -15,25 +14,21 @@ import pandas as pd
 @dataclass
 class DocumentAssembler:
     # gh.load_env_vars()
-    # data_processed = os.getenv("DATA")
+    # data_processed = env_variables("DATA")
     infos: list = field(default_factory=list)
     doc_name: str = field(default_factory=str)
 
     last_heading: list = field(default_factory=list)
 
-
     def __init__(self, run_context):
-
         self.logger = run_context.logger
 
         self.save_folder = run_context.save_folder
         self.assemble_config = run_context.run_settings
-        
-        return 
 
+        return
 
     def collect(self, page_info, f_name):
-
         (timestamp, _, _, gmp_part, chapter, _, page, _) = f_name.split("_")
 
         headings = page_info["headings"]
@@ -219,7 +214,6 @@ class DocumentAssembler:
         #
 
     def _rebuild_text(self, text_blocks: list[dict], headings: list[dict]) -> dict:
-
         # self.logger.info("Length of text_blocks | text_blocks[0]:\t%s  | %s",
         #                  len(text_blocks),
         #                  len(text_blocks[0])

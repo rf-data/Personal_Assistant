@@ -1,8 +1,5 @@
-
-
-
 ## 1. Automated Invoice Generator
-'''
+"""
 Press enter or click to view image in full size
 
 Photo by Brian Abuga on Unsplash
@@ -22,10 +19,10 @@ def create_invoice(customer, amount):
     pdf.save()
 create_invoice("John Doe", 299)
 Small businesses love solutions that reduce paperwork.
-'''
+"""
 
 ## Email Automation
-'''
+"""
 Imagine replying to dozens of similar emails every day.
 
 Now imagine letting Python handle the repetitive parts.
@@ -41,10 +38,10 @@ Welcome emails.
 AI can personalize each message while Python sends them automatically.
 
 “Automation doesn’t replace good customer service — it gives you more time to provide it.”
-'''
+"""
 
 ##  File Organization Service
-'''
+"""
 Everyone has that one Downloads folder filled with hundreds of random files.
 
 Businesses aren’t any different.
@@ -77,10 +74,10 @@ Yes.
 Useful?
 
 Absolutely.
-'''
+"""
 
 ## Excel Report Automation
-'''
+"""
 Many companies still spend hours copying data into spreadsheets.
 
 Python can do it automatically.
@@ -96,10 +93,10 @@ Export files.
 Send reports by email.
 
 What takes an employee three hours every Friday could take your script thirty seconds.
-'''
+"""
 
 ## AI Customer Support Assistant
-'''
+"""
 Businesses receive the same questions every day.
 
 Shipping.
@@ -128,10 +125,10 @@ def reply(question):
 You aren’t replacing human support.
 
 You’re handling repetitive questions automatically.
-'''
+"""
 
 ## Web Scraping & Price Monitoring
-'''
+"""
 Online stores constantly monitor competitors.
 
 Instead of checking prices manually…
@@ -145,10 +142,10 @@ Inventory changes.
 New products appear.
 
 That’s valuable information delivered automatically.
-'''
+"""
 
 ## PDF Processing Service
-'''
+"""
 Companies receive thousands of PDFs every year.
 
 Contracts.
@@ -167,7 +164,7 @@ Merge PDFs
 Split documents
 Search keywords
 What seems like a small automation can save entire teams hours every week.
-'''
+"""
 
 ## AI Report & Summary Generator
 '''
@@ -197,7 +194,7 @@ Clear information is often more valuable than more information.
 '''
 
 ## Custom Workflow Automation
-'''
+"""
 This is where freelancers earn the most.
 
 Every business has unique repetitive tasks.
@@ -228,10 +225,10 @@ class BusinessAutomation:
 Businesses don’t care how many lines of code you wrote.
 
 They care how many hours your automation saves.
-'''
+"""
 
 ## 4. funcy — Functional Utilities That Actually Fit Python
-'''
+"""
 toolz is the more commonly mentioned functional utility library, but funcy tends to produce cleaner code in everyday Python contexts because it's designed specifically around Python's conventions rather than ported from Clojure idioms.
 
 from funcy import memoize, retry, chunks, lfilter, compose, silent
@@ -259,19 +256,22 @@ print(process("  HELLO WORLD  "))  # "Hello World"
 safe_int = silent(int)
 print(safe_int("123"))    # 123
 print(safe_int("abc"))    # None - no exception raised
-'''
+"""
 ## Smart_Note._compression_system
-from collections import Counter
 import re
+from collections import Counter
+
 
 def clean_text(text):
-    text = re.sub(r'\W+', ' ', text)
+    text = re.sub(r"\W+", " ", text)
     return text.lower()
+
 
 def extract_keywords(text, top_n=5):
     words = text.split()
     common = Counter(words).most_common(top_n)
     return [word for word, _ in common]
+
 
 notes = """
 AI is transforming industries. Machine learning enables automation.

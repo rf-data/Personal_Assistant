@@ -1,23 +1,22 @@
 ## apollo_extractor.py
 # import
 # import html
-import re
 import json
+import re
 from pathlib import Path
-# import sys
-from returns.result import Result, Success, Failure
-from dataclasses import dataclass   # , field
-# from pathlib import Path
 
+# from pathlib import Path
 # import requests
 from bs4 import BeautifulSoup as bs
-# from bs4 import NavigableString  # , Tag
 
+# import sys
+from returns.result import Failure, Result, Success
+
+# from bs4 import NavigableString  # , Tag
 from src.model_classes_parsing.base_classes_parsing import (
     BulletList,
-    Code, 
+    Code,
     CodeMeta,
-    RawDocument,
     DocumentExtract,
     Element,
     ElementMeta,
@@ -27,30 +26,28 @@ from src.model_classes_parsing.base_classes_parsing import (
     ImageMeta,
     LinkPreview,
     ListMeta,
-    # Quote, 
-    Word
-    )
-
+    RawDocument,
+    # Quote,
+    Word,
+)
 from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
+from src.utils.dict_helper import save_dict
+
 # from src.utils.html_helper import normalize_url
 # from src.utils.path_helper import shorten_path
-from src.utils.html_helper import read_html_file   # , save_text_file
-from src.utils.dict_helper import save_dict
+from src.utils.html_helper import read_html_file  # , save_text_file
 
 # from src.core.memory import RunContext
 
+
 # @dataclass
 class ApolloCleanExtractor(HTMLCleanExtractor):
-    
-    def extract(
-            self, 
-            f_path: str
-            ) -> Result[DocumentExtract, str]:
-        
+    def extract(self, f_path: str) -> Result[DocumentExtract, str]:
         # data = self._get_apollo_data(f_text)
-        f_text = read_html_file(f_path) 
-        apollo_extract = self._get_apollo_data(f_text)\
-                            .bind(self._extract_apollo_elements)
+        f_text = read_html_file(f_path)
+        apollo_extract = self._get_apollo_data(f_text).bind(
+            self._extract_apollo_elements
+        )
         # (data)
         if apollo_extract is None:
             return Failure("Error while parsing")
@@ -67,25 +64,18 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
         for element in apollo_extract:
             # text_clean = self._clean_text(element.text)
             words_clean = []
-            for word in re.findall(r"\S+|\n", 
-                                   element.text):
+            for word in re.findall(r"\S+|\n", element.text):
                 # element.text.split():   # text_clean.split():
 
                 words_clean.append(
-                                Word(
-                                    text=self._clean_word_token(word),
-                                    leaf_id=None
-                                    )
-                                )
+                    Word(text=self._clean_word_token(word), leaf_id=None)
+                )
 
-            if (hasattr(element, "container_type") 
-                and element.container_type != "code"):
+            if (
+                hasattr(element, "container_type") and element.container_type != "code"
+            ) or (hasattr(element, "leaf_type") and element.leaf_type != "code"):
                 txt_clean = self._clean_text(element.text)
-            
-            elif (hasattr(element, "leaf_type") 
-                and element.leaf_type != "code"):
-                txt_clean = self._clean_text(element.text)
-            
+
             else:
                 txt_clean = element.text
 
@@ -107,29 +97,27 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
         doc_info = self.enricher._add_basic_metadata(
             text_clean, elements_clean, RawDocument()
         )
-        
+
         f_path = Path(f"{self.save_folder}/{self.save_name}")
-        save_dict(data=doc_info.model_dump(
-                            mode="json",
-                            serialize_as_any=True,
-                            ), 
-                path=f_path)
+        save_dict(
+            data=doc_info.model_dump(
+                mode="json",
+                serialize_as_any=True,
+            ),
+            path=f_path,
+        )
 
         return Success(
-                    DocumentExtract(
-                            doc_type="html_apollo",
-                            doc_name=self.doc_name,
-                            text="",
-                            elements=apollo_extract
-                            # meta=doc_info.meta,
-        ))
-    
+            DocumentExtract(
+                doc_type="html_apollo",
+                doc_name=self.doc_name,
+                text="",
+                elements=apollo_extract,
+                # meta=doc_info.meta,
+            )
+        )
 
-    def _get_apollo_data(
-                    self, 
-                    f_text: str
-                    ) -> Result:
-
+    def _get_apollo_data(self, f_text: str) -> Result:
         soup = bs(f_text, self.parser)
         scripts_all = soup.find_all("script")
         # self.logger.info("Created soup from '%s'", shorten_path(f_path))
@@ -137,79 +125,62 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
         apollo_text = None
 
         for script in scripts_all:
-            text = script.text      # .string
-            
+            text = script.text  # .string
+
             if not text:
                 continue
-                
+
             if "window.__APOLLO_STATE__" in text:
                 apollo_text = str(text)
                 break
-        
+
         if not apollo_text:
             return Failure("No APOLLO_STATE found")
             # raise ValueError("No APOLLO_STATE found")
 
-        json_text = apollo_text.split(
-                    "window.__APOLLO_STATE__ = ",
-                    1
-                    )[1]
+        json_text = apollo_text.split("window.__APOLLO_STATE__ = ", 1)[1]
 
         json_text = json_text.strip()
 
         if json_text.endswith(";"):
             json_text = json_text[:-1]
-            
+
         return Success(json.loads(json_text))
 
+    def _extract_apollo_elements(self, data: dict) -> Result[list[Element], None]:
+        data_root = data.get("ROOT_QUERY", {})
 
-    def _extract_apollo_elements(
-                            self, 
-                            data: dict
-                            ) -> Result[list[Element], None]:
+        self.logger.info("Found 'ROOT_QUERY'. Keys:\n %s", data_root.keys())
 
-        data_root = data.get("ROOT_QUERY", {}) 
+        page_content = []  # re.match(r"", root_keys)
 
-        self.logger.info("Found 'ROOT_QUERY'. Keys:\n %s",
-                         data_root.keys())
-        
-        page_content = []      # re.match(r"", root_keys)
-
-        for key in data.keys():
+        for key in data:
             if key.startswith("Post:"):
                 # data_post.append({
                 #             "key": key,
                 #             "content": data[key]
                 #             })
-                
+
                 info = data[key]
 
                 if "title" in info.keys():
-                    page_content.append({
-                            "key": key,
-                            "content": data[key]
-                            })      # .split(":")[-1]
+                    page_content.append(
+                        {"key": key, "content": data[key]}
+                    )  # .split(":")[-1]
 
-        self.logger.info("Found %s 'actual' page_content",
-                        len(page_content)
-                        )
+        self.logger.info("Found %s 'actual' page_content", len(page_content))
 
         body_model = []
         for cont in page_content:
-            
             p_cont = cont["content"]
             for key in p_cont.keys():
-                if key.startswith("content({\"postMeteringOptions\""):
-                    
-                    body_model.append({
-                                "key": key,
-                                "content": p_cont[key].get("bodyModel")})
+                if key.startswith('content({"postMeteringOptions"'):
+                    body_model.append(
+                        {"key": key, "content": p_cont[key].get("bodyModel")}
+                    )
 
+        self.logger.info("Found %s bodyModel(s)", len(body_model))
 
-        self.logger.info("Found %s bodyModel(s)",
-                        len(body_model)
-                        )
-        
         # text_full = ""
         paragraphs = body_model[0]["content"].get("paragraphs")
 
@@ -228,12 +199,12 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
                 continue
 
             metadata = data[ref].get("metadata") or {}
-            p_meta_ref  = metadata.get("__ref", "")
+            p_meta_ref = metadata.get("__ref", "")
 
             text_type = para.get("type")
             p_text = para.get("text", "")
             p_markups = para.get("markups", [])
-            
+
             if not text_type:
                 self.logger.warning("Paragraph without type: %s", ref)
                 continue
@@ -255,15 +226,14 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
                         # leaf_type="heading",
                         # inline_elements=h_elements,
                         meta=HeadingMeta(
-                                        # element_id=idx, 
-                                        level=level
-                                        ),
+                            # element_id=idx,
+                            level=level
+                        ),
                     )
                 )
                 idx += 1
 
             elif text_type == "P":  # paragraph
-
                 extract.append(
                     Paragraph(
                         container_id=idx,
@@ -348,7 +318,6 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
                 idx += 1
 
             elif text_type == "BQ":
-
                 quote_text = ""
                 for part in p_text.split("\n"):
                     quote_text += f"> {part}\n"
@@ -377,7 +346,6 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
                 )
                 idx += 1
 
-
             elif text_type == "MIXTAPE_EMBED":
                 extract.append(
                     LinkPreview(
@@ -388,12 +356,11 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
                         # ,
                         # tag.get_text(" ", strip=True),
                         meta=ElementMeta(
-                             context=dict(current_headings),
+                            context=dict(current_headings),
                         ),
                     )
                 )
                 idx += 1
-
 
             elif text_type == "IMG":  # image
                 # src = tag.get("src", "")
@@ -405,10 +372,10 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
                 # else:
                 #     success = None
 
-                meta_info={}
+                meta_info = {}
                 if len(p_meta_ref) > 0:
                     meta_info = data[p_meta_ref]
-                    
+
                 extract.append(
                     Image(
                         container_id=idx,
@@ -422,11 +389,10 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
                 )
                 idx += 1
 
-            
             else:
                 self.logger.info(
-                    "Text type of element does not match with a relevant type:\t%s", 
-                    text_type
+                    "Text type of element does not match with a relevant type:\t%s",
+                    text_type,
                 )
 
         self.logger.info(
@@ -436,4 +402,3 @@ class ApolloCleanExtractor(HTMLCleanExtractor):
         )
 
         return Success(extract)
-

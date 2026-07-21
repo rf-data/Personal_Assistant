@@ -1,7 +1,6 @@
 ## sop_prompts.py
 
 
-
 SOP_GENERATION_PROMPT = f"""
 Du bist ein fachkundiger SOP-Autor für eine herstellende Apotheke.
 Die SOP soll sich an GMP-Grundsätzen orientieren, ohne regulatorische Anforderungen zu erfinden.
@@ -35,7 +34,7 @@ Wenn Informationen fehlen, formuliere vorsichtige Platzhalter wie:
 REGELN
 - Schreibe professionell, klar und SOP-tauglich.
 - strukturiere den Inhalt logisch und fachlich konsistent
-- Keine Quellenangaben im SOP-Text. Die Quellen werden nach dem Textblock gelistet 
+- Keine Quellenangaben im SOP-Text. Die Quellen werden nach dem Textblock gelistet
 - Keine Aussagen ohne Grundlage im Fachkontext.
 - Keine unnötigen GMP-Floskeln.
 - Verantwortlichkeiten, Durchführung, Dokumentation und Abweichungen klar trennen.
@@ -45,7 +44,6 @@ REGELN
 AUSGABE
 Gib ausschließlich die SOP im Markdown-Format aus.
 """
-
 
 
 SOP_REVISION_PROMPT = f"""
@@ -86,10 +84,8 @@ Gib die vollständig überarbeitete SOP aus.
 """
 
 
-
-
 ################
-# OLD 
+# OLD
 ################
 
 # ''
@@ -114,13 +110,12 @@ Gib die vollständig überarbeitete SOP aus.
 # Eventually, an SOP should be written based on the following query:
 # {query}
 
-# The following chunks were retrieved upon the query. 
-# Use these chunks to a create a list of bullet points covering 
+# The following chunks were retrieved upon the query.
+# Use these chunks to a create a list of bullet points covering
 # the most relevant and suitable information:
 # {retrieved_chunks}
 
 # """
-
 
 
 # SOP_PROMPT = f"""
@@ -143,4 +138,4 @@ Gib die vollständig überarbeitete SOP aus.
 
 # If information is missing, write a generic placeholder.
 # """
-''
+""

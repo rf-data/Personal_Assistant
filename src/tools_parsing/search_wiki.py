@@ -3,7 +3,7 @@
 # import requests
 # import sys
 # # import json
-import os
+
 # from pathlib import Path
 # from datetime import datetime
 # from typing import Literal
@@ -14,26 +14,27 @@ import os
 # from playwright.sync_api import sync_playwright
 # from src.core.config import GenWikiSettings
 # from src.core.logger import create_logger
-from src.model_tools_parsing.wiki_client import WikipediaClient
+from src.core.config import env_variables
+
 # from src.utils.dict_helper import get_yaml_config
 # from src.utils.general_helper import load_env_vars
 from src.core.memory import ParseContext
+from src.model_tools_parsing.wiki_client import WikipediaClient
 
 
 def wiki_article_search(parse_context: ParseContext):
+    general_config = parse_context.general_settings.wiki
+    parse_config = parse_context.parse_settings.wiki
 
-    general_config = parse_context.general_settings.wiki 
-    parse_config = parse_context.parse_settings.wiki 
-                        
     parse_context.header = {
-        "User-Agent": os.getenv("HEADER_AGENT"),
+        "User-Agent": env_variables.header_agent,
         "Referer": general_config.header_referer,
         "Accept": general_config.header_accept,
     }
 
     wiki = WikipediaClient(parse_context)
-    
-    # wiki_config=run_config, 
+
+    # wiki_config=run_config,
     #                        header=header)
 
     results = wiki.search_article(query=parse_config.query)
@@ -62,4 +63,3 @@ if __name__ == "__main__":
     # session_state.logger = logger
 
     wiki_article_search(RunContext())
-    

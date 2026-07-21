@@ -1,28 +1,20 @@
 ## pdf_cleaner.py
 # imports
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
-from src.core.memory import ParseContext    #  app_session, 
-
-from src.model_classes_parsing.base_classes_parsing import TextBlock
+from src.core.memory import ParseContext  #  app_session,
 
 
 @dataclass
 class PDFCleaner:
-
     def __init__(self, parse_context: ParseContext):
         self.clean_config = parse_context.parse_settings
         self.logger = parse_context.logger
         # : dict = field(default_factory=dict)
         self.stop_words = ["und", "oder", "bzw.", "sowie", "als"]
 
-
-    def handle_column_hyphens(
-                        self, 
-                        tbl_col_groups: list[dict]
-                        ) -> tuple[list, list]:
-
+    def handle_column_hyphens(self, tbl_col_groups: list[dict]) -> tuple[list, list]:
         left_cleaned = []
         right_cleaned = []
 
@@ -65,9 +57,7 @@ class PDFCleaner:
         # left_segs = [seg["left"] for seg in tbl_col_segments]
         # right_segs = [seg["right"] for seg in tbl_col_segments]
 
-
     def _fix_column_hyphens(self, text_list: list[dict]):
-
         cleaned = []
         for i, curr_seg in enumerate(text_list):
             curr_text = curr_seg["text"]
@@ -120,10 +110,9 @@ class PDFCleaner:
     #     return blocks
 
     def handle_body_text_hyphens(
-                            self, 
-                            blocks: dict,   # list[TextBlock]
-                            ) -> dict:       # list[TextBlock]:
-
+        self,
+        blocks: dict,  # list[TextBlock]
+    ) -> dict:  # list[TextBlock]:
         # blocks_sorted = sorted(
         #                     blocks,
         #                     key=lambda l: (l["y0_min"],
@@ -133,14 +122,14 @@ class PDFCleaner:
         #     words = line["words"] # [w["text"] for w in line["words"]]
         #     words_sort = sorted(words, key=lambda w: w["x0"])
         #     line["text"] = " ".join([w["text"] for w in words_sort])
-        bullets = blocks.get("bullets", []) 
+        bullets = blocks.get("bullets", [])
         text_bodies = blocks.get("text_bodies", [])
         cleaned = {
-                "bullets": [],
-                "text_bodies": [],
-            }
+            "bullets": [],
+            "text_bodies": [],
+        }
 
-        if bullets and len(bullets) > 0: 
+        if bullets and len(bullets) > 0:
             for i, block in enumerate(bullets):
                 text = block.text
 
@@ -150,7 +139,7 @@ class PDFCleaner:
 
                 cleaned["bullets"].append(block)
 
-        if text_bodies and len(text_bodies) > 0: 
+        if text_bodies and len(text_bodies) > 0:
             for i, block in enumerate(text_bodies):
                 text = block.text
 
@@ -165,7 +154,6 @@ class PDFCleaner:
             # print(f"block # {i} keys:\t", block.keys())
             # sys.exit()
 
-
             # letzter Segment?
             # if i < len(lines_sorted) - 1:
             #     next_line = lines_sorted[i+1]
@@ -175,12 +163,9 @@ class PDFCleaner:
             #     # if text.endswith("-") and next_text[0].islower():
             #     #     line["text"], next_line["text"] = self._fix_end_hyphen(line, next_line)
 
-        
         return cleaned
 
-
     def _fix_inline_hyphen(self, text: str) -> str:
-
         text_splits = text.split("-")
         # re.findall(r"(\w+)-\s+", text) #
         self.logger.info("len text_splits:\t%s", len(text_splits))
@@ -232,7 +217,6 @@ class PDFCleaner:
                 i += 1
 
         return " ".join(text_new)
-    
 
     def _fix_end_hyphen(self, curr_line, next_line):
         """
@@ -272,8 +256,7 @@ class PDFCleaner:
             else:
                 curr_line["text"] = curr_text[:-1] + right_word
                 self.logger.info(
-                    "Fix end_hyphen between '%s' and '%s'.", 
-                    curr_text[-20:], right_word
+                    "Fix end_hyphen between '%s' and '%s'.", curr_text[-20:], right_word
                 )
 
             # entferne Wort aus next_line
@@ -284,7 +267,6 @@ class PDFCleaner:
                 next_line["text"] = next_text[1:].lstrip()
 
         return curr_line["text"], next_line["text"]
-
 
     def merge_hyphenated_words(self, segments):
         merged = []

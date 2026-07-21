@@ -5,7 +5,7 @@ from pathlib import Path
 
 import streamlit as st
 
-
+'''
 def load_env_vars(name: List | str = ".env"):
     """
     Load environment variables from .env files if available.
@@ -31,10 +31,10 @@ def load_env_vars(name: List | str = ".env"):
     session.state.env_loaded = env_loaded
 
     return
+'''
 
 
 def ensure_dir(f_path: Union[str | Path]) -> Path:
-
     p = Path(f_path)
 
     target_dir = p.parent if p.suffix else p

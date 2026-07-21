@@ -1,21 +1,14 @@
 ## automate_helper.py
 # import
 
+import heapq
+import multiprocessing
 import subprocess
 import time
 from collections import deque
 
-import heapq
-import time
+"""
 
-
-import multiprocessing
-import time
-
-
-
-'''
-import os
 import time
 
 TEMP_DIR = "temp_files"
@@ -33,9 +26,9 @@ def cleanup_temp_files():
             print("Deleted:", path)
 
 cleanup_temp_files()
-'''
+"""
 
-'''
+"""
 import schedule
 import time
 
@@ -50,11 +43,10 @@ while True:
     schedule.run_pending()
 
     time.sleep(1)
-'''
+"""
 
 
 def worker():
-
     while True:
         try:
             print("Worker running...")
@@ -68,8 +60,8 @@ def worker():
             print("Worker crashed:", e)
             time.sleep(2)
 
-def start_worker():
 
+def start_worker():
     while True:
         process = multiprocessing.Process(target=worker)
         process.start()
@@ -79,10 +71,11 @@ def start_worker():
         print("Restarting worker process...")
         time.sleep(3)
 
+
 # start_worker()
 
 #######################
-'''
+"""
 
 tasks = []
 
@@ -98,13 +91,15 @@ add_task("Follow up client")
 
 view_tasks()
 
-'''
+"""
 
 
 tasks = []
 
+
 def add_task(name, deadline):
     heapq.heappush(tasks, (deadline, name))
+
 
 add_task("send_report", time.time() + 60)
 add_task("cleanup", time.time() + 3600)
@@ -123,11 +118,10 @@ MAX_FAILS = 3
 
 failures = deque()
 
+
 def run_script():
-    return subprocess.run(
-        ["python", "worker.py"],
-        capture_output=True
-    )
+    return subprocess.run(["python", "worker.py"], capture_output=True)
+
 
 while True:
     result = run_script()
@@ -142,13 +136,10 @@ while True:
             break
     time.sleep(5)
 
-import subprocess
 import time
 
 while True:
-    process = subprocess.Popen(
-        ["python", "worker.py"]
-    )
+    process = subprocess.Popen(["python", "worker.py"])
 
     code = process.wait()
 
@@ -156,14 +147,14 @@ while True:
 
     time.sleep(5)
 
-import psutil
 import time
 
+import psutil
+
+
 def system_ready():
-    return (
-        psutil.cpu_percent() < 40 and
-        psutil.virtual_memory().percent < 70
-    )
+    return psutil.cpu_percent() < 40 and psutil.virtual_memory().percent < 70
+
 
 while True:
     if system_ready():

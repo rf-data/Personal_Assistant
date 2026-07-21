@@ -4,9 +4,6 @@ from dataclasses import dataclass, field
 from typing import Any, Literal
 
 
-
-
-
 @dataclass
 class RetrievedChunk:
     chunk_id: str
@@ -30,4 +27,3 @@ class RetrievalResult:
     query: str
     chunks: list[RetrievedChunk]
     n_results: int
-

@@ -14,5 +14,4 @@ def load_spacy_model(lang_model: str):  # "en_core_web_sm"
 
 
 def remove_stop_words():
-
     return

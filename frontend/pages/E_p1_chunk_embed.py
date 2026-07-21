@@ -1,33 +1,29 @@
 ## E_p1_chunk_embed.py
 # imports
-import os
-from pathlib import Path
-import pandas as pd
-import gc
 
+from pathlib import Path
+
+import pandas as pd
 import streamlit as st
 
-from src.core.memory import app_session, ParseContext
-from src.core.config import ChunkSettings
-from src.utils.path_helper import shorten_path, ensure_dir 
-# from src.utils.st_eda_helper import st_df_profile
+from src.core.config import env_variables
 
-from src.run_embedding import chunk_text, embed_text, load_chunks_to_chroma
+# from src.utils.st_eda_helper import st_df_profile
+from src.tools_rag.create_embeds import load_chunks_to_chroma  # chunk_text, embed_text,
+from src.utils.chroma_helper import get_chroma_client, list_files_in_coll
+from src.utils.path_helper import ensure_dir, shorten_path
 
 
 def show():
     st.header("🏠 Startseite ")
     st.subheader("**Chunk & Embed**")
 
-    # data_processed = os.getenv("DATA_PROCESSED")
-    # data_embed = os.getenv("DATA_EMBED")
-    data = os.getenv("DATA_DIR")
-    assert data is not None
+    data = env_variables.data_dir
 
     data = Path(ensure_dir(data))
 
     # st.warning("ADAPT TO NEW FILE SYSTEM")
-    
+
     # st.divider()
 
     # # parse_settings = {
@@ -38,21 +34,16 @@ def show():
     # #                         "bullet_list"
     # #                         ],
     # #     "spacy_language": "",
-    # #     "max_tokens": ""                    
+    # #     "max_tokens": ""
     # # }
 
     chunk_folder = st.pills(
-            label="Select folder (processed files)", 
-            options=["txt_md", 
-                     "docx", 
-                     "html",
-                     "pdf", 
-                     "json"], 
-            selection_mode="single",
-            # key="chunk_folder"
-            )
+        label="Select folder (processed files)",
+        options=["txt_md", "docx", "html", "pdf", "json"],
+        selection_mode="single",
+        # key="chunk_folder"
+    )
 
-    
     folder_path = f"{data}/{chunk_folder}/processed"
     # # files = [f for f in Path(folder_path).rglob("*_info.json")
     # #          if f.parent.name.startswith("ready_")]
@@ -60,7 +51,7 @@ def show():
     # files_to_chunk = st.multiselect(
     #     label="Which json file should be chunked?",
     #     options=files,
-    #     # key="chunk_files", 
+    #     # key="chunk_files",
     #     format_func=lambda p: shorten_path(p, n=1)
     # )
 
@@ -81,7 +72,7 @@ def show():
     #     chunk_context = ParseContext(
     #                 # save_name = Path(selected_file).stem,
     #                 # save_folder = data_embed,
-    #                 doc_kind=f_kind, 
+    #                 doc_kind=f_kind,
     #                 chunk_settings = ChunkSettings(
     #                                 container_types = [
     #                                         # "body_text",
@@ -99,38 +90,38 @@ def show():
     #                                 transformer_model="intfloat/multilingual-e5-base",
     #                                 # "paraphrase-multilingual-MiniLM-L12-v2",
     #                                 # "all-MiniLM-L6-v2",
-    #                                 batch_size=43 
+    #                                 batch_size=43
     #                                 )
     #                 )
     #     chunk_context.encoder=app_session.encoder
-    
+
     # # f_path = f"{folder_path}/{str(selected_file)}"
     # if "chunk_status" not in st.session_state:
     #     st.session_state["chunk_status"] = "ready"
-    
+
     # st.markdown(f"Status 'chunk_status': {st.session_state['chunk_status']}")
-    
+
     # left, right = st.columns(2)
 
     # if (left.button("Reset", type="primary")
     #     and st.session_state["chunk_status"] is not None):
     #     st.session_state["chunk_status"] = "ready"
 
-    # if (right.button("Start run") 
+    # if (right.button("Start run")
     #     and st.session_state["chunk_status"] in ["ready", None]):
 
     #     for idx, f_path in enumerate(files_to_chunk):
-            
+
     #         chunk_context.save_name = Path(f_path).stem
-            
+
     #         df_chunk = chunk_text(
-    #                         f_path=str(f_path), 
+    #                         f_path=str(f_path),
     #                         parse_context=chunk_context
     #                         )
 
     #         st.write(f"""
     #             File #{idx}
-    #             {Path(f_path).name}: 
+    #             {Path(f_path).name}:
     #             {len(df_chunk)} chunks
     #             """)
     #         # st.info(f"Chunking file #{idx}")
@@ -150,14 +141,14 @@ def show():
 
     #         st.button("Rerun")
     #         """
-    #         # with st.expander(f"Preview df '{Path(f_path).stem}'"): 
+    #         # with st.expander(f"Preview df '{Path(f_path).stem}'"):
     #         #     st_df_profile(df_chunk)
 
     #         df_embed = embed_text(df_chunk, chunk_context)
 
     #         load_chunks_to_chroma(
     #                 coll_name="QMS_apo", # : str,
-    #                 data=df_embed, # : pd.DataFrame | str, 
+    #                 data=df_embed, # : pd.DataFrame | str,
     #                 # meta_data: dict = {}
     #                     )
 
@@ -166,40 +157,65 @@ def show():
     #         # del embeddings
 
     #         gc.collect()
-            
+
     #     st.session_state["chunk_status"] = "done"
 
     st.divider()
-    st.error('\n**TEXT EMBEDDINGS MUST BE CREATED IN CODESPACE OR GOOGLE COLAB**', 
-             icon="🚨")
+    st.error(
+        "\n**TEXT EMBEDDINGS MUST BE CREATED IN CODESPACE (w/o UI) OR GOOGLE COLAB**",
+        icon="🚨",
+    )
     # st.markdown("")
     st.divider()
 
     st.subheader("Upload Data to ChromaDB")
 
     dfs_embed = [
-            f for f in Path(folder_path).rglob("*_info.parquet")
-            if f.parent.name.startswith("ready_")
-            ]
+        f
+        for f in Path(folder_path).rglob("*_embed.parquet")
+        if f.parent.name.startswith("ready_")
+    ]
+
+    chroma_client = get_chroma_client()
+    chroma_colls = chroma_client.list_collections()
+    coll_name = st.selectbox(
+        label="Selct a database", options=[coll.name for coll in chroma_colls]
+    )
+    # "QMS_apo"
+    coll = [c for c in chroma_colls if c.name in coll_name]
+    f_names, _, _ = list_files_in_coll(coll[0])
+
+    dfs_filtered = [df_path for df_path in dfs_embed if df_path.stem not in f_names]
+
     files_to_load = st.multiselect(
-                        label="Which files should be uploaded?",
-                        options=dfs_embed,
-                        format_func=lambda p: shorten_path(p, n=1)
-                        )
-    
+        label="Which files should be uploaded?",
+        options=dfs_filtered,  # set(dfs_embed) - set(f_names),
+        format_func=lambda p: shorten_path(p, n=1),
+    )
+
+    st.info(f"You selcted {len(files_to_load)} files.")
     start_upload = st.toggle("Start Upload")
 
     if start_upload:
         for f_path in files_to_load:
-            df_upload = pd.read_parquet(f_path)
+            df_path = f" /{f_path}.parquet"
+            df_upload = pd.read_parquet(df_path)
+
             load_chunks_to_chroma(
-                            coll_name="QMS_apo", # : str,
-                            data=df_upload, # : pd.DataFrame | str, 
-                            # meta_data: dict = {}
-                                )  
+                coll_name=coll_name,  # : str,
+                data=df_upload,  # : pd.DataFrame | str,
+                required_columns={
+                    "chunk_text",
+                    "chunk_global_id",
+                    # "f_name",
+                    "embed_text",
+                },
+                # meta_data: dict = {}
+            )
         start_upload = False
 
     # st.markdown("**Under Construction**")
+
 
 # from sentence_transformers import SentenceTransformer
 
@@ -213,8 +229,8 @@ def show():
 #     show_progress_bar=True,
 #     normalize_embeddings=True,
 # )
-# def _chunk_by_sentences(block_text: str, 
-#                         chunk_config: dict, 
+# def _chunk_by_sentences(block_text: str,
+#                         chunk_config: dict,
 #                         nlp) -> list[dict]:
 #     max_tokens = chunk_config["max_tokens"]
 #     overlap_sentences = chunk_config.get("overlap_sentences", 1)

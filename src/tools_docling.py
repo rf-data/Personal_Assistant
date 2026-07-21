@@ -1,5 +1,3 @@
-
-
 # !!! - docling --> AI-focused document processing library
 
 from docling.document_converter import DocumentConverter

@@ -1,8 +1,9 @@
 # imports
-from pathlib import Path
 import shutil
+from pathlib import Path
 
 from src.core.memory import app_session
+
 # from src.core.session import session
 
 
@@ -16,10 +17,11 @@ def find_project_root() -> Path:
 
 
 def ensure_dir(f_path: str | Path) -> Path:
-
     p = Path(f_path)
 
     target_dir = p.parent if p.suffix else p
+
+    # target_dir.parent.mkdir(parents=True, exist_ok=True)
     target_dir.mkdir(parents=True, exist_ok=True)
 
     return p
@@ -31,24 +33,27 @@ def shorten_path(path, n=3):
 
 
 def move_file(src_path: Path, dst_path: Path):
-
     dst_path = ensure_dir(dst_path)
     src_path = ensure_dir(src_path)
 
     if dst_path.exists():
         try:
-            app_session.logger.error("File already exists at destination path. Hence, file will not be moved.")
+            app_session.logger.error(
+                "File already exists at destination path. Hence, file will not be moved."
+            )
         except TypeError:
-            print("File already exists at destination path. Hence, file will not be moved.")
-            return 
-        
+            print(
+                "File already exists at destination path. Hence, file will not be moved."
+            )
+            return
+
     shutil.move(src_path, dst_path)
     app_session.logger.info(
-                        "File '%s' has been moved to '%s'",
-                        shorten_path(src_path),
-                        shorten_path(dst_path)
-                        )
-    return 
+        "File '%s' has been moved to '%s'",
+        shorten_path(src_path),
+        shorten_path(dst_path),
+    )
+    return
 
 
 def create_save_path(name_suffix, file_suffix):  # folder_name,
@@ -57,7 +62,7 @@ def create_save_path(name_suffix, file_suffix):  # folder_name,
     from src.core.memory import session_state
 
     # gh.load_env_vars()
-    # folder = os.getenv("PATH_EVALUATED", None)
+    # folder = env_variables("PATH_EVALUATED", None)
     folder = session_state.save_folder
     now = session_state.timestamp  # ", None)
     # run_name = session.model_class # log_file", None)
@@ -69,7 +74,6 @@ def create_save_path(name_suffix, file_suffix):  # folder_name,
 
 
 def list_files(folder: str | Path | list, suffix: str):
-
     if isinstance(folder, (str, Path)):
         folder = [folder]
 

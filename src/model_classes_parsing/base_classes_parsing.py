@@ -3,13 +3,12 @@
 from typing import (
     Annotated,  #
     Literal,
-    List,
-    Dict
 )
 
 from pydantic import BaseModel, Field
 
-# from src.model_classes_parsing.classes_pdf_parsing import SpanMeta 
+# from src.model_classes_parsing.classes_pdf_parsing import SpanMeta
+
 
 # -------------------------
 # METADATA
@@ -31,6 +30,7 @@ class ElementMeta(BaseMeta):
     # element_id: int = Field(default_factory=int)
     # context: dict = Field(default_factory=dict)
     pass
+
 
 class DrawingMeta(BaseModel):
     # drawing_id: int = Field(default_factory=int)
@@ -75,7 +75,7 @@ class DOCXImageMeta(ImageMeta):
     relationship_id: int = Field(default_factory=int)
     width_cm: float | None = Field(default_factory=float)
     height_cm: float | None = Field(default_factory=float)
-    
+
 
 class CellMeta(BaseMeta):
     language: str | list[str] = Field(default_factory=str)
@@ -95,7 +95,7 @@ class SpanMeta(BaseModel):
     color: int = Field(default_factory=int)
     # List = Field(default_factory=list)
 
-    
+
 class WordMeta(SpanMeta):
     is_bold: bool = Field(default_factory=bool)
 
@@ -166,13 +166,14 @@ class WikiPageMeta(BaseModel):
     wordcount: int = Field(default_factory=int)
     timestamp: str = Field(default_factory=str)
 
+
 class TableMeta(BaseMeta):
     n_rows: int = Field(default_factory=int)
     n_cols: int = Field(default_factory=int)
     has_header: bool = Field(default_factory=bool)
     has_empty_cells: bool = Field(default_factory=bool)
     has_merged_cells: bool = Field(default_factory=bool)
-    col_names: List[str] = Field(default_factory=list)
+    col_names: list[str] = Field(default_factory=list)
     title: str = Field(default_factory=str)
     source: Literal["docx", "tba"] = Field(default="tba")
     layout: Literal["grid", "tba"] = Field(default="tba")
@@ -189,11 +190,11 @@ class TableMeta(BaseMeta):
 # LEAF_ELEMENTS
 # -------------------------
 class BaseLeaf(BaseModel):
-    leaf_id: int|None = None 
+    leaf_id: int | None = None
     leaf_type: str
     text: str = Field(default_factory=str)
     meta: ElementMeta = Field(default_factory=ElementMeta)
-    markups: List[dict] = Field(default_factory=list)
+    markups: list[dict] = Field(default_factory=list)
 
 
 class Word(BaseLeaf):
@@ -218,7 +219,6 @@ class Drawing(BaseLeaf):
 class Span(BaseLeaf):
     leaf_type: Literal["span"] = "span"
     meta: SpanMeta | None = Field(default_factory=SpanMeta)
-
 
     #
     # list
@@ -307,7 +307,7 @@ class BulletItem(Element):
 class BulletList(Element):
     container_type: Literal["bullet_list"] = "bullet_list"
     elements: list[BulletItem] = Field(default_factory=list)
-    meta: TextBlockMeta|ListMeta = Field(default_factory=TextBlockMeta)
+    meta: TextBlockMeta | ListMeta = Field(default_factory=TextBlockMeta)
 
 
 class Heading(Element):
@@ -359,7 +359,7 @@ class TextBlock(BaseContainer):
     context: dict = Field(default_factory=dict)
     meta: TextBlockMeta = Field(default_factory=TextBlockMeta)
     elements: list[LineGroup | Word] = Field(default_factory=list)
-    inline_elements: List = Field(default_factory=list)
+    inline_elements: list = Field(default_factory=list)
 
 
 class TableCell(BaseContainer):
@@ -416,7 +416,7 @@ class TableObject(BaseContainer):
     context: list[str] = Field(default_factory=list)
     meta: TableMeta = Field(default_factory=TableMeta)
     elements: list[TableRow] = Field(default_factory=list)
-    inline_elements: List = Field(default_factory=list)
+    inline_elements: list = Field(default_factory=list)
     caption: str = Field(default_factory=str)
 
 
@@ -448,7 +448,6 @@ class SearchResult(BaseContainer):
 # class Blocks()
 
 
-
 # -------------------------
 # SUMMARIES
 # -------------------------
@@ -461,21 +460,14 @@ class SearchResult(BaseContainer):
 
 class DocumentExtract(BaseModel):
     doc_type: Literal[
-                    "",
-                    "md",
-                    "html",
-                    "html_apollo",
-                    "pdf",
-                    "txt",
-                    "json_nb",
-                    "docx"
-                    ] = Field(default="")
+        "", "md", "html", "html_apollo", "pdf", "txt", "json_nb", "docx"
+    ] = Field(default="")
     doc_name: str
     text: str  #  = text,
-    tables: List[TableObject] = Field(default_factory=list)
-    elements: List = Field(default_factory=list)
+    tables: list[TableObject] = Field(default_factory=list)
+    elements: list = Field(default_factory=list)
     meta: DocumentMeta = Field(default_factory=DocumentMeta)
-    non_text: List = Field(default_factory=list)
+    non_text: list = Field(default_factory=list)
     # foot_notes: List  = Field(default_factory=list)
     # headings: List  = Field(default_factory=list)
 
@@ -483,7 +475,7 @@ class DocumentExtract(BaseModel):
 class PageExtract(DocumentExtract):
     page_no: int = Field(default_factory=int)
     meta: PageMeta = Field(default_factory=PageMeta)
-    content_table: List = Field(default_factory=list)
+    content_table: list = Field(default_factory=list)
     # graphics: Graphics = Field(default_factory=Graphics)
     # images: List[Image] = Field(default_factory=List)
     # non_text: List  = Field(default_factory=list)
@@ -518,8 +510,7 @@ class PDFPageExtract(PageExtract):
 #     text_bodies: list = Field(default_factory=list)
 
 
-line_types = Annotated[LineSplit | Line | LineGroup, 
-                       Field(discriminator="meta_type")]
+line_types = Annotated[LineSplit | Line | LineGroup, Field(discriminator="meta_type")]
 
 container_types = Annotated[
     RawDocument | Line | LineSplit | Element | Heading | TextBlock | Code,
@@ -527,13 +518,6 @@ container_types = Annotated[
 ]
 
 doc_container = Annotated[
-                (BulletList|
-                 Code|
-                 Element|
-                 Heading|
-                 Image|
-                 List|
-                 TableObject|
-                 TextBlock), 
-                Field(discriminator="meta_type")
-                ]
+    (BulletList | Code | Element | Heading | Image | list | TableObject | TextBlock),
+    Field(discriminator="meta_type"),
+]

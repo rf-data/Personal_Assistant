@@ -2,35 +2,35 @@
 # import
 import html
 import re
+
 # import json
 # import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from returns.result import Failure, Result, Success
 
 import requests
 from bs4 import BeautifulSoup as bs
 from bs4 import NavigableString  # , Tag
+from returns.result import Failure, Result, Success
 
 from src.model_classes_parsing.base_classes_parsing import (
-    Code, 
-    CodeMeta,
     BulletList,
-    RawDocument,
+    Code,
+    CodeMeta,
     DocumentExtract,
-    Element,
     ElementMeta,
     Heading,
     HeadingMeta,
     Image,
     ImageMeta,
-    Link, 
+    Link,
     ListMeta,
-    TableObject, 
+    RawDocument,
+    TableObject,
     TextBlock,
     TextBlockMeta,
-    Word
-    )
+    Word,
+)
 from src.model_classes_parsing.classes_html_parsing import (
     BulletNode,
     CiteNode,
@@ -38,16 +38,16 @@ from src.model_classes_parsing.classes_html_parsing import (
     ImageNode,
     LinkNode,
     OtherNode,
-    TextNode
+    TextNode,
 )
 from src.model_tools_parsing.base_extractor import BaseExtractor
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
-from src.utils.html_helper import normalize_url
-from src.utils.path_helper import shorten_path
-from src.utils.html_helper import read_html_file   # , save_text_file
 from src.utils.dict_helper import save_dict
+from src.utils.html_helper import (
+    normalize_url,
+    read_html_file,  # , save_text_file
+)
+from src.utils.path_helper import shorten_path
 
-from src.core.memory import ParseContext
 
 @dataclass
 class HTMLCleanExtractor(BaseExtractor):
@@ -69,9 +69,21 @@ class HTMLCleanExtractor(BaseExtractor):
         "Wiki_letter",
     ]
 
-    RELEVANT_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", 
-                     "p", "ul", "ol", 
-                     "pre", "table", "img", "div"]
+    RELEVANT_TAGS = [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "p",
+        "ul",
+        "ol",
+        "pre",
+        "table",
+        "img",
+        "div",
+    ]
     MIME_MAP = {
         "image/png": ".png",
         "image/jpeg": ".jpg",
@@ -80,10 +92,10 @@ class HTMLCleanExtractor(BaseExtractor):
         "image/gif": ".gif",
     }
 
-    # def __init__(self, 
-    #              enricher: FeatureEnricher, 
+    # def __init__(self,
+    #              enricher: FeatureEnricher,
     #              parse_context: ParseContext):
-        
+
     #     self.enricher = enricher
     #     self.extract_config = parse_context.parse_settings.html
 
@@ -92,10 +104,10 @@ class HTMLCleanExtractor(BaseExtractor):
     #     self.save_name = parse_context.save_name
     #     self.text_type = parse_context.text_type
 
-    #     return 
+    #     return
 
     # def __post_init__(self, run_context: RunContext):
-        
+
     #     return
 
     def setup(self):
@@ -103,21 +115,15 @@ class HTMLCleanExtractor(BaseExtractor):
         self.extraction_tags = self.general_config.extraction_tags
         self.header = self.parse_context.header
 
-        return 
-
+        return
 
     def extract(
-            self, 
-            f_path=None, 
-            url=None, 
-            f_text=None
-            ) -> Result[DocumentExtract, str]:
-
+        self, f_path=None, url=None, f_text=None
+    ) -> Result[DocumentExtract, str]:
         if f_path is not None:
             file = read_html_file(f_path)
             soup = bs(file, self.parser)
-            self.logger.info("Created soup from '%s'", 
-                             shorten_path(f_path))
+            self.logger.info("Created soup from '%s'", shorten_path(f_path))
 
         elif url is not None:
             page = requests.get(url, timeout=10)
@@ -127,8 +133,7 @@ class HTMLCleanExtractor(BaseExtractor):
         elif f_text is not None:
             soup = bs(f_text, self.parser)
 
-            self.logger.info("Created soup from '%s'", 
-                             f_text[:100])
+            self.logger.info("Created soup from '%s'", f_text[:100])
 
         else:
             self.logger.error("Neither 'f_path' nor 'url' nor 'f_text' were provided.")
@@ -141,7 +146,7 @@ class HTMLCleanExtractor(BaseExtractor):
             or soup.select_one("article")
             or soup.body
             or soup
-            )
+        )
         # soup.find_all("div", class_="container") or soup.body or soup
 
         elements_clean = self._extract_per_container(root)
@@ -150,24 +155,25 @@ class HTMLCleanExtractor(BaseExtractor):
         doc_info = self.enricher._add_basic_metadata(
             text_clean, elements_clean, RawDocument()
         )
-        
+
         f_path = Path(f"{self.save_folder}/{self.save_name}_info")
-        save_dict(data=doc_info.model_dump(
-                            mode="json",
-                            serialize_as_any=True,
-                            ), 
-                path=f_path)
+        save_dict(
+            data=doc_info.model_dump(
+                mode="json",
+                serialize_as_any=True,
+            ),
+            path=f_path,
+        )
 
         return Success(
-                DocumentExtract(
-                        doc_type="html",
-                        doc_name=self.doc_name,
-                        text=doc_info.text,
-                        elements=doc_info.elements,
-                        meta=doc_info.meta,
-                        ))
- 
-
+            DocumentExtract(
+                doc_type="html",
+                doc_name=self.doc_name,
+                text=doc_info.text,
+                elements=doc_info.elements,
+                meta=doc_info.meta,
+            )
+        )
 
     def _extract_per_container(self, root):
         elements_all = self._extract_elements(root)
@@ -180,20 +186,14 @@ class HTMLCleanExtractor(BaseExtractor):
                 # element.text.split():   # text_clean.split():
 
                 words_clean.append(
-                                Word(
-                                    text=self._clean_word_token(word),
-                                    leaf_id=None
-                                    )
-                                )
+                    Word(text=self._clean_word_token(word), leaf_id=None)
+                )
 
-            if (hasattr(element, "container_type") 
-                and element.container_type != "code"):
+            if (
+                hasattr(element, "container_type") and element.container_type != "code"
+            ) or (hasattr(element, "leaf_type") and element.leaf_type != "code"):
                 txt_clean = self._clean_text(element.text)
-            
-            elif (hasattr(element, "leaf_type") 
-                and element.leaf_type != "code"):
-                txt_clean = self._clean_text(element.text)
-            
+
             else:
                 txt_clean = element.text
 
@@ -212,8 +212,7 @@ class HTMLCleanExtractor(BaseExtractor):
             elements_clean.append(element_new)
 
         return elements_clean
-    
-    
+
     def _clean_text(self, text: str) -> str:
         text = html.unescape(text)
 
@@ -237,23 +236,16 @@ class HTMLCleanExtractor(BaseExtractor):
 
         return text
 
-
     def _is_inside_code_block(self, tag) -> bool:
-        return tag.find_parent(
-            "div",
-            class_="urvanov-syntax-highlighter-syntax"
-        ) is not None
+        return (
+            tag.find_parent("div", class_="urvanov-syntax-highlighter-syntax")
+            is not None
+        )
 
-    
     def _is_inside_relevant_parent(self, tag):
         return tag.find_parent(["p", "ul", "ol", "pre", "table"]) is not None
 
-
-    def _extract_elements(
-                            self, 
-                            root
-                            ) -> list:  # , str]:
-
+    def _extract_elements(self, root) -> list:  # , str]:
         self.logger.info(
             "Relevant tags (in _extract_elements()):\n%s", self.RELEVANT_TAGS
         )
@@ -265,11 +257,12 @@ class HTMLCleanExtractor(BaseExtractor):
             # protection against duplicates
             if tag.name in ["code", "li"] and self._is_inside_relevant_parent(tag):
                 continue
-            
+
             is_code_block = (
                 tag.name == "div"
                 and "urvanov-syntax-highlighter-syntax" in tag.get("class", [])
-                and "urvanov-syntax-highlighter-syntax-inline" not in tag.get("class", [])
+                and "urvanov-syntax-highlighter-syntax-inline"
+                not in tag.get("class", [])
             )
 
             if not is_code_block and self._is_inside_code_block(tag):
@@ -281,7 +274,7 @@ class HTMLCleanExtractor(BaseExtractor):
 
                 level = int(tag.name[1])
 
-                h_text, h_elements = self._parse_inline(tag)    # .unwrap()
+                h_text, h_elements = self._parse_inline(tag)  # .unwrap()
                 current_headings[level] = h_text
                 # tag.get_text(" ",
                 #                                        strip=True)
@@ -305,7 +298,8 @@ class HTMLCleanExtractor(BaseExtractor):
             elif (
                 tag.name == "div"
                 and "urvanov-syntax-highlighter-syntax" in tag.get("class", [])
-                and "urvanov-syntax-highlighter-syntax-inline" not in tag.get("class", [])
+                and "urvanov-syntax-highlighter-syntax-inline"
+                not in tag.get("class", [])
             ):
                 code = self._extract_urvanov_code(tag)
 
@@ -325,15 +319,13 @@ class HTMLCleanExtractor(BaseExtractor):
                 idx += 1
 
             elif tag.name == "p":  # paragraph
-
-                children = [c for c in tag.children
-                            if getattr(c, "name", None) is not None]      
-                if (len(children) == 1
-                    and children[0].name == "img"):
+                children = [
+                    c for c in tag.children if getattr(c, "name", None) is not None
+                ]
+                if len(children) == 1 and children[0].name == "img":
                     continue
-                
 
-                p_text, p_elements = self._parse_inline(tag)    # .unwrap()
+                p_text, p_elements = self._parse_inline(tag)  # .unwrap()
 
                 p_text = p_text.strip()
                 if not p_text:
@@ -347,7 +339,7 @@ class HTMLCleanExtractor(BaseExtractor):
                         # get_text(" ", strip=True),
                         inline_elements=p_elements,
                         meta=TextBlockMeta(),
-                        context=dict(current_headings)
+                        context=dict(current_headings),
                     )
                 )
                 idx += 1
@@ -391,13 +383,10 @@ class HTMLCleanExtractor(BaseExtractor):
                 # if code_tag:
                 classes = tag.get("class", [])
                 lang = ""
-                
+
                 for cls in classes:
                     if cls.startswith("language-"):
-                        lang += f"{cls.replace(
-                                    'language-', 
-                                    ''
-                                    )} / "
+                        lang += f"{cls.replace('language-', '')} / "
                         # break
 
                 extract.append(
@@ -419,7 +408,7 @@ class HTMLCleanExtractor(BaseExtractor):
                 extract.append(
                     TableObject(
                         text=tab_text,
-                        container_type="table", 
+                        container_type="table",
                         container_id=idx,
                         # tag.get_text(" ", strip=True),
                         inline_elements=tab_elements,
@@ -503,7 +492,6 @@ class HTMLCleanExtractor(BaseExtractor):
 
         return extract  # Success()
 
-
     def _extract_urvanov_code(self, tag) -> str:
         lines = []
 
@@ -518,12 +506,7 @@ class HTMLCleanExtractor(BaseExtractor):
 
         return "\n".join(lines).strip()
 
-
-    def _parse_inline(
-                    self, 
-                    tag
-                    ) -> tuple[str, list]:  # , str]:
-
+    def _parse_inline(self, tag) -> tuple[str, list]:  # , str]:
         parts = []
         text_full = []
 
@@ -535,11 +518,7 @@ class HTMLCleanExtractor(BaseExtractor):
                 if child.name not in ["code", "p"]:
                     text = text.replace("\n", " ")
 
-                parts.append(
-                        TextNode(
-                            text=text, 
-                            meta=ElementMeta()
-                            ))
+                parts.append(TextNode(text=text, meta=ElementMeta()))
                 text_full.append(text)
 
             # inline code
@@ -552,11 +531,7 @@ class HTMLCleanExtractor(BaseExtractor):
                     pass
 
                 # parts.append()       # strip=True
-                parts.append(
-                        CodeNode(
-                            text=code,
-                            meta=CodeMeta()
-                            ))
+                parts.append(CodeNode(text=code, meta=CodeMeta()))
                 text_full.append(f"{code}")
 
             # links
@@ -566,16 +541,17 @@ class HTMLCleanExtractor(BaseExtractor):
                 href = child.get("href", "")
                 text_final = f"[{a_text}]({href})"
                 # , "")
-                # if href: 
+                # if href:
                 text_full.append(text_final)
 
                 parts.append(
-                        LinkNode(
-                            text=text_final,
-                            href=href, 
-                            inline_elements=a_elements,
-                            meta=ElementMeta()
-                            ))
+                    LinkNode(
+                        text=text_final,
+                        href=href,
+                        inline_elements=a_elements,
+                        meta=ElementMeta(),
+                    )
+                )
                 # text_full.append(a_text)
 
             elif child.name == "img":
@@ -584,12 +560,12 @@ class HTMLCleanExtractor(BaseExtractor):
                 alt = child.get("alt", "")
 
                 parts.append(
-                        ImageNode(
-                            src=src, 
-                            alt=alt, 
-                            text=img_text, 
-                            inline_elements=img_elements,
-                            meta=ImageMeta()
+                    ImageNode(
+                        src=src,
+                        alt=alt,
+                        text=img_text,
+                        inline_elements=img_elements,
+                        meta=ImageMeta(),
                     )
                 )
                 text_full.append(alt or src)
@@ -598,26 +574,28 @@ class HTMLCleanExtractor(BaseExtractor):
                 sup_text, sup_elements = self._parse_inline(child)
                 # text =
                 href = child.get("href", "")
-                
+
                 text_final = f"[{sup_text}]({href})"
                 text_full.append(text_final)
 
                 parts.append(
-                        CiteNode(
-                            text=text_final, 
-                            href=href, 
-                            inline_elements=sup_elements,
-                            meta=ElementMeta())
+                    CiteNode(
+                        text=text_final,
+                        href=href,
+                        inline_elements=sup_elements,
+                        meta=ElementMeta(),
+                    )
                 )
                 # text_full.append(sup_text)
 
                 parts.append(
-                        LinkNode(
-                            text=text_final,
-                            href=href, 
-                            inline_elements=a_elements,
-                            meta=ElementMeta()
-                            ))
+                    LinkNode(
+                        text=text_final,
+                        href=href,
+                        inline_elements=a_elements,
+                        meta=ElementMeta(),
+                    )
+                )
 
             # bold
             elif child.name in ["strong", "b"]:
@@ -626,13 +604,13 @@ class HTMLCleanExtractor(BaseExtractor):
                 text = f"**{bold_text}**"
 
                 parts.append(
-                        TextNode(
-                            text=bold_text, 
-                            inline_elements=bold_elements,
-                            meta=ElementMeta()
-                            ))
+                    TextNode(
+                        text=bold_text,
+                        inline_elements=bold_elements,
+                        meta=ElementMeta(),
+                    )
+                )
                 text_full.append(bold_text)
-
 
             # italic
             elif child.name in ["em", "i"]:
@@ -641,13 +619,13 @@ class HTMLCleanExtractor(BaseExtractor):
                 text = f"*{ital_text}*"
 
                 parts.append(
-                        TextNode(
-                            text=ital_text, 
-                            inline_elements=ital_elements,
-                            meta=ElementMeta()
-                            ))
+                    TextNode(
+                        text=ital_text,
+                        inline_elements=ital_elements,
+                        meta=ElementMeta(),
+                    )
+                )
                 text_full.append(ital_text)
-
 
             elif child.name == "li":
                 li_text, li_elements = self._parse_inline(child)
@@ -655,24 +633,17 @@ class HTMLCleanExtractor(BaseExtractor):
                 text = f"\n- {li_text}\n"
 
                 parts.append(
-                        BulletNode(
-                            text=text, 
-                            inline_elements=li_elements,
-                            meta=ElementMeta()
-                            ))
+                    BulletNode(
+                        text=text, inline_elements=li_elements, meta=ElementMeta()
+                    )
+                )
                 text_full.append(text)
-
 
             elif child.name == "br":
                 text = "\n"
 
-                parts.append(
-                        TextNode(
-                            text=text,
-                            meta=ElementMeta()
-                            ))
+                parts.append(TextNode(text=text, meta=ElementMeta()))
                 text_full.append(text)
-
 
             else:
                 other_text, other_elements = self._parse_inline(child)
@@ -680,15 +651,15 @@ class HTMLCleanExtractor(BaseExtractor):
                 text = f"{other_text}"
 
                 parts.append(
-                        OtherNode(
-                            text=other_text, 
-                            inline_elements=other_elements,
-                            meta=ElementMeta()
-                            ))
+                    OtherNode(
+                        text=other_text,
+                        inline_elements=other_elements,
+                        meta=ElementMeta(),
+                    )
+                )
                 text_full.append(other_text)
 
-        return "".join(text_full), parts        # Success(())
-
+        return "".join(text_full), parts  # Success(())
 
     def _scrape_image(self, img_url: str, save_folder: str) -> bool:
         # logger = session.logger
@@ -740,17 +711,13 @@ class HTMLCleanExtractor(BaseExtractor):
 
         return False
 
-
     def _ensure_suffix(self, url: str, content_type: str) -> str:
-
         url_suffix = Path(url).suffix
         cont_suffix = self.MIME_MAP.get(content_type.split(";")[0])
 
         return url_suffix or cont_suffix or "bin"
 
-
     def _is_blacklisted(self, img_url):
-
         if re.search(r"/\d{1,2}px-", img_url):
             self.logger.info(
                 "Image '%s' appears to be small (<= 60px) and will not be scraped.",

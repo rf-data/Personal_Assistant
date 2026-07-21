@@ -1,11 +1,3 @@
-
-
-
-
-
-
-from time import perf_counter
-
 ######################
 # PERFORMANCE_ANALYZER
 ######################
@@ -18,7 +10,6 @@ from time import perf_counter
 #     print(f"{fn.__name__}: {elapsed:.6f}s")
 
 #     return result
-
 
 
 ######################
@@ -81,10 +72,9 @@ from time import perf_counter
 # ######################
 
 
-
 import ast
-import os
-'''
+
+"""
 def find_unused_imports(path):
     for file in os.listdir(path):
         if file.endswith(".py"):
@@ -96,19 +86,18 @@ def find_unused_imports(path):
                 print(file, unused)
 
 find_unused_imports("src")
-'''
+"""
+
 
 def find_unused_imports(file_path):
-    with open(file_path, "r",
-              encoding="utf-8") as f:
+    with open(file_path, encoding="utf-8") as f:
         tree = ast.parse(f.read())
-    
+
     imports = set()
-    
+
     used = set()
-    
+
     for node in ast.walk(tree):
-        
         if isinstance(node, ast.Import):
             for alias in node.names:
                 imports.add(alias.name)
@@ -116,16 +105,14 @@ def find_unused_imports(file_path):
             used.add(node.id)
     return imports - used
 
+
 # print(find_unused_imports("app.py"))
 
 
 patterns = {
-    "AWS Key":
-        r"AKIA[0-9A-Z]{16}",
-    "OpenAI Key":
-        r"sk-[A-Za-z0-9]{20,}",
-    "Generic Token":
-        r"(?i)(api|secret|token).{0,20}[=:].+"
+    "AWS Key": r"AKIA[0-9A-Z]{16}",
+    "OpenAI Key": r"sk-[A-Za-z0-9]{20,}",
+    "Generic Token": r"(?i)(api|secret|token).{0,20}[=:].+",
 }
 
 # limit length of files
@@ -135,7 +122,7 @@ patterns = {
 
 # for file in Path(".").rglob("*.py"):
 #     lines = sum(1 for _ in open(file, encoding="utf-8"))
-    
+
 #     if lines > LIMIT:
 #         print(f"{file} -> {lines} lines")
 
@@ -160,14 +147,14 @@ patterns = {
 
 # asyncio.run(main())
 
-'''
+"""
 import traceback
 
 try:
     run_job()
 except Exception:
     traceback.print_exc()
-'''
+"""
 
 # use built-in debugger
 # import pdb
@@ -186,18 +173,14 @@ except Exception:
 
 # cProfile.run("slow()")
 
+
 def scan_file(file_path):
-    
-    with open(file_path,
-              encoding="utf-8",
-              errors="ignore") as f:
+    with open(file_path, encoding="utf-8", errors="ignore") as f:
         content = f.read()
-    
+
     for name, pattern in patterns.items():
         if re.search(pattern, content):
-            print(
-                f"Potential {name} found "
-                f"in {file_path}"
-            )
+            print(f"Potential {name} found in {file_path}")
+
 
 # scan_file("config.py")

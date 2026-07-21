@@ -9,9 +9,7 @@ def show():
 
     st.divider()
 
-
     st.markdown("**Under Construction**")
-
 
     # proj_mets, infra_mets, docker_mets = st.tabs(["Project Metrics", "Infrastructure Metrics", "Container Metrics"])
 

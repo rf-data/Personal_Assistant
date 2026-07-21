@@ -1,7 +1,6 @@
 # import yaml
 import inspect
 import json
-import os
 import re
 from pathlib import Path
 
@@ -15,9 +14,9 @@ import numpy as np
 # import ast
 import yaml
 from pydantic import BaseModel
-from src.core.config import GeneralSettings, RunSettings
 
 # import src.core.logger as log
+from src.core.config import GeneralSettings, RunSettings, env_variables
 from src.core.memory import app_session
 
 # import hashlib
@@ -28,28 +27,23 @@ from src.utils.path_helper import ensure_dir, shorten_path
 # -----------------------
 # CONFIGURATION METHODS
 # -----------------------
-def load_yaml_config(path: str|Path):
+def load_yaml_config(path: str | Path):
     with open(path) as f:
         return yaml.safe_load(f)
 
 
-def load_yaml_as_base_model(path: str|Path,
-                              model: GeneralSettings | RunSettings):
+def load_yaml_as_base_model(path: str | Path, model: GeneralSettings | RunSettings):
     cfg_dict = load_yaml_config(path)
-    
+
     return model.model_validate(cfg_dict)
-    
 
 
-def get_yaml_config(name: str,
-                    model: GeneralSettings|RunSettings|None=None):
+def get_yaml_config(name: str, model: GeneralSettings | RunSettings | None = None):
     # (1) load config + logger
     # gh.load_env_vars()
     # logger = session.logger
 
-    config_folder = os.getenv("CONFIG_DIR")
-
-    assert config_folder is not None
+    config_folder = env_variables.config_dir
 
     config_path = Path(config_folder) / f"{name}.yaml"
 
@@ -58,9 +52,8 @@ def get_yaml_config(name: str,
     if model is None:
         config = load_yaml_config(config_path)
 
-    else: 
-        config = load_yaml_as_base_model(path=config_path,
-                                         model=model)
+    else:
+        config = load_yaml_as_base_model(path=config_path, model=model)
 
     return config
 
@@ -106,9 +99,7 @@ def make_json_safe(obj):
     return str(obj)
 
 
-def save_base_model_as_dict(data: BaseModel, 
-                            path: Path) -> None:
-
+def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
     data_dict = data.model_dump()
 
     return save_dict(data_dict, path)
@@ -142,7 +133,6 @@ def save_dict(data: dict, path: Path) -> None:
 
 
 def append_json(data: dict, path: Path) -> None:
-
     path = ensure_dir(path)
     data_new = make_json_safe(data)
 
@@ -163,9 +153,7 @@ def load_dict(path: Path | str) -> dict:
     return data
 
 
-def load_base_model_from_dict(path: Path | str, 
-                              model_class: BaseModel):
-
+def load_base_model_from_dict(path: Path | str, model_class: BaseModel):
     data_dict = load_dict(path)
 
     return model_class.model_validate(data_dict)
@@ -179,7 +167,7 @@ def load_base_model_from_dict(path: Path | str,
 #     logger = session.logger
 
 #     #
-#     folder = os.getenv("PATH_MODEL")
+#     folder = env_variables("PATH_MODEL")
 #     model_path = Path(f"{folder}({name}.joblib)")
 #     joblib.dump(model, model_path)
 
@@ -193,7 +181,7 @@ def load_base_model_from_dict(path: Path | str,
 #     logger = session.logger
 
 #     #
-#     folder = os.getenv("PATH_MODEL")
+#     folder = env_variables("PATH_MODEL")
 #     model_path = Path(f"{folder}({name}.joblib)")
 #     model = joblib.load(model_path)
 

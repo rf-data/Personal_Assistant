@@ -2,7 +2,6 @@
 # imports
 import ast
 import gc
-import os
 from pathlib import Path
 
 import pandas as pd
@@ -12,6 +11,7 @@ import pyarrow.parquet as pq
 import src.utils.path_helper as ph
 
 # import src.feature_engineering.time_columns as time_col
+from src.core.config import env_variables
 from src.core.memory import app_session
 
 # -----------------
@@ -21,8 +21,7 @@ from src.core.memory import app_session
 # -----------------
 
 
-def load_dfs(paths: list[str | Path] | str | Path, 
-             index_col: str | None = None):
+def load_dfs(paths: list[str | Path] | str | Path, index_col: str | None = None):
     if isinstance(paths, (Path, str)):
         paths = [paths]
 
@@ -130,12 +129,11 @@ def load_processed_files(
     prefix: str = None,
     from_report: bool = True,
 ):
-
     # setup logger
     logger = app_session.logger
 
     #
-    data_processed = os.getenv("PATH_PROCESSED")
+    data_processed = env_variables.data_processed
 
     # arg_dict = config.get("general_args", {})
     if data_folder is None:
@@ -209,7 +207,6 @@ def load_processed_files(
 
 
 def load_merge_processed_files(config):
-
     cols_needed = config.get("necessary_cols", [])
     merge_col = config["merge_col"]
 
@@ -257,7 +254,6 @@ def merge_dfs(
     drop_cols: list[str] | str | None = None,
     how: str = "inner",
 ) -> pd.DataFrame:
-
     if isinstance(on_cols, str):
         on_cols = [on_cols]
 
@@ -463,7 +459,6 @@ def create_complete_grid(df, idx_name, idx_values, col_name, col_values):
 
 
 def aggregate_all(df):
-
     df_agg = (
         df.groupby(["h3_index", "time_bin"])  # "resolution", "freq",
         .size()
@@ -474,7 +469,6 @@ def aggregate_all(df):
 
 
 def aggregate_single(df, config):
-
     res_col = config.get("res", "h3_index")
     freq_col = config.get("freq_col", "time_bin")
     target_col = config.get("target_col", "n_accidents")
@@ -491,7 +485,6 @@ def aggregate_single(df, config):
 # (G) MELT
 # ------------------------------
 def melt_h3(df, res_range, freq_range):
-
     res_cols = [f"h3_res{r}" for r in res_range]
 
     df_long = df.melt(
@@ -508,7 +501,6 @@ def melt_h3(df, res_range, freq_range):
 
 
 def melt_time(df_long, freq_range):
-
     df_time = df_long.melt(
         id_vars=["ID_accident", "resolution", "h3_index"],
         value_vars=freq_range,
@@ -527,7 +519,7 @@ def save_df_to_parquet(df, f_name, folder=None, chunked=False):
     logger = app_session.logger
 
     if folder is None:
-        folder = os.getenv("PATH_PROCESSED")
+        folder = env_variables.data_processed
 
     file_path = Path(folder) / f"{f_name}.parquet"
 

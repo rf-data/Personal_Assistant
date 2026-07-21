@@ -5,8 +5,7 @@ import re
 
 # from bs4 import NavigableString # , Tag
 # import requests
-from dataclasses import dataclass, field
-from returns.result import Failure, Result, Success
+from dataclasses import field
 
 # import html
 from pathlib import Path
@@ -14,19 +13,19 @@ from pathlib import Path
 # from markdown_it import MarkdownIt
 import markdown
 from bs4 import BeautifulSoup as bs
+from returns.result import Failure, Result, Success
 
+from src.core.memory import ParseContext
 from src.model_classes_parsing.base_classes_parsing import (
     Cell,
     CellMeta,
-    RawDocument,
     DocumentExtract,
+    RawDocument,
     Word,
 )
-
 from src.model_tools_parsing.feature_enricher import FeatureEnricher
 from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
 
-from src.core.memory import ParseContext
 # Element, ElementMeta,
 # from src.utils.text_file_helper import read_html_file
 # from src.utils.path_helper import shorten_path
@@ -35,13 +34,9 @@ from src.utils.dict_helper import load_dict, save_dict
 
 # @dataclass
 class NoteBookCleanExtractor(HTMLCleanExtractor):
-
     nb_language: str = field(default_factory=str)
-    
-    def __init__(self, 
-                 enricher: FeatureEnricher, 
-                 parse_context: ParseContext):
-        
+
+    def __init__(self, enricher: FeatureEnricher, parse_context: ParseContext):
         self.doc_name = parse_context.run_id
         self.enricher = enricher
         self.extract_config = parse_context.parse_settings.json_nb
@@ -54,14 +49,9 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
         self.save_name = parse_context.save_name
         self.text_type = parse_context.text_type
 
-        return 
+        return
 
-
-    def extract(
-            self, 
-            f_path: str
-            ) -> Result[DocumentExtract, str]:
-
+    def extract(self, f_path: str) -> Result[DocumentExtract, str]:
         self.logger.info("Starting extraction by NotebookCleanExtractor")
 
         nb = load_dict(f_path)
@@ -79,15 +69,16 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
                 "Provided json-file did not match the expected structure. No value or invalid for 'name':\t%s",
                 nb,
             )
-            return Failure("Provided json-file did not match the expected structure. No value or invalid for 'name'")
+            return Failure(
+                "Provided json-file did not match the expected structure. No value or invalid for 'name'"
+            )
 
         nb_cells = nb.get("content", {}).get("cells")
         assert nb_cells is not None
 
         cells = self._extract_cells(nb_cells)
 
-        self.logger.info("Number of cells in notebook:\t%s", 
-                         len(cells))
+        self.logger.info("Number of cells in notebook:\t%s", len(cells))
 
         cells_clean = []
         for cell in cells:
@@ -101,46 +92,38 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
 
         text_clean = "\n\n".join([cell.text for cell in cells_clean])
         doc_info = self.enricher._add_basic_metadata(
-                                            text_clean, 
-                                            cells_clean, 
-                                            RawDocument()
-                                        )
+            text_clean, cells_clean, RawDocument()
+        )
 
         save_path = Path(f"{self.save_folder}/{self.save_name}")
-        save_dict(data=doc_info.model_dump(
-                            mode="json",
-                            serialize_as_any=True,
-                            ), 
-                path=save_path)
-        
+        save_dict(
+            data=doc_info.model_dump(
+                mode="json",
+                serialize_as_any=True,
+            ),
+            path=save_path,
+        )
+
         return Success(
-                DocumentExtract(
-                    doc_type="json_nb",
-                    doc_name=Path(f_path).name,
-                    text=doc_info.text,
-                    elements=doc_info.elements,
-                    meta=doc_info.meta,
-        ))
+            DocumentExtract(
+                doc_type="json_nb",
+                doc_name=Path(f_path).name,
+                text=doc_info.text,
+                elements=doc_info.elements,
+                meta=doc_info.meta,
+            )
+        )
 
-    def _prepare_code_cell(self, 
-                           cell):
-
+    def _prepare_code_cell(self, cell):
         words_clean = []
         for word in re.findall(r"\S+|\n", cell.text):
             # element.text.split():   # text_clean.split():
 
-            words_clean.append(
-                            Word(
-                                text=self._clean_word_token(word)
-                            ))
+            words_clean.append(Word(text=self._clean_word_token(word)))
 
         txt_clean = cell.text
 
-        cell_new = self.enricher._add_basic_metadata(
-                                                txt_clean, 
-                                                words_clean, 
-                                                cell
-                                                )
+        cell_new = self.enricher._add_basic_metadata(txt_clean, words_clean, cell)
 
         # cell_new.cell_type = cell.cell_type
 
@@ -155,23 +138,15 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
         )
         return cell_new
 
-
-    def _prepare_md_cell(self, 
-                         cell):
-         # "lxml"
+    def _prepare_md_cell(self, cell):
+        # "lxml"
 
         # md = MarkdownIt()
 
         html = markdown.markdown(
-            cell.text, 
-            extensions=[
-                    "fenced_code", 
-                    "tables", 
-                    "nl2br"
-                    ]
+            cell.text, extensions=["fenced_code", "tables", "nl2br"]
         )
-        soup = bs(html, 
-                  self.parser)
+        soup = bs(html, self.parser)
 
         # elements = self._differentiate_text(tokens)
 
@@ -180,24 +155,17 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
 
         elements_clean = []
         for element in elements:
+            if (
+                hasattr(element, "container_type") and element.container_type != "code"
+            ) or (hasattr(element, "leaf_type") and element.leaf_type != "code"):
+                e_txt_clean = self._clean_text(element.text)
 
-            if (hasattr(element, "container_type") 
-                and element.container_type != "code"):
-                e_txt_clean = self._clean_text(element.text)
-            
-            elif (hasattr(element, "leaf_type") 
-                and element.leaf_type != "code"):
-                e_txt_clean = self._clean_text(element.text)
-            
             else:
                 e_txt_clean = element.text
 
             words_clean = []
             for word in re.findall(r"\S+|\n", e_txt_clean):
-                words_clean.append(
-                            Word(
-                                text=self._clean_word_token(word)
-                                ))
+                words_clean.append(Word(text=self._clean_word_token(word)))
 
             # if element.meta.element_type != "code":
             #     e_txt_clean = self._clean_text(element.text)
@@ -205,7 +173,6 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
             # else:
             #     e_txt_clean = element.text
 
-            
             element_new = self.enricher._add_basic_metadata(
                 e_txt_clean, words_clean, element
             )
@@ -282,10 +249,7 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
 
         return text
 
-    def _extract_cells(
-                    self, 
-                    cells: list[dict]
-                    ) -> list[Cell]:
+    def _extract_cells(self, cells: list[dict]) -> list[Cell]:
         extract = []
         idx = 0
 
@@ -333,11 +297,8 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
                 # hi = ""
                 extract.append(
                     Cell(
-                        text=c_text, 
-                        cell_type="md_block", 
-                        cell_id=idx,
-                        meta=CellMeta()
-                        )
+                        text=c_text, cell_type="md_block", cell_id=idx, meta=CellMeta()
+                    )
                 )
                 idx += 1
 

@@ -1,7 +1,7 @@
 ## wiki_client.py
 # import
 # import logging
-import os
+
 import random
 import sys
 
@@ -12,11 +12,11 @@ import time
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-# from typing import Literal
 
+# from typing import Literal
 import requests
 
-# from src.core.config import RunWikiSettings
+from src.core.config import env_variables
 from src.core.memory import ParseContext
 from src.model_classes_parsing.data_classes_wiki import (
     ResultItem,
@@ -46,12 +46,12 @@ class WikipediaClient:
     # from urllib3.util.retry import Retry
 
     def __init__(self, parse_context: ParseContext):
+        self.now = (
+            parse_context.parse_settings.wiki.query_time
+            or parse_context.timestamp
+            or datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        )
 
-        self.now = (parse_context.parse_settings.wiki.query_time 
-                    or parse_context.timestamp
-                    or datetime.now()\
-                        .strftime("%Y-%m-%d_%H-%M-%S"))
-        
         self.wiki_config = parse_context.parse_settings.wiki
 
         self.query_param = parse_context.query_param
@@ -59,8 +59,7 @@ class WikipediaClient:
         # .get(
         #     "query_time", datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         # )
-        save_dir = os.getenv("DATA_WIKI")
-        assert save_dir is not None
+        save_dir = env_variables.data_wiki
 
         self.save_folder = Path(save_dir)
         self.save = parse_context.save
@@ -68,9 +67,7 @@ class WikipediaClient:
 
         return
 
-
     def search_article(self, query):
-
         # self.query = query
 
         params = {
@@ -97,13 +94,9 @@ class WikipediaClient:
             )
 
             self.logger.info(
-                "[Result #%s] Title:\t%s (pageid=%s)", 
-                idx, 
-                hit["title"], 
-                hit["pageid"]
+                "[Result #%s] Title:\t%s (pageid=%s)", idx, hit["title"], hit["pageid"]
             )
-            self.logger.info("snippet:\n%s\n\n", 
-                             hit["snippet"])
+            self.logger.info("snippet:\n%s\n\n", hit["snippet"])
 
         s_info = data.get("query", {}).get("searchinfo", {})
         s_results = SearchResult(
@@ -246,7 +239,6 @@ class WikipediaClient:
     #     return
 
     def _parse_max_retry(self, params):
-
         MAX_RETRIES = self.wiki_config.get("max_retries", 3)
 
         self.logger.info(
@@ -273,9 +265,9 @@ class WikipediaClient:
         language = self.wiki_config.language
 
         if language == "en":
-            base_url = os.getenv("WIKI_EN_API")
+            base_url = env_variables.wiki_en_api
         elif language == "de":
-            base_url = os.getenv("WIKI_DE_API")
+            base_url = env_variables.wiki_de_api
         else:
             self.logger.error("Invalid language:\t%s", language)
             sys.exit()
@@ -287,7 +279,6 @@ class WikipediaClient:
         return base_url
 
     def _get_wiki_response(self, params: dict) -> dict:
-
         if self.url is None:
             self.url = self._get_wiki_url()
 
@@ -311,11 +302,8 @@ class WikipediaClient:
             self.req_session = requests.Session()
 
         response = self.req_session.get(
-                                    self.url, 
-                                    headers=self.header, 
-                                    timeout=10, 
-                                    params=params
-                                )
+            self.url, headers=self.header, timeout=10, params=params
+        )
         try:
             response.raise_for_status()
 
@@ -325,23 +313,18 @@ class WikipediaClient:
             return data
 
         except requests.exceptions.HTTPError as e:
-            self.logger.error("HTTP ERROR:\t%s\n", 
-                              e, 
-                              response.text[:1000])
+            self.logger.error("HTTP ERROR:\t%s\n", e, response.text[:1000])
 
             raise
 
         except requests.exceptions.JSONDecodeError as e:
-            self.logger.error("JSON ERROR:\t%s\n", 
-                              e, 
-                              response.text[:1000])
+            self.logger.error("JSON ERROR:\t%s\n", e, response.text[:1000])
 
             raise
         # print(response.status_code)
         # print(response.text[:500])
 
     def _random_sleep(self):
-
         sleep_time = random.uniform(1.0, 2.5)
         self.logger.info("Rate limited. Waiting %s", round(sleep_time, 2))
 

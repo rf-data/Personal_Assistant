@@ -1,12 +1,11 @@
 ## feature_enricher.py
 # import
 # # import unicodedata
-import logging
 import re
 import sys
+
 # from collections.abc import Callable  # , , Any
-from dataclasses import dataclass   #, field
-from typing import List
+from dataclasses import dataclass  # , field
 
 # # import pandas as pd
 # # from sklearn.cluster import KMeans
@@ -22,8 +21,8 @@ from src.model_classes_parsing.base_classes_parsing import (
     LineSplit,
     PageExtract,
     PDFPageExtract,
+    TableCell,
     TextBlock,  # TextBlockMeta,
-    TableCell, 
     Word,
     container_types,
     doc_container,
@@ -31,26 +30,21 @@ from src.model_classes_parsing.base_classes_parsing import (
 )
 
 
-
 @dataclass
 class FeatureEnricher:
-    
     # structure_dict = {
     #             "line" : Line,
     #              "line_group": LineGroup,
     #               "line_split": LineSplit if line.structure_object == "line" else LineSplit}
 
-    structure_dict = {"line": Line, 
-                      "line_group": LineGroup, 
-                      "line_split": LineSplit}
+    structure_dict = {"line": Line, "line_group": LineGroup, "line_split": LineSplit}
 
-    def __init__(self, 
-                 parse_context,
-                 page_height: float=0.0, 
-                 page_width: float=0.0):
+    def __init__(
+        self, parse_context, page_height: float = 0.0, page_width: float = 0.0
+    ):
         self.page_height = page_height
         self.page_width = page_width
-        
+
         self.logger = parse_context.logger
 
         self.encoder = parse_context.encoder
@@ -58,13 +52,10 @@ class FeatureEnricher:
         self.text_prep_config = parse_context.parse_settings
 
         return
-    
 
     def enrich_pages(
-        self, 
-        pages: list[PageExtract | PDFPageExtract]
+        self, pages: list[PageExtract | PDFPageExtract]
     ) -> list[PageExtract | PDFPageExtract]:
-
         self.logger.info("Start enriching pages")
 
         # if
@@ -113,11 +104,9 @@ class FeatureEnricher:
 
         return pages
 
-
-    def enrich_blocks(self, 
-                      blocks: list[TextBlock],
-                      page_attributes: dict) -> list[TextBlock]:
-
+    def enrich_blocks(
+        self, blocks: list[TextBlock], page_attributes: dict
+    ) -> list[TextBlock]:
         self.page_height = page_attributes.get("height")
         self.page_width = page_attributes.get("width")
 
@@ -155,12 +144,7 @@ class FeatureEnricher:
 
     #     return
 
-    def enrich_lines(
-                self, 
-                lines: list[line_types], 
-                text=None
-                ) -> list[LineSplit]:
-
+    def enrich_lines(self, lines: list[line_types], text=None) -> list[LineSplit]:
         for idx, line in enumerate(lines):
             if not line:
                 continue
@@ -214,45 +198,35 @@ class FeatureEnricher:
 
         return lines
 
-
-    def enrich_table_cell(
-                        self, 
-                        cell_info: TableCell
-                        ) -> TableCell:
-
+    def enrich_table_cell(self, cell_info: TableCell) -> TableCell:
         # for idx, cell in enumerate(cell_info):
-            # if not cell:
-            #     continue
+        # if not cell:
+        #     continue
 
         return self._add_basic_metadata(
-                                text = cell_info.text, 
-                                leaf_info = cell_info.elements,
-                                # : list, # [document_leafs], 
-                                info_obj = cell_info
-                                )
-        
-            # container_types | None
-            # if isinstance(line, list):
-            #     words= line
-            # else:
-            
-            # content = cell.text
+            text=cell_info.text,
+            leaf_info=cell_info.elements,
+            # : list, # [document_leafs],
+            info_obj=cell_info,
+        )
 
-            # if isinstance(line, list):
-            # text = " ".join([w.text for w in words])
+        # container_types | None
+        # if isinstance(line, list):
+        #     words= line
+        # else:
 
+        # content = cell.text
 
-        
-
+        # if isinstance(line, list):
+        # text = " ".join([w.text for w in words])
 
     # Document|Line|LineSplit|Element
     def _add_basic_metadata(
-        self, 
-        text: str, 
-        leaf_info: list, # [document_leafs], 
-        info_obj: container_types | None
+        self,
+        text: str,
+        leaf_info: list,  # [document_leafs],
+        info_obj: container_types | None,
     ):
-
         if info_obj is None:
             self.logger.info(
                 "No info_obj provided or provided info_obj is of type 'None'."
@@ -298,14 +272,12 @@ class FeatureEnricher:
 
         return info_obj
 
-
     def _add_metadata(
-        self, 
-        text: str, 
-        leaf_info: list[doc_container], 
-        info_obj: Line | LineSplit | TextBlock
+        self,
+        text: str,
+        leaf_info: list[doc_container],
+        info_obj: Line | LineSplit | TextBlock,
     ):
-
         # width_thresh = self.text_prep_config["width_thresh_rel"]
         # left_indent =
         # left_thresh = self.text_prep_config["left_right_thresh"]
@@ -313,9 +285,7 @@ class FeatureEnricher:
         assert float(self.page_height) != 0.0
         assert float(self.page_width) != 0.0
 
-        info_obj = self._add_basic_metadata(text, 
-                                            leaf_info, 
-                                            info_obj)
+        info_obj = self._add_basic_metadata(text, leaf_info, info_obj)
 
         info_obj.meta.x_start_min = min(l.meta.x_start for l in leaf_info)
         info_obj.meta.x_end_max = max(l.meta.x_end for l in leaf_info)
@@ -347,9 +317,7 @@ class FeatureEnricher:
 
         return info_obj
 
-
     def _get_inter_word_gaps(self, leaf_info: list[Word]):
-
         i = 0
 
         word_gaps = []

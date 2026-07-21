@@ -36,12 +36,12 @@ json_nb:  # _extraction:
 
 pdf:
   y_gap_words: 3                   # 3-8
-  x_gap_words: 20 
+  x_gap_words: 20
   y_gap_words: 3                   # 3-8
-  x_gap_words: 20 
+  x_gap_words: 20
 
-  width_thresh: 0.45 
-  y_gap_line: 15  # 20                
+  width_thresh: 0.45
+  y_gap_line: 15  # 20
   up_down_thresh: 0.06    # 0.10    # 0,15
   left_right_thresh: 0.2
   heading_threshold: 3

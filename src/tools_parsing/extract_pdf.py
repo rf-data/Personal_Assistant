@@ -1,22 +1,21 @@
 ## run_text_extraction.py
 # import
 # import click
-import os
-from typing import List
+
+
 # from pathlib import Path
 # from datetime import datetime
 # from tiktoken import encoding_for_model
-from returns.result import Result, Success, Failure
+from returns.result import Result, Success
 
-from src.core.memory import app_session
-from src.core.memory import ParseContext
+from src.core.memory import ParseContext, app_session
+from src.model_classes_parsing.base_classes_parsing import PDFPageExtract
 
 # from src.core.logger import create_logger
 # from gmp_compliance.src.model_parsing.classes_html_parsing import PDFPageExtract
-
 # from gmp_compliance.src.tools.__dev__extraction import extract_text_per_page
 from src.model_tools_parsing.pdf_extractor import PDFCleanExtractor
-from src.model_classes_parsing.base_classes_parsing import PDFPageExtract
+
 # from src.core.feature_enricher import FeatureEnricher
 
 # import src.utils.general_helper as gh
@@ -39,15 +38,14 @@ from src.model_classes_parsing.base_classes_parsing import PDFPageExtract
 
 
 def extract_pdf_file(
-            # f_path: str,  #  | List=None,
-            extractor: PDFCleanExtractor,
-            parse_context: ParseContext,
-            ) -> Result[List[PDFPageExtract], str]:
-    
+    # f_path: str,  #  | List=None,
+    extractor: PDFCleanExtractor,
+    parse_context: ParseContext,
+) -> Result[list[PDFPageExtract], str]:
     logger = app_session.logger
     logger.info("Starting extracting PDF-FILE.")
 
-    # input_data = os.getenv("DATA_INPUT")
+    # input_data = env_variables("DATA_INPUT")
     # assert input_data is not None
 
     # name_short = Path(f_path).name.split(".")[0]
@@ -63,21 +61,22 @@ def extract_pdf_file(
     extract_grouped = []
     for page_extract in extract_results.unwrap():
         extract_grouped.append(
-                    extractor.restructure_lines(
-                        page_extract, 
-                        # save=run_context.parse_settings.pdf.save
-                        ))
+            extractor.restructure_lines(
+                page_extract,
+                # save=run_context.parse_settings.pdf.save
+            )
+        )
 
     app_session.logger.info("Finished 'extract_pdf.py'")
 
-    return Success(extract_grouped)    # extract_grouped
+    return Success(extract_grouped)  # extract_grouped
 
 
 # if __name__ == "__main__":
 #     extract_pdf_file()
 
 
-# data_processed = os.getenv("DATA_PROCESSED")
+# data_processed = env_variables("DATA_PROCESSED")
 
 # general_config = config.get("general_args", {})
 # log_name = general_config["name_log"]
@@ -91,7 +90,7 @@ def extract_pdf_file(
 #     file_name = extract_config["file_name"]
 
 # if folder is None:
-#     folder = os.getenv("DATA_RAW")
+#     folder = env_variables("DATA_RAW")
 
 # if isinstance(file_name, str):
 #     file_name = [file_name]

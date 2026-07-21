@@ -1,105 +1,108 @@
 # memory.py
 import logging
+from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from pydantic import Field
-from typing import Any, Dict, ClassVar, Literal, List, Annotated
-from dataclasses import dataclass, field
-from chromadb.api.models.Collection import Collection
+from typing import Any, ClassVar, Literal  # , Annotated
 
-from openai import OpenAI
+from pydantic import Field
+
+# from openai import OpenAI
 from tiktoken import encoding_for_model
 
 from src.core.config import (
-                        ChunkSettings,
-                        GeneralSettings,
-                        # NIRSettings,
-                        ParseSettings, 
-                        # ParseSettings_all 
-                        )
+    ChunkSettings,
+    GeneralSettings,
+    # NIRSettings,
+    ParseSettings,
+)
 
+# from chromadb.api.models.Collection import Collection
+
+"""
 LLMClient = Annotated[
                 OpenAI,
                 Field(discriminator="meta_type")
                 ]
+"""
+
 
 @dataclass
-class SOPGenContext: 
-    client: LLMClient = field(default=LLMClient)
+class LLMContext:
+    name_logger: str
+    name_logfile: str
+    path_tracker_file: str
+    model: Literal["gpt-4o"]
+    temperature: float
+    callbacks: list
+
+
+@dataclass
+class SOPGenContext:
+    llm_context: LLMContext = field(default_factory=LLMContext)
     title: str = field(default_factory=str)
-    topics: List = field(default_factory=list) 
+    topics: list = field(default_factory=list)
+    transformer_model: Literal[
+        "all-MiniLM-L6-v2",
+        "paraphrase-multilingual-MiniLM-L12-v2",
+        "intfloat/multilingual-e5-base",
+        None,
+    ] = Field(default=None)
     q_doc_type: Literal[
-                    "SOP",
-                    # "SOP_specific", 
-                    "record", 
-                    "risk_analysis"
-                    ] = field(default="SOP")
-    work_mode: Literal["create", "revise", "merge"] = "create"    
-    template_id: int = field(default_factory=int)  
-    style: Literal["gmp_oriented"]  = "gmp_oriented" 
+        "SOP",
+        # "SOP_specific",
+        "record",
+        "risk_analysis",
+    ] = field(default="SOP")
+    work_mode: Literal["create", "revise", "merge"] = "create"
+    template_id: int = field(default_factory=int)
+    style: Literal["gmp_oriented"] = "gmp_oriented"
     output_format: Literal["markdown"] = "markdown"
-    where: str|None = None
+    where: str | None = None
     allowed_sources: Literal["retrieved_context_only"] = "retrieved_context_only"
     # # "merge", "split"
     chapter_mode: Literal["full", "chapterwise"] = "chapterwise"
-    chapters: List[str] | str | Literal["n.a."] = "n.a."
-    collection: List[str] = field(default_factory=list) 
+    chapters: list[str] | str | Literal["n.a."] = "n.a."
+    collection: list[str] = field(default_factory=list)
     # | Collection
     # results: Dict = field(default_factory=dict)
     n_results: int = field(default_factory=int)
     save_folder: str = field(default_factory=str)
-    save_name : str = field(default_factory=str)
-
+    save_name: str = field(default_factory=str)
 
 
 # @dataclass
 # class UserRequest:
 #     query: str
-    
+
 # @dataclass
-# class ParseContext: 
+# class ParseContext:
 
 
 @dataclass
-class ParseContext:    
-    chunk_settings: ChunkSettings = field(
-                    default_factory=ChunkSettings
-                    )
+class ParseContext:
+    chunk_settings: ChunkSettings = field(default_factory=ChunkSettings)
     encoder = encoding_for_model
     general_settings: GeneralSettings = field(default_factory=GeneralSettings)
     parse_settings: ParseSettings = field(
-                            default_factory=ParseSettings   # _all
-                            )
+        default_factory=ParseSettings  # _all
+    )
     text_type: Literal[
-                    "txt", 
-                    "md", 
-                    "pdf", 
-                    "json_nb", 
-                    "wiki",
-                    "docx",
-                    "html",
-                    "url", 
-                    None
-                    ] = field(default=None)
+        "txt", "md", "pdf", "json_nb", "wiki", "docx", "html", "url", None
+    ] = field(default=None)
     save_folder: str | Path = field(default_factory=str)
     save_name: str | Path = field(default_factory=str)
     doc_id: str = field(default_factory=str)
-    doc_kind: Literal[
-                "regulatory", 
-                "comment"
-                "SOP"
-                ] = field(default="regulatory")
+    doc_kind: Literal["regulatory", "commentSOP"] = field(default="regulatory")
     timestamp: datetime | str | None = field(default=None)
     run_id: str = field(default_factory=str)
     logger: ClassVar = logging.getLogger(__name__)
-    header: Dict = field(default_factory=dict)
+    header: dict = field(default_factory=dict)
 
 
 @dataclass
 class AppSession:
-    chunk_settings: ChunkSettings = field(
-                                default_factory=ChunkSettings
-                                )
+    chunk_settings: ChunkSettings = field(default_factory=ChunkSettings)
     encoder = encoding_for_model
     env_loaded: list[str] = field(default_factory=list)
     general_settings: GeneralSettings = field(default_factory=GeneralSettings)
@@ -108,14 +111,14 @@ class AppSession:
     run_context: ParseContext = field(default_factory=ParseContext)
     timestamp: str = field(default_factory=str)
 
-
     # frontend_config: FrontendConfig
+
 
 app_session = AppSession()
 
 
 # @dataclass
-# class NIRContext:  
+# class NIRContext:
 #     nir_settings: NIRSettings = field(
 #                     default_factory=NIRSettings
 #                     )
@@ -125,22 +128,22 @@ app_session = AppSession()
 #     logger: ClassVar = logging.getLogger(__name__)
 
 
-    
-    # TO-DO: replace 'suffix' with text_type + suffix_dict
-    # suffix: str = field(default_factory=str)
+# TO-DO: replace 'suffix' with text_type + suffix_dict
+# suffix: str = field(default_factory=str)
 
-    # query: str = field(default_factory=str)
-    # file_path: str | List[str] = field(default_factory=str)
-    # url: str | List[str] = field(default_factory=str)
-    # language: str = field(default_factory=str)
-    # save: List[
-    #         Literal[
-    #             True, 
-    #             False, 
-    #             "info", 
-    #             "md", 
-    #             "html"]
-    #         ] = field(default_factory=list)
+# query: str = field(default_factory=str)
+# file_path: str | List[str] = field(default_factory=str)
+# url: str | List[str] = field(default_factory=str)
+# language: str = field(default_factory=str)
+# save: List[
+#         Literal[
+#             True,
+#             False,
+#             "info",
+#             "md",
+#             "html"]
+#         ] = field(default_factory=list)
+
 
 class SimpleMemory:
     def __init__(self):
@@ -155,22 +158,20 @@ class SimpleMemory:
     def keys(self):
         return list(self._store.keys())
 
+
 simple_memory = SimpleMemory()
 
 
+# as lazy import to prevent circular imports
+# import src.utils.path_helper as ph
+# root = ph.find_project_root()
 
+# model_config =
 
-
-    # as lazy import to prevent circular imports
-    # import src.utils.path_helper as ph
-    # root = ph.find_project_root()
-
-    # model_config =
-
-    # logger: logging.Logger = Field(default_factory=lambda: logging.getLogger(__name__))
-    # preprocessor: "TextPreprocessor" = Field(default_factory=TextPreprocessor)
-    # now: datetime = Field(default_factory=datetime.now)
-    # env_loaded: Optional[List[str]] = Field(default_factory=list)
+# logger: logging.Logger = Field(default_factory=lambda: logging.getLogger(__name__))
+# preprocessor: "TextPreprocessor" = Field(default_factory=TextPreprocessor)
+# now: datetime = Field(default_factory=datetime.now)
+# env_loaded: Optional[List[str]] = Field(default_factory=list)
 
 
 # class LLM_State(BaseModel):

@@ -2,15 +2,13 @@
 # import
 # import click
 import streamlit as st
-# from collections import defaultdict
 
-from returns.result import Result, Success, Failure
+# from collections import defaultdict
+from returns.result import Success
 
 # from gmp_compliance.src.model_parsing.classes_html_parsing import PDFPageExtract
-
 # from src.core.logger import create_logger
 from src.core.memory import app_session
-
 from src.model_tools_parsing.pdf_assembler import PDFAssembler
 
 # from src.tools.chunk import prepare_chunk_df
@@ -30,7 +28,7 @@ from src.model_tools_parsing.pdf_assembler import PDFAssembler
 # def prepare_pdf_rag():
 
 #     gh.load_env_vars()
-#     data_processed = os.getenv("DATA_PROCESSED")
+#     data_processed = env_variables("DATA_PROCESSED")
 
 #     config_name = input("Enter 'config_file' name (no suffix): ")
 
@@ -63,11 +61,10 @@ from src.model_tools_parsing.pdf_assembler import PDFAssembler
 
 
 def assemble_single_pdf(
-    extracts: Success,   # list[PDFPageExtract], 
-    # assemble_config: dict, 
+    extracts: Success,  # list[PDFPageExtract],
+    # assemble_config: dict,
     # save: bool = False
-    ) -> dict:
-
+) -> dict:
     parse_context = app_session.run_context
     assemble = parse_context.parse_settings.pdf.assemble
 
@@ -76,7 +73,6 @@ def assemble_single_pdf(
     assembler = PDFAssembler(parse_context=parse_context)
 
     for p_extract in extracts:
-
         if isinstance(p_extract, Success):
             p_extract = p_extract.unwrap()
 
@@ -86,16 +82,14 @@ def assemble_single_pdf(
 
     if assemble:
         if "md" in assemble:
-            md_file = assembler.create_md_from_extract(
-                                    doc_dict["info_dict"]
-                                    )
+            md_file = assembler.create_md_from_extract(doc_dict["info_dict"])
 
         if "txt" in assemble:
             logger.info("'Text assembling' script has not been build yet.")
 
-            try: 
+            try:
                 st.warning("'Text assembling' script has not been build yet.")
-            except ImportError: 
+            except ImportError:
                 pass
 
     return ""
@@ -104,7 +98,7 @@ def assemble_single_pdf(
 # def assemble_related_pdf(file_names: List[str],
 #                  config: dict):
 #     # load env variables and config
-#     data_processed = os.getenv("DATA_PROCESSED")
+#     data_processed = env_variables("DATA_PROCESSED")
 
 #     # if not session.model_config:
 #     # config = session.model_config
@@ -358,5 +352,3 @@ def assemble_single_pdf(
 # #         logger.info("%s\n", "=" * 50)
 
 # #     return dfs
-
-

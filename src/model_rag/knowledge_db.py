@@ -1,6 +1,4 @@
-
-
-'''
+"""
 class KnowledgeBase:
 def store_document(self, document):
         pass
@@ -10,4 +8,4 @@ def store_document(self, document):
         pass
     def answer_question(self):
         pass
-'''
+"""

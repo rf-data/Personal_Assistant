@@ -31,16 +31,16 @@ docker_file_ml = Path(
 def show():
     st.header("📦 Docker and microservice architecture")
     st.markdown("""
-    **What is the use of 'Docker'?**   
-    - Containerized execution of services and applications   
-    - Reproducible runtime environments across development and deployment   
+    **What is the use of 'Docker'?**
+    - Containerized execution of services and applications
+    - Reproducible runtime environments across development and deployment
     - Isolation of dependencies for API, UI, and other infrastructure components
     - Allows a microservice architecture and portability (**DockerHub**)
 
-    --- 
+    ---
 
     **How we used Docker?**
-    - one docker-compose.yaml per 'microservice' and a Dockerfile if necessary   
+    - one docker-compose.yaml per 'microservice' and a Dockerfile if necessary
     """)
 
     with st.expander("Docker-composes and Dockerfiles"):
@@ -48,9 +48,9 @@ def show():
 
         with st.container(border=True):
             st.markdown("""
-            **Docker 'Airflow'** covers:   
-            - Airflow (incl. init, scheduler, webserver)   
-            - PostgreSQL  
+            **Docker 'Airflow'** covers:
+            - Airflow (incl. init, scheduler, webserver)
+            - PostgreSQL
             """)
 
             with st.popover("ℹ️ **docker-compose.airflow.yaml**"):
@@ -58,9 +58,9 @@ def show():
 
         with st.container(border=True):
             st.markdown("""
-            **Docker 'APIs'** covers:   
-            - FastAPI   
-            - Streamlit  
+            **Docker 'APIs'** covers:
+            - FastAPI
+            - Streamlit
             """)
 
             with st.popover("ℹ️ **docker-compose.api.yaml**"):
@@ -71,11 +71,11 @@ def show():
 
         with st.container(border=True):
             st.markdown("""
-            **Docker 'ML'** covers:   
-            - MLflow,   
-            - SQLite/PostgreSQL if necessary,   
-            - prospectively, W&B or similar 
-            
+            **Docker 'ML'** covers:
+            - MLflow,
+            - SQLite/PostgreSQL if necessary,
+            - prospectively, W&B or similar
+
             """)
             with st.popover("ℹ️ **docker-compose.ml.yaml**"):
                 st.code(docker_compose_ml, language="python")
@@ -85,19 +85,19 @@ def show():
 
         with st.container(border=True):
             st.markdown("""
-            **Docker 'Monitoring'** covers:   
-            - Prometheus   
-            - Grafana   
-            - Node-explorer   
-            - Promtail (*not yet fully integrated*)   
+            **Docker 'Monitoring'** covers:
+            - Prometheus
+            - Grafana
+            - Node-explorer
+            - Promtail (*not yet fully integrated*)
             - Loki (*not yet fully integrated*)
-            
+
             """)
             with st.popover("ℹ️ **docker-compose.monitoring.yaml**"):
                 st.code(docker_monitoring, language="python")
 
     st.markdown("""
-    - automation by using Makefile   
+    - automation by using Makefile
     **-->** same project by default --> no network mismatches possible
 
     """)

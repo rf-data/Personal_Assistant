@@ -283,40 +283,40 @@ def show():
         with col1:
             with st.popover("**_INFO: Classification Metrics_**"):
                 st.markdown("""
-                **Recall (Sensitivity):**  
+                **Recall (Sensitivity):**
                 > Measures the proportion of true positives among positive samples.
-                > It's the model's ability to correctly identify positive instances.    
+                > It's the model's ability to correctly identify positive instances.
                 """)
                 st.latex(r"Recall = \frac{TP}{TP + FN}")
 
                 st.markdown("""
-                **Specificity:**  
+                **Specificity:**
                 > Measures the proportion of true negatives among negative samples. <br>
-                > It's the model's ability to correctly identify negative instances.    
+                > It's the model's ability to correctly identify negative instances.
                 """)
                 st.latex(r"Specificity = \frac{TN}{TN + FP}")
 
                 st.markdown("""
-                **Precision:**  
+                **Precision:**
                 > Measures the proportion of true positives among positive predictions. <br>
-                > It's the model's ability to avoid false positives.   
+                > It's the model's ability to avoid false positives.
                 """)
                 st.latex(r"Precision = \frac{TP}{TP + FP}")
 
                 st.markdown("""
-                **Accuracy:**  
+                **Accuracy:**
                 > Measures the proportion of all correct predictions (true positives and <br>
                 > true negatives) among all samples. It's a global measure of model performance.
                 """)
                 st.latex(r"Accuracy = \frac{TP + TN}{TP + TN + FP + FN}")
 
                 st.markdown("""
-                **Fβ-Score (including F1 and F2):**  
-                > The Fβ-Score is a generalized harmonic mean of precision and recall.  
+                **Fβ-Score (including F1 and F2):**
+                > The Fβ-Score is a generalized harmonic mean of precision and recall.
                 > It adjusts the weight between recall and precision using the parameter β:
                 >
-                > - **F1-Score:** β = 1 → equal weight for precision and recall  
-                > - **F2-Score:** β = 2 → recall is weighted four times higher  
+                > - **F1-Score:** β = 1 → equal weight for precision and recall
+                > - **F2-Score:** β = 2 → recall is weighted four times higher
                 """)
                 st.latex(
                     r"F_\beta = (1+\beta^2) \cdot \frac{\text{Precision} \cdot \text{Recall}}{\beta^2 \cdot \text{Precision} + \text{Recall}}"
@@ -326,28 +326,28 @@ def show():
             with st.popover("**_INFO: Multi-Class Metrics_**"):
                 st.markdown("""
                 <span style="font-size:85%">
-                >   
-                > **Macro Average:**  
-                > Unweighted mean of the metric across classes.    
+                >
+                > **Macro Average:**
+                > Unweighted mean of the metric across classes.
                 > $$\text{Macro-Avg} = \frac{1}{N}\sum_{i=1}^{N} \text{Metric}_i$$
                 >
-                > **Weighted Average:** 
-                > where \(n_i\) = support for class \(i\)   
-                > Mean of the metric weighted by the number of samples per class.    
+                > **Weighted Average:**
+                > where \(n_i\) = support for class \(i\)
+                > Mean of the metric weighted by the number of samples per class.
                 > $$
                 > \text{Weighted-Avg} = \frac{\sum_{i=1}^{N} n_i \cdot \text{Metric}_i}{\sum_{i=1}^{N} n_i}
-                > $$  
-                >   
-                >
-                > **Micro Average:**  
-                > Aggregates true positives, false positives, and false negatives globally 
-                > across classes.     
-                > $$ 
-                > \text{Micro-Avg Precision} = \frac{\sum_{i} TP_{i}}{\sum_{i} (TP_{i} + FP_{i})} 
                 > $$
                 >
-                > $$ 
-                > \text{Micro-Avg Recall} = \frac{\sum_{i} TP_{i}}{\sum_{i} (TP_{i} + FN_{i})} 
+                >
+                > **Micro Average:**
+                > Aggregates true positives, false positives, and false negatives globally
+                > across classes.
+                > $$
+                > \text{Micro-Avg Precision} = \frac{\sum_{i} TP_{i}}{\sum_{i} (TP_{i} + FP_{i})}
+                > $$
+                >
+                > $$
+                > \text{Micro-Avg Recall} = \frac{\sum_{i} TP_{i}}{\sum_{i} (TP_{i} + FN_{i})}
                 > $$
                 > </span>
                 """)
@@ -356,9 +356,9 @@ def show():
             with st.popover("**_INFO: Confusion Matrix_**"):
                 st.markdown("""
                 **Confusion matrix**
-                > A confusion matrix shows how many samples of each true class were predicted as each class.  
-                > - **Diagonal:** correct predictions  
-                > - **Off-diagonal:** misclassifications  
+                > A confusion matrix shows how many samples of each true class were predicted as each class.
+                > - **Diagonal:** correct predictions
+                > - **Off-diagonal:** misclassifications
                 >
                 > |              | Pred Class 0 | Pred Class 1 | Pred Class 2 | Pred Class 3 |
                 > |--------------|-------------|--------------|--------------|--------------|
@@ -381,16 +381,16 @@ def show():
                 st.markdown(
                     """
                 #### **(B) Grad-CAM heatmaps per image**
-                > **📷 What is Grad-CAM?**  
+                > **📷 What is Grad-CAM?**
                 > <span style="font-size:85%">
-                > **Gradient-weighted Class Activation Mapping (Grad-CAM)** is a visualization technique used to interpret Convolutional Neural Networks (CNNs).  
-                > - It highlights the regions of an input image that contribute most to a model’s prediction for a specific class.  
-                > - Uses the gradients of the target class flowing into the final convolutional layer to produce a **heatmap**.  
+                > **Gradient-weighted Class Activation Mapping (Grad-CAM)** is a visualization technique used to interpret Convolutional Neural Networks (CNNs).
+                > - It highlights the regions of an input image that contribute most to a model’s prediction for a specific class.
+                > - Uses the gradients of the target class flowing into the final convolutional layer to produce a **heatmap**.
                 >
-                > **How it’s visualized:**  
-                > - A colored heatmap is overlaid on the original X-ray image.  
-                > - Warmer colors (red/yellow) indicate regions with stronger influence on the model’s decision.  
-                > - Cooler colors (blue) indicate less relevant areas.  
+                > **How it’s visualized:**
+                > - A colored heatmap is overlaid on the original X-ray image.
+                > - Warmer colors (red/yellow) indicate regions with stronger influence on the model’s decision.
+                > - Cooler colors (blue) indicate less relevant areas.
                 > </span>
                 """,
                     unsafe_allow_html=True,
@@ -398,40 +398,40 @@ def show():
 
             with st.popover("**_INFO 'Sparsity Score'_**"):
                 st.markdown("""
-                
-                **🟦 What is Sparsity in Explanations?**  
+
+                **🟦 What is Sparsity in Explanations?**
                 """)
                 # st.divider()
                 st.markdown("""
                 ---
-                **Sparsity** measures how focused or distributed a model’s explanation is over the input image.  
-                  - High sparsity → The model relies on a **small, concentrated region** of the image.  
-                  - Low sparsity → The model spreads its attention over **larger areas** of the image.  
+                **Sparsity** measures how focused or distributed a model’s explanation is over the input image.
+                  - High sparsity → The model relies on a **small, concentrated region** of the image.
+                  - Low sparsity → The model spreads its attention over **larger areas** of the image.
                 ---
                 """)
                 # st.divider()
                 st.markdown("""
-                **Mathematical intuition:**  
-                Given a normalized heatmap :red[H] of width :red[W] and height :red[H\_i],  
-                where :blue['Active Pixels'] are those above a chosen intensity threshold,  
+                **Mathematical intuition:**
+                Given a normalized heatmap :red[H] of width :red[W] and height :red[H\_i],
+                where :blue['Active Pixels'] are those above a chosen intensity threshold,
                 sparsity can be approximated as:
                 """)
                 st.latex(r"Sparsity = 1 - \frac{\text{Active Pixels}}{W \cdot H\_i}")
                 # st.divider()
                 st.markdown("""
                 ---
-                **How it’s visualized:**  
-                  - Typically displayed as a **percentage or numeric score**  
+                **How it’s visualized:**
+                  - Typically displayed as a **percentage or numeric score**
                   - Helps compare how localized different explanations are.
                 ---
                 """)
                 # st.divider()
                 st.markdown(
                     """
-                **How it is used here:**  
-                Because many images often show homogeneous pixel distributions, and meaningful  
-                comparison across thresholds is required during training, the formula above has been slightly adapted.  
-                In our implementation, sparsity scores are additionally **divided by the applied threshold**,  
+                **How it is used here:**
+                Because many images often show homogeneous pixel distributions, and meaningful
+                comparison across thresholds is required during training, the formula above has been slightly adapted.
+                In our implementation, sparsity scores are additionally **divided by the applied threshold**,
                 making it easier to compare values at a glance.
                 """,
                 )
@@ -526,7 +526,7 @@ def show():
             else:
                 st.warning("Please complete your selection.")
                 # st.write(f"DEBUG:  {opt_3} and {select_3}")
-        """ 
+        """
         my_df = pd.DataFrame()
             for stage in options:
                 df = load_df(stage_best_hp[f"{stage}"])
@@ -625,8 +625,8 @@ def show():
             for img in enumerate(image):
                 with cols[i % 2]:
                     st.image(img, use_container_width=True)
-            
-            
+
+
             for img in img_list:
                 name = img.stem.lower()
                 for i, label in enumerate(["good", "bad"]):

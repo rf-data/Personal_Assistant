@@ -4,6 +4,7 @@
 
 # import requests
 import streamlit as st
+
 # # from frontend.pages.B_p0_ETL_plain_text import FILE_FOLDER  # INPUT_FOLDER
 
 # from src.core.memory import app_session
@@ -20,14 +21,15 @@ import streamlit as st
 # #         ".doc": ""
 # #         }
 
+
 def show():
     st.header("🏠 Startseite ")
     st.subheader("**ETL CSV & Parquet files**")
 
     st.divider()
 
-
     st.markdown("**Under Construction**")
+
 
 # def show():
 #     st.header("🔍 Extraktion / Parsing")

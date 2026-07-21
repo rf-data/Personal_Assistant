@@ -3,7 +3,7 @@
 import html
 import re
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 
 import requests
@@ -30,18 +30,15 @@ from bs4 import NavigableString  # , Tag
 #     Word,
 # )
 from src.model_tools import HTMLCleanExtractor
-from src.model_tools.base_extractor import BaseExtractor
+
 from src.utils.html_helper import normalize_url
 from src.utils.path_helper import shorten_path
 from src.utils.text_file_helper import read_html_file
 
-from src.core.memory import RunContext
 
 @dataclass
 class URLCleanExtractor(HTMLCleanExtractor):
-    
     def extract(self, f_path=None, url=None, f_text=None):
-
         # parser = extract_config["html_parser"]
         parser = "html.parser"  # "lxml"
         if f_path is not None:
@@ -144,7 +141,6 @@ class URLCleanExtractor(HTMLCleanExtractor):
         return tag.find_parent(["p", "ul", "ol", "pre", "table"]) is not None
 
     def _extract_elements(self, root) -> list[Element]:
-
         self.logger.info(
             "Relevant tags (in _extract_elements()):\n%s", self.RELEVANT_TAGS
         )
@@ -348,7 +344,6 @@ class URLCleanExtractor(HTMLCleanExtractor):
         return extract
 
     def _parse_inline(self, tag) -> tuple[str, list]:
-
         parts = []
         text_full = []
 
@@ -502,14 +497,12 @@ class URLCleanExtractor(HTMLCleanExtractor):
         return False
 
     def _ensure_suffix(self, url: str, content_type: str) -> str:
-
         url_suffix = Path(url).suffix
         cont_suffix = self.MIME_MAP.get(content_type.split(";")[0])
 
         return url_suffix or cont_suffix or "bin"
 
     def _is_blacklisted(self, img_url):
-
         if re.search(r"/\d{1,2}px-", img_url):
             self.logger.info(
                 "Image '%s' appears to be small (<= 60px) and will not be scraped.",

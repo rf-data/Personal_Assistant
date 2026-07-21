@@ -66,7 +66,6 @@ Knowledge Extraction
 def process_wiki(
     extract: DocumentExtract, prepare_config: dict, enricher
 ) -> None:  # List[PDFPageExtract]
-
     logger = session_state.logger
 
     classifier = WikiClassifier(classify_config=prepare_config)
@@ -142,7 +141,7 @@ def process_wiki(
 
 
 #     # load env variables and config
-#     data_processed = os.getenv("DATA_PROCESSED")
+#     data_processed = env_variables("DATA_PROCESSED")
 
 #     # if not session.model_config:
 #     config = session.model_config

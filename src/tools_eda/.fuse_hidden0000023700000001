@@ -27,7 +27,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "import os\n",
+    "\n",
     "import pandas as pd\n",
     "import pyarrow\n",
     "import re\n",
@@ -1137,7 +1137,7 @@
    "source": [
     "## loading data\n",
     "# from src.data_import import extract_au_alter_krankheitsgruppen_table\n",
-    "import os\n",
+    "\n",
     "\n",
     "path_alter = \"DRV/data/0_data_downloaded/BMG_AU_Alter_Krankheitsgruppen\"\n",
     "alter_files = f_path_list(path_alter)\n",

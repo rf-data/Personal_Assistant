@@ -1,36 +1,35 @@
 ## txt_file_helper.py
 # import
-import subprocess 
 import shutil
-import os
+import subprocess
+from collections.abc import Iterator
 from pathlib import Path
+
 import pandas as pd
 from docx import Document
-from typing import Iterator
+
+from src.core.config import env_variables
+from src.core.memory import app_session
 
 # import src.utils.general_helper as gh
 from src.utils.path_helper import ensure_dir, shorten_path
-from src.core.memory import app_session
 
 
 def get_soffice() -> str:
     soffice = shutil.which("soffice")
     if soffice is None:
-        raise RuntimeError(
-            "LibreOffice (soffice) wurde nicht gefunden."
-            )
-        # sudo apt update 
+        raise RuntimeError("LibreOffice (soffice) wurde nicht gefunden.")
+        # sudo apt update
         # sudo apt install libreoffice-writer
-    
+
     return soffice
 
 
 def convert_docx(
-            f_path: str | Path,
-            out_format: str,
-            overwrite: bool = False,
-            ) -> Path:
-
+    f_path: str | Path,
+    out_format: str,
+    overwrite: bool = False,
+) -> Path:
     f_path = Path(f_path)
 
     if not f_path.exists():
@@ -62,12 +61,10 @@ def convert_docx(
     if not save_path.exists():
         raise RuntimeError("LibreOffice did not create the ODT file.")
 
-    print(
-        f"Saved converted file (docx -> {out_format}): "
-        f"'{shorten_path(save_path)}'"
-    )
+    print(f"Saved converted file (docx -> {out_format}): '{shorten_path(save_path)}'")
 
     return save_path
+
 
 # def convert_docx_to_odt(f_path: str|Path, save=False) -> aw.Document:
 #     f_path = Path(f_path)
@@ -84,24 +81,19 @@ def convert_docx(
 
 
 def read_docx_tables(path: str) -> Iterator[tuple[int, pd.DataFrame]]:
-
     doc = Document(path)
     for idx, tbl in enumerate(doc.tables, start=1):
-        rows = [
-            [cell.text.strip() for cell in row.cells]
-            for row in tbl.rows
-            ]
-            
+        rows = [[cell.text.strip() for cell in row.cells] for row in tbl.rows]
+
         if not rows:
             continue
 
         header = rows[0]
         data = rows[1:]
-        df = pd.DataFrame(data, 
-                          columns=header)
+        df = pd.DataFrame(data, columns=header)
 
         yield idx, df
-    
+
 
 def read_docx_text(path):
     doc = Document(path)
@@ -114,9 +106,7 @@ def read_docx_text(path):
     return "\n\n".join(lines)
 
 
-
 def read_text_file(f_path):
-
     txt_file = Path(f_path).read_text(encoding="utf-8")
 
     return txt_file
@@ -160,7 +150,6 @@ def read_text_file(f_path):
 
 
 def save_text_file(data, file_name, folder, suffix="md"):
-
     logger = app_session.logger
 
     folder = ensure_dir(folder)
@@ -171,8 +160,6 @@ def save_text_file(data, file_name, folder, suffix="md"):
     logger.info("File saved as %s", shorten_path(f_path))
 
     return
-
-
 
 
 #####################
@@ -192,15 +179,12 @@ def save_text_file(data, file_name, folder, suffix="md"):
 # print(magic, version)
 
 
-
 if __name__ == "__main__":
+    # from src.utils.general_helper import load_env_vars
 
-    from src.utils.general_helper import load_env_vars
+    # load_env_vars()
 
-    load_env_vars()
-
-    folder = os.getenv("DATA_QMS")
-    assert folder is not None
+    folder = env_variables.data_qms
 
     files = [f for f in Path(folder).iterdir() if f.suffix == ".docx"]
     print(f"Length 'files': {len(files)}")
@@ -210,4 +194,4 @@ if __name__ == "__main__":
             f_path=file,
             out_format="odt",
             overwrite=False,
-            )
+        )

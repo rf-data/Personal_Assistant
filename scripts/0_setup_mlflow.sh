@@ -24,14 +24,14 @@ LOGFILE="$PROJECT_ROOT/logs/0_mlflow_setup.log"
     set +o allexport
   else
     echo ""
-    echo "No .env file found - relying on defaults"  
+    echo "No .env file found - relying on defaults"
   fi
 } >> "$LOGFILE" 2>&1
 
 # ----------------------------
 # Defaults (only for SERVER)
 # ----------------------------
-MLFLOW_DB=${MLFLOW_DB:-"sqlite:///$PROJECT_ROOT/mlflow/mlflow.db"} 
+MLFLOW_DB=${MLFLOW_DB:-"sqlite:///$PROJECT_ROOT/mlflow/mlflow.db"}
 ARTIFACT_DIR=${MLFLOW_ARTIFACTS:-"$PROJECT_ROOT/mlflow/artifacts"}
 
 # Kürzen auf die letzten 2–3 Teile des Pfads
@@ -52,7 +52,7 @@ short_artifacts=$(echo "$ARTIFACT_DIR" | awk -F'/' '{print $(NF-1)"/"$NF}')
     --host 127.0.0.1 \
     --port 5000 \
      >> "$LOGFILE" 2>&1 &
-  
+
   echo "MLflow server started with PID $!"
   echo "===== END MLFLOW_SERVER_SETUP [$(date '+%Y-%m-%d %H:%M:%S')] ===="
 } >> "$LOGFILE" 2>&1
@@ -65,7 +65,7 @@ short_artifacts=$(echo "$ARTIFACT_DIR" | awk -F'/' '{print $(NF-1)"/"$NF}')
   echo "===== START MLFLOW_SERVER_CHECK [$(date '+%Y-%m-%d %H:%M:%S')] ===="
   echo "Waiting for MLflow server to become available..."
   MLFLOW_PID=$!
-  
+
   sleep 2
   if ! kill -0 "$MLFLOW_PID" 2>/dev/null; then
     echo "MLflow server crashed during startup. See log above."
@@ -81,7 +81,7 @@ short_artifacts=$(echo "$ARTIFACT_DIR" | awk -F'/' '{print $(NF-1)"/"$NF}')
   # until curl -sf http://127.0.0.1:5000/api/2.0/mlflow/experiments/list > /dev/null; do
   #   sleep 1
   # done
-  
+
   echo "MLflow server is ready"
 } >> "$LOGFILE" 2>&1
 

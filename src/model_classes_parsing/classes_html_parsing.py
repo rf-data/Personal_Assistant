@@ -1,17 +1,15 @@
 ## classes_html_parsing.py
 # import
-from typing import (
-    Literal,
-    Dict
+from typing import Literal
+
+from pydantic import Field  # BaseModel,
+
+from src.model_classes_parsing.base_classes_parsing import (
+    BaseLeaf,
+    # BaseContainer,
+    ImageMeta,
 )
 
-from pydantic import Field  # BaseModel, 
-
-from src.model_classes_parsing.base_classes_parsing import (BaseLeaf,
-                                                    # BaseContainer,
-                                                    Element, 
-                                                    HeadingMeta, 
-                                                    ImageMeta)
 
 # -------------------------
 # LEAF_ELEMENTS
@@ -35,7 +33,7 @@ class ImageNode(TextNode):
     src: str = ""
     alt: str = ""
     meta: ImageMeta
-    meta_from_html: Dict = {}
+    meta_from_html: dict = {}
 
 
 class CiteNode(TextNode):
@@ -54,5 +52,3 @@ class OtherNode(TextNode):
 # -------------------------
 # CONTAINER_ELEMENTS
 # -------------------------
-
- 

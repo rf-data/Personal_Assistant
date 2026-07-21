@@ -9,13 +9,10 @@ import inspect
 import subprocess
 from collections.abc import Callable, Iterable
 
-from dotenv import find_dotenv, load_dotenv
-
 from src.core.memory import session
 
 
 def pretty_print(result):
-
     if isinstance(result, AggregatedResult):
         data = result.model_dump()
     elif isinstance(result, dict):
@@ -106,6 +103,7 @@ def iter_chunks(df, chunk_size=25):
         yield df.iloc[start : start + chunk_size]
 
 
+'''
 def load_env_vars(name: list | str = ".env"):
     """
     Load environment variables from .env files if available.
@@ -131,6 +129,7 @@ def load_env_vars(name: list | str = ".env"):
     session.state.env_loaded = env_loaded
 
     return
+'''
 
 
 def get_git_commit():

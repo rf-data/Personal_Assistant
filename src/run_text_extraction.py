@@ -1,15 +1,11 @@
 ## run_txt_md_extraction.py
 # import
-import os
+
 import sys
 from datetime import datetime
 from pathlib import Path
 
 import pyinputplus as pyip
-from tiktoken import encoding_for_model
-
-from src.core.logger import create_logger
-from src.core.memory import app_session, RunContext
 from src.model_tools.base_assembler import BaseAssembler
 from src.model_tools.feature_enricher import FeatureEnricher
 from src.model_tools.html_extractor import HTMLCleanExtractor
@@ -17,6 +13,11 @@ from src.model_tools.notebook_extractor import NoteBookCleanExtractor
 from src.model_tools.pdf_extractor import PDFCleanExtractor
 from src.model_tools.text_classifier import TXTClassifier
 from src.model_tools.text_extractor import MDCleanExtractor, TXTCleanExtractor
+from tiktoken import encoding_for_model
+
+from src.core.config import env_variables
+from src.core.logger import create_logger
+from src.core.memory import RunContext, app_session
 
 # from src.tools.build_structure import build_structure_from_lines
 # # from src.tools.extraction import  extraction_per_page
@@ -34,13 +35,14 @@ from src.tools_parsing.extract_md import extract_md_file
 from src.tools_parsing.extract_notebook import extract_notebook_json
 from src.tools_parsing.extract_pdf import extract_pdf_file
 from src.tools_parsing.extract_txt import extract_txt_file
+
 # from src.tools.extract_medium import extract_url
 from src.tools_parsing.extract_wiki import extract_wiki_article
 from src.tools_parsing.post_extract_processing_pdf import process_pdf
 from src.utils.dict_helper import get_yaml_config
 
 # from src.tools.post_extract_processing_wiki import process_wiki
-from src.utils.general_helper import load_env_vars
+# from src.utils.general_helper import load_env_vars
 from src.utils.path_helper import shorten_path
 from src.utils.pdf_helper import check_pdf_split
 from src.utils.text_file_helper import save_text_file
@@ -56,7 +58,7 @@ from src.utils.text_file_helper import save_text_file
 
 def text_file_extraction():
     # load env variables and config
-    load_env_vars()
+    # load_env_vars()
 
     # config_name = input("Enter 'config_file' name (no suffix): ")
     general_config = get_yaml_config("extract_text")
@@ -112,10 +114,9 @@ def run_text_file_extraction(
     query: str | None = None,
     url: str | None = None,
 ) -> None:
-
     # load_env_vars()
-    data_raw = os.getenv("DATA_RAW")
-    data_processed = os.getenv("DATA_PROCESSED")
+    data_raw = env_variables.data_raw
+    data_processed = env_variables.data_processed
 
     general_config = session_state.general_config
     run_config = session_state.run_config
@@ -139,7 +140,6 @@ def run_text_file_extraction(
     # session.enricher = feat_enricher
 
     if url and text_type == "url":
-
         # session_state.save_folder = Path(f"{data_processed}/url/extracted")
 
         # extractor = HTMLCleanExtractor(enricher=feat_enricher)
@@ -208,9 +208,8 @@ def run_text_file_extraction(
             app_session.save_name = f"{now}_{f_name}_extracted"
 
             md_extractor = MDCleanExtractor(
-                                extract_config=config.get("md_extraction", {}), 
-                                enricher=feat_enricher
-                                )
+                extract_config=config.get("md_extraction", {}), enricher=feat_enricher
+            )
 
             md_extract_ = extract_md_file(f_path, md_extractor, save=True)
 
@@ -224,13 +223,10 @@ def run_text_file_extraction(
             # TODO: improve header_footer detection
 
             pdf_extractor = PDFCleanExtractor(
-                extract_config=config.get("pdf_extraction", {}), 
-                enricher=feat_enricher
+                extract_config=config.get("pdf_extraction", {}), enricher=feat_enricher
             )
 
-            pdf_extract_raw = extract_pdf_file(f_path, 
-                                               pdf_extractor, 
-                                               save=True)
+            pdf_extract_raw = extract_pdf_file(f_path, pdf_extractor, save=True)
 
             app_session.save_folder = Path(f"{data_processed}/pdf_files/processed")
             # session.state.save_name = f"{now}_{f_name}"
@@ -265,19 +261,19 @@ def run_text_file_extraction(
         elif suffix == "html":
             # session_state.save_folder = Path(f"{data_processed}/html_files/extracted/{now}_{f_name}")
             # session_state.save_name = f"{f_name}_extracted"
-            
+
             run_context = RunContext(
-                        # encoder=app_session.encoder,
-                        run_settings=run_config,
-                        save_folder=Path(f"{data_processed}/html_files/extracted/{now}_{f_name}"),
-                        save_name=f"{f_name}_extracted",
-                        text_type="html",
-                        timestamp=now
-                        )
-            
-            html_extractor = HTMLCleanExtractor(
-                                    run_context=run_context
+                # encoder=app_session.encoder,
+                run_settings=run_config,
+                save_folder=Path(
+                    f"{data_processed}/html_files/extracted/{now}_{f_name}"
+                ),
+                save_name=f"{f_name}_extracted",
+                text_type="html",
+                timestamp=now,
             )
+
+            html_extractor = HTMLCleanExtractor(run_context=run_context)
 
             #     extract_config=config.get("html_extraction", {}), enricher=feat_enricher
             # )
@@ -353,7 +349,7 @@ if __name__ == "__main__":
 #     # load env variables and config
 #     gh.load_env_vars()
 #     data_processed = "/home/robfra/0_Portfolio_Projekte/gmp_compliance/data/processed"
-#     # os.getenv("DATA_PROCESSED")
+#     # env_variables("DATA_PROCESSED")
 
 #     general_config = config.get("general_args", {})
 #     log_name = general_config["name_log"]
@@ -619,7 +615,7 @@ if __name__ == "__main__":
 
 # #         # timestamp = session.state.now
 # #         # f_name = Path(f_path).stem   # name.split(".")[0]
-# #         # data_processed = os.getenv("DATA_PROCESSED")
+# #         # data_processed = env_variables("DATA_PROCESSED")
 
 # #         # chunk_folder = f"{data_processed}/chunk_df"
 # #         # chunk_file = f"{timestamp}_{f_name}_chunk_df"

@@ -1,16 +1,16 @@
 # alerts.yaml
 groups:
   - name: infrastructure
-    rules: 
+    rules:
     - alert: HostHighCPU
-      expr: 100 -(avg by(instance) 
+      expr: 100 -(avg by(instance)
             (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
       for: 5m
       labels:
         severity: warning
       annotations:
         summary: CPU > 90%
-    
+
     - alert: HostHighMemory
       expr: (
         (1 -

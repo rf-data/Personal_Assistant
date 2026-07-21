@@ -1,61 +1,50 @@
 ## generate.py
 # import
-from typing import List
 
 from src.core.memory import SOPGenContext
+
 # from src.agent.templates.sop_template import CHAPTER_TEMPLATE   # , SOP_TEMPLATE
 
-SCOPE_DICT = {
-    "sop_allg": "Erstelle eine allgemeine SOP zu folgendem Thema:"
-}
-
-
+SCOPE_DICT = {"sop_allg": "Erstelle eine allgemeine SOP zu folgendem Thema:"}
 
 
 # task_scope = "Erstelle eine allgemeine SOP zu folgendem Thema:"
 
-def _ingest_chunks(
-            chunks: List, 
-            sop_context: SOPGenContext
-            ):
-    """= Post-retrieval; 
+
+def _ingest_chunks(chunks: list, sop_context: SOPGenContext):
+    """= Post-retrieval;
     - add infos / metadata / sources to each chunk
     """
 
     POST_RETRIEVAL_PROMPT = ""
 
     return IngestedChunk(
-                chunk_id="",
-                fact="",
-                topic="",
-                source="",
-                section="",
-                # page=""?,
-                confidence=""
-                )
+        chunk_id="",
+        fact="",
+        topic="",
+        source="",
+        section="",
+        # page=""?,
+        confidence="",
+    )
 
 
-# def summarize_chunks(chunks: List[str]):
-#     """
-#     merge/deduplicate all chunks 
-#     """
+def summarize_chunks(chunks: list[str], context: SOPGenContext):
+    """
+    ingest and summarize retrieved chunks
+    """
 
+    chunks_ing = _ingest_chunks(chunks, context)
 
-#     chunks_ing = _ingest_chunks(chunks)
-
-#     return ChunkSummary(
-#                 content="",
-#                 sources=[(source, section), (...)],
-
-#     )
-
+    return ChunkSummary(
+        content="",
+        sources=[(source, section), (...)],
+    )
 
 
 def build_context(
-            topic: str,
-            chapter_name: str,
-            chunk_summary: ChunkSummary
-            ) -> PromptContext:
+    topic: str, chapter_name: str, chunk_summary: ChunkSummary
+) -> PromptContext:
     # parts = []
 
     # for i, chunk in enumerate(chunks, start=1):
@@ -65,45 +54,42 @@ def build_context(
     #     )
 
     return PromptContext(
-                chunk_summary = "\n\n".join(parts),
-                task_scope = SCOPE_DICT[""],
-                chapter="",
-                mode = "",        # ["new", "update"]
-                template = CHAPTER_TEMPLATE[""]
-                )
+        chunk_summary="\n\n".join(parts),
+        task_scope=SCOPE_DICT[""],
+        chapter="",
+        mode="",  # ["new", "update"]
+        template=CHAPTER_TEMPLATE[""],
+    )
 
 
-# GMP-orientierter . 
-# Berücksichtige, dass die SOPs zu einer  
-# gehören und man sich an GMP orientiert aber nicht daran gebunden ist.  
+# GMP-orientierter .
+# Berücksichtige, dass die SOPs zu einer
+# gehören und man sich an GMP orientiert aber nicht daran gebunden ist.
 
 
-def build_sop_gen_prompt(
-                context: SOPGenContext
-                ) -> str:
-    
-    # return 
+def build_sop_gen_prompt(context: SOPGenContext) -> str:
+    # return
     """
-    Du bist GMP-Experte.
+        Du bist GMP-Experte.
 
-Erstelle aus dem bereitgestellten Wissenspool eine SOP.
+    Erstelle aus dem bereitgestellten Wissenspool eine SOP.
 
-Regeln:
+    Regeln:
 
-keine neuen Inhalte
-keine Halluzinationen
-nichts weglassen
-fachlich konsistent
-logisch strukturieren
-keine Quellen zitieren
-professioneller SOP-Stil
-Markdown
+    keine neuen Inhalte
+    keine Halluzinationen
+    nichts weglassen
+    fachlich konsistent
+    logisch strukturieren
+    keine Quellen zitieren
+    professioneller SOP-Stil
+    Markdown
     """
-    
+
     return f"""
 Du bist ein SOP-Autor, der GMP-relevante SOPs für eine
-herstellende Apotheke schreibt. Man ist nicht an GMP gebunden, 
-will sich aber daran orientieren. 
+herstellende Apotheke schreibt. Man ist nicht an GMP gebunden,
+will sich aber daran orientieren.
 
 Aufgabe:
 {context.task_scope}
@@ -132,10 +118,6 @@ def generate_sop(prompt: str, client) -> str:
     return response.output_text
 
 
-
-
-
-
 # - Zweck
 # - Geltungsbereich
 # - Verantwortlichkeiten
@@ -159,7 +141,7 @@ prompt = f"""
     return llm(prompt)
 '''
 
-'''
+"""
 import pandas as pd
 
 def generate_report():
@@ -168,4 +150,4 @@ def generate_report():
     summary.to_csv("report.csv")
 
 generate_report()
-'''
+"""

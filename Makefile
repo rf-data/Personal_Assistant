@@ -3,23 +3,26 @@ PROJECT := personal_assistence
 
 .PHONY: all fmt lint type_check monitoring_docker monitoring_stop mlflow_fingerprint mlflow_start mlflow_stop
 # mlflow_local n8n_quick text_prepare text_extract rag_prepare  # test
-# all stop evaluation fire-alert reports  
+# all stop evaluation fire-alert reports
 
 all: fmt lint type_check
+
+streamlit:
+	streamlit run streamlit_app.py
 
 litellm_start:
 	litellm --config /workspaces/gmp_compliance/configuration/litellm_config.yaml
 	# --detailed_debug
 
-mlflow_fingerprint: 
+mlflow_fingerprint:
 	bash scripts/create_experiment.sh
 
 mlflow_start:
 	bash scripts/0_setup_mlflow.sh
-	
+
 mlflow_stop:
 	pkill -f "mlflow server" || true
-	
+
 clean_linux:
 	bash scripts/clean_linux.sh
 
@@ -41,7 +44,7 @@ type_check:
 
 # api_start:
 # 	uvicorn fastapi_main:app --host 0.0.0.0 --port 8000
-	
+
 # mlflow_local:
 # 	${ROOT}/scripts/0_setup_mlflow.sh
 
@@ -57,11 +60,11 @@ type_check:
 # rag_prepare:
 # 	python -m src.run_rag_preparation
 
-	
-# all: 
+
+# all:
 # 	docker compose -p $(PROJECT) -f $(ROOT)/docker-compose.yaml up --build -d
 
-# stop: 
+# stop:
 # 	docker compose -p $(PROJECT) -f $(ROOT)/docker-compose.yaml down
 
 # evaluation:
@@ -72,4 +75,3 @@ type_check:
 
 # reports:
 # 	python3 $(ROOT)/src/main_drift.py
-

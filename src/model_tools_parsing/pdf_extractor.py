@@ -4,42 +4,39 @@ import re
 from collections import defaultdict
 from dataclasses import dataclass  # , field
 from pathlib import Path
-from typing import Literal
-from returns.result import Result, Success, Failure
 
 # import numpy as np
 # import gc
 # import logging
 import fitz  # PyMuPDF
+from returns.result import Result, Success
+
+from src.core.memory import ParseContext
 
 # from src.utils.pdf_helper import extract_text_pymupdf
-
 from src.model_classes_parsing.base_classes_parsing import (
-                                            BulletItem,
-                                            BulletMeta,
-                                            Drawing,
-                                            DrawingMeta,
-                                            Graphics,
-                                            Image,
-                                            ImageMeta,
-                                            Line,
-                                            LineGroup,
-                                            LineSplit,
-                                            PageMeta,
-                                            PDFPageExtract,
-                                            Span,
-                                            SpanMeta,
-                                            Word,
-                                            WordMeta
-                                                )
-
+    BulletItem,
+    BulletMeta,
+    Drawing,
+    DrawingMeta,
+    Graphics,
+    Image,
+    ImageMeta,
+    Line,
+    LineGroup,
+    LineSplit,
+    PageMeta,
+    PDFPageExtract,
+    Span,
+    SpanMeta,
+    Word,
+    WordMeta,
+)
+from src.model_tools_parsing.base_extractor import BaseExtractor
 
 # from tiktoken import encoding_for_model
 from src.model_tools_parsing.feature_enricher import FeatureEnricher
-from src.model_tools_parsing.base_extractor import BaseExtractor
 from src.utils.dict_helper import save_base_model_as_dict
-
-from src.core.memory import ParseContext
 
 # @dataclass
 # class CleaningStats:
@@ -51,17 +48,14 @@ from src.core.memory import ParseContext
 class PDFCleanExtractor(BaseExtractor):
     bullets = {"•", "▪", "●", "‣", "◦", "–"}
     heading_prefix = (
-                r"^("
-                r"(?:[IVXLCDM]+)"
-                r"|(?:[A-Z](?:\.\d+)*)"
-                r"|(?:\d+(?:\.\d+)*)"
-                r")(?:\.|\)|\])?\s+"
-                )
-    
-    def __init__(self, 
-                 enricher: FeatureEnricher, 
-                 parse_context: ParseContext):
-        
+        r"^("
+        r"(?:[IVXLCDM]+)"
+        r"|(?:[A-Z](?:\.\d+)*)"
+        r"|(?:\d+(?:\.\d+)*)"
+        r")(?:\.|\)|\])?\s+"
+    )
+
+    def __init__(self, enricher: FeatureEnricher, parse_context: ParseContext):
         self.doc_name = parse_context.run_id
         self.enricher = enricher
         self.extract_config = parse_context.parse_settings.pdf
@@ -76,33 +70,32 @@ class PDFCleanExtractor(BaseExtractor):
         self.save_name = parse_context.save_name
         self.text_type = parse_context.text_type
 
-        return 
-    
+        return
 
     def extract_text_per_page(
         self,
         f_path: str,
     ) -> Result[list[PDFPageExtract], str]:
-
         self.logger.info("Preparing text for extraction.")
 
         self.doc_name = Path(f_path).name
-        # self.extract_config["pymupdf"] = 
+        # self.extract_config["pymupdf"] =
         extract_fn = self._extract_text_pymupdf
 
         extract_graphics = self.extract_config.extract_graphics
         # ", False)
-        extract_images = self.extract_config.scrape_images # ", False)
+        extract_images = self.extract_config.scrape_images  # ", False)
         # extract_model = self.extract_config.extraction_model   #"]
 
         # extract_fn = self.extract_config[extract_model]
         # extract_results = extract_fn(f_path)
         doc = fitz.open(f_path)
 
-
-        pages = [(idx, page) for idx, page in enumerate(doc)
-                if (self.page_range == "all" 
-                    or idx in self.page_range)]
+        pages = [
+            (idx, page)
+            for idx, page in enumerate(doc)
+            if (self.page_range == "all" or idx in self.page_range)
+        ]
         # if self.page_range == "all":
         #     pages = [(idx, page) in range(len(doc))]
 
@@ -112,11 +105,10 @@ class PDFCleanExtractor(BaseExtractor):
         #             # page = doc[page_num]
         #             pages.append((idx, page))
 
-
         records = []
         # graphs = []
         # images = []
-        for (idx, page) in pages:     # enumerate(doc):
+        for idx, page in pages:  # enumerate(doc):
             if idx % 5 == 0:
                 self.logger.info("Start extracting page #%s", idx)
 
@@ -139,9 +131,7 @@ class PDFCleanExtractor(BaseExtractor):
 
             if extract_images:
                 self.logger.info(
-                    "Start extracting images from %s (page: %s)", 
-                    self.doc_name, 
-                    idx
+                    "Start extracting images from %s (page: %s)", self.doc_name, idx
                 )
 
                 images = self._extract_images(page, idx)
@@ -154,18 +144,15 @@ class PDFCleanExtractor(BaseExtractor):
 
         return Success(records_enriched)
 
-
     def restructure_lines(
-                    self, 
-                    extract: PDFPageExtract, 
-                    # save: bool = False
-                    ) -> Result[PDFPageExtract, str]:
-
+        self,
+        extract: PDFPageExtract,
+        # save: bool = False
+    ) -> Result[PDFPageExtract, str]:
         # process flow
         line_splits_all = []
         for line in extract.elements:
-
-            # print("line (pdf_extractor l.140):", type(line), 
+            # print("line (pdf_extractor l.140):", type(line),
             #       "\n", line)
             l_splits = self._split_lines(line.elements)
             line_splits_all.append(self.enricher.enrich_lines(l_splits))
@@ -186,21 +173,22 @@ class PDFCleanExtractor(BaseExtractor):
         #     texts.append(res["text_merge"])
         #     info.append(res["segments"])
 
-        if "extract" in self.extract_config.save:   # save:
+        if "extract" in self.extract_config.save:  # save:
             # save_folder = session.state.save_folder
             # save_name = session.state.save_name
             # now = session.state.timestamp
             page_no = extract.page_no
 
-            save_path = Path(f"{self.save_folder}/{self.save_name}_p{page_no}_extracted")
+            save_path = Path(
+                f"{self.save_folder}/{self.save_name}_p{page_no}_extracted"
+            )
 
-            save_base_model_as_dict(extract, 
-                                    save_path)
+            save_base_model_as_dict(extract, save_path)
 
             # text_comb = "\n\n".join(text)
             # dh.save_md_file(text_comb, f"{now}_{name_short}_text", f"{data_processed}/extract_from_words")
 
-        return Success(extract) # , text
+        return Success(extract)  # , text
 
         #     def extract_grafics(self, page) -> GraphMeta:
 
@@ -225,7 +213,6 @@ class PDFCleanExtractor(BaseExtractor):
         #     }
 
     def _extract_text_pymupdf(self, page) -> PDFPageExtract:
-
         lines = self._extract_and_group_words(page)
 
         lines = self.enricher.enrich_lines(lines)
@@ -246,9 +233,7 @@ class PDFCleanExtractor(BaseExtractor):
 
         return extract  # , texts
 
-
     def _extract_grafics(self, page) -> Graphics:
-
         # from src.core.memory import session
 
         # doc = fitz.open(path)
@@ -273,8 +258,7 @@ class PDFCleanExtractor(BaseExtractor):
     # CLEANING TEXT
     # -----------------------------
 
-    def _clean_words_from_words(self, 
-                                words: list[tuple]) -> list[Word]:
+    def _clean_words_from_words(self, words: list[tuple]) -> list[Word]:
         cleaned = []
 
         for w in words:
@@ -304,7 +288,6 @@ class PDFCleanExtractor(BaseExtractor):
     # EXTRACTING TEXT + NON_TEXT
     # -----------------------------
     def _extract_and_group_words(self, page) -> list[Word | Span]:
-
         extract_source = self.extract_config.extract_source
 
         if "words" in extract_source:
@@ -343,7 +326,6 @@ class PDFCleanExtractor(BaseExtractor):
 
         return lines  # result, text_comb
 
-
     def _extract_images(self, page, page_no: int):
         # from src.core.memory import session
 
@@ -354,12 +336,9 @@ class PDFCleanExtractor(BaseExtractor):
 
         # print the number of images found on the page
         if image_list:
-            self.logger.info("Found %s images on page %s.", 
-                             len(image_list), 
-                             {page_no})
+            self.logger.info("Found %s images on page %s.", len(image_list), {page_no})
         else:
-            self.logger.info("No images found on page %s", 
-                             page_no)
+            self.logger.info("No images found on page %s", page_no)
             return []
 
         img_all = []
@@ -411,7 +390,6 @@ class PDFCleanExtractor(BaseExtractor):
     #     image_file: str = Field(default_factory=str)
 
     def _extract_drawings(self, page):
-
         self.logger.info("Start extracting drawings / vector graphics.")
 
         drawings = page.get_drawings()
@@ -433,7 +411,6 @@ class PDFCleanExtractor(BaseExtractor):
             )
 
         return reduced  # make_json_safe(drawings)
-
 
     def _extract_bullet_chars(self, page):
         self.logger.info("Start extracting bullet chars.")
@@ -460,7 +437,6 @@ class PDFCleanExtractor(BaseExtractor):
 
         return bullets
 
-
     def _is_bullet_drawing(self, d: dict) -> bool:
         x0, y0, x1, y1 = d["bbox"]
 
@@ -471,9 +447,7 @@ class PDFCleanExtractor(BaseExtractor):
             width < 10 and height < 10 and abs(width - height) < 2  # ~kreisförmig
         )
 
-
     def _extract_spans_from_rawdict(self, page) -> list[Span]:
-
         raw = page.get_text("rawdict")
 
         line_info = []
@@ -515,7 +489,6 @@ class PDFCleanExtractor(BaseExtractor):
     # -------------------------
 
     def _merge_sources(self, words: list[Word], spans: list[Span]) -> list[Word]:
-
         # print(f"Length of 'words' | 'spans':\t{len(words)} | {len(spans)} ")
 
         self.logger.info("Start merging information from both sources")
@@ -572,7 +545,6 @@ class PDFCleanExtractor(BaseExtractor):
 
         return merged
 
-
     def _group_words_to_lines(self, words: list[Word]) -> list[Line]:
         y_tol = self.general_config.y_gap_words  # 3
         # x_tol = self.extract_config["x_gap_words"]
@@ -600,8 +572,7 @@ class PDFCleanExtractor(BaseExtractor):
             # elif abs(w["x0"] - prev_w["x1"]) < x_tol:
 
             else:
-                lin_sort = sorted(current_line, 
-                                  key=lambda w: w.meta.x_start)
+                lin_sort = sorted(current_line, key=lambda w: w.meta.x_start)
                 # print("lin_sort:\t", lin_sort)
 
                 lines.append(Line(elements=lin_sort))
@@ -654,24 +625,14 @@ class PDFCleanExtractor(BaseExtractor):
 
         return line_splits
 
-
-
     def is_numbered_heading(self, text: str) -> bool:
-        
-        return bool(
-                re.match(
-                    self.heading_prefix, 
-                    text.strip()
-                    )
-                    )
+        return bool(re.match(self.heading_prefix, text.strip()))
         #     r"^(I|II|III|IV|V|VI|VII|VIII|IX|X)\s+\S+",
         # ))
-
 
     def _group_splitted_lines(
         self, splitted_lines_sorted: list[list[LineSplit]]
     ) -> list[LineGroup]:
-
         paragraph_y_gap = self.general_config.y_gap_words
 
         # line_dict = {
@@ -687,14 +648,12 @@ class PDFCleanExtractor(BaseExtractor):
             top = min(l.meta.y_start_min for l in line)
             # bottom = max(l.meta.y_end_max for l in line)
 
-
-
             if prev_top is None:
                 current.append(line)
-            
+
             elif current and self.is_numbered_heading(
-                                " ".join(l.text for l in current[-1])
-                                ):
+                " ".join(l.text for l in current[-1])
+            ):
                 line_group.append(self._finalize_splitted_lines(current))
                 current = [line]
                 prev_top = top
@@ -702,16 +661,12 @@ class PDFCleanExtractor(BaseExtractor):
 
             else:
                 y_delta = top - prev_top
-                
+
                 if y_delta < paragraph_y_gap:
                     current.append(line)
 
                 else:
-                    line_group.append(
-                            self._finalize_splitted_lines(
-                                current
-                                )
-                                )
+                    line_group.append(self._finalize_splitted_lines(current))
                     current = [line]
 
             prev_top = top
@@ -721,11 +676,9 @@ class PDFCleanExtractor(BaseExtractor):
 
         return line_group
 
-
     def _sort_reading_order(
         self, splitted_lines: list[list[LineSplit]]
     ) -> list[list[LineSplit]]:
-
         if not splitted_lines:
             return splitted_lines
 
@@ -753,7 +706,6 @@ class PDFCleanExtractor(BaseExtractor):
     # HELPER FUNCTIONS
     # -------------------------
     def _bbox_overlap(self, a: Word, b: Word) -> float:
-
         x_overlap = max(
             0, min(a.meta.x_end, b.meta.x_end) - max(a.meta.x_start, b.meta.x_start)
         )
@@ -766,7 +718,6 @@ class PDFCleanExtractor(BaseExtractor):
     def _finalize_splitted_lines(
         self, splitted_lines: list[list[LineSplit]]
     ) -> LineGroup:
-
         text_all = []
         words_all = []
         for split_line in splitted_lines:
@@ -795,7 +746,6 @@ class PDFCleanExtractor(BaseExtractor):
     def _assign_columns(
         self, splitted_lines: list[list[LineSplit]]
     ) -> list[list[LineSplit]]:
-
         flat_lines = []  # l.elements
         for line in splitted_lines:
             # if len(line.elements) == 1:

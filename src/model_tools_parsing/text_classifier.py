@@ -16,7 +16,6 @@ from src.model_tools_parsing.base_classifier import BaseClassifier
 @dataclass
 class TXTClassifier(BaseClassifier):
     def classify_lines(self, text_extract: DocumentExtract) -> DocumentExtract:
-
         self.logger = session.logger
 
         for block in text_extract.elements:
@@ -38,7 +37,6 @@ class TXTClassifier(BaseClassifier):
         return text_extract
 
     def _is_bullet(self, line) -> bool:
-
         if re.match(r"^[\*\-\•]\s*", line):
             return True
 
@@ -48,7 +46,6 @@ class TXTClassifier(BaseClassifier):
         return False
 
     def _is_heading(self, line) -> bool:
-
         # if :
         #     return True
 
@@ -58,7 +55,6 @@ class TXTClassifier(BaseClassifier):
         return False
 
     def _is_paragraph(self, line):
-
         if line.meta.n_words >= 10 and (
             line.meta.ends_sentence or re.match(r"\:$", line)
         ):

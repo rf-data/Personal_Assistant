@@ -1,14 +1,15 @@
 ## base_extractor.py
 # import
 # import logging
+import logging
 import re
 import unicodedata
-import logging
 from dataclasses import dataclass, field
-# from typing import Any
 
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
 from src.core.memory import ParseContext
+
+# from typing import Any
+from src.model_tools_parsing.feature_enricher import FeatureEnricher
 from src.utils.general_helper import get_file_config
 
 
@@ -18,18 +19,17 @@ class BaseExtractor:
     # extract_config: dict = field(default_factory=dict)
     # logger = logging.getLogger(__name__)
     # doc_name: str = field(default_factory=str)
-    parse_context: ParseContext #  = field(init=False)
+    parse_context: ParseContext  #  = field(init=False)
     text_type: str = field(init=False)
 
-    enricher: FeatureEnricher   #  = field(init=False)
+    enricher: FeatureEnricher  #  = field(init=False)
     # extract_config:  = parse_context.parse_settings
     logger: logging.Logger = field(init=False)
-    
-                #  enricher: FeatureEnricher, 
-                #  parse_context: ParseContext
+
+    #  enricher: FeatureEnricher,
+    #  parse_context: ParseContext
 
     def __post_init__(self):
-
         self.logger = self.parse_context.logger
         self.text_type = self.parse_context.text_type
         # self.enricher = enricher
@@ -39,25 +39,20 @@ class BaseExtractor:
         self.doc_name = self.parse_context.run_id
 
         self.extract_config = get_file_config(
-                                    self.parse_context.parse_settings,
-                                    self.text_type
-                                    )
+            self.parse_context.parse_settings, self.text_type
+        )
         self.general_config = get_file_config(
-                                    self.parse_context.general_settings,
-                                    self.text_type
-                                    )
+            self.parse_context.general_settings, self.text_type
+        )
         self.setup()
 
-        return 
-
+        return
 
     def setup(self):
         """Hook für Subklassen."""
         pass
 
-
     def extract(self):
-
         return
 
     # -------------------------

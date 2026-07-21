@@ -1,10 +1,10 @@
 ## run_folder_sync.py
 # import
-from pathlib import Path
 import hashlib
 import shutil
-import os
+from pathlib import Path
 
+from src.core.config import env_variables
 from src.core.memory import app_session
 
 """
@@ -58,12 +58,13 @@ def sync_folders(source_dir, target_dir):
         if old_hash != src_hash:
             dst_path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src_path, dst_path)
-            
+
             if app_session.logger is not None:
                 app_session.logger.info(f"Copied: {rel_path}")
 
             else:
                 print(f"Copied: {rel_path}")
+
 
 # def changed_files(source_dir, target_hashes):
 #     for path in Path(source_dir).rglob("*"):
@@ -80,11 +81,8 @@ def sync_folders(source_dir, target_dir):
 
 
 if __name__ == "__main__":
+    source_dir = env_variables.backup_src
 
-    source_dir = os.getenv("BACKUP_SOURCE")
-    assert source_dir is not None
-
-    target_dir = os.getenv("BACKUP_TARGET")
-    assert target_dir is not None
+    target_dir = env_variables.backup_target
 
     sync_folders(source_dir, target_dir)

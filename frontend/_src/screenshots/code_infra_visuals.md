@@ -1,5 +1,5 @@
 # Airflow + Pipelines
-```code 
+```code
 architecture-beta
     group orchestration(server)[Airflow and Pipelines]
 

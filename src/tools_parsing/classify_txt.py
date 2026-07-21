@@ -1,13 +1,13 @@
 ## classify_txt.py
 # import
-# import os
+#
 # from datetime import datetime
 # import pprint
 # from tiktoken import encoding_for_model
 
 # from src.core.logger import create_logger
 # from src.core.feature_enricher import FeatureEnricher
-import src.utils.general_helper as gh
+# import src.utils.general_helper as gh
 # from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract
 from src.model_tools_parsing.text_classifier import TXTClassifier
 
@@ -41,7 +41,7 @@ def classify_txt_file(
     from src.core.memory import session_state
 
     # load env variables and config
-    gh.load_env_vars()
+    #  gh.load_env_vars()
 
     logger = session_state.logger
 

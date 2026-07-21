@@ -1,17 +1,17 @@
 ## E_p2_sop_generation.py
 # imports
-# import os
+#
 # from pathlib import Path
 import streamlit as st
 
-# from src.core.memory import app_session, ParseContext
-# from src.core.config import ChunkSettings
-# from src.utils.path_helper import shorten_path, ensure_dir 
-# from src.utils.st_eda_helper import st_df_profile
-
-from src.utils.chroma_helper import get_chroma_client   #, run_chroma_query
 from src.core.memory import SOPGenContext
 from src.run_st_SOP_generation import run_st_sop_generation
+
+# from src.core.memory import app_session, ParseContext
+# from src.core.config import ChunkSettings
+# from src.utils.path_helper import shorten_path, ensure_dir
+# from src.utils.st_eda_helper import st_df_profile
+from src.utils.chroma_helper import get_chroma_client  # , run_chroma_query
 
 # from src.run_embedding import chunk_text, embed_text, load_chunks_to_chroma
 
@@ -21,75 +21,89 @@ def show():
     st.subheader("**SOP Generation**")
 
     # st.subheader("RAG Query")
-    
+
     chroma_client = get_chroma_client()
     chroma_colls = chroma_client.list_collections()
 
-    rag_colls = st.multiselect(       # selectbox, multiselect(
-                    label="Which chroma DB collection should be used?",
-                    options=[c.name for c in chroma_colls], # chroma_colls
-                    # format_func=lambda p: shorten_path(p, n=1), 
-                    # key="pdf_files"
-                    )
+    rag_colls = st.multiselect(  # selectbox, multiselect(
+        label="Which chroma DB collection should be used?",
+        options=[c.name for c in chroma_colls],  # chroma_colls
+        # format_func=lambda p: shorten_path(p, n=1),
+        # key="pdf_files"
+    )
 
     sop_title = st.text_input(
-                        label = "Enter name of SOP to be written", 
-                        # max_chars = 100
-                        )
+        label="Enter name of SOP to be written",
+        value="Hygienmonitoring",
+        # max_chars = 100
+    )
+
+    st.write(f"Title of SOP to be written:\t **{sop_title}**")
+    # st.divider()
     sop_topics = st.text_area(
-                        label="which topics to be covered (Provide bullets of enumerated key words and / or short phrases)",
-                        value=" "
-                        )
-    # topic_list = sop_topics.split("-")
+        label="which topics to be covered (Provide bullets of enumerated key words and / or short phrases)",
+        value="""
+- Hygienemonitoring in der aseptischen Herstellung
+- mikrobiologische Überwachung von Luft, Personal und Oberflächen
+- Probenahme, Häufigkeit, Warn- und Aktionsgrenzen
+- Dokumentation, Trendanalyse und Maßnahmen bei Abweichung
+""",
+        height="content",
+    )
+
+    """
+    - Hygienemonitoring in der aseptischen Herstellung
+- mikrobiologische Überwachung von Luft, Personal und Oberflächen
+- Probenahme, Häufigkeit, Warn- und Aktionsgrenzen
+- Dokumentation, Trendanalyse und Maßnahmen bei Abweichung
+    """
     topic_list = [
-            line.removeprefix("-").strip()
-            for line in sop_topics.splitlines()
-            if line.removeprefix("-").strip()
-            ]
+        line.removeprefix("-").strip()
+        for line in sop_topics.splitlines()
+        if line.removeprefix("-").strip()
+    ]
 
-    st.info(f"You provided a list with {len(topic_list)} topics")
-    # with st.expander()
-#     "Text to analyze",
-#     "It was the best of times, it was the worst of times, it was the age of "
-#     "wisdom, it was the age of foolishness, it was the epoch of belief, it "
-#     "was the epoch of incredulity, it was the season of Light, it was the "
-#     "season of Darkness, it was the spring of hope, it was the winter of "
-#     "despair, (...)",
-# )
+    st.info(
+        f"You provided a list with **{len(topic_list)}** topics (**{len(sop_topics)}** characters)"
+    )
 
-    st.write(f"Name of SOP to be written:\t {sop_title}")
-    st.write(f"You wrote {len(sop_topics)} characters in 'topics'.")
+    #    st.write(f"You wrote  in 'SOP topics'.")
+    st.divider()
 
     n_results = st.slider(
-                        "n_results",
-                        min_value = 1,
-                        max_value = 20,
-                        value = 10
-                        # value=min_val,
-                        # key="min_number"
-                    )
+        "n_results",
+        min_value=1,
+        max_value=20,
+        value=10,
+        # value=min_val,
+        # key="min_number"
+    )
 
     left, right = st.columns(2)
     if "query_started" not in st.session_state:
         st.session_state["query_started"] = "ready"
     st.markdown(f"Status 'query_started': {st.session_state['query_started']}")
-    
-    if (left.button("Reset", type="primary")
-        and st.session_state["query_started"] is not None):
+
+    if (
+        left.button("Reset", type="primary")
+        and st.session_state["query_started"] is not None
+    ):
         st.session_state["query_started"] = "ready"
 
-    if (right.button("Start run") 
-        and st.session_state["query_started"] in ["ready", None]):
-        
+    if right.button("Start run") and st.session_state["query_started"] in [
+        "ready",
+        None,
+    ]:
         sop_context = SOPGenContext(
-                            # query=rag_query,
-                            work_mode="create",
-                            n_results=n_results,
-                            collection=rag_colls,
-                            title=sop_title,
-                            topics=topic_list, 
-                            q_doc_type="SOP"
-                                )
+            # query=rag_query,
+            work_mode="create",
+            n_results=n_results,
+            collection=rag_colls,
+            title=sop_title,
+            topics=topic_list,
+            transformer_model="intfloat/multilingual-e5-base",
+            q_doc_type="SOP",
+        )
 
         # results = run_chroma_query(
         #                 context=sop_context
@@ -97,21 +111,15 @@ def show():
         #                 # query=,
         #                 # n_results=n_results
         #                     )
-        
 
         # st.json(results)
 
         run_st_sop_generation(sop_context)
 
-    # data_processed = os.getenv("DATA_PROCESSED")
-    # data_embed = os.getenv("DATA_EMBED")
-    # data = os.getenv("DATA_DIR")
-    # assert data is not None
-
     # data = Path(ensure_dir(data))
 
     # st.warning("ADAPT TO NEW FILE SYSTEM")
-    
+
     # st.divider()
 
     # # parse_settings = {
@@ -122,21 +130,20 @@ def show():
     # #                         "bullet_list"
     # #                         ],
     # #     "spacy_language": "",
-    # #     "max_tokens": ""                    
+    # #     "max_tokens": ""
     # # }
 
     # chunk_folder = st.pills(
-    #         label="Select folder (processed files)", 
-    #         options=["txt_md", 
-    #                  "docx", 
+    #         label="Select folder (processed files)",
+    #         options=["txt_md",
+    #                  "docx",
     #                  "html",
-    #                  "pdf", 
-    #                  "json"], 
+    #                  "pdf",
+    #                  "json"],
     #         selection_mode="single",
     #         # key="chunk_folder"
     #         )
 
-    
     # folder_path = f"{data}/{chunk_folder}/processed"
     # files = [f for f in Path(folder_path).rglob("*_info.json")
     #          if f.parent.name.startswith("ready_")]
@@ -144,7 +151,7 @@ def show():
     # selected_file = st.multiselect(
     #     label="Which json file should be chunked?",
     #     options=files,
-    #     key="chunk_files", 
+    #     key="chunk_files",
     #     format_func=lambda p: shorten_path(p, n=1)
     # )
 
@@ -174,55 +181,56 @@ def show():
     #                                 max_tokens = 80,
     #                                 overlap_sentences=1,
     #                                 transformer_model = "all-MiniLM-L6-v2",
-    #                                 batch_size=43 
+    #                                 batch_size=43
     #                                 )
     #                 )
     #     chunk_context.encoder=app_session.encoder
-    
+
     # # f_path = f"{folder_path}/{str(selected_file)}"
     # if "chunk_status" not in st.session_state:
     #     st.session_state["chunk_status"] = "ready"
-    
+
     # st.markdown(f"Status 'chunk_status': {st.session_state['chunk_status']}")
-    
+
     # left, right = st.columns(2)
 
     # if (left.button("Reset", type="primary")
     #     and st.session_state["chunk_status"] is not None):
     #     st.session_state["chunk_status"] = "ready"
 
-    # if (right.button("Start run") 
+    # if (right.button("Start run")
     #     and st.session_state["chunk_status"] in ["ready", None]):
 
     #     for file in selected_file:
-            
+
     #         chunk_context.save_name = Path(file).stem
-            
+
     #         df_chunk = chunk_text(
-    #                         f_path=str(file), 
+    #                         f_path=str(file),
     #                         parse_context=chunk_context
     #                         )
 
-    #         with st.expander(f"Preview df '{Path(file).stem}'"): 
+    #         with st.expander(f"Preview df '{Path(file).stem}'"):
     #             st_df_profile(df_chunk)
 
     #         df_embed = embed_text(df_chunk, chunk_context)
 
     #         load_chunks_to_chroma(
     #                 coll_name="QMS_apo", # : str,
-    #                 data=df_embed, # : pd.DataFrame | str, 
+    #                 data=df_embed, # : pd.DataFrame | str,
     #                 # meta_data: dict = {}
     #                     )
 
     #     st.session_state["chunk_status"] = "done"
 
     # st.divider()
-    # st.error('\n**TEXT EMBEDDINGS MUST BE CREATED IN CODESPACE OR GOOGLE COLAB**', 
+    # st.error('\n**TEXT EMBEDDINGS MUST BE CREATED IN CODESPACE OR GOOGLE COLAB**',
     #          icon="🚨")
     # # st.markdown("")
     # st.divider()
-            
+
     # st.markdown("**Under Construction**")
+
 
 # from sentence_transformers import SentenceTransformer
 
@@ -236,8 +244,8 @@ def show():
 #     show_progress_bar=True,
 #     normalize_embeddings=True,
 # )
-# def _chunk_by_sentences(block_text: str, 
-#                         chunk_config: dict, 
+# def _chunk_by_sentences(block_text: str,
+#                         chunk_config: dict,
 #                         nlp) -> list[dict]:
 #     max_tokens = chunk_config["max_tokens"]
 #     overlap_sentences = chunk_config.get("overlap_sentences", 1)

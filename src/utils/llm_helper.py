@@ -2,14 +2,14 @@
 # imports
 import hashlib
 import json
-import os
 import re
 from pathlib import Path
+
 from openai import OpenAI
 
 import src.utils.path_helper as ph
+from src.core.config import env_variables
 from src.core.memory import app_session
-
 
 
 def get_openai_client() -> OpenAI:
@@ -18,9 +18,7 @@ def get_openai_client() -> OpenAI:
     return client
 
 
-def _make_cache_key(report_text: str, 
-                    prompt: str, 
-                    namespace: str) -> str:
+def _make_cache_key(report_text: str, prompt: str, namespace: str) -> str:
     h = hashlib.sha256()
     h.update(prompt.encode("utf-8"))
     h.update(report_text.encode("utf-8"))
@@ -32,7 +30,7 @@ def _load_from_cache(key: str, cache_dir: Path = None):
     logger = app_session.logger
 
     if not cache_dir:
-        folder = os.getenv("CACHE_DIR")
+        folder = env_variables.cache_dir
         cache_dir = Path(f"{folder}")
 
     fn = cache_dir / f"{key}.json"
@@ -50,7 +48,7 @@ def _save_to_cache(key: str, data: dict, cache_dir: Path = None):
     logger = app_session.logger
 
     if not cache_dir:
-        cache_dir = Path(os.getenv("CACHE_DIR"))
+        cache_dir = Path(env_variables.cache_dir)
 
     fn = cache_dir / f"{key}.json"
     ph.ensure_dir(fn)

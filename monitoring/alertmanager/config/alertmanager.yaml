@@ -6,19 +6,19 @@ route:
 receivers:
   - name: default
 inhibit_rules: []
-  
+
 # BOT ERSTELLEN
 # https://core.telegram.org/bots?utm_source=chatgpt.com#6-botfather
 # route:
 #   receiver: telegram
 
 # receivers:
-#   - name: telegram 
+#   - name: telegram
 #     telegram_configs:
 #     - bot_token: "xxxx"
 #       chat_id: 12345
 #       send_resolve: true
-  
+
 #   - name: email
 #     email_configs:
 #     - to: monitor@server.de
@@ -26,5 +26,5 @@ inhibit_rules: []
 #       smarthost: smtp.gmail.com:587
 #       auth_username: "..."
 #       auth_password: "..."
-    
+
 #   - name: slack

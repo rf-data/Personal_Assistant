@@ -5,9 +5,9 @@ import streamlit as st
 
 def show():
     st.header("🧪 MLflow")
-    st.markdown("""   
-    - Central tool for tracking ML experiments)   
-    - Logs parameters, metrics, models, and artifacts  
+    st.markdown("""
+    - Central tool for tracking ML experiments)
+    - Logs parameters, metrics, models, and artifacts
     - Makes ML experiments reproducible and comparable
     """)
     img1 = Path(

@@ -1,11 +1,10 @@
 ## extract_text.py
 # import
-# import os
+#
 from pathlib import Path
 
 # from src.core.feature_enricher import FeatureEnricher
 # from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract
-
 # from datetime import datetime
 # import pprint
 # from tiktoken import encoding_for_model

@@ -14,7 +14,6 @@ def find_project_root() -> Path:
 
 
 def ensure_dir(f_path: str | Path) -> Path:
-
     p = Path(f_path)
 
     target_dir = p.parent if p.suffix else p
@@ -30,11 +29,8 @@ def shorten_path(path, n=3):
 
 def create_save_path(name_suffix, file_suffix):  # folder_name,
     # as lazy imports
-    # import src.utils.general_helper as gh
     from src.core.session import session
 
-    # gh.load_env_vars()
-    # folder = os.getenv("PATH_EVALUATED", None)
     folder = session.save_folder
     now = session.now  # ", None)
     run_name = session.model_class  # log_file", None)

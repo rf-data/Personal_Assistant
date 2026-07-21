@@ -1,18 +1,20 @@
 ## extract_html.py
 # import
 # from pathlib import Path
-import os
-# from typing import Literal
-from returns.result import Result, Success, Failure
 
+# from typing import Literal
+from returns.result import Failure, Result, Success
+
+from src.core.config import env_variables
 from src.core.memory import ParseContext
 from src.model_classes_parsing.base_classes_parsing import DocumentExtract
-# from src.model_tools.base_assembler import BaseAssembler
 
+# from src.model_tools.base_assembler import BaseAssembler
 from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
 
 # from src.utils.dict_helper import save_dict
 from src.utils.path_helper import shorten_path
+
 # from src.utils.text_file_helper import save_text_file  # , create_md_from_extract
 
 
@@ -28,33 +30,24 @@ from src.utils.path_helper import shorten_path
 
 
 def extract_html_file(
-                extractor: HTMLCleanExtractor,
-                parse_context: ParseContext,
-                f_text: str|None = None
-                ) -> Result[DocumentExtract, str]:
-
+    extractor: HTMLCleanExtractor,
+    parse_context: ParseContext,
+    f_text: str | None = None,
+) -> Result[DocumentExtract, str]:
     logger = parse_context.logger
 
-    html_data = os.getenv("DATA_HTML")
-    assert html_data is not None
-    
+    html_data = env_variables.data_html
+
     if parse_context.parse_settings.file_name is not None:
         f_name = parse_context.parse_settings.file_name
         f_path = f"{html_data}/input/{f_name}.html"
-        
-        logger.info(
-                "Starting extracting HTML-FILE: %s",
-                shorten_path(f_path)
-                )
 
-        html_extract = extractor.extract(
-                    f_path=f_path
-                    )
+        logger.info("Starting extracting HTML-FILE: %s", shorten_path(f_path))
+
+        html_extract = extractor.extract(f_path=f_path)
 
     elif parse_context.parse_settings.url_path is not None:
-        html_extract = extractor.extract(
-            url=parse_context.parse_settings.url_path
-            )
+        html_extract = extractor.extract(url=parse_context.parse_settings.url_path)
 
     elif f_text is not None:
         html_extract = extractor.extract(f_text=f_text)
@@ -64,7 +57,7 @@ def extract_html_file(
         # sys.exit()
         return Failure("Neither 'file_path' nor 'url' nor 'f_text' were provided.")
 
-    # if "html" in run_context.run_settings.html.save: 
+    # if "html" in run_context.run_settings.html.save:
     #     save_folder = run_context.save_folder
     #     save_name = run_context.save_name
 
@@ -73,12 +66,12 @@ def extract_html_file(
     #     save_html = Path(f"{save_folder}/{save_name}")
     #     save_dict(extract_dict, save_html)
 
-        # if "md" in run_context.save:
-        #     text = extract_dict["text"]
-        #     assembler = BaseAssembler()
-        #     text = assembler.create_md_from_extract(extract_dict)
-        #     # text = md(text)
-        #     save_text_file(text, save_name, save_folder)
+    # if "md" in run_context.save:
+    #     text = extract_dict["text"]
+    #     assembler = BaseAssembler()
+    #     text = assembler.create_md_from_extract(extract_dict)
+    #     # text = md(text)
+    #     save_text_file(text, save_name, save_folder)
 
     # pprint.pprint(text_extract)
     # return text_extract
@@ -88,5 +81,3 @@ def extract_html_file(
 
 # if __name__ == "__main__":
 #     extract_html_file()
-
-

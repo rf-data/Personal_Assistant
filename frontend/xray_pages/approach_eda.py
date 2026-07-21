@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -12,7 +11,6 @@ EDA = Path("/workspaces/may25_bds_covid19/streamlit/app/static_files/eda_files")
 
 
 def show():
-
     st.header("📊 Approach and EDA")
     st.write("Welcome to the COVID-19 X-Ray Classification app!")
 
@@ -77,12 +75,12 @@ def show():
         ### PART 1
         with st.popover("**(A) Dataset analysis**"):
             st.markdown(f"""
-        - **COVID dataset:**\t--> {covid_df.shape[0]} x-ray images\t ({covid_df.isna().sum().sum()} null-values) 
+        - **COVID dataset:**\t--> {covid_df.shape[0]} x-ray images\t ({covid_df.isna().sum().sum()} null-values)
         - **Lung Opacity dataset:**\t-->{lung_opacity_df.shape[0]} x-ray images\t ({lung_opacity_df.isna().sum().sum()} null-values)
-        - **Normal dataset:**\t--> {normal_df.shape[0]} x-ray images\t ({normal_df.isna().sum().sum()} null-values) 
+        - **Normal dataset:**\t--> {normal_df.shape[0]} x-ray images\t ({normal_df.isna().sum().sum()} null-values)
         - **Viral Pneumonia dataset:**\t--> {viral_pneumonia_df.shape[0]} x-ray images\t ({viral_pneumonia_df.isna().sum().sum()} null-values)
-        
-        
+
+
                     """)
 
             fig_1 = plt.figure(figsize=(20, 10))

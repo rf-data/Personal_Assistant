@@ -1,6 +1,6 @@
 ## transcribe_models.py
 # import
-from dataclasses import dataclass 
+from dataclasses import dataclass
 
 
 @dataclass

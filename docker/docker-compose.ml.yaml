@@ -29,6 +29,6 @@ services:
     volumes:
       - ./mlflow/artifacts:/mlflow/artifacts
       - ./mlflow/runs:/mlflow/runs
-    
+
 volumes:
   mlflow-postgres-db-volume:

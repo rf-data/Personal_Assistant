@@ -1,25 +1,24 @@
 ## extract_notebook.py
 # import
-import os
-# import sys
-from pathlib import Path
-from returns.result import Result, Success, Failure
 
+# import sys
+from returns.result import Failure, Result, Success
+
+from src.core.config import env_variables
 from src.core.memory import ParseContext
+from src.model_classes_parsing.base_classes_parsing import DocumentExtract
+
 # # from src.core.feature_enricher import FeatureEnricher
 # from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract
-
 # # from datetime import datetime
 # # import pprint
 # # from tiktoken import encoding_for_model
 # # from src.core.logger import create_logger
 from src.model_tools_parsing.notebook_extractor import NoteBookCleanExtractor
-from src.model_classes_parsing.base_classes_parsing import DocumentExtract
+
 # # import src.utils.general_helper as gh
 # # import src.utils.dict_helper as dh
-from src.utils.dict_helper import save_dict
 from src.utils.path_helper import shorten_path
-from src.utils.text_file_helper import save_text_file  # , create_md_from_extract
 
 # from markdownify import markdownify as md
 
@@ -47,30 +46,26 @@ def extract_notebook_json(
     logger = parse_context.logger
     logger.info("Starting extracting notebook from json-file")
 
-    input_data = os.getenv("DATA_INPUT")
+    input_data = env_variables.data_input
     if input_data is None:
         logger.error("Folder 'input_data' is 'None'.")
         # sys.exit()
         return Failure("Folder 'input_data' is 'None'.")
-    
 
     # file_names = run_context.run_settings.file_names
     # if isinstance(file_names, list) and len(file_names) > 0:
     #     for idx, f_name in enumerate(file_names):
-            
-    f_path = f"{input_data}/{f_name}.json"
-                
-            # if f_name: 
-            #     # ) != 0:
-            #     f_path = 
-    logger.info("Starting extracting JSON-Notebook (%s)",
-                                    shorten_path(f_path))
 
-    nb_extract = extractor.extract(
-                            f_path=f_path
-                            )
+    f_path = f"{input_data}/{f_name}.json"
+
+    # if f_name:
+    #     # ) != 0:
+    #     f_path =
+    logger.info("Starting extracting JSON-Notebook (%s)", shorten_path(f_path))
+
+    nb_extract = extractor.extract(f_path=f_path)
     # else:
-        
+
     return Success(nb_extract)
 
     # logger.info("Try getting source code from %s",

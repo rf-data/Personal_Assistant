@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 
 from src.core.logger import create_logger
+
 # from src.core.memory import session_state
 from src.utils.dict_helper import (
     get_yaml_config,
@@ -12,7 +13,7 @@ from src.utils.dict_helper import (
 )
 
 # from src.model_parsing.data_classes_parsing import Element
-from src.utils.general_helper import load_env_vars
+# from src.utils.general_helper import load_env_vars
 from src.utils.path_helper import list_files
 
 # ------------------
@@ -22,7 +23,7 @@ from src.utils.path_helper import list_files
 
 def scrape_images_from_url():
     # load env variables and config
-    load_env_vars()
+    # load_env_vars()
 
     config_name = input("Enter 'config_file' name (no suffix): ")
     config = get_yaml_config(config_name)
@@ -119,7 +120,6 @@ def run_scrape_images_from_url(config):
 
 
 def _extract_image_urls(elements: list[dict]):
-
     img_urls = []
 
     for element in elements:

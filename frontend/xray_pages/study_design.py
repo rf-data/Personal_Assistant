@@ -44,7 +44,7 @@ def show():
             - Converts image pixel values from RGB format to the format expected by ResNet50 (BGR channel order)
             - Subtracts the mean RGB values computed on the ImageNet training set
             - Ensures that input values match the scale and distribution the model was originally trained on
-            
+
             This step is critical when using pretrained models, as discrepancies in input distributions can significantly affect model performance.
             Even though our dataset contains grayscale chest X-ray images, the use of `preprocess_input()` remains essential. These images are typically replicated
             into three identical RGB channels before being fed into the model. Applying ImageNet-style normalization ensures compatibility with the pretrained
@@ -151,9 +151,9 @@ def build_ds:
                                 ])
 
                         model.compile(
-                            optimizer=Adam(learning_rate=hp.Float('learning_rate', config.INITIAL_LR_MIN, config.INITIAL_LR_MAX, 
-                                                                    sampling=config.INITIAL_LR_SAMPLING)), 
-                            loss='sparse_categorical_crossentropy', 
+                            optimizer=Adam(learning_rate=hp.Float('learning_rate', config.INITIAL_LR_MIN, config.INITIAL_LR_MAX,
+                                                                    sampling=config.INITIAL_LR_SAMPLING)),
+                            loss='sparse_categorical_crossentropy',
                             metrics=['accuracy']
                                 )
                         return model
@@ -212,27 +212,27 @@ def build_ds:
     with tab2:
         st.subheader("Training Stages")
         st.markdown("""
-            The training was conducted in several steps, which can be divided into three blocks: 
-            - **Initial training**, 
-            - **Fine-tuning**, 
+            The training was conducted in several steps, which can be divided into three blocks:
+            - **Initial training**,
+            - **Fine-tuning**,
             - **Data Augmentation**
-            
-            Before the first training step was conducted in each block, (additional) samples were drawn. The first training 
+
+            Before the first training step was conducted in each block, (additional) samples were drawn. The first training
             step in each block was among other used for determing a baseline from the current sample set. The name of
             these steps contain a '0' or 'None'.
-            
-            At each stage, a Bayesian optimization of the hyperparameter was applied. During the initial training, hyperparameters of the classification layer were 
-            optimized, while, during the other training steps, hyperparameters of the applied callbacks were tested (ReduceOnPlateau and ??). More details are provided 
+
+            At each stage, a Bayesian optimization of the hyperparameter was applied. During the initial training, hyperparameters of the classification layer were
+            optimized, while, during the other training steps, hyperparameters of the applied callbacks were tested (ReduceOnPlateau and ??). More details are provided
             in the expanders below.
             After each epoch, the model performance was evaluated on the training and validation by using accuracy. Additionally, the metric 'loss' was logged.
-            After each step, the best model was evaluated in more depth, i.e. more metrics were calculated for the training and validation dataset. 
+            After each step, the best model was evaluated in more depth, i.e. more metrics were calculated for the training and validation dataset.
             """)
 
         with st.expander("Initial Training"):
             st.markdown("""
                 We trained a frozen ResNet50 model with a custom dense classification head on a limited dataset. Hyperparameter tuning was applied to the dense layer
                 size, dropout rate, and initial learning rate. Batch sizes of 16, and 32 were tested after the data set has been divided 80:20 and
-                60:40, respectively. After a 80:20 split, the dataset was also tested with a larger batch size (64) and feeded with smoothly augmented data , 
+                60:40, respectively. After a 80:20 split, the dataset was also tested with a larger batch size (64) and feeded with smoothly augmented data ,
                 respectively (RandomContrast: 0.05, RandomBrightness: 0.05, RandomZoom: 0.03, RandomRotation: 0.02).
 
 
@@ -243,7 +243,7 @@ def build_ds:
             st.markdown("""
             The best results were obtained by using:
             - **Dataset split: _80:20 (train:val)_**
-            - **Batch size: _32_**, 
+            - **Batch size: _32_**,
             - **Dense layer size: _??_**
             - **Dropout rate: _??_**
             - **Initial learnings rate: _??_**
@@ -251,11 +251,11 @@ def build_ds:
 
         with st.expander("Fine tuning - Part 1"):
             st.markdown("""
-                #### __Part 1: Increased Data, Still Frozen__ 
+                #### __Part 1: Increased Data, Still Frozen__
 
                 The best model from initial training was now trained with a larger subset of the dataset to investigate the isolated effect of more training data. No
                 layers were unfrozen, but different hyperparameter settings of the applied callbacks `‘ReduceLearnRateOnPLateau’` and `‘EarlyStopping’` were tested
-                using KerasTuner. 
+                using KerasTuner.
                 [...]
                 """)
 
@@ -267,10 +267,10 @@ def build_ds:
                 We partially unfroze the ResNet50 model, training the top 20 layers in addition to the classification head. Callbacks for early stopping and reducing
                 learning rate were used to stabilize training.
                 In this setup, we included the following representative convolutional layers ("block_layer") as trainable:
-                - <span style="color:#008000;">`conv4_block6_3_conv` _(new)_</span> 
-                - <span style="color:#008000;">`conv5_block1_3_conv` _(new)_</span> 
-                - <span style="color:#008000;">`conv5_block3_3_conv` _(new)_</span> 
-                
+                - <span style="color:#008000;">`conv4_block6_3_conv` _(new)_</span>
+                - <span style="color:#008000;">`conv5_block1_3_conv` _(new)_</span>
+                - <span style="color:#008000;">`conv5_block3_3_conv` _(new)_</span>
+
                 These layers are part of the deeper stages of the network and contribute significantly to high-level feature extraction, which is especially relevant
                 when adapting to domain-specific patterns in chest X-ray images.
                 [...]
@@ -287,12 +287,12 @@ def build_ds:
                 This experiment extended fine-tuning further by unfreezing the last 50 layers of the ResNet50 model. In this configuration, most of the deeper
                 convolutional blocks were allowed to adapt to the CXR data.
                 Relevant trainable layers from the block_layer list are now included:
-                - <span style="color:#00AA00;">`conv3_block4_3_conv` _(new)_</span> 
-                - <span style="color:#008000;">`conv4_block1_3_conv` _(new)_</span> 
+                - <span style="color:#00AA00;">`conv3_block4_3_conv` _(new)_</span>
+                - <span style="color:#008000;">`conv4_block1_3_conv` _(new)_</span>
                 - `conv4_block6_3_conv` _(previously unfrozen)_
                 - `conv5_block1_3_conv` _(previously unfrozen)_
                 - `conv5_block3_3_conv` _(previously unfrozen)_
-                
+
                 This strategy allowed for more complex adaptation, though it increased the risk of overfitting and required careful regularization and learning rate
                 scheduling.
                 """,
@@ -304,17 +304,17 @@ def build_ds:
             st.markdown(
                 """
                 #### __Part 4: Last 100 Layers Unfrozen__
-                
+
                 To push the adaptation further, the final 100 layers were set to trainable. This allowed more than a half of all convolutional blocks from the
                 ResNet50 architecture to learn from the X-Ray data. Included block_layer components:
-                - <span style="color:#008000;">`conv2_block3_3_conv` _(new)_</span> 
-                - <span style="color:#008000;">`conv3_block1_3_conv` _(new)_</span> 
+                - <span style="color:#008000;">`conv2_block3_3_conv` _(new)_</span>
+                - <span style="color:#008000;">`conv3_block1_3_conv` _(new)_</span>
                 - `conv3_block4_3_conv` _(previously unfrozen)_
                 - `conv4_block1_3_conv` _(previously unfrozen)_
                 - `conv4_block6_3_conv` _(previously unfrozen)_
                 - `conv5_block1_3_conv` _(previously unfrozen)_
                 - `conv5_block3_3_conv` _(previously unfrozen)_
-                
+
                 This deeper unfreezing made the model more flexible and expressive but also required longer training time and stronger regularization.
                 """,
                 unsafe_allow_html=True,
@@ -327,8 +327,8 @@ def build_ds:
 
                 In this final fine-tuning variant, the entire ResNet50 model was unfrozen—including the early convolutional layers in the last 75 layers. This allows
                 full adaptation of all model parameters to the specific data domain. All block_layer components were trainable:
-                - <span style="color:#008000;">`conv1_conv`     &nbsp;&nbsp;&nbsp;&nbsp; _(new)_</span> 
-                - <span style="color:#008000;">`conv2_block1_3_conv` _(new)_</span> 
+                - <span style="color:#008000;">`conv1_conv`     &nbsp;&nbsp;&nbsp;&nbsp; _(new)_</span>
+                - <span style="color:#008000;">`conv2_block1_3_conv` _(new)_</span>
                 - `conv2_block3_3_conv` _(previously unfrozen)_
                 - `conv3_block1_3_conv` _(previously unfrozen)_
                 - `conv3_block4_3_conv` _(previously unfrozen)_
@@ -336,7 +336,7 @@ def build_ds:
                 - `conv4_block6_3_conv` _(previously unfrozen)_
                 - `conv5_block1_3_conv` _(previously unfrozen)_
                 - `conv5_block3_3_conv` _(previously unfrozen)_
-                
+
                 While full unfreezing maximizes representational power, it also increases the risk of catastrophic forgetting of pretrained features and requires the
                 most careful training configuration among all strategies.
                 """,
@@ -350,7 +350,7 @@ def build_ds:
                 - `DataAug_none`: No augmentation but additional samples
                 - `DataAug_smooth`: Mild brightness/contrast/rotation
                 - `DataAug_enhanced`: Stronger and combined transformations
-                
+
                 The following augmentation types were used in the stated ranges:
                 *to be added*
                 """)
@@ -359,7 +359,7 @@ def build_ds:
         with st.expander("INFO: Configuration and Hyperparameters"):
             st.text("""
                 These strategies were applied subsequently to the same model setup to isolate the effect of input variability and .
-                
+
                 loss function: ??
                 optimizer ??
                 max_epochs ??
