@@ -80,6 +80,7 @@ class EnvVariables(BaseSettings):
     data_qms: str
 
     # other folder_paths
+    log_dir: str
     report_dir: str
     config_dir: str
     cache_dir: str

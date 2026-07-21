@@ -37,7 +37,7 @@ def show():
 
         pdf_files = st.multiselect(  # selectbox, multiselect(
             label="Which pdf file(s) should be parsed?",
-            options=list(Path(input_data).rglob("*.pdf")),
+            options=sorted(list(Path(input_data).rglob("*.pdf"))),
             format_func=lambda p: shorten_path(p, n=1),
             key="pdf_files",
         )

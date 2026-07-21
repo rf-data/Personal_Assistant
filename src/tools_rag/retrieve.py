@@ -564,7 +564,7 @@ def run_retrieve():
     #
     q_emb = _embed_query()
 
-    df["score"] = df["embed_text"].apply(lambda x: _cosine_sim(q_emb, a))
+    df["score"] = df["text_embed"].apply(lambda x: _cosine_sim(q_emb, a))
 
     top_k = df.sort_values("score", ascending=False).head(n_retrieve)
     context = "\n\n".join(top_k["text"])

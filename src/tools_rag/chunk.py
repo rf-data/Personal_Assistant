@@ -1,6 +1,7 @@
 ## chunk.py
 # import
 # import re
+from pathlib import Path
 from collections.abc import Callable
 from typing import Any
 
@@ -12,7 +13,8 @@ from src.core.memory import ParseContext, app_session
 # from collections import Counter
 from src.utils.spacy_helper import load_spacy_model
 
-# from src.utils.general_helper import make_doc_id, load_env_vars
+from src.utils.general_helper import make_doc_id
+from src.utils.dict_helper import load_dict
 
 
 # df_blocks = document_json_to_blocks(json_path)
@@ -228,7 +230,7 @@ def prepare_chunk_df(blocks: list[dict], parse_context: ParseContext, encoder):
             text = (chunk["chunk_text"]).strip()
             # _normalize_text_value
 
-            embed_text = np.where(
+            text_embed = np.where(
                 (heading is not None and text is not None),
                 f"Abschnitt: {heading}\n\n{text}",
                 heading or text,
@@ -241,7 +243,7 @@ def prepare_chunk_df(blocks: list[dict], parse_context: ParseContext, encoder):
                     "container_id": row["container_id"],
                     "container_type": row["container_type"],
                     "heading_context": heading,
-                    "embed_text": embed_text,
+                    "text_embed": text_embed,
                     "page": row.get("page"),
                     "doc_kind": row.get("doc_kind"),
                 }
@@ -261,8 +263,8 @@ def prepare_chunk_df(blocks: list[dict], parse_context: ParseContext, encoder):
         + df_chunk["chunk_id"].astype(str)
     )
 
-    df_chunk["embed_text"] = df_chunk["embed_text"].map(_normalize_text_value)
-    assert df_chunk["embed_text"].map(lambda value: isinstance(value, str)).all()
+    df_chunk["text_embed"] = df_chunk["text_embed"].map(_normalize_text_value)
+    assert df_chunk["text_embed"].map(lambda value: isinstance(value, str)).all()
 
     # columns:
     # timestamp, gmp_part,

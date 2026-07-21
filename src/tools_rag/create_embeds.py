@@ -144,7 +144,7 @@ def embed_text(df_embed: pd.DataFrame, chunk_context: ParseContext):
     transformer_model = chunk_settings.transformer_model
 
     model = load_embedding_model(transformer_model)
-    texts = df_embed["embed_text"].tolist()
+    texts = df_embed["text_embed"].tolist()
 
     embeddings = []
     batch_size = 16  # chunk_settings.batch_size  # 256
@@ -159,7 +159,9 @@ def embed_text(df_embed: pd.DataFrame, chunk_context: ParseContext):
     embeddings = np.vstack(embeddings)
 
     logger.info(
-        "Finished creating embeddings", "--> embeddings shape:\t%s", embeddings.shape
+        "Finished creating embeddings\n"
+        "--> embeddings shape:\t%s",
+        embeddings.shape
     )
 
     embeddings = np.asarray(embeddings)
@@ -175,7 +177,7 @@ def embed_text(df_embed: pd.DataFrame, chunk_context: ParseContext):
             f"DataFrame rows ({len(df_embed)})"
         )
 
-    df_embed["embed_text"] = [row.astype(float).tolist() for row in embeddings]
+    df_embed["text_embed"] = [row.astype(float).tolist() for row in embeddings]
 
     del embeddings
 
@@ -191,25 +193,27 @@ def embed_text(df_embed: pd.DataFrame, chunk_context: ParseContext):
 def load_chunks_to_chroma(
     coll_name: str,
     data: pd.DataFrame,  #  | str,
-    required_columns: dict,
+    required_columns: set,
     meta_data: dict = {},
 ):
     logger = app_session.logger
 
     chroma_coll = get_chroma_collection(coll_name=coll_name)
 
-    real_dim = len(data["text_embed"].iloc[0])
-    expected_dim = chroma_coll.metadata.get("embedding_dim")
+    # real_dim = len(data["embed_text"].iloc[0])
+    # expected_dim = chroma_coll.metadata.get("embedding_dim")
 
-    if expected_dim != real_dim:
-        raise ValueError(
-            f"Embedding dimension mismatch: "
-            f"collection expects {expected_dim}, "
-            f"model produces {real_dim}"
-        )
+    # if expected_dim != real_dim:
+    #     raise ValueError(
+    #         f"Embedding dimension mismatch: "
+    #         f"collection expects {expected_dim}, "
+    #         f"model produces {real_dim}"
+    #     )
     meta_data = meta_data or {}
 
-    metadatas = _create_or_update_metadata(data, required_columns, meta_data)
+    metadatas = _create_or_update_metadata(data,
+                                           required_columns,
+                                           meta_data)
     # required_columns = {
     #     "chunk_text",
     #     "chunk_global_id",
@@ -220,17 +224,20 @@ def load_chunks_to_chroma(
     missing_columns = required_columns - set(data.columns)
     if missing_columns:
         logger.error(
-            f"df_name: {data.loc[:, 'doc_name'][0]}\n"
-            f"Missing required columns: {sorted(missing_columns)}\n"
-            f"Available columns:\n {data.columns}"
-        )
+            "df_name: %s\n"
+            "Missing required columns: %s\n"
+            "Available columns:\n %s",
+            data.loc[:, 'doc_name'][0],
+            sorted(missing_columns),
+            data.columns
+            )
 
-        if (
-            len(missing_columns) == 1
-            and "embed_text" in missing_columns
-            and "text_embed" in data.columns
-        ):
-            data.rename(columns={"embed_text": "text_embed"})
+        # if (
+        #     len(missing_columns) == 1
+        #     and "text_embed" in missing_columns
+        #     and "text_embed" in data.columns
+        # ):
+        #     data.rename(columns={"embed_text": "text_embed"})
 
         # print(
         #   f"df_name: {data.loc[:, 'doc_name'][0]}\n"
@@ -242,6 +249,12 @@ def load_chunks_to_chroma(
     if data.empty:
         raise ValueError("No chunk data supplied.")
 
-    add_chroma_data(coll_name=coll_name, data=data, meta_data=meta_data)
+    add_chroma_data(
+                chroma_coll=chroma_coll,
+                data=data,
+                doc_column="doc_name",
+                id_column="chunk_global_id",
+                metadatas=metadatas
+                )
 
     return

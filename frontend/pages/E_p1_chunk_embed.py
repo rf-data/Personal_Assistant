@@ -198,8 +198,8 @@ def show():
 
     if start_upload:
         for f_path in files_to_load:
-            df_path = f" /{f_path}.parquet"
-            df_upload = pd.read_parquet(df_path)
+            # df_path = f" /{f_path}.parquet"
+            df_upload = pd.read_parquet(f_path)
 
             load_chunks_to_chroma(
                 coll_name=coll_name,  # : str,
@@ -208,7 +208,7 @@ def show():
                     "chunk_text",
                     "chunk_global_id",
                     # "f_name",
-                    "embed_text",
+                    "text_embed",
                 },
                 # meta_data: dict = {}
             )

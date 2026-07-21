@@ -1,9 +1,13 @@
 ##
 # imports
-# from datetime import datetime
 # from typing import List
+from datetime import datetime
 import gc
 from pathlib import Path
+from tiktoken import encoding_for_model
+
+from src.core.logger import create_logger
+
 
 # (
 #                             document_json_to_blocks,
@@ -17,7 +21,7 @@ from src.core.config import ChunkSettings, env_variables
 # import streamlit as st
 from src.core.memory import ParseContext, app_session
 from src.tools_rag.chunk import chunk_text
-from src.tools_rag.create_embeds import load_chunks_to_chroma
+from src.tools_rag.create_embeds import load_chunks_to_chroma, embed_text
 
 # from src.core.config import ParseSettings
 # from src.core.logger import create_logger
@@ -96,13 +100,13 @@ def run_chunk_and_embed(
             data=df_embed,  # : pd.DataFrame | str,
             meta_data={
                 "embedding_model": chunk_context.chunk_settings.transformer_model,
-                "embedding_dim": real_dim,
+                "embedding_dim": len(df_embed["text_embed"].iloc[0]),
             },
             required_columns={
                 "chunk_text",
                 "chunk_global_id",
                 # "f_name",
-                "embed_text",
+                "text_embed",
             },
             # : dict = {}
         )
@@ -116,6 +120,20 @@ def run_chunk_and_embed(
 
 
 if __name__ == "__main__":
+
+    log_name = "Chunk & Embed"
+    name_logfile = "chunk_embed"
+    today = datetime.today().strftime("%Y-%m-%d")
+
+    logger = create_logger(
+                    name=log_name,
+                    file_name=f"{today}_{name_logfile}"
+                    )
+    app_session.logger = logger
+
+    encoder = encoding_for_model("gpt-4o-mini")
+    app_session.encoder = encoder
+
     data = env_variables.data_dir
 
     data = Path(ensure_dir(data))
@@ -125,4 +143,4 @@ if __name__ == "__main__":
     folder = "pdf"
     folder_path = f"{data}/{folder}/processed"
 
-    run_chunk_and_embed(folder)
+    run_chunk_and_embed(folder_path)

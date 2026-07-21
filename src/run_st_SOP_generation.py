@@ -7,7 +7,7 @@ from pathlib import Path
 from src.core.memory import SOPGenContext, app_session
 
 # from src.tools_rag.retrieve import normalise_chroma_results
-from src.tools_rag.generate import summarize_chunks
+# from src.tools_rag.generate import summarize_chunks
 from src.utils.dict_helper import save_dict
 
 #                                 build_context,

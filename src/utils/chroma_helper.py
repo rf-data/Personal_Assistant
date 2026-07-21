@@ -147,7 +147,9 @@ def add_chroma_data(
     documents = data[doc_column].fillna("").astype(str).tolist()
     ids = data[id_column].astype(str).tolist()
     embeddings = [
-        emb.tolist() if hasattr(emb, "tolist") else emb for emb in data["embed_text"]
+        emb.tolist()
+        if hasattr(emb, "tolist")
+        else emb for emb in data["text_embed"]
     ]
 
     if not all(doc.strip() for doc in documents):
