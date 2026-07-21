@@ -1,0 +1,93 @@
+## 
+# imports
+import subprocess
+import json
+import re
+
+def get_installed_packages():
+    result = subprocess.run(
+        ['pip', 'list', '--format=json'],
+        capture_output=True, text=True
+    )
+    return json.loads(result.stdout)
+def check_vulnerabilities():
+    result = subprocess.run(
+        ['pip-audit', '--format=json', '--output=-'],
+        capture_output=True, text=True
+    )
+    if result.returncode == 0 or result.stdout:
+        try:
+            return json.loads(result.stdout)
+        except json.JSONDecodeError:
+            return []
+    return []
+def parse_requirements(filepath='requirements.txt'):
+    packages = {}
+    try:
+        with open(filepath, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    match = re.match(r'([A-Za-z0-9_\-\.]+)(.*)', line)
+                    if match:
+                        packages[match.group(1).lower()] = match.group(2).strip()
+    except FileNotFoundError:
+        print("requirements.txt not found.")
+    return packages
+def auto_fix_vulnerabilities(vulnerabilities):
+    fixed = []
+    skipped = []
+    for vuln in vulnerabilities:
+        package_name = vuln.get('name', '')
+        fix_versions = vuln.get('fix_versions', [])
+        if fix_versions:
+            target_version = fix_versions[-1]
+            print(f"Updating {package_name} to {target_version}...")
+            result = subprocess.run(
+                ['pip', 'install', f'{package_name}=={target_version}'],
+                capture_output=True, text=True
+            )
+            if result.returncode == 0:
+                fixed.append(f"{package_name}=={target_version}")
+                print(f"  Fixed: {package_name} updated to {target_version}")
+            else:
+                skipped.append(package_name)
+                print(f"  Failed: Could not update {package_name}")
+        else:
+            skipped.append(package_name)
+            print(f"  Skipped: No safe version available for {package_name}")
+    return fixed, skipped
+def update_requirements_file(fixed_packages, filepath='requirements.txt'):
+    if not fixed_packages:
+        return
+    requirements = parse_requirements(filepath)
+    with open(filepath, 'r') as f:
+        content = f.read()
+    for package_version in fixed_packages:
+        name, version = package_version.split('==')
+        for key in requirements:
+            if key == name.lower():
+                old_line = name + requirements[key]
+                new_line = f"{name}=={version}"
+                content = content.replace(old_line, new_line)
+    with open(filepath, 'w') as f:
+        f.write(content)
+    print(f"\nrequirements.txt updated with {len(fixed_packages)} fix(es).")
+if __name__ == "__main__":
+    print("Running Dependency Vulnerability Checker...\n")
+    print("Note: Requires pip-audit. Install with: pip install pip-audit\n")
+    vulnerabilities = check_vulnerabilities()
+    if not vulnerabilities:
+        print("[CLEAN] No known vulnerabilities found in dependencies.")
+    else:
+        print(f"[WARNING] {len(vulnerabilities)} vulnerable package(s) detected.\n")
+        for v in vulnerabilities:
+            print(f"  Package : {v.get('name')}")
+            print(f"  Version : {v.get('version')}")
+            print(f"  CVEs    : {', '.join(v.get('vulns', [{}])[0].get('aliases', ['Unknown']))}")
+            print(f"  Fix     : {v.get('fix_versions', ['No fix available'])}")
+            print()
+        print("Attempting automatic fixes...\n")
+        fixed, skipped = auto_fix_vulnerabilities(vulnerabilities)
+        update_requirements_file(fixed)
+        print(f"\nSummary: {len(fixed)} fixed, {len(skipped)} require manual review.")
