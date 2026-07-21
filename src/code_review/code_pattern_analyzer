@@ -1,0 +1,84 @@
+## code_pattern_analyzer.py
+# import
+import os
+import ast
+import re
+
+UNSAFE_PATTERNS = [
+    (r'\beval\s*\(', "Use of eval() - potential code injection risk"),
+    (r'\bexec\s*\(', "Use of exec() - potential code injection risk"),
+    (r'subprocess\.(call|run|Popen)\s*\(.*shell\s*=\s*True', "shell=True in subprocess - command injection risk"),
+    (r'pickle\.loads?\s*\(', "Unsafe pickle deserialization"),
+    (r'yaml\.load\s*\([^,)]+\)', "yaml.load without Loader - use yaml.safe_load"),
+    (r'SELECT.+FROM.+WHERE.+["\'].*\+', "Possible SQL injection via string concatenation"),
+    (r'os\.system\s*\(', "os.system() usage - prefer subprocess with shell=False"),
+    (r'hashlib\.md5\s*\(', "MD5 usage - consider SHA-256 or stronger"),
+    (r'hashlib\.sha1\s*\(', "SHA-1 usage - consider SHA-256 or stronger"),
+    (r'random\.(random|randint|choice)\s*\(', "Use of random for potentially security-sensitive operation"),
+    (r'http://(?!localhost|127\.0\.0\.1)', "HTTP instead of HTTPS - unencrypted connection"),
+    (r'DEBUG\s*=\s*True', "DEBUG mode enabled - ensure this is not production config"),
+]
+SKIP_DIRS = {'.git', 'node_modules', '__pycache__', '.venv', 'venv', 'migrations'}
+def scan_file_for_patterns(filepath):
+    findings = []
+    try:
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            lines = f.readlines()
+        for line_num, line in enumerate(lines, 1):
+            stripped = line.strip()
+            if stripped.startswith('#'):
+                continue
+            for pattern, description in UNSAFE_PATTERNS:
+                if re.search(pattern, line, re.IGNORECASE):
+                    findings.append({
+                        'file': filepath,
+                        'line': line_num,
+                        'issue': description,
+                        'code': stripped
+                    })
+    except Exception:
+        pass
+    return findings
+def scan_project(root_dir):
+    all_findings = []
+    for dirpath, dirnames, filenames in os.walk(root_dir):
+        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+        for filename in filenames:
+            if filename.endswith('.py'):
+                filepath = os.path.join(dirpath, filename)
+                findings = scan_file_for_patterns(filepath)
+                all_findings.extend(findings)
+    return all_findings
+def generate_report(findings):
+    if not findings:
+        print("[CLEAN] No unsafe code patterns detected.")
+        return
+    print(f"\n[WARNING] {len(findings)} unsafe pattern(s) found:\n")
+    severity_map = {
+        "injection": "HIGH",
+        "eval": "HIGH",
+        "exec": "HIGH",
+        "pickle": "HIGH",
+        "sql": "HIGH",
+        "shell=True": "HIGH",
+        "MD5": "MEDIUM",
+        "SHA-1": "MEDIUM",
+        "DEBUG": "MEDIUM",
+        "HTTP": "LOW",
+        "random": "LOW",
+    }
+    for f in findings:
+        severity = "MEDIUM"
+        for keyword, level in severity_map.items():
+            if keyword.lower() in f['issue'].lower():
+                severity = level
+                break
+        print(f"  [{severity}] {f['issue']}")
+        print(f"  File  : {f['file']} (Line {f['line']})")
+        print(f"  Code  : {f['code']}")
+        print()
+if __name__ == "__main__":
+    project_root = "."
+    print("Running Code Pattern Analyzer...\n")
+    results = scan_project(project_root)
+    generate_report(results)
