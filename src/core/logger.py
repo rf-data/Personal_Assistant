@@ -21,15 +21,12 @@ import src.utils.path_helper as ph
 # import src.utils.general_helper as gh
 from src.core.config import env_variables
 
-<<<<<<< HEAD
 # import src.core.ml_manager as log
 # from src.core.session import session
 # import src.utils.file_helper as fh
 # import src.utils.df_helper as dfh
-import src.utils.path_helper as ph
 
 
-from collections import defaultdict
 
 
 '''
@@ -56,18 +53,17 @@ This project teaches a valuable lesson: developers rarely debug code directly �
 Gotcha: Read large logs line by line instead of loading the entire file into memory.
 
 Speaking of information, let’s organize data that humans actually care about.
-'''
 
-'''
-=======
-"""
->>>>>>> 5881b02 (Refactor code structure for improved readability and maintainability)
+######################
+
+
 !!! - logfire --> observability platform (logs, traces, exceptions, and
         performance data )
 
         - Loguru / structlog --> Ersatz für logging ??
 
         """
+'''
 
 """
 errors = defaultdict(int)

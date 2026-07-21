@@ -7,25 +7,31 @@ SECRET_PATTERNS = [
     (r'(?i)(aws_secret_access_key)\s*=\s*["\']([A-Za-z0-9/+=]{40})["\']', "AWS Secret"),
     (r'["\']([A-Za-z0-9+/]{40,}={0,2})["\']', "Possible Base64 Secret"),
 ]
-SKIP_DIRS = {'.git', 'node_modules', '__pycache__', '.venv', 'venv'}
-SKIP_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.gif', '.pdf', '.zip', '.exe'}
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv"}
+SKIP_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".pdf", ".zip", ".exe"}
+
+
 def scan_file(filepath):
     findings = []
     try:
-        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+        with open(filepath, encoding="utf-8", errors="ignore") as f:
             lines = f.readlines()
         for line_num, line in enumerate(lines, 1):
             for pattern, secret_type in SECRET_PATTERNS:
                 if re.search(pattern, line):
-                    findings.append({
-                        'file': filepath,
-                        'line': line_num,
-                        'type': secret_type,
-                        'content': line.strip()
-                    })
-    except Exception as e:
+                    findings.append(
+                        {
+                            "file": filepath,
+                            "line": line_num,
+                            "type": secret_type,
+                            "content": line.strip(),
+                        }
+                    )
+    except Exception:
         pass
     return findings
+
+
 def scan_directory(root_dir):
     all_findings = []
     for dirpath, dirnames, filenames in os.walk(root_dir):
@@ -38,6 +44,8 @@ def scan_directory(root_dir):
             findings = scan_file(filepath)
             all_findings.extend(findings)
     return all_findings
+
+
 def generate_report(findings):
     if not findings:
         print("[CLEAN] No secrets detected in the codebase.")
@@ -49,6 +57,8 @@ def generate_report(findings):
         print(f"  Type    : {f['type']}")
         print(f"  Content : {f['content']}")
         print()
+
+
 if __name__ == "__main__":
     project_root = "."  # Change this to your project path
     print("Running Secret Scanner...")
