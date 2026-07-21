@@ -4,6 +4,8 @@ import os
 import ast
 import re
 
+# --> python secret_scanner.py && python dependency_checker.py && python pattern_analyzer.py
+
 UNSAFE_PATTERNS = [
     (r'\beval\s*\(', "Use of eval() - potential code injection risk"),
     (r'\bexec\s*\(', "Use of exec() - potential code injection risk"),
