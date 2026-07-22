@@ -1,21 +1,19 @@
 ## chunk.py
 # import
 # import re
-from pathlib import Path
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
 import numpy as np
 import pandas as pd
 
 from src.core.memory import ParseContext, app_session
+from src.utils.dict_helper import load_dict
+from src.utils.general_helper import make_doc_id
 
 # from collections import Counter
 from src.utils.spacy_helper import load_spacy_model
-
-from src.utils.general_helper import make_doc_id
-from src.utils.dict_helper import load_dict
-
 
 # df_blocks = document_json_to_blocks(json_path)
 # df_chunks = prepare_chunk_df(df_blocks)
@@ -230,11 +228,15 @@ def prepare_chunk_df(blocks: list[dict], parse_context: ParseContext, encoder):
             text = (chunk["chunk_text"]).strip()
             # _normalize_text_value
 
-            text_embed = np.where(
-                (heading is not None and text is not None),
-                f"Abschnitt: {heading}\n\n{text}",
-                heading or text,
-            )
+            if heading:
+                text_embed = f"Abschnitt: {heading}\n\n{text}"
+            else:
+                text_embed = text
+            # text_embed = np.where(
+            #     (heading is not None and text is not None),
+            #     f"Abschnitt: {heading}\n\n{text}",
+            #     heading or text,
+            # )
 
             chunk.update(
                 {

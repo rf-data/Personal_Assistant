@@ -3,15 +3,13 @@
 
 from pathlib import Path
 
-import pandas as pd
 import streamlit as st
 
 from src.core.config import env_variables
 
-# from src.utils.st_eda_helper import st_df_profile
-from src.tools_rag.create_embeds import load_chunks_to_chroma  # chunk_text, embed_text,
-from src.utils.chroma_helper import get_chroma_client, list_files_in_coll
-from src.utils.path_helper import ensure_dir, shorten_path
+# from src.utils.st_eda_helper import st_df_profile  # chunk_text, embed_text,
+# from src.utils.chroma_helper import get_chroma_client, list_files_in_coll
+# from src.utils.path_helper import ensure_dir, shorten_path
 
 
 def show():
@@ -20,7 +18,7 @@ def show():
 
     data = env_variables.data_dir
 
-    data = Path(ensure_dir(data))
+    # data = Path(ensure_dir(data))
 
     # st.warning("ADAPT TO NEW FILE SYSTEM")
 
@@ -167,52 +165,6 @@ def show():
     )
     # st.markdown("")
     st.divider()
-
-    st.subheader("Upload Data to ChromaDB")
-
-    dfs_embed = [
-        f
-        for f in Path(folder_path).rglob("*_embed.parquet")
-        if f.parent.name.startswith("ready_")
-    ]
-
-    chroma_client = get_chroma_client()
-    chroma_colls = chroma_client.list_collections()
-    coll_name = st.selectbox(
-        label="Selct a database", options=[coll.name for coll in chroma_colls]
-    )
-    # "QMS_apo"
-    coll = [c for c in chroma_colls if c.name in coll_name]
-    f_names, _, _ = list_files_in_coll(coll[0])
-
-    dfs_filtered = [df_path for df_path in dfs_embed if df_path.stem not in f_names]
-
-    files_to_load = st.multiselect(
-        label="Which files should be uploaded?",
-        options=dfs_filtered,  # set(dfs_embed) - set(f_names),
-        format_func=lambda p: shorten_path(p, n=1),
-    )
-
-    st.info(f"You selcted {len(files_to_load)} files.")
-    start_upload = st.toggle("Start Upload")
-
-    if start_upload:
-        for f_path in files_to_load:
-            # df_path = f" /{f_path}.parquet"
-            df_upload = pd.read_parquet(f_path)
-
-            load_chunks_to_chroma(
-                coll_name=coll_name,  # : str,
-                data=df_upload,  # : pd.DataFrame | str,
-                required_columns={
-                    "chunk_text",
-                    "chunk_global_id",
-                    # "f_name",
-                    "text_embed",
-                },
-                # meta_data: dict = {}
-            )
-        start_upload = False
 
     # st.markdown("**Under Construction**")
 

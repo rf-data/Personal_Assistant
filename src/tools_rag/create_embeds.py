@@ -159,9 +159,7 @@ def embed_text(df_embed: pd.DataFrame, chunk_context: ParseContext):
     embeddings = np.vstack(embeddings)
 
     logger.info(
-        "Finished creating embeddings\n"
-        "--> embeddings shape:\t%s",
-        embeddings.shape
+        "Finished creating embeddings\n--> embeddings shape:\t%s", embeddings.shape
     )
 
     embeddings = np.asarray(embeddings)
@@ -211,9 +209,7 @@ def load_chunks_to_chroma(
     #     )
     meta_data = meta_data or {}
 
-    metadatas = _create_or_update_metadata(data,
-                                           required_columns,
-                                           meta_data)
+    metadatas = _create_or_update_metadata(data, required_columns, meta_data)
     # required_columns = {
     #     "chunk_text",
     #     "chunk_global_id",
@@ -224,13 +220,11 @@ def load_chunks_to_chroma(
     missing_columns = required_columns - set(data.columns)
     if missing_columns:
         logger.error(
-            "df_name: %s\n"
-            "Missing required columns: %s\n"
-            "Available columns:\n %s",
-            data.loc[:, 'doc_name'][0],
+            "df_name: %s\nMissing required columns: %s\nAvailable columns:\n %s",
+            data.loc[:, "doc_name"][0],
             sorted(missing_columns),
-            data.columns
-            )
+            data.columns,
+        )
 
         # if (
         #     len(missing_columns) == 1
@@ -250,11 +244,11 @@ def load_chunks_to_chroma(
         raise ValueError("No chunk data supplied.")
 
     add_chroma_data(
-                chroma_coll=chroma_coll,
-                data=data,
-                doc_column="doc_name",
-                id_column="chunk_global_id",
-                metadatas=metadatas
-                )
+        chroma_coll=chroma_coll,
+        data=data,
+        doc_column="chunk_text",
+        id_column="chunk_global_id",
+        metadatas=metadatas,
+    )
 
     return

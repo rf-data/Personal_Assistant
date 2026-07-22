@@ -1,19 +1,18 @@
 ##
 # imports
 # from typing import List
-from datetime import datetime
 import gc
+from datetime import datetime
 from pathlib import Path
+
 from tiktoken import encoding_for_model
-
-from src.core.logger import create_logger
-
 
 # (
 #                             document_json_to_blocks,
 #                             prepare_chunk_df
 #                             )
 from src.core.config import ChunkSettings, env_variables
+from src.core.logger import create_logger
 
 # from tiktoken import encoding_for_model
 # import numpy as np
@@ -21,7 +20,7 @@ from src.core.config import ChunkSettings, env_variables
 # import streamlit as st
 from src.core.memory import ParseContext, app_session
 from src.tools_rag.chunk import chunk_text
-from src.tools_rag.create_embeds import load_chunks_to_chroma, embed_text
+from src.tools_rag.create_embeds import embed_text, load_chunks_to_chroma
 
 # from src.core.config import ParseSettings
 # from src.core.logger import create_logger
@@ -120,15 +119,11 @@ def run_chunk_and_embed(
 
 
 if __name__ == "__main__":
-
     log_name = "Chunk & Embed"
     name_logfile = "chunk_embed"
     today = datetime.today().strftime("%Y-%m-%d")
 
-    logger = create_logger(
-                    name=log_name,
-                    file_name=f"{today}_{name_logfile}"
-                    )
+    logger = create_logger(name=log_name, file_name=f"{today}_{name_logfile}")
     app_session.logger = logger
 
     encoder = encoding_for_model("gpt-4o-mini")

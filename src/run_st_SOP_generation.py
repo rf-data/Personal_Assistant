@@ -4,10 +4,10 @@ from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
 
-from src.core.memory import SOPGenContext, app_session
+from src.core.memory import SOPGenContext, LLMContext, app_session
 
 # from src.tools_rag.retrieve import normalise_chroma_results
-# from src.tools_rag.generate import summarize_chunks
+from src.tools_rag.generate import summarize_chunks
 from src.utils.dict_helper import save_dict
 
 #                                 build_context,
@@ -89,12 +89,14 @@ def run_st_sop_generation(
     )
     save_name = sop_context.save_name or f"{today}_SOP_{sop_context.title}"
 
-    chunks_serialized = [asdict(chunk) for chunk in chunks]
-
-    save_dict(data=chunks_serialized, path=Path(save_folder) / save_name)
+    # chunks_serialized = [asdict(chunk) for chunk in chunks]
+    # save_dict(data=chunks_serialized, path=Path(save_folder) / save_name)
 
     # for chunk in chunks:
-    chunks_sum = summarize_chunks(chunks)
+    facts = summarize_chunks(chunks, sop_context)
+
+    facts_serialized = [asdict(ing_fact) for fact in facts for ing_fact in fact["facts"]]
+    save_dict(data=facts_serialized, path=Path(save_folder) / f"{save_name}_facts")
 
     # template = load_sop_template(q_f_type)
     # retrieve_plan = create_retrieval_plan()
@@ -128,8 +130,19 @@ if __name__ == "__main__":
         if line.removeprefix("-").strip()
     ]
 
+
     sop_context = SOPGenContext(
         # query=rag_query,
+        llm_context=LLMContext(
+                name_logger="",
+                name_logfile="",
+                path_tracker_file="",
+                # generation_model: str = "openai/gpt-5-mini"   # LiteLLM
+                # extraction_model: str = "openai:gpt-4o",
+                # model="gpt-4o",
+                temperature=1.0,
+                callbacks=[""]
+                ),
         work_mode="create",
         n_results=n_results,
         collection=rag_colls,

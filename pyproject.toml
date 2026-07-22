@@ -7,6 +7,7 @@ requires-python = ">=3.12,<3.14"
 dependencies = [
     "bs4>=0.0.2",
     "chromadb>=1.5.9",
+    "de-core-news-sm @ https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-3.8.0/de_core_news_sm-3.8.0-py3-none-any.whl",
     "defusedxml>=0.7.1",
     "docx>=0.2.4",
     "fastapi>=0.136.1",
@@ -26,6 +27,7 @@ dependencies = [
     "pandas>=3.0.2",
     "pre-commit>=4.6.0",
     "pydantic>=2.13.3",
+    "pydantic-ai>=1.9,<1.20",
     "pydub>=0.25.1",
     "pyinputplus>=0.2.12",
     "pymupdf>=1.27.2.2",
@@ -80,3 +82,6 @@ python_version = "3.12"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-v --tb=short"
+
+[tool.uv.sources]
+de-core-news-sm = { url = "https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-3.8.0/de_core_news_sm-3.8.0-py3-none-any.whl" }

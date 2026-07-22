@@ -32,9 +32,11 @@ class LLMContext:
     name_logger: str
     name_logfile: str
     path_tracker_file: str
-    model: Literal["gpt-4o"]
     temperature: float
-    callbacks: list
+    callbacks: list = field(default_factory=["_track_costs"])
+    # model: Literal["gpt-4o"]
+    generation_model: Literal["openai/gpt-4o-mini"] = "openai/gpt-4o-mini"   # LiteLLM
+    extraction_model: Literal["openai-chat:gpt-4o-mini"] = "openai-chat:gpt-4o-mini"
 
 
 @dataclass

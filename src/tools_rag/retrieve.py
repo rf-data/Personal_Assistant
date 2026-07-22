@@ -8,7 +8,7 @@ from enum import Enum
 from typing import Any, Literal
 
 from src.core.memory import SOPGenContext
-from src.model_rag.chunks_retrieval import RetrievalResult, RetrievedChunk
+from src.model_rag.chunks_retrieval import RetrievedChunk, RetrievalResult
 from src.tools_rag.create_embeds import load_embedding_model
 
 # import src.utils.dict_helper as dh
@@ -537,6 +537,14 @@ def flatten_retrieval_results(
 
             seen.add(chunk_key)
             chunks_flat.append(chunk)
+
+    chunks_flat.sort(
+        key=lambda chunk: (
+                chunk.distance
+                if chunk.distance is not None
+                else float("inf")
+                )
+            )
 
     return chunks_flat
 

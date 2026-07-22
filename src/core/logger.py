@@ -27,8 +27,6 @@ from src.core.config import env_variables
 # import src.utils.df_helper as dfh
 
 
-
-
 '''
 4. Create a Log File Analyzer
 Every production application generates logs.

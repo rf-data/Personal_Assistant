@@ -91,8 +91,8 @@ class EnvVariables(BaseSettings):
     header_agent: str
 
     # llm token
-    hf_token: str
-    # openai_token: str
+    hf_api_key: str
+    openai_api_key: str
     # claude_token: str
     # gemini_token: str
 

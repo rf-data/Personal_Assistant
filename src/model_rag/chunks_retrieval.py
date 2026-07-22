@@ -1,5 +1,6 @@
 ## chunks_retrieval.py
 # import
+from pydantic import BaseModel
 from dataclasses import dataclass, field
 from typing import Any, Literal
 
@@ -18,8 +19,56 @@ class RetrievedChunk:
 
 
 @dataclass
-class IngestedChunk(RetrievedChunk):
-    pass
+class IngestedChunk: # (RetrievedChunk):
+    chunk_id: str
+    text: str
+    # fact: str
+    topic: str
+    source: str
+    section: str
+    page: int | None
+    similarity: float
+    metric: Literal["cosine"] = "cosine"
+
+
+# @dataclass
+# class ExtractedFact:
+#     fact: str
+#     topic: str
+#     source_chunk_id: str
+#     source: str
+#     page: int | None
+
+
+class ExtractedFact(BaseModel):
+    fact: str
+    topic: str
+
+
+@dataclass
+class IngestedFact:
+    fact: str
+    topic: str
+
+    chunk_id: str
+    source: str
+    section: str
+    page: int | None
+    similarity: float | None#
+
+
+@dataclass
+class SourceReference:
+    chunk_id: str
+    source: str
+    section: str
+    page: int | None
+
+
+@dataclass
+class ChunkSummary:
+    content: str
+    sources: list[SourceReference]
 
 
 @dataclass

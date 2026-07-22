@@ -1,6 +1,7 @@
 # imports
 import hashlib
 import inspect
+from dotenv import load_dotenv, find_dotenv
 
 # import numpy as np
 import json
@@ -30,7 +31,6 @@ def iter_chunks(df, chunk_size=25):
         yield df.iloc[start : start + chunk_size]
 
 
-'''
 def load_env_vars(name: list | str = ".env"):
     """
     Load environment variables from .env files if available.
@@ -56,7 +56,6 @@ def load_env_vars(name: list | str = ".env"):
     app_session.env_loaded = env_loaded
 
     return
-'''
 
 
 ####################
@@ -148,6 +147,7 @@ def make_cache_key(
 def save_to_cache(key: str, folder: str | Path, data: dict):
     cache_dir = env_variables.cache_dir
 
+    # if isinstance(data, dict):
     data["created_at"] = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     fn = Path(cache_dir) / folder / f"{key}.json"
