@@ -21,40 +21,52 @@ class LLMClient:
         self.temperature = llm_context.temperature
         self.response_model = llm_context.response_model
 
-        return
-
-    def __post_init__(self):
-        log_name = self.context.name_logger
-        name_logfile = self.context.name_logfile
         today = datetime.today().strftime("%Y-%m-%d")
 
-        self.logger = create_logger(name=log_name, file_name=f"{today}_{name_logfile}")
+        self.logger = create_logger(
+                                name=self.context.name_logger,
+                                file_name=f"{today}_{self.context.name_logfile}")
 
         self.client = instructor.from_provider(f"litellm/{self.model}")
         self._configure_callbacks()
-
         return
+
+
+def _configure_callbacks(self) -> None:
+        """
+        Konfiguriert optionale LiteLLM-Callbacks.
+        """
+
+        callbacks = getattr(
+            self.context,
+            "callbacks",
+            None,
+        )
+
+        if self.context.callbacks:
+            litellm.success_callback = callbacks
+
 
     def completion(self, messages: list[dict[str, Any]], **kwargs):
         """
         Gibt das vollständige LiteLLM-Response-Objekt zurück.
         """
-        cached_complete = self._cache_available(messages)
+        cached = self._cache_available(messages)
 
-        if cached_complete is not None:
-            return cached_complete
+        if cached is not None:
+            return cached
 
-        client = ""
-        response = litellm.completion(
+        # client = ""
+        # response =
+
+        # self._track_costs(kwargs, response, start_time=str(datetime.now()))
+
+        return litellm.completion(
             model=self.model,
             messages=messages,
             temperature=self.temperature,
             **kwargs,
         )
-
-        self._track_costs(kwargs, response, start_time=str(datetime.now()))
-
-        return response
 
     """
     ## Non-stream ResponseModel 'completion()'
@@ -96,6 +108,7 @@ class LLMClient:
 
         return response.choices[0].message.content
 
+
     def _cache_available(self, message):
         key = make_cache_key(message=message, model=self.model)
         cached = load_from_cache(key=key, folder=self.model)
@@ -105,54 +118,41 @@ class LLMClient:
 
         return None
 
-    def _configure_callbacks(self) -> None:
-        """
-        Konfiguriert optionale LiteLLM-Callbacks.
-        """
 
-        callbacks = getattr(
-            self.context,
-            "callbacks",
-            None,
-        )
+    # def _track_costs(
+    #     self,
+    #     kwargs,  # kwargs to completion
+    #     completion_response,  # response from completion
+    #     start_time="n.a.",
+    #     end_time="n.a.",  # start/end time
+    # ):
+    #     """
+    #     Beispiel für einen Custom Success Callback.
+    #     """
+    #     response_cost = kwargs.get("response_cost", "n.a.")
+    #     model = completion_response.get("model", "n.a.")
+    #     usuage = completion_response.get("usuage", "n.a.")
+    #     """
+    #     if response_cost is None:
+    #         return
+    #     """
+    #     self.logger.info(
+    #         "model used: %s\nstart | end time: %s | %susuage: \n%s\nLLM cost: %s",
+    #         model,
+    #         start_time,
+    #         end_time,
+    #         usuage,
+    #         response_cost,
+    #     )
 
-        if self.context.callbacks:
-            litellm.success_callback = callbacks
+    #     f_path = self.context.path_tracker_file
+    #     data = [model, start_time, end_time, usuage, response_cost]
 
-    def _track_costs(
-        self,
-        kwargs,  # kwargs to completion
-        completion_response,  # response from completion
-        start_time="n.a.",
-        end_time="n.a.",  # start/end time
-    ):
-        """
-        Beispiel für einen Custom Success Callback.
-        """
-        response_cost = kwargs.get("response_cost", "n.a.")
-        model = completion_response.get("model", "n.a.")
-        usuage = completion_response.get("usuage", "n.a.")
-        """
-        if response_cost is None:
-            return
-        """
-        self.logger.info(
-            "model used: %s\nstart | end time: %s | %susuage: \n%s\nLLM cost: %s",
-            model,
-            start_time,
-            end_time,
-            usuage,
-            response_cost,
-        )
+    #     with open(f_path, "a", newline="\n", encoding="utf-8") as file:
+    #         writer = csv.writer(file)
+    #         writer.writerows(data)
 
-        f_path = self.context.path_tracker_file
-        data = [model, start_time, end_time, usuage, response_cost]
-
-        with open(f_path, "a", newline="\n", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerows(data)
-
-        return None
+    #     return None
 
         # try:
         #     response_cost = kwargs.get("response_cost", 0)

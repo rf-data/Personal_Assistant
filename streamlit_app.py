@@ -29,6 +29,7 @@ from frontend.pages import (
     E_p0_rag_status,
     E_p1_chunk_embed,
     E_p2_sop_generation,
+    E_p3_chat_w_files
 )
 from src.core.config import GeneralSettings, ParseSettings
 from src.core.logger import create_logger
@@ -194,6 +195,7 @@ with st.sidebar:
                 "RAG_Status",
                 "Chunk & Embed",
                 "SOP_Generation",
+                "File Chat"
                 # "Evaluation Dashboard",
             ],
             key="subpage",
@@ -276,6 +278,8 @@ elif page == "RAG System":
         E_p1_chunk_embed.show()
     elif sub == "SOP_Generation":
         E_p2_sop_generation.show()
+    elif sub == "File Chat":
+        E_p3_chat_w_files.show()
 
 elif page == "Development":
     if sub == "Development_Area":

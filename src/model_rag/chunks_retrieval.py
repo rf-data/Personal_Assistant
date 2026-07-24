@@ -6,6 +6,14 @@ from typing import Any, Literal
 
 
 @dataclass
+class SourceReference:
+    chunk_id: str
+    source: str
+    section: str
+    page: int | None
+
+
+@dataclass
 class RetrievedChunk:
     chunk_id: str
     text: str
@@ -58,17 +66,66 @@ class IngestedFact:
 
 
 @dataclass
-class SourceReference:
-    chunk_id: str
-    source: str
-    section: str
-    page: int | None
+class ConsolidatedFact:
+    fact: str
+    topic: str
+    sources: list[SourceReference]  = field(
+                                        default_factory=list
+                                        )
+
+@dataclass
+class MergedFact:   # (BaseModel):
+    fact: str
 
 
 @dataclass
-class ChunkSummary:
-    content: str
-    sources: list[SourceReference]
+class MergeDecision:    # (BaseModel):
+    mergeable: bool
+    fact: str | None
+
+
+
+    # cache_folder = "fact_extraction"
+    # cache_key = make_cache_key(params={
+    #                     "topic": [
+    #                         item.topic
+    #                         for item in cluster
+    #                         ],
+    #                     "n_facts": len(cluster),
+    #                     "run_name": "cluster_merge_v1",
+    #                     "prompt_version": "prompt_v1",
+    #                     "model": "marvin_gpt-4o"
+    #                     # topics_hash
+    #                     })
+
+    # cached = load_from_cache(key=cache_key, folder=cache_folder)
+
+    # if cached is not None:
+    #     app_session.logger.info("Loading cached facts (key=%s)", cache_key)
+    #     print(f"Loading cached facts (key={cache_key})")
+    #     return [
+    #         IngestedFact(**chunk_dict)
+    #         for chunk_dict in cached["facts"]
+    #         ]
+
+
+    # save_to_cache(
+    #             key=cache_key,
+    #             folder=cache_folder,
+    #             data={"facts": [asdict(fact) for fact in fact_list]}
+    #             )
+
+
+# @dataclass
+# class KnowledgeSummary:
+#     content: str
+#     sources: list[SourceReference]
+
+
+# @dataclass
+# class ChunkSummary:
+#     content: str
+#     sources: list[SourceReference]
 
 
 @dataclass

@@ -95,6 +95,10 @@ class EnvVariables(BaseSettings):
     openai_api_key: str
     # claude_token: str
     # gemini_token: str
+    langfuse_public_key: str
+    langfuse_secret_key: str
+    langfuse_host: str
+    langfuse_base_url: str
 
     # MLflow relevance
     mlflow_artifacts: str

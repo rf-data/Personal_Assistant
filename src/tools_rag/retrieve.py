@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Literal
 
-from src.core.memory import SOPGenContext
+from src.core.memory import SOPGenContext, app_session
 from src.model_rag.chunks_retrieval import RetrievedChunk, RetrievalResult
 from src.tools_rag.create_embeds import load_embedding_model
 
@@ -260,6 +260,9 @@ def get_templates(sop_context: SOPGenContext):
     #             # chapters: List[int] | str = "all"
     #             # ):
 
+    app_session.logger.info("Start 'get_templates'")
+    print("Start 'get_templates'")
+
     match f_type:
         case "SOP":
             if work_mode == "create":
@@ -284,6 +287,8 @@ def get_templates(sop_context: SOPGenContext):
 def build_retrieval_queries(
     sop_context: SOPGenContext,
 ) -> list[str]:
+
+
     queries = []
 
     # Allgemeine Query
@@ -307,6 +312,9 @@ def retrieve_for_sop(
     Kapitelweises Retrieval.
     Das passt zu eurer neuen Template-getriebenen Pipeline.
     """
+
+    app_session.logger.info("Start 'retrieve_for_sop'")
+    print("Start 'retrieve_for_sop'")
 
     # "paraphrase-multilingual-MiniLM-L12-v2" oder "intfloat/multilingual-e5-base"
     embed_model = load_embedding_model(
@@ -521,6 +529,9 @@ def flatten_retrieval_results(
     """
     Macht aus kapitelweisen Ergebnissen eine deduplizierte Chunk-Liste.
     """
+
+    app_session.logger.info("Start 'flatten_retrieval_results'")
+    print("Start 'flatten_retrieval_results'")
 
     seen = set()
     chunks_flat: list[RetrievedChunk] = []

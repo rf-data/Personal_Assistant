@@ -5,9 +5,15 @@ from datetime import datetime
 from pathlib import Path
 
 from src.core.memory import SOPGenContext, LLMContext, app_session
+from src.core.config import env_variables
+from src.core.observability import configure_llm_observability
 
 # from src.tools_rag.retrieve import normalise_chroma_results
-from src.tools_rag.generate import summarize_chunks
+from src.tools_rag.generate import (
+                            build_chunk_fact_pool,
+                            configure_marvin,
+                            group_filtered_facts
+                            )
 from src.utils.dict_helper import save_dict
 
 #                                 build_context,
@@ -93,10 +99,17 @@ def run_st_sop_generation(
     # save_dict(data=chunks_serialized, path=Path(save_folder) / save_name)
 
     # for chunk in chunks:
-    facts = summarize_chunks(chunks, sop_context)
+    # configure_langfuse(env_variables)
+    configure_llm_observability(
+                        env_variables
+                    )
+    configure_marvin(sop_context)
 
-    facts_serialized = [asdict(ing_fact) for fact in facts for ing_fact in fact["facts"]]
-    save_dict(data=facts_serialized, path=Path(save_folder) / f"{save_name}_facts")
+    chunks_facts = build_chunk_fact_pool(chunks, sop_context)
+    facts_group = group_filtered_facts(chunks_facts.get("facts", []))
+
+    # facts_serialized = [asdict(ing_fact) for fact in facts for ing_fact in fact["facts"]]
+    # save_dict(data=facts_serialized, path=Path(save_folder) / f"{save_name}_facts")
 
     # template = load_sop_template(q_f_type)
     # retrieve_plan = create_retrieval_plan()
