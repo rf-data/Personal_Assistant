@@ -4,16 +4,27 @@ from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
 
+from tenacity import (
+                retry,
+                wait_random_exponential,
+                stop_after_attempt
+                )
+
+from src.core.retry import my_before_sleep
 from src.core.memory import SOPGenContext, LLMContext, app_session
 from src.core.config import env_variables
 from src.core.observability import configure_llm_observability
 
 # from src.tools_rag.retrieve import normalise_chroma_results
-from src.tools_rag.generate import (
+from src.tools_rag.generate_chunks_facts import (
                             build_chunk_fact_pool,
+                            build_knowledge_pool,
                             configure_marvin,
-                            group_filtered_facts
+                            consolidate_facts,
+#                             group_filtered_facts
                             )
+from src.tools_rag.generate_sop import generate_chapter_text
+
 from src.utils.dict_helper import save_dict
 
 #                                 build_context,
@@ -35,6 +46,32 @@ from src.utils.dict_helper import save_dict
 
 4. Retrieval
    Chroma/FAISS → relevante Chunks
+ ↓
+RetrievedChunk
+
+5. Ingestion + Fact Extraction
+   ↓
+IngestedChunk
+IngestedFact
+   │
+   └── chunk_id
+
+6. Fact Consolidation
+   ↓
+ConsolidatedFact
+   │
+   └── SourceReference(chunk_id)
+
+6b. Knowledge Pool
+   ↓
+KnowledgePool
+├── chunks
+└── consolidated_facts
+
+7. Template Mapping
+
+###########
+
 
 5. Post-Retrieval Extraction
    Chunks → strukturierte Fakten/Stichpunkte mit Quellen
@@ -64,6 +101,14 @@ from src.tools_rag.retrieve import (
 
 
 # streamlit run streamlit_app.py
+@retry(
+    wait=wait_random_exponential(
+                            multiplier=1,
+                                max=10
+                                ),
+	before_sleep=my_before_sleep,
+	stop=stop_after_attempt(3)
+    )
 def run_st_sop_generation(
     # user_request: UserRequest,
     sop_context: SOPGenContext,
@@ -91,12 +136,12 @@ def run_st_sop_generation(
     today = app_session.timestamp or datetime.today().strftime("%Y-%m-%d")
 
     save_folder = (
-        sop_context.save_folder or "/workspaces/gmp_compliance/data/rag_queries"
-    )
-    save_name = sop_context.save_name or f"{today}_SOP_{sop_context.title}"
+        f"{env_variables.data_dir}/sop_{sop_context.title}"
+        # workspaces/gmp_compliance/data/rag_queries"
+        )
 
-    # chunks_serialized = [asdict(chunk) for chunk in chunks]
-    # save_dict(data=chunks_serialized, path=Path(save_folder) / save_name)
+    chunks_serialized = [asdict(chunk) for chunk in chunks]
+    save_dict(data=chunks_serialized, path=Path(save_folder) / f"{today}_{sop_context.title}_chunk_retr")
 
     # for chunk in chunks:
     # configure_langfuse(env_variables)
@@ -106,10 +151,45 @@ def run_st_sop_generation(
     configure_marvin(sop_context)
 
     chunks_facts = build_chunk_fact_pool(chunks, sop_context)
-    facts_group = group_filtered_facts(chunks_facts.get("facts", []))
+    # facts_group = group_filtered_facts(chunks_facts.get("facts", []))
+    facts_con = consolidate_facts(
+                    chunks_facts["facts"], # , []),  # acts_group: list[IngestedFact],
+                    sop_context
+                    # similarity_threshold: float = 0.90,
+                    )
 
-    # facts_serialized = [asdict(ing_fact) for fact in facts for ing_fact in fact["facts"]]
-    # save_dict(data=facts_serialized, path=Path(save_folder) / f"{save_name}_facts")
+    facts_con_serialized = {
+                        topic: [
+                            asdict(fact)
+                            for fact in facts
+                            ]
+                        for topic, facts in facts_con.items()
+                        }
+
+    # print("type 'facts_con':\t", type(facts_con))
+    # print("type 'facts_con' values:\t'", type(next(iter(facts_con.values()))))
+
+    save_dict(
+        data=facts_con_serialized,
+        path=Path(save_folder) / f"{today}_{sop_context.title}_fact_con"
+        # f"{save_name}_facts_consol"
+        )
+
+    know_pool = build_knowledge_pool(
+                    chunks=chunks_facts["chunks"],
+                    facts=facts_con
+                    )
+
+    save_dict(
+            data=asdict(know_pool),
+            path=Path(save_folder) / f"{today}_{sop_context.title}_knowledge"
+            )
+
+    hi = generate_chapter_text(
+                            know_pool,
+                            sop_context,
+                            chapter_templates
+                            )
 
     # template = load_sop_template(q_f_type)
     # retrieve_plan = create_retrieval_plan()
@@ -127,10 +207,11 @@ def run_st_sop_generation(
     #                      chapter_idx)
 
 
+
 if __name__ == "__main__":
     n_results = 10
     rag_colls = ["QMS_apo_intfloat_multi_v1"]  # rag_colls,
-    sop_title = "Hygienmonitoring"  # sop_title,
+    sop_title = "Hygienemonitoring"  # sop_title,
     sop_topics = """
 - Hygienemonitoring in der aseptischen Herstellung
 - mikrobiologische Überwachung von Luft, Personal und Oberflächen
@@ -146,6 +227,7 @@ if __name__ == "__main__":
 
     sop_context = SOPGenContext(
         # query=rag_query,
+        # save_folder="/workspaces/gmp_compliance/data/rag_queries",
         llm_context=LLMContext(
                 name_logger="",
                 name_logfile="",
@@ -163,6 +245,7 @@ if __name__ == "__main__":
         topics=topic_list,
         transformer_model="intfloat/multilingual-e5-base",
         q_doc_type="SOP",
+        similarity_threshold=0.7
     )
 
     run_st_sop_generation(sop_context)

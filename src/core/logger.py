@@ -77,6 +77,249 @@ for err, count in sorted(errors.items(), key=lambda x: x[1], reverse=True):
 """
 
 
+# Ja, absolut. Rich ist dafür meiner Meinung nach die beste Lösung.
+# Ich würde allerdings Terminal und Logfile getrennt behandeln, weil
+# Farben in einer Logdatei eher stören als helfen.
+
+# Ich würde die Ausgabe in drei Ebenen aufteilen:
+
+# Rich Console
+#     ↓
+#     farbig
+#     fett
+#     Panels
+#     Tabellen
+#     Progress
+
+# Logger
+#     ↓
+#     Plain Text
+#     vollständige Tracebacks
+#     dauerhaft lesbar
+# 1. Terminal (Rich)
+
+# Hier kannst du praktisch alles hervorheben.
+
+# Beispielsweise:
+
+# from rich.console import Console
+
+# console = Console()
+
+# console.print("[bold red]ERROR[/bold red]")
+# console.print("[yellow]Retry #2[/yellow]")
+# console.print("[green]Finished[/green]")
+
+# oder
+
+# console.rule("[bold blue]Merge Cluster 5")
+
+# ergibt etwa
+
+# ──────────────────── Merge Cluster 5 ────────────────────
+# Panels
+
+# Die finde ich für deine Pipeline besonders schön.
+
+# from rich.panel import Panel
+
+# console.print(
+#     Panel.fit(
+#         "Start consolidate_facts",
+#         title="RAG",
+#         border_style="green",
+#     )
+# )
+# ╭──── RAG ─────╮
+# │ Start consolidate_facts │
+# ╰──────────────╯
+# Tracebacks
+
+# Rich besitzt sogar einen eigenen Traceback-Renderer.
+
+# from rich.traceback import install
+
+# install(show_locals=True)
+
+# Dann sehen Exceptions etwa so aus:
+
+# AttributeError
+# ──────────────────────────────
+
+# merge_clusters()
+
+# result.mergeable
+
+# ...
+
+# mit Syntaxhighlighting und optional sogar lokalen Variablen.
+
+# Das ist deutlich angenehmer als der normale Python-Traceback.
+
+# 2. Logging
+
+# Hier würde ich keine Farben speichern.
+
+# ANSI-Codes landen sonst in der Datei.
+
+# Also:
+
+# 2026-07-25 15:23
+
+# ERROR
+
+# Retry #2
+
+# Traceback:
+# ...
+
+# Das ist später viel besser durchsuchbar.
+
+# 3. Beides gleichzeitig
+
+# Rich besitzt dafür den RichHandler.
+
+# from rich.logging import RichHandler
+
+# logging.basicConfig(
+#     level=logging.INFO,
+#     handlers=[
+#         RichHandler(
+#             rich_tracebacks=True,
+#         )
+#     ],
+# )
+
+# Dann bekommst du
+
+# farbige Log-Ausgabe im Terminal
+# Rich-Tracebacks
+# schöne Zeitstempel
+
+# ohne deinen Logger groß umzubauen.
+
+# 4. Ich würde für deine Pipeline noch einen Schritt weiter gehen
+
+# Deine Pipeline besteht ja aus klaren Phasen:
+
+# Retrieve
+# ↓
+
+# Chunk Facts
+# ↓
+
+# Consolidate
+
+# ↓
+
+# Generate SOP
+
+# Dafür würde ich tatsächlich Rich-Regeln verwenden.
+
+# Beispielsweise
+
+# console.rule(
+#     "[bold cyan]Fact Extraction"
+# )
+
+# oder
+
+# console.rule(
+#     "[bold green]Merge Cluster #7"
+# )
+
+# Das macht das Scrollen im Terminal unglaublich angenehm.
+
+# 5. Fortschritt
+
+# Du hast viele Chunks.
+
+# Momentan:
+
+# Loading cached facts...
+# Loading cached facts...
+# Loading cached facts...
+
+# Mit Rich könntest du stattdessen einfach
+
+# from rich.progress import track
+
+# for chunk in track(
+#     chunks,
+#     description="Extract Facts",
+# ):
+#     ...
+
+# erhalten:
+
+# Extract Facts ━━━━━━━━━━━━━━━━━━━━━━━ 100%
+
+# Oder bei der Konsolidierung:
+
+# Merge Topics ━━━━━━━━━━━ 4/12
+# 6. Tabellen
+
+# Gerade für Debugging finde ich Tabellen extrem hilfreich.
+
+# Beispielsweise:
+
+# Topic                              Facts   Merged
+# --------------------------------------------------
+# Hygienemonitoring                  37      14
+# Monitoring Luft                    22       9
+# Warn- und Aktionsgrenzen           18       8
+
+# Das geht mit Rich in wenigen Zeilen.
+# Meine Empfehlung für dein Projekt
+
+# Da deine Anwendung inzwischen recht komplex geworden ist (Retriever → Marvin → LiteLLM → Langfuse → MLflow), würde ich den Logger nicht nur "verschönern", sondern systematisch modernisieren.
+
+# Ich würde ungefähr so aufbauen:
+
+# Rich Console
+# │
+# ├── console.rule()
+# ├── console.print()
+# ├── Progress
+# ├── Tables
+# ├── Panels
+# └── Rich Tracebacks
+
+# ↓
+
+# Python Logger
+
+# ↓
+
+# Datei
+
+# Dann hast du:
+
+# Terminal: sehr übersichtlich, farbig, mit Progressbars und Panels.
+# Logdatei: sauberer Text ohne ANSI-Codes.
+# Tracebacks: sowohl im Terminal schön formatiert als auch vollständig
+# in der Logdatei.
+# Für dein Projekt würde ich sogar noch einen kleinen PipelineLogger bauen
+
+# Mit Funktionen wie:
+
+# pipeline_logger.stage("Fact Extraction")
+# pipeline_logger.topic("Hygienemonitoring")
+# pipeline_logger.cluster(7)
+# pipeline_logger.cache_hit(key)
+# pipeline_logger.retry(retry_state)
+# pipeline_logger.summary(...)
+
+# Intern würde dieser automatisch:
+
+# eine console.rule() im Terminal ausgeben,
+# den entsprechenden Eintrag in die Logdatei schreiben,
+# und bei Bedarf Rich-Panels oder Tabellen verwenden.
+
+# Ich glaube, das würde sich bei deinem inzwischen recht
+# großen GMP-/RAG-Projekt langfristig deutlich auszahlen und
+# den Debugging-Aufwand spürbar reduzieren.
+
 def has_file_handler(logger, log_path):
     for h in logger.handlers:
         if isinstance(h, logging.FileHandler):

@@ -45,11 +45,12 @@ class SOPGenContext:
     title: str = field(default_factory=str)
     topics: list = field(default_factory=list)
     transformer_model: Literal[
-        "all-MiniLM-L6-v2",
-        "paraphrase-multilingual-MiniLM-L12-v2",
-        "intfloat/multilingual-e5-base",
-        None,
-    ] = Field(default=None)
+            "all-MiniLM-L6-v2",
+            "paraphrase-multilingual-MiniLM-L12-v2",
+            "intfloat/multilingual-e5-base",
+            None,
+            ] = Field(default=None)
+    similarity_threshold: float = field(default_factory=float)
     q_doc_type: Literal[
         "SOP",
         # "SOP_specific",

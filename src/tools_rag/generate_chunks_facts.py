@@ -1,4 +1,4 @@
-## generate.py
+## generate_chunks_facts.py
 # import
 import os
 import re
@@ -13,14 +13,15 @@ from pydantic_ai import Agent
 from src.core.memory import SOPGenContext, app_session
 from src.core.config import env_variables
 from src.tools_rag.create_embeds import load_embedding_model
-from src.model_rag.chunks_retrieval import (
+from src.model_rag.classes_chunk_fact import (
                                         # MergedFact,
-                                        MergeDecision,
+                                        ConsolidatedFact,
                                         ExtractedFact,
+                                        MergeDecision,
                                         IngestedFact,
                                         IngestedChunk,
+                                        KnowledgePool,
                                         RetrievedChunk,
-                                        ConsolidatedFact,
                                         SourceReference
                                         )
 from src.utils.general_helper import (
@@ -123,7 +124,7 @@ def extract_chunk_facts(
 
 def extract_facts(
             chunk: IngestedChunk,
-            sop_context: SOPGenContext,
+            context: SOPGenContext,
             ) -> List[IngestedFact]:
     cache_folder = "fact_extraction"
     cache_key = make_cache_key(params={
@@ -149,7 +150,7 @@ def extract_facts(
 
     extracted = extract_chunk_facts(
         chunk_text=chunk.text,
-        allowed_topics=sop_context.topics,
+        allowed_topics=context.topics,
     )
 
     fact_list = [
@@ -168,7 +169,7 @@ def extract_facts(
     save_to_cache(
                 key=cache_key,
                 folder=cache_folder,
-                data={"facts": [asdict(fact) for fact in fact_list]}
+                data={"result": [asdict(fact) for fact in fact_list]}
                 )
             # chunks_serialized =
     return fact_list
@@ -176,25 +177,25 @@ def extract_facts(
 
 def build_chunk_fact_pool(
                 chunks_ret: list[RetrievedChunk],
-                sop_context: SOPGenContext
+                context: SOPGenContext
                 ) -> dict:
     """
     ingest and summarize retrieved chunks
     """
 
-    app_session.logger.info("Start 'summarize_chunks'")
-    print("Start 'summarize_chunks'")
+    app_session.logger.info("Start 'build_chunk_fact_pool'")
+    print("Start 'build_chunk_fact_pool'")
 
-    chunks = []
+    chunks = {}
     facts = []
     for chunk in chunks_ret:
         chunk_ing = _ingest_chunk(chunk)
         # chunk_fact =
-        chunks.append(chunk_ing)
-        facts.append(
+        chunks[chunk_ing.chunk_id] = chunk_ing
+        facts.extend(
                 extract_facts(
                     chunk=chunk_ing,
-                    sop_context=sop_context
+                    context=context
                     # allowed_topics=sop_context.topics,
                     )
                 )
@@ -206,8 +207,8 @@ def build_chunk_fact_pool(
 
 
 def filter_facts(
-            facts: list[IngestedFact],
-        ) -> list[IngestedFact]:
+            facts: list[ConsolidatedFact],
+        ) -> list[ConsolidatedFact]:
 
     cleaned = []
 
@@ -220,6 +221,9 @@ def filter_facts(
 
         if len(text) < 20:
             continue
+
+        # if len(text.split()) < 5:
+        #     continue
 
         if text.lower().startswith(
             (
@@ -235,8 +239,8 @@ def filter_facts(
 
 
 def group_filtered_facts(
-    facts: list[IngestedFact],
-) -> dict[str, list[IngestedFact]]:
+    facts: list[ConsolidatedFact],
+) -> dict[str, list[ConsolidatedFact]]:
 
     grouped = defaultdict(list)
 
@@ -262,7 +266,7 @@ def normalize_fact_text(text: str) -> str:
 
 def deduplicate_facts(
                 facts: list[IngestedFact],
-            ) -> list[IngestedFact]:
+            ) -> list[ConsolidatedFact]:
 
     fact_map: dict[
                 tuple[str, str],
@@ -420,21 +424,22 @@ def assess_and_merge_facts(
 
 
 def merge_clusters(
-    clusters: list[
-        list[ConsolidatedFact]
-    ],
-) -> list[ConsolidatedFact]:
+            clusters: list[
+                list[ConsolidatedFact]
+            ],
+        ) -> list[ConsolidatedFact]:
 
     cache_folder = "cluster_merge"
 
     merged_results = []
+    # fact_id = 0
 
     for cluster in clusters:
 
         if len(cluster) == 1:
-            merged_results.append(
-                cluster[0]
-            )
+            # fact = cluster[0]
+            # fact.fact_id = fact_id
+            merged_results.append(cluster[0]) # (fact)
             continue
 
         cache_key = make_cache_key(params={
@@ -449,7 +454,12 @@ def merge_clusters(
                         # topics_hash
                         })
 
-        cached = load_from_cache(key=cache_key, folder=cache_folder)
+        cached = load_from_cache(
+                            key=cache_key,
+                            folder=cache_folder,
+                            cls=MergeDecision
+                            )
+
         if cached is None:
             result = assess_and_merge_facts(
                                         facts=[
@@ -465,7 +475,8 @@ def merge_clusters(
                 )
 
         else:
-            result = cached.get("result")
+            result = cached # .get("result")
+
             app_session.logger.info("Loading cached results (key=%s)", cache_key)
             print(f"Loading cached results (key={cache_key})")
 
@@ -476,12 +487,15 @@ def merge_clusters(
             #     ]
 
         if not result.mergeable:
+            # cluster.fact_id = fact_id
+            # fact_id += 1
+
             merged_results.extend(
-                cluster
-            )
+                            cluster
+                            )
+
         else:
             sources = []
-
             for item in cluster:
                 sources.extend(
                     item.sources
@@ -490,10 +504,12 @@ def merge_clusters(
             merged_results.append(
                 ConsolidatedFact(
                     fact=result.fact,
+                    # fact_id=fact_id,
                     topic=cluster[0].topic,
                     sources=sources,
                 )
             )
+            # fact_id += 1
 
     return merged_results
 
@@ -505,9 +521,13 @@ def merge_clusters(
 
 def consolidate_facts(
             facts: list[IngestedFact],
-            embed_model,
-            similarity_threshold: float = 0.90,
+            context: SOPGenContext
+            # transformer_model: str,
+            # similarity_threshold: float = 0.90,
             ) -> dict[str, list[ConsolidatedFact]]:
+
+    app_session.logger.info("Starting 'consolidate_facts")
+    print("Start 'consolidate_facts'")
 
     # 1. Exakte Dubletten
     deduplicated = deduplicate_facts(
@@ -521,13 +541,15 @@ def consolidate_facts(
 
     result = {}
 
-    for topic, topic_facts in grouped.items():
+    for idx, (topic, topic_facts) in enumerate(grouped.items()):
+
+        print(f"[group #{idx}]: Start 'cluster_similar_facts' + 'merge_clusters'")
 
         # 3. Semantisch ähnliche Facts clustern
         clusters = cluster_similar_facts(
             facts=topic_facts,
-            embed_model=embed_model,
-            threshold=similarity_threshold,
+            transformer_model=context.transformer_model,
+            threshold=context.similarity_threshold,
         )
 
         # 4. LLM-gestützter Merge
@@ -538,6 +560,35 @@ def consolidate_facts(
         result[topic] = merged
 
     return result
+
+
+def assign_fact_ids(
+        facts_by_topic: dict[str, list[ConsolidatedFact]],
+    ) -> dict[str, list[ConsolidatedFact]]:
+
+    fact_id = 1
+
+    for facts in facts_by_topic.values():
+        for fact in facts:
+            fact.fact_id = f"fact_{fact_id:04d}"
+            fact_id += 1
+
+    return facts_by_topic
+
+
+
+def build_knowledge_pool(
+                chunks: dict[int, IngestedChunk],
+                facts: dict[str, list[ConsolidatedFact]]
+                ) -> KnowledgePool:
+
+    facts_w_id = assign_fact_ids(facts)
+
+    return KnowledgePool(
+                    chunks=chunks,  # _facts["chunks"],
+                    facts=facts_w_id
+                    )
+
 
     # chunks_ing = []
     # for chunk in chunks:

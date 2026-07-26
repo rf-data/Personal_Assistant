@@ -1,6 +1,8 @@
 # imports
 import hashlib
 import inspect
+from dataclasses import is_dataclass
+from pydantic import BaseModel
 from dotenv import load_dotenv, find_dotenv
 
 # import numpy as np
@@ -12,7 +14,7 @@ import subprocess
 from collections.abc import Callable, Iterable
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from src.core.config import env_variables
 from src.core.memory import app_session
@@ -91,10 +93,18 @@ def snapshot_dependent_functions(
     return snapshot
 
 
-def make_doc_id(file_path: str, short: bool = True) -> str:
-    stem = Path(file_path).stem.lower().strip()
+def make_doc_id(name: str,
+                mode: Literal["file_path", "headline"] = "file_path",
+                short: bool = True) -> str:
+    if mode == "file_path":
+        stem = Path(name).stem.lower().strip()
+        doc_id = hashlib.sha256(stem.encode("utf-8")).hexdigest()
 
-    doc_id = hashlib.sha256(stem.encode("utf-8")).hexdigest()
+    elif mode == "headline":
+        doc_id = hashlib.sha256(name.encode("utf-8")).hexdigest()
+
+    else:
+        raise ValueError("Unknown value in 'mode':\t", mode)
 
     if short:
         return doc_id[:16]
@@ -163,20 +173,38 @@ def save_to_cache(key: str, folder: str | Path, data: dict):
     return
 
 
-def load_from_cache(key: str, folder: str | Path):
+def load_from_cache(
+                key: str,
+                folder: str | Path,
+                cls=None
+                ):
     cache_dir = env_variables.cache_dir
 
     fn = Path(cache_dir) / folder / f"{key}.json"
     ensure_dir(fn)
 
-    if fn.exists():
-        logger = app_session.logger
-        logger.info("Loaded cached data (key=%s).", key)
+    if not fn.exists():
+        return None
 
-        with open(fn) as f:
-            return json.load(f)
+    app_session.logger.info("Loaded cached data (key=%s).", key)
 
-    return None
+    with open(fn) as f:
+        data = json.load(f)
+
+    if cls is None:
+        return data
+
+    if isinstance(data, dict) and "result" in data:
+        data = data["result"]
+
+    if isinstance(cls, type) and issubclass(cls, BaseModel):
+        return cls.model_validate(data)
+
+    if isinstance(cls, type) and is_dataclass(cls):
+        return cls(**data)
+
+    return data
+
 
 
 def get_file_config(config_root: Any, file_type: str) -> Any:

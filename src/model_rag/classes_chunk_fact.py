@@ -67,8 +67,9 @@ class IngestedFact:
 
 @dataclass
 class ConsolidatedFact:
-    fact: str
-    topic: str
+    fact: str = field(default_factory=str)
+    fact_id: int = field(default_factory=int)
+    topic: str = field(default_factory=str)
     sources: list[SourceReference]  = field(
                                         default_factory=list
                                         )
@@ -83,6 +84,11 @@ class MergeDecision:    # (BaseModel):
     mergeable: bool
     fact: str | None
 
+
+@dataclass
+class KnowledgePool:
+    chunks: dict[str, IngestedChunk]
+    facts: dict[str, list[ConsolidatedFact]]
 
 
     # cache_folder = "fact_extraction"
