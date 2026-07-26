@@ -1403,11 +1403,9 @@ source = { virtual = "." }
 dependencies = [
     { name = "bs4" },
     { name = "chromadb" },
-    { name = "de-core-news-sm" },
     { name = "defusedxml" },
     { name = "docx" },
     { name = "fastapi" },
-    { name = "faster-whisper" },
     { name = "ffmpeg" },
     { name = "httpx" },
     { name = "instructor" },
@@ -1415,7 +1413,6 @@ dependencies = [
     { name = "langfuse" },
     { name = "litellm" },
     { name = "markdown" },
-    { name = "markdown-it-py" },
     { name = "marvin" },
     { name = "matplotlib" },
     { name = "mlflow" },
@@ -1426,8 +1423,6 @@ dependencies = [
     { name = "pre-commit" },
     { name = "pydantic" },
     { name = "pydantic-ai" },
-    { name = "pydub" },
-    { name = "pyinputplus" },
     { name = "pymupdf" },
     { name = "pypdf" },
     { name = "python-docx" },
@@ -1436,14 +1431,10 @@ dependencies = [
     { name = "returns" },
     { name = "scikit-learn" },
     { name = "scipy" },
-    { name = "sentence-transformers" },
-    { name = "sounddevice" },
-    { name = "spacy" },
     { name = "streamlit", extra = ["pdf"] },
     { name = "streamlit-pdf-viewer" },
     { name = "tenacity" },
     { name = "tiktoken" },
-    { name = "torch" },
     { name = "yt-dlp" },
 ]
 
@@ -1454,19 +1445,27 @@ dev = [
     { name = "ruff" },
 ]
 nlp = [
+    { name = "de-core-news-sm" },
     { name = "sentence-transformers" },
     { name = "spacy" },
+    { name = "torch" },
+]
+transcribe = [
+    { name = "faster-whisper" },
+    { name = "pydub" },
+    { name = "sounddevice" },
+]
+unclear = [
+    { name = "markdown-it-py" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "bs4", specifier = ">=0.0.2" },
     { name = "chromadb", specifier = ">=1.5.9" },
-    { name = "de-core-news-sm", url = "https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-3.8.0/de_core_news_sm-3.8.0-py3-none-any.whl" },
     { name = "defusedxml", specifier = ">=0.7.1" },
     { name = "docx", specifier = ">=0.2.4" },
     { name = "fastapi", specifier = ">=0.136.1" },
-    { name = "faster-whisper", specifier = ">=1.2.1" },
     { name = "ffmpeg", specifier = ">=1.4" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "instructor", specifier = ">=1.15.4" },
@@ -1474,7 +1473,6 @@ requires-dist = [
     { name = "langfuse", specifier = ">=4.14.1" },
     { name = "litellm", specifier = ">=1.93.0" },
     { name = "markdown", specifier = ">=3.10.2" },
-    { name = "markdown-it-py", specifier = ">=4.0.0" },
     { name = "marvin", specifier = ">=3.2.7" },
     { name = "matplotlib", specifier = ">=3.10.9" },
     { name = "mlflow", specifier = ">=1.27.0" },
@@ -1485,8 +1483,6 @@ requires-dist = [
     { name = "pre-commit", specifier = ">=4.6.0" },
     { name = "pydantic", specifier = ">=2.13.3" },
     { name = "pydantic-ai", specifier = ">=1.9,<1.20" },
-    { name = "pydub", specifier = ">=0.25.1" },
-    { name = "pyinputplus", specifier = ">=0.2.12" },
     { name = "pymupdf", specifier = ">=1.27.2.2" },
     { name = "pypdf", specifier = ">=6.11.0" },
     { name = "python-docx", specifier = ">=1.2.0" },
@@ -1495,14 +1491,10 @@ requires-dist = [
     { name = "returns", specifier = ">=0.27.0" },
     { name = "scikit-learn", specifier = ">=1.8.0" },
     { name = "scipy", specifier = ">=1.17.1" },
-    { name = "sentence-transformers", specifier = ">=5.0" },
-    { name = "sounddevice", specifier = ">=0.5.5" },
-    { name = "spacy", specifier = ">=3.8.14" },
     { name = "streamlit", extras = ["pdf"], specifier = ">=1.56.0" },
     { name = "streamlit-pdf-viewer", specifier = ">=0.0.29" },
     { name = "tenacity", specifier = ">=9.1.4" },
     { name = "tiktoken", specifier = ">=0.12.0" },
-    { name = "torch", specifier = ">=2.13.0" },
     { name = "yt-dlp", specifier = ">=2026.3.17" },
 ]
 
@@ -1513,9 +1505,17 @@ dev = [
     { name = "ruff", specifier = ">=0.15.14" },
 ]
 nlp = [
-    { name = "sentence-transformers", specifier = ">=2.2.2" },
+    { name = "de-core-news-sm", url = "https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-3.8.0/de_core_news_sm-3.8.0-py3-none-any.whl" },
+    { name = "sentence-transformers", specifier = ">=5.0" },
     { name = "spacy", specifier = ">=3.8.14" },
+    { name = "torch", specifier = ">=2.13.0" },
 ]
+transcribe = [
+    { name = "faster-whisper", specifier = ">=1.2.1" },
+    { name = "pydub", specifier = ">=0.25.1" },
+    { name = "sounddevice", specifier = ">=0.5.5" },
+]
+unclear = [{ name = "markdown-it-py", specifier = ">=4.0.0" }]
 
 [[package]]
 name = "google-auth"
@@ -3929,16 +3929,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pyinputplus"
-version = "0.2.12"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pysimplevalidate" },
-    { name = "stdiomask" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/6a/d4/afb45ed88323ef6d3c4cbf48e9c1bac38059a168b8392a56f3b8f9d1d39c/PyInputPlus-0.2.12.tar.gz", hash = "sha256:3a86b03dc6d003fec7dc627ad175cacaaf6e14a6a3b13b34c8fe6f5d01506231", size = 20872, upload-time = "2020-10-11T01:31:20.243Z" }
-
-[[package]]
 name = "pyjwt"
 version = "2.13.0"
 source = { registry = "https://pypi.org/simple" }
@@ -4012,12 +4002,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/e7/82/28175b2414effca1c
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bd/24/12818598c362d7f300f18e74db45963dbcb85150324092410c8b49405e42/pyproject_hooks-1.2.0-py3-none-any.whl", hash = "sha256:9e5c6bfa8dcc30091c74b0cf803c81fdd29d94f01992a7707bc97babb1141913", size = 10216, upload-time = "2024-09-29T09:24:11.978Z" },
 ]
-
-[[package]]
-name = "pysimplevalidate"
-version = "0.2.12"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0b/54/8fd99436073dbdbba719e08e1b7e5f3f36a8cc9e518612e1b97e4806d2ce/PySimpleValidate-0.2.12.tar.gz", hash = "sha256:645d24bdca17ad4c40658f3aa0bd5c1aa1688ba0c02ba75c5ed2cb3b8abaaa19", size = 22958, upload-time = "2020-07-09T19:58:55.197Z" }
 
 [[package]]
 name = "pytest"
@@ -4723,12 +4707,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/eb/e3/7c1dc7381d9f8ab7d
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ec/bb/2799cc2ede3ed41131f8975621e7213dfc7ef4acbbaadfa440f32500c370/starlette-1.3.1-py3-none-any.whl", hash = "sha256:c7372aae11c3c3f26a42df7bd626cec2f47d03483d261d369516a615a53714c6", size = 73632, upload-time = "2026-06-12T09:23:10.017Z" },
 ]
-
-[[package]]
-name = "stdiomask"
-version = "0.0.6"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/47/a2/f72fd263cecb11ed4cc96bd31608359e1df30349c665674e5c35ea9a72d6/stdiomask-0.0.6.tar.gz", hash = "sha256:c1e47069ead9e10bda150a26f7922ca01d2adc503042a9d7acf64877a2b9a3a6", size = 3628, upload-time = "2020-10-11T02:32:50.698Z" }
 
 [[package]]
 name = "streamlit"

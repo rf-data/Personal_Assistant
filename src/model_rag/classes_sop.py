@@ -27,7 +27,8 @@ class SOPChapter:
                 "retrieval",
                 "template",
                 "core_chapters",
-                "existing_document"
+                "existing_document",
+                "human_system"
             ] = "retrieval"
     allow_subchapters: bool = False # =True,
     min_subchapters: int | None = None    # =3,

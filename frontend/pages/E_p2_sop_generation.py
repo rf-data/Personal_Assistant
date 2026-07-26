@@ -79,42 +79,56 @@ def show():
         # key="min_number"
     )
 
-    left, right = st.columns(2)
-    if "query_started" not in st.session_state:
-        st.session_state["query_started"] = "ready"
-    st.markdown(f"Status 'query_started': {st.session_state['query_started']}")
+    st.warning("Due to RAM issues, 'SOP_Generation' script needs to be run locally or in RunPod")
+            #    ADAPT TO NEW FILE SYSTEM''")
 
-    if (
-        left.button("Reset", type="primary")
-        and st.session_state["query_started"] is not None
-    ):
-        st.session_state["query_started"] = "ready"
+    with st.expander("**Preview 'Retrieved Chunks'**"):
+        st.json()
 
-    if right.button("Start run") and st.session_state["query_started"] in [
-        "ready",
-        None,
-    ]:
-        sop_context = SOPGenContext(
-            # query=rag_query,
-            work_mode="create",
-            n_results=n_results,
-            collection=rag_colls,
-            title=sop_title,
-            topics=topic_list,
-            transformer_model="intfloat/multilingual-e5-base",
-            q_doc_type="SOP",
-        )
+    with st.expander("**Preview 'Consilidated Facts'**"):
+        st.json()
 
-        # results = run_chroma_query(
-        #                 context=sop_context
-        #                 # chroma_coll=rag_colls[0],
-        #                 # query=,
-        #                 # n_results=n_results
-        #                     )
+    with st.expander("**Preview 'Knowledge Pool'**"):
+        st.json()
 
-        # st.json(results)
+    with st.expander("**Preview 'Retrieved Chunks'**"):
+        st.json()
+    # left, right = st.columns(2)
+    # if "query_started" not in st.session_state:
+    #     st.session_state["query_started"] = "ready"
+    # st.markdown(f"Status 'query_started': {st.session_state['query_started']}")
 
-        run_st_sop_generation(sop_context)
+    # if (
+    #     left.button("Reset", type="primary")
+    #     and st.session_state["query_started"] is not None
+    # ):
+    #     st.session_state["query_started"] = "ready"
+
+    # if right.button("Start run") and st.session_state["query_started"] in [
+    #     "ready",
+    #     None,
+    # ]:
+    #     sop_context = SOPGenContext(
+    #         # query=rag_query,
+    #         work_mode="create",
+    #         n_results=n_results,
+    #         collection=rag_colls,
+    #         title=sop_title,
+    #         topics=topic_list,
+    #         transformer_model="intfloat/multilingual-e5-base",
+    #         q_doc_type="SOP",
+    #     )
+
+    #     # results = run_chroma_query(
+    #     #                 context=sop_context
+    #     #                 # chroma_coll=rag_colls[0],
+    #     #                 # query=,
+    #     #                 # n_results=n_results
+    #     #                     )
+
+    #     # st.json(results)
+
+    #     run_st_sop_generation(sop_context)
 
     # data = Path(ensure_dir(data))
 

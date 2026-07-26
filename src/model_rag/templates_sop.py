@@ -17,6 +17,9 @@ SOP_BASE_TEMPLATE = SOPTemplate(
             kind="core",
             name="Durchführung",
             knowledge_source="retrieval",
+            allow_subchapters=True,
+            min_subchapters=2,
+            max_subchapters=8
             # etreten des Herstellungsraumes",
             # text="Der Anreicher hat ,
             # beim Betreten des Herstellungsraumes die Arbeitsanweisungen AA Hygieneplan und AA Ein- und Ausschleusen von Personal einzuhalten.",
@@ -26,6 +29,9 @@ SOP_BASE_TEMPLATE = SOPTemplate(
             order=1,
             text="",
             knowledge_source="core_chapters",
+            kind="support",
+            # min_subchapters=None,
+            # max_subchapters=None
             # Beschreibung der Tätigkeiten am Arbeitsplatz des Anreichers im Herstellungsraum",
         ),
         SOPChapter(
@@ -33,20 +39,36 @@ SOP_BASE_TEMPLATE = SOPTemplate(
             order=2,
             text="",
             knowledge_source="core_chapters",
+            kind="support",
             # Abteilung Sterilherstellung",
         ),
         SOPChapter(
-            name="Zuständigkeit", order=3, text="", knowledge_source="core_chapters"
+            name="Zuständigkeit", 
+            order=3, 
+            text="", 
+            knowledge_source=["core_chapters", "human_system"],
+            kind="support"
         ),
-        SOPChapter(name="Begriffe", order=4, text="", knowledge_source="core_chapters"),
+        SOPChapter(
+                name="Begriffe", 
+                kind="support", 
+                order=4, 
+                text="", 
+                knowledge_source="core_chapters"
+                ),
         SOPChapter(
             name="Mitgeltende Unterlagen",
             order=6,
+            kind="support",
             text="",
-            knowledge_source="core_chapters",
+            knowledge_source=["core_chapters", "human_system"],
         ),
         SOPChapter(
-            name="Änderungshistorie", order=7, text="", knowledge_source="core_chapters"
+            name="Änderungshistorie", 
+            order=7, 
+            kind="support",
+            text="", 
+            knowledge_source="human_system"
         ),
     ],
 )

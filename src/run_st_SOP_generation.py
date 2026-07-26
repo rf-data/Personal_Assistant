@@ -23,7 +23,10 @@ from src.tools_rag.generate_chunks_facts import (
                             consolidate_facts,
 #                             group_filtered_facts
                             )
-from src.tools_rag.generate_sop import generate_chapter_text
+from src.tools_rag.generate_sop import (
+                            # generate_chapter_text,
+                            generate_chapter_plan
+                            )
 
 from src.utils.dict_helper import save_dict
 
@@ -185,12 +188,17 @@ def run_st_sop_generation(
             path=Path(save_folder) / f"{today}_{sop_context.title}_knowledge"
             )
 
-    hi = generate_chapter_text(
+    chapter_plans = generate_chapter_plan(
                             know_pool,
-                            sop_context,
+                            # sop_context,
                             chapter_templates
                             )
 
+    save_dict(
+        data=chapter_plans,
+        path=Path(save_folder) / f"{today}_{sop_context.title}_chapter_plans"
+        )
+    
     # template = load_sop_template(q_f_type)
     # retrieve_plan = create_retrieval_plan()
 

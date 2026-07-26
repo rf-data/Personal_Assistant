@@ -7,11 +7,9 @@ requires-python = ">=3.12,<3.14"
 dependencies = [
     "bs4>=0.0.2",
     "chromadb>=1.5.9",
-    "de-core-news-sm @ https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-3.8.0/de_core_news_sm-3.8.0-py3-none-any.whl",
     "defusedxml>=0.7.1",
     "docx>=0.2.4",
     "fastapi>=0.136.1",
-    "faster-whisper>=1.2.1",
     "ffmpeg>=1.4",
     "httpx>=0.28.1",
     "instructor>=1.15.4",
@@ -19,7 +17,6 @@ dependencies = [
     "langfuse>=4.14.1",
     "litellm>=1.93.0",
     "markdown>=3.10.2",
-    "markdown-it-py>=4.0.0",
     "marvin>=3.2.7",
     "matplotlib>=3.10.9",
     "mlflow>=1.27.0",
@@ -30,8 +27,6 @@ dependencies = [
     "pre-commit>=4.6.0",
     "pydantic>=2.13.3",
     "pydantic-ai>=1.9,<1.20",
-    "pydub>=0.25.1",
-    "pyinputplus>=0.2.12",
     "pymupdf>=1.27.2.2",
     "pypdf>=6.11.0",
     "python-docx>=1.2.0",
@@ -40,14 +35,10 @@ dependencies = [
     "returns>=0.27.0",
     "scikit-learn>=1.8.0",
     "scipy>=1.17.1",
-    "sentence-transformers>=5.0",
-    "sounddevice>=0.5.5",
-    "spacy>=3.8.14",
     "streamlit-pdf-viewer>=0.0.29",
     "streamlit[pdf]>=1.56.0",
     "tenacity>=9.1.4",
     "tiktoken>=0.12.0",
-    "torch>=2.13.0",
     "yt-dlp>=2026.3.17",
 ]
 
@@ -59,11 +50,22 @@ dev = [
 ]
 
 nlp = [
-    "sentence-transformers>=2.2.2",
+    "sentence-transformers>=5.0",
     "spacy>=3.8.14",
+    "torch>=2.13.0",
+    "de-core-news-sm @ https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-3.8.0/de_core_news_sm-3.8.0-py3-none-any.whl",
+    
 ]
 
+transcribe = [
+    "faster-whisper>=1.2.1",
+    "sounddevice>=0.5.5",
+    "pydub>=0.25.1",
+]
 
+unclear = [
+    "markdown-it-py>=4.0.0",
+]
 
 [tool.ruff]
 line-length = 88
