@@ -1,5 +1,7 @@
 ## A_p4_emails.py
 # imports
+import imaplib
+import email
 import streamlit as st
 
 """
@@ -21,6 +23,128 @@ def show():
     st.divider()
 
     st.markdown("**Under Construction**")
+
+    # step 1
+    email_server = organizer.email_server        # env_variables
+    email_address = organizer.email_address    # env_variables
+    email_pw = organizer.email_pw        # env_variables
+    
+    mail = imaplib.IMAP4_SSL(email_server)         # "imap.gmail.com")
+    mail.login(email_addresss, email_pw)
+
+    "https://realpython.com/ref/stdlib/imaplib/"
+    "https://docs.pythonlang.de/3/library/imaplib.html"
+    "https://www.w3schools.com/python/ref_module_imaplib.asp"
+    """
+    Verwendung von imaplib in Python
+    imaplib — IMAP4 protocol client — Python 3.13.5 documentation
+    https://docs.python.org/3/library/imaplib.html
+    How to fetch an email body using imaplib in python? - Stack Overflow
+    https://stackoverflow.com/questions/2230037/how-to-fetch-an-email-body-using-imaplib-in-python
+    imaplib2 · PyPI
+    https://pypi.org/project/imaplib2/
+    Das Modul imaplib in Python bietet eine Schnittstelle zur Kommunikation mit IMAP4-Servern und unterstützt eine Vielzahl von IMAP4rev1-Befehlen. Es ermöglicht das Abrufen, Verwalten und Manipulieren von E-Mails auf einem IMAP-Server.
+    
+    Grundlegende Funktionen und Klassen
+    
+    Das Modul definiert drei Hauptklassen:
+    
+    IMAP4: Stellt die Standard-IMAP4-Verbindung her. Standardmäßig wird Port 143 verwendet.
+    
+    IMAP4_SSL: Verwendet eine SSL-verschlüsselte Verbindung (Port 993).
+    
+    IMAP4_stream: Ermöglicht Verbindungen über einen Unterprozess.
+    
+    Beispiel: Verbindung zu einem IMAP-Server und Abrufen von E-Mails
+    
+    import imaplib
+    import getpass
+    
+    # Verbindung zum IMAP-Server herstellen
+    server = imaplib.IMAP4_SSL('imap.example.com')
+    server.login(getpass.getuser(), getpass.getpass())
+    
+    # Postfach auswählen
+    server.select('INBOX')
+    
+    # Alle Nachrichten abrufen
+    status, messages = server.search(None, 'ALL')
+    
+    # Nachrichten durchlaufen und Inhalte abrufen
+    for num in messages[0].split():
+    status, data = server.fetch(num, '(RFC822)')
+    print(f'Nachricht {num}:\n{data[0][1].decode("utf-8")}\n')
+    
+    # Verbindung schließen
+    server.close()
+    server.logout()
+    
+    ##  Wichtige Methoden
+    login(user, password): Authentifiziert den Benutzer.
+    select(mailbox='INBOX', readonly=False): Wählt ein Postfach aus.
+    search(charset, criterion): Sucht nach Nachrichten basierend auf Kriterien wie FROM, SUBJECT oder ALL.
+    fetch(message_set, message_parts): Ruft spezifische Teile einer Nachricht ab, z. B. den Textkörper.
+    store(message_set, command, flag_list): Ändert Flags von Nachrichten, z. B. \Seen oder \Deleted.
+    expunge(): Entfernt dauerhaft gelöschte Nachrichten.
+    logout(): Trennt die Verbindung zum Server.
+    
+    ## Fehlerbehandlung
+    Das Modul definiert spezifische Ausnahmen:
+    IMAP4.error: Allgemeiner Fehler.
+    IMAP4.abort: Fehler aufgrund von Serverproblemen.
+    IMAP4.readonly: Fehler, wenn ein Postfach schreibgeschützt wird.
+    
+    ##  Erweiterte Nutzung
+    Für komplexere Anforderungen, wie parallele Verbindungen oder bessere Performance, kann die Bibliothek imaplib2 verwendet werden. 
+    Sie basiert auf imaplib, unterstützt jedoch Threads und bietet eine optimierte Nutzung von IMAP4-Funktionen.
+    
+    Beispiel mit imaplib2
+
+    from imaplib2 import IMAP4_SSL
+    
+    # Verbindung herstellen
+    server = IMAP4_SSL('imap.example.com')
+    server.login('user@example.com', 'password')
+    
+    # Postfach auswählen und Nachrichten abrufen
+    server.select('INBOX')
+    status, messages = server.search(None, 'UNSEEN')
+    
+    # Verarbeitung der Nachrichten
+    for num in messages[0].split():
+        status, data = server.fetch(num, '(RFC822)')
+        print(data[0][1].decode('utf-8'))
+    
+    server.logout()
+    
+    ## Wichtige Hinweise
+    Sicherheitsaspekte: Verwenden Sie immer SSL/TLS für sichere Verbindungen.
+    UIDs verwenden: Da sich Nachrichten-IDs nach Änderungen im Postfach ändern können, ist es ratsam, UIDs zu verwenden.
+    Fehlerbehandlung: Überprüfen Sie stets den Rückgabestatus (OK oder NO), um Fehler zu vermeiden.
+    Mit imaplib können Sie effizient E-Mails abrufen und verwalten, wobei die Flexibilität der IMAP4-Protokollbefehle voll ausgeschöpft wird.
+    """
+    
+    with st.expander("**Mail boxes**"):
+        # list mail box folders
+        hi = ""
+
+        mail_box = st.pills(
+                    label="",
+                    option=[]
+                    )
+        
+    # step 2
+    # with st.expander("")
+    emails = [(f"Mail {idx}, mail) in idx, mail for enumerate(emails)]    # all (new) mails 
+    for idx, mail in emails:
+        # import email
+        raw_mail = ""
+        message = email.message_from_string(raw_mail)
+        st.write(f"{idx}:\nSubject: {message["Subject"]} \nFrom: {message["From"]})    # header
+        
+        # mail.select("inbox")
+    
+    email_to_respond = st.text_input("List emails (as 'Mail idx', sep=",") for whom AI should prepare a response. ").split(", ")
 
 
 '''
@@ -138,7 +262,7 @@ response = client.chat.completions.create(
             Write a professional
             and concise email reply.
             """
-        },
+        },*a
         {
             "role": "user",
             "content": incoming_email
