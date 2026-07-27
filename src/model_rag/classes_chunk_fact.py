@@ -1,20 +1,20 @@
 ## chunks_retrieval.py
 # import
-from pydantic import BaseModel
-from dataclasses import dataclass, field
+from pydantic import BaseModel, Field
+# from dataclasses import dataclass, field
 from typing import Any, Literal
 
 
-@dataclass
-class SourceReference:
+# @dataclass
+class SourceReference(BaseModel):
     chunk_id: str
     source: str
     section: str
     page: int | None
 
 
-@dataclass
-class RetrievedChunk:
+# @dataclass
+class RetrievedChunk(BaseModel):
     chunk_id: str
     text: str
     source: str = ""
@@ -23,11 +23,11 @@ class RetrievedChunk:
     distance: float | None = None
     similarity: float | None = None
     metric: Literal["cosine"] = "cosine"
-    metadata: dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
 
-@dataclass
-class IngestedChunk: # (RetrievedChunk):
+# @dataclass
+class IngestedChunk(BaseModel): # (RetrievedChunk):
     chunk_id: str
     text: str
     # fact: str
@@ -53,8 +53,8 @@ class ExtractedFact(BaseModel):
     topic: str
 
 
-@dataclass
-class IngestedFact:
+# @dataclass
+class IngestedFact(BaseModel):
     fact: str
     topic: str
 
@@ -65,31 +65,38 @@ class IngestedFact:
     similarity: float | None#
 
 
-@dataclass
-class ConsolidatedFact:
-    fact: str = field(default_factory=str)
-    fact_id: int = field(default_factory=int)
-    topic: str = field(default_factory=str)
-    sources: list[SourceReference]  = field(
+# @dataclass
+class ConsolidatedFact(BaseModel):
+    fact: str = Field(default_factory=str)
+    fact_id: int = Field(default_factory=int)
+    topic: str = Field(default_factory=str)
+    sources: list[SourceReference]  = Field(
                                         default_factory=list
                                         )
 
-@dataclass
-class MergedFact:   # (BaseModel):
+# @dataclass
+class MergedFact(BaseModel):   # (BaseModel):
     fact: str
 
 
-@dataclass
-class MergeDecision:    # (BaseModel):
+# @dataclass
+class MergeDecision(BaseModel):    # (BaseModel):
     mergeable: bool
     fact: str | None
 
 
-@dataclass
-class KnowledgePool:
+# @dataclass
+class KnowledgePool(BaseModel):
     chunks: dict[str, IngestedChunk]
     facts: dict[str, list[ConsolidatedFact]]
 
+
+
+# @dataclass
+class RetrievalResult(BaseModel):
+    query: str
+    chunks: list[RetrievedChunk]
+    n_results: int
 
     # cache_folder = "fact_extraction"
     # cache_key = make_cache_key(params={
@@ -132,10 +139,3 @@ class KnowledgePool:
 # class ChunkSummary:
 #     content: str
 #     sources: list[SourceReference]
-
-
-@dataclass
-class RetrievalResult:
-    query: str
-    chunks: list[RetrievedChunk]
-    n_results: int

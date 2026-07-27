@@ -43,17 +43,17 @@ SOP_BASE_TEMPLATE = SOPTemplate(
             # Abteilung Sterilherstellung",
         ),
         SOPChapter(
-            name="Zuständigkeit", 
-            order=3, 
-            text="", 
-            knowledge_source=["core_chapters", "human_system"],
+            name="Zuständigkeit",
+            order=3,
+            text="",
+            knowledge_source="human_system",    # ["core_chapters",
             kind="support"
         ),
         SOPChapter(
-                name="Begriffe", 
-                kind="support", 
-                order=4, 
-                text="", 
+                name="Begriffe",
+                kind="support",
+                order=4,
+                text="",
                 knowledge_source="core_chapters"
                 ),
         SOPChapter(
@@ -61,13 +61,13 @@ SOP_BASE_TEMPLATE = SOPTemplate(
             order=6,
             kind="support",
             text="",
-            knowledge_source=["core_chapters", "human_system"],
+            knowledge_source="human_system",    # ["core_chapters", ],
         ),
         SOPChapter(
-            name="Änderungshistorie", 
-            order=7, 
+            name="Änderungshistorie",
+            order=7,
             kind="support",
-            text="", 
+            text="",
             knowledge_source="human_system"
         ),
     ],

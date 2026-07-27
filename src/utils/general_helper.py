@@ -191,17 +191,41 @@ def load_from_cache(
     with open(fn) as f:
         data = json.load(f)
 
-    if cls is None:
-        return data
-
     if isinstance(data, dict) and "result" in data:
         data = data["result"]
 
-    if isinstance(cls, type) and issubclass(cls, BaseModel):
-        return cls.model_validate(data)
+    if cls is None:
+        return data
 
-    if isinstance(cls, type) and is_dataclass(cls):
-        return cls(**data)
+    if isinstance(data, list):
+        if issubclass(cls, BaseModel):
+            return [
+                cls.model_validate(item)
+                for item in data
+            ]
+
+        if is_dataclass(cls):
+            return [
+                cls(**item)
+                for item in data
+            ]
+
+        raise TypeError(
+            f"Cannot deserialize list items into {cls!r}"
+        )
+
+    if isinstance(data, dict):
+        if isinstance(cls, type) and issubclass(cls, BaseModel):
+            return cls.model_validate(data)
+
+        if isinstance(cls, type) and is_dataclass(cls):
+            return cls(**data)
+
+    # if issubclass(cls, BaseModel):
+    #     return cls.model_validate(data)
+
+    # if :
+    #     return cls(**data)
 
     return data
 

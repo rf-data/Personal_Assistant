@@ -77,7 +77,7 @@ def get_templates(sop_context: SOPGenContext):
     #             # ):
 
     app_session.logger.info("Start 'get_templates'")
-    print("Start 'get_templates'")
+    # print("Start 'get_templates'")
 
     match f_type:
         case "SOP":
@@ -130,7 +130,7 @@ def retrieve_for_sop(
     """
 
     app_session.logger.info("Start 'retrieve_for_sop'")
-    print("Start 'retrieve_for_sop'")
+    # print("Start 'retrieve_for_sop'")
 
     # "paraphrase-multilingual-MiniLM-L12-v2" oder "intfloat/multilingual-e5-base"
     embed_model = load_embedding_model(
@@ -347,7 +347,7 @@ def flatten_retrieval_results(
     """
 
     app_session.logger.info("Start 'flatten_retrieval_results'")
-    print("Start 'flatten_retrieval_results'")
+    # print("Start 'flatten_retrieval_results'")
 
     seen = set()
     chunks_flat: list[RetrievedChunk] = []

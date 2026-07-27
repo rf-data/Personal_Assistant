@@ -1,15 +1,17 @@
 ## run_SOP_generation.py
 # imports
-from dataclasses import asdict
+# from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
 
 from tenacity import (
                 retry,
                 wait_random_exponential,
-                stop_after_attempt
+                stop_after_attempt,
+                retry_if_not_exception_type
                 )
 
+from src.core.logger import create_logger
 from src.core.retry import my_before_sleep
 from src.core.memory import SOPGenContext, LLMContext, app_session
 from src.core.config import env_variables
@@ -109,6 +111,13 @@ from src.tools_rag.retrieve import (
                             multiplier=1,
                                 max=10
                                 ),
+    retry=retry_if_not_exception_type(
+                                (
+                            TypeError,
+                            ValueError,
+                            AttributeError
+                            )
+                        ),
 	before_sleep=my_before_sleep,
 	stop=stop_after_attempt(3)
     )
@@ -143,7 +152,7 @@ def run_st_sop_generation(
         # workspaces/gmp_compliance/data/rag_queries"
         )
 
-    chunks_serialized = [asdict(chunk) for chunk in chunks]
+    chunks_serialized = [chunk.model_dump() for chunk in chunks]
     save_dict(data=chunks_serialized, path=Path(save_folder) / f"{today}_{sop_context.title}_chunk_retr")
 
     # for chunk in chunks:
@@ -163,7 +172,7 @@ def run_st_sop_generation(
 
     facts_con_serialized = {
                         topic: [
-                            asdict(fact)
+                            fact.model_dump()
                             for fact in facts
                             ]
                         for topic, facts in facts_con.items()
@@ -184,7 +193,7 @@ def run_st_sop_generation(
                     )
 
     save_dict(
-            data=asdict(know_pool),
+            data=know_pool.model_dump(),
             path=Path(save_folder) / f"{today}_{sop_context.title}_knowledge"
             )
 
@@ -195,10 +204,13 @@ def run_st_sop_generation(
                             )
 
     save_dict(
-        data=chapter_plans,
+        data={
+            c_name:subs.model_dump()
+            for c_name, subs
+            in chapter_plans.items()},
         path=Path(save_folder) / f"{today}_{sop_context.title}_chapter_plans"
         )
-    
+
     # template = load_sop_template(q_f_type)
     # retrieve_plan = create_retrieval_plan()
 
@@ -256,6 +268,13 @@ if __name__ == "__main__":
         similarity_threshold=0.7
     )
 
+    # logger = create_logger(name=log_name, file_name=f"{today}_{name_logfile}")
+
+    app_session.timestamp = datetime.today().strftime("%Y-%m-%d")
+    app_session.logger = create_logger(
+                                name="SOP_Gen",
+                                file_name=f"{app_session.timestamp}_sop_gen"
+                                )
     run_st_sop_generation(sop_context)
 
     # with st.expander("Preview 'retrieved chunks'"):

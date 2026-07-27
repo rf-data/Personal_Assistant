@@ -3,7 +3,7 @@
 import os
 import re
 from collections import defaultdict
-from dataclasses import asdict
+# from dataclasses import asdict
 from typing import List
 
 import numpy as np
@@ -135,18 +135,19 @@ def extract_facts(
                         # topics_hash
                         })
 
-    cached = load_from_cache(key=cache_key, folder=cache_folder)
+    cached = load_from_cache(key=cache_key, folder=cache_folder, cls=IngestedFact)
 
     if cached is not None:
         app_session.logger.info("Loading cached facts (key=%s)", cache_key)
-        print(f"Loading cached facts (key={cache_key})")
-        return [
-            IngestedFact(**chunk_dict)
-            for chunk_dict in cached["facts"]
-            ]
+        # print(f"Loading cached facts (key={cache_key})")
+        return cached
+    # [
+    #         IngestedFact(**chunk_dict)
+    #         for chunk_dict in cached    # ["result"]
+    #         ]
 
     app_session.logger.info("Start extracting facts by 'marvin'")
-    print("Start extracting facts by 'marvin'")
+    # print("Start extracting facts by 'marvin'")
 
     extracted = extract_chunk_facts(
         chunk_text=chunk.text,
@@ -169,7 +170,7 @@ def extract_facts(
     save_to_cache(
                 key=cache_key,
                 folder=cache_folder,
-                data={"result": [asdict(fact) for fact in fact_list]}
+                data={"result": [fact.model_dump() for fact in fact_list]}
                 )
             # chunks_serialized =
     return fact_list
@@ -184,7 +185,7 @@ def build_chunk_fact_pool(
     """
 
     app_session.logger.info("Start 'build_chunk_fact_pool'")
-    print("Start 'build_chunk_fact_pool'")
+    # print("Start 'build_chunk_fact_pool'")
 
     chunks = {}
     facts = []
@@ -471,14 +472,14 @@ def merge_clusters(
             save_to_cache(
                 key=cache_key,
                 folder=cache_folder,
-                data={"result": asdict(result)}    #  for res in ]}
+                data={"result": result.model_dump()}    #  for res in ]}
                 )
 
         else:
             result = cached # .get("result")
 
             app_session.logger.info("Loading cached results (key=%s)", cache_key)
-            print(f"Loading cached results (key={cache_key})")
+            # print(f"Loading cached results (key={cache_key})")
 
 
             # return [
@@ -527,7 +528,7 @@ def consolidate_facts(
             ) -> dict[str, list[ConsolidatedFact]]:
 
     app_session.logger.info("Starting 'consolidate_facts")
-    print("Start 'consolidate_facts'")
+    # print("Start 'consolidate_facts'")
 
     # 1. Exakte Dubletten
     deduplicated = deduplicate_facts(
@@ -543,7 +544,10 @@ def consolidate_facts(
 
     for idx, (topic, topic_facts) in enumerate(grouped.items()):
 
-        print(f"[group #{idx}]: Start 'cluster_similar_facts' + 'merge_clusters'")
+        app_session.logger.info(
+                        "[group #%s]: Start 'cluster_similar_facts' + 'merge_clusters'",
+                        idx
+                        )
 
         # 3. Semantisch ähnliche Facts clustern
         clusters = cluster_similar_facts(
