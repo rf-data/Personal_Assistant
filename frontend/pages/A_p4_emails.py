@@ -22,17 +22,14 @@ def show():
 
     st.divider()
 
-    st.markdown("**Under Construction**")
+    # st.markdown("**Under Construction**")
 
     # step 1
-    email_server = organizer.email_server        # env_variables
-    email_address = organizer.email_address    # env_variables
-    email_pw = organizer.email_pw        # env_variables
-    
-    mail = imaplib.IMAP4_SSL(email_server)         # "imap.gmail.com")
-    mail.login(email_addresss, email_pw)
+
 
     "https://realpython.com/ref/stdlib/imaplib/"
+    "https://realpython.com/python-send-email/"
+
     "https://docs.pythonlang.de/3/library/imaplib.html"
     "https://www.w3schools.com/python/ref_module_imaplib.asp"
     """
@@ -145,7 +142,6 @@ def show():
         # mail.select("inbox")
     
     email_to_respond = st.text_input("List emails (as 'Mail idx', sep=",") for whom AI should prepare a response. ").split(", ")
-
 
 '''
 from openai import OpenAI
