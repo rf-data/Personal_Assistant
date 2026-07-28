@@ -1,14 +1,91 @@
 ## config.py
 # import
 from typing import Annotated, Literal  # Dict,
-
-#
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # from src.core.memory import session_state
 # from src.utils.general_helper import load_env_vars
 # from src.utils.dict_helper import get_yaml_config
+
+
+# ------------------------------------
+# GENERAL SETTINGS (from .env files)
+# ------------------------------------
+class ParseEnvVariables(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        # env_ignore_case=False
+        # env_nested_delimiter="__"
+    )
+    app_name: str = "personal_assistant"
+
+    # raw data
+    data_dir: str
+    data_audio: str
+    data_docx: str
+    data_html: str
+    data_image: str
+    data_json_nb: str
+    data_pdf: str
+    data_txt_md: str
+    data_wiki: str
+    data_qms: str
+
+    # other folder_paths
+    log_dir: str
+    report_dir: str
+    config_dir: str
+    cache_dir: str
+    chroma_dir: str
+
+    # wikipedia relevance
+    wiki_en_api: str
+    header_agent: str
+
+parsing_env_vars = ParseEnvVariables()
+
+
+class AIAgenticEnvVars(BaseSetting):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        # env_ignore_case=False
+        # env_nested_delimiter="__"
+    )
+    app_name: str = "personal_assistant"
+    
+    # llm token
+    hf_api_key: str
+    openai_api_key: str
+    # claude_token: str
+    # gemini_token: str
+    langfuse_public_key: str
+    langfuse_secret_key: str
+    langfuse_host: str
+    langfuse_base_url: str
+
+agentic_env_vars = AIAgenticEnvVariables()
+
+
+class MLOpsEnvVars(BaseSetting):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        # env_ignore_case=False
+        # env_nested_delimiter="__"
+    )
+    app_name: str = "personal_assistant"
+    # MLflow relevance
+    mlflow_artifacts: str
+    mlflow_db: str
+    mlflow_tracking_uri: str
+    mlflow_backup: str
+    fingerprint_exp: str
+    fingerprint_run: str
+
+mlops_env_vars = MLOpsEnvVariables()
 
 
 """
@@ -52,64 +129,6 @@ the kind of thing that only surfaces when you've tried to write a
 cross-field validator and gotten confusing type errors at runtime.
 
 """
-
-# ------------------------------------
-# GENERAL SETTINGS (from .env files)
-# # ------------------------------------
-
-
-class EnvVariables(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8",
-        # env_ignore_case=False
-        # env_nested_delimiter="__"
-    )
-    app_name: str = "gmp_compliance"
-
-    # raw data
-    data_dir: str
-    data_audio: str
-    data_docx: str
-    data_html: str
-    data_image: str
-    data_json_nb: str
-    data_pdf: str
-    data_txt_md: str
-    data_wiki: str
-    data_qms: str
-
-    # other folder_paths
-    log_dir: str
-    report_dir: str
-    config_dir: str
-    cache_dir: str
-    chroma_dir: str
-
-    # wikipedia relevance
-    wiki_en_api: str
-    header_agent: str
-
-    # llm token
-    hf_api_key: str
-    openai_api_key: str
-    # claude_token: str
-    # gemini_token: str
-    langfuse_public_key: str
-    langfuse_secret_key: str
-    langfuse_host: str
-    langfuse_base_url: str
-
-    # MLflow relevance
-    mlflow_artifacts: str
-    mlflow_db: str
-    mlflow_tracking_uri: str
-    mlflow_backup: str
-    fingerprint_exp: str
-    fingerprint_run: str
-
-
-env_variables = EnvVariables()
 
 
 # ------------------------------------
@@ -319,37 +338,4 @@ ParseSettings_all = Annotated[
 RunSettings = Annotated[
     ParseSettings_all | ChunkSettings, Field(discriminator="meta_type")
 ]
-# def __post_init__(self):
 
-#     load_env_vars(name=self.env_name)
-#     raw_config = get_yaml_config(self.config_name)
-
-#     self.general_config = raw_config.get("general_args", {})
-#     self.extract_config = raw_config.get("extraction", {})
-#     # self.config_name
-#     # c_path = env_variables("CONFIG_PATH")
-
-#     return
-
-
-# def load_from_yaml(self):
-
-#     self._create_general_config()
-
-
-#     return
-
-
-# def _create_general_config(self):
-
-#     self.name_log = self.general_config.get("name_log")
-#     self.name_logfile = self.general_config.get("name_logfile")
-#     # self.
-
-#     return
-
-
-# def _create_extraction_config(self):
-
-
-#     return
