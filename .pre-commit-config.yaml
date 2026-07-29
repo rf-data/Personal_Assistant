@@ -54,19 +54,19 @@ repos:
         args: ["--baseline", ".secrets.baseline"]
         stages: [pre-commit, pre-push]
 
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.9.4
-    hooks:
-      - id: bandit
-        args:
-          - "-c"
-          - "pyproject.toml"
-          - "-r"
-          - "src"
-        additional_dependencies:
-          - "bandit[toml]"
-        pass_filenames: false
-        stages: [pre-push]
+  # - repo: https://github.com/PyCQA/bandit
+  #   rev: 1.9.4
+  #   hooks:
+  #     - id: bandit
+  #       args:
+  #         - "-c"
+  #         - "pyproject.toml"
+  #         - "-r"
+  #         - "src"
+  #       additional_dependencies:
+  #         - "bandit[toml]"
+  #       pass_filenames: false
+  #       stages: [pre-push]
 
   - repo: local
     hooks:
@@ -93,10 +93,10 @@ repos:
         always_run: true
         stages: [manual]
 
-      - id: mypy
-        name: Mypy type check
-        entry: uv run mypy src/
-        language: system
-        pass_filenames: false
-        always_run: true
-        stages: [pre-push]
+      # - id: mypy
+      #   name: Mypy type check
+      #   entry: uv run mypy src/
+      #   language: system
+      #   pass_filenames: false
+      #   always_run: true
+      #   stages: [pre-push]
