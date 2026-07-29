@@ -5,7 +5,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.memory import ParseContext, app_session
 
 # from src.utils.html_helper import read_html_file
@@ -31,7 +31,7 @@ def show():
     with col1:
         st.subheader("🖼️ Select an pdf file")
 
-        pdf_data = env_variables.data_pdf
+        pdf_data = parsing_env_vars.data_pdf
 
         input_data = f"{pdf_data}/input"
 

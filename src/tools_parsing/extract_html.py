@@ -5,7 +5,7 @@
 # from typing import Literal
 from returns.result import Failure, Result, Success
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.memory import ParseContext
 from src.model_classes_parsing.base_classes_parsing import DocumentExtract
 
@@ -36,7 +36,7 @@ def extract_html_file(
 ) -> Result[DocumentExtract, str]:
     logger = parse_context.logger
 
-    html_data = env_variables.data_html
+    html_data = parsing_env_vars.data_html
 
     if parse_context.parse_settings.file_name is not None:
         f_name = parse_context.parse_settings.file_name

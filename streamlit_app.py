@@ -29,7 +29,7 @@ from frontend.pages import (
     E_p0_rag_status,
     E_p1_chunk_embed,
     E_p2_sop_generation,
-    E_p3_chat_w_files
+    E_p3_chat_w_files,
 )
 from src.core.config import GeneralSettings, ParseSettings
 from src.core.logger import create_logger
@@ -134,7 +134,7 @@ with st.sidebar:
                 "simple LLM actions",
                 "File System",
                 "Transcription",
-                "E-Mail & Calender",
+                "E-Mails & Calender",
                 "Monitoring",
             ],
             key="subpage",
@@ -195,7 +195,7 @@ with st.sidebar:
                 "RAG_Status",
                 "Chunk & Embed",
                 "SOP_Generation",
-                "File Chat"
+                "File Chat",
                 # "Evaluation Dashboard",
             ],
             key="subpage",

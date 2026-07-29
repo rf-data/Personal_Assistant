@@ -2,13 +2,10 @@
 # import
 import logging
 import traceback
+
 from tenacity import RetryCallState
 
 from src.core.memory import app_session
-
-
-import traceback
-from tenacity import RetryCallState
 
 
 def log_retry(retry_state: RetryCallState) -> str:
@@ -29,14 +26,10 @@ def log_retry(retry_state: RetryCallState) -> str:
             type(exc),
             exc,
             exc.__traceback__,
-            )
         )
-
-    return (
-        f"Exception: {type(exc).__name__}\n"
-        f"Message: {exc}\n\n"
-        f"{tb}"
     )
+
+    return f"Exception: {type(exc).__name__}\nMessage: {exc}\n\n{tb}"
 
 
 def my_before_sleep(retry_state):
@@ -49,18 +42,18 @@ def my_before_sleep(retry_state):
 
     app_session.logger.log(
         loglevel,
-        'Retrying %s: attempt %s ended with: %s\nTraceback:\n%s',
+        "Retrying %s: attempt %s ended with: %s\nTraceback:\n%s",
         retry_state.fn,
         retry_state.attempt_number,
         retry_state.outcome,
-        traceback_str
-        )
+        traceback_str,
+    )
 
     print(
         f"Retrying {retry_state.fn} "
         f"attempt {retry_state.attempt_number} "
         f"ended with: {retry_state.outcome}"
-        f"{'='*25} TRACEBACK - START {'='*25}"
+        f"{'=' * 25} TRACEBACK - START {'=' * 25}"
         "traceback_str"
-        f"{'='*25} TRACEBACK - END {'='*25}\n"
+        f"{'=' * 25} TRACEBACK - END {'=' * 25}\n"
     )

@@ -6,7 +6,7 @@
 from typing import Any  # , Literal
 
 from src.core.memory import SOPGenContext, app_session
-from src.model_rag.classes_chunk_fact import RetrievedChunk, RetrievalResult
+from src.model_rag.classes_chunk_fact import RetrievalResult, RetrievedChunk
 from src.model_rag.templates_sop import SOP_BASE_TEMPLATE, SOPTemplate
 from src.tools_rag.create_embeds import load_embedding_model
 
@@ -103,7 +103,6 @@ def get_templates(sop_context: SOPGenContext):
 def build_retrieval_queries(
     sop_context: SOPGenContext,
 ) -> list[str]:
-
 
     queries = []
 
@@ -366,12 +365,8 @@ def flatten_retrieval_results(
             chunks_flat.append(chunk)
 
     chunks_flat.sort(
-        key=lambda chunk: (
-                chunk.distance
-                if chunk.distance is not None
-                else float("inf")
-                )
-            )
+        key=lambda chunk: chunk.distance if chunk.distance is not None else float("inf")
+    )
 
     return chunks_flat
 

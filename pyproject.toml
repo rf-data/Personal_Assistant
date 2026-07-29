@@ -12,6 +12,7 @@ dependencies = [
     "fastapi>=0.136.1",
     "ffmpeg>=1.4",
     "httpx>=0.28.1",
+    "imapclient>=3.1.0",
     "instructor>=1.15.4",
     "json5>=0.14.0",
     "langfuse>=4.14.1",
@@ -47,6 +48,7 @@ dev = [
     "mypy>=2.1.0",
     "ruff>=0.15.14",
     "pytest>=9.0.3",
+    "detect-secrets>=1.5.0",
 ]
 
 nlp = [
@@ -54,7 +56,7 @@ nlp = [
     "spacy>=3.8.14",
     "torch>=2.13.0",
     "de-core-news-sm @ https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-3.8.0/de_core_news_sm-3.8.0-py3-none-any.whl",
-    
+
 ]
 
 transcribe = [
@@ -72,21 +74,55 @@ line-length = 88
 indent-width = 4
 target-version = "py312"
 
+extend-exclude = [
+    "data",
+    "logs",
+    "cache",
+    "chroma",
+    "mlflow",
+]
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+docstring-code-format = true
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM"]
-ignore = []
+select = [
+        "E",    # pycodestyle-Fehler
+        "F",    # Pyflakes
+        "I",    # Import-Sortierung
+        "UP",   # pyupgrade
+        "B",    # flake8-bugbear
+        ]
+
+ignore = [
+        "E501",
+        "SIM103",
+        "SIM105",
+        "SIM108",
+        ]
+fixable = ["ALL"]
 
 [tool.mypy]
 strict = true
 python_version = "3.12"
+exclude = [
+    "^src/_dev_to_add/",
+]
+explicit_package_bases = true
+
+[tool.bandit]
+exclude_dirs = [
+    "tests",
+    "data",
+    ".venv",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-v --tb=short"
+pythonpath = ["."]
 
 [tool.uv.sources]
 de-core-news-sm = { url = "https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-3.8.0/de_core_news_sm-3.8.0-py3-none-any.whl" }

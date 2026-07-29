@@ -2,7 +2,6 @@
 # imports
 from __future__ import annotations
 
-import csv
 from datetime import datetime
 from typing import Any
 
@@ -24,15 +23,15 @@ class LLMClient:
         today = datetime.today().strftime("%Y-%m-%d")
 
         self.logger = create_logger(
-                                name=self.context.name_logger,
-                                file_name=f"{today}_{self.context.name_logfile}")
+            name=self.context.name_logger,
+            file_name=f"{today}_{self.context.name_logfile}",
+        )
 
         self.client = instructor.from_provider(f"litellm/{self.model}")
         self._configure_callbacks()
         return
 
-
-def _configure_callbacks(self) -> None:
+    def _configure_callbacks(self) -> None:
         """
         Konfiguriert optionale LiteLLM-Callbacks.
         """
@@ -45,7 +44,6 @@ def _configure_callbacks(self) -> None:
 
         if self.context.callbacks:
             litellm.success_callback = callbacks
-
 
     def completion(self, messages: list[dict[str, Any]], **kwargs):
         """
@@ -108,7 +106,6 @@ def _configure_callbacks(self) -> None:
 
         return response.choices[0].message.content
 
-
     def _cache_available(self, message):
         key = make_cache_key(message=message, model=self.model)
         cached = load_from_cache(key=key, folder=self.model)
@@ -117,7 +114,6 @@ def _configure_callbacks(self) -> None:
             return cached
 
         return None
-
 
     # def _track_costs(
     #     self,
@@ -154,16 +150,16 @@ def _configure_callbacks(self) -> None:
 
     #     return None
 
-        # try:
-        #     response_cost = kwargs.get("response_cost", 0)
-        #     print("streaming response_cost", response_cost)
-        # except:
-        #     pass
+    # try:
+    #     response_cost = kwargs.get("response_cost", 0)
+    #     print("streaming response_cost", response_cost)
+    # except:
+    #     pass
 
-        # # set callback
-        # litellm.success_callback = [track_cost_callback]
+    # # set callback
+    # litellm.success_callback = [track_cost_callback]
 
-        # return
+    # return
 
 
 ## install Litellm

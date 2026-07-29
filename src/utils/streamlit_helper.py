@@ -10,7 +10,7 @@ import pandas as pd
 import streamlit as st
 from streamlit_pdf_viewer import pdf_viewer
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.utils.html_helper import read_html_file
 
 # from src.utils.general_helper import load_env_vars
@@ -114,7 +114,7 @@ def show_tree(path: str | Path = None, level=0, max_depth=2):
         st.write("Please, select a folder to browse.")
 
         # load_env_vars()
-        data = env_variables.data_dir
+        data = parsing_env_vars.data_dir
         """
         if data is None:
             st.write("No default folder ('DATA_DIR') in '.env'.")

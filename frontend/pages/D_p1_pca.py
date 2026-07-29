@@ -6,8 +6,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src.core.config import ParseSettings, env_variables
-from src.run_PCA import explained_variance_by_pca
+from gmp_compliance.src._prototypes.run_PCA import explained_variance_by_pca
+from src.core.config import ParseSettings, parsing_env_vars
 from src.utils.path_helper import shorten_path
 
 # from src.utils.dict_helper import load_dict
@@ -25,7 +25,7 @@ def show():
     with file_select:
         st.subheader("🖼️ Select a data file")
 
-        input_data = env_variables.data_input
+        input_data = parsing_env_vars.data_input
 
         st.warning("ADAPT TO NEW FILE SYSTEM")
 

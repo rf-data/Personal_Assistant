@@ -2,16 +2,10 @@
 # imports
 import streamlit as st
 
-"""
-Calender
-
-import markdown
-import pdfkit
-md_content = "# Daily Plan\n- Task 1\n- Task 2"
-html_content = markdown.markdown(md_content)
-pdfkit.from_string(html_content, "daily_plan.pdf")
-
-"""
+from src.core.config import organizer_env_vars as organizer
+from src.core.logger import create_logger
+from src.core.memory import app_session
+from src.utils.email_helper import context_imap_connection, list_mailboxes
 
 
 def show():
@@ -20,7 +14,45 @@ def show():
 
     st.divider()
 
-    st.markdown("**Under Construction**")
+    if app_session.logger is None:
+        app_session.logger = create_logger(name="organizer", file_name="organizer")
+    # st.markdown("**Under Construction**")
+
+    with st.expander("**Mail boxes**"):
+        # list mail box folders
+        with context_imap_connection(organizer) as mail:
+            boxes_all = list_mailboxes(mail)
+
+        st.json(boxes_all)
+
+        st.divider()
+        # for box in boxes_all:
+
+        box_to_see = st.pills(
+            label="", options=[b["name"] for b in boxes_all], default=None
+        )
+
+    with st.expander(" **2**"):
+        st.markdown("**Under Construction**")
+
+
+"""
+## TO-DOS
+- email filtern nach Absender | Datum | Mailbox
+- Information aus gefilterten Mails extrahieren,
+  z.B. Links zu Artikeln
+"""
+# emails = [(f"Mail {idx}",
+#            mail) in idx, mail for enumerate(emails)]    # all (new) mails
+# for idx, mail in emails:
+#     # import email
+#     raw_mail = ""
+#     message = email.message_from_string(raw_mail)
+#     st.write(f"{idx}:\nSubject: {message["Subject"]} \nFrom: {message["From"]})    # header
+
+#     # mail.select("inbox")
+
+# email_to_respond = st.text_input("List emails (as 'Mail idx', sep=",") for whom AI should prepare a response. ").split(", ")
 
 
 '''

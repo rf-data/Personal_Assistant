@@ -1,8 +1,9 @@
 ## chunks_retrieval.py
 # import
-from pydantic import BaseModel, Field
 # from dataclasses import dataclass, field
 from typing import Any, Literal
+
+from pydantic import BaseModel, Field
 
 
 # @dataclass
@@ -27,7 +28,7 @@ class RetrievedChunk(BaseModel):
 
 
 # @dataclass
-class IngestedChunk(BaseModel): # (RetrievedChunk):
+class IngestedChunk(BaseModel):  # (RetrievedChunk):
     chunk_id: str
     text: str
     # fact: str
@@ -62,7 +63,7 @@ class IngestedFact(BaseModel):
     source: str
     section: str
     page: int | None
-    similarity: float | None#
+    similarity: float | None  #
 
 
 # @dataclass
@@ -70,17 +71,17 @@ class ConsolidatedFact(BaseModel):
     fact: str = Field(default_factory=str)
     fact_id: int = Field(default_factory=int)
     topic: str = Field(default_factory=str)
-    sources: list[SourceReference]  = Field(
-                                        default_factory=list
-                                        )
+    sources: list[SourceReference] = Field(default_factory=list)
+    quality: Literal["usable", "fragmentary", "irrelevant", "duplicate", "tba"] = "tba"
+
 
 # @dataclass
-class MergedFact(BaseModel):   # (BaseModel):
+class MergedFact(BaseModel):  # (BaseModel):
     fact: str
 
 
 # @dataclass
-class MergeDecision(BaseModel):    # (BaseModel):
+class MergeDecision(BaseModel):  # (BaseModel):
     mergeable: bool
     fact: str | None
 
@@ -89,7 +90,6 @@ class MergeDecision(BaseModel):    # (BaseModel):
 class KnowledgePool(BaseModel):
     chunks: dict[str, IngestedChunk]
     facts: dict[str, list[ConsolidatedFact]]
-
 
 
 # @dataclass
@@ -120,7 +120,6 @@ class RetrievalResult(BaseModel):
     #         IngestedFact(**chunk_dict)
     #         for chunk_dict in cached["facts"]
     #         ]
-
 
     # save_to_cache(
     #             key=cache_key,

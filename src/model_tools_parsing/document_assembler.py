@@ -14,7 +14,7 @@ import pandas as pd
 @dataclass
 class DocumentAssembler:
     # gh.load_env_vars()
-    # data_processed = env_variables("DATA")
+    # data_processed = parsing_env_vars("DATA")
     infos: list = field(default_factory=list)
     doc_name: str = field(default_factory=str)
 

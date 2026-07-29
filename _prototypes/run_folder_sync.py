@@ -4,7 +4,7 @@ import hashlib
 import shutil
 from pathlib import Path
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.memory import app_session
 
 """
@@ -81,8 +81,8 @@ def sync_folders(source_dir, target_dir):
 
 
 if __name__ == "__main__":
-    source_dir = env_variables.backup_src
+    source_dir = parsing_env_vars.backup_src
 
-    target_dir = env_variables.backup_target
+    target_dir = parsing_env_vars.backup_target
 
     sync_folders(source_dir, target_dir)

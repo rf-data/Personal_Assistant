@@ -6,7 +6,7 @@ import mlflow
 
 # from utils.experiment_logger_impl import ExperimentLogger
 # from src.utils.general_helper import load_env_vars
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.logger import create_logger
 from src.core.memory import app_session
 from src.utils.dict_helper import load_dict, save_dict
@@ -34,7 +34,7 @@ class ExperimentLogger:
 
     def __post_init__(self):
         root = find_project_root()
-        # project_name = env_variables("PROJECT_NAME", "default_project")
+        # project_name = parsing_env_vars("PROJECT_NAME", "default_project")
         folder = f"{root}/mlflow/logs"
 
         self.logger = create_logger(f"mlflow_{project_name}", "mlflow", folder=folder)
@@ -152,7 +152,7 @@ class ExperimentLogger:
 
     def setup_experiment(self):
         # load_env_vars()
-        mlflow_uri = env_variables.mlflow_tracking_uri
+        mlflow_uri = parsing_env_vars.mlflow_tracking_uri
         mlflow.set_tracking_uri(mlflow_uri)
 
         exp = mlflow.get_experiment_by_name(self.experiment_name)
