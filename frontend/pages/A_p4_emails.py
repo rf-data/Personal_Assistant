@@ -7,7 +7,11 @@ import streamlit as st
 from src.core.config import organizer_env_vars as organizer
 from src.core.logger import create_logger
 from src.core.memory import app_session
-from src.utils.email_helper import context_imap_connection, list_mailboxes
+from src.utils.email_helper import (
+    context_imap_connection,
+    fetch_unseen_mails,
+    list_mailboxes,
+)
 
 
 def show():
@@ -19,7 +23,6 @@ def show():
     # st.markdown("**Under Construction**")
 
     # step 1
-
 
     "https://realpython.com/ref/stdlib/imaplib/"
     "https://realpython.com/python-send-email/"
@@ -35,41 +38,41 @@ def show():
     imaplib2 · PyPI
     https://pypi.org/project/imaplib2/
     Das Modul imaplib in Python bietet eine Schnittstelle zur Kommunikation mit IMAP4-Servern und unterstützt eine Vielzahl von IMAP4rev1-Befehlen. Es ermöglicht das Abrufen, Verwalten und Manipulieren von E-Mails auf einem IMAP-Server.
-    
+
     Grundlegende Funktionen und Klassen
-    
+
     Das Modul definiert drei Hauptklassen:
-    
+
     IMAP4: Stellt die Standard-IMAP4-Verbindung her. Standardmäßig wird Port 143 verwendet.
-    
+
     IMAP4_SSL: Verwendet eine SSL-verschlüsselte Verbindung (Port 993).
-    
+
     IMAP4_stream: Ermöglicht Verbindungen über einen Unterprozess.
-    
+
     Beispiel: Verbindung zu einem IMAP-Server und Abrufen von E-Mails
-    
+
     import imaplib
     import getpass
-    
+
     # Verbindung zum IMAP-Server herstellen
     server = imaplib.IMAP4_SSL('imap.example.com')
     server.login(getpass.getuser(), getpass.getpass())
-    
+
     # Postfach auswählen
     server.select('INBOX')
-    
+
     # Alle Nachrichten abrufen
     status, messages = server.search(None, 'ALL')
-    
+
     # Nachrichten durchlaufen und Inhalte abrufen
     for num in messages[0].split():
     status, data = server.fetch(num, '(RFC822)')
     print(f'Nachricht {num}:\n{data[0][1].decode("utf-8")}\n')
-    
+
     # Verbindung schließen
     server.close()
     server.logout()
-    
+
     ##  Wichtige Methoden
     login(user, password): Authentifiziert den Benutzer.
     select(mailbox='INBOX', readonly=False): Wählt ein Postfach aus.
@@ -78,64 +81,111 @@ def show():
     store(message_set, command, flag_list): Ändert Flags von Nachrichten, z. B. \Seen oder \Deleted.
     expunge(): Entfernt dauerhaft gelöschte Nachrichten.
     logout(): Trennt die Verbindung zum Server.
-    
+
     ## Fehlerbehandlung
     Das Modul definiert spezifische Ausnahmen:
     IMAP4.error: Allgemeiner Fehler.
     IMAP4.abort: Fehler aufgrund von Serverproblemen.
     IMAP4.readonly: Fehler, wenn ein Postfach schreibgeschützt wird.
-    
+
     ##  Erweiterte Nutzung
-    Für komplexere Anforderungen, wie parallele Verbindungen oder bessere Performance, kann die Bibliothek imaplib2 verwendet werden. 
+    Für komplexere Anforderungen, wie parallele Verbindungen oder bessere Performance, kann die Bibliothek imaplib2 verwendet werden.
     Sie basiert auf imaplib, unterstützt jedoch Threads und bietet eine optimierte Nutzung von IMAP4-Funktionen.
-    
+
     Beispiel mit imaplib2
 
     from imaplib2 import IMAP4_SSL
-    
+
     # Verbindung herstellen
     server = IMAP4_SSL('imap.example.com')
     server.login('user@example.com', 'password')
-    
+
     # Postfach auswählen und Nachrichten abrufen
     server.select('INBOX')
     status, messages = server.search(None, 'UNSEEN')
-    
+
     # Verarbeitung der Nachrichten
     for num in messages[0].split():
         status, data = server.fetch(num, '(RFC822)')
         print(data[0][1].decode('utf-8'))
-    
+
     server.logout()
-    
+
     ## Wichtige Hinweise
     Sicherheitsaspekte: Verwenden Sie immer SSL/TLS für sichere Verbindungen.
     UIDs verwenden: Da sich Nachrichten-IDs nach Änderungen im Postfach ändern können, ist es ratsam, UIDs zu verwenden.
     Fehlerbehandlung: Überprüfen Sie stets den Rückgabestatus (OK oder NO), um Fehler zu vermeiden.
     Mit imaplib können Sie effizient E-Mails abrufen und verwalten, wobei die Flexibilität der IMAP4-Protokollbefehle voll ausgeschöpft wird.
     """
-    
+
     with st.expander("**Mail boxes**"):
         # list mail box folders
         hi = ""
 
-        mail_box = st.pills(
-                    label="",
-                    option=[]
-                    )
-        
+        mail_box = st.pills(label="", option=[])
+
     # step 2
     # with st.expander("")
-    emails = [(f"Mail {idx}, mail) in idx, mail for enumerate(emails)]    # all (new) mails 
+    emails = [
+        (f"Mail {idx}", mail) for idx, mail in enumerate(emails)
+    ]  # all (new) mails
     for idx, mail in emails:
         # import email
         raw_mail = ""
         message = email.message_from_string(raw_mail)
-        st.write(f"{idx}:\nSubject: {message["Subject"]} \nFrom: {message["From"]})    # header
-        
+        st.write(
+            f"{idx}:\nSubject: {message['Subject']} \nFrom: {message['From']}"
+        )  # header
+
         # mail.select("inbox")
-    
-    email_to_respond = st.text_input("List emails (as 'Mail idx', sep=",") for whom AI should prepare a response. ").split(", ")
+
+    email_to_respond = st.text_input(
+        "List emails (as 'Mail idx', sep=", ") for whom AI should prepare a response. "
+    ).split(", ")
+    with context_imap_connection(organizer) as mail:
+        boxes_all = list_mailboxes(mail)
+
+        status, _ = mail.select("INBOX", readonly=True)
+        if status != "OK":
+            raise RuntimeError("Could not select INBOX.")
+
+        new_mails = fetch_unseen_mails(mail)
+
+        st.json(boxes_all)
+
+        st.divider()
+        # for box in boxes_all:
+
+        # box_to_see = st.selectbox(
+        #             label="",
+        #             options=[b["name"] for b in boxes_all],
+        #             # default=None
+        #             )
+
+    with st.expander("**Unseen Emails**"):
+        # st.markdown("**Under Construction**")
+
+        st.json(new_mails[0])
+
+
+"""
+## TO-DOS
+- email filtern nach Absender | Datum | Mailbox
+- Information aus gefilterten Mails extrahieren,
+  z.B. Links zu Artikeln
+"""
+# emails = [(f"Mail {idx}",
+#            mail) in idx, mail for enumerate(emails)]    # all (new) mails
+# for idx, mail in emails:
+#     # import email
+#     raw_mail = ""
+#     message = email.message_from_string(raw_mail)
+#     st.write(f"{idx}:\nSubject: {message["Subject"]} \nFrom: {message["From"]})    # header
+
+#     # mail.select("inbox")
+
+# email_to_respond = st.text_input("List emails (as 'Mail idx', sep=",") for whom AI should prepare a response. ").split(", ")
+
 
 '''
 from openai import OpenAI

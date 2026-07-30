@@ -1,12 +1,12 @@
 ## email.py
 # import
-# from email import policy
-# from email.parser import BytesParser
+from email import policy
+from email.parser import BytesParser
 
 from src.core.config import organizer_env_vars as organizer
 from src.core.logger import create_logger
 from src.core.memory import app_session
-from src.utils.email_helper import context_imap_connection
+from src.utils.email_helper import context_imap_connection, fetch_unseen_mails
 
 
 def fetch_mails():
@@ -14,17 +14,66 @@ def fetch_mails():
     app_session.logger = create_logger(name="organizer", file_name="organizer")
 
     with context_imap_connection(organizer) as mail:
-        status, _ = mail.select("INBOX")
+        status, _ = mail.select("INBOX", readonly=True)
 
-        emails = fetch_unseen_mails(mail)
+        # emails = fetch_unseen_mails(mail)
 
-        for item in emails:
-            print(f"Von: {item['sender']}")
-            print(f"Betreff: {item['subject']}")
-            print(f"Gesendet: {item['sent_at']}")
-            print(f"Servereingang: {item['received_at']}")
-            print("-" * 60)
+        if status != "OK":
+            raise RuntimeError("Could not select INBOX.")
 
+        status, messages = mail.search(None, "UNSEEN")
+
+        if status != "OK":
+            raise RuntimeError("Could not search for unseen emails.")
+
+        email_ids = messages[0].split()
+        app_session.logger.info(
+            "Found %s unread emails.",
+            len(email_ids),
+        )
+
+        for email_id in email_ids:  # [:10]:
+            status, data = mail.fetch(
+                email_id,
+                "(BODY.PEEK[])",
+            )
+
+            if status != "OK":
+                app_session.logger.warning(
+                    "Could not fetch email ID %r.",
+                    email_id,
+                )
+                continue
+
+            raw_email = next(
+                (
+                    item[1]
+                    for item in data
+                    if isinstance(item, tuple) and isinstance(item[1], bytes)
+                ),
+                None,
+            )
+
+            if raw_email is None:
+                app_session.logger.warning(
+                    "No message content found for email ID %r.",
+                    email_id,
+                )
+                continue
+
+            message = BytesParser(policy=policy.default).parsebytes(raw_email)
+
+            subject = message.get("Subject", "(kein Betreff)")
+            sender = message.get("From", "(unbekannter Absender)")
+
+            print(f"{sender}: {subject}")
+            # print(f"Von: {item['sender']}")
+            # print(f"Betreff: {item['subject']}")
+            # print(f"Gesendet: {item['sent_at']}")
+            # print(f"Servereingang: {item['received_at']}")
+            # print("-" * 60)
+
+            print(item, "\n")
         # if status != "OK":
         #     raise RuntimeError("Could not select INBOX.")
 

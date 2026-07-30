@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from gmp_compliance.src._prototypes.run_PCA import explained_variance_by_pca
+# from src._prototypes.run_PCA import explained_variance_by_pca
 from src.core.config import ParseSettings, parsing_env_vars
 from src.utils.path_helper import shorten_path
 

@@ -1,107 +1,109 @@
-## watchdog.py
-# import
+# ## watchdog.py
+# # import
 
 
-# core watcher skeleton I still use today
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
+# # core watcher skeleton I still use today
+# from watchdog.observers import Observer
+# from watchdog.events import FileSystemEventHandler
 
-class Handler(FileSystemEventHandler):
-    def on_created(self, event):
-        print("Created:", event.src_path)
+# class Handler(FileSystemEventHandler):
+#     def on_created(self, event):
+#         print("Created:", event.src_path)
 
-observer = Observer()
-observer.schedule(Handler(), path="/data/inbound", recursive=True)
-observer.start()
+# observer = Observer()
+# observer.schedule(Handler(),
+#                   path="/data/inbound",
+#                   recursive=True)
+# observer.start()
 
-## design 'directory -> action' pipeline
-# directory → handler routing map
-ROUTES = {
-    "/data/invoices": "process_invoice",
-    "/data/images": "thumbnail_image",
-    "/data/logs": "parse_log",
-}
-############################
-# HELPER
-############################
-## event deduplication + micro-delays.
-import time
+# ## design 'directory -> action' pipeline
+# # directory → handler routing map
+# ROUTES = {
+#     "/data/invoices": "process_invoice",
+#     "/data/images": "thumbnail_image",
+#     "/data/logs": "parse_log",
+# }
+# ############################
+# # HELPER
+# ############################
+# ## event deduplication + micro-delays.
+# import time
 
-class StableEventHandler(FileSystemEventHandler):
-    pending = {}
+# class StableEventHandler(FileSystemEventHandler):
+#     pending = {}
 
-    def on_modified(self, event):
-        self.pending[event.src_path] = time.time()
+#     def on_modified(self, event):
+#         self.pending[event.src_path] = time.time()
 
-def flush_stable(handler, delay=0.3):
-    now = time.time()
-    stable = [p for p,t in handler.pending.items() if now - t > delay]
-    for path in stable:
-        print("Stable:", path)
-        del handler.pending[path]
+# def flush_stable(handler, delay=0.3):
+#     now = time.time()
+#     stable = [p for p,t in handler.pending.items() if now - t > delay]
+#     for path in stable:
+#         print("Stable:", path)
+#         del handler.pending[path]
 
-## turn handler into workflows
-import logging
+# ## turn handler into workflows
+# import logging
 
-logging.basicConfig(
-    filename="automation.log",
-    format="%(asctime)s | %(levelname)s | %(message)s",
-    level=logging.INFO,
-)
+# logging.basicConfig(
+#     filename="automation.log",
+#     format="%(asctime)s | %(levelname)s | %(message)s",
+#     level=logging.INFO,
+# )
 
-def workflow(func):
-    def wrapper(path):
-        logging.info(f"RUN {func.__name__} -> {path}")
-      
-        try:
-            print("Start:", path)
-            func(path)
-            print("Done:", path)
-        except Exception as e:
-            print("Error:", e)
-    return wrapper
+# def workflow(func):
+#     def wrapper(path):
+#         logging.info(f"RUN {func.__name__} -> {path}")
 
-@workflow
-def process_invoice(path):
-    # parse, validate, push to API
-    pass
+#         try:
+#             print("Start:", path)
+#             func(path)
+#             print("Done:", path)
+#         except Exception as e:
+#             print("Error:", e)
+#     return wrapper
 
-from queue import Queue
-from threading import Thread
+# @workflow
+# def process_invoice(path):
+#     # parse, validate, push to API
+#     pass
 
-q = Queue()
+# from queue import Queue
+# from threading import Thread
 
-def worker():
-    while True:
-        fn, path = q.get()
-        fn(path)
-        q.task_done()
+# q = Queue()
 
-Thread(target=worker, daemon=True).start()
+# def worker():
+#     while True:
+#         fn, path = q.get()
+#         fn(path)
+#         q.task_done()
 
-def on_created(self, event):
-    task = resolve(event.src_path)  # converts path → function
-    q.put((task, event.src_path))
+# Thread(target=worker, daemon=True).start()
 
-## Preventing Duplicate Runs and Race Conditions
-import hashlib
+# def on_created(self, event):
+#     task = resolve(event.src_path)  # converts path → function
+#     q.put((task, event.src_path))
 
-processed = set()
+# ## Preventing Duplicate Runs and Race Conditions
+# import hashlib
 
-def file_id(path):
-    with open(path, "rb") as f:
-        return hashlib.md5(f.read()).hexdigest()
+# processed = set()
 
-def safe_run(func, path):
-    fid = file_id(path)
-    if fid in processed:
-        return
-    processed.add(fid)
-    func(path)
+# def file_id(path):
+#     with open(path, "rb") as f:
+#         return hashlib.md5(f.read()).hexdigest()
 
-## upgrades 
-- Async I/O with asyncio for non-blocking tasks
-- A pluggable rule engine for mappings
-- Better metrics (Prometheus)
-- A disk-based checkpoint system for persistence
-- Optional cloud emitters
+# def safe_run(func, path):
+#     fid = file_id(path)
+#     if fid in processed:
+#         return
+#     processed.add(fid)
+#     func(path)
+
+# ## upgrades
+# - Async I/O with asyncio for non-blocking tasks
+# - A pluggable rule engine for mappings
+# - Better metrics (Prometheus)
+# - A disk-based checkpoint system for persistence
+# - Optional cloud emitters
