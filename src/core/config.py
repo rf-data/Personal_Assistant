@@ -1,8 +1,6 @@
 ## config.py
 # import
 from typing import Annotated, Literal  # Dict,
-
-#
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -58,7 +56,7 @@ class AIAgenticEnvVars(BaseSettings):
         # env_nested_delimiter="__"
     )
     app_name: str = "personal_assistant"
-
+    
     # llm token
     hf_api_key: str
     openai_api_key: str
@@ -89,6 +87,13 @@ class MLOpsEnvVars(BaseSettings):
     fingerprint_exp: str
     fingerprint_run: str
 
+mlops_env_vars = MLOpsEnvVariables()
+
+
+"""
+from pydantic import BaseModel, model_validator, field_validator, Field
+from typing import Optional
+from datetime import date
 
 mlops_env_vars = MLOpsEnvVars()
 
@@ -416,37 +421,4 @@ ParseSettings_all = Annotated[
 RunSettings = Annotated[
     ParseSettings_all | ChunkSettings, Field(discriminator="meta_type")
 ]
-# def __post_init__(self):
 
-#     load_env_vars(name=self.env_name)
-#     raw_config = get_yaml_config(self.config_name)
-
-#     self.general_config = raw_config.get("general_args", {})
-#     self.extract_config = raw_config.get("extraction", {})
-#     # self.config_name
-#     # c_path = parsing_env_vars("CONFIG_PATH")
-
-#     return
-
-
-# def load_from_yaml(self):
-
-#     self._create_general_config()
-
-
-#     return
-
-
-# def _create_general_config(self):
-
-#     self.name_log = self.general_config.get("name_log")
-#     self.name_logfile = self.general_config.get("name_logfile")
-#     # self.
-
-#     return
-
-
-# def _create_extraction_config(self):
-
-
-#     return
