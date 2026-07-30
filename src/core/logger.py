@@ -1,17 +1,15 @@
-# src/core/mlflow_logger.py
-import logging
+# # src/core/mlflow_logger.py
+# import logging
 
-# from dataclasses import dataclass, field
-# from typing import Dict, List
-import sys
-from datetime import datetime
-from pathlib import Path
-
-# from src.core.session import session
-# import src.utils.file_helper as fh
-# import src.utils.df_helper as dfh
-import src.utils.path_helper as ph
-
+# # from dataclasses import dataclass, field
+# # from typing import Dict, List
+# import sys
+# from datetime import datetime
+# from pathlib import Path
+# # from src.core.session import session
+# # import src.utils.file_helper as fh
+# # import src.utils.df_helper as dfh
+# import src.utils.path_helper as ph
 # import numpy as np
 # import pandas as pd
 # import json
@@ -19,12 +17,216 @@ import src.utils.path_helper as ph
 # import mlflow
 # from utils.experiment_logger_impl import ExperimentLogger
 # import src.utils.general_helper as gh
-from src.core.config import env_variables
-
 # import src.core.ml_manager as log
 # from src.core.session import session
 # import src.utils.file_helper as fh
 # import src.utils.df_helper as dfh
+## logger.py
+import logging
+import re
+from datetime import datetime
+from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
+from pathlib import Path
+from typing import Literal
+
+from rich.console import Console
+
+# import loguru
+# import rich
+from rich.logging import RichHandler
+from rich.traceback import install
+
+import src.utils.path_helper as ph
+from src.core.config import parsing_env_vars
+
+# formatiert zusätzlich unbehandelte Exceptions
+install()
+
+
+def clear_handlers(logger: logging.Logger) -> None:
+    """
+    Remove and close all handlers attached to a logger.
+    """
+    for handler in logger.handlers[:]:
+        handler.close()
+        logger.removeHandler(handler)
+
+
+def create_logger(
+    name: str,
+    file_name: str | None = None,
+    folder: str | Path = None,
+    level: str = "info",
+    *,
+    logfile_mode: Literal["time", "size"] = "time",
+    file_level: str | None = None,
+    retention_days: int = 14,
+) -> logging.Logger:
+    """
+    Create a configured logger with Rich console output and
+    optional daily rotating file logging.
+
+    Parameters
+    ----------
+    name:
+        Logger name, for example "SOP_Gen".
+    file_name:
+        Log file name without the ".log" suffix.
+        If None, file logging is disabled.
+    folder:
+        Directory for log files. Defaults to parsing_env_vars.log_dir.
+    level:
+        Console log level.
+    file_level:
+        File log level. Defaults to the console level.
+    retention_days:
+        Number of daily backup files to retain.
+    """
+
+    level_map = {
+        "not_set": logging.NOTSET,
+        "debug": logging.DEBUG,
+        "info": logging.INFO,
+        "warning": logging.WARNING,
+        "error": logging.ERROR,
+        # "exception": logging.exception,
+        "critical": logging.CRITICAL,
+    }
+
+    console_log_level = level_map.get(level.lower(), logging.INFO)
+
+    if file_level is None:
+        file_log_level = console_log_level
+    else:
+        file_log_level = level_map.get(
+            file_level.lower(),
+            logging.DEBUG,
+        )
+
+    logger = logging.getLogger(name)
+
+    # Der Logger muss alle Meldungen durchlassen, die irgendein Handler benötigt.
+    logger.setLevel(min(console_log_level, file_log_level))
+    logger.propagate = False  # VERY important with Uvicorn / Streamlit
+
+    # Verhindert doppelte Handler bei wiederholtem Aufruf,
+    # insbesondere bei Streamlit-Reruns.
+    # logger.handlers.clear()
+    clear_handlers(logger)
+
+    # --------------------
+    # Rich console handler
+    # --------------------
+    console_handler = RichHandler(
+        level=console_log_level,
+        rich_tracebacks=True,
+        tracebacks_show_locals=False,
+        show_time=True,
+        show_level=True,
+        show_path=False,
+        markup=False,
+    )
+
+    # Rich stellt Zeit und Level selbst dar.
+    console_handler.setFormatter(logging.Formatter("%(message)s"))
+
+    logger.addHandler(console_handler)
+
+    formatter = logging.Formatter(
+        fmt=(
+            "%(asctime)s [%(levelname)s] %(name)s:%(module)s:%(lineno)d - %(message)s"
+        ),
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+
+    # --------------------
+    # Rotating file handler
+    # --------------------
+    if file_name:
+        if folder is None:
+            folder = parsing_env_vars.log_dir
+
+        log_dir = ph.ensure_dir(folder)
+        log_file = Path(log_dir) / f"{file_name}.log"
+
+        if logfile_mode == "time":
+            file_handler = TimedRotatingFileHandler(
+                filename=log_file,
+                when="midnight",
+                interval=1,
+                backupCount=retention_days,
+                encoding="utf-8",
+                delay=True,
+            )
+        elif logfile_mode == "size":
+            file_handler = RotatingFileHandler(
+                filename=log_file,
+                maxBytes=10 * 1024 * 1024,
+                backupCount=10,
+                encoding="utf-8",
+                delay=True,
+            )
+        else:
+            raise ValueError(
+                f"Unknown value in 'logfile_mode' (allowed: 'time' | 'size'):\n-> {logfile_mode}"
+            )
+
+        file_handler.setLevel(file_log_level)
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+
+    return logger
+
+
+def log_header(logger, title: str, level="info"):
+    """
+    Aufruf: log_header(self.logger, "START ESCALATION CHECK")
+    """
+    header = (
+        "\n"
+        + "=" * 50
+        + "\n"
+        + f"--- {title} --- {datetime.now():%Y-%m-%d %H:%M:%S} ---\n"
+        + "=" * 50
+    )
+
+    getattr(logger, level)(header)
+
+
+def log_section(logger, title):
+    """
+    Header als Ereignis
+    """
+    logger.info("")
+    logger.info("=" * 50)
+    logger.info(
+        "--- %s --- %s ---", title, datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    )
+    logger.info("=" * 50 + "\n")
+
+    # else:
+    #     print("\n")
+    #     print("=" * 50 + "\n")
+    #     print(f"--- {title} --- {datetime.now():%Y-%m-%d %H:%M:%S} ---\n")
+    #     print("=" * 50 + "\n")
+
+
+console = Console()
+
+
+def log_rich_section(
+    logger: logging.Logger,
+    title: str,
+) -> None:
+    console.rule(f"[bold cyan]{title}")
+    logger.info("SECTION: %s", title)
+
+
+def get_errors_from_log():
+    with open("app.log") as f:
+        errors = [line for line in f if re.search("ERROR|WARNING", line)]
+
+    print("\n".join(errors[:20]))
 
 
 '''
@@ -320,6 +522,7 @@ for err, count in sorted(errors.items(), key=lambda x: x[1], reverse=True):
 # großen GMP-/RAG-Projekt langfristig deutlich auszahlen und
 # den Debugging-Aufwand spürbar reduzieren.
 
+
 def has_file_handler(logger, log_path):
     for h in logger.handlers:
         if isinstance(h, logging.FileHandler):
@@ -361,9 +564,6 @@ def log_section(logger, title):
     #     print("=" * 50 + "\n")
 
 
-import re
-
-
 def get_errors_from_log():
     with open("app.log") as f:
         errors = [line for line in f if re.search("ERROR|WARNING", line)]
@@ -389,87 +589,87 @@ def get_errors_from_log():
 #         detect(line)
 
 
-def create_logger(
-    name: str, file_name: str, folder: str | Path = None, level: str = "info"
-) -> logging.Logger:
-    """
-    Create a configured logger with stdout + optional file logging.
+# def create_logger(
+#     name: str, file_name: str, folder: str | Path = None, level: str = "info"
+# ) -> logging.Logger:
+#     """
+#     Create a configured logger with stdout + optional file logging.
 
-    Parameters
-    ----------
-    name : str
-        Logger name (e.g. "api", "health", "traffic")
-    file_name : str | None
-        Log file name (without .log). If None, no file logging.
-    folder : str | Path | None
-        Folder to save log files. If None, uses LOGS env var or "logs".
-    level : str
-        Log level ("debug", "info", "warning", "error", "critical")
-    """
+#     Parameters
+#     ----------
+#     name : str
+#         Logger name (e.g. "api", "health", "traffic")
+#     file_name : str | None
+#         Log file name (without .log). If None, no file logging.
+#     folder : str | Path | None
+#         Folder to save log files. If None, uses LOGS env var or "logs".
+#     level : str
+#         Log level ("debug", "info", "warning", "error", "critical")
+#     """
 
-    level_dict = {
-        "not_set": logging.NOTSET,
-        "debug": logging.DEBUG,
-        "info": logging.INFO,
-        "warning": logging.WARNING,
-        "error": logging.ERROR,
-        # "exception": logging.exception,
-        "critical": logging.CRITICAL,
-    }
+#     level_dict = {
+#         "not_set": logging.NOTSET,
+#         "debug": logging.DEBUG,
+#         "info": logging.INFO,
+#         "warning": logging.WARNING,
+#         "error": logging.ERROR,
+#         # "exception": logging.exception,
+#         "critical": logging.CRITICAL,
+#     }
 
-    log_level = level_dict.get(level.lower(), logging.INFO)
+#     log_level = level_dict.get(level.lower(), logging.INFO)
 
-    logger = logging.getLogger(name)
-    logger.setLevel(log_level)
-    logger.propagate = False  # VERY important with Uvicorn / Streamlit
+#     logger = logging.getLogger(name)
+#     logger.setLevel(log_level)
+#     logger.propagate = False  # VERY important with Uvicorn / Streamlit
 
-    formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+#     formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 
-    # --- stdout handler (always) ---
-    stream_handler = logging.StreamHandler(sys.stdout)
-    stream_handler.setLevel(log_level)
-    stream_handler.setFormatter(formatter)
-    logger.addHandler(stream_handler)
+#     # --- stdout handler (always) ---
+#     stream_handler = logging.StreamHandler(sys.stdout)
+#     stream_handler.setLevel(log_level)
+#     stream_handler.setFormatter(formatter)
+#     logger.addHandler(stream_handler)
 
-    # --- file handler (optional) ---
-    if folder is None:
-        folder = env_variables.log_dir
+#     # --- file handler (optional) ---
+#     if folder is None:
+#         folder = parsing_env_vars.log_dir
 
-    if file_name:
-        log_path = ph.ensure_dir(folder)
-        log_file = log_path / f"{file_name}.log"
+#     if file_name:
+#         log_path = ph.ensure_dir(folder)
+#         log_file = log_path / f"{file_name}.log"
 
-        # check if file handler already exists
-        if not has_file_handler(logger, log_file):
-            file_handler = logging.FileHandler(log_file, mode="a", encoding="utf-8")
-            file_handler.setLevel(log_level)
-            file_handler.setFormatter(formatter)
-            logger.addHandler(file_handler)
+#         # check if file handler already exists
+#         if not has_file_handler(logger, log_file):
+#             file_handler = logging.FileHandler(log_file, mode="a", encoding="utf-8")
+#             file_handler.setLevel(log_level)
+#             file_handler.setFormatter(formatter)
+#             logger.addHandler(file_handler)
 
-    return logger
+#     return logger
 
 
-# --------------
-# MLflow Experiment Logger
-# --------------
+# # --------------
+# # MLflow Experiment Logger
+# # --------------
 
-# @dataclass
-# class ExperimentLogger:
-#     experiment_name: str
-#     artifact_location: Path | None = None  # field(default_factory=Path)
-#     backup_dir: Path = Path(f"{ph.find_project_root()}/mlflow/backups")
+# # @dataclass
+# # class ExperimentLogger:
+# #     experiment_name: str
+# #     artifact_location: Path | None = None  # field(default_factory=Path)
+# #     backup_dir: Path = Path(f"{ph.find_project_root()}/mlflow/backups")
 
-#     tags: Dict[str, object] = field(default_factory=dict)
-#     params: Dict[str, object] = field(default_factory=dict)
-#     metrics: Dict[str, float] = field(default_factory=dict)
-#     artifacts: List[str] = field(default_factory=list)
-#     texts: Dict[str, str] = field(default_factory=dict)
-#     # _model: Dict[str, object] = field(default_factory=dict)
-#     # dicts: Dict[str, str] = field(default_factory=dict)
+# #     tags: Dict[str, object] = field(default_factory=dict)
+# #     params: Dict[str, object] = field(default_factory=dict)
+# #     metrics: Dict[str, float] = field(default_factory=dict)
+# #     artifacts: List[str] = field(default_factory=list)
+# #     texts: Dict[str, str] = field(default_factory=dict)
+# #     # _model: Dict[str, object] = field(default_factory=dict)
+# #     # dicts: Dict[str, str] = field(default_factory=dict)
 
-#     def __post_init__(self):
-#         root = ph.find_project_root()
-#         project_name = env_variables("PROJECT_NAME", "default_project")
+# #     def __post_init__(self):
+# #         root = ph.find_project_root()
+#         project_name = parsing_env_vars("PROJECT_NAME", "default_project")
 #         folder = f"{root}/mlflow/logs"
 
 #         self.logger = log.create_logger(
@@ -589,7 +789,7 @@ def create_logger(
 
 #     def setup_experiment(self):
 #         gh.load_env_vars()
-#         mlflow_uri = env_variables("MLFLOW_TRACKING_URI")
+#         mlflow_uri = parsing_env_vars("MLFLOW_TRACKING_URI")
 #         mlflow.set_tracking_uri(mlflow_uri)
 
 #         exp = mlflow.get_experiment_by_name(self.experiment_name)

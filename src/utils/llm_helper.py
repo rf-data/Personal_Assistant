@@ -8,7 +8,7 @@ from pathlib import Path
 from openai import OpenAI
 
 import src.utils.path_helper as ph
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.memory import app_session
 
 
@@ -30,7 +30,7 @@ def _load_from_cache(key: str, cache_dir: Path = None):
     logger = app_session.logger
 
     if not cache_dir:
-        folder = env_variables.cache_dir
+        folder = parsing_env_vars.cache_dir
         cache_dir = Path(f"{folder}")
 
     fn = cache_dir / f"{key}.json"
@@ -48,7 +48,7 @@ def _save_to_cache(key: str, data: dict, cache_dir: Path = None):
     logger = app_session.logger
 
     if not cache_dir:
-        cache_dir = Path(env_variables.cache_dir)
+        cache_dir = Path(parsing_env_vars.cache_dir)
 
     fn = cache_dir / f"{key}.json"
     ph.ensure_dir(fn)

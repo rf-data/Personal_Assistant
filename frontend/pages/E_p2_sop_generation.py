@@ -1,13 +1,15 @@
 ## E_p2_sop_generation.py
 # imports
 #
-# from pathlib import Path
+from pathlib import Path
+
 import streamlit as st
 
-from src.core.memory import SOPGenContext
-from src.run_st_SOP_generation import run_st_sop_generation
-
+# from src.core.memory import SOPGenContext
+# from src.run_st_SOP_generation import run_st_sop_generation
 # from src.core.memory import app_session, ParseContext
+from src.core.config import parsing_env_vars
+
 # from src.core.config import ChunkSettings
 # from src.utils.path_helper import shorten_path, ensure_dir
 # from src.utils.st_eda_helper import st_df_profile
@@ -34,7 +36,7 @@ def show():
 
     sop_title = st.text_input(
         label="Enter name of SOP to be written",
-        value="Hygienmonitoring",
+        value="Hygienemonitoring",
         # max_chars = 100
     )
 
@@ -79,8 +81,25 @@ def show():
         # key="min_number"
     )
 
-    st.warning("Due to RAM issues, 'SOP_Generation' script needs to be run locally or in RunPod")
-            #    ADAPT TO NEW FILE SYSTEM''")
+    st.warning(
+        "Due to RAM issues, 'SOP_Generation' script needs to be run locally or in RunPod"
+    )
+    #    ADAPT TO NEW FILE SYSTEM''")
+
+    data = parsing_env_vars.data_dir
+    folder_path = f"{data}/{sop_title}"
+    dates = [f.stem.split("_")[0] for f in Path(folder_path).rglob("*.json")]
+
+    run_date = st.pills(
+        label="Select a run date",
+        options=[set(dates)],
+        selection_mode="single",
+        # key="chunk_folder"
+    )
+
+    files = [
+        f for f in Path(folder_path).rglob("*.json") if f.name.startswith(run_date)
+    ]
 
     with st.expander("**Preview 'Retrieved Chunks'**"):
         st.json()

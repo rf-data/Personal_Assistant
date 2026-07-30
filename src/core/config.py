@@ -11,6 +11,162 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 # from src.utils.dict_helper import get_yaml_config
 
 
+# ------------------------------------
+# GENERAL SETTINGS (from .env files)
+# ------------------------------------
+class ParseEnvVars(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env.parse",
+        env_file_encoding="utf-8",
+        # env_ignore_case=False
+        # env_nested_delimiter="__"
+    )
+    app_name: str = "personal_assistant"
+
+    # raw data
+    data_dir: str
+    data_audio: str
+    data_docx: str
+    data_html: str
+    data_image: str
+    data_json_nb: str
+    data_pdf: str
+    data_txt_md: str
+    data_wiki: str
+    data_qms: str
+
+    # other folder_paths
+    log_dir: str
+    report_dir: str
+    config_dir: str
+    cache_dir: str
+    chroma_dir: str
+
+    # wikipedia relevance
+    wiki_en_api: str
+    header_agent: str
+
+
+parsing_env_vars = ParseEnvVars()
+
+
+class AIAgenticEnvVars(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env.agentic",
+        env_file_encoding="utf-8",
+        # env_ignore_case=False
+        # env_nested_delimiter="__"
+    )
+    app_name: str = "personal_assistant"
+
+    # llm token
+    hf_api_key: str
+    openai_api_key: str
+    # claude_token: str
+    # gemini_token: str
+    langfuse_public_key: str
+    langfuse_secret_key: str
+    langfuse_host: str
+    langfuse_base_url: str
+
+
+agentic_env_vars = AIAgenticEnvVars()
+
+
+class MLOpsEnvVars(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env.mlops",
+        env_file_encoding="utf-8",
+        # env_ignore_case=False
+        # env_nested_delimiter="__"
+    )
+    app_name: str = "personal_assistant"
+    # MLflow relevance
+    mlflow_artifacts: str
+    mlflow_db: str
+    mlflow_tracking_uri: str
+    mlflow_backup: str
+    fingerprint_exp: str
+    fingerprint_run: str
+
+
+mlops_env_vars = MLOpsEnvVars()
+
+
+class OrganizerEnvVars(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env.organizer",
+        env_file_encoding="utf-8",
+        # env_ignore_case=False
+        # env_nested_delimiter="__"
+    )
+    app_name: str = "personal_assistant"
+
+    imap_server: str
+    imap_port: int
+    smtp_server: str
+    smtp_port: int
+    email_rf_address: str
+    email_rf_pw: str
+    email_llf_address: str
+    email_llf_pw: str
+
+
+organizer_env_vars = OrganizerEnvVars()
+# class EnvVariables(BaseSettings):
+#     model_config = SettingsConfigDict(
+#         env_file=".env",
+#         env_file_encoding="utf-8",
+#         # env_ignore_case=False
+#         # env_nested_delimiter="__"
+#     )
+#     app_name: str = "gmp_compliance"
+
+#     # raw data
+#     data_dir: str
+#     data_audio: str
+#     data_docx: str
+#     data_html: str
+#     data_image: str
+#     data_json_nb: str
+#     data_pdf: str
+#     data_txt_md: str
+#     data_wiki: str
+#     data_qms: str
+
+#     # other folder_paths
+#     log_dir: str
+#     report_dir: str
+#     config_dir: str
+#     cache_dir: str
+#     chroma_dir: str
+
+#     # wikipedia relevance
+#     wiki_en_api: str
+#     header_agent: str
+
+#     # llm token
+#     hf_api_key: str
+#     openai_api_key: str
+#     # claude_token: str
+#     # gemini_token: str
+#     langfuse_public_key: str
+#     langfuse_secret_key: str
+#     langfuse_host: str
+#     langfuse_base_url: str
+
+#     # MLflow relevance
+#     mlflow_artifacts: str
+#     mlflow_db: str
+#     mlflow_tracking_uri: str
+#     mlflow_backup: str
+#     fingerprint_exp: str
+#     fingerprint_run: str
+
+
+# parsing_env_vars = EnvVariables()
+
+
 """
 from pydantic import BaseModel, model_validator, field_validator, Field
 from typing import Optional
@@ -50,66 +206,7 @@ actual date objects by the time you compare them, not raw strings.
 Using mode="before" runs against raw input instead. This distinction is
 the kind of thing that only surfaces when you've tried to write a
 cross-field validator and gotten confusing type errors at runtime.
-
 """
-
-# ------------------------------------
-# GENERAL SETTINGS (from .env files)
-# # ------------------------------------
-
-
-class EnvVariables(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8",
-        # env_ignore_case=False
-        # env_nested_delimiter="__"
-    )
-    app_name: str = "gmp_compliance"
-
-    # raw data
-    data_dir: str
-    data_audio: str
-    data_docx: str
-    data_html: str
-    data_image: str
-    data_json_nb: str
-    data_pdf: str
-    data_txt_md: str
-    data_wiki: str
-    data_qms: str
-
-    # other folder_paths
-    log_dir: str
-    report_dir: str
-    config_dir: str
-    cache_dir: str
-    chroma_dir: str
-
-    # wikipedia relevance
-    wiki_en_api: str
-    header_agent: str
-
-    # llm token
-    hf_api_key: str
-    openai_api_key: str
-    # claude_token: str
-    # gemini_token: str
-    langfuse_public_key: str
-    langfuse_secret_key: str
-    langfuse_host: str
-    langfuse_base_url: str
-
-    # MLflow relevance
-    mlflow_artifacts: str
-    mlflow_db: str
-    mlflow_tracking_uri: str
-    mlflow_backup: str
-    fingerprint_exp: str
-    fingerprint_run: str
-
-
-env_variables = EnvVariables()
 
 
 # ------------------------------------
@@ -327,7 +424,7 @@ RunSettings = Annotated[
 #     self.general_config = raw_config.get("general_args", {})
 #     self.extract_config = raw_config.get("extraction", {})
 #     # self.config_name
-#     # c_path = env_variables("CONFIG_PATH")
+#     # c_path = parsing_env_vars("CONFIG_PATH")
 
 #     return
 

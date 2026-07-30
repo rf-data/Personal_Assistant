@@ -1,12 +1,7 @@
 ## templates_sop.py
 # import
 
-from src.model_rag.classes_sop import (
-                                    SOPChapter,
-                                    SOPTemplate,
-                                    SOPType
-                                    )
-
+from src.model_rag.classes_sop import SOPChapter, SOPTemplate, SOPType
 
 SOP_BASE_TEMPLATE = SOPTemplate(
     sop_type=SOPType.GENERAL,
@@ -19,7 +14,7 @@ SOP_BASE_TEMPLATE = SOPTemplate(
             knowledge_source="retrieval",
             allow_subchapters=True,
             min_subchapters=2,
-            max_subchapters=8
+            max_subchapters=8,
             # etreten des Herstellungsraumes",
             # text="Der Anreicher hat ,
             # beim Betreten des Herstellungsraumes die Arbeitsanweisungen AA Hygieneplan und AA Ein- und Ausschleusen von Personal einzuhalten.",
@@ -46,29 +41,29 @@ SOP_BASE_TEMPLATE = SOPTemplate(
             name="Zuständigkeit",
             order=3,
             text="",
-            knowledge_source="human_system",    # ["core_chapters",
-            kind="support"
+            knowledge_source="human_system",  # ["core_chapters",
+            kind="support",
         ),
         SOPChapter(
-                name="Begriffe",
-                kind="support",
-                order=4,
-                text="",
-                knowledge_source="core_chapters"
-                ),
+            name="Begriffe",
+            kind="support",
+            order=4,
+            text="",
+            knowledge_source="core_chapters",
+        ),
         SOPChapter(
             name="Mitgeltende Unterlagen",
             order=6,
             kind="support",
             text="",
-            knowledge_source="human_system",    # ["core_chapters", ],
+            knowledge_source="human_system",  # ["core_chapters", ],
         ),
         SOPChapter(
             name="Änderungshistorie",
             order=7,
             kind="support",
             text="",
-            knowledge_source="human_system"
+            knowledge_source="human_system",
         ),
     ],
 )

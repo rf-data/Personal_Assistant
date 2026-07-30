@@ -1,17 +1,86 @@
+SHELL := /bin/bash
+.SHELLFLAGS := -eu -o pipefail -c
+
 ROOT := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT := personal_assistence
+LOG_DIR := $(ROOT)/logs
+# TODAY := $(shell date +%Y-%m-%d)
 
-.PHONY: all fmt lint type_check monitoring_docker monitoring_stop mlflow_fingerprint mlflow_start mlflow_stop
+.PHONY: \
+		ai_code_review \
+		clean_linux \
+		dependency_check \
+		litellm_start \
+		monitoring_docker \
+		monitoring_stop \
+		mlflow_fingerprint \
+		mlflow_start \
+		mlflow_stop \
+		pre_commit_update \
+		pre_commit_check \
+		pre_push_check \
+		streamlit
+
 # mlflow_local n8n_quick text_prepare text_extract rag_prepare  # test
 # all stop evaluation fire-alert reports
 
-all: fmt lint type_check
+# all:
+# 	uv run ruff format
+# 	uv run ruff check . --fix
+# 	uv run mypy src/
+
+# fmt:
+# 	uv run ruff format .
+
+# lint:
+# 	uv run ruff check . --fix
+
+# type_check:
+# 	uv run mypy src/
+
+dependency_check:
+	uv run python src/run_dependency_check.py
+
+pre_commit_update:
+	@mkdir -p "$(LOG_DIR)"; \
+	LOGFILE="$(LOG_DIR)/pre_commit_manual.log"; \
+	{ \
+		echo "=== pre-commit update ($$(date '+%Y-%m-%d %H:%M:%S')) ==="; \
+		uv run pre-commit autoupdate; \
+		uv run pre-commit run --all-files; \
+		echo " "; \
+	} 2>&1 | tee -a "$$LOGFILE"
+
+pre_commit_check:
+	@mkdir -p "$(LOG_DIR)"; \
+	LOGFILE="$(LOG_DIR)/pre_commit_manual.log"; \
+	{ \
+		echo "=== 'manual' pre-commit run ($$(date '+%Y-%m-%d %H:%M:%S')) ==="; \
+		uv run pre-commit run --all-files; \
+		echo " "; \
+	} 2>&1 | tee -a "$$LOGFILE"
+
+# ($${(date '+%Y-%m-%d ')})
+
+pre_push_check:
+	@mkdir -p "$(LOG_DIR)"; \
+	LOGFILE="$(LOG_DIR)/pre_push_manual.log"; \
+	{ \
+		echo "=== 'manual' pre-push run ($$(date '+%Y-%m-%d %H:%M:%S')) ==="; \
+		uv run pre-commit run --hook-stage pre-push --all-files; \
+		echo " "; \
+	} 2>&1 | tee -a "$$LOGFILE"
+
+ai_code_review:
+	uv run pre-commit run ai-review --hook-stage manual
 
 streamlit:
-	streamlit run streamlit_app.py
+	uv run streamlit run streamlit_app.py
 
 litellm_start:
-	litellm --config /workspaces/gmp_compliance/configuration/litellm_config.yaml
+	uv run litellm \
+		--config \
+		/workspaces/gmp_compliance/configuration/litellm_config.yaml
 	# --detailed_debug
 
 mlflow_fingerprint:
@@ -26,20 +95,18 @@ mlflow_stop:
 clean_linux:
 	bash scripts/clean_linux.sh
 
-fmt:
-	uv run ruff format .
-
-lint:
-	uv run ruff check . --fix
-
 monitoring_docker:
-	docker compose -p $(PROJECT) -f $(ROOT)/docker/docker-compose.monitoring.yaml up --build -d
+	docker compose \
+		-p $(PROJECT) \
+		-f $(ROOT)/docker/docker-compose.monitoring.yaml \
+		up --build -d
 
 monitoring_stop:
-	docker compose -p $(PROJECT) -f $(ROOT)/docker/docker-compose.monitoring.yaml down
+	docker compose \
+		-p $(PROJECT) \
+		-f $(ROOT)/docker/docker-compose.monitoring.yaml \
+		down
 
-type_check:
-	uv run mypy src/
 
 
 # api_start:

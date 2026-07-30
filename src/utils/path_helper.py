@@ -62,7 +62,7 @@ def create_save_path(name_suffix, file_suffix):  # folder_name,
     from src.core.memory import session_state
 
     # gh.load_env_vars()
-    # folder = env_variables("PATH_EVALUATED", None)
+    # folder = parsing_env_vars("PATH_EVALUATED", None)
     folder = session_state.save_folder
     now = session_state.timestamp  # ", None)
     # run_name = session.model_class # log_file", None)

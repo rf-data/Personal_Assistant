@@ -5,7 +5,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.memory import ParseContext, app_session
 from src.model_tools_parsing.apollo_extractor import ApolloCleanExtractor
 from src.model_tools_parsing.base_assembler import BaseAssembler
@@ -36,7 +36,7 @@ def show():
     with file_select:
         st.subheader("🖼️ Select an html file")
 
-        html_data = env_variables.data_html
+        html_data = parsing_env_vars.data_html
 
         input_data = f"{html_data}/input"
 

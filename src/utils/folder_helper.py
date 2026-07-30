@@ -4,6 +4,8 @@
 import difflib
 from pathlib import Path
 
+from src.utils.path_helper import find_project_root
+
 
 def meaningful_change(old, new):
     ratio = difflib.SequenceMatcher(None, old, new).ratio()
@@ -60,44 +62,115 @@ def context_aware_backup(folder: str, text_type: str = "txt"):
     return
 
 
-def get_folder_size(path):
+def get_folder_size(
+    path: str | Path, *, logger=None, skip_symlinks: bool = True
+) -> int:
+    root = Path(path)
     total = 0
 
-    for dirpath, _, filenames in os.walk(path):
-        for file in filenames:
-            try:
-                fp = os.path.join(dirpath, file)
-                total += os.path.getsize(fp)
-            except:
-                pass
+    for item in root.rglob("*"):
+        try:
+            if skip_symlinks and item.is_symlink():
+                continue
+
+            if item.is_file():
+                total += item.stat().st_size
+
+        except OSError as exc:
+            if logger:
+                logger.debug(
+                    "Could not inspect file '%s': %s",
+                    item,
+                    exc,
+                )
 
     return total
 
 
-def create_report(folder):
-    report = []
+EXCLUDED_DIRS = {
+    # ".git",
+    # ".venv",
+    # "__pycache__",
+    # ".mypy_cache",
+    # ".pytest_cache",
+    "data",
+    "logs",
+    # "cache",
+    "chroma",
+    "mlflow",
+}
 
-    for path in Path(folder).rglob("*"):
-        depth = len(path.parts)
 
-        report.append("  " * depth + f"- {path.name}")
+def is_excluded(path: Path, root: Path) -> bool:
+    relative_parts = path.relative_to(root).parts
+    return (
+        any(part in EXCLUDED_DIRS for part in relative_parts)
+        or any("cache" in part for part in relative_parts)
+        or any(part.startswith(".") for part in relative_parts)
+    )
 
-    with open("project_report.md", "w") as f:
-        f.write("\n".join(report))
+
+def create_report(
+    folder: str | Path = None, output_file: str | Path = "project_report.md"
+) -> Path:
+
+    if folder is None:
+        root = find_project_root()
+    else:
+        root = Path(folder).resolve()
+
+    output_path = Path(output_file)
+
+    report: list[str] = [
+        f"# Project structure: `{root.name}`",
+        "",
+    ]
+
+    for path in sorted(root.rglob("*")):
+        try:
+            if path.resolve() == output_path:
+                continue
+        except OSError:
+            continue
+
+        if is_excluded(path, root):
+            continue
+
+        relative_path = path.relative_to(root)
+        depth = len(relative_path.parts) - 1
+        marker = "📁" if path.is_dir() else "📄"
+
+        report.append(f"{'  ' * depth}- {marker} {path.name}")
+
+    output_path.write_text(
+        "\n".join(report) + "\n",
+        encoding="utf-8",
+    )
+
+    return output_path
 
 
 # create_report(".")
 
 
-def folder_profile(folder: str = "."):
-    results = []
+def folder_profile(
+    folder: str | Path = ".", *, limit: int = 10
+) -> list[tuple[Path, int]]:
 
-    for item in os.listdir(folder):
-        full_path = os.path.join(folder, item)
+    root = Path(folder)
 
-        if os.path.isdir(full_path):
-            size = get_folder_size(full_path)
-            results.append((item, size))
+    results = [
+        (item, get_folder_size(item)) for item in root.iterdir() if item.is_dir()
+    ]
 
-    for folder, size in sorted(results, key=lambda x: x[1], reverse=True)[:10]:
-        print(f"{folder}: {size / (1024**3):.2f} GB")
+    results.sort(
+        key=lambda entry: entry[1],
+        reverse=True,
+    )
+
+    top_results = results[:limit]
+
+    for path, size in top_results:
+        print(f"{path.name}: {size / (1024**3):.2f} GB")
+
+    return top_results

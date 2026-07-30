@@ -2,7 +2,7 @@
 # import
 from pathlib import Path
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.model_tools_parsing.feature_enricher import FeatureEnricher
 from src.model_tools_parsing.pdf_extractor import PDFCleanExtractor
 from src.tools_parsing.assemble_pdf import assemble_single_pdf
@@ -14,7 +14,7 @@ from src.utils.path_helper import move_file, shorten_path
 
 
 def run_pdf_extraction(parse_context):
-    pdf_data = env_variables.data_pdf
+    pdf_data = parsing_env_vars.data_pdf
 
     raw_data = f"{pdf_data}/raw"
 

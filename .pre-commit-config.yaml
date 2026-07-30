@@ -1,17 +1,102 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+
+default_install_hook_types:
+  - pre-commit
+  - pre-push
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
       - id: trailing-whitespace
-      - id: end-of-file-fixer
-      # - id: check-yaml
-      - id: check-added-large-files
+        stages: [pre-commit]
 
-  # - repo: https://github.com/astral-sh/ruff-pre-commit
-  #   rev: v0.4.4
+      - id: end-of-file-fixer
+        stages: [pre-commit]
+
+      - id: check-yaml
+        # exclude: ^path/...
+        stages: [pre-commit]
+
+      - id: check-json
+        stages: [pre-commit]
+
+      - id: check-toml
+        stages: [pre-commit]
+
+      - id: check-ast
+        stages: [pre-commit]
+
+      - id: debug-statements
+        stages: [pre-commit]
+
+      - id: check-added-large-files
+        args: [--maxkb=10000]
+        stages: [pre-commit]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.0
+    hooks:
+      # - id: ruff-check
+      #   args:
+      #     - --fix
+      #     - --show-fixes
+      #   stages: [pre-commit]
+
+      - id: ruff-format
+        stages: [pre-commit]
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
+        stages: [pre-commit, pre-push]
+
+  # - repo: https://github.com/PyCQA/bandit
+  #   rev: 1.9.4
   #   hooks:
-  #     - id: ruff
-  #       args: [--fix]
-  #     - id: ruff-format
+  #     - id: bandit
+  #       args:
+  #         - "-c"
+  #         - "pyproject.toml"
+  #         - "-r"
+  #         - "src"
+  #       additional_dependencies:
+  #         - "bandit[toml]"
+  #       pass_filenames: false
+  #       stages: [pre-push]
+
+  - repo: local
+    hooks:
+      - id: pytest-fast
+        name: Fast unit tests
+        entry: uv run pytest -q -m "not integration"
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [manual]
+
+      # - id: ai-review
+      #   name: Optional AI review
+      #   entry: # uv run python scripts/auto_review.py
+      #   language: system
+      #   pass_filenames: false
+      #   stages: [manual]
+
+      - id: pip-audit
+        name: Dependency vulnerability audit
+        entry: uv run python src/run_dependency_check.py
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [manual]
+
+      # - id: mypy
+      #   name: Mypy type check
+      #   entry: uv run mypy src/
+      #   language: system
+      #   pass_filenames: false
+      #   always_run: true
+      #   stages: [pre-push]

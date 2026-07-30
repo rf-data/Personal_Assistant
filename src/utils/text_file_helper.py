@@ -8,7 +8,7 @@ from pathlib import Path
 import pandas as pd
 from docx import Document
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.memory import app_session
 
 # import src.utils.general_helper as gh
@@ -184,7 +184,7 @@ if __name__ == "__main__":
 
     # load_env_vars()
 
-    folder = env_variables.data_qms
+    folder = parsing_env_vars.data_qms
 
     files = [f for f in Path(folder).iterdir() if f.suffix == ".docx"]
     print(f"Length 'files': {len(files)}")
