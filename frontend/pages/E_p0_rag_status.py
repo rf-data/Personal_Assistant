@@ -1,14 +1,16 @@
 ## E_p0_rag_system.py
 # imports
-import streamlit as st
-from pathlib import Path
-import pandas as pd
 import time
+from pathlib import Path
 
-from src.core.config import env_variables
+import pandas as pd
+import streamlit as st
+
+from src.core.config import parsing_env_vars
 from src.tools_rag.create_embeds import load_chunks_to_chroma
 from src.utils.chroma_helper import get_chroma_client, list_files_in_coll
 from src.utils.path_helper import shorten_path
+
 
 def show():
     # st.subheader("🏠 Startseite ")
@@ -78,13 +80,9 @@ def show():
 
     # st.divider()
     with st.expander("**Create a ChromaDB collection**"):
-        coll_new = st.text_input(
-                        label="Enter name of new collection"
-                        )
+        coll_new = st.text_input(label="Enter name of new collection")
 
-        start_create = st.button(
-                            label="Start creating collection"
-                            )
+        start_create = st.button(label="Start creating collection")
 
         if start_create:
             chroma_client.create_collection(name=coll_new)
@@ -92,14 +90,14 @@ def show():
 
     # st.divider()
     with st.expander("**Add data to ChromaDB collection**"):
-    #    st.subheader("Upload Data to ChromaDB")
-        root = env_variables.data_dir
+        #    st.subheader("Upload Data to ChromaDB")
+        root = parsing_env_vars.data_dir
         data_folder = st.pills(
-                label="Select folder (processed files)",
-                options=["txt_md", "docx", "html", "pdf", "json"],
-                selection_mode="single",
-                # key="chunk_folder"
-            )
+            label="Select folder (processed files)",
+            options=["txt_md", "docx", "html", "pdf", "json"],
+            selection_mode="single",
+            # key="chunk_folder"
+        )
 
         folder_path = f"{root}/{data_folder}/processed"
 
@@ -139,7 +137,7 @@ def show():
                 # df_path = f" /{f_path}.parquet"
 
                 time.sleep(0.01)
-                my_bar.progress((idx+1)/n_files, text=progress_text)
+                my_bar.progress((idx + 1) / n_files, text=progress_text)
 
                 df_upload = pd.read_parquet(f_path)
 

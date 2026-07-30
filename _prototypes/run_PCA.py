@@ -11,7 +11,7 @@ from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.preprocessing import KernelCenterer, StandardScaler
 from sklearn.utils import extmath
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.memory import app_session
 
 # from src.utils.general_helper import load_env_vars
@@ -66,7 +66,7 @@ def pca_vs_kernel_pca(f_path: str):
     # load env variables and config
     # load_env_vars()
 
-    data_input = env_variables.data_dir
+    data_input = parsing_env_vars.data_dir
 
     data = pd.read_csv(f_path)
     # '../data/plums.csv')

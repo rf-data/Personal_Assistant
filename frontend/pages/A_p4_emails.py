@@ -4,16 +4,10 @@ import imaplib
 import email
 import streamlit as st
 
-"""
-Calender
-
-import markdown
-import pdfkit
-md_content = "# Daily Plan\n- Task 1\n- Task 2"
-html_content = markdown.markdown(md_content)
-pdfkit.from_string(html_content, "daily_plan.pdf")
-
-"""
+from src.core.config import organizer_env_vars as organizer
+from src.core.logger import create_logger
+from src.core.memory import app_session
+from src.utils.email_helper import context_imap_connection, list_mailboxes
 
 
 def show():

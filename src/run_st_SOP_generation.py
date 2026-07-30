@@ -5,31 +5,27 @@ from datetime import datetime
 from pathlib import Path
 
 from tenacity import (
-                retry,
-                wait_random_exponential,
-                stop_after_attempt,
-                retry_if_not_exception_type
-                )
+    retry,
+    retry_if_not_exception_type,
+    stop_after_attempt,
+    wait_random_exponential,
+)
 
+from src.core.config import parsing_env_vars
 from src.core.logger import create_logger
-from src.core.retry import my_before_sleep
-from src.core.memory import SOPGenContext, LLMContext, app_session
-from src.core.config import env_variables
+from src.core.memory import LLMContext, SOPGenContext, app_session
 from src.core.observability import configure_llm_observability
+from src.core.retry import my_before_sleep
 
 # from src.tools_rag.retrieve import normalise_chroma_results
 from src.tools_rag.generate_chunks_facts import (
-                            build_chunk_fact_pool,
-                            build_knowledge_pool,
-                            configure_marvin,
-                            consolidate_facts,
-#                             group_filtered_facts
-                            )
-from src.tools_rag.generate_sop import (
-                            # generate_chapter_text,
-                            generate_chapter_plan
-                            )
-
+    build_chunk_fact_pool,
+    build_knowledge_pool,
+    configure_marvin,
+    consolidate_facts,
+    #                             group_filtered_facts
+)
+from src.tools_rag.generate_sop import generate_chapter_plan  # generate_chapter_text,
 from src.utils.dict_helper import save_dict
 
 #                                 build_context,
@@ -107,20 +103,11 @@ from src.tools_rag.retrieve import (
 
 # streamlit run streamlit_app.py
 @retry(
-    wait=wait_random_exponential(
-                            multiplier=1,
-                                max=10
-                                ),
-    retry=retry_if_not_exception_type(
-                                (
-                            TypeError,
-                            ValueError,
-                            AttributeError
-                            )
-                        ),
-	before_sleep=my_before_sleep,
-	stop=stop_after_attempt(3)
-    )
+    wait=wait_random_exponential(multiplier=1, max=10),
+    retry=retry_if_not_exception_type((TypeError, ValueError, AttributeError)),
+    before_sleep=my_before_sleep,
+    stop=stop_after_attempt(3),
+)
 def run_st_sop_generation(
     # user_request: UserRequest,
     sop_context: SOPGenContext,
@@ -148,69 +135,65 @@ def run_st_sop_generation(
     today = app_session.timestamp or datetime.today().strftime("%Y-%m-%d")
 
     save_folder = (
-        f"{env_variables.data_dir}/sop_{sop_context.title}"
+        f"{parsing_env_vars.data_dir}/sop_{sop_context.title}"
         # workspaces/gmp_compliance/data/rag_queries"
-        )
+    )
 
     chunks_serialized = [chunk.model_dump() for chunk in chunks]
-    save_dict(data=chunks_serialized, path=Path(save_folder) / f"{today}_{sop_context.title}_chunk_retr")
+    save_dict(
+        data=chunks_serialized,
+        path=Path(save_folder) / f"{today}_{sop_context.title}_chunk_retr",
+    )
 
     # for chunk in chunks:
-    # configure_langfuse(env_variables)
-    configure_llm_observability(
-                        env_variables
-                    )
+    # configure_langfuse(parsing_env_vars)
+    configure_llm_observability(parsing_env_vars)
     configure_marvin(sop_context)
 
     chunks_facts = build_chunk_fact_pool(chunks, sop_context)
     # facts_group = group_filtered_facts(chunks_facts.get("facts", []))
     facts_con = consolidate_facts(
-                    chunks_facts["facts"], # , []),  # acts_group: list[IngestedFact],
-                    sop_context
-                    # similarity_threshold: float = 0.90,
-                    )
+        chunks_facts["facts"],  # , []),  # acts_group: list[IngestedFact],
+        sop_context,
+        # similarity_threshold: float = 0.90,
+    )
 
     facts_con_serialized = {
-                        topic: [
-                            fact.model_dump()
-                            for fact in facts
-                            ]
-                        for topic, facts in facts_con.items()
-                        }
+        topic: [fact.model_dump() for fact in facts]
+        for topic, facts in facts_con.items()
+    }
 
     # print("type 'facts_con':\t", type(facts_con))
     # print("type 'facts_con' values:\t'", type(next(iter(facts_con.values()))))
 
     save_dict(
         data=facts_con_serialized,
-        path=Path(save_folder) / f"{today}_{sop_context.title}_fact_con"
+        path=Path(save_folder) / f"{today}_{sop_context.title}_fact_con",
         # f"{save_name}_facts_consol"
-        )
+    )
 
-    know_pool = build_knowledge_pool(
-                    chunks=chunks_facts["chunks"],
-                    facts=facts_con
-                    )
+    know_pool = build_knowledge_pool(chunks=chunks_facts["chunks"], facts=facts_con)
 
     save_dict(
-            data=know_pool.model_dump(),
-            path=Path(save_folder) / f"{today}_{sop_context.title}_knowledge"
-            )
+        data=know_pool.model_dump(),
+        path=Path(save_folder) / f"{today}_{sop_context.title}_knowledge",
+    )
 
-    chapter_plans = generate_chapter_plan(
-                            know_pool,
-                            # sop_context,
-                            chapter_templates
-                            )
+    chapter_plans, plan_evals = generate_chapter_plan(
+        know_pool,
+        # sop_context,
+        chapter_templates,
+    )
 
     save_dict(
-        data={
-            c_name:subs.model_dump()
-            for c_name, subs
-            in chapter_plans.items()},
-        path=Path(save_folder) / f"{today}_{sop_context.title}_chapter_plans"
-        )
+        data={c_name: subs.model_dump() for c_name, subs in chapter_plans.items()},
+        path=Path(save_folder) / f"{today}_{sop_context.title}_chapter_plans",
+    )
 
+    save_dict(
+        data={c_name: evals.model_dump() for c_name, evals in plan_evals.items()},
+        path=Path(save_folder) / f"{today}_{sop_context.title}_plan_evals",
+    )
     # template = load_sop_template(q_f_type)
     # retrieve_plan = create_retrieval_plan()
 
@@ -225,7 +208,6 @@ def run_st_sop_generation(
     #     add_chapter_text(template,
     #                      chunk_sum,
     #                      chapter_idx)
-
 
 
 if __name__ == "__main__":
@@ -244,20 +226,19 @@ if __name__ == "__main__":
         if line.removeprefix("-").strip()
     ]
 
-
     sop_context = SOPGenContext(
         # query=rag_query,
         # save_folder="/workspaces/gmp_compliance/data/rag_queries",
         llm_context=LLMContext(
-                name_logger="",
-                name_logfile="",
-                path_tracker_file="",
-                # generation_model: str = "openai/gpt-5-mini"   # LiteLLM
-                # extraction_model: str = "openai:gpt-4o",
-                # model="gpt-4o",
-                temperature=1.0,
-                callbacks=[""]
-                ),
+            name_logger="",
+            name_logfile="",
+            path_tracker_file="",
+            # generation_model: str = "openai/gpt-5-mini"   # LiteLLM
+            # extraction_model: str = "openai:gpt-4o",
+            # model="gpt-4o",
+            temperature=1.0,
+            callbacks=[""],
+        ),
         work_mode="create",
         n_results=n_results,
         collection=rag_colls,
@@ -265,16 +246,15 @@ if __name__ == "__main__":
         topics=topic_list,
         transformer_model="intfloat/multilingual-e5-base",
         q_doc_type="SOP",
-        similarity_threshold=0.7
+        similarity_threshold=0.7,
     )
 
     # logger = create_logger(name=log_name, file_name=f"{today}_{name_logfile}")
 
     app_session.timestamp = datetime.today().strftime("%Y-%m-%d")
     app_session.logger = create_logger(
-                                name="SOP_Gen",
-                                file_name=f"{app_session.timestamp}_sop_gen"
-                                )
+        name="SOP_Gen", file_name=f"{app_session.timestamp}_sop_gen"
+    )
     run_st_sop_generation(sop_context)
 
     # with st.expander("Preview 'retrieved chunks'"):

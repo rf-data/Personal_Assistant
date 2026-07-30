@@ -4,7 +4,7 @@
 # import sys
 from returns.result import Failure, Result, Success
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.memory import ParseContext
 from src.model_classes_parsing.base_classes_parsing import DocumentExtract
 
@@ -46,7 +46,7 @@ def extract_notebook_json(
     logger = parse_context.logger
     logger.info("Starting extracting notebook from json-file")
 
-    input_data = env_variables.data_input
+    input_data = parsing_env_vars.data_input
     if input_data is None:
         logger.error("Folder 'input_data' is 'None'.")
         # sys.exit()

@@ -1,41 +1,39 @@
-
+from __future__ import annotations
 
 import imaplib
-import email
-from functools import wraps
+import re
 from contextlib import contextmanager
 
+# from getpass import getpass
+# from send_msg import send
+from datetime import datetime
+from email.utils import parsedate_to_datetime
 
+# from email.message import EmailMessage
+# import email
+from functools import wraps
+from typing import Any
 
-# Eingang (imaplib = Postfach lesen und verwalten)
-IMAP-Server: imap.gmx.net
-Port: 993
-Verschlüsselung: SSL/TLS
+from imapclient.imap_utf7 import decode as decode_imap_utf7
 
-# versand (smtplib = E-Mails versenden)
-Server: mail.gmx.net
-Port: 587			| 	 465
-Verschlüsselung: STARTTLS	| 	SSL/TLS
+from src.core.memory import app_session
 
 
 # @wraps        # contextlib
 def deco_mail_connection(func):
-    
+
     @wraps(func)
-    def wrapper(organizer, *argsm **kwargs): 
-	# port = 465   
-	# context = ssl.create_default_context()
-	# mail = smtplib.SMTP_SSL(organizer.email_server, port, context=context) 
-        mail = imaplib.IMAP4_SSL(organizer.email_server)         # "imap.gmail.com")
+    def wrapper(organizer, *args, **kwargs):
+        # port = 465
+        # context = ssl.create_default_context()
+        # mail = smtplib.SMTP_SSL(organizer.email_server, port, context=context)
+        mail = imaplib.IMAP4_SSL(organizer.email_server)  # "imap.gmail.com")
 
-	"""
-	create_default_context() from the ssl module	
-	"""
+        """
+        create_default_context() from the ssl module
+        """
 
-        mail.login(
-            organizer.email_address, 
-            organizer.email_pw
-            )
+        mail.login(organizer.email_address, organizer.email_pw)
         try:
             if app_session.logger:
                 app_session.logger.info(

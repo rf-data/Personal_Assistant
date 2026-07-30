@@ -16,7 +16,7 @@ import yaml
 from pydantic import BaseModel
 
 # import src.core.logger as log
-from src.core.config import GeneralSettings, RunSettings, env_variables
+from src.core.config import GeneralSettings, RunSettings, parsing_env_vars
 from src.core.memory import app_session
 
 # import hashlib
@@ -43,7 +43,7 @@ def get_yaml_config(name: str, model: GeneralSettings | RunSettings | None = Non
     # gh.load_env_vars()
     # logger = session.logger
 
-    config_folder = env_variables.config_dir
+    config_folder = parsing_env_vars.config_dir
 
     config_path = Path(config_folder) / f"{name}.yaml"
 
@@ -133,12 +133,25 @@ def save_dict(data: dict, path: Path) -> None:
 
 
 def append_json(data: dict, path: Path) -> None:
-    path = ensure_dir(path)
+    logger = app_session.logger
+
+    f_path = Path(f"{path}.json")
+    path = ensure_dir(f_path)
     data_new = make_json_safe(data)
 
     with path.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(data_new) + "\n")
-        print(f"Appending data on {shorten_path(path, 3)}")
+        try:
+            f.write(json.dumps(data_new) + "\n")
+            # print(f"Appending data on {shorten_path(path, 3)}")
+            logger.info("Appending data on json_file in %s", shorten_path(f_path, 3))
+
+        except TypeError as e:
+            logger.error(
+                "ERROR (non_serializable):\n%s\n\ndtype=%s\nrepr=%s",
+                e,
+                type(data_new),
+                repr(data_new),
+            )
 
 
 def load_dict(path: Path | str) -> dict:
@@ -167,7 +180,7 @@ def load_base_model_from_dict(path: Path | str, model_class: BaseModel):
 #     logger = session.logger
 
 #     #
-#     folder = env_variables("PATH_MODEL")
+#     folder = parsing_env_vars("PATH_MODEL")
 #     model_path = Path(f"{folder}({name}.joblib)")
 #     joblib.dump(model, model_path)
 
@@ -181,7 +194,7 @@ def load_base_model_from_dict(path: Path | str, model_class: BaseModel):
 #     logger = session.logger
 
 #     #
-#     folder = env_variables("PATH_MODEL")
+#     folder = parsing_env_vars("PATH_MODEL")
 #     model_path = Path(f"{folder}({name}.joblib)")
 #     model = joblib.load(model_path)
 

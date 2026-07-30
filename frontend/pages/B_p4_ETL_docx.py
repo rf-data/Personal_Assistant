@@ -6,7 +6,7 @@ from pathlib import Path
 import streamlit as st
 from docx import Document
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.memory import ParseContext, app_session
 from src.model_tools_parsing.base_assembler import BaseAssembler
 from src.model_tools_parsing.docx_extractor import DOCXCleanExtractor
@@ -16,8 +16,8 @@ from src.utils.streamlit_helper import st_file_preview
 
 # from src.tools_parsing.extract_docx import extract_docx
 
-data = env_variables.data_dir
-docx_data = env_variables.data_docx
+data = parsing_env_vars.data_dir
+docx_data = parsing_env_vars.data_docx
 
 folder_options = [
     f"{docx_data}/input",

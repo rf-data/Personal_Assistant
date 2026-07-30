@@ -15,7 +15,7 @@ from src.model_tools.text_classifier import TXTClassifier
 from src.model_tools.text_extractor import MDCleanExtractor, TXTCleanExtractor
 from tiktoken import encoding_for_model
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.core.logger import create_logger
 from src.core.memory import RunContext, app_session
 
@@ -115,8 +115,8 @@ def run_text_file_extraction(
     url: str | None = None,
 ) -> None:
     # load_env_vars()
-    data_raw = env_variables.data_raw
-    data_processed = env_variables.data_processed
+    data_raw = parsing_env_vars.data_raw
+    data_processed = parsing_env_vars.data_processed
 
     general_config = session_state.general_config
     run_config = session_state.run_config
@@ -349,7 +349,7 @@ if __name__ == "__main__":
 #     # load env variables and config
 #     gh.load_env_vars()
 #     data_processed = "/home/robfra/0_Portfolio_Projekte/gmp_compliance/data/processed"
-#     # env_variables("DATA_PROCESSED")
+#     # parsing_env_vars("DATA_PROCESSED")
 
 #     general_config = config.get("general_args", {})
 #     log_name = general_config["name_log"]
@@ -615,7 +615,7 @@ if __name__ == "__main__":
 
 # #         # timestamp = session.state.now
 # #         # f_name = Path(f_path).stem   # name.split(".")[0]
-# #         # data_processed = env_variables("DATA_PROCESSED")
+# #         # data_processed = parsing_env_vars("DATA_PROCESSED")
 
 # #         # chunk_folder = f"{data_processed}/chunk_df"
 # #         # chunk_file = f"{timestamp}_{f_name}_chunk_df"

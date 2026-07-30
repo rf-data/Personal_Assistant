@@ -9,7 +9,7 @@ from faster_whisper import WhisperModel
 from tqdm import tqdm
 from yt_dlp import YoutubeDL
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 from src.utils.dict_helper import save_dict
 
 # from src.utils.general_helper import load_env_vars
@@ -33,7 +33,7 @@ def download_audio(url: str, out_file: str):
 
 
 def get_audio_file(f_path: str = None, url: str = None) -> str:
-    data_dir = env_variables.data_dir
+    data_dir = parsing_env_vars.data_dir
 
     if f_path:
         return f_path
@@ -54,7 +54,7 @@ def transcribe_video(
     # load env variables and config
     # load_env_vars()
 
-    data_processed = env_variables.data_processed
+    data_processed = parsing_env_vars.data_processed
     save_folder = f"{data_processed}/Mathe-Vorkurs 2013"
 
     f_name = "JLoviscach_YT_001_Grundrech_0_Division"

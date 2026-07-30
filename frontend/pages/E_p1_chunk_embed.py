@@ -1,11 +1,11 @@
 ## E_p1_chunk_embed.py
 # imports
 
-from pathlib import Path
+# from pathlib import Path
 
 import streamlit as st
 
-from src.core.config import env_variables
+from src.core.config import parsing_env_vars
 
 # from src.utils.st_eda_helper import st_df_profile  # chunk_text, embed_text,
 # from src.utils.chroma_helper import get_chroma_client, list_files_in_coll
@@ -16,7 +16,7 @@ def show():
     st.header("🏠 Startseite ")
     st.subheader("**Chunk & Embed**")
 
-    data = env_variables.data_dir
+    data = parsing_env_vars.data_dir
 
     # data = Path(ensure_dir(data))
 

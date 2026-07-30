@@ -1,9 +1,6 @@
 # imports
 import hashlib
 import inspect
-from dataclasses import is_dataclass
-from pydantic import BaseModel
-from dotenv import load_dotenv, find_dotenv
 
 # import numpy as np
 import json
@@ -12,11 +9,15 @@ import json
 #                                            LLMAggregatedResult)
 import subprocess
 from collections.abc import Callable, Iterable
+from dataclasses import is_dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Literal
 
-from src.core.config import env_variables
+from dotenv import find_dotenv, load_dotenv
+from pydantic import BaseModel
+
+from src.core.config import parsing_env_vars
 from src.core.memory import app_session
 from src.utils.path_helper import ensure_dir  # , shorten_path
 
@@ -93,9 +94,9 @@ def snapshot_dependent_functions(
     return snapshot
 
 
-def make_doc_id(name: str,
-                mode: Literal["file_path", "headline"] = "file_path",
-                short: bool = True) -> str:
+def make_doc_id(
+    name: str, mode: Literal["file_path", "headline"] = "file_path", short: bool = True
+) -> str:
     if mode == "file_path":
         stem = Path(name).stem.lower().strip()
         doc_id = hashlib.sha256(stem.encode("utf-8")).hexdigest()
@@ -155,7 +156,7 @@ def make_cache_key(
 
 
 def save_to_cache(key: str, folder: str | Path, data: dict):
-    cache_dir = env_variables.cache_dir
+    cache_dir = parsing_env_vars.cache_dir
 
     # if isinstance(data, dict):
     data["created_at"] = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -173,12 +174,8 @@ def save_to_cache(key: str, folder: str | Path, data: dict):
     return
 
 
-def load_from_cache(
-                key: str,
-                folder: str | Path,
-                cls=None
-                ):
-    cache_dir = env_variables.cache_dir
+def load_from_cache(key: str, folder: str | Path, cls=None):
+    cache_dir = parsing_env_vars.cache_dir
 
     fn = Path(cache_dir) / folder / f"{key}.json"
     ensure_dir(fn)
@@ -199,20 +196,12 @@ def load_from_cache(
 
     if isinstance(data, list):
         if issubclass(cls, BaseModel):
-            return [
-                cls.model_validate(item)
-                for item in data
-            ]
+            return [cls.model_validate(item) for item in data]
 
         if is_dataclass(cls):
-            return [
-                cls(**item)
-                for item in data
-            ]
+            return [cls(**item) for item in data]
 
-        raise TypeError(
-            f"Cannot deserialize list items into {cls!r}"
-        )
+        raise TypeError(f"Cannot deserialize list items into {cls!r}")
 
     if isinstance(data, dict):
         if isinstance(cls, type) and issubclass(cls, BaseModel):
@@ -228,7 +217,6 @@ def load_from_cache(
     #     return cls(**data)
 
     return data
-
 
 
 def get_file_config(config_root: Any, file_type: str) -> Any:

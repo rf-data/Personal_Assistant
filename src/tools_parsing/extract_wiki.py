@@ -39,9 +39,9 @@ def extract_wiki_article(
     now = session_state.timestamp
 
     header = {
-        "User-Agent": env_variables.header_agent,
-        "Referer": env_variables.header_referer,
-        "Accept": env_variables.header_accept,
+        "User-Agent": parsing_env_vars.header_agent,
+        "Referer": parsing_env_vars.header_referer,
+        "Accept": parsing_env_vars.header_accept,
     }
 
     wiki = WikipediaClient(wiki_config=extract_config, header=header)
@@ -49,12 +49,12 @@ def extract_wiki_article(
     query_time = extract_config["query_time"]
     query = extract_config["query"]
 
-    data_wiki = env_variables.data_wiki
+    data_wiki = parsing_env_vars.data_wiki
     result_path = f"{data_wiki}/query/{query_time}_{query}_norm.json"
 
     result = load_dict(result_path)
 
-    # session_state.save_folder = env_variables("DATA_WIKI") # / "extract_raw"
+    # session_state.save_folder = parsing_env_vars("DATA_WIKI") # / "extract_raw"
 
     to_parse = extract_config.get("article_to_parse", [])
 
