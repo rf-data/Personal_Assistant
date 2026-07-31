@@ -9,7 +9,16 @@ from src.core.memory import app_session
 from src.utils.email_helper import context_imap_connection, fetch_unseen_mails
 
 
-def fetch_mails():
+def fetch_mails(
+            # mail_box: List[
+            #             Literal[], 
+            # mail_status: List[
+            #             Literal[
+            #                 "all",
+            #                 "unseen"
+            #                 ]
+            #                 ] = "unseen"
+               ):
 
     app_session.logger = create_logger(name="organizer", file_name="organizer")
 
@@ -32,111 +41,51 @@ def fetch_mails():
             len(email_ids),
         )
 
-        for email_id in email_ids:  # [:10]:
-            status, data = mail.fetch(
-                email_id,
-                "(BODY.PEEK[])",
-            )
-
-            if status != "OK":
-                app_session.logger.warning(
-                    "Could not fetch email ID %r.",
-                    email_id,
-                )
-                continue
-
-            raw_email = next(
-                (
-                    item[1]
-                    for item in data
-                    if isinstance(item, tuple) and isinstance(item[1], bytes)
-                ),
-                None,
-            )
-
-            if raw_email is None:
-                app_session.logger.warning(
-                    "No message content found for email ID %r.",
-                    email_id,
-                )
-                continue
-
-            message = BytesParser(policy=policy.default).parsebytes(raw_email)
-
-            subject = message.get("Subject", "(kein Betreff)")
-            sender = message.get("From", "(unbekannter Absender)")
-
-            print(f"{sender}: {subject}")
-            # print(f"Von: {item['sender']}")
-            # print(f"Betreff: {item['subject']}")
-            # print(f"Gesendet: {item['sent_at']}")
-            # print(f"Servereingang: {item['received_at']}")
-            # print("-" * 60)
-
-            print(item, "\n")
-        # if status != "OK":
-        #     raise RuntimeError("Could not select INBOX.")
-
-        # status, messages = mail.search(None, "UNSEEN")
-        # if status != "OK":
-        #     raise RuntimeError("Could not search mailbox for unseen mails.")
-
-        # email_ids = messages[0].split()
-
-        # app_session.logger.info(
-        #     "Found %s unread emails.",
-        #     len(email_ids),
+        # for email_id in email_ids:  # [:10]:
+        #     status, data = mail.fetch(
+        #         email_id,
+        #         "(BODY.PEEK[])",     # w/o changing status
         #     )
 
-        # for email_id in email_ids:
-        #     status, data = mail.fetch(email_id, "(BODY.PEEK[])")    # w/o changing status
-        #     # mail.fetch(email_id, "(RFC822)")      # changing status
-        #     if status != "OK" or not data:
+        #     if status != "OK"or not data:
         #         app_session.logger.warning(
         #             "Could not fetch email ID %s.",
         #             email_id.decode(errors="replace"),
         #         )
         #         continue
 
-        #     # raw_email = data[0][1]
         #     raw_email = next(
-        #                 (
-        #                 item[1]
-        #                 for item in data
-        #                 if isinstance(item, tuple)
-        #                 and isinstance(item[1], bytes)
-        #                 ),
-        #                 None
-        #                 )
+        #         (
+        #             item[1]
+        #             for item in data
+        #             if isinstance(item, tuple) 
+                       and isinstance(item[1], bytes)
+        #         ),
+        #         None,
+        #     )
 
         #     if raw_email is None:
         #         app_session.logger.warning(
-        #                 "No message content found for email ID %r.",
-        #                 email_id,
-        #                 )
+        #             "No message content found for email ID %r.",
+        #             email_id,
+        #         )
         #         continue
 
-        #     message = BytesParser(
-        #                     policy=policy.default
-        #                 ).parsebytes(raw_email)
+        #     message = BytesParser(policy=policy.default).parsebytes(raw_email)
 
         #     subject = message.get("Subject", "(kein Betreff)")
         #     sender = message.get("From", "(unbekannter Absender)")
         #     send_date = get_sent_datetime(message).strftime("%d.%m.%Y %H:%M:%S %z")
         #     receive_date = parse_internal_date()
 
-        #     # for item in emails:
-        #     print(f"Von: {item['sender']}")
-        #     print(f"Betreff: {item['subject']}")
-        #     print(f"Gesendet: {item['sent_at']}")
-        #     print(f"Servereingang: {item['received_at']}")
-        #     print("-" * 60)
-        #     # print(
-        #     f"{sender} (time: {date if date is not None else 'unknown'}):\n"
-        #     f"-> {subject}\n"
-        #     )
+        #     print(f"{sender}: {subject}")
+            # print(f"Von: {item['sender']}")
+            # print(f"Betreff: {item['subject']}")
+            # print(f"Gesendet: {item['sent_at']}")
+            # print(f"Servereingang: {item['received_at']}")
+            # print("-" * 60)
 
-    # return
+    return
 
 
 # folders = list_mailboxes(mail)
