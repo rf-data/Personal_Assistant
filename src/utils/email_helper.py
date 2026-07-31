@@ -24,7 +24,41 @@ from imapclient.imap_utf7 import decode as decode_imap_utf7
 from src.core.memory import app_session
 
 
+import imaplib
+from datetime import datetime
+
+
+from email import policy
+from email.parser import BytesParser
+from email.utils import parsedate_to_datetime
 import re
+from datetime import datetime
+
+import re
+
+
+
+@contextmanager
+def context_imap_connection(organizer):
+
+    mail = imaplib.IMAP4_SSL(organizer.email_server)
+
+    mail.login(
+        organizer.email_address,
+        organizer.email_pw,
+    )
+
+    if app_session.logger:
+        app_session.logger.info(
+            "Connected to IMAP server '%s' as '%s'.",
+            organizer.email_server,
+            organizer.email_address,
+        )
+    try:
+        yield mail
+
+    finally:
+        mail.logout()
 
 
 MAILBOX_PATTERN = re.compile(
@@ -69,14 +103,13 @@ def list_mailboxes(mail) -> list[dict[str, Any]]:
         if match is None:
             # Ungewöhnliche Serverantwort nicht stillschweigend verlieren
             mailboxes.append(
-                {
-                    "name": decoded,
-                    "flags": [],
-                    "delimiter": None,
-                    "raw": decoded,
-                    "raw_name": "n.a.",
-                }
-            )
+                    Mailbox(
+                        name=decoded,
+                        flags=[],
+                        delimiter=None,
+                        raw_name="n.a."
+                        )
+                    )
             continue
 
         flags_text = match.group("flags").strip()
@@ -93,32 +126,16 @@ def list_mailboxes(mail) -> list[dict[str, Any]]:
         name = decode_imap_utf7(raw_name.encode("ascii"))
 
         mailboxes.append(
-            {
-                "name": name,
-                "flags": flags,
-                "delimiter": delimiter,
-                "raw": decoded,
-                "raw_name": raw_name,
-            }
-        )
+                    Mailbox(
+                        name=name,
+                        flags=flags,
+                        delimiter=delimiter,
+                        raw_name=raw_name        # decoded,
+                        )
+                    )
 
     return mailboxes
 
-
-# def list_folders(mail) -> list[str]:
-#     status, mailboxes = mail.list()
-
-#     if status != "OK":
-#         raise RuntimeError("Could not retrieve mailbox list.")
-
-#     folders = []
-
-#     for mailbox in mailboxes:
-#         decoded = mailbox.decode("utf-8")
-#         folder = re.split(r' "/" ', decoded)[-1].strip('"')
-#         folders.append(folder)
-
-#     return folders
 
 SPECIAL_USE_FLAGS = {
     "\\Sent": "sent",
@@ -130,7 +147,6 @@ SPECIAL_USE_FLAGS = {
     "\\Flagged": "flagged",
     "\\Important": "important",
 }
-
 
 def detect_mailbox_type(flags: list[str]) -> str | None:
     for flag in flags:
@@ -153,19 +169,7 @@ def get_sent_datetime(message) -> datetime | None:
         return None
 
 
-import imaplib
-from datetime import datetime
-
-
-from email import policy
-from email.parser import BytesParser
-from email.utils import parsedate_to_datetime
-import re
-from datetime import datetime
-
-
 INTERNAL_DATE_PATTERN = re.compile(rb'INTERNALDATE "([^"]+)"')
-
 
 def parse_internal_date(fetch_metadata: bytes) -> datetime | None:
     match = INTERNAL_DATE_PATTERN.search(fetch_metadata)
@@ -188,15 +192,25 @@ def fetch_unseen_mails(mail) -> list[dict]:
     if status != "OK":
         raise RuntimeError("Could not search for unseen emails.")
 
+    email_ids = messages[0].split()
+        app_session.logger.info(
+            "Found %s unread emails.",
+            len(email_ids),
+        )
+
     results = []
 
-    for email_id in messages[0].split():
+    for email_id in email_ids:
         status, data = mail.fetch(
             email_id,
             "(INTERNALDATE BODY.PEEK[])",
         )
 
-        if status != "OK":
+        if status != "OK" or not data:
+            app_session.logger.warning(
+                    "Could not fetch email ID %s.",
+                    email_id.decode(errors="replace"),
+                )
             continue
 
         metadata = None
@@ -213,6 +227,10 @@ def fetch_unseen_mails(mail) -> list[dict]:
                 raw_email = item[1]
 
         if raw_email is None:
+            app_session.logger.warning(
+                    "No message content found for email ID %r.",
+                    email_id,
+                )
             continue
 
         message = BytesParser(policy=policy.default).parsebytes(raw_email)
@@ -220,27 +238,29 @@ def fetch_unseen_mails(mail) -> list[dict]:
         date_header = message.get("Date")
 
         try:
-            sent_at = parsedate_to_datetime(date_header) if date_header else None
+            sent_date = parsedate_to_datetime(date_header) if date_header else None
         except (TypeError, ValueError, OverflowError):
-            sent_at = None
+            sent_date = None
 
-        received_at = parse_internal_date(metadata) if metadata is not None else None
+        received_date = parse_internal_date(metadata) if metadata is not None else None
 
         results.append(
-            {
-                "imap_id": email_id.decode(),
+            EmailMessage(
+                uid="",
+                message_id="",        # email_id.decode(),
                 "subject": message.get(
                     "Subject",
                     "(kein Betreff)",
-                ),
-                "sender": message.get(
+                    ),
+                sender_name="",
+                sender_email = message.get(
                     "From",
-                    "(unbekannter Absender)",
-                ),
-                "sent_at": sent_at,
-                "received_at": received_at,
-                "message": message,
-            }
+                    "(unbekannter Absender)"
+                    ),
+                sent_at=sent_date,
+                received_at=received_date,
+                body_plain=message,
+                body_html=""
         )
 
     return results
@@ -406,27 +426,6 @@ def deco_mail_connection(func):
 #         	yield smtp
 
 
-@contextmanager
-def context_imap_connection(organizer):
-
-    mail = imaplib.IMAP4_SSL(organizer.email_server)
-
-    mail.login(
-        organizer.email_address,
-        organizer.email_pw,
-    )
-
-    if app_session.logger:
-        app_session.logger.info(
-            "Connected to IMAP server '%s' as '%s'.",
-            organizer.email_server,
-            organizer.email_address,
-        )
-    try:
-        yield mail
-
-    finally:
-        mail.logout()
 
         if app_session.logger:
             app_session.logger.info("IMAP connection closed.")
