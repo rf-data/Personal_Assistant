@@ -119,53 +119,63 @@ def show():
     """
 
     with st.expander("**Mail boxes**"):
-        # list mail box folders
-        hi = ""
+        with context_imap_connection(organizer) as mail:
+            # list mail box folders
+            boxes = list_mailboxes(mail)
 
-        mail_box = st.pills(label="", option=[])
+            for box in boxes:
+                box = get_mailbox_status(mail, box)
+
+                st.write(
+                    f"**Name mailbox:**\t{box.name}"
+                    f"**Total emails:** \t{box.total_messages}"
+                    f"**Unseen emails:** \t{box.unread_messages}"
+                    )
+
+        # mail_box = st.pills(label="", option=[])
 
     # step 2
-    # with st.expander("")
-    emails = [
-        (f"Mail {idx}", mail) for idx, mail in enumerate(emails)
-    ]  # all (new) mails
-    for idx, mail in emails:
-        # import email
-        raw_mail = ""
-        message = email.message_from_string(raw_mail)
-        st.write(
-            f"{idx}:\nSubject: {message['Subject']} \nFrom: {message['From']}"
-        )  # header
+    # with st.expander(""):
+    # emails = [
+    #     (f"Mail {idx}", mail) for idx, mail in enumerate(emails)
+    # ]  # all (new) mails
+    # for idx, mail in emails:
+    #     # import email
+    #     raw_mail = ""
+    #     message = email.message_from_string(raw_mail)
+    #     st.write(
+    #         f"{idx}:\nSubject: {message['Subject']} \nFrom: {message['From']}"
+    #     )  # header
 
-        # mail.select("inbox")
+    #     # mail.select("inbox")
 
-    email_to_respond = st.text_input(
-        "List emails (as 'Mail idx', sep=", ") for whom AI should prepare a response. "
-    ).split(", ")
-    with context_imap_connection(organizer) as mail:
-        boxes_all = list_mailboxes(mail)
+    # email_to_respond = st.text_input(
+    #     "List emails (as 'Mail idx', sep=", ") for whom AI should prepare a response. "
+    # ).split(", ")
+    # with context_imap_connection(organizer) as mail:
+    #     boxes_all = list_mailboxes(mail)
 
-        status, _ = mail.select("INBOX", readonly=True)
-        if status != "OK":
-            raise RuntimeError("Could not select INBOX.")
+    #     status, _ = mail.select("INBOX", readonly=True)
+    #     if status != "OK":
+    #         raise RuntimeError("Could not select INBOX.")
 
-        new_mails = fetch_unseen_mails(mail)
+    #     new_mails = fetch_unseen_mails(mail)
 
-        st.json(boxes_all)
+    #     st.json(boxes_all)
 
-        st.divider()
-        # for box in boxes_all:
+    #     st.divider()
+    #     # for box in boxes_all:
 
-        # box_to_see = st.selectbox(
-        #             label="",
-        #             options=[b["name"] for b in boxes_all],
-        #             # default=None
-        #             )
+    #     # box_to_see = st.selectbox(
+    #     #             label="",
+    #     #             options=[b["name"] for b in boxes_all],
+    #     #             # default=None
+    #     #             )
 
-    with st.expander("**Unseen Emails**"):
-        # st.markdown("**Under Construction**")
+    # with st.expander("**Unseen Emails**"):
+    #     # st.markdown("**Under Construction**")
 
-        st.json(new_mails[0])
+    #     st.json(new_mails[0])
 
 
 """
