@@ -11,6 +11,9 @@ from imapclient.imap_utf7 import decode as decode_imap_utf7
 # from send_msg import send
 from email import policy
 from email.parser import BytesParser
+from email.utils import parseaddr
+from email.message import EmailMessage as ParsedEmailMessage
+
 from datetime import datetime
 from email.utils import parsedate_to_datetime
 
@@ -36,11 +39,6 @@ from datetime import datetime
 
 import re
 
-
-
-###################
-# Links extrahieren
-####################
 
 @contextmanager
 def context_imap_connection(organizer):
@@ -316,8 +314,6 @@ def search_mail_uids(
         for uid in messages[0].split()
         ]
 
-from email.utils import parseaddr
-from email.message import EmailMessage as ParsedEmailMessage
 
 def parse_sender(message) -> tuple[str | None, str | None]:
     sender_header = message.get("From", "")
@@ -385,7 +381,72 @@ def extract_bodies(
     )
 
     return body_plain, body_html
+
+
+def is_allowed_url(url: str) -> bool:
+    parsed = urlparse(url)
+
+    return parsed.scheme in {"http", "https"}
+
+
+def extract_html_links(
+    html: str | None,
+) -> list[str]:
+    if not html:
+        return []
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    return list(
+        dict.fromkeys(
+            link
+            for tag in soup.find_all("a", href=True)
+            if (
+                link and is_allowed_url(link) := tag.get("href")
+            )
+        )
+    )
+
+
+URL_PATTERN = re.compile(
+    r"https?://[^\s<>\"]+",
+    flags=re.IGNORECASE,
+)
+
+
+def extract_plain_links(
+    text: str | None,
+) -> list[str]:
+    if not text:
+        return []
+
+    return list(
+        dict.fromkeys(
+            match.rstrip(".,);]")
+            for match in URL_PATTERN.findall(text)
+        )
+    )
     
+
+def extract_links(
+            message: EmailMessage,
+            ) -> list[str]:
+
+    links_plain = [
+            *extract_plain_links(message.body_plain),
+            ]
+
+    if links_plain:
+        message.links_plain = list(dict.fromkeys(links_plain))  
+
+        for link in links_plain:         
+            app_session.logger()
+    else: 
+        message.links_plain = []
+    message.links_html = list(dict.fromkeys(links_html)) if links_html else []          
+   
+    return message
+
 
 def fetch_mails_from_mailbox(
     mail: imaplib.IMAP4_SSL,
@@ -496,7 +557,7 @@ def fetch_mails_from_mailbox(
                     "(kein Betreff)",
                     ),
                 sender_name=sender_name,
-                sender_email = sender_email
+                sender_email = sender_email,
                 # message.get(
                 #     "From",
                 #     "(unbekannter Absender)"
