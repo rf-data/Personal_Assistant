@@ -21,6 +21,9 @@ class Mailbox(BaseModel):
     total_messages: int | None = None
     unread_messages: int | None = None
 
+    # uid_validity: int | None = None
+    # uid_next: int | None = None
+    
 
 class EmailMessage(BaseModel):
     uid: int  # str
