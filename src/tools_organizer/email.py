@@ -7,7 +7,7 @@
 # from src.core.logger import create_logger
 # from src.core.memory import app_session
 # from src.utils.email_helper import (
-#                         context_imap_connection, 
+#                         context_imap_connection,
 #                         fetch_unseen_mails,
 #                         get_sent_datetime,
 #                         parse_internal_date
@@ -16,7 +16,7 @@
 
 # def check_mailbox(
 #             # mail_box: List[
-#             #             Literal[], 
+#             #             Literal[],
 #             # mail_status: List[
 #             #             Literal[
 #             #                 "all",
@@ -68,7 +68,7 @@
 #         #         (
 #         #             item[1]
 #         #             for item in data
-#         #             if isinstance(item, tuple) 
+#         #             if isinstance(item, tuple)
 #         #             and isinstance(item[1], bytes)
 #         #         ),
 #         #         None,

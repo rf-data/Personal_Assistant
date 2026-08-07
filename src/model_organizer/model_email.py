@@ -23,7 +23,7 @@ class Mailbox(BaseModel):
 
     # uid_validity: int | None = None
     # uid_next: int | None = None
-    
+
 
 class EmailMessage(BaseModel):
     uid: int  # str

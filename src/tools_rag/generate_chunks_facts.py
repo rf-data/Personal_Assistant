@@ -9,7 +9,10 @@ import marvin
 import numpy as np
 from pydantic_ai import Agent
 
-from src.core.config import parsing_env_vars
+from src.core.config import (
+    # parsing_env_vars,
+    agentic_env_vars,
+)
 from src.core.memory import SOPGenContext, app_session
 from src.model_rag.classes_chunk_fact import (
     # MergedFact,
@@ -85,7 +88,7 @@ def configure_marvin(
     # model: str = "openai:gpt-4o-mini",
 ) -> None:
 
-    api_key = parsing_env_vars.openai_api_key
+    api_key = agentic_env_vars.openai_api_key
 
     if not api_key:
         raise ValueError("OPENAI_API_KEY not found in environment.")

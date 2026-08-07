@@ -325,7 +325,7 @@ def has_file_handler(logger, log_path):
 #         detect(line)
 
     ###########################
-        
+
 """
     # --- stdout handler (always) ---
     stream_handler = logging.StreamHandler(sys.stdout)
@@ -333,10 +333,10 @@ def has_file_handler(logger, log_path):
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
 
-    
+
 
     if file_name:
-        
+
         # check if file handler already exists
         if not has_file_handler(logger, log_file):
             file_handler = logging.FileHandler(log_file, mode="a", encoding="utf-8")

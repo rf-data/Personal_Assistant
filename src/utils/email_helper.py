@@ -188,7 +188,7 @@ def parse_internal_date(fetch_metadata: bytes) -> datetime | None:
         return None
 
 
-def get_mailbox_status(mail, mailbox: Mailbox):  
+def get_mailbox_status(mail, mailbox: Mailbox):
     # status, messages = mail.search(mailbox)
     status, data = mail.select(mailbox.name, readonly=True)
 
@@ -204,14 +204,14 @@ def get_mailbox_status(mail, mailbox: Mailbox):
         raise RuntimeError(
             "Could not search unread mails."
         )
-        
+
     app_session.logger.info(
                 "Found %s total and %s unseen emails",
                 mailbox.total_messages,
                 mailbox.unread_messages
             )
-    return mailbox 
-    
+    return mailbox
+
 def filter_mails(
     mails: Iterable[EmailMessage],
     keyword: str,
@@ -279,10 +279,10 @@ def filter_mails(
 # )
 
 def search_mail_uids(
-            mail: imaplib.IMAP4_SSL, 
+            mail: imaplib.IMAP4_SSL,
             mailbox: Mailbox,
             criteria: tuple[str, ...] = ("UNSEEN",)
-    ) -> list[str]
+    ) -> list[str]:
 
     status, _ = mail.select(
         mailbox.raw_name,
@@ -299,7 +299,7 @@ def search_mail_uids(
         None,
         *criteria,
         )
-        
+
     if status != "OK":
         raise RuntimeError(
             f"Could not search mailbox {mailbox.name!r} "
@@ -426,7 +426,7 @@ def extract_plain_links(
             for match in URL_PATTERN.findall(text)
         )
     )
-    
+
 
 def extract_links(
             message: EmailMessage,
@@ -437,14 +437,14 @@ def extract_links(
             ]
 
     if links_plain:
-        message.links_plain = list(dict.fromkeys(links_plain))  
+        message.links_plain = list(dict.fromkeys(links_plain))
 
-        for link in links_plain:         
+        for link in links_plain:
             app_session.logger()
-    else: 
+    else:
         message.links_plain = []
-    message.links_html = list(dict.fromkeys(links_html)) if links_html else []          
-   
+    message.links_html = list(dict.fromkeys(links_html)) if links_html else []
+
     return message
 
 
@@ -453,7 +453,7 @@ def fetch_mails_from_mailbox(
     mailbox: Mailbox,
     criteria: tuple[str, ...] = ("UNSEEN",),
     ) -> list[EmailMessage]:
-    
+
    uids = search_mail_uids(
         mail,
         mailbox,
@@ -468,14 +468,14 @@ def fetch_mails_from_mailbox(
             uid,
             "(INTERNALDATE FLAGS BODY.PEEK[])",
         )
-        
+
         if status != "OK" or not data:
             app_session.logger.warning(
                 "Could not fetch email UID %s.",
                 uid,
             )
             continue
-        
+
     if status != "OK":
         raise RuntimeError("Could not search for unseen emails.")
 
@@ -547,7 +547,7 @@ def fetch_mails_from_mailbox(
         )
 
         message_id = parsed_message.get("Message-ID")
-        
+
         results.append(
             EmailMessage(
                 uid=int(uid),

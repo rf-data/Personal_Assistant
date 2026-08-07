@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-from src.utils.eda_helper import (
+from _prototypes.utils.eda_helper import (
     compile_eda_summary,
     describe_features_stats,
 )

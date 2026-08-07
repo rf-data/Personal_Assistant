@@ -10,26 +10,18 @@ from src.tools_parsing.extract_pdf import extract_pdf_file
 from src.tools_parsing.post_extract_processing_pdf import post_process_pdf
 from src.utils.path_helper import move_file, shorten_path
 
-# from src.core.memory import app
-
 
 def run_pdf_extraction(parse_context):
     pdf_data = parsing_env_vars.data_pdf
 
     raw_data = f"{pdf_data}/raw"
 
-    feat_enricher = FeatureEnricher(
-        parse_context=parse_context,
-        # encoder=app_session.encoder
-    )
+    feat_enricher = FeatureEnricher(parse_context=parse_context)
 
     pdf_extractor = PDFCleanExtractor(
         parse_context=parse_context, enricher=feat_enricher
     )
 
-    # pdf_assembler = BaseAssembler(run_context=run_context)
-
-    # html_extract =
     md_file = (
         extract_pdf_file(extractor=pdf_extractor, parse_context=parse_context)
         .bind(post_process_pdf)
@@ -47,3 +39,7 @@ def run_pdf_extraction(parse_context):
     )
 
     return md_file
+
+
+# if __name__ == "__main__":
+#     run_pdf_extraction

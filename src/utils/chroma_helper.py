@@ -15,37 +15,6 @@ from chromadb.api.models.Collection import Collection
 from src.core.config import parsing_env_vars
 from src.core.memory import SOPGenContext, app_session
 
-# from fastapi import Depends
-
-# load_dotenv()
-
-# _client: ClientAPI | None = None
-# _collection: Collection | None = None
-
-# def get_chroma_client() -> ClientAPI:
-# 	global _client
-# 	if _client is None:
-# 		_client = chromadb.PersistentClient(
-#           # chromadb.CloudClient(
-#             api_key=parsing_env_vars("CHROMA_API_KEY"),
-#             tenant=parsing_env_vars("CHROMA_TENANT"),
-#             database=parsing_env_vars("CHROMA_DATABASE")
-#         )
-# 	return _client
-# VARIANTE A (LOKAL)
-
-"""
-collection.modify(
-    name = "new_name",
-    metadata="{}
-    )
-
-client.delete_collection(name="")
-
-collection.count() --> returns number of records
-collection.peek() --> returns first 10 records
-"""
-
 
 def get_chroma_client() -> ClientAPI:
     # global _client
@@ -80,39 +49,6 @@ def get_chroma_collection(
     )
 
     return chroma_coll
-
-
-# def get_chroma_collection(client: ClientAPI = Depends(get_chroma_client)) -> Collection:
-# 	global _collection
-# 	if _collection is None:
-# 		_collection = client.get_or_create_collection(
-# 		    name="my_collection",
-# 		)
-# 	return _collection
-
-
-# def _create_metadata(data):
-
-#     heading_context = data["heading_context"].tolist()
-
-#     metadata = {
-#             "doc_id": data["doc_id"],
-#             "container_id": data["container_id"],
-#             "chunk_id": data["chunk_id"],
-#             "doc_name": data["f_name"],
-#             # "page": 1,
-#             "chapter": heading_context[0],
-#             "section": heading_context[-1],
-#             # "document_group": "guideline",
-#         }
-
-#     return metadata
-
-# for col in data.columns:
-
-
-#
-# return
 
 
 def list_files_in_coll(coll: Collection) -> tuple[set, int, set]:
@@ -183,6 +119,70 @@ def add_chroma_data(
     )
 
     return
+
+
+# def get_chroma_collection(client: ClientAPI = Depends(get_chroma_client)) -> Collection:
+# 	global _collection
+# 	if _collection is None:
+# 		_collection = client.get_or_create_collection(
+# 		    name="my_collection",
+# 		)
+# 	return _collection
+
+
+# def _create_metadata(data):
+
+#     heading_context = data["heading_context"].tolist()
+
+#     metadata = {
+#             "doc_id": data["doc_id"],
+#             "container_id": data["container_id"],
+#             "chunk_id": data["chunk_id"],
+#             "doc_name": data["f_name"],
+#             # "page": 1,
+#             "chapter": heading_context[0],
+#             "section": heading_context[-1],
+#             # "document_group": "guideline",
+#         }
+
+#     return metadata
+
+# for col in data.columns:
+
+
+#
+# return
+
+# from fastapi import Depends
+
+# load_dotenv()
+
+# _client: ClientAPI | None = None
+# _collection: Collection | None = None
+
+# def get_chroma_client() -> ClientAPI:
+# 	global _client
+# 	if _client is None:
+# 		_client = chromadb.PersistentClient(
+#           # chromadb.CloudClient(
+#             api_key=parsing_env_vars("CHROMA_API_KEY"),
+#             tenant=parsing_env_vars("CHROMA_TENANT"),
+#             database=parsing_env_vars("CHROMA_DATABASE")
+#         )
+# 	return _client
+# VARIANTE A (LOKAL)
+
+"""
+collection.modify(
+    name = "new_name",
+    metadata="{}
+    )
+
+client.delete_collection(name="")
+
+collection.count() --> returns number of records
+collection.peek() --> returns first 10 records
+"""
 
 
 # collection.upsert()       -> update + insert data

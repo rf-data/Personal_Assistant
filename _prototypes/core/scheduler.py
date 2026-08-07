@@ -28,11 +28,11 @@ def daily_report():
     except Exception as e:
         duration = time.perf_counter() - start
         logger.error(f"daily_report: failed after {duration:.1f}s — {e}", exc_info=True)
-        raise 
-"""    
+        raise
+"""
 ############################################################################
-       
-                  
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     setup_scheduler()
@@ -43,31 +43,32 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 # import logging
 
-# 
+#
 if app_session.logger.session is None:
-  hio = "" # create_logger(name="", logname="")
+    hio = ""  # create_logger(name="", logname="")
 else:
-  logger = app_session.logger
+    logger = app_session.logger
 
 # Persistent job store — jobs survive restarts
 # jobstores = {
 #     'default': SQLAlchemyJobStore(url='postgresql://user:pass@localhost/mydb')
 # }
 
-scheduler = AsyncIOScheduler(jobstores=jobstores, timezone='UTC')
+scheduler = AsyncIOScheduler(jobstores=jobstores, timezone="UTC")
+
 
 def setup_scheduler():
     """Register all scheduled jobs."""
 
     scheduler.add_job(
         retrieve_mails,
-        trigger=IntervalTrigger(minutes=30)
-      # =CronTrigger(hour=8, minute=0),
-        id='retrieve_mails',
+        trigger=IntervalTrigger(minutes=30),
+        # =CronTrigger(hour=8, minute=0),
+        id="retrieve_mails",
         replace_existing=True,
         misfire_grace_time=3600,  # Run if missed within 1 hour
     )
-    '''
+    """
     scheduler.add_job(
         warm_cache,
         trigger=IntervalTrigger(minutes=30),
@@ -81,12 +82,13 @@ def setup_scheduler():
         id='weekly_cleanup',
         replace_existing=True,
     )
-    '''
+    """
 
     scheduler.start()
     logger.info("Scheduler started with %d jobs", len(scheduler.get_jobs()))
 
-'''
+
+"""
 async def retrieve_mails():
     logger.info("Retrieving mails...")
     # Your retrieve logic here
@@ -100,12 +102,13 @@ async def warm_cache():
 async def cleanup_expired_data():
     logger.info("Running weekly cleanup...")
     # Your cleanup logic here
-'''
+"""
 
 
-############################# 
+#############################
 # create / delete reminder
 #############################
+
 
 @app.post("/api/reminders")
 def create_reminder(data: ReminderCreate, user: User = Depends(get_current_user)):
@@ -125,6 +128,7 @@ def create_reminder(data: ReminderCreate, user: User = Depends(get_current_user)
     )
 
     return {"job_id": job_id, "schedule": data.schedule_description}
+
 
 @app.delete("/api/reminders/{reminder_id}")
 def delete_reminder(reminder_id: str, user: User = Depends(get_current_user)):
