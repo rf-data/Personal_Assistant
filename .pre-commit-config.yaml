@@ -75,7 +75,6 @@ repos:
     hooks:
       - id: pytest-fast
         name: Fast unit tests
-        files: '^_prototype'
         entry: uv run pytest -q -m "not integration"
         language: system
         pass_filenames: false
@@ -96,7 +95,6 @@ repos:
         pass_filenames: false
         always_run: true
         stages: [manual]
-        files: '^_prototype'
 
       # - id: mypy
       #   name: Mypy type check
