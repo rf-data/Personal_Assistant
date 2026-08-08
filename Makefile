@@ -38,8 +38,8 @@ LOG_DIR := $(ROOT)/logs
 # type_check:
 # 	uv run mypy src/
 
-ai_code_review:
-	uv run pre-commit run ai-review --hook-stage manual
+# ai_code_review:
+# 	uv run pre-commit run ai-review --hook-stage manual
 
 
 clean_linux:
@@ -50,11 +50,11 @@ dependency_check:
 	uv run python src/run_dependency_check.py
 
 
-litellm_start:
-	uv run litellm \
-		--config \
-		/workspaces/gmp_compliance/configuration/litellm_config.yaml
-	# --detailed_debug
+# litellm_start:
+# 	uv run litellm \
+# 		--config \
+# 		/workspaces/gmp_compliance/configuration/litellm_config.yaml
+# 	# --detailed_debug
 
 
 mlflow_fingerprint:

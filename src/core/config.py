@@ -94,11 +94,9 @@ class MLOpsEnvVars(BaseSettings):
 mlops_env_vars = MLOpsEnvVars()
 
 
-
 # from pydantic import BaseModel, model_validator, field_validator, Field
 # from typing import Optional
 # from datetime import date
-
 
 
 class OrganizerEnvVars(BaseSettings):
