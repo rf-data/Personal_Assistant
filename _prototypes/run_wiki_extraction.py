@@ -1,63 +1,19 @@
 ## run_wiki_extraction.py
 # import
-#
-# import sys
-# from typing import List
-# from pathlib import Path
 from datetime import datetime
 
-# from src.core.text_extractor import TXTCleanExtractor, MDCleanExtractor
-# from src.core.pdf_extractor import PDFCleanExtractor
-# from src.core.html_extractor import HTMLCleanExtractor
-# from src.core.notebook_extractor import NoteBookCleanExtractor
-# from src.core.text_classifier import TXTClassifier
-# from src.core.feature_enricher import FeatureEnricher
-# from src.core.base_assembler import BaseAssembler
-# from src.tools.build_structure import build_structure_from_lines
-# # from src.tools.extraction import  extraction_per_page
-from src.model_tools.feature_enricher import FeatureEnricher
-
-# from tiktoken import encoding_for_model
-# from src.core.memory import session_state
 from src.core.logger import create_logger
-
-# # from gmp_compliance.src.core._dev_block_classifier import BlockClassifier
-# from src.core.text_cleaner import TextCleaner
-# # from src.core.tbl_col_detector import TableColumnDetector
-# from src.core.document_classifier import DocumentClassifier
-# from src.core.text_merger import TextMerger
-# # text_clean_extractor import TextCleanExtractor
+from src.model_tools_parsing.feature_enricher import FeatureEnricher
 from src.tools_parsing.extract_wiki import extract_wiki_article
 from src.tools_parsing.post_extract_processing_wiki import process_wiki
-
-# from src.tools.extract_html import extract_html_file
-# from src.tools.extract_pdf import extract_pdf_file
-# from src.tools.post_extract_processing_pdf import process_pdf
-# from src.tools.assemble_pdf import assemble_single_pdf
-# from src.tools.extract_notebook import extract_notebook_json
-# from src.tools.classify_txt import classify_txt_file
-# from src.utils.general_helper import load_env_vars
-# from src.utils.path_helper import shorten_path
 from src.utils.dict_helper import get_yaml_config
 
-# from src.utils.text_file_helper import save_text_file
-# from src.utils.html_helper import scrape_source_code
-# # from src.utils.extract_pdf_helper import extract_info_and_grafics
+
 
 # ------------------
 # MAIN FUNCTION
 # ------------------
 
-
-# def wiki_extraction():
-
-
-#     return run_wiki_extraction(
-#                             query,
-#                             query_time,
-#                             config,
-#                             save=True
-#                             )
 
 
 def run_wiki_extraction(query, query_time, config, save=False):
@@ -66,7 +22,7 @@ def run_wiki_extraction(query, query_time, config, save=False):
 
     # config_name = input("Enter 'config_file' name (no suffix): ")
     config = get_yaml_config("wiki_requests")
-    session.model_config = config
+    app_session.model_config = config
 
     general_config = config.get("general_args", {})
     # page_ids = general_config.get("file_name", {})

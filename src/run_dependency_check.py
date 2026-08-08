@@ -10,6 +10,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from src.core.memory import app_session
+from src.core.logger import create_logger
+
 
 def run_pip_audit(
     report_dir: Path,
@@ -44,7 +47,7 @@ def run_pip_audit(
     ]
 
     if app_session.logger is None:
-        logger = create_logger()
+        logger = create_logger(name="DependCheck", file_level="dependency_check")
 
     else:
         logger = app_session.logger
@@ -64,14 +67,14 @@ def run_pip_audit(
         logger.error(
             "[ERROR] 'uv' was not found. "
             "Install uv or run the script inside the project environment.\n\n%s",
-            file=sys.stderr,
+            sys.stderr,
         )
         return 2
     except subprocess.TimeoutExpired:
-        logger.erro(
+        logger.error(
             "[ERROR] pip-audit exceeded the timeout of %s seconds.\n\n%s",
             timeout,
-            file=sys.stderr,
+            sys.stderr,
         )
         return 2
 
@@ -82,35 +85,36 @@ def run_pip_audit(
     if result.returncode not in {0, 1}:
         logger.error(
             "[ERROR] pip-audit failed to execute correctly.\n\n%s",
-            file=sys.stderr,
+            sys.stderr,
         )
 
         if result.stderr:
-            logger.error("\nError: \n%s\n\n%s", result.stderr.strip(), file=sys.stderr)
+            logger.error("\nError: \n%s\n\n%s", result.stderr.strip(), sys.stderr)
 
         return 2
 
     if not result.stdout.strip():
         logger.error(
             "[ERROR] pip-audit returned no JSON output.\n\n%s",
-            file=sys.stderr,
+            sys.stderr,
         )
         return 2
 
     try:
         report = json.loads(result.stdout)
+
     except json.JSONDecodeError as exc:
         logger.error(
             "[ERROR] Invalid JSON returned by pip-audit: %s\n\n%s",
             exc,
-            file=sys.stderr,
+            sys.stderr,
         )
 
         # Save raw output for diagnosis without claiming the audit was clean.
         raw_path = report_dir / f"{timestamp}_pip_audit_invalid_output.txt"
         raw_path.write_text(result.stdout, encoding="utf-8")
 
-        print(f"Raw output saved to: {raw_path}")
+        logger.info("Raw output saved to: %s", raw_path)
         return 2
 
     json_path.write_text(

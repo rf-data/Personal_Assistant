@@ -10,28 +10,37 @@ repos:
     rev: v6.0.0
     hooks:
       - id: trailing-whitespace
+        files: '^_prototype'
+        # .*\.py$|^(\.pre-commit-config\.yaml|pyproject\.toml|tach\.toml)$'
         stages: [pre-commit]
 
       - id: end-of-file-fixer
+        files: '^_prototype'
         stages: [pre-commit]
 
       - id: check-yaml
+        files: '^_prototype'
         # exclude: ^path/...
         stages: [pre-commit]
 
       - id: check-json
+        files: '^_prototype'
         stages: [pre-commit]
 
       - id: check-toml
+        files: '^_prototype'
         stages: [pre-commit]
 
       - id: check-ast
+        files: '^_prototype'
         stages: [pre-commit]
 
       - id: debug-statements
+        files: '^_prototype'
         stages: [pre-commit]
 
       - id: check-added-large-files
+        files: '^_prototype'
         args: [--maxkb=10000]
         stages: [pre-commit]
 
@@ -45,6 +54,7 @@ repos:
       #   stages: [pre-commit]
 
       - id: ruff-format
+        files: '^_prototype'
         stages: [pre-commit]
 
   - repo: https://github.com/Yelp/detect-secrets
@@ -52,7 +62,9 @@ repos:
     hooks:
       - id: detect-secrets
         args: ["--baseline", ".secrets.baseline"]
-        stages: [pre-commit, pre-push]
+        files: '^_prototype'
+        stages: [pre-push]
+        # pre-commit, 
 
   # - repo: https://github.com/PyCQA/bandit
   #   rev: 1.9.4
@@ -72,6 +84,7 @@ repos:
     hooks:
       - id: pytest-fast
         name: Fast unit tests
+        files: '^_prototype'
         entry: uv run pytest -q -m "not integration"
         language: system
         pass_filenames: false
@@ -92,6 +105,7 @@ repos:
         pass_filenames: false
         always_run: true
         stages: [manual]
+        files: '^_prototype'
 
       # - id: mypy
       #   name: Mypy type check

@@ -11,7 +11,7 @@ from tenacity import (
     wait_random_exponential,
 )
 
-from src.core.config import parsing_env_vars
+from src.core.config import parsing_env_vars, agentic_env_vars
 from src.core.logger import create_logger
 from src.core.memory import LLMContext, SOPGenContext, app_session
 from src.core.observability import configure_llm_observability
@@ -147,7 +147,7 @@ def run_st_sop_generation(
 
     # for chunk in chunks:
     # configure_langfuse(parsing_env_vars)
-    configure_llm_observability(parsing_env_vars)
+    configure_llm_observability(agentic_env_vars)
     configure_marvin(sop_context)
 
     chunks_facts = build_chunk_fact_pool(chunks, sop_context)

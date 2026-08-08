@@ -7,15 +7,15 @@ import litellm
 from pydantic_ai import Agent
 
 
-def configure_llm_observability(parsing_env_vars) -> None:
+def configure_llm_observability(env_vars) -> None:
     # Langfuse
-    os.environ["LANGFUSE_PUBLIC_KEY"] = parsing_env_vars.langfuse_public_key
-    os.environ["LANGFUSE_SECRET_KEY"] = parsing_env_vars.langfuse_secret_key
+    os.environ["LANGFUSE_PUBLIC_KEY"] = env_vars.langfuse_public_key
+    os.environ["LANGFUSE_SECRET_KEY"] = env_vars.langfuse_secret_key
 
     # Falls du Langfuse Cloud EU verwendest bzw.
     # einen eigenen Host konfiguriert hast:
-    if getattr(parsing_env_vars, "langfuse_host", None):
-        os.environ["LANGFUSE_HOST"] = parsing_env_vars.langfuse_host
+    if getattr(env_vars, "langfuse_host", None):
+        os.environ["LANGFUSE_HOST"] = env_vars.langfuse_host
 
     # LiteLLM
     litellm.success_callback = ["langfuse"]

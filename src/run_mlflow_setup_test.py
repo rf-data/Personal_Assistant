@@ -1,9 +1,7 @@
 ## run_mlflow_setup_test.py
-#
-# from mlflow.tracking import MlflowClient
+# import
 import mlflow
 
-# import src.utils.general_helper as gh
 from src.utils.mlflow_helper import create_mlflow_client, mlflow_fingerprint_check
 
 # configuration - initial setup

@@ -4,28 +4,13 @@
 import gc
 from datetime import datetime
 from pathlib import Path
-
 from tiktoken import encoding_for_model
 
-# (
-#                             document_json_to_blocks,
-#                             prepare_chunk_df
-#                             )
 from src.core.config import ChunkSettings, parsing_env_vars
 from src.core.logger import create_logger
-
-# from tiktoken import encoding_for_model
-# import numpy as np
-# import pandas as pd
-# import streamlit as st
 from src.core.memory import ParseContext, app_session
 from src.tools_rag.chunk import chunk_text
 from src.tools_rag.create_embeds import embed_text, load_chunks_to_chroma
-
-# from src.core.config import ParseSettings
-# from src.core.logger import create_logger
-# from src.utils.general_helper import make_doc_id, load_env_vars
-# from src.utils.dict_helper import load_dict, get_yaml_config
 from src.utils.df_helper import save_df_to_parquet
 from src.utils.path_helper import ensure_dir  # shorten_path,
 
@@ -67,15 +52,9 @@ def run_chunk_and_embed(
         df_chunk = chunk_text(f_path=str(f_path), parse_context=chunk_context)
 
         chunk_context.save_name = Path(f_path).stem
-        # chunk_context.save_folder = Path(f_path).parent
         save_name = chunk_context.save_name.replace("info", "chunked")
 
-        save_df_to_parquet(
-            df=df_chunk,
-            f_name=save_name,  # f"{}_chunked",
-            folder=Path(f_path).parent,
-            # parse_context.save_folder
-        )
+        save_df_to_parquet(df=df_chunk, f_name=save_name, folder=Path(f_path).parent)
 
         logger.info("Saved chunk_df as %s", f"{save_name}")
 
@@ -90,13 +69,13 @@ def run_chunk_and_embed(
 
         save_df_to_parquet(
             df=df_embed,
-            f_name=save_name,  # f"{}_chunked",
+            f_name=save_name,
             folder=chunk_context.save_folder,
         )
 
         load_chunks_to_chroma(
-            coll_name="QMS_apo_intfloat_multi_v1",  # : str,
-            data=df_embed,  # : pd.DataFrame | str,
+            coll_name="QMS_apo_intfloat_multi_v1",
+            data=df_embed,
             meta_data={
                 "embedding_model": chunk_context.chunk_settings.transformer_model,
                 "embedding_dim": len(df_embed["text_embed"].iloc[0]),
@@ -104,10 +83,8 @@ def run_chunk_and_embed(
             required_columns={
                 "chunk_text",
                 "chunk_global_id",
-                # "f_name",
                 "text_embed",
             },
-            # : dict = {}
         )
 
         del df_chunk
@@ -132,8 +109,6 @@ if __name__ == "__main__":
     data = parsing_env_vars.data_dir
 
     data = Path(ensure_dir(data))
-
-    # chunk_folder = context.folder
 
     folder = "pdf"
     folder_path = f"{data}/{folder}/processed"
