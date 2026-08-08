@@ -33,8 +33,11 @@ def show():
             for box in boxes:
                 box = get_mailbox_status(mail, box)
 
-                st.write(
-                    f"**Name mailbox:**\t{box.name}"
-                    f"**Total emails:** \t{box.total_messages}"
-                    f"**Unseen emails:** \t{box.unread_messages}"
-                )
+                box_info = {
+                    "**Name mailbox**": box.name,
+                    "**Total emails**": box.total_messages,
+                    "**Unseen emails**": box.unread_messages
+                    }
+
+                st.json(box_info)
+                st.write()

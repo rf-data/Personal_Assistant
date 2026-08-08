@@ -2,48 +2,34 @@
 # import
 from __future__ import annotations
 from collections.abc import Callable, Iterable
+from typing import Any
+from bs4 import BeautifulSoup as bs
 import imaplib
+from imapclient.imap_utf7 import decode as decode_imap_utf7
+from datetime import datetime
 import re
 from contextlib import contextmanager
-from imapclient.imap_utf7 import decode as decode_imap_utf7
 
 # from getpass import getpass
 # from send_msg import send
 from email import policy
 from email.parser import BytesParser
-from email.utils import parseaddr
+from email.utils import parseaddr, parsedate_to_datetime
 from email.message import EmailMessage as ParsedEmailMessage
-
-from datetime import datetime
-from email.utils import parsedate_to_datetime
-
 # from email.message import EmailMessage
-# import email
-from functools import wraps
-from typing import Any
-
-from imapclient.imap_utf7 import decode as decode_imap_utf7
+# from functools import wraps
 
 from src.core.memory import app_session
-
-
-import imaplib
-from datetime import datetime
-
-
-from email import policy
-from email.parser import BytesParser
-from email.utils import parsedate_to_datetime
-import re
-from datetime import datetime
-
-import re
+from src.model_organizer.model_email import (
+                                        Mailbox,
+                                        EmailMessage
+                                             )
 
 
 @contextmanager
 def context_imap_connection(organizer):
 
-    mail = imaplib.IMAP4_SSL(organizer.email_server)
+    mail = imaplib.IMAP4_SSL(organizer.imap_server)
 
     mail.login(
         organizer.email_address,
@@ -53,7 +39,7 @@ def context_imap_connection(organizer):
     if app_session.logger:
         app_session.logger.info(
             "Connected to IMAP server '%s' as '%s'.",
-            organizer.email_server,
+            organizer.imap_server,
             organizer.email_address,
         )
     try:
@@ -159,6 +145,11 @@ def detect_mailbox_type(flags: list[str]) -> str | None:
     return None
 
 
+def quote_imap_mailbox(name: str) -> str:
+    escaped = name.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{escaped}"'
+
+
 def get_sent_datetime(message) -> datetime | None:
     date_header = message.get("Date")
 
@@ -190,7 +181,9 @@ def parse_internal_date(fetch_metadata: bytes) -> datetime | None:
 
 def get_mailbox_status(mail, mailbox: Mailbox):
     # status, messages = mail.search(mailbox)
-    status, data = mail.select(mailbox.name, readonly=True)
+    imap_name = quote_imap_mailbox(mailbox.raw_name)
+
+    status, data = mail.select(imap_name, readonly=True)
 
     if status != "OK":
         raise RuntimeError(
@@ -211,6 +204,7 @@ def get_mailbox_status(mail, mailbox: Mailbox):
                 mailbox.unread_messages
             )
     return mailbox
+
 
 def filter_mails(
     mails: Iterable[EmailMessage],
@@ -389,23 +383,37 @@ def is_allowed_url(url: str) -> bool:
     return parsed.scheme in {"http", "https"}
 
 
+# def extract_html_links(html: str | None) -> list[str]:
+#     if not html:
+#         return []
+
+#     soup = bs(html, "html.parser")
+#     links: list[str] = []
+
+#     for tag in soup.find_all("a", href=True):
+#         href = tag.get("href")
+
+#         if isinstance(href, str) and is_allowed_url(href):
+#             links.append(href)
+
+#     return list(dict.fromkeys(links))
+
 def extract_html_links(
     html: str | None,
-) -> list[str]:
+    ) -> list[str]:
     if not html:
         return []
 
-    soup = BeautifulSoup(html, "html.parser")
+    soup = bs(html, "html.parser")
 
     return list(
         dict.fromkeys(
-            link
+            href
             for tag in soup.find_all("a", href=True)
-            if (
-                link and is_allowed_url(link) := tag.get("href")
+            if (href := tag.get("href")) 
+            and is_allowed_url(href) 
             )
         )
-    )
 
 
 URL_PATTERN = re.compile(
@@ -416,7 +424,7 @@ URL_PATTERN = re.compile(
 
 def extract_plain_links(
     text: str | None,
-) -> list[str]:
+    ) -> list[str]:
     if not text:
         return []
 
@@ -439,175 +447,177 @@ def extract_links(
     if links_plain:
         message.links_plain = list(dict.fromkeys(links_plain))
 
-        for link in links_plain:
-            app_session.logger()
+        # for link in links_plain:
+        #     app_session.logger()
     else:
         message.links_plain = []
-    message.links_html = list(dict.fromkeys(links_html)) if links_html else []
+
+    # message.links_html = list(dict.fromkeys(links_html)) if links_html else []
 
     return message
 
 
-def fetch_mails_from_mailbox(
-    mail: imaplib.IMAP4_SSL,
-    mailbox: Mailbox,
-    criteria: tuple[str, ...] = ("UNSEEN",),
-    ) -> list[EmailMessage]:
+# def fetch_mails_from_mailbox(
+#     mail: imaplib.IMAP4_SSL,
+#     mailbox: Mailbox,
+#     criteria: tuple[str, ...] = ("UNSEEN",),
+#     ) -> list[EmailMessage]:
 
-   uids = search_mail_uids(
-        mail,
-        mailbox,
-        criteria=criteria,
-        )
+#    uids = search_mail_uids(
+#         mail,
+#         mailbox,
+#         criteria=criteria,
+#         )
 
-    results: list[EmailMessage] = []
+#     results: list[EmailMessage] = []
 
-    for uid in uids:
-        status, data = mail.uid(
-            "FETCH",
-            uid,
-            "(INTERNALDATE FLAGS BODY.PEEK[])",
-        )
+#     for uid in uids:
+#         status, data = mail.uid(
+#             "FETCH",
+#             uid,
+#             "(INTERNALDATE FLAGS BODY.PEEK[])",
+#         )
 
-        if status != "OK" or not data:
-            app_session.logger.warning(
-                "Could not fetch email UID %s.",
-                uid,
-            )
-            continue
+#         if status != "OK" or not data:
+#             app_session.logger.warning(
+#                 "Could not fetch email UID %s.",
+#                 uid,
+#             )
+#             continue
 
-    if status != "OK":
-        raise RuntimeError("Could not search for unseen emails.")
+#         if status != "OK":
+#             raise RuntimeError("Could not search for unseen emails.")
 
-    # mailbox.total_messages = len(email_ids)
-    # email_ids = messages[0].split()
-    #     app_session.logger.info(
-    #         "Found %s total emails.",
-    #         mailbox.total_messages,
-    #     )
+#     # mailbox.total_messages = len(email_ids)
+#     # email_ids = messages[0].split()
+#     #     app_session.logger.info(
+#     #         "Found %s total emails.",
+#     #         mailbox.total_messages,
+#     #     )
 
-    results = []
+#     results = []
 
-    for email_id in email_ids:
-        status, data = mail.fetch(
-            email_id,
-            "(INTERNALDATE BODY.PEEK[])",
-        )
+#     for email_id in email_ids:
+#         status, data = mail.fetch(
+#             email_id,
+#             "(INTERNALDATE BODY.PEEK[])",
+#         )
 
-        if status != "OK" or not data:
-            app_session.logger.warning(
-                    "Could not fetch email ID %s.",
-                    email_id.decode(errors="replace"),
-                )
-            continue
+#         if status != "OK" or not data:
+#             app_session.logger.warning(
+#                     "Could not fetch email ID %s.",
+#                     email_id.decode(errors="replace"),
+#                 )
+#             continue
 
-        metadata: bytes | None = None
-        raw_email: bytes | None = None
+#         metadata: bytes | None = None
+#         raw_email: bytes | None = None
 
-        for item in data:
-            if not isinstance(item, tuple):
-                continue
+#         for item in data:
+#             if not isinstance(item, tuple):
+#                 continue
 
-            if (
-                len(item) >= 1
-                and isinstance(item[0], bytes)
-                ):
-                metadata = item[0]
+#             if (
+#                 len(item) >= 1
+#                 and isinstance(item[0], bytes)
+#                 ):
+#                 metadata = item[0]
 
-            if (
-                len(item) >= 2
-                and isinstance(item[1], bytes)
-                ):
-                raw_email = item[1]
+#             if (
+#                 len(item) >= 2
+#                 and isinstance(item[1], bytes)
+#                 ):
+#                 raw_email = item[1]
 
-        if raw_email is None:
-            app_session.logger.warning(
-                    "No message content found for UID %s.",
-                    uid,
-                )
-            continue
+#         if raw_email is None:
+#             app_session.logger.warning(
+#                     "No message content found for UID %s.",
+#                     uid,
+#                 )
+#             continue
 
-        parsed_message = BytesParser(policy=policy.default).parsebytes(raw_email)
+#         parsed_message = BytesParser(policy=policy.default).parsebytes(raw_email)
 
-        date_header = message.get("Date")
+#         date_header = parsed_message.get("Date")
 
-        try:
-            sent_date = parsedate_to_datetime(date_header) if date_header else None
-        except (TypeError, ValueError, OverflowError):
-            sent_date = None
+#         try:
+#             sent_date = parsedate_to_datetime(date_header) if date_header else None
+#         except (TypeError, ValueError, OverflowError):
+#             sent_date = None
 
-        received_date = parse_internal_date(metadata) if metadata is not None else None
+#         received_date = parse_internal_date(metadata) if metadata is not None else None
 
-        sender_name, sender_email = parse_sender(
-            parsed_message
-        )
+#         sender_name, sender_email = parse_sender(
+#             parsed_message
+#         )
 
-        body_plain, body_html = extract_bodies(
-            parsed_message
-        )
+#         body_plain, body_html = extract_bodies(
+#             parsed_message
+#         )
 
-        message_id = parsed_message.get("Message-ID")
+#         message_id = parsed_message.get("Message-ID")
 
-        results.append(
-            EmailMessage(
-                uid=int(uid),
-                message_id=message_id,        # email_id.decode(),
-                subject=message.get(
-                    "Subject",
-                    "(kein Betreff)",
-                    ),
-                sender_name=sender_name,
-                sender_email = sender_email,
-                # message.get(
-                #     "From",
-                #     "(unbekannter Absender)"
-                #     ),
-                sent_at=sent_date,
-                received_at=received_date,
-                body_plain=body_plain,
-                body_html=body_html,
-        )
+#         results.append(
+#             EmailMessage(
+#                 uid=int(uid),
+#                 message_id=message_id,        # email_id.decode(),
+#                 subject=message.get(
+#                     "Subject",
+#                     "(kein Betreff)",
+#                     ),
+#                 sender_name=sender_name,
+#                 sender_email=sender_email,
+#                 # message.get(
+#                 #     "From",
+#                 #     "(unbekannter Absender)"
+#                 #     ),
+#                 sent_at=sent_date,
+#                 received_at=received_date,
+#                 body_plain=body_plain,
+#                 body_html=body_html,
+#                 )
+#             )
 
-    return results
+#     return results
 
 
 # @wraps        # contextlib
-def deco_mail_connection(func):
+# def deco_mail_connection(func):
 
-    @wraps(func)
-    def wrapper(organizer, *args, **kwargs):
-        # port = 465
-        # context = ssl.create_default_context()
-        # mail = smtplib.SMTP_SSL(organizer.email_server, port, context=context)
-        mail = imaplib.IMAP4_SSL(organizer.email_server)  # "imap.gmail.com")
+#     @wraps(func)
+#     def wrapper(organizer, *args, **kwargs):
+#         # port = 465
+#         # context = ssl.create_default_context()
+#         # mail = smtplib.SMTP_SSL(organizer.email_server, port, context=context)
+#         mail = imaplib.IMAP4_SSL(organizer.email_server)  # "imap.gmail.com")
 
-        """
-        create_default_context() from the ssl module
-        """
+#         """
+#         create_default_context() from the ssl module
+#         """
 
-        mail.login(organizer.email_address, organizer.email_pw)
-        try:
-            if app_session.logger:
-                app_session.logger.info(
-                    "Connected to IMAP server '%s' as '%s'.",
-                    organizer.email_server,
-                    organizer.email_address,
-                )
+#         mail.login(organizer.email_address, organizer.email_pw)
+#         try:
+#             if app_session.logger:
+#                 app_session.logger.info(
+#                     "Connected to IMAP server '%s' as '%s'.",
+#                     organizer.email_server,
+#                     organizer.email_address,
+#                 )
 
-            return func(
-                mail,
-                organizer,
-                *args,
-                **kwargs,
-            )
+#             return func(
+#                 mail,
+#                 organizer,
+#                 *args,
+#                 **kwargs,
+#             )
 
-        finally:
-            mail.logout()
+#         finally:
+#             mail.logout()
 
-            if app_session.logger:
-                app_session.logger.info("IMAP connection closed.")
+#             if app_session.logger:
+#                 app_session.logger.info("IMAP connection closed.")
 
-    return wrapper
+#     return wrapper
 
 
 # # import smtplib
@@ -732,5 +742,5 @@ def deco_mail_connection(func):
 
 
 
-        if app_session.logger:
-            app_session.logger.info("IMAP connection closed.")
+        # if app_session.logger:
+        #     app_session.logger.info("IMAP connection closed.")

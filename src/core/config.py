@@ -94,7 +94,7 @@ class MLOpsEnvVars(BaseSettings):
 mlops_env_vars = MLOpsEnvVars()
 
 
-"""
+
 # from pydantic import BaseModel, model_validator, field_validator, Field
 # from typing import Optional
 # from datetime import date
@@ -114,14 +114,14 @@ class OrganizerEnvVars(BaseSettings):
     imap_port: int
     smtp_server: str
     smtp_port: int
-    email_rf_address: str
-    email_rf_pw: str
+    email_address: str
+    email_pw: str
     email_llf_address: str
     email_llf_pw: str
 
 
 organizer_env_vars = OrganizerEnvVars()
-"""
+""""""
 
 
 # ------------------------------------

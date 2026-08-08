@@ -38,7 +38,7 @@ class EmailMessage(BaseModel):
 
     to: list[EmailStr] = Field(default_factory=list)
     cc: list[EmailStr] = Field(default_factory=list)
-    in_reply_to: str | None
+    in_reply_to: str | None = None
 
     sent_at: datetime | None = None
     received_at: datetime | None = None
@@ -47,6 +47,9 @@ class EmailMessage(BaseModel):
     body_html: str | None
 
     flags: list[str] = Field(default_factory=list)
+
+    links_plain: list[str] = Field(default_factory=list)
+    links_html: list[str] = Field(default_factory=list)
 
     attachments: List[Attachment] = Field(default_factory=list)
     # references: list[str] = []
