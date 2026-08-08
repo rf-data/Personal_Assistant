@@ -41,3 +41,9 @@ def show():
 
                 st.json(box_info)
                 st.write()
+
+    with st.expander("PLACEHOLDER **New mails**"):
+        st.info("PLACEHOLDER **fetch_mails()**")
+
+    with st.expander("PLACEHOLDER **Filtered mails**"):
+        st.info("PLACEHOLDER **fetch_mails()**")

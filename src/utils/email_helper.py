@@ -405,15 +405,17 @@ def extract_html_links(
         return []
 
     soup = bs(html, "html.parser")
+    links: list[str] = [] 
 
-    return list(
-        dict.fromkeys(
-            href
-            for tag in soup.find_all("a", href=True)
-            if (href := tag.get("href")) 
-            and is_allowed_url(href) 
-            )
-        )
+    for tag in soup.find_all("a", href=True):
+        href = tag.get("href")
+
+        if isinstance(href, str) and is_allowed_url(href):
+            links.append(href)
+
+
+    return list(dict.fromkeys(links))
+
 
 
 URL_PATTERN = re.compile(
