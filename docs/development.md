@@ -81,10 +81,10 @@ LLM-API-Keys und Observability.
 
 ```env
 # Erforderlich für Text-Generierung
-OPENAI_API_KEY = "sk-..."         # ChatGPT API
+OPENAI_API_KEY = "<your-openai-api-key>"         # ChatGPT API
 
 # Optional
-HF_API_KEY = "hf_..."             # HuggingFace (für Open-Source Models)
+HF_API_KEY = "<your-huggingface-api-key>"            # HuggingFace (für Open-Source Models)
 
 # Optional: Langfuse (LLM Observability)
 LANGFUSE_PUBLIC_KEY = ""
@@ -101,7 +101,7 @@ MLflow Backend-Konfiguration.
 # Optional (wenn leer, nutzt lokal SQLite)
 MLFLOW_DB = "sqlite:///mlflow/mlflow.db"              # Default
 # oder PostgreSQL:
-# MLFLOW_DB = "postgresql://user:pass@localhost:5432/mlflow_db"
+# MLFLOW_DB = "postgresql://<user>:<password>@localhost:5432/mlflow_db"
 
 MLFLOW_ARTIFACTS = "mlflow/artifacts"
 MLFLOW_TRACKING_URI = "http://127.0.0.1:5000"
