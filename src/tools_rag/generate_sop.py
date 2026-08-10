@@ -336,15 +336,17 @@ def evaluate_chapter_plan(
 #                   "Number of  and non-unique facts:\t %s | %s",
 
 
-def save_prompt(fn: Callable, prompt: str | None = None) -> None:
+def save_prompt(fn: Callable, context: str, prompt: str | None = None) -> None:
     """
     Save a prompt or the docstring of a prompt function.
+
+    context: Name of process for whom prompt is used
     """
 
     prompt_text = prompt if prompt is not None else inspect.getdoc(fn)
 
     # elif fn is not None:
-    save_path = Path(parsing_env_vars.data_dir) / "prompts" / f"prompts_{fn.__name__}"
+    save_path = Path(parsing_env_vars.prompt_dir) / f"{context}_{fn.__name__}"
 
     # with open(save_path, "a", encoding="utf-8") as f:
     prompt_data = {
@@ -429,6 +431,6 @@ def generate_chapter_plan(knowledge_pool: KnowledgePool, template: SOPTemplate):
 
         plan_evals[chap.name] = evaluate_chapter_plan(knowledge_pool, chapter_plans)
 
-    save_prompt(plan_core_chapter)
+    save_prompt(fn=plan_core_chapter, context="sop_gen")
 
     return chapter_plans, plan_evals

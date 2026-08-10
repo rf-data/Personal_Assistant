@@ -38,8 +38,49 @@ LOG_DIR := $(ROOT)/logs
 # type_check:
 # 	uv run mypy src/
 
+# ai_code_review:
+# 	uv run pre-commit run ai-review --hook-stage manual
+
+
+clean_linux:
+	bash scripts/clean_linux.sh
+
+
 dependency_check:
 	uv run python src/run_dependency_check.py
+
+
+# litellm_start:
+# 	uv run litellm \
+# 		--config \
+# 		/workspaces/gmp_compliance/configuration/litellm_config.yaml
+# 	# --detailed_debug
+
+
+mlflow_fingerprint:
+	bash scripts/create_experiment.sh
+
+mlflow_start:
+	bash scripts/0_setup_mlflow.sh
+
+
+mlflow_stop:
+	pkill -f "mlflow server" || true
+
+
+monitoring_docker:
+	docker compose \
+		-p $(PROJECT) \
+		-f $(ROOT)/docker/docker-compose.monitoring.yaml \
+		up --build -d
+
+
+monitoring_stop:
+	docker compose \
+		-p $(PROJECT) \
+		-f $(ROOT)/docker/docker-compose.monitoring.yaml \
+		down
+
 
 pre_commit_update:
 	@mkdir -p "$(LOG_DIR)"; \
@@ -51,6 +92,7 @@ pre_commit_update:
 		echo " "; \
 	} 2>&1 | tee -a "$$LOGFILE"
 
+
 pre_commit_check:
 	@mkdir -p "$(LOG_DIR)"; \
 	LOGFILE="$(LOG_DIR)/pre_commit_manual.log"; \
@@ -60,7 +102,6 @@ pre_commit_check:
 		echo " "; \
 	} 2>&1 | tee -a "$$LOGFILE"
 
-# ($${(date '+%Y-%m-%d ')})
 
 pre_push_check:
 	@mkdir -p "$(LOG_DIR)"; \
@@ -71,42 +112,9 @@ pre_push_check:
 		echo " "; \
 	} 2>&1 | tee -a "$$LOGFILE"
 
-ai_code_review:
-	uv run pre-commit run ai-review --hook-stage manual
 
 streamlit:
 	uv run streamlit run streamlit_app.py
-
-litellm_start:
-	uv run litellm \
-		--config \
-		/workspaces/gmp_compliance/configuration/litellm_config.yaml
-	# --detailed_debug
-
-mlflow_fingerprint:
-	bash scripts/create_experiment.sh
-
-mlflow_start:
-	bash scripts/0_setup_mlflow.sh
-
-mlflow_stop:
-	pkill -f "mlflow server" || true
-
-clean_linux:
-	bash scripts/clean_linux.sh
-
-monitoring_docker:
-	docker compose \
-		-p $(PROJECT) \
-		-f $(ROOT)/docker/docker-compose.monitoring.yaml \
-		up --build -d
-
-monitoring_stop:
-	docker compose \
-		-p $(PROJECT) \
-		-f $(ROOT)/docker/docker-compose.monitoring.yaml \
-		down
-
 
 
 # api_start:
