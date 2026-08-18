@@ -13,17 +13,17 @@ import marvin
 
 from src.core.config import parsing_env_vars
 from src.core.memory import app_session
-from src.model_rag.classes_chunk_fact import (
-    ConsolidatedFact,
-    IngestedChunk,
-    KnowledgePool,
-)
-from src.model_rag.classes_sop import (
-    ChapterPlanEvaluation,
-    CoreChapterPlan,
-    FactEvaluationItem,
-    SOPTemplate,
-)  # , FactForPlanning
+from src.model_rag.data_chunk_fact import (
+                                    ConsolidatedFact,
+                                    IngestedChunk,
+                                    KnowledgePool,
+                                )
+from src.model_rag.data_sop import (
+                        ChapterPlanEvaluation,
+                        CoreChapterPlan,
+                        FactEvaluationItem,
+                        SOPTemplate,
+                    )  # , FactForPlanning
 from src.utils.dict_helper import append_json
 from src.utils.general_helper import (
     load_from_cache,

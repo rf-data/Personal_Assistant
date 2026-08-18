@@ -14,17 +14,17 @@ from src.core.config import (
     agentic_env_vars,
 )
 from src.core.memory import SOPGenContext, app_session
-from src.model_rag.classes_chunk_fact import (
-    # MergedFact,
-    ConsolidatedFact,
-    ExtractedFact,
-    IngestedChunk,
-    IngestedFact,
-    KnowledgePool,
-    MergeDecision,
-    RetrievedChunk,
-    SourceReference,
-)
+from src.model_rag.data_chunk_fact import (
+                                    # MergedFact,
+                                    ConsolidatedFact,
+                                    ExtractedFact,
+                                    IngestedChunk,
+                                    IngestedFact,
+                                    KnowledgePool,
+                                    MergeDecision,
+                                    RetrievedChunk,
+                                    SourceReference,
+                                )
 from src.tools_rag.create_embeds import load_embedding_model
 from src.utils.general_helper import (
     load_from_cache,

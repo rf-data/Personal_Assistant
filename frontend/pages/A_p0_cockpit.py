@@ -16,11 +16,11 @@ pdfkit.from_string(html_content, "daily_plan.pdf")
 
 def show():
     st.header("🏠 Startseite ")
-    st.subheader("**E-Mails**")
+    st.subheader("**Cockpit**")
 
     st.divider()
 
-    st.markdown("**Under Construction**")
+    # st.markdown("**Under Construction**")
 
 
 """

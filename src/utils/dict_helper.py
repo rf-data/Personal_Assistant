@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 from pydantic import BaseModel
+from dataclasses import is_dataclass
 
 from src.core.config import GeneralSettings, RunSettings, parsing_env_vars
 from src.core.memory import app_session
@@ -89,16 +90,10 @@ def make_json_safe(obj):
     return str(obj)
 
 
-def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
-    data_dict = data.model_dump()
-
-    return save_dict(data_dict, path)
-
-
 def save_dict(data: dict, path: Path) -> None:
     logger = app_session.logger
 
-    f_path = Path(f"{path}.json")
+    f_path = path.with_suffix(".json")
     f_path = ensure_dir(f_path)
     data_new = make_json_safe(data)
 
@@ -113,13 +108,20 @@ def save_dict(data: dict, path: Path) -> None:
             )
             logger.info("Dict saved as %s", shorten_path(f_path, 3))
 
-        except TypeError as e:
+        except (TypeError, OSError) as e:
             logger.error(
-                "ERROR (non_serializable):\n%s\n\ndtype=%s\nrepr=%s",
+                "Could not save JSON: %s\n"
+                "dtype=%s\nrepr=%s",
                 e,
                 type(data_new),
-                repr(data_new),
-            )
+                repr(data_new)[:2000],
+                )
+            raise
+
+def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
+    data_dict = data.model_dump()
+
+    return save_dict(data_dict, path)
 
 
 def append_json(data: dict, path: Path) -> None:
@@ -144,7 +146,7 @@ def append_json(data: dict, path: Path) -> None:
             )
 
 
-def load_dict(path: Path | str) -> dict:
+def load_dict(path: Path | str, cls=None) -> dict:
     logger = app_session.logger
 
     path = ensure_dir(path)
@@ -153,13 +155,24 @@ def load_dict(path: Path | str) -> dict:
         data = json.load(f)
         logger.info("Dict loaded:\t%s", shorten_path(path, 3))
 
-    return data
+    if cls is None:
+        return data
 
-
-def load_base_model_from_dict(path: Path | str, model_class: BaseModel):
-    data_dict = load_dict(path)
-
-    return model_class.model_validate(data_dict)
+    if isinstance(data, list):
+        if isinstance(cls, type) and issubclass(cls, BaseModel):
+            return [cls.model_validate(item) for item in data]
+    
+        if isinstance(cls, type) and is_dataclass(cls):
+            return [cls(**item) for item in data]
+    
+        raise TypeError(f"Cannot deserialize list items into {cls!r}")
+    
+    if isinstance(data, dict):
+        if isinstance(cls, type) and issubclass(cls, BaseModel):
+            return cls.model_validate(data)
+    
+        if isinstance(cls, type) and is_dataclass(cls):
+            return cls(**data)
 
 
 # # -----------------

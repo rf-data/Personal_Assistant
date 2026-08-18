@@ -179,19 +179,19 @@ def save_text_file(data, file_name, folder, suffix="md"):
 # print(magic, version)
 
 
-if __name__ == "__main__":
-    # from src.utils.general_helper import load_env_vars
+# if __name__ == "__main__":
+#     # from src.utils.general_helper import load_env_vars
 
-    # load_env_vars()
+#     # load_env_vars()
 
-    folder = parsing_env_vars.data_qms
+#     folder = parsing_env_vars.data_qms
 
-    files = [f for f in Path(folder).iterdir() if f.suffix == ".docx"]
-    print(f"Length 'files': {len(files)}")
+#     files = [f for f in Path(folder).iterdir() if f.suffix == ".docx"]
+#     print(f"Length 'files': {len(files)}")
 
-    for file in files:
-        convert_docx(
-            f_path=file,
-            out_format="odt",
-            overwrite=False,
-        )
+#     for file in files:
+#         convert_docx(
+#             f_path=file,
+#             out_format="odt",
+#             overwrite=False,
+#         )

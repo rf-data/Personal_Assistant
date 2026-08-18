@@ -13,7 +13,8 @@ from chromadb.api.models.Collection import Collection
 # import streamlit as st
 # from src.utils.general_helper import load_env_vars
 from src.core.config import parsing_env_vars
-from src.core.memory import SOPGenContext, app_session
+from src.core.memory import app_session
+from src.core.memory_sop import SOPGenContext
 
 
 def get_chroma_client() -> ClientAPI:

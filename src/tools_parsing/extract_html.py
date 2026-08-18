@@ -36,18 +36,20 @@ def extract_html_file(
 ) -> Result[DocumentExtract, str]:
     logger = parse_context.logger
 
-    html_data = parsing_env_vars.data_html
+    data_dir = parsing_env_vars.data_dir
+    # html_data = parsing_env_vars.data_html
 
     if parse_context.parse_settings.file_name is not None:
         f_name = parse_context.parse_settings.file_name
-        f_path = f"{html_data}/input/{f_name}.html"
+        f_path = f"{data_dir}/input/{f_name}.html"
 
-        logger.info("Starting extracting HTML-FILE: %s", shorten_path(f_path))
+        logger.info("Starting extracting HTML-FILE: %s", 
+                    shorten_path(f_path))
 
         html_extract = extractor.extract(f_path=f_path)
 
-    elif parse_context.parse_settings.url_path is not None:
-        html_extract = extractor.extract(url=parse_context.parse_settings.url_path)
+    # elif parse_context.parse_settings.url_path is not None:
+    #     html_extract = extractor.extract(url=parse_context.parse_settings.url_path)
 
     elif f_text is not None:
         html_extract = extractor.extract(f_text=f_text)

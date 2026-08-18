@@ -1,7 +1,7 @@
 ## templates_sop.py
 # import
 
-from src.model_rag.classes_sop import SOPChapter, SOPTemplate, SOPType
+from src.model_rag.data_sop import SOPChapter, SOPTemplate, SOPType
 
 SOP_BASE_TEMPLATE = SOPTemplate(
     sop_type=SOPType.GENERAL,

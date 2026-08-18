@@ -23,9 +23,43 @@ class ParseEnvVars(BaseSettings):
     )
     app_name: str = "personal_assistant"
 
-    # raw data
+    # # folder
+    # root: Path
+    # data_dir: Path
+    # chroma_dir: Path
+
+    # other folder_paths
+    log_dir: str
+    prompt_dir: str
+    report_dir: str
+    config_dir: str
+    cache_dir: str
+    chroma_dir: str
+
+    # @property
+    # def log_dir(self) -> Path:
+    #     return self.root / "logs"
+
+    # @property
+    # def report_dir(self) -> Path:
+    #     return self.root / "reports"
+
+    # @property
+    # def config_dir(self) -> Path:
+    #     return self.root / "configuration"
+
+    # @property
+    # def cache_dir(self) -> Path:
+    #     return self.root / ".cache"
+
+    # @property
+    # def prompt_dir(self) -> Path:
+    #     return self.root / "src/agent/prompts"
+    
+    # data folders
     data_dir: str
     data_audio: str
+    data_transcripts: str
     data_docx: str
     data_html: str
     data_image: str
@@ -35,13 +69,42 @@ class ParseEnvVars(BaseSettings):
     data_wiki: str
     data_qms: str
 
-    # other folder_paths
-    log_dir: str
-    prompt_dir: str
-    report_dir: str
-    config_dir: str
-    cache_dir: str
-    chroma_dir: str
+    # @property
+    # def data_audio(self) -> Path:
+    #     return self.data_dir / "audio"
+
+    # @property
+    # def data_docx(self) -> Path:
+    #     return self.data_dir / "docx"
+
+    # @property
+    # def data_html(self) -> Path:
+    #     return self.data_dir / "html"
+    
+    # @property
+    # def data_image(self) -> Path:
+    #     return self.data_dir / "images_ocr"
+
+    # @property
+    # def data_json_nb(self) -> Path:
+    #     return self.data_dir / "notebooks"
+    
+    # @property
+    # def data_pdf(self) -> Path:
+    #     return self.data_dir / "pdf"
+
+    # @property
+    # def data_txt_md(self) -> Path:
+    #     return self.data_dir / "txt_md"
+
+    # @property
+    # def data_wiki(self) -> Path:
+    #     return self.data_dir / "wiki"
+    
+    # @property
+    # def data_qms(self) -> Path:
+    #     return self.data_dir / "_QMS_apo/Q_Dokumente"    
+    
 
     # wikipedia relevance
     wiki_en_api: str
@@ -123,6 +186,58 @@ class OrganizerEnvVars(BaseSettings):
 organizer_env_vars = OrganizerEnvVars()
 """"""
 
+
+TranscriptionBackend = Literal[
+    "faster_whisper",
+    "whisper_live",
+    "cloud_stt",
+]
+
+
+class TranscribeSettings(BaseModel):
+    backend: TranscriptionBackend = "faster_whisper"
+
+    model_size: Literal[
+                    "tiny",
+                    "base",
+                    "small",
+                    "medium",
+                    "large-v3",
+                ] = "medium" # später: "large-v3"
+
+    device: Literal["cpu", "cuda"] = "cpu"
+
+    compute_type: Literal[
+                    "int8",
+                    "float16",
+                    "float32",
+                    "int8_float16",
+                ] = "int8"
+
+    cpu_threads: int = 6  # os.cpu_count()
+
+    language: str | None = None
+
+    vad_filter: bool=False
+
+
+class DownloadSettings(BaseModel):
+    format: str = "bestaudio/best"
+
+    no_playlist: bool = True
+    playlist_items: str | None = None
+    playlist_name: str|None = None
+
+    quiet: bool = False
+    socket_timeout: int = 30
+    retries: int = 20
+    fragment_retries: int = 20
+    continue_download: bool = True
+    ignore_errors: bool = True
+
+    show_progress: bool = True
+    
+    
 
 # ------------------------------------
 # FILE_TYPE SPECIFIC PARSING SETTINGS
