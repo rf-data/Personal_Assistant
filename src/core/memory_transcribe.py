@@ -1,41 +1,41 @@
-# memory.py
-import logging
-from logging import Logger
-# from dataclasses import dataclass, field
-from pydantic import BaseModel, Field, ConfigDict
-from datetime import datetime
+# memory_transcribe.py
+from pydantic import BaseModel, Field
 from pathlib import Path
-from typing import Any, ClassVar, Literal  # , Annotated
+from typing import Literal
 
 from pydantic import Field
 
-# from openai import OpenAI
-from tiktoken import Encoding       # , encoding_for_model
 
 from src.core.config import (
-    ChunkSettings,
     DownloadSettings,
-    GeneralSettings,
-    # NIRSettings,
-    ParseSettings,
     TranscribeSettings
 )
 
 
-AudioSource = Literal[
-    "local",
-    "url",
-    "youtube",
-]
-
-# @dataclass
 class AudioContext(BaseModel):
-    source: AudioSource = "local"
+    source: Literal[
+                "local",
+                "url",
+                "youtube",
+            ] = "local"
+
+    logger_name: str|None = None
+    logger_f_name: str|None = None
+    memory_f_name: str|None = None
+
+    lecture_files: list = []
 
     url: str|None = None
     local_path: Path|None = None
-    f_name: str|None = None
+    f_name: str = Field(default_factory=str)
 
+    subtitle_only: bool = False
+    kind: list[
+            Literal[
+                "foundation",
+                "supplement"
+                ]
+            ] = ["foundation"]
     model_transcribe: Literal[
                         "FasterWhisper",
                         "WhisperLive",

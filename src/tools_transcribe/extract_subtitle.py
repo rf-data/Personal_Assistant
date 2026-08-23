@@ -18,7 +18,11 @@ from src.utils.text_file_helper import save_text_file
 from src.utils.dict_helper import save_dict
 
 
-def download_subtitles(context: AudioContext, automatic: bool) -> list[Path]:
+def download_subtitles(
+                context: AudioContext, 
+                automatic: bool,
+                language: str
+                ) -> list[Path]:
     # url: str, output_dir: str)
 
     save_folder = Path(parsing_env_vars.data_audio)
@@ -29,14 +33,14 @@ def download_subtitles(context: AudioContext, automatic: bool) -> list[Path]:
     # if cfg.no_playlist is True:
     outtmpl = str(
                 save_folder
-                / f"{context.cfg_download.playlist_name or 'single'}"
+                / f"{cfg.playlist_name or 'single'}"
                 / f"{'%(title)s.%(ext)s' if cfg.no_playlist is True else '%(playlist_index)03d_%(title)s.%(ext)s'}"
                 )
     opts = {
         "skip_download": True,
         "writesubtitles": not automatic,
         "writeautomaticsub": automatic,
-        "subtitleslangs": ["de"],
+        "subtitleslangs": [language],
 
         "subtitlesformat": "vtt",
         

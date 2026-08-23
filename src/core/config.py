@@ -1,5 +1,6 @@
 ## config.py
 # import
+from pathlib import Path
 from typing import Annotated, Literal  # Dict,
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -29,12 +30,12 @@ class ParseEnvVars(BaseSettings):
     # chroma_dir: Path
 
     # other folder_paths
-    log_dir: str
-    prompt_dir: str
-    report_dir: str
-    config_dir: str
-    cache_dir: str
-    chroma_dir: str
+    log_dir: Path
+    prompt_dir: Path
+    report_dir: Path
+    config_dir: Path
+    cache_dir: Path
+    chroma_dir: Path
 
     # @property
     # def log_dir(self) -> Path:
@@ -57,17 +58,21 @@ class ParseEnvVars(BaseSettings):
     #     return self.root / "src/agent/prompts"
     
     # data folders
-    data_dir: str
-    data_audio: str
-    data_transcripts: str
-    data_docx: str
-    data_html: str
-    data_image: str
-    data_json_nb: str
-    data_pdf: str
-    data_txt_md: str
-    data_wiki: str
-    data_qms: str
+    data_dir: Path
+    data_audio: Path
+    data_transcripts: Path
+    data_docx: Path
+    data_html: Path
+    data_image: Path
+    data_json_nb: Path
+    data_pdf: Path
+    data_txt_md: Path
+    data_wiki: Path
+    data_qms: Path
+
+    @property
+    def yt_cookies(self) -> Path:
+        return self.cache_dir / "yt_cookies.txt"
 
     # @property
     # def data_audio(self) -> Path:
@@ -223,6 +228,7 @@ class TranscribeSettings(BaseModel):
 
 class DownloadSettings(BaseModel):
     format: str = "bestaudio/best"
+    cookie_file: Path|None = None
 
     no_playlist: bool = True
     playlist_items: str | None = None

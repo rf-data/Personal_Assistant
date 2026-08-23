@@ -1,15 +1,43 @@
 ## llm_helper.py
 # imports
+import os
 import hashlib
 import json
 import re
 from pathlib import Path
 
 from openai import OpenAI
+import marvin
+from pydantic_ai import Agent
 
 import src.utils.path_helper as ph
 from src.core.config import parsing_env_vars
 from src.core.memory import app_session
+from src.core.config import agentic_env_vars
+
+
+def configure_marvin(
+    context,
+    # model: str = "openai:gpt-4o-mini",
+) -> None:
+
+    api_key = agentic_env_vars.openai_api_key
+
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY not found in environment.")
+
+    os.environ["OPENAI_API_KEY"] = api_key
+
+    llm_model = getattr(context, "llm_model", None)
+
+    llm_context = getattr(context, "llm_context", None)
+    extract_model = getattr(llm_context, "extraction_model", None)
+    
+    marvin.defaults.model = extract_model or llm_model
+
+    Agent.instrument_all()
+
+    return
 
 
 def get_openai_client() -> OpenAI:

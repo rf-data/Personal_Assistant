@@ -95,13 +95,18 @@ def snapshot_dependent_functions(
 
 
 def make_doc_id(
-    name: str, mode: Literal["file_path", "headline"] = "file_path", short: bool = True
+    name: str, 
+    mode: Literal["file_path", "text"] = "file_path", 
+    short: bool = True
 ) -> str:
+
+    # ! TODO: Combine with fn below
+
     if mode == "file_path":
         stem = Path(name).stem.lower().strip()
         doc_id = hashlib.sha256(stem.encode("utf-8")).hexdigest()
 
-    elif mode == "headline":
+    elif mode == "text":
         doc_id = hashlib.sha256(name.encode("utf-8")).hexdigest()
 
     else:
@@ -111,6 +116,14 @@ def make_doc_id(
         return doc_id[:16]
 
     return doc_id
+
+
+def hash_text(text: str, short: bool = True) -> str:
+    value = hashlib.sha256(
+        text.strip().encode("utf-8")
+    ).hexdigest()
+
+    return value[:16] if short else value
 
 
 def make_doc_id_by_content(file_path: str) -> str:
@@ -155,21 +168,29 @@ def make_cache_key(
     return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
 
 
-def save_to_cache(key: str, folder: str | Path, data: dict):
+def save_to_cache(
+            key: str,
+            folder: str | Path,
+            data: dict,
+            metadata: dict | None = None,
+            ):
     cache_dir = parsing_env_vars.cache_dir
 
-    # if isinstance(data, dict):
-    data["created_at"] = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
     fn = Path(cache_dir) / folder / f"{key}.json"
-
     ensure_dir(fn)
 
-    with open(fn, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    payload = {
+        "metadata": {
+            "created_at":datetime.now().isoformat(),
+            **(metadata or {}),
+            },
+        "result": data
+        }
 
-    logger = app_session.logger
-    logger.info("Saved cached data (key=%s).", key)
+    with open(fn, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+
+    app_session.logger.info("Saved cached data (key=%s).", key)
 
     return
 

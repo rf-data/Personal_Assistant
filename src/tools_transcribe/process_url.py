@@ -25,10 +25,18 @@ def process_youtube_video(context: AudioContext) -> DownloadResult:
         manual = {}
         automatic = {}
 
-    if "de" in manual:
+    # --------------------------------------------------
+    # 1. Manual subtitles
+    # --------------------------------------------------
+    lang = select_subtitle_language(
+                                manual,
+                                preferred_languages=("de", "en"),
+                                )
+    if lang is not None:
         paths = download_subtitles(
             context,
             automatic=False,
+            language=lang
             )
 
         if paths:
@@ -36,13 +44,22 @@ def process_youtube_video(context: AudioContext) -> DownloadResult:
                 success=True,
                 strategy=DownloadStrategy.SUBTITLES,
                 transcript_source=TranscriptSource.MANUAL_SUBTITLE,
+                language=lang,
                 paths=paths,
                 )
 
-    if "de" in automatic:
+    # --------------------------------------------------
+    # 2. Automatic subtitles
+    # --------------------------------------------------
+    lang = select_subtitle_language(
+                            automatic,
+                            preferred_languages=("de", "en"),
+                            )
+    if lang is not None:
         paths = download_subtitles(
             context,
             automatic=True,
+            language=lang
             )
 
         if paths:
@@ -51,11 +68,21 @@ def process_youtube_video(context: AudioContext) -> DownloadResult:
                 strategy=DownloadStrategy.SUBTITLES,
                 transcript_source=TranscriptSource.AUTO_SUBTITLE,
                 paths=paths,
+                language=lang,
             )
 
+    if context.subtitle_only:
+        return DownloadResult(
+                success=False,
+                error="No usable subtitles found. Skipped search for audio files.",
+                )
+    # --------------------------------------------------
+    # 3. Preferred audio
+    # --------------------------------------------------
     files = download_audio(
         context,
-        format_override="bestaudio[ext=m4a]/bestaudio/best",     # "bestaudio/best",
+        format_override="bestaudio[ext=m4a]/bestaudio/best",     
+        # "bestaudio/best",
         )
 
     if files:
@@ -64,11 +91,15 @@ def process_youtube_video(context: AudioContext) -> DownloadResult:
             strategy=DownloadStrategy.AUDIO_DEFAULT,
             transcript_source=TranscriptSource.WHISPER,
             paths=files,
+            media_format="bestaudio[ext=m4a]/bestaudio/best",
         )
 
+    # --------------------------------------------------
+    # 4. Smaller audio fallback
+    # --------------------------------------------------
     files = download_audio(
         context,
-        format_override="bestaudio/best",
+        format_override="bestaudio[abr<=96]/bestaudio[abr<=128]/worstaudio",
         )
 
     if files:
@@ -79,11 +110,72 @@ def process_youtube_video(context: AudioContext) -> DownloadResult:
             paths=files,
         )
 
+    # --------------------------------------------------
+    # 5. Authenticated web fallback
+    # --------------------------------------------------
+    cookie_file = context.cfg_download.cookie_file
+
+    if cookie_file and cookie_file.exists():
+        files = download_audio(
+                    context,
+                    format_override="18",
+                    extra_ydl_opts={
+                        "cookiefile": str(cookie_file),
+                        "extractor_args": {
+                            "youtube": {
+                                "player_client": ["web"],
+                                },
+                            },
+                        },
+                    )
+
+    if files:
+        return DownloadResult(
+            success=True,
+            strategy=DownloadStrategy.AUDIO_WEB_FALLBACK,
+            transcript_source=TranscriptSource.WHISPER,
+            paths=files,
+            media_format="18"
+            )
+
     return DownloadResult(
         success=False,
         error="No usable subtitles or audio found.",
         )
 
+
+def select_subtitle_language(
+    subtitles: dict,
+    preferred_languages: tuple[str, ...] = ("de", "en"),
+) -> str | None:
+    """
+    Select the best available subtitle language.
+
+    Priority:
+        de
+        de-*
+        en
+        en-*
+    """
+
+    available = subtitles.keys()
+
+    for preferred in preferred_languages:
+        # Exact match first
+        if preferred in available:
+            return preferred
+
+        # Then variants, e.g. de-DE, en-US, en-GB
+        variants = sorted(
+            lang
+            for lang in available
+            if lang.startswith(f"{preferred}-")
+        )
+
+        if variants:
+            return variants[0]
+
+    return None
 
 
 def inspect_audio_file(context: AudioContext) -> dict | None: 

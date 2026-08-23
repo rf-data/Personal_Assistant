@@ -1,38 +1,174 @@
 ## run_knowledge_extraction.py
 # imports
+from pathlib import Path
+from datetime import datetime
+
+from src.core.config import parsing_env_vars
+from src.core.memory import app_session
+from src.core.logger import create_logger
+from src.core.memory_knowledge import KnowledgeContext
 from src.tools_knowledge.find_knowledge import (
+                                    analyze_and_extract_chunk,
+                                    attach_chunk_provenance,
                                     build_transcript_chunks,
                                     enrich_chunks, 
-                                    classify_chunk_knowledge
+                                    make_visual_candidate,
+                                    validate_extraction
                                     )
+from src.model_knowledge.data_knowledge import (
+                                            # ChunkKnowledgeResult,
+                                            TranscriptKnowledgeDocument    
+                                            )
+from src.model_transcribe.data_transcribe import TranscriptDocument
+from src.utils.llm_helper import configure_marvin  
 
-def run_math_retrieval(context: KnowledgeContext):
+from src.utils.path_helper import shorten_path
+from src.utils.dict_helper import load_dict, save_dict
 
 
-    chunks = build_transcript_chunks(context)
-    chunks_enriched = enrich_chunks(chunks)
+def run_knowledge_extraction():
+
+    dict_name = input("Enter name of context_file (no suffix): ")
+    dict_path = parsing_env_vars.config_dir / f"context_{dict_name}.json"
+    context = load_dict(
+                    path=dict_path, 
+                    cls=KnowledgeContext
+                    # TranscriptDocument
+                    )
+    # context = KnowledgeContext(
+    #     text = transcript,     # TranscriptDocument,
+    #     target_duration = 45, # context.   # float = 45,
+    #     # dur_max = context.max_duration         # float = 75
+    #     overlap_segments = 2
+    #     # context.overlap_segments  # : int = 2
+    # )
+
+    app_session.timestamp = datetime.today().strftime("%Y-%m-%d")
+    app_session.logger = create_logger(
+                        name=context.logger_name,  
+                        file_name=context.logger_f_name  
+                    )
+
+    n_paths = len(context.transcript_names)
+    for idx, t_name in enumerate(context.transcript_names):
+
+        t_path = Path(parsing_env_vars.data_audio) / t_name
+        app_session.logger.info(
+                    "[File #%s / %s] Start extracting knowledge from '%s'",
+                    idx, 
+                    n_paths,
+                    shorten_path(t_path)
+                    )
+        
+        extract = knowledge_extraction(context, t_path)
+        save_dict(
+            data=extract.model_dump(mode="json"), 
+            path=Path(f"data/{str(datetime.now().isoformat()).replace(":", "-").replace("T", "_")}_know_extract_results"))
+        
     
-    for chunk in chunks_enriched:
+    return None
 
-        text_chunks = {
-                "previous_chunk": chunk.previous_context_context,
-                "chunk": chunk.text,
-                "next_chunk": chunk.next_context
-                }
 
-        classify_chunk_knowledge(text_chunks) 
+def knowledge_extraction(
+                context: KnowledgeContext,
+                transcript_path: Path
+                ) -> TranscriptKnowledgeDocument:
+      # list[ChunkKnowledgeResult]:
+    configure_marvin(context) 
+
+    transcript = load_dict(
+                        path=transcript_path, 
+                        cls=TranscriptDocument
+                            )
+    transcript_id = (transcript.provenance.youtube_id or "tba")
+    
+    chunks = build_transcript_chunks(context, transcript)
+    chunks = enrich_chunks(chunks)
+    
+    # results: dict ={}
+    results: list = []
+    # str, dict[str, str | ChunkKnowledgeResult]
+    # chunks
+    # dict = {}
+
+    visual_candidates: list = []
+
+    for idx, chunk in enumerate(chunks):
+        result = analyze_and_extract_chunk(chunk, context.llm_model) 
+
+        if not result.analysis.relevant:
+            continue
+
+        result = attach_chunk_provenance(
+                                result=result,
+                                chunk=chunk,
+                                )
+
+        result = validate_extraction(result)
+
+        # if (
+        #     result.extraction is None
+        #     or not result.analysis.needs_visual_context
+        #     ):
+        #     result
+        
+        # else:
+        #     return None
+
+        visual_candidate = make_visual_candidate(
+                                        result=result,
+                                        chunk=chunk,
+                                        )
+
+        if visual_candidate is not None:
+            visual_candidates.append(visual_candidate)
+
+            # for expression in result.extraction.formulas:
+            #     expression.verification_status = "pending"
+            #     expression.verification_reason = (
+            #         "Visual context required for reliable reconstruction."
+            #         )
+                
+        results.append(result)
+        # results.update({
+        #         f"chunk_{idx:03d}": {
+        #             "chunk": chunk, 
+        #             # .model_dump(mode="json"),
+        #             "result": result,
+        #             "visual_candidate": visual_candidate or []
+        #             }
+        #         })
+    
+    # save_dict(data=results, 
+    #           path=Path(f"data/{app_session.timestamp}_know_extract_results"))
+
+    # results_all = [
+    #             value for key, value in results.items() 
+    #             if key == result
+    #             ]
+    # attach_chunk_provenance
+    # validate_extraction
+    return TranscriptKnowledgeDocument(
+                        source_id=transcript_id,
+                        chunks=results,     # _all,
+                        visual_candidates=visual_candidates,
+                        transcript_url=transcript.provenance.source_url
+                    )
+    # results
+
+
+if __name__ == "__main__":
+    run_knowledge_extraction()
         # is True:
         #     chunk = ""
         #     hi = !
+        
         
 
     # if doc_rep: # BaseModel subclass = 
     #     hi = !
 
     # for chunk in chunkdoc_rep.segments:
-
-
-    return 
 
 
 """

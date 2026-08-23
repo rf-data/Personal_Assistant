@@ -147,13 +147,17 @@ def append_json(data: dict, path: Path) -> None:
 
 
 def load_dict(path: Path | str, cls=None) -> dict:
-    logger = app_session.logger
-
+    
     path = ensure_dir(path)
 
     with path.open("r", encoding="utf-8") as f:
         data = json.load(f)
-        logger.info("Dict loaded:\t%s", shorten_path(path, 3))
+
+    if app_session.logger is not None:
+        app_session.logger.info(
+                    "Dict loaded:\t%s", 
+                    shorten_path(path, 3)
+                    )
 
     if cls is None:
         return data

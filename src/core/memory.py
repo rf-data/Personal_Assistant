@@ -1,11 +1,6 @@
 # memory.py
-import logging
 from logging import Logger
-# from dataclasses import dataclass, field
 from pydantic import BaseModel, Field, ConfigDict
-from datetime import datetime
-from pathlib import Path
-from typing import Any, ClassVar, Literal  # , Annotated
 
 from pydantic import Field
 
@@ -15,11 +10,8 @@ from tiktoken import Encoding       # , encoding_for_model
 from src.core.memory_parsing import ParseContext
 from src.core.config import (
     ChunkSettings,
-    DownloadSettings,
     GeneralSettings,
-    # NIRSettings,
-    ParseSettings,
-    TranscribeSettings
+    ParseSettings
 )
 
 

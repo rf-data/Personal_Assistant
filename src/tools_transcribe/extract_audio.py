@@ -16,7 +16,8 @@ from src.utils.yt_helper import yt_progress_hook
 
 def download_audio(
             context: AudioContext, 
-            format_override: str | None = None
+            format_override: str | None = None,
+            extra_ydl_opts: dict | None = None,
             ) -> list[Path]:
     # if context.url is None:
     #     raise ValueError("No URL provided.")
@@ -29,8 +30,10 @@ def download_audio(
     # if cfg.no_playlist is True:
     outtmpl = str(
                 save_folder
-                / f"{context.cfg_download.playlist_name or 'single'}"
-                / f"{'%(title)s.%(ext)s' if cfg.no_playlist is True else '%(playlist_index)03d_%(title)s.%(ext)s'}"
+                / f"{cfg.playlist_name or 'single'}"
+                / f"{'%(title)s.%(ext)s' 
+                     if cfg.no_playlist is True 
+                     else '%(playlist_index)03d_%(title)s.%(ext)s'}"
                 )
     # else:
     #     outtmpl = str(
@@ -59,18 +62,24 @@ def download_audio(
         # "ignoreerrors": cfg.ignore_errors,
         }
 
+    if extra_ydl_opts:
+        ydl_opts.update(extra_ydl_opts)
+
     try:
         with YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(context.url, download=True)
+            info = ydl.extract_info(
+                            context.url, 
+                            download=True
+                            )
 
             if info is None:
                 raise RuntimeError(
-                            f"Could not extract audio from {context.url}"
+                            f"Could not extract media from {context.url}"
                         )
             
     except DownloadError as exc:
         app_session.logger.error(
-                    "Audio download failed for %s: %s",
+                    "Audio/media download failed for %s: %s",
                     context.url,
                     exc,
                     )

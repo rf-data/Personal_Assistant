@@ -1,12 +1,8 @@
-## config.py
+## config_transcribe.py
 # import
-from typing import Annotated, Literal  # Dict,
-from pydantic import BaseModel, ConfigDict, Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
-
-# from src.core.memory import session_state
-# from src.utils.general_helper import load_env_vars
-# from src.utils.dict_helper import get_yaml_config
+from pathlib import Path
+from typing import Literal  
+from pydantic import BaseModel     
 
 TranscriptionBackend = Literal[
     "faster_whisper",
@@ -24,7 +20,7 @@ class TranscribeSettings(BaseModel):
                     "small",
                     "medium",
                     "large-v3",
-                ] = "medium" # später: "large-v3"
+                ] = "medium" # ? TODO: "large-v3"
 
     device: Literal["cpu", "cuda"] = "cpu"
 
@@ -43,13 +39,13 @@ class TranscribeSettings(BaseModel):
 
 
 class DownloadSettings(BaseModel):
-    format: str = "bestaudio/best"
-
+    # relevant for both
     no_playlist: bool = True
     playlist_items: str | None = None
     playlist_name: str|None = None
-
+    
     quiet: bool = False
+
     socket_timeout: int = 30
     retries: int = 20
     fragment_retries: int = 20
@@ -58,4 +54,27 @@ class DownloadSettings(BaseModel):
 
     show_progress: bool = True
     
+    cookie_file: Path | None = None
+
+    # relevant for video 
+    video_format: str = "bv/b"
+    force_keyframes_at_cuts: bool = True
+    padding: float = 2.0
     
+    # relevant for audio
+    audio_format: str = "bestaudio/best"
+
+
+class ScreenshotSettings(BaseModel):
+    image_format: str = "png"
+    
+    f_times_interval: float = 5.0
+    min_distance: int = 2
+    merge_gap: float = 2.0
+
+    min_hash_distance: int = 5
+    max_hash_distance: int = 20
+    max_time_gap: float = 15.0
+
+
+    # f_times_interval: float = 5.0
