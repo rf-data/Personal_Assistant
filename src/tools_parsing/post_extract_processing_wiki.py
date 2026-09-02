@@ -66,7 +66,7 @@ Knowledge Extraction
 def process_wiki(
     extract: DocumentExtract, prepare_config: dict, enricher
 ) -> None:  # List[PDFPageExtract]
-    logger = session_state.logger
+    logger = app_session.logger
 
     classifier = WikiClassifier(classify_config=prepare_config)
 

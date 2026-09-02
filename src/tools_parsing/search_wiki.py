@@ -28,8 +28,9 @@ def wiki_article_search(parse_context: ParseContext):
 
     parse_context.header = {
         "User-Agent": parsing_env_vars.header_agent,
-        "Referer": general_config.header_referer,
-        "Accept": general_config.header_accept,
+        # Referer": general_config.header_referer,
+        "Accept": "application/json",
+        "Accept-Encoding": "gzip",
     }
 
     wiki = WikipediaClient(parse_context)
@@ -37,12 +38,10 @@ def wiki_article_search(parse_context: ParseContext):
     # wiki_config=run_config,
     #                        header=header)
 
-    results = wiki.search_article(query=parse_config.query)
-
-    return results
+    return wiki.search_article(query=parse_config.query)
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # # load_env_vars()
 
     # from src.core.memory import session_state

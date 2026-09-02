@@ -17,7 +17,7 @@ from pathlib import Path
 import requests
 
 from src.core.config import parsing_env_vars
-from src.core.memory import ParseContext
+from src.core.memory import ParseContext, app_session
 from src.model_classes_parsing.data_classes_wiki import (
     ResultItem,
     SearchResult,
@@ -54,16 +54,22 @@ class WikipediaClient:
 
         self.wiki_config = parse_context.parse_settings.wiki
 
-        self.query_param = parse_context.query_param
+        """
+        self.query_param = getattr(
+                                parse_context, 
+                                query_param,
+                                None
+                                ) or {}
+                                """
         self.header = parse_context.header
         # .get(
         #     "query_time", datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         # )
-        save_dir = parsing_env_vars.data_wiki
+        # save_dir = 
 
-        self.save_folder = Path(save_dir)
-        self.save = parse_context.save
-        self.logger = parse_context.logger
+        self.save_folder = Path(parsing_env_vars.data_wiki)
+        # self.save = parse_context.save
+        self.logger = app_session.logger
 
         return
 
@@ -75,8 +81,10 @@ class WikipediaClient:
             "list": "search",
             "srsearch": query,
             "format": "json",
+            "formatversion": 2,
+            "maxlag": 5,
         }
-
+        
         data = self._get_wiki_response(params)
 
         results = data.get("query", {}).get("search", [])
@@ -107,12 +115,12 @@ class WikipediaClient:
             suggestion_hits=s_info.get("totalhits"),
         )
 
-        if self.save:
-            raw_path = Path(f"{self.save_folder}/query/{self.now}_{query}_raw")
-            norm_path = Path(f"{self.save_folder}/query/{self.now}_{query}_norm")
+        # if self.save:
+        # raw_path = Path(f"{self.save_folder}/query/{self.now}_{query}_raw")
+        # norm_path = Path(f"{self.save_folder}/query/{self.now}_{query}_norm")
 
-            save_dict(data, raw_path)
-            save_dict(s_results.model_dump(), norm_path)
+        # save_dict(data, raw_path)
+        # save_dict(s_results.model_dump(), norm_path)
 
         return s_results
 
@@ -151,10 +159,13 @@ class WikipediaClient:
             page_info.get("title"),
             page_info.get("page_id"),
         )
+
         params = {
             # "action": "query",
             "action": "parse",
             "format": "json",
+            "formatversion": 2,
+            "maxlag": 5,
             # "section": int,
             # # section         Only parse the content of the section with this identifier.
             "prop": "text",
@@ -270,11 +281,15 @@ class WikipediaClient:
             base_url = parsing_env_vars.wiki_de_api
         else:
             self.logger.error("Invalid language:\t%s", language)
-            sys.exit()
+            raise ValueError(
+                    "Input does not fit to allowed values: 'en' | 'de'" 
+                    )
 
-        if base_url is None:
+        if not base_url:
             self.logger.error("No API_URL provided in '.env'.")
-            sys.exit()
+            raise ValueError(
+                        f"No Wikipedia API URL configured for language '{language}'."
+                        )
 
         return base_url
 

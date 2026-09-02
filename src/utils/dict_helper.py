@@ -96,7 +96,6 @@ def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
 
 
 def save_dict(data: dict, path: Path) -> None:
-    logger = app_session.logger
 
     f_path = Path(f"{path}.json")
     f_path = ensure_dir(f_path)
@@ -111,19 +110,20 @@ def save_dict(data: dict, path: Path) -> None:
                 indent=2,
                 sort_keys=True,
             )
-            logger.info("Dict saved as %s", shorten_path(f_path, 3))
+            if app_session.logger:
+                app_session.logger.info("Dict saved as %s", shorten_path(f_path, 3))
 
         except TypeError as e:
-            logger.error(
+            if app_session.logger:
+                app_session.logger.error(
                 "ERROR (non_serializable):\n%s\n\ndtype=%s\nrepr=%s",
                 e,
                 type(data_new),
                 repr(data_new),
-            )
+                )
 
 
 def append_json(data: dict, path: Path) -> None:
-    logger = app_session.logger
 
     f_path = Path(f"{path}.json")
     path = ensure_dir(f_path)
@@ -133,25 +133,27 @@ def append_json(data: dict, path: Path) -> None:
         try:
             f.write(json.dumps(data_new) + "\n")
             # print(f"Appending data on {shorten_path(path, 3)}")
-            logger.info("Appending data on json_file in %s", shorten_path(f_path, 3))
+            if app_session.logger:
+                app_session.logger.info("Appending data on json_file in %s", shorten_path(f_path, 3))
 
         except TypeError as e:
-            logger.error(
+            if app_session.logger:
+                app_session.logger.error(
                 "ERROR (non_serializable):\n%s\n\ndtype=%s\nrepr=%s",
                 e,
                 type(data_new),
                 repr(data_new),
-            )
+                )
 
 
 def load_dict(path: Path | str) -> dict:
-    logger = app_session.logger
-
+    
     path = ensure_dir(path)
 
     with path.open("r", encoding="utf-8") as f:
         data = json.load(f)
-        logger.info("Dict loaded:\t%s", shorten_path(path, 3))
+        if app_session.logger:
+            app_session.logger.info("Dict loaded:\t%s", shorten_path(path, 3))
 
     return data
 

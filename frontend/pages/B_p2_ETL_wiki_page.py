@@ -30,7 +30,9 @@ def show():
         parse_config = app_session.parse_settings
         parse_config.wiki.query = query
 
-        parse_context = ParseContext(parse_settings=app_session.parse_settings)
+        parse_context = ParseContext(
+                        parse_settings=app_session.parse_settings
+                        )
 
         parse_context.logger = app_session.logger
 

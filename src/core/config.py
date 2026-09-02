@@ -1,5 +1,6 @@
 ## config.py
 # import
+from pathlib import Path
 from typing import Annotated, Literal  # Dict,
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -24,33 +25,34 @@ class ParseEnvVars(BaseSettings):
     app_name: str = "personal_assistant"
 
     # raw data
-    data_dir: str
-    data_audio: str
-    data_docx: str
-    data_html: str
-    data_image: str
-    data_json_nb: str
-    data_pdf: str
-    data_txt_md: str
-    data_wiki: str
-    data_qms: str
+    data_dir: Path
+    data_audio: Path
+    data_docx: Path
+    data_html: Path
+    data_image: Path
+    data_json_nb: Path
+    data_pdf: Path
+    data_txt_md: Path
+    data_wiki: Path
+    data_qms: Path
 
     # other folder_paths
-    log_dir: str
-    prompt_dir: str
-    report_dir: str
-    config_dir: str
-    cache_dir: str
-    chroma_dir: str
+    log_dir: Path
+    prompt_dir: Path
+    report_dir: Path
+    config_dir: Path
+    cache_dir: Path
+    chroma_dir: Path
 
     # wikipedia relevance
     wiki_en_api: str
+    wiki_de_api: str
     header_agent: str
 
 
 parsing_env_vars = ParseEnvVars()
 
-
+'''
 class AgenticEnvVars(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env.agentic",
@@ -72,8 +74,10 @@ class AgenticEnvVars(BaseSettings):
 
 
 agentic_env_vars = AgenticEnvVars()
+'''
 
 
+'''
 class MLOpsEnvVars(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env.mlops",
@@ -94,11 +98,13 @@ class MLOpsEnvVars(BaseSettings):
 mlops_env_vars = MLOpsEnvVars()
 
 
+'''
+
 # from pydantic import BaseModel, model_validator, field_validator, Field
 # from typing import Optional
 # from datetime import date
 
-
+'''
 class OrganizerEnvVars(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env.organizer",
@@ -120,7 +126,7 @@ class OrganizerEnvVars(BaseSettings):
 
 organizer_env_vars = OrganizerEnvVars()
 """"""
-
+'''
 
 # ------------------------------------
 # FILE_TYPE SPECIFIC PARSING SETTINGS
@@ -225,8 +231,9 @@ class GenURLSettings(GeneralFileSettings):
 
 class GenWikiSettings(GeneralFileSettings):
     # header_agent
-    header_referer: str = ""
+    # header_referer: str = ""
     header_accept: str = ""
+    header_accept_encoding: str = ""
 
 
 #     query: str = Field(default_factory=str)

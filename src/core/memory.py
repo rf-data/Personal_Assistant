@@ -1,6 +1,8 @@
 # memory.py
 import logging
-from dataclasses import dataclass, field
+from logging import Logger
+# from dataclasses import dataclass, field
+from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime
 from pathlib import Path
 from typing import Any, ClassVar, Literal  # , Annotated
@@ -13,7 +15,7 @@ from tiktoken import encoding_for_model
 from src.core.config import (
     ChunkSettings,
     GeneralSettings,
-    # NIRSettings,
+    # NIRSettings,b
     ParseSettings,
 )
 
@@ -27,38 +29,38 @@ LLMClient = Annotated[
 """
 
 
-@dataclass
-class LLMContext:
+# @dataclass
+class LLMContext(BaseModel):
     name_logger: str
     name_logfile: str
     path_tracker_file: str
     temperature: float
-    callbacks: list = field(default_factory=["_track_costs"])
+    callbacks: list = Field(default_factory=["_track_costs"])
     # model: Literal["gpt-4o"]
     generation_model: Literal["openai/gpt-4o-mini"] = "openai/gpt-4o-mini"  # LiteLLM
     extraction_model: Literal["openai-chat:gpt-4o-mini"] = "openai-chat:gpt-4o-mini"
 
 
-@dataclass
-class SOPGenContext:
-    llm_context: LLMContext = field(default_factory=LLMContext)
-    title: str = field(default_factory=str)
-    topics: list = field(default_factory=list)
+# @dataclass
+class SOPGenContext(BaseModel):
+    llm_context: LLMContext = Field(default_factory=LLMContext)
+    title: str = Field(default_factory=str)
+    topics: list = Field(default_factory=list)
     transformer_model: Literal[
         "all-MiniLM-L6-v2",
         "paraphrase-multilingual-MiniLM-L12-v2",
         "intfloat/multilingual-e5-base",
         None,
     ] = Field(default=None)
-    similarity_threshold: float = field(default_factory=float)
+    similarity_threshold: float = Field(default_factory=float)
     q_doc_type: Literal[
         "SOP",
         # "SOP_specific",
         "record",
         "risk_analysis",
-    ] = field(default="SOP")
+    ] = Field(default="SOP")
     work_mode: Literal["create", "revise", "merge"] = "create"
-    template_id: int = field(default_factory=int)
+    template_id: int = Field(default_factory=int)
     style: Literal["gmp_oriented"] = "gmp_oriented"
     output_format: Literal["markdown"] = "markdown"
     where: str | None = None
@@ -66,12 +68,12 @@ class SOPGenContext:
     # # "merge", "split"
     chapter_mode: Literal["full", "chapterwise"] = "chapterwise"
     chapters: list[str] | str | Literal["n.a."] = "n.a."
-    collection: list[str] = field(default_factory=list)
+    collection: list[str] = Field(default_factory=list)
     # | Collection
     # results: Dict = field(default_factory=dict)
-    n_results: int = field(default_factory=int)
-    save_folder: str = field(default_factory=str)
-    save_name: str = field(default_factory=str)
+    n_results: int = Field(default_factory=int)
+    save_folder: str = Field(default_factory=str)
+    save_name: str = Field(default_factory=str)
 
 
 # @dataclass
@@ -82,37 +84,42 @@ class SOPGenContext:
 # class ParseContext:
 
 
-@dataclass
-class ParseContext:
-    chunk_settings: ChunkSettings = field(default_factory=ChunkSettings)
+# @dataclass
+class ParseContext(BaseModel):
+    chunk_settings: ChunkSettings = Field(default_factory=ChunkSettings)
     encoder = encoding_for_model
-    general_settings: GeneralSettings = field(default_factory=GeneralSettings)
-    parse_settings: ParseSettings = field(
+    general_settings: GeneralSettings = Field(default_factory=GeneralSettings)
+    parse_settings: ParseSettings = Field(
         default_factory=ParseSettings  # _all
     )
     text_type: Literal[
         "txt", "md", "pdf", "json_nb", "wiki", "docx", "html", "url", None
-    ] = field(default=None)
-    save_folder: str | Path = field(default_factory=str)
-    save_name: str | Path = field(default_factory=str)
-    doc_id: str = field(default_factory=str)
-    doc_kind: Literal["regulatory", "commentSOP"] = field(default="regulatory")
-    timestamp: datetime | str | None = field(default=None)
-    run_id: str = field(default_factory=str)
+    ] = Field(default=None)
+    save_folder: str | Path = Field(default_factory=str)
+    save_name: str | Path = Field(default_factory=str)
+    doc_id: str = Field(default_factory=str)
+    doc_kind: Literal["regulatory", "commentSOP"] = Field(default="regulatory")
+    timestamp: datetime | str | None = Field(default=None)
+    run_id: str = Field(default_factory=str)
     logger: ClassVar = logging.getLogger(__name__)
-    header: dict = field(default_factory=dict)
+    header: dict = Field(default_factory=dict)
 
 
-@dataclass
-class AppSession:
-    chunk_settings: ChunkSettings = field(default_factory=ChunkSettings)
+# @dataclass
+class AppSession(BaseModel):
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True,
+        )
+
+    chunk_settings: ChunkSettings = Field(default_factory=ChunkSettings)
     encoder = encoding_for_model
-    env_loaded: list[str] = field(default_factory=list)
-    general_settings: GeneralSettings = field(default_factory=GeneralSettings)
-    logger: ClassVar = logging.getLogger(__name__)
-    parse_settings: ParseSettings = field(default_factory=ParseSettings)
-    run_context: ParseContext = field(default_factory=ParseContext)
-    timestamp: str = field(default_factory=str)
+    env_loaded: list[str] = Field(default_factory=list)
+    general_settings: GeneralSettings = Field(default_factory=GeneralSettings)
+    logger: Logger | None = None
+    # ClassVar = logging.getLogger(__name__)
+    parse_settings: ParseSettings = Field(default_factory=ParseSettings)
+    run_context: ParseContext = Field(default_factory=ParseContext)
+    timestamp: str = Field(default_factory=str)
 
     # frontend_config: FrontendConfig
 
