@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from src.core.config import folder_env_vars
+from src.core.memory import ParseContext
 from src.model_tools_parsing.feature_enricher import FeatureEnricher
 from src.model_tools_parsing.pdf_extractor import PDFCleanExtractor
 from src.tools_parsing.assemble_pdf import assemble_single_pdf
@@ -41,5 +42,6 @@ def run_pdf_extraction(parse_context):
     return md_file
 
 
-# if __name__ == "__main__":
-#     run_pdf_extraction
+if __name__ == "__main__":
+    parse_context = ParseContext()
+    run_pdf_extraction(parse_context)
