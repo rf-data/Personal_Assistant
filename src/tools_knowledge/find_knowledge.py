@@ -1,39 +1,36 @@
 ## find_knowledge.py
 # imports
 import json
+
 # from pathlib import Path
 import marvin
 
 from src.core.memory import app_session
 from src.model_knowledge.data_knowledge import (
-                                            ChunkKnowledgeResult,
-                                            # KnowledgeSemanticType, 
-                                            # MathExpressionType,
-                                            TranscriptChunk,
-                                            VisualCandidate    
-                                            )
-from src.model_transcribe.data_transcribe import (
-                                            TranscriptSegment, 
-                                            TranscriptDocument
-                                            )
+    ChunkKnowledgeResult,
+    # KnowledgeSemanticType,
+    # MathExpressionType,
+    TranscriptChunk,
+    VisualCandidate,
+)
+from src.model_transcribe.data_transcribe import TranscriptSegment, TranscriptDocument
 from src.core.memory_knowledge import KnowledgeContext
 from src.agent.prompts.prompt_know_extract import build_knowledge_extraction_prompt
 
 from src.utils.general_helper import (
-                                hash_text, 
-                                load_from_cache,
-                                make_cache_key,
-                                save_to_cache
-                                )
-# from src.utils.dict_helper import load_dict                                  
+    hash_text,
+    load_from_cache,
+    make_cache_key,
+    save_to_cache,
+)
+# from src.utils.dict_helper import load_dict
 
 
 def build_transcript_chunks(
-    context: KnowledgeContext,
-    transcript: TranscriptDocument
-    ) -> list[TranscriptChunk]:
+    context: KnowledgeContext, transcript: TranscriptDocument
+) -> list[TranscriptChunk]:
 
-    dur_target = context.target_duration   # float = 45,
+    dur_target = context.target_duration  # float = 45,
     # dur_max = context.max_duration         # float = 75
     seg_overlap = context.overlap_segments  # : int = 2
 
@@ -48,89 +45,73 @@ def build_transcript_chunks(
         # if current_dur >= dur_max:
         #     # harter Cut
 
-        # elif current_dur >= dur_target: 
+        # elif current_dur >= dur_target:
         if current_dur >= dur_target:
             # bevorzugter Cut, ggf. auf Themenwechsel warten
             final.append(
-                    TranscriptChunk(
-                            chunk_id=f"chunk_{len(final):04d}",
-                            segment_ids=[s.seg_id for s in current],
-                            start=current[0].start,
-                            end=current[-1].end,
-                            text="\n".join(s.text for s in current),
-                            n_words=sum(
-                                    len(s.text.split())
-                                    for s in current
-                                    )
-                            )
-                    )
+                TranscriptChunk(
+                    chunk_id=f"chunk_{len(final):04d}",
+                    segment_ids=[s.seg_id for s in current],
+                    start=current[0].start,
+                    end=current[-1].end,
+                    text="\n".join(s.text for s in current),
+                    n_words=sum(len(s.text.split()) for s in current),
+                )
+            )
 
             current = current[-seg_overlap:]
 
     if current:
-        existing_ids = set(
-                    final[-1].segment_ids
-                    if final
-                    else []
-                    )
+        existing_ids = set(final[-1].segment_ids if final else [])
         new_ids = {s.seg_id for s in current}
 
         if not new_ids.issubset(existing_ids):
             final.append(
-                    TranscriptChunk(
-                            chunk_id=f"chunk_{len(final):04d}",
-                            segment_ids=[s.seg_id for s in current],
-                            start=current[0].start,
-                            end=current[-1].end,
-                            text="\n".join(s.text for s in current),
-                            n_words=sum(
-                                    len(s.text.split())
-                                    for s in current
-                                    )
-                            )
-                    )
+                TranscriptChunk(
+                    chunk_id=f"chunk_{len(final):04d}",
+                    segment_ids=[s.seg_id for s in current],
+                    start=current[0].start,
+                    end=current[-1].end,
+                    text="\n".join(s.text for s in current),
+                    n_words=sum(len(s.text.split()) for s in current),
+                )
+            )
 
-    return final    
+    return final
 
 
-def enrich_chunks(
-            chunks: list[TranscriptChunk]
-            ) -> list[TranscriptChunk]:
+def enrich_chunks(chunks: list[TranscriptChunk]) -> list[TranscriptChunk]:
 
     n_chunks = len(chunks)
 
     for idx, chunk in enumerate(chunks):
-
         # previous_context = (
-        #                 chunks[idx-1].text 
-        #                 if idx > 0 
+        #                 chunks[idx-1].text
+        #                 if idx > 0
         #                 else None
         #                 )
         # next_context = (
-        #                 chunks[idx+1].text 
-        #                 if idx < n_chunks -1 
+        #                 chunks[idx+1].text
+        #                 if idx < n_chunks -1
         #                 else None
         #                 )
 
         chunk.previous_context = (
-                            "\n".join(
-                                chunks[idx - 1].text.splitlines()[-3:]
-                            ) if idx > 0 
-                            else None
-                            )
+            "\n".join(chunks[idx - 1].text.splitlines()[-3:]) if idx > 0 else None
+        )
 
         chunk.next_context = (
-                            "\n".join(
-                                chunks[idx + 1].text.splitlines()[:3]
-                            ) if idx < n_chunks -1 
-                            else None
-                            )
+            "\n".join(chunks[idx + 1].text.splitlines()[:3])
+            if idx < n_chunks - 1
+            else None
+        )
 
-        
-    
     return chunks
 
+
 KNOWLEDGE_EXTRACTION_PROMPT = build_knowledge_extraction_prompt()
+
+
 @marvin.fn(instructions=KNOWLEDGE_EXTRACTION_PROMPT)
 def extract_knowledge(
     target_chunk: str,
@@ -141,75 +122,72 @@ def extract_knowledge(
 ) -> ChunkKnowledgeResult:
     ""
 
+
 def analyze_and_extract_chunk(
-                    chunk: TranscriptChunk,
-                    model_name: str
-                    ) -> ChunkKnowledgeResult:
+    chunk: TranscriptChunk, model_name: str
+) -> ChunkKnowledgeResult:
 
     chunk_info = {
-                "chunk_id": chunk.chunk_id,
-                "segment_ids": chunk.segment_ids,
-                "start": chunk.start,
-                "end": chunk.end,
-                "previous_context": chunk.previous_context,
-                "chunk": chunk.text,
-                "next_context": chunk.next_context
-                }
-    
+        "chunk_id": chunk.chunk_id,
+        "segment_ids": chunk.segment_ids,
+        "start": chunk.start,
+        "end": chunk.end,
+        "previous_context": chunk.previous_context,
+        "chunk": chunk.text,
+        "next_context": chunk.next_context,
+    }
+
     # model_name = context.llm_model  # marvin_gpt-4o
     prompt_hash = hash_text(KNOWLEDGE_EXTRACTION_PROMPT)
 
     serialized_input = json.dumps(
-                            chunk_info,
-                        #       {
-                        # "previous_context": chunk.previous_context,
-                        # "target_chunk": chunk.text,
-                        # "next_context": chunk.next_context,
-                        # },
-                            sort_keys=True,
-                            ensure_ascii=False,
-                            )
-    
+        chunk_info,
+        #       {
+        # "previous_context": chunk.previous_context,
+        # "target_chunk": chunk.text,
+        # "next_context": chunk.next_context,
+        # },
+        sort_keys=True,
+        ensure_ascii=False,
+    )
+
     input_hash = hash_text(text=serialized_input)
 
     cache_key = make_cache_key(
-            params={
-                "task": "knowledge_extraction_v1",
-                "prompt_hash": prompt_hash,
-                "input_hash": input_hash,
-                "chunk_id": chunk.chunk_id,
-                # "run_name": "chapter_planning_v2",
-                # "prompt_version": "prompt_v1",
-                "model": model_name,
-                "schema": "ChunkKnowledgeResult_v1",
-                # topics_hash
-            }
-        )
+        params={
+            "task": "knowledge_extraction_v1",
+            "prompt_hash": prompt_hash,
+            "input_hash": input_hash,
+            "chunk_id": chunk.chunk_id,
+            # "run_name": "chapter_planning_v2",
+            # "prompt_version": "prompt_v1",
+            "model": model_name,
+            "schema": "ChunkKnowledgeResult_v1",
+            # topics_hash
+        }
+    )
 
     cache_folder = "knowledge_extraction"
 
     cached = load_from_cache(
-            key=cache_key, 
-            folder=cache_folder, 
-            cls=ChunkKnowledgeResult
-        )
+        key=cache_key, folder=cache_folder, cls=ChunkKnowledgeResult
+    )
 
     if cached is not None:
         app_session.logger.info(
-                    "Loading cached knowledge extraction "
-                    "(chunk=%s, key=%s)",
-                    chunk.chunk_id,
-                    cache_key[:12]
-                    )
+            "Loading cached knowledge extraction (chunk=%s, key=%s)",
+            chunk.chunk_id,
+            cache_key[:12],
+        )
         return cached
 
     result = extract_knowledge(
-                    target_chunk=chunk_info.get("chunk"),
-                    previous_context=chunk_info.get("previous_context"),
-                    next_context=chunk_info.get("next_context"),
-                    # start=chunk_info["start"],
-                    # end=chunk_info["end"],
-                    )
+        target_chunk=chunk_info.get("chunk"),
+        previous_context=chunk_info.get("previous_context"),
+        next_context=chunk_info.get("next_context"),
+        # start=chunk_info["start"],
+        # end=chunk_info["end"],
+    )
 
     save_to_cache(
         key=cache_key,
@@ -221,22 +199,22 @@ def analyze_and_extract_chunk(
             "input_hash": input_hash,
             "model": model_name,
             "schema": "ChunkKnowledgeResult_v1",
-            },
-        )
+        },
+    )
 
     return result
 
 
 def attach_chunk_provenance(
-                result: ChunkKnowledgeResult,
-                chunk: TranscriptChunk,
-                ) -> ChunkKnowledgeResult:
+    result: ChunkKnowledgeResult,
+    chunk: TranscriptChunk,
+) -> ChunkKnowledgeResult:
 
     result.analysis.chunk_id = chunk.chunk_id
-    
+
     if result.extraction is None:
         return result
-    
+
     result.extraction.chunk_id = chunk.chunk_id
 
     for statement in result.extraction.statements:
@@ -252,29 +230,24 @@ def attach_chunk_provenance(
         formula.start = chunk.start
         formula.end = chunk.end
         formula.source = "transcript"
-        
 
     return result
 
 
 def validate_extraction(
-            result: ChunkKnowledgeResult,
-            ) -> ChunkKnowledgeResult:
+    result: ChunkKnowledgeResult,
+) -> ChunkKnowledgeResult:
 
     if result.extraction is None:
         return result
-    
+
     result.extraction.statements = [
-                                item
-                                for item in result.extraction.statements
-                                if item.text.strip()
-                                ]
+        item for item in result.extraction.statements if item.text.strip()
+    ]
 
     result.extraction.formulas = [
-                                item
-                                for item in result.extraction.formulas
-                                if item.plain_text.strip()
-                                ]
+        item for item in result.extraction.formulas if item.plain_text.strip()
+    ]
 
     if result.analysis.needs_visual_context:
         for formula in result.extraction.formulas:
@@ -284,16 +257,15 @@ def validate_extraction(
             # )
             formula.verification_status = "pending"
             formula.verification_reason = (
-                        "Transcript-based reconstruction requires "
-                        "visual verification."
-                        )
+                "Transcript-based reconstruction requires visual verification."
+            )
     # ? TODO:
     # confidence < threshold
     # leere/absurde Formel
     # Duplikat im selben Chunk
     # Meta-Aussage statt Fachwissen
- 
-    return result 
+
+    return result
 
 
 def make_visual_candidate(
@@ -301,39 +273,36 @@ def make_visual_candidate(
     chunk: TranscriptChunk,
 ) -> VisualCandidate | None:
 
-    if (
-        result.extraction is None
-        or not result.analysis.needs_visual_context
-        ):
+    if result.extraction is None or not result.analysis.needs_visual_context:
         return None
-    
+
     # for expression in result.extraction.formulas:
     #     expression.verification_status = "pending"
     #     expression.verification_reason = (
     #             "Visual context required for reliable reconstruction."
     #             )
-      
+
     return VisualCandidate(
-                    chunk_id=chunk.chunk_id,
-                    segment_ids=chunk.segment_ids.copy(),
-                    start=chunk.start,
-                    end=chunk.end,
-                    reason=result.analysis.visual_reason,
-                    )
+        chunk_id=chunk.chunk_id,
+        segment_ids=chunk.segment_ids.copy(),
+        start=chunk.start,
+        end=chunk.end,
+        reason=result.analysis.visual_reason,
+    )
 
 
 # def collect_visual_candidates(
 #                         results: list[ChunkKnowledgeResult]
-#                         ) -> TranscriptKnowledgeDocument: 
+#                         ) -> TranscriptKnowledgeDocument:
 
 
 #     visual_candidates: list = []
 
-#     for result in results: 
+#     for result in results:
 #         if result.analysis.needs_visual_context:
 #             visual_candidates.append(
 #                         VisualCandidate(
-#                             chunk_id=result.analysis.chunk_id, 
+#                             chunk_id=result.analysis.chunk_id,
 #                             segment_ids: list[int]
 #                             start: float
 #                             end: float
@@ -342,18 +311,17 @@ def make_visual_candidate(
 #                         )
 
 #     return TranscriptKnowledgeDocument(
-#                     source_id="", 
+#                     source_id="",
 #                     chunks=results,  # : list[ChunkKnowledgeResult]
 #                     visual_candidates=visual_candidates        # : list[VisualCandidate]
 #                     )
 
 
 def classify_chunk_knowledge(
-                text_chunks: dict[str, str]    
-                # ) -> KnowledgeCandidate:
-                ):
-
-    # TODO: 
+    text_chunks: dict[str, str],
+    # ) -> KnowledgeCandidate:
+):
+    # TODO:
     """
     TranscriptChunk
         ↓
@@ -393,7 +361,8 @@ def classify_chunk_knowledge(
       └─ Wissensextraktion
     """
 
-    return 
+    return
+
 
 """
 
@@ -402,27 +371,25 @@ def classify_chunk_knowledge(
 # def extract_chunk_knowledge() -> ExtractedKnowledge:
 
 
-#     return 
+#     return
 
-    #         # else: 
-    #         #     hi = !
-    #         start_segs = transcript.segments[idx-seg_overlap-1:idx-1]
-    #         current.extend(start_segs)
+#         # else:
+#         #     hi = !
+#         start_segs = transcript.segments[idx-seg_overlap-1:idx-1]
+#         current.extend(start_segs)
 
-    #         min_time = 1e5
-    #         max_time = 0
-    #         for start_s in start_segs:
-    #             min_time = min(min_time, start_s.start)
-    #             max_time = max(max_time, start_s.end)
+#         min_time = 1e5
+#         max_time = 0
+#         for start_s in start_segs:
+#             min_time = min(min_time, start_s.start)
+#             max_time = max(max_time, start_s.end)
 
-    #         current_dur = max_time - min_time
-    #         # (start_s.end - start_s.start)
-    #         continue
+#         current_dur = max_time - min_time
+#         # (start_s.end - start_s.start)
+#         continue
 
-    #     current.append(seg.text)
-    #     current_dur += (seg.end - seg.start)
-
-
-    # return 
+#     current.append(seg.text)
+#     current_dur += (seg.end - seg.start)
 
 
+# return

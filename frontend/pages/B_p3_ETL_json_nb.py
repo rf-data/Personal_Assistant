@@ -5,7 +5,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory import ParseContext, app_session
 from src.model_tools_parsing.base_assembler import BaseAssembler
 from src.model_tools_parsing.feature_enricher import FeatureEnricher
@@ -27,7 +27,7 @@ def show():
     with file_select:
         st.subheader("🖼️ Select an JSON file")
 
-        nb_data = parsing_env_vars.data_json_nb
+        nb_data = folder_env_vars.data_json_nb
 
         input_data = f"{nb_data}/input"
 

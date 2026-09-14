@@ -8,7 +8,7 @@ import streamlit as st
 # from src.core.memory import SOPGenContext
 # from src.run_st_SOP_generation import run_st_sop_generation
 # from src.core.memory import app_session, ParseContext
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 
 # from src.core.config import ChunkSettings
 # from src.utils.path_helper import shorten_path, ensure_dir
@@ -86,7 +86,7 @@ def show():
     )
     #    ADAPT TO NEW FILE SYSTEM''")
 
-    data = parsing_env_vars.data_dir
+    data = folder_env_vars.data_dir
     folder_path = f"{data}/{sop_title}"
     dates = [f.stem.split("_")[0] for f in Path(folder_path).rglob("*.json")]
 

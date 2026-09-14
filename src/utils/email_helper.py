@@ -1,8 +1,9 @@
 ## email_helper.py
 # import
 from __future__ import annotations
-from collections.abc import Callable, Iterable
+from collections.abc import Iterable  # Callable,
 from typing import Any
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup as bs
 import imaplib
 from imapclient.imap_utf7 import decode as decode_imap_utf7
@@ -20,10 +21,7 @@ from email.message import EmailMessage as ParsedEmailMessage
 # from functools import wraps
 
 from src.core.memory import app_session
-from src.model_organizer.model_email import (
-                                        Mailbox,
-                                        EmailMessage
-                                             )
+from gmp_compliance.src.model_organizer.data_email import Mailbox, EmailMessage
 
 
 @contextmanager
@@ -91,13 +89,8 @@ def list_mailboxes(mail) -> list[Mailbox]:
         if match is None:
             # Ungewöhnliche Serverantwort nicht stillschweigend verlieren
             mailboxes.append(
-                    Mailbox(
-                        name=decoded,
-                        flags=[],
-                        delimiter=None,
-                        raw_name="n.a."
-                        )
-                    )
+                Mailbox(name=decoded, flags=[], delimiter=None, raw_name="n.a.")
+            )
             continue
 
         flags_text = match.group("flags").strip()
@@ -114,13 +107,13 @@ def list_mailboxes(mail) -> list[Mailbox]:
         name = decode_imap_utf7(raw_name.encode("ascii"))
 
         mailboxes.append(
-                    Mailbox(
-                        name=name,
-                        flags=flags,
-                        delimiter=delimiter,
-                        raw_name=raw_name        # decoded,
-                        )
-                    )
+            Mailbox(
+                name=name,
+                flags=flags,
+                delimiter=delimiter,
+                raw_name=raw_name,  # decoded,
+            )
+        )
 
     return mailboxes
 
@@ -135,6 +128,7 @@ SPECIAL_USE_FLAGS = {
     "\\Flagged": "flagged",
     "\\Important": "important",
 }
+
 
 def detect_mailbox_type(flags: list[str]) -> str | None:
     for flag in flags:
@@ -164,6 +158,7 @@ def get_sent_datetime(message) -> datetime | None:
 
 INTERNAL_DATE_PATTERN = re.compile(rb'INTERNALDATE "([^"]+)"')
 
+
 def parse_internal_date(fetch_metadata: bytes) -> datetime | None:
     match = INTERNAL_DATE_PATTERN.search(fetch_metadata)
 
@@ -186,23 +181,19 @@ def get_mailbox_status(mail, mailbox: Mailbox):
     status, data = mail.select(imap_name, readonly=True)
 
     if status != "OK":
-        raise RuntimeError(
-            f"Could not select mailbox {mailbox.name!r}."
-        )
+        raise RuntimeError(f"Could not select mailbox {mailbox.name!r}.")
     mailbox.total_messages = int(data[0])
 
     status, data = mail.search(None, "UNSEEN")
     mailbox.unread_messages = len(data[0].split())
     if status != "OK":
-        raise RuntimeError(
-            "Could not search unread mails."
-        )
+        raise RuntimeError("Could not search unread mails.")
 
     app_session.logger.info(
-                "Found %s total and %s unseen emails",
-                mailbox.total_messages,
-                mailbox.unread_messages
-            )
+        "Found %s total and %s unseen emails",
+        mailbox.total_messages,
+        mailbox.unread_messages,
+    )
     return mailbox
 
 
@@ -213,6 +204,7 @@ def filter_mails(
     *,
     case_sensitive: bool = False,
 ) -> list[EmailMessage]:
+
     allowed_fields = {
         "subject",
         "sender_name",
@@ -223,15 +215,10 @@ def filter_mails(
 
     if field not in allowed_fields:
         raise ValueError(
-            f"Unsupported field {field!r}. "
-            f"Allowed fields: {sorted(allowed_fields)}"
+            f"Unsupported field {field!r}. Allowed fields: {sorted(allowed_fields)}"
         )
 
-    search_term = (
-        keyword
-        if case_sensitive
-        else keyword.casefold()
-    )
+    search_term = keyword if case_sensitive else keyword.casefold()
 
     matches: list[EmailMessage] = []
 
@@ -272,41 +259,34 @@ def filter_mails(
 #     ),
 # )
 
+
 def search_mail_uids(
-            mail: imaplib.IMAP4_SSL,
-            mailbox: Mailbox,
-            criteria: tuple[str, ...] = ("UNSEEN",)
-    ) -> list[str]:
+    mail: imaplib.IMAP4_SSL, mailbox: Mailbox, criteria: tuple[str, ...] = ("UNSEEN",)
+) -> list[str]:
 
     status, _ = mail.select(
         mailbox.raw_name,
         readonly=True,
-        )
+    )
 
     if status != "OK":
-        raise RuntimeError(
-            f"Could not select mailbox {mailbox.name!r}."
-        )
+        raise RuntimeError(f"Could not select mailbox {mailbox.name!r}.")
 
     status, messages = mail.uid(
         "SEARCH",
         None,
         *criteria,
-        )
+    )
 
     if status != "OK":
         raise RuntimeError(
-            f"Could not search mailbox {mailbox.name!r} "
-            f"with criteria {criteria!r}."
+            f"Could not search mailbox {mailbox.name!r} with criteria {criteria!r}."
         )
 
     if not messages or not messages[0]:
         return []
 
-    return [
-        uid.decode("ascii")
-        for uid in messages[0].split()
-        ]
+    return [uid.decode("ascii") for uid in messages[0].split()]
 
 
 def parse_sender(message) -> tuple[str | None, str | None]:
@@ -327,9 +307,7 @@ def extract_bodies(
 
     if message.is_multipart():
         for part in message.walk():
-            content_disposition = (
-                part.get_content_disposition()
-            )
+            content_disposition = part.get_content_disposition()
 
             if content_disposition == "attachment":
                 continue
@@ -362,17 +340,9 @@ def extract_bodies(
             else:
                 plain_parts.append(content)
 
-    body_plain = (
-        "\n".join(plain_parts).strip()
-        if plain_parts
-        else None
-    )
+    body_plain = "\n".join(plain_parts).strip() if plain_parts else None
 
-    body_html = (
-        "\n".join(html_parts).strip()
-        if html_parts
-        else None
-    )
+    body_html = "\n".join(html_parts).strip() if html_parts else None
 
     return body_plain, body_html
 
@@ -398,14 +368,15 @@ def is_allowed_url(url: str) -> bool:
 
 #     return list(dict.fromkeys(links))
 
+
 def extract_html_links(
     html: str | None,
-    ) -> list[str]:
+) -> list[str]:
     if not html:
         return []
 
     soup = bs(html, "html.parser")
-    links: list[str] = [] 
+    links: list[str] = []
 
     for tag in soup.find_all("a", href=True):
         href = tag.get("href")
@@ -413,9 +384,7 @@ def extract_html_links(
         if isinstance(href, str) and is_allowed_url(href):
             links.append(href)
 
-
     return list(dict.fromkeys(links))
-
 
 
 URL_PATTERN = re.compile(
@@ -426,161 +395,129 @@ URL_PATTERN = re.compile(
 
 def extract_plain_links(
     text: str | None,
-    ) -> list[str]:
+) -> list[str]:
     if not text:
         return []
 
     return list(
-        dict.fromkeys(
-            match.rstrip(".,);]")
-            for match in URL_PATTERN.findall(text)
-        )
+        dict.fromkeys(match.rstrip(".,);]") for match in URL_PATTERN.findall(text))
     )
 
 
 def extract_links(
-            message: EmailMessage,
-            ) -> list[str]:
+    message: EmailMessage,
+) -> EmailMessage:
 
-    links_plain = [
-            *extract_plain_links(message.body_plain),
-            ]
+    message.links_plain = extract_plain_links(message.body_plain)
+    # links_plain = [*, ]
 
-    if links_plain:
-        message.links_plain = list(dict.fromkeys(links_plain))
+    message.links_html = extract_html_links(message.body_html)
+    # if links_plain:
+    #     message.links_plain = list(dict.fromkeys(links_plain))
 
-        # for link in links_plain:
-        #     app_session.logger()
-    else:
-        message.links_plain = []
+    #     # for link in links_plain:
+    #     #     app_session.logger()
+    # else:
+    #     message.links_plain = []
 
     # message.links_html = list(dict.fromkeys(links_html)) if links_html else []
 
     return message
 
 
-# def fetch_mails_from_mailbox(
-#     mail: imaplib.IMAP4_SSL,
-#     mailbox: Mailbox,
-#     criteria: tuple[str, ...] = ("UNSEEN",),
-#     ) -> list[EmailMessage]:
+def fetch_mails_from_mailbox(
+    mail: imaplib.IMAP4_SSL,
+    mailbox: Mailbox,
+    criteria: tuple[str, ...] = ("UNSEEN",),
+) -> list[EmailMessage]:
 
-#    uids = search_mail_uids(
-#         mail,
-#         mailbox,
-#         criteria=criteria,
-#         )
+    # (1) find relevant UIDs
+    uids = search_mail_uids(
+        mail,
+        mailbox,
+        criteria=criteria,
+    )
 
-#     results: list[EmailMessage] = []
+    # (2) load respective mails as read-only
+    results: list[EmailMessage] = []
 
-#     for uid in uids:
-#         status, data = mail.uid(
-#             "FETCH",
-#             uid,
-#             "(INTERNALDATE FLAGS BODY.PEEK[])",
-#         )
+    for uid in uids:
+        status, data = mail.uid(
+            "FETCH",
+            uid,
+            "(INTERNALDATE FLAGS BODY.PEEK[])",
+        )
 
-#         if status != "OK" or not data:
-#             app_session.logger.warning(
-#                 "Could not fetch email UID %s.",
-#                 uid,
-#             )
-#             continue
+        if status != "OK" or not data:
+            app_session.logger.warning(
+                "Could not fetch email UID %s.",
+                uid,
+            )
+            continue
 
-#         if status != "OK":
-#             raise RuntimeError("Could not search for unseen emails.")
+        # if status != "OK":
+        #     raise RuntimeError("Could not search for unseen emails.")
 
-#     # mailbox.total_messages = len(email_ids)
-#     # email_ids = messages[0].split()
-#     #     app_session.logger.info(
-#     #         "Found %s total emails.",
-#     #         mailbox.total_messages,
-#     #     )
+        # (3) extract meta data + raw mail
+        metadata: bytes | None = None
+        raw_email: bytes | None = None
 
-#     results = []
+        for item in data:
+            if not isinstance(item, tuple):
+                continue
 
-#     for email_id in email_ids:
-#         status, data = mail.fetch(
-#             email_id,
-#             "(INTERNALDATE BODY.PEEK[])",
-#         )
+            if len(item) >= 1 and isinstance(item[0], bytes):
+                metadata = item[0]
 
-#         if status != "OK" or not data:
-#             app_session.logger.warning(
-#                     "Could not fetch email ID %s.",
-#                     email_id.decode(errors="replace"),
-#                 )
-#             continue
+            if len(item) >= 2 and isinstance(item[1], bytes):
+                raw_email = item[1]
 
-#         metadata: bytes | None = None
-#         raw_email: bytes | None = None
+        if raw_email is None:
+            app_session.logger.warning(
+                "No message content found for UID %s.",
+                uid,
+            )
+            continue
 
-#         for item in data:
-#             if not isinstance(item, tuple):
-#                 continue
+        # (4) parse RFC mail
+        parsed_message = BytesParser(policy=policy.default).parsebytes(raw_email)
 
-#             if (
-#                 len(item) >= 1
-#                 and isinstance(item[0], bytes)
-#                 ):
-#                 metadata = item[0]
+        # (5) extract meta data
+        sent_at = get_sent_datetime(parsed_message)
 
-#             if (
-#                 len(item) >= 2
-#                 and isinstance(item[1], bytes)
-#                 ):
-#                 raw_email = item[1]
+        received_at = parse_internal_date(metadata) if metadata is not None else None
 
-#         if raw_email is None:
-#             app_session.logger.warning(
-#                     "No message content found for UID %s.",
-#                     uid,
-#                 )
-#             continue
+        sender_name, sender_email = parse_sender(parsed_message)
 
-#         parsed_message = BytesParser(policy=policy.default).parsebytes(raw_email)
+        # (6) extract text / html
+        body_plain, body_html = extract_bodies(parsed_message)
 
-#         date_header = parsed_message.get("Date")
+        # (7) create DataObject
+        message = EmailMessage(
+            uid=int(uid),
+            message_id=parsed_message.get("Message-ID"),  # email_id.decode(),
+            subject=parsed_message.get(
+                "Subject",
+                # "(kein Betreff)",
+            ),
+            sender_name=sender_name,
+            sender_email=sender_email,
+            # message.get(
+            #     "From",
+            #     "(unbekannter Absender)"
+            #     ),
+            sent_at=sent_at,
+            received_at=received_at,
+            body_plain=body_plain,
+            body_html=body_html,
+        )
 
-#         try:
-#             sent_date = parsedate_to_datetime(date_header) if date_header else None
-#         except (TypeError, ValueError, OverflowError):
-#             sent_date = None
+        # (8) add extractd raw links
+        message = extract_links(message)
 
-#         received_date = parse_internal_date(metadata) if metadata is not None else None
+        results.append(message)
 
-#         sender_name, sender_email = parse_sender(
-#             parsed_message
-#         )
-
-#         body_plain, body_html = extract_bodies(
-#             parsed_message
-#         )
-
-#         message_id = parsed_message.get("Message-ID")
-
-#         results.append(
-#             EmailMessage(
-#                 uid=int(uid),
-#                 message_id=message_id,        # email_id.decode(),
-#                 subject=message.get(
-#                     "Subject",
-#                     "(kein Betreff)",
-#                     ),
-#                 sender_name=sender_name,
-#                 sender_email=sender_email,
-#                 # message.get(
-#                 #     "From",
-#                 #     "(unbekannter Absender)"
-#                 #     ),
-#                 sent_at=sent_date,
-#                 received_at=received_date,
-#                 body_plain=body_plain,
-#                 body_html=body_html,
-#                 )
-#             )
-
-#     return results
+    return results
 
 
 # @wraps        # contextlib
@@ -743,6 +680,5 @@ def extract_links(
 #         	yield smtp
 
 
-
-        # if app_session.logger:
-        #     app_session.logger.info("IMAP connection closed.")
+# if app_session.logger:
+#     app_session.logger.info("IMAP connection closed.")

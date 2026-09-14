@@ -1,6 +1,7 @@
 # memory.py
 import logging
 from logging import Logger
+
 # from dataclasses import dataclass, field
 from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime
@@ -10,7 +11,7 @@ from typing import Any, ClassVar, Literal  # , Annotated
 from pydantic import Field
 
 # from openai import OpenAI
-from tiktoken import Encoding       # , encoding_for_model
+from tiktoken import Encoding  # , encoding_for_model
 
 from src.core.config import (
     ChunkSettings,
@@ -22,7 +23,6 @@ from src.core.config import (
 )
 
 
-
 # @dataclass
 class ParseContext(BaseModel):
     model_config = ConfigDict(
@@ -31,7 +31,7 @@ class ParseContext(BaseModel):
     )
 
     chunk_settings: ChunkSettings = Field(default_factory=ChunkSettings)
-    encoder: Encoding | None = None     #  = encoding_for_model
+    encoder: Encoding | None = None  #  = encoding_for_model
     general_settings: GeneralSettings = Field(default_factory=GeneralSettings)
     parse_settings: ParseSettings = Field(
         default_factory=ParseSettings  # _all
@@ -47,4 +47,3 @@ class ParseContext(BaseModel):
     run_id: str = Field(default_factory=str)
     logger: ClassVar = logging.getLogger(__name__)
     header: dict = Field(default_factory=dict)
-

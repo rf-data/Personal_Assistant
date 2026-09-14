@@ -16,7 +16,7 @@ from pathlib import Path
 # from typing import Literal
 import requests
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory import ParseContext
 from src.model_classes_parsing.data_classes_wiki import (
     ResultItem,
@@ -59,7 +59,7 @@ class WikipediaClient:
         # .get(
         #     "query_time", datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         # )
-        save_dir = parsing_env_vars.data_wiki
+        save_dir = folder_env_vars.data_wiki
 
         self.save_folder = Path(save_dir)
         self.save = parse_context.save
@@ -265,9 +265,9 @@ class WikipediaClient:
         language = self.wiki_config.language
 
         if language == "en":
-            base_url = parsing_env_vars.wiki_en_api
+            base_url = folder_env_vars.wiki_en_api
         elif language == "de":
-            base_url = parsing_env_vars.wiki_de_api
+            base_url = folder_env_vars.wiki_de_api
         else:
             self.logger.error("Invalid language:\t%s", language)
             sys.exit()

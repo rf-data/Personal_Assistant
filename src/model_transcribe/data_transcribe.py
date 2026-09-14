@@ -3,8 +3,10 @@
 from datetime import datetime
 from pydantic import BaseModel, Field  # dataclass
 from pathlib import Path
+
 # from typing import Protocol
 from enum import Enum
+
 
 # @dataclass
 class TranscriptSegment(BaseModel):
@@ -27,7 +29,7 @@ class DownloadStrategy(str, Enum):
 
     AUDIO_DEFAULT = "audio_default"
     AUDIO_FALLBACK = "audio_fallback"
-    
+
     AUDIO_WEB_FALLBACK = "audio_web_fallback"
     # AUDIO_POT = "audio_po_token"
     # BROWSER_CAPTURE = "browser_capture"
@@ -62,9 +64,7 @@ class TranscriptProvenance(BaseModel):
     transcription_provider: str | None = None
     transcription_model: str | None = None
 
-    acquired_at: datetime = Field(
-        default_factory=datetime.now
-    )
+    acquired_at: datetime = Field(default_factory=datetime.now)
 
 
 # @dataclass
@@ -78,7 +78,7 @@ class TranscriptDocument(BaseModel):
 
     runtime: float | None = None
     realtime_factor: float | None = None
-    
+
     segments: list[TranscriptSegment]
     text: str
 

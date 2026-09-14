@@ -17,7 +17,7 @@ from typing import Any, Literal
 from dotenv import find_dotenv, load_dotenv
 from pydantic import BaseModel
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory import app_session
 from src.utils.path_helper import ensure_dir  # , shorten_path
 
@@ -64,8 +64,6 @@ def load_env_vars(name: list | str = ".env"):
 ####################
 # ANALYZE_FUNCTIONS
 ####################
-
-
 def inspect_single_function(fn: Callable) -> dict:
     src = inspect.getsource(fn)
     return {
@@ -95,9 +93,7 @@ def snapshot_dependent_functions(
 
 
 def make_doc_id(
-    name: str, 
-    mode: Literal["file_path", "text"] = "file_path", 
-    short: bool = True
+    name: str, mode: Literal["file_path", "text"] = "file_path", short: bool = True
 ) -> str:
 
     # ! TODO: Combine with fn below
@@ -119,9 +115,7 @@ def make_doc_id(
 
 
 def hash_text(text: str, short: bool = True) -> str:
-    value = hashlib.sha256(
-        text.strip().encode("utf-8")
-    ).hexdigest()
+    value = hashlib.sha256(text.strip().encode("utf-8")).hexdigest()
 
     return value[:16] if short else value
 
@@ -169,23 +163,23 @@ def make_cache_key(
 
 
 def save_to_cache(
-            key: str,
-            folder: str | Path,
-            data: dict,
-            metadata: dict | None = None,
-            ):
-    cache_dir = parsing_env_vars.cache_dir
+    key: str,
+    folder: str | Path,
+    data: dict,
+    metadata: dict | None = None,
+):
+    cache_dir = folder_env_vars.cache_dir
 
     fn = Path(cache_dir) / folder / f"{key}.json"
     ensure_dir(fn)
 
     payload = {
         "metadata": {
-            "created_at":datetime.now().isoformat(),
+            "created_at": datetime.now().isoformat(),
             **(metadata or {}),
-            },
-        "result": data
-        }
+        },
+        "result": data,
+    }
 
     with open(fn, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
@@ -196,7 +190,7 @@ def save_to_cache(
 
 
 def load_from_cache(key: str, folder: str | Path, cls=None):
-    cache_dir = parsing_env_vars.cache_dir
+    cache_dir = folder_env_vars.cache_dir
 
     fn = Path(cache_dir) / folder / f"{key}.json"
     ensure_dir(fn)

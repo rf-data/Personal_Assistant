@@ -5,7 +5,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory import ParseContext, app_session
 
 # from src.utils.html_helper import read_html_file
@@ -31,8 +31,8 @@ def show():
     with col1:
         st.subheader("🖼️ Select an pdf file")
 
-        pdf_data = parsing_env_vars.data_pdf
-        data_dir = parsing_env_vars.data_dir
+        pdf_data = folder_env_vars.data_pdf
+        data_dir = folder_env_vars.data_dir
 
         input_data = f"{data_dir}/input"
 
@@ -202,7 +202,7 @@ def show():
             st.success(f"Parsing finished\t '{f_name}'")
 
             dst_path = f"{data_dir}/raw/{f_name}.html"
-            
+
             move_file(f_path, dst_path)
         ##################
 

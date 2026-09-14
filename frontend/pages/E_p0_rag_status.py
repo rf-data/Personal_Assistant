@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.tools_rag.create_embeds import load_chunks_to_chroma
 from src.utils.chroma_helper import get_chroma_client, list_files_in_coll
 from src.utils.path_helper import shorten_path
@@ -91,7 +91,7 @@ def show():
     # st.divider()
     with st.expander("**Add data to ChromaDB collection**"):
         #    st.subheader("Upload Data to ChromaDB")
-        root = parsing_env_vars.data_dir
+        root = folder_env_vars.data_dir
         data_folder = st.pills(
             label="Select folder (processed files)",
             options=["txt_md", "docx", "html", "pdf", "json"],

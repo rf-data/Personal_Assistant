@@ -14,7 +14,7 @@ from datetime import datetime
 from pathlib import Path
 
 from src.utils.path_helper import ensure_dir
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 
 # formatiert zusätzlich unbehandelte Exceptions
 install()
@@ -51,7 +51,7 @@ def create_logger(
         Log file name without the ".log" suffix.
         If None, file logging is disabled.
     folder:
-        Directory for log files. Defaults to parsing_env_vars.log_dir.
+        Directory for log files. Defaults to folder_env_vars.log_dir.
     level:
         Console log level.
     file_level:
@@ -121,7 +121,7 @@ def create_logger(
     # --------------------
     if file_name:
         if folder is None:
-            folder = parsing_env_vars.log_dir
+            folder = folder_env_vars.log_dir
 
         log_dir = ensure_dir(folder)
         log_file = Path(log_dir) / f"{file_name}.log"

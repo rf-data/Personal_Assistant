@@ -63,13 +63,13 @@ nlp = [
 ]
 
 ocr = [
-    "pix2tex[gui]>=0.1.4",
-    "pytesseract>=0.3.13",
+    "imagehash>=4.3.2",
     "torch==2.13.0",
     "torchvision==0.28.0",
 ]
 
 transcribe = [
+    "imagehash>=4.3.2",
     "yt-dlp[default]>=2026.7.4",
     "faster-whisper>=1.2.1",
     "sounddevice>=0.5.5",

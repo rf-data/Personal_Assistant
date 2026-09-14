@@ -1,11 +1,39 @@
 ## data_resources.py
 # import
+from enum import Enum
 from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
 from pydantic import BaseModel, Field
 
+
+class LectureResourceType(Enum):
+    VIDEO = "video"
+    SCRIPT = "script"
+    MATERIAL = "material"
+    NOTEBOOK = "notebook"
+    EXAM = "exam"
+    OTHER = "other"
+
+
+class ResourceAction(Enum):
+    CHUNK = "chunk"
+    DOWNLOAD = "download"
+    EXTRACT_FRAMES = "extract_frames"
+    EXTRACT_KNOWLEDGE = "extract_knowledge"
+    EXTRACT_META = "extract_metadata"
+    PARSE_DOCUMENT = "parse_document"
+    PARSE_SUBTITLE = "parse_subtitle"
+    TRANSCRIBE = "transcribe"
+
+
+class ActionStatus(Enum):
+    PENDING = ("pending",)
+    RUNNING = ("running",)
+    DONE = ("done",)
+    FAILED = ("failed",)
+    SKIPPED = ("skipped",)
 
 
 class LectureResource(BaseModel):
@@ -14,23 +42,14 @@ class LectureResource(BaseModel):
     title: str | None = None
     source_url: str
 
-    kind: Literal[
+    resource_kind: Literal[
         "foundation",
         "supplement",
     ] = "foundation"
 
-    resource_type: Literal[
-        "video",
-        "script",
-        "material",
-        "notebook",
-        "exam", 
-        "other",
-    ]
+    resource_type: LectureResourceType
 
-    lecture_blocks: list[str] = Field(
-        default_factory=list
-    )
+    lecture_blocks: list[str] = Field(default_factory=list)
 
     # semester: str | None = None
 
@@ -38,9 +57,18 @@ class LectureResource(BaseModel):
     local_path: Path | None = None
 
     downloaded: bool = False
-
     content_hash: str | None = None
     license: str | None = None
+
+
+class ResourceTask(BaseModel):
+    resource: LectureResource
+
+    actions: list[ResourceAction] = Field(default_factory=list)
+
+    status: ActionStatus = "pending"
+
+    error: str | None = None
 
 
 class LectureVideo(LectureResource):
@@ -68,11 +96,20 @@ class LectureScript(LectureResource):
 
 class LectureMaterial(LectureResource):
     resource_type: Literal["material"] = "material"
+    material_type: Literal["repository", "other"] = "other"
+
+
+class RawLectureBlock(BaseModel):
+    block_id: str
+    title: str | None = None
+    date_text: str | None = None
+
+    resources: list[LectureResource] = Field(default_factory=list)
 
 
 class LectureResource_old(BaseModel):
     videos: list[LectureVideo]
-    scripts: list[LectureScript] 
+    scripts: list[LectureScript]
     material: dict = Field(default_factory=dict)  # [str, LectureMaterial]
     other_links: dict[str, dict] = Field(default_factory=dict)
 
@@ -81,46 +118,40 @@ class LectureSection(BaseModel):
     section_id: str
     title: str | None = None
 
-    videos: list[LectureVideo] = Field(
-        default_factory=list
-    )
-    scripts: list[LectureScript] = Field(
-        default_factory=list
-    )
-    materials: list[LectureMaterial] = Field(
-        default_factory=list
-    )
+    resources: list[LectureResource] = Field(default_factory=list)
+    # videos: list[LectureVideo] = Field(
+    #     default_factory=list
+    # )
+    # scripts: list[LectureScript] = Field(
+    #     default_factory=list
+    # )
+    # materials: list[LectureMaterial] = Field(
+    #     default_factory=list
+    # )
 
 
 class LectureCourse(BaseModel):
     title: str
     source_url: str
 
-    sections: list[LectureSection] = Field(
-        default_factory=list
-    )
+    sections: list[LectureSection] = Field(default_factory=list)
 
-    unassigned_resources: list[LectureResource] = Field(
-                                            default_factory=list
-                                            )
+    unassigned_resources: list[LectureResource] = Field(default_factory=list)
 
-    examen: list = Field(
-                default_factory=list
-                )
-
+    examen: list = Field(default_factory=list)
 
 
 ##################################
 # KNOWLEDGE_SOURCES
 ##################################
 
-# TODO: 
+# TODO:
 # class LectureBook(BaseModel):
 #     title: str | None = None
 #     source_url: str
 #     section: str | None = None
 
-# TODO: 
+# TODO:
 # class LectureChapter(BaseModel):
 #     title: str | None = None
 #     source_url: str
@@ -155,7 +186,7 @@ class LectureCourse(BaseModel):
 #     section: str | None = None
 #     file_type: str | None = None
 
-  
+
 # class LectureSection(BaseModel):
 #     title: str
 #     script_url: str | None = None
@@ -166,5 +197,3 @@ class LectureCourse(BaseModel):
 #     title: str
 #     source_url: str
 #     sections: list[LectureSection]
-
-

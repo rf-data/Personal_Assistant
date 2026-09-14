@@ -15,108 +15,90 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 # ------------------------------------
 
 
-class ParseEnvVars(BaseSettings):
+class FolderEnvVars(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env.parse",
+        env_file=".env.folder",
         env_file_encoding="utf-8",
         # env_ignore_case=False
         # env_nested_delimiter="__"
     )
     app_name: str = "personal_assistant"
 
-    # # folder
-    # root: Path
-    # data_dir: Path
-    # chroma_dir: Path
-
-    # other folder_paths
-    log_dir: Path
-    prompt_dir: Path
-    report_dir: Path
-    config_dir: Path
-    cache_dir: Path
+    # folder
+    root: Path
     chroma_dir: Path
 
-    # @property
-    # def log_dir(self) -> Path:
-    #     return self.root / "logs"
+    # other folder_paths
+    @property
+    def log_dir(self) -> Path:
+        return self.root / "logs"
 
-    # @property
-    # def report_dir(self) -> Path:
-    #     return self.root / "reports"
+    @property
+    def config_dir(self) -> Path:
+        return self.root / "configuration"
 
-    # @property
-    # def config_dir(self) -> Path:
-    #     return self.root / "configuration"
-
-    # @property
-    # def cache_dir(self) -> Path:
-    #     return self.root / ".cache"
-
-    # @property
-    # def prompt_dir(self) -> Path:
-    #     return self.root / "src/agent/prompts"
-    
-    # data folders
-    data_dir: Path
-    data_audio: Path
-    data_transcripts: Path
-    data_docx: Path
-    data_html: Path
-    data_image: Path
-    data_json_nb: Path
-    data_pdf: Path
-    data_txt_md: Path
-    data_wiki: Path
-    data_qms: Path
+    @property
+    def cache_dir(self) -> Path:
+        return self.root / ".cache"
 
     @property
     def yt_cookies(self) -> Path:
         return self.cache_dir / "yt_cookies.txt"
 
-    # @property
-    # def data_audio(self) -> Path:
-    #     return self.data_dir / "audio"
+    @property
+    def prompt_dir(self) -> Path:
+        return self.root / "src/agent/prompts"
 
-    # @property
-    # def data_docx(self) -> Path:
-    #     return self.data_dir / "docx"
+    @property
+    def report_dir(self) -> Path:
+        return self.root / "reports"
 
-    # @property
-    # def data_html(self) -> Path:
-    #     return self.data_dir / "html"
-    
-    # @property
-    # def data_image(self) -> Path:
-    #     return self.data_dir / "images_ocr"
+    # data folders
+    data_dir: Path
 
-    # @property
-    # def data_json_nb(self) -> Path:
-    #     return self.data_dir / "notebooks"
-    
-    # @property
-    # def data_pdf(self) -> Path:
-    #     return self.data_dir / "pdf"
+    # other data folders
+    @property
+    def data_docx(self) -> Path:
+        return self.data_dir / "docx"
 
-    # @property
-    # def data_txt_md(self) -> Path:
-    #     return self.data_dir / "txt_md"
+    @property
+    def data_html(self) -> Path:
+        return self.data_dir / "html"
 
-    # @property
-    # def data_wiki(self) -> Path:
-    #     return self.data_dir / "wiki"
-    
-    # @property
-    # def data_qms(self) -> Path:
-    #     return self.data_dir / "_QMS_apo/Q_Dokumente"    
-    
+    @property
+    def data_audio(self) -> Path:
+        return self.data_dir / "audio"
+
+    @property
+    def data_image(self) -> Path:
+        return self.data_dir / "images_ocr"
+
+    @property
+    def data_json_nb(self) -> Path:
+        return self.data_dir / "notebooks"
+
+    @property
+    def data_pdf(self) -> Path:
+        return self.data_dir / "pdf"
+
+    @property
+    def data_txt_md(self) -> Path:
+        return self.data_dir / "txt_md"
+
+    @property
+    def data_wiki(self) -> Path:
+        return self.data_dir / "wiki"
+
+    @property
+    def data_qms(self) -> Path:
+        return self.data_dir / "_QMS_apo/Q_Dokumente"
 
     # wikipedia relevance
     wiki_en_api: str
     header_agent: str
 
 
-parsing_env_vars = ParseEnvVars()
+folder_env_vars = FolderEnvVars()
 
 
 class AgenticEnvVars(BaseSettings):
@@ -162,11 +144,9 @@ class MLOpsEnvVars(BaseSettings):
 mlops_env_vars = MLOpsEnvVars()
 
 
-
 # from pydantic import BaseModel, model_validator, field_validator, Field
 # from typing import Optional
 # from datetime import date
-
 
 
 class OrganizerEnvVars(BaseSettings):
@@ -191,59 +171,6 @@ class OrganizerEnvVars(BaseSettings):
 organizer_env_vars = OrganizerEnvVars()
 """"""
 
-
-TranscriptionBackend = Literal[
-    "faster_whisper",
-    "whisper_live",
-    "cloud_stt",
-]
-
-
-class TranscribeSettings(BaseModel):
-    backend: TranscriptionBackend = "faster_whisper"
-
-    model_size: Literal[
-                    "tiny",
-                    "base",
-                    "small",
-                    "medium",
-                    "large-v3",
-                ] = "medium" # später: "large-v3"
-
-    device: Literal["cpu", "cuda"] = "cpu"
-
-    compute_type: Literal[
-                    "int8",
-                    "float16",
-                    "float32",
-                    "int8_float16",
-                ] = "int8"
-
-    cpu_threads: int = 6  # os.cpu_count()
-
-    language: str | None = None
-
-    vad_filter: bool=False
-
-
-class DownloadSettings(BaseModel):
-    format: str = "bestaudio/best"
-    cookie_file: Path|None = None
-
-    no_playlist: bool = True
-    playlist_items: str | None = None
-    playlist_name: str|None = None
-
-    quiet: bool = False
-    socket_timeout: int = 30
-    retries: int = 20
-    fragment_retries: int = 20
-    continue_download: bool = True
-    ignore_errors: bool = True
-
-    show_progress: bool = True
-    
-    
 
 # ------------------------------------
 # FILE_TYPE SPECIFIC PARSING SETTINGS
@@ -505,7 +432,7 @@ RunSettings = Annotated[
 #     fingerprint_run: str
 
 
-# parsing_env_vars = EnvVariables()
+# folder_env_vars = EnvVariables()
 
 """
 from pydantic import BaseModel, model_validator, field_validator, Field

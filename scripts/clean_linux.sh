@@ -127,6 +127,14 @@ echo ""
 echo "in 0_Portfolio_Projekte"
 du -sh ~/0_Portfolio_Projekte/* 2>/dev/null | sort -hr | head -20
 
+echo ""
+echo "in gmp_compliance"
+du -sh ~/0_Portfolio_Projekte/gmp_compliance/* 2>/dev/null | sort -hr | head -20
+
+echo ""
+echo "in ai-job-search"
+du -sh ~/0_Portfolio_Projekte/ai-job-search/* 2>/dev/null | sort -hr | head -20
+
 # echo ""
 # echo "Cleanup complete."
 

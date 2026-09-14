@@ -1,5 +1,5 @@
 ## extract_resources.py
-# import 
+# import
 import re
 from pathlib import Path
 from urllib.parse import urlparse, unquote
@@ -9,7 +9,7 @@ import requests
 
 # TODO: requests.Session()
 
-# TODO: 
+# TODO:
 # seen_urls: set[str] = set()
 
 # for material in materials:
@@ -17,6 +17,7 @@ import requests
 #         continue
 
 #     seen_urls.add(material.source_url)
+
 
 def download_lecture_resource(
     url: str,
@@ -38,14 +39,10 @@ def download_lecture_resource(
     )
     response.raise_for_status()
 
-    filename = unquote(
-        Path(urlparse(response.url).path).name
-    )
+    filename = unquote(Path(urlparse(response.url).path).name)
 
     if not filename:
-        raise ValueError(
-            f"Could not determine filename from URL: {url}"
-        )
+        raise ValueError(f"Could not determine filename from URL: {url}")
 
     output_path = output_dir / filename
 
@@ -57,7 +54,6 @@ def download_lecture_resource(
                 f.write(chunk)
 
     return output_path
-
 
 
 def extract_section_no(value: str) -> str | None:

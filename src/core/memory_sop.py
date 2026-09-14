@@ -1,6 +1,7 @@
 # memory.py
 import logging
 from logging import Logger
+
 # from dataclasses import dataclass, field
 from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime
@@ -10,7 +11,7 @@ from typing import Any, ClassVar, Literal  # , Annotated
 from pydantic import Field
 
 # from openai import OpenAI
-from tiktoken import Encoding       # , encoding_for_model
+from tiktoken import Encoding  # , encoding_for_model
 
 from src.core.config import (
     ChunkSettings,
@@ -18,7 +19,7 @@ from src.core.config import (
     GeneralSettings,
     # NIRSettings,
     ParseSettings,
-    TranscribeSettings
+    TranscribeSettings,
 )
 
 # from chromadb.api.models.Collection import Collection
@@ -76,4 +77,3 @@ class SOPGenContext(BaseModel):
     n_results: int = Field(default_factory=int)
     save_folder: str = Field(default_factory=str)
     save_name: str = Field(default_factory=str)
-

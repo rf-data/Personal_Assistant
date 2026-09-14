@@ -14,7 +14,7 @@
 # from playwright.sync_api import sync_playwright
 # from src.core.config import GenWikiSettings
 # from src.core.logger import create_logger
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 
 # from src.utils.dict_helper import get_yaml_config
 # from src.utils.general_helper import load_env_vars
@@ -27,7 +27,7 @@ def wiki_article_search(parse_context: ParseContext):
     parse_config = parse_context.parse_settings.wiki
 
     parse_context.header = {
-        "User-Agent": parsing_env_vars.header_agent,
+        "User-Agent": folder_env_vars.header_agent,
         "Referer": general_config.header_referer,
         "Accept": general_config.header_accept,
     }

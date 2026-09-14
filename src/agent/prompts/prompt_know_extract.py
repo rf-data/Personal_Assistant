@@ -1,9 +1,88 @@
 ## prompt_know_extract.py
-# import 
+# import
 from src.model_knowledge.data_knowledge import (
-                                            KnowledgeSemanticType, 
-                                            MathExpressionType   
-                                            )
+    KnowledgeSemanticType,
+    MathExpressionType,
+    VisualAnalysisBatch,
+)
+
+
+def build_visual_verification_prompt(
+    batch: VisualAnalysisBatch,
+) -> str:
+
+    statements = (
+        "\n".join(f"- {item}" for item in batch.transcript_statements) or "- none"
+    )
+
+    formulas = "\n".join(f"- {item}" for item in batch.transcript_formulas) or "- none"
+
+    reasons = "\n".join(f"- {item}" for item in batch.visual_reasons) or "- none"
+
+    return f"""
+## Goal
+
+Use the supplied chronological video frames to verify and recover
+mathematical information that could not be reconstructed reliably from
+the transcript alone.
+
+The images are the primary evidence for visible mathematical notation.
+
+Transcript-derived statements and expressions are hypotheses and may
+contain transcription errors.
+
+## Visual context reasons
+
+{reasons}
+
+## Transcript-derived statements
+
+{statements}
+
+## Transcript-derived mathematical expressions
+
+{formulas}
+
+## Instructions
+
+1. Inspect the images in chronological order.
+2. Extract clearly visible mathematical notation.
+3. Use multiple frames to resolve notation when one frame is ambiguous.
+4. Verify transcript-derived expressions against the images.
+5. Mark each transcript-derived expression as:
+   - confirmed,
+   - corrected,
+   - rejected,
+   - insufficient_evidence.
+6. Add clearly visible mathematical information absent from the
+   transcript as new.
+7. Never confirm an expression merely because it is mathematically
+   plausible.
+8. Never invent missing numbers, signs, vector components, variables,
+   or operators.
+9. If frames disagree, prefer the clearest visible frame and report
+   the disagreement.
+10. Record the source_time of the frames supporting each visual
+    expression.
+""".strip()
+
+
+def extract_visual_knowledge_prompt() -> str:
+    return f"""
+Analyze the mathematical content visible in this image.
+
+Tasks:
+1. Transcribe all clearly readable mathematical expressions.
+2. Return mathematical notation as LaTeX where possible.
+3. Briefly describe the relationship between the expressions.
+4. Distinguish visible information from inferred information.
+5. Do not reconstruct or invent symbols, numbers, signs, or vector
+   components that are not clearly visible.
+6. If something is ambiguous, explicitly mark it as ambiguous.
+
+Focus on mathematical content rather than general image description.
+"""
+
 
 def build_knowledge_extraction_prompt() -> str:
     return f"""
@@ -83,7 +162,7 @@ Do NOT invent:
 - equation terms.
 
 If a mathematical expression is incomplete or ambiguous enough to require
-visual context, do not extract the incomplete expression as a MathExpression. 
+visual context, do not extract the incomplete expression as a MathExpression.
 Set needs_visual_context=True instead.
 
 Only include MathExpression objects whose complete mathematical content can
@@ -142,16 +221,16 @@ Before returning the result, verify that:
   represented in the structured extraction.
 """.strip()
 
-    
-# Analyze the target transcript chunk. Previous_context and next_context 
-# are provided only to interpret the target chunk. Knowledge from 
-# previous_context or next_context MUST NOT be included in the extraction 
+
+# Analyze the target transcript chunk. Previous_context and next_context
+# are provided only to interpret the target chunk. Knowledge from
+# previous_context or next_context MUST NOT be included in the extraction
 # unless the same knowledge is explicitly supported by the target chunk itself.
 
-# Surrounding context may only be used to resolve references, ambiguities, 
-# terminology, or incomplete wording in the target chunk. 
+# Surrounding context may only be used to resolve references, ambiguities,
+# terminology, or incomplete wording in the target chunk.
 
-# Before extracting each knowledge item, verify that evidence for the item 
+# Before extracting each knowledge item, verify that evidence for the item
 # exists within the target chunk.
 
 # Classify each extracted knowledge item using the following definitions:
@@ -183,31 +262,30 @@ Before returning the result, verify that:
 # - describe the recoverable conceptual knowledge separately if possible.
 
 
-    # f"""
-    # Knowledge from previous_context or next_context MUST NOT be included
-    # in the extraction unless the same knowledge is explicitly supported
-    # by the target chunk itself.
+# f"""
+# Knowledge from previous_context or next_context MUST NOT be included
+# in the extraction unless the same knowledge is explicitly supported
+# by the target chunk itself.
 
-    # Surrounding context may only be used to resolve references,
-    # ambiguities, terminology, or incomplete wording in the target chunk.
+# Surrounding context may only be used to resolve references,
+# ambiguities, terminology, or incomplete wording in the target chunk.
 
-    # Before extracting each knowledge item, verify that evidence for the
-    # item exists within the target chunk.
-    ###############################
-    # Analyze the target transcript chunk and extract
-    # only knowledge supported by the target chunk.
+# Before extracting each knowledge item, verify that evidence for the
+# item exists within the target chunk.
+###############################
+# Analyze the target transcript chunk and extract
+# only knowledge supported by the target chunk.
 
-    # Previous and next context are provided only for interpretation.
-    # Do not extract claims supported solely by surrounding context.
+# Previous and next context are provided only for interpretation.
+# Do not extract claims supported solely by surrounding context.
 
-    # Mark knowledge as requiring visual context when mathematical
-    # notation, formulas, diagrams, vectors, or other information
-    # cannot be reconstructed reliably from the transcript alone.
-    # """
+# Mark knowledge as requiring visual context when mathematical
+# notation, formulas, diagrams, vectors, or other information
+# cannot be reconstructed reliably from the transcript alone.
+# """
 
 # previous_context and next_context are provided only to interpret
 # the target chunk.
 
 # Extract knowledge only if it is supported by the target chunk.
 # Do not extract knowledge solely from previous_context or next_context.
-

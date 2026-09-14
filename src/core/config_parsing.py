@@ -4,6 +4,7 @@ from typing import Annotated, Literal  # Dict,
 from pydantic import BaseModel, ConfigDict, Field
 # from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 # ------------------------------------
 # FILE_TYPE SPECIFIC PARSING SETTINGS
 # ------------------------------------
@@ -201,4 +202,3 @@ ParseSettings_all = Annotated[
 RunSettings = Annotated[
     ParseSettings_all | ChunkSettings, Field(discriminator="meta_type")
 ]
-

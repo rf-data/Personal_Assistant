@@ -1,8 +1,24 @@
 ## yt_helper.py
-# imports 
+# imports
 from pathlib import Path
 
 from src.core.memory import app_session
+# from src.core.memory_transcribe import KnowledgeContext
+
+
+def build_base_ydl_opts(context) -> dict:
+    cfg = context.cfg_download
+
+    opts = {
+        "noplaylist": cfg.no_playlist,
+        "socket_timeout": cfg.socket_timeout,
+        "retries": cfg.retries,
+    }
+
+    if cfg.cookie_file and cfg.cookie_file.exists():
+        opts["cookiefile"] = str(cfg.cookie_file)
+
+    return opts
 
 
 def format_speed(speed: float | None) -> str:
@@ -21,26 +37,17 @@ def format_speed(speed: float | None) -> str:
 def yt_progress_hook(d):
     status = d.get("status")
 
-    filename = Path(
-            d.get("filename", "unknown")
-        ).name
-    
+    filename = Path(d.get("filename", "unknown")).name
+
     if status == "downloading":
         downloaded = d.get("downloaded_bytes", 0)
-        total = (
-            d.get("total_bytes")
-            or d.get("total_bytes_estimate")
-            )
-        # speed = d.get("speed")                  
+        total = d.get("total_bytes") or d.get("total_bytes_estimate")
+        # speed = d.get("speed")
         # filename = Path(d["filename"]).name
         # percent = d.get("_percent_str", "").strip()
         speed = d.get("speed")  # .strip()
 
-        percent = (
-            downloaded / total * 100
-            if total 
-            else None
-            )
+        percent = downloaded / total * 100 if total else None
 
         if percent is not None:
             percent_str = f"{percent:5.1f}%"
@@ -85,5 +92,3 @@ def yt_progress_hook(d):
 #             "yt-dlp | %s",
 #             msg,
 #         )
-
-    

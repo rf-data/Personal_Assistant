@@ -1,4 +1,4 @@
-## model_email.py
+## data_email.py
 # import
 from typing import List
 from datetime import datetime
@@ -27,14 +27,13 @@ class Mailbox(BaseModel):
 
 class EmailMessage(BaseModel):
     uid: int  # str
-
-    message_id: str
+    message_id: str | None = None
 
     # sequence_number: int | None
     subject: str | None
 
-    sender_name: str
-    sender_email: EmailStr
+    sender_name: str | None = None
+    sender_email: EmailStr | None = None
 
     to: list[EmailStr] = Field(default_factory=list)
     cc: list[EmailStr] = Field(default_factory=list)

@@ -1,8 +1,6 @@
-
-
 # Comparing two obejcts deeply --> what + where + how sth. change?
 """
-from deepdiff import DeepDiff 
+from deepdiff import DeepDiff
 diff = DeepDiff(old_state, new_state)
 print(diff)
 """

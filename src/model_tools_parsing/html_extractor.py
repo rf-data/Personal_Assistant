@@ -213,7 +213,6 @@ class HTMLCleanExtractor(BaseExtractor):
 
         return elements_clean
 
-
     def _clean_text(self, text: str) -> str:
         text = html.unescape(text)
 
@@ -237,17 +236,14 @@ class HTMLCleanExtractor(BaseExtractor):
 
         return text
 
-
     def _is_inside_code_block(self, tag) -> bool:
         return (
             tag.find_parent("div", class_="urvanov-syntax-highlighter-syntax")
             is not None
         )
 
-
     def _is_inside_relevant_parent(self, tag):
         return tag.find_parent(["p", "ul", "ol", "pre", "table"]) is not None
-
 
     def _extract_elements(self, root) -> list:  # , str]:
         self.logger.info(

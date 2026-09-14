@@ -5,6 +5,7 @@ import email
 import streamlit as st
 
 from src.core.config import organizer_env_vars as organizer
+
 # from src.core.logger import create_logger
 # from src.core.memory import app_session
 from src.utils.email_helper import (
@@ -36,8 +37,8 @@ def show():
                 box_info = {
                     "**Name mailbox**": box.name,
                     "**Total emails**": box.total_messages,
-                    "**Unseen emails**": box.unread_messages
-                    }
+                    "**Unseen emails**": box.unread_messages,
+                }
 
                 st.json(box_info)
                 st.write()

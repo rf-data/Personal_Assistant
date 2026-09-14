@@ -13,7 +13,7 @@ from joblib import dump  # , load
 # import inspect
 from mlflow.tracking import MlflowClient
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 
 # from src.utils.general_helper import load_env_vars
 # # from core.session import session
@@ -29,7 +29,7 @@ def save_model(model, model_name, folder=None):
 
     #
     if folder is None:
-        folder = parsing_env_vars.model_dir
+        folder = folder_env_vars.model_dir
 
     ensure_dir(folder)
     model_path = Path(f"{folder}/{model_name}.joblib")
@@ -45,7 +45,7 @@ def create_mlflow_client(initial=False):
     # configuration - initial setup
     # load_env_vars()
 
-    database = parsing_env_vars.mlflow_tracking_uri
+    database = folder_env_vars.mlflow_tracking_uri
     mlflow.set_tracking_uri(database)
 
     start_time = datetime.now()
@@ -53,7 +53,7 @@ def create_mlflow_client(initial=False):
     client = MlflowClient()
 
     root = find_project_root()
-    project_name = parsing_env_vars.project_name
+    project_name = folder_env_vars.project_name
     folder = f"{root}/mlflow/logs"
     mlflow_log = create_logger(
         name=f"mlflow_{project_name}", file_name="mlflow", folder=folder
@@ -79,7 +79,7 @@ def mlflow_fingerprint_check(
 ):
     if not experiment_name:
         # load_env_vars()
-        experiment_name = parsing_env_vars.fingerprint_exp
+        experiment_name = folder_env_vars.fingerprint_exp
         # raise ValueError(
         #     "mlflow_fingerprint_check(): experiment_name must be a non-empty string"
         # )

@@ -1,5 +1,5 @@
 ## extract_subtitle.py
-# import 
+# import
 import html
 import re
 from pathlib import Path
@@ -7,69 +7,64 @@ from yt_dlp import YoutubeDL
 from yt_dlp.utils import DownloadError
 
 from src.core.memory import app_session
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory_transcribe import AudioContext
 from src.model_transcribe.data_transcribe import (
-                                        TranscriptDocument,
-                                        TranscriptSegment,
-                                        )
+    TranscriptDocument,
+    TranscriptSegment,
+)
+from src.utils.yt_helper import build_base_ydl_opts
+
 from src.utils.path_helper import ensure_dir
 from src.utils.text_file_helper import save_text_file
 from src.utils.dict_helper import save_dict
 
 
 def download_subtitles(
-                context: AudioContext, 
-                automatic: bool,
-                language: str
-                ) -> list[Path]:
+    context: AudioContext, automatic: bool, language: str
+) -> list[Path]:
     # url: str, output_dir: str)
 
-    save_folder = Path(parsing_env_vars.data_audio)
+    save_folder = Path(folder_env_vars.data_audio)
     ensure_dir(save_folder)
-    
+
     cfg = context.cfg_download
-    
+
     # if cfg.no_playlist is True:
     outtmpl = str(
-                save_folder
-                / f"{cfg.playlist_name or 'single'}"
-                / f"{'%(title)s.%(ext)s' if cfg.no_playlist is True else '%(playlist_index)03d_%(title)s.%(ext)s'}"
-                )
-    opts = {
+        save_folder
+        / f"{cfg.playlist_name or 'single'}"
+        / f"{'%(title)s.%(ext)s' if cfg.no_playlist is True else '%(playlist_index)03d_%(title)s.%(ext)s'}"
+    )
+    yt_opts = {
+        **build_base_ydl_opts(context),
         "skip_download": True,
         "writesubtitles": not automatic,
         "writeautomaticsub": automatic,
         "subtitleslangs": [language],
-
         "subtitlesformat": "vtt",
-        
         "noplaylist": cfg.no_playlist,
         "restrictfilenames": True,
         "quiet": cfg.quiet,
-        
         "socket_timeout": cfg.socket_timeout,
         "retries": cfg.retries,
-        "outtmpl": outtmpl,              # f"{output_dir}/%(id)s.%(ext)s",
+        "outtmpl": outtmpl,  # f"{output_dir}/%(id)s.%(ext)s",
     }
 
-    try: 
-        with YoutubeDL(opts) as ydl:
+    try:
+        with YoutubeDL(yt_pts) as ydl:
             info = ydl.extract_info(context.url, download=True)
 
             if info is None:
-                raise RuntimeError(
-                        f"Could not download subtitles from {context.url}"
-                        )
-
+                raise RuntimeError(f"Could not download subtitles from {context.url}")
 
     except DownloadError as exc:
-            app_session.logger.error(
-                        "Subtitle download failed for %s: %s",
-                        context.url,
-                        exc,
-                        )
-            return []
+        app_session.logger.error(
+            "Subtitle download failed for %s: %s",
+            context.url,
+            exc,
+        )
+        return []
 
     requested_subtitles = info.get("requested_subtitles", {})
     # print(requested_subtitles)
@@ -85,17 +80,15 @@ def download_subtitles(
 
 
 def parse_subtitle(
-            path: Path,
-            language: str = "de",
-        ) -> TranscriptDocument:
+    path: Path,
+    language: str = "de",
+) -> TranscriptDocument:
 
     if not path.exists():
         raise FileNotFoundError(path)
 
     if path.suffix.lower() != ".vtt":
-        raise ValueError(
-            f"Unsupported subtitle format: {path.suffix}"
-        )
+        raise ValueError(f"Unsupported subtitle format: {path.suffix}")
 
     content = path.read_text(
         encoding="utf-8",
@@ -113,11 +106,7 @@ def parse_subtitle(
     duration = 0.0
 
     for block in blocks:
-        lines = [
-            line.strip()
-            for line in block.splitlines()
-            if line.strip()
-        ]
+        lines = [line.strip() for line in block.splitlines() if line.strip()]
 
         if not lines:
             continue
@@ -127,34 +116,22 @@ def parse_subtitle(
             continue
 
         timestamp_idx = next(
-            (
-                idx
-                for idx, line in enumerate(lines)
-                if "-->" in line
-            ),
+            (idx for idx, line in enumerate(lines) if "-->" in line),
             None,
         )
 
         if timestamp_idx is None:
             continue
 
-        match = _TIMESTAMP_RE.search(
-            lines[timestamp_idx]
-        )
+        match = _TIMESTAMP_RE.search(lines[timestamp_idx])
 
         if match is None:
             continue
 
-        start = _timestamp_to_seconds(
-            match.group("start")
-        )
-        end = _timestamp_to_seconds(
-            match.group("end")
-        )
+        start = _timestamp_to_seconds(match.group("start"))
+        end = _timestamp_to_seconds(match.group("end"))
 
-        raw_text = " ".join(
-            lines[timestamp_idx + 1:]
-        )
+        raw_text = " ".join(lines[timestamp_idx + 1 :])
 
         text = _clean_vtt_text(raw_text)
 
@@ -191,28 +168,26 @@ def parse_subtitle(
         )
 
     if not segments:
-        raise ValueError(
-            f"No subtitle segments found in {path}"
-        )
+        raise ValueError(f"No subtitle segments found in {path}")
 
-    # text_final = 
+    # text_final =
     # save_text_file(
-    #         data=text_final, 
-    #         file_name=path.stem, 
+    #         data=text_final,
+    #         file_name=path.stem,
     #         folder="/home/robfra/0_Portfolio_Projekte/gmp_compliance/data"
     #         )
 
     trans_doc = TranscriptDocument(
-                    source=str(path),
-                    language=language,
-                    language_probability=None,
-                    duration=duration,
-                    duration_after_vad=None,
-                    runtime=None,
-                    realtime_factor=None,
-                    segments=segments,
-                    text="\n\n".join(text_parts),
-                    )
+        source=str(path),
+        language=language,
+        language_probability=None,
+        duration=duration,
+        duration_after_vad=None,
+        runtime=None,
+        realtime_factor=None,
+        segments=segments,
+        text="\n\n".join(text_parts),
+    )
 
     return trans_doc
 
@@ -225,9 +200,7 @@ _TIMESTAMP_RE = re.compile(
     r"(?P<end>\d{2}:\d{2}:\d{2}\.\d{3})"
 )
 
-_INLINE_TIMESTAMP_RE = re.compile(
-    r"<\d{2}:\d{2}:\d{2}\.\d{3}>"
-)
+_INLINE_TIMESTAMP_RE = re.compile(r"<\d{2}:\d{2}:\d{2}\.\d{3}>")
 
 _TAG_RE = re.compile(r"<[^>]+>")
 
@@ -235,11 +208,7 @@ _TAG_RE = re.compile(r"<[^>]+>")
 def _timestamp_to_seconds(value: str) -> float:
     hours, minutes, seconds = value.split(":")
 
-    return (
-        int(hours) * 3600
-        + int(minutes) * 60
-        + float(seconds)
-    )
+    return int(hours) * 3600 + int(minutes) * 60 + float(seconds)
 
 
 def _clean_vtt_text(text: str) -> str:
@@ -250,11 +219,10 @@ def _clean_vtt_text(text: str) -> str:
     return " ".join(text.split())
 
 
-
 def _remove_prefix_overlap(
-                previous: str,
-                current: str,
-                ) -> str:
+    previous: str,
+    current: str,
+) -> str:
     """
     Removes words from the beginning of `current` that are already
     present at the end of `previous`.
@@ -270,16 +238,15 @@ def _remove_prefix_overlap(
     current_words = current.split()
 
     max_overlap = min(
-            len(previous_words),
-            len(current_words),
-            )
+        len(previous_words),
+        len(current_words),
+    )
 
     for overlap in range(max_overlap, 0, -1):
         if previous_words[-overlap:] == current_words[:overlap]:
             return " ".join(current_words[overlap:])
 
     return current
-
 
     # video_id = info.get("id")
 
@@ -296,6 +263,5 @@ def _remove_prefix_overlap(
     #         context.url,
     #     )
     #     return []
-    
-    # return new_files
 
+    # return new_files

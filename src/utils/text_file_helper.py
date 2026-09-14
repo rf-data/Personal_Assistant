@@ -8,7 +8,7 @@ from pathlib import Path
 import pandas as pd
 from docx import Document
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory import app_session
 
 # import src.utils.general_helper as gh
@@ -106,7 +106,7 @@ def read_docx_text(path):
     return "\n\n".join(lines)
 
 
-def read_text_file(f_path):
+def read_text_file(f_path) -> str:
     txt_file = Path(f_path).read_text(encoding="utf-8")
 
     return txt_file
@@ -184,7 +184,7 @@ def save_text_file(data, file_name, folder, suffix="md"):
 
 #     # load_env_vars()
 
-#     folder = parsing_env_vars.data_qms
+#     folder = folder_env_vars.data_qms
 
 #     files = [f for f in Path(folder).iterdir() if f.suffix == ".docx"]
 #     print(f"Length 'files': {len(files)}")

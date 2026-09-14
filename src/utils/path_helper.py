@@ -27,6 +27,43 @@ def ensure_dir(f_path: str | Path) -> Path:
     return p
 
 
+def find_folder_files(
+    file_name: str,
+    folder: str | Path,
+    suffix: str | None = None,
+    exact: bool = True,
+    recursive: bool = False,
+) -> list[Path]:
+
+    folder = Path(folder)
+
+    if not folder.exists():
+        raise FileNotFoundError(f"Folder does not exist: {folder}")
+
+    if not folder.is_dir():
+        raise NotADirectoryError(f"Path is not a directory: {folder}")
+
+    suffix = suffix.removeprefix(".") if suffix else None
+
+    if exact:
+        pattern = f"{file_name}.{suffix}" if suffix else f"{file_name}.*"
+
+    else:
+        pattern = f"{file_name}*.{suffix}" if suffix else f"{file_name}*"
+
+    iterator = folder.rglob(pattern) if recursive else folder.glob(pattern)
+
+    file_matches = [path for path in iterator if path.is_file()]
+
+    app_session.logger.info(
+        "Found %s matching file(s):\n%s",
+        len(file_matches),
+        "\n".join(f"  {path}" for path in file_matches) or "  none",
+    )
+
+    return file_matches
+
+
 def shorten_path(path, n=3):
     p = Path(path).parts
     return "/".join(p[-n:])
@@ -62,7 +99,7 @@ def create_save_path(name_suffix, file_suffix):  # folder_name,
     from src.core.memory import session_state
 
     # gh.load_env_vars()
-    # folder = parsing_env_vars("PATH_EVALUATED", None)
+    # folder = folder_env_vars("PATH_EVALUATED", None)
     folder = session_state.save_folder
     now = session_state.timestamp  # ", None)
     # run_name = session.model_class # log_file", None)

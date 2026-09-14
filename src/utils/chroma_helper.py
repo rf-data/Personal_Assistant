@@ -12,7 +12,7 @@ from chromadb.api.models.Collection import Collection
 
 # import streamlit as st
 # from src.utils.general_helper import load_env_vars
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory import app_session
 from src.core.memory_sop import SOPGenContext
 
@@ -24,7 +24,7 @@ def get_chroma_client() -> ClientAPI:
     # load_env_vars()
 
     # if db_path is None:
-    db_path = parsing_env_vars.chroma_dir
+    db_path = folder_env_vars.chroma_dir
 
     client = chromadb.PersistentClient(path=db_path)
 
@@ -166,9 +166,9 @@ def add_chroma_data(
 # 	if _client is None:
 # 		_client = chromadb.PersistentClient(
 #           # chromadb.CloudClient(
-#             api_key=parsing_env_vars("CHROMA_API_KEY"),
-#             tenant=parsing_env_vars("CHROMA_TENANT"),
-#             database=parsing_env_vars("CHROMA_DATABASE")
+#             api_key=folder_env_vars("CHROMA_API_KEY"),
+#             tenant=folder_env_vars("CHROMA_TENANT"),
+#             database=folder_env_vars("CHROMA_DATABASE")
 #         )
 # 	return _client
 # VARIANTE A (LOKAL)
@@ -253,7 +253,7 @@ docker run -d -p 8000:8000 -v \
 # VARIANTE C (Cloud)
 # def start_chroma_cloud(config):
 
-#     API_KEY = parsing_env_vars("CHROMA_API_KEY")
+#     API_KEY = folder_env_vars("CHROMA_API_KEY")
 #     # subprocess.run(["chroma", "login", "--api-key", f"{API_KEY}"])
 
 #     client = chromadb.CloudClient(
