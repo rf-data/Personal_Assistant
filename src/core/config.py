@@ -1,5 +1,6 @@
 ## config.py
 # import
+from pathlib import Path
 from typing import Annotated, Literal  # Dict,
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -14,41 +15,90 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 # ------------------------------------
 
 
-class ParseEnvVars(BaseSettings):
+class FolderEnvVars(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env.parse",
+        env_file=".env.folder",
         env_file_encoding="utf-8",
         # env_ignore_case=False
         # env_nested_delimiter="__"
     )
     app_name: str = "personal_assistant"
 
-    # raw data
-    data_dir: str
-    data_audio: str
-    data_docx: str
-    data_html: str
-    data_image: str
-    data_json_nb: str
-    data_pdf: str
-    data_txt_md: str
-    data_wiki: str
-    data_qms: str
+    # folder
+    root: Path
+    chroma_dir: Path
 
     # other folder_paths
-    log_dir: str
-    prompt_dir: str
-    report_dir: str
-    config_dir: str
-    cache_dir: str
-    chroma_dir: str
+    @property
+    def log_dir(self) -> Path:
+        return self.root / "logs"
+
+    @property
+    def config_dir(self) -> Path:
+        return self.root / "configuration"
+
+    @property
+    def cache_dir(self) -> Path:
+        return self.root / ".cache"
+
+    @property
+    def yt_cookies(self) -> Path:
+        return self.cache_dir / "yt_cookies.txt"
+
+    @property
+    def prompt_dir(self) -> Path:
+        return self.root / "src/agent/prompts"
+
+    @property
+    def report_dir(self) -> Path:
+        return self.root / "reports"
+
+    # data folders
+    data_dir: Path
+
+    # other data folders
+    @property
+    def data_docx(self) -> Path:
+        return self.data_dir / "docx"
+
+    @property
+    def data_html(self) -> Path:
+        return self.data_dir / "html"
+
+    @property
+    def data_audio(self) -> Path:
+        return self.data_dir / "audio"
+
+    @property
+    def data_image(self) -> Path:
+        return self.data_dir / "images_ocr"
+
+    @property
+    def data_json_nb(self) -> Path:
+        return self.data_dir / "notebooks"
+
+    @property
+    def data_pdf(self) -> Path:
+        return self.data_dir / "pdf"
+
+    @property
+    def data_txt_md(self) -> Path:
+        return self.data_dir / "txt_md"
+
+    @property
+    def data_wiki(self) -> Path:
+        return self.data_dir / "wiki"
+
+    @property
+    def data_qms(self) -> Path:
+        return self.data_dir / "_QMS_apo/Q_Dokumente"
 
     # wikipedia relevance
     wiki_en_api: str
     header_agent: str
 
 
-parsing_env_vars = ParseEnvVars()
+folder_env_vars = FolderEnvVars()
 
 
 class AgenticEnvVars(BaseSettings):
@@ -382,7 +432,7 @@ RunSettings = Annotated[
 #     fingerprint_run: str
 
 
-# parsing_env_vars = EnvVariables()
+# folder_env_vars = EnvVariables()
 
 """
 from pydantic import BaseModel, model_validator, field_validator, Field

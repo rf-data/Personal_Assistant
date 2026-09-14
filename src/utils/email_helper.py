@@ -1,8 +1,9 @@
 ## email_helper.py
 # import
 from __future__ import annotations
-from collections.abc import Callable, Iterable
+from collections.abc import Iterable  # Callable,
 from typing import Any
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup as bs
 import imaplib
 from imapclient.imap_utf7 import decode as decode_imap_utf7
@@ -203,6 +204,7 @@ def filter_mails(
     *,
     case_sensitive: bool = False,
 ) -> list[EmailMessage]:
+
     allowed_fields = {
         "subject",
         "sender_name",
@@ -404,147 +406,118 @@ def extract_plain_links(
 
 def extract_links(
     message: EmailMessage,
-) -> list[str]:
+) -> EmailMessage:
 
-    links_plain = [
-        *extract_plain_links(message.body_plain),
-    ]
+    message.links_plain = extract_plain_links(message.body_plain)
+    # links_plain = [*, ]
 
-    if links_plain:
-        message.links_plain = list(dict.fromkeys(links_plain))
+    message.links_html = extract_html_links(message.body_html)
+    # if links_plain:
+    #     message.links_plain = list(dict.fromkeys(links_plain))
 
-        # for link in links_plain:
-        #     app_session.logger()
-    else:
-        message.links_plain = []
+    #     # for link in links_plain:
+    #     #     app_session.logger()
+    # else:
+    #     message.links_plain = []
 
     # message.links_html = list(dict.fromkeys(links_html)) if links_html else []
 
     return message
 
 
-# def fetch_mails_from_mailbox(
-#     mail: imaplib.IMAP4_SSL,
-#     mailbox: Mailbox,
-#     criteria: tuple[str, ...] = ("UNSEEN",),
-#     ) -> list[EmailMessage]:
+def fetch_mails_from_mailbox(
+    mail: imaplib.IMAP4_SSL,
+    mailbox: Mailbox,
+    criteria: tuple[str, ...] = ("UNSEEN",),
+) -> list[EmailMessage]:
 
-#    uids = search_mail_uids(
-#         mail,
-#         mailbox,
-#         criteria=criteria,
-#         )
+    # (1) find relevant UIDs
+    uids = search_mail_uids(
+        mail,
+        mailbox,
+        criteria=criteria,
+    )
 
-#     results: list[EmailMessage] = []
+    # (2) load respective mails as read-only
+    results: list[EmailMessage] = []
 
-#     for uid in uids:
-#         status, data = mail.uid(
-#             "FETCH",
-#             uid,
-#             "(INTERNALDATE FLAGS BODY.PEEK[])",
-#         )
+    for uid in uids:
+        status, data = mail.uid(
+            "FETCH",
+            uid,
+            "(INTERNALDATE FLAGS BODY.PEEK[])",
+        )
 
-#         if status != "OK" or not data:
-#             app_session.logger.warning(
-#                 "Could not fetch email UID %s.",
-#                 uid,
-#             )
-#             continue
+        if status != "OK" or not data:
+            app_session.logger.warning(
+                "Could not fetch email UID %s.",
+                uid,
+            )
+            continue
 
-#         if status != "OK":
-#             raise RuntimeError("Could not search for unseen emails.")
+        # if status != "OK":
+        #     raise RuntimeError("Could not search for unseen emails.")
 
-#     # mailbox.total_messages = len(email_ids)
-#     # email_ids = messages[0].split()
-#     #     app_session.logger.info(
-#     #         "Found %s total emails.",
-#     #         mailbox.total_messages,
-#     #     )
+        # (3) extract meta data + raw mail
+        metadata: bytes | None = None
+        raw_email: bytes | None = None
 
-#     results = []
+        for item in data:
+            if not isinstance(item, tuple):
+                continue
 
-#     for email_id in email_ids:
-#         status, data = mail.fetch(
-#             email_id,
-#             "(INTERNALDATE BODY.PEEK[])",
-#         )
+            if len(item) >= 1 and isinstance(item[0], bytes):
+                metadata = item[0]
 
-#         if status != "OK" or not data:
-#             app_session.logger.warning(
-#                     "Could not fetch email ID %s.",
-#                     email_id.decode(errors="replace"),
-#                 )
-#             continue
+            if len(item) >= 2 and isinstance(item[1], bytes):
+                raw_email = item[1]
 
-#         metadata: bytes | None = None
-#         raw_email: bytes | None = None
+        if raw_email is None:
+            app_session.logger.warning(
+                "No message content found for UID %s.",
+                uid,
+            )
+            continue
 
-#         for item in data:
-#             if not isinstance(item, tuple):
-#                 continue
+        # (4) parse RFC mail
+        parsed_message = BytesParser(policy=policy.default).parsebytes(raw_email)
 
-#             if (
-#                 len(item) >= 1
-#                 and isinstance(item[0], bytes)
-#                 ):
-#                 metadata = item[0]
+        # (5) extract meta data
+        sent_at = get_sent_datetime(parsed_message)
 
-#             if (
-#                 len(item) >= 2
-#                 and isinstance(item[1], bytes)
-#                 ):
-#                 raw_email = item[1]
+        received_at = parse_internal_date(metadata) if metadata is not None else None
 
-#         if raw_email is None:
-#             app_session.logger.warning(
-#                     "No message content found for UID %s.",
-#                     uid,
-#                 )
-#             continue
+        sender_name, sender_email = parse_sender(parsed_message)
 
-#         parsed_message = BytesParser(policy=policy.default).parsebytes(raw_email)
+        # (6) extract text / html
+        body_plain, body_html = extract_bodies(parsed_message)
 
-#         date_header = parsed_message.get("Date")
+        # (7) create DataObject
+        message = EmailMessage(
+            uid=int(uid),
+            message_id=parsed_message.get("Message-ID"),  # email_id.decode(),
+            subject=parsed_message.get(
+                "Subject",
+                # "(kein Betreff)",
+            ),
+            sender_name=sender_name,
+            sender_email=sender_email,
+            # message.get(
+            #     "From",
+            #     "(unbekannter Absender)"
+            #     ),
+            sent_at=sent_at,
+            received_at=received_at,
+            body_plain=body_plain,
+            body_html=body_html,
+        )
 
-#         try:
-#             sent_date = parsedate_to_datetime(date_header) if date_header else None
-#         except (TypeError, ValueError, OverflowError):
-#             sent_date = None
+        # (8) add extractd raw links
+        message = extract_links(message)
 
-#         received_date = parse_internal_date(metadata) if metadata is not None else None
+        results.append(message)
 
-#         sender_name, sender_email = parse_sender(
-#             parsed_message
-#         )
-
-#         body_plain, body_html = extract_bodies(
-#             parsed_message
-#         )
-
-#         message_id = parsed_message.get("Message-ID")
-
-#         results.append(
-#             EmailMessage(
-#                 uid=int(uid),
-#                 message_id=message_id,        # email_id.decode(),
-#                 subject=message.get(
-#                     "Subject",
-#                     "(kein Betreff)",
-#                     ),
-#                 sender_name=sender_name,
-#                 sender_email=sender_email,
-#                 # message.get(
-#                 #     "From",
-#                 #     "(unbekannter Absender)"
-#                 #     ),
-#                 sent_at=sent_date,
-#                 received_at=received_date,
-#                 body_plain=body_plain,
-#                 body_html=body_html,
-#                 )
-#             )
-
-#     return results
+    return results
 
 
 # @wraps        # contextlib

@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from tiktoken import encoding_for_model
 
-from src.core.config import ChunkSettings, parsing_env_vars
+from src.core.config import ChunkSettings, folder_env_vars
 from src.core.logger import create_logger
 from src.core.memory import ParseContext, app_session
 from src.tools_rag.chunk import chunk_text
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     encoder = encoding_for_model("gpt-4o-mini")
     app_session.encoder = encoder
 
-    data = parsing_env_vars.data_dir
+    data = folder_env_vars.data_dir
 
     data = Path(ensure_dir(data))
 

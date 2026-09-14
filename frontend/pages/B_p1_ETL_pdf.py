@@ -5,14 +5,14 @@ from pathlib import Path
 
 import streamlit as st
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory import ParseContext, app_session
 
 # from src.utils.html_helper import read_html_file
 from src.run_st_pdf_extract import run_pdf_extraction
 
 # from src.model_tools.base_assembler import BaseAssembler
-from src.utils.path_helper import shorten_path
+from src.utils.path_helper import move_file, shorten_path
 from src.utils.pdf_helper import pdf_page_count
 from src.utils.streamlit_helper import st_file_preview
 
@@ -31,9 +31,10 @@ def show():
     with col1:
         st.subheader("🖼️ Select an pdf file")
 
-        pdf_data = parsing_env_vars.data_pdf
+        pdf_data = folder_env_vars.data_pdf
+        data_dir = folder_env_vars.data_dir
 
-        input_data = f"{pdf_data}/input"
+        input_data = f"{data_dir}/input"
 
         pdf_files = st.multiselect(  # selectbox, multiselect(
             label="Which pdf file(s) should be parsed?",
@@ -153,7 +154,7 @@ def show():
     if "pdf_parsed" not in st.session_state:
         st.session_state["pdf_parsed"] = "ready"
 
-    data_processed = f"{pdf_data}/processed"
+    # data_processed = f"{pdf_data}/processed"
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     st.divider()
@@ -173,15 +174,15 @@ def show():
 
     if right.button("Start run") and st.session_state["pdf_parsed"] in ["ready", None]:
         # st.session_state["parsed"] = None
-        for file in pdf_files:
-            f_name = Path(file).stem
+        for f_path in pdf_files:
+            f_name = Path(f_path).stem
 
             t_stamp = app_session.timestamp
             save_folder = Path(
-                f"{data_processed}/{'ready' if rag_ready else 'test'}_{t_stamp}_{f_name}"
+                f"{pdf_data}/{'ready' if rag_ready else 'test'}_{t_stamp}_{f_name}"
             )
 
-            parse_config.file_name = str(file)
+            parse_config.file_name = str(f_path)
 
             parse_context = ParseContext(
                 parse_settings=parse_config,
@@ -199,6 +200,10 @@ def show():
             run_pdf_extraction(parse_context)
 
             st.success(f"Parsing finished\t '{f_name}'")
+
+            dst_path = f"{data_dir}/raw/{f_name}.html"
+
+            move_file(f_path, dst_path)
         ##################
 
         st.session_state["pdf_parsed"] = "done"

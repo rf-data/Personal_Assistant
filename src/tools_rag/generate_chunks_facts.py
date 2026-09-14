@@ -1,20 +1,14 @@
 ## generate_chunks_facts.py
 # import
-import os
 import re
 from collections import defaultdict
 
 # from dataclasses import asdict
 import marvin
 import numpy as np
-from pydantic_ai import Agent
 
-from src.core.config import (
-    # parsing_env_vars,
-    agentic_env_vars,
-)
 from src.core.memory import SOPGenContext, app_session
-from src.model_rag.classes_chunk_fact import (
+from src.model_rag.data_chunk_fact import (
     # MergedFact,
     ConsolidatedFact,
     ExtractedFact,
@@ -32,6 +26,7 @@ from src.utils.general_helper import (
     make_cache_key,
     save_to_cache,
 )
+from src.utils.llm_helper import configure_marvin
 
 # from src.agent.templates.sop_template import CHAPTER_TEMPLATE   # , SOP_TEMPLATE
 
@@ -81,25 +76,6 @@ def _ingest_chunk(chunk: RetrievedChunk):
 
 # print(extract_test("Environmental monitoring shall be performed regularly."))
 # PY
-
-
-def configure_marvin(
-    context,
-    # model: str = "openai:gpt-4o-mini",
-) -> None:
-
-    api_key = agentic_env_vars.openai_api_key
-
-    if not api_key:
-        raise ValueError("OPENAI_API_KEY not found in environment.")
-
-    os.environ["OPENAI_API_KEY"] = api_key
-
-    marvin.defaults.model = context.llm_context.extraction_model
-
-    Agent.instrument_all()
-
-    return
 
 
 @marvin.fn

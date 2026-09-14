@@ -1,0 +1,176 @@
+## run_audio_transcription.py
+# imports
+from pathlib import Path
+from datetime import datetime
+# from yt_dlp.utils import DownloadError
+
+from src.core.config import folder_env_vars
+from src.core.memory_transcribe import AudioContext
+from src.core.memory import app_session
+from src.core.logger import create_logger
+from src.model_transcribe.provider_transcript import get_transcription_provider
+from src.model_transcribe.data_transcribe import (
+    DownloadResult,
+    TranscriptProvenance,
+    TranscriptSource,
+)
+
+# from src.model_knowledge.data_resources import (
+#     # LectureVideo,
+#     LectureResource_old,
+# )
+from src.tools_transcribe.process_url import acquire_transcript_source
+# from src.tools_transcribe.extract_subtitle import parse_subtitle
+
+
+from src.utils.dict_helper import save_dict, load_dict
+from src.utils.path_helper import shorten_path, ensure_dir
+
+
+# ! TODO: change LectureResource_old -> new data models
+
+
+def run_audio_transcription():
+
+    dict_name = input("Enter name of context_file (no suffix): ")
+    dict_path = folder_env_vars.config_dir / f"context_{dict_name}.json"
+    context = load_dict(dict_path, cls=AudioContext)
+
+    app_session.timestamp = datetime.today().strftime("%Y-%m-%d_%H-%M")
+    app_session.logger = create_logger(
+        name=context.logger_name, file_name=context.logger_f_name
+    )
+
+    cache_dir = folder_env_vars.cache_dir
+    memory_f_path = Path(cache_dir) / f"audio_processed/{context.memory_f_name}"
+
+    if memory_f_path.exists():
+        memory_file = load_dict(memory_f_path)
+
+        audio_list = memory_file if isinstance(memory_file, dict) else {}
+
+    else:
+        ensure_dir(memory_f_path)
+        audio_list: dict[str, dict] = {}
+
+    audio_list_clean = {
+        audio_id
+        for audio_id, meta in audio_list.items()
+        if meta.get("result") == "success"
+    }
+
+    app_session.logger.info(
+        "Found %s already processed audio files in memory, %s successful",
+        len(audio_list),
+        len(audio_list_clean),
+    )
+
+    audio_transcription(context)
+
+
+def add_transcript_provenance(
+    transcript,
+    source_result: DownloadResult,
+    context: AudioContext,
+    src_file: Path,
+):
+    transcript.provenance = TranscriptProvenance(
+        transcript_source=source_result.transcript_source,
+        download_strategy=source_result.strategy,
+        source_url=context.url,
+        source_file=str(src_file),
+        language=source_result.language,
+        media_format=source_result.media_format,
+        transcription_provider=(
+            "faster-whisper"
+            if source_result.transcript_source == TranscriptSource.WHISPER
+            else None
+        ),
+        transcription_model=(
+            context.cfg_transcribe.model_size
+            if source_result.transcript_source == TranscriptSource.WHISPER
+            else None
+        ),
+    )
+
+    return transcript
+
+
+def audio_transcription(context: AudioContext):
+    if app_session.logger is None:
+        app_session.timestamp = datetime.today().strftime("%Y-%m-%d")
+        app_session.logger = create_logger(
+            name="Audio_Transcript",
+            file_name=f"{app_session.timestamp}_audio_transcript",
+        )
+
+    source_result = acquire_transcript_source(context)
+
+    if not source_result.success:
+        app_session.logger.error(
+            "Transcript source acquisition failed: %s",
+            source_result.error,
+        )
+        return None
+
+    source_files = source_result.paths
+
+    if not source_files or not any(src.exists() for src in source_files):
+        app_session.logger.error("Source file download failed: %s", context.url)
+        return None
+
+    n_files = len(source_files)
+
+    app_session.logger.info("Initializing transcription provider...")
+
+    provider = get_transcription_provider(
+        context=context,
+        logger=app_session.logger,
+    )
+
+    app_session.logger.info("Transcription provider initialized.")
+
+    for idx, src_file in enumerate(source_files):
+        app_session.logger.info(
+            "[File %s / %s] Start processing source file.", idx + 1, n_files
+        )
+
+        transcript = provider.transcribe(src_file)
+
+        if transcript is None:
+            raise RuntimeError(f"No transcript generated for '{src_file}'")
+
+        transcript = add_transcript_provenance(
+            transcript=transcript,
+            source_result=source_result,
+            context=context,
+            src_file=src_file,
+        )
+
+        save_dict(
+            data=transcript.model_dump(mode="json"),
+            path=Path(f"{src_file.parent}/transcripts/{src_file.name}_trans"),
+        )
+
+    return transcript
+
+
+if __name__ == "__main__":
+    run_audio_transcription()
+
+
+# def build_media_filename(
+#             lecture_no: str | None,
+#             youtube_id: str | None,
+#             topic: str,
+#             ) -> str:
+
+#     safe_topic = "_".join(topic.replace(",", " ").split())
+
+#     parts = [
+#         lecture_no or "NA",
+#         safe_topic,
+#         youtube_id or "NOID",
+#     ]
+
+#     return "_".join(parts)

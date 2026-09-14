@@ -5,7 +5,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory import ParseContext, app_session
 from src.model_tools_parsing.apollo_extractor import ApolloCleanExtractor
 from src.model_tools_parsing.base_assembler import BaseAssembler
@@ -36,9 +36,10 @@ def show():
     with file_select:
         st.subheader("🖼️ Select an html file")
 
-        html_data = parsing_env_vars.data_html
+        html_data = folder_env_vars.data_html
+        data_dir = folder_env_vars.data_dir
 
-        input_data = f"{html_data}/input"
+        input_data = f"{data_dir}/input"
 
         files_html = st.multiselect(  # multiselect(
             label="Which html file(s) should be parsed?",
@@ -119,7 +120,7 @@ def show():
     if "html_parsed" not in st.session_state:
         st.session_state["html_parsed"] = "ready"
 
-    data_processed = f"{html_data}/processed"
+    # data_processed = f"{html_data}/processed"
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     st.divider()
@@ -145,7 +146,7 @@ def show():
 
             t_stamp = app_session.timestamp
             save_folder = Path(
-                f"{data_processed}/{'ready' if rag_ready else 'test'}_{t_stamp}_{f_name}"
+                f"{html_data}/{'ready' if rag_ready else 'test'}_{t_stamp}_{f_name}"
             )
 
             parse_context = ParseContext(
@@ -182,7 +183,7 @@ def show():
             ).bind(html_assembler.render_text_file)
 
             # f_name = parse_context.parse_settings.file_name
-            dst_path = f"{html_data}/raw/{f_name}.html"
+            dst_path = f"{data_dir}/raw/{f_name}.html"
 
             move_file(f_path, dst_path)
 

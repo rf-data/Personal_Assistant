@@ -7,8 +7,9 @@ from pathlib import Path
 import numpy as np
 import yaml
 from pydantic import BaseModel
+from dataclasses import is_dataclass
 
-from src.core.config import GeneralSettings, RunSettings, parsing_env_vars
+from src.core.config import GeneralSettings, RunSettings, folder_env_vars
 from src.core.memory import app_session
 from src.utils.general_helper import inspect_single_function
 from src.utils.path_helper import ensure_dir, shorten_path
@@ -33,7 +34,7 @@ def get_yaml_config(name: str, model: GeneralSettings | RunSettings | None = Non
     # gh.load_env_vars()
     # logger = session.logger
 
-    config_folder = parsing_env_vars.config_dir
+    config_folder = folder_env_vars.config_dir
 
     config_path = Path(config_folder) / f"{name}.yaml"
 
@@ -89,20 +90,14 @@ def make_json_safe(obj):
     return str(obj)
 
 
-def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
-    data_dict = data.model_dump()
-
-    return save_dict(data_dict, path)
-
-
-def save_dict(data: dict, path: Path) -> None:
+def save_dict(data: dict, path: Path, mode: str = "w") -> None:
     logger = app_session.logger
 
-    f_path = Path(f"{path}.json")
+    f_path = path.with_suffix(".json")
     f_path = ensure_dir(f_path)
     data_new = make_json_safe(data)
 
-    with f_path.open("w", encoding="utf-8") as f:
+    with f_path.open(mode, encoding="utf-8") as f:
         try:
             json.dump(
                 data_new,
@@ -113,53 +108,72 @@ def save_dict(data: dict, path: Path) -> None:
             )
             logger.info("Dict saved as %s", shorten_path(f_path, 3))
 
-        except TypeError as e:
+        except (TypeError, OSError) as e:
             logger.error(
-                "ERROR (non_serializable):\n%s\n\ndtype=%s\nrepr=%s",
+                "Could not save JSON: %s\ndtype=%s\nrepr=%s",
                 e,
                 type(data_new),
-                repr(data_new),
+                repr(data_new)[:2000],
             )
+            raise
 
 
-def append_json(data: dict, path: Path) -> None:
-    logger = app_session.logger
+def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
+    data_dict = data.model_dump()
 
-    f_path = Path(f"{path}.json")
-    path = ensure_dir(f_path)
-    data_new = make_json_safe(data)
-
-    with path.open("a", encoding="utf-8") as f:
-        try:
-            f.write(json.dumps(data_new) + "\n")
-            # print(f"Appending data on {shorten_path(path, 3)}")
-            logger.info("Appending data on json_file in %s", shorten_path(f_path, 3))
-
-        except TypeError as e:
-            logger.error(
-                "ERROR (non_serializable):\n%s\n\ndtype=%s\nrepr=%s",
-                e,
-                type(data_new),
-                repr(data_new),
-            )
+    return save_dict(data_dict, path)
 
 
-def load_dict(path: Path | str) -> dict:
-    logger = app_session.logger
+# def append_json(data: dict, path: Path) -> None:
+#     logger = app_session.logger
+
+#     f_path = Path(f"{path}.json")
+#     path = ensure_dir(f_path)
+#     data_new = make_json_safe(data)
+
+#     with path.open("a", encoding="utf-8") as f:
+#         try:
+#             f.write(json.dumps(data_new) + "\n")
+#             # print(f"Appending data on {shorten_path(path, 3)}")
+#             logger.info("Appending data on json_file in %s", shorten_path(f_path, 3))
+
+#         except TypeError as e:
+#             logger.error(
+#                 "ERROR (non_serializable):\n%s\n\ndtype=%s\nrepr=%s",
+#                 e,
+#                 type(data_new),
+#                 repr(data_new),
+#             )
+
+
+def load_dict(path: Path | str, cls=None) -> dict:
 
     path = ensure_dir(path)
 
     with path.open("r", encoding="utf-8") as f:
         data = json.load(f)
-        logger.info("Dict loaded:\t%s", shorten_path(path, 3))
 
-    return data
+    if app_session.logger is not None:
+        app_session.logger.info("Dict loaded:\t%s", shorten_path(path, 3))
 
+    if cls is None:
+        return data
 
-def load_base_model_from_dict(path: Path | str, model_class: BaseModel):
-    data_dict = load_dict(path)
+    if isinstance(data, list):
+        if isinstance(cls, type) and issubclass(cls, BaseModel):
+            return [cls.model_validate(item) for item in data]
 
-    return model_class.model_validate(data_dict)
+        if isinstance(cls, type) and is_dataclass(cls):
+            return [cls(**item) for item in data]
+
+        raise TypeError(f"Cannot deserialize list items into {cls!r}")
+
+    if isinstance(data, dict):
+        if isinstance(cls, type) and issubclass(cls, BaseModel):
+            return cls.model_validate(data)
+
+        if isinstance(cls, type) and is_dataclass(cls):
+            return cls(**data)
 
 
 # # -----------------
@@ -170,7 +184,7 @@ def load_base_model_from_dict(path: Path | str, model_class: BaseModel):
 #     logger = session.logger
 
 #     #
-#     folder = parsing_env_vars("PATH_MODEL")
+#     folder = folder_env_vars("PATH_MODEL")
 #     model_path = Path(f"{folder}({name}.joblib)")
 #     joblib.dump(model, model_path)
 
@@ -184,7 +198,7 @@ def load_base_model_from_dict(path: Path | str, model_class: BaseModel):
 #     logger = session.logger
 
 #     #
-#     folder = parsing_env_vars("PATH_MODEL")
+#     folder = folder_env_vars("PATH_MODEL")
 #     model_path = Path(f"{folder}({name}.joblib)")
 #     model = joblib.load(model_path)
 

@@ -141,7 +141,7 @@ def process_wiki(
 
 
 #     # load env variables and config
-#     data_processed = parsing_env_vars("DATA_PROCESSED")
+#     data_processed = folder_env_vars("DATA_PROCESSED")
 
 #     # if not session.model_config:
 #     config = session.model_config

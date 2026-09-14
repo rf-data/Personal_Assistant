@@ -9,11 +9,9 @@ from src.tools_parsing.post_extract_processing_wiki import process_wiki
 from src.utils.dict_helper import get_yaml_config
 
 
-
 # ------------------
 # MAIN FUNCTION
 # ------------------
-
 
 
 def run_wiki_extraction(query, query_time, config, save=False):
@@ -55,9 +53,9 @@ def run_wiki_extraction(query, query_time, config, save=False):
 
 # session.model_config = config
 
-# data_raw = parsing_env_vars("DATA_RAW")
+# data_raw = folder_env_vars("DATA_RAW")
 # #
-# data_processed = parsing_env_vars("DATA_PROCESSED")
+# data_processed = folder_env_vars("DATA_PROCESSED")
 
 # general_config = config.get("general_args", {})
 # url = general_config.get("url", {})
@@ -328,7 +326,7 @@ def run_wiki_extraction(query, query_time, config, save=False):
 #     # load env variables and config
 #     gh.load_env_vars()
 #     data_processed = "/home/robfra/0_Portfolio_Projekte/gmp_compliance/data/processed"
-#     # parsing_env_vars("DATA_PROCESSED")
+#     # folder_env_vars("DATA_PROCESSED")
 
 #     general_config = config.get("general_args", {})
 #     log_name = general_config["name_log"]
@@ -594,7 +592,7 @@ def run_wiki_extraction(query, query_time, config, save=False):
 
 # #         # timestamp = session.state.now
 # #         # f_name = Path(f_path).stem   # name.split(".")[0]
-# #         # data_processed = parsing_env_vars("DATA_PROCESSED")
+# #         # data_processed = folder_env_vars("DATA_PROCESSED")
 
 # #         # chunk_folder = f"{data_processed}/chunk_df"
 # #         # chunk_file = f"{timestamp}_{f_name}_chunk_df"

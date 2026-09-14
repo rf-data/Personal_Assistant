@@ -45,7 +45,7 @@ def extract_pdf_file(
     logger = app_session.logger
     logger.info("Starting extracting PDF-FILE.")
 
-    # input_data = parsing_env_vars("DATA_INPUT")
+    # input_data = folder_env_vars("DATA_INPUT")
     # assert input_data is not None
 
     # name_short = Path(f_path).name.split(".")[0]
@@ -76,7 +76,7 @@ def extract_pdf_file(
 #     extract_pdf_file()
 
 
-# data_processed = parsing_env_vars("DATA_PROCESSED")
+# data_processed = folder_env_vars("DATA_PROCESSED")
 
 # general_config = config.get("general_args", {})
 # log_name = general_config["name_log"]
@@ -90,7 +90,7 @@ def extract_pdf_file(
 #     file_name = extract_config["file_name"]
 
 # if folder is None:
-#     folder = parsing_env_vars("DATA_RAW")
+#     folder = folder_env_vars("DATA_RAW")
 
 # if isinstance(file_name, str):
 #     file_name = [file_name]

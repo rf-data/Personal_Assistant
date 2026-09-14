@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 
 # from src.core.memory import app_session # , RunContext
 from src.tools_eda.profile_dataset import profile_dataset
@@ -29,7 +29,7 @@ def show():
     # with file_select:
     st.subheader("🖼️ Select a CSV file")
 
-    input_data = parsing_env_vars.data_dir
+    input_data = folder_env_vars.data_dir
 
     st.warning("ADAPT TO NEW FILE SYSTEM")
 

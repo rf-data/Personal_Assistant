@@ -11,14 +11,14 @@ from pathlib import Path
 
 import marvin
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory import app_session
-from src.model_rag.classes_chunk_fact import (
+from src.model_rag.data_chunk_fact import (
     ConsolidatedFact,
     IngestedChunk,
     KnowledgePool,
 )
-from src.model_rag.classes_sop import (
+from src.model_rag.data_sop import (
     ChapterPlanEvaluation,
     CoreChapterPlan,
     FactEvaluationItem,
@@ -346,7 +346,7 @@ def save_prompt(fn: Callable, context: str, prompt: str | None = None) -> None:
     prompt_text = prompt if prompt is not None else inspect.getdoc(fn)
 
     # elif fn is not None:
-    save_path = Path(parsing_env_vars.prompt_dir) / f"{context}_{fn.__name__}"
+    save_path = Path(folder_env_vars.prompt_dir) / f"{context}_{fn.__name__}"
 
     # with open(save_path, "a", encoding="utf-8") as f:
     prompt_data = {

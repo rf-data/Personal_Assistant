@@ -11,7 +11,7 @@ import pyarrow.parquet as pq
 import src.utils.path_helper as ph
 
 # import src.feature_engineering.time_columns as time_col
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.core.memory import app_session
 
 # -----------------
@@ -133,7 +133,7 @@ def load_processed_files(
     logger = app_session.logger
 
     #
-    data_processed = parsing_env_vars.data_processed
+    data_processed = folder_env_vars.data_processed
 
     # arg_dict = config.get("general_args", {})
     if data_folder is None:
@@ -519,7 +519,7 @@ def save_df_to_parquet(df, f_name, folder=None, chunked=False):
     logger = app_session.logger
 
     if folder is None:
-        folder = parsing_env_vars.data_processed
+        folder = folder_env_vars.data_processed
 
     file_path = Path(folder) / f"{f_name}.parquet"
 

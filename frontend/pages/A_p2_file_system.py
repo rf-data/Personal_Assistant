@@ -5,7 +5,7 @@ from pathlib import Path
 # import fitz  # pymupdf
 import streamlit as st
 
-from src.core.config import parsing_env_vars
+from src.core.config import folder_env_vars
 from src.utils.path_helper import ensure_dir, shorten_path
 
 # from src.tools_parsing.extract_docx import extract_docx
@@ -16,7 +16,7 @@ from src.utils.streamlit_helper import st_file_preview  # show_tree
 
 # load_env_vars()
 
-data = parsing_env_vars.data_dir
+data = folder_env_vars.data_dir
 
 data = Path(ensure_dir(data))
 
