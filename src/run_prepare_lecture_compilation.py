@@ -6,7 +6,7 @@ from pathlib import Path
 from pprint import pformat
 from datetime import datetime
 from typing import Literal
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, unquote
 import requests
 from bs4 import BeautifulSoup
 
@@ -18,9 +18,9 @@ from src.model_classes_parsing.base_classes_parsing import (
     RawDocument,
 )  # DocumentExtract,
 from src.model_knowledge.data_resources import (
-    LectureVideo,
-    # LectureResource,
+    LectureResource,
     LectureScript,
+    LectureVideo,
     # RawLectureBlock
 )
 from src.utils.dict_helper import load_dict, save_dict
@@ -151,6 +151,105 @@ Filtering %s elements: %s
     return None
 
 
+def get_resource_metadata_from_url(
+    source_url: str,
+) -> dict:
+
+    url_path = unquote(urlparse(source_url).path)
+
+    file_name = Path(url_path).name
+
+    if not file_name:
+        return {}
+
+    path = Path(file_name)
+
+    file_type = path.suffix.removeprefix(".").lower() or None
+
+    title = path.stem or None
+
+    return {
+        "title": title,
+        "file_type": file_type,
+    }
+
+
+def enrich_resource_metadata(
+    resource: LectureResource,
+) -> LectureResource:
+
+    metadata = get_resource_metadata_from_url(resource.source_url)
+
+    title = None
+    title_meta = metadata.get("title")
+
+    if resource.title:
+        title = normalize_resource_title(resource.title)
+
+    elif title_meta:
+        title = normalize_resource_title(title_meta)
+
+    # if title:
+    #     title = normalize_resource_title(title)
+
+    lecture_no = resource.lecture_no
+    topic = resource.topic
+
+    if title and (lecture_no is None or topic is None):
+        parsed_no, parsed_topic = parse_resource_title(title)
+
+        lecture_no = lecture_no or parsed_no
+
+        topic = topic or parsed_topic
+
+    updates = {
+        "title": title,
+        "file_type": (resource.file_type or metadata.get("file_type")),
+        "lecture_no": lecture_no,
+        "topic": topic,
+    }
+
+    if not resource.title:
+        updates["title"] = metadata.get("title")
+
+    if not resource.file_type:
+        updates["file_type"] = metadata.get("file_type")
+
+    if resource.local_path is not None and resource.local_path.is_file():
+        updates["downloaded"] = True
+
+    return resource.model_copy(update=updates)
+
+
+def normalize_resource_title(
+    title: str,
+) -> str:
+
+    title = title.replace(",", "")
+
+    while "__" in title:
+        title = title.replace("__", "_")
+
+    return title.strip("_")
+
+
+def parse_resource_title(
+    title: str,
+) -> tuple[str | None, str | None]:
+
+    if "_" not in title:
+        return None, title.replace("_", " ")
+
+    resource_no, topic = title.split(
+        "_",
+        maxsplit=1,
+    )
+
+    topic = topic.replace("_", " ").replace(",", "").strip()
+
+    return resource_no, topic
+
+
 def find_lecture_table(
     html_doc: RawDocument,
 ):
@@ -265,7 +364,7 @@ def prepare_lecture_compilation(f_path: Path, elements: list[str]) -> dict[str, 
     all_videos: list[LectureVideo] = []
     all_scripts: list[LectureScript] = []
 
-    all_material = []
+    all_materials = []
     all_other = []
 
     for block in lecture_blocks:
@@ -300,7 +399,7 @@ def prepare_lecture_compilation(f_path: Path, elements: list[str]) -> dict[str, 
         all_videos.extend(videos)
         all_scripts.extend(scripts)
 
-        all_material.extend(links["material"].values())
+        all_materials.extend(links["material"].values())
 
         all_other.extend(links["other"].values())
 
@@ -308,7 +407,18 @@ def prepare_lecture_compilation(f_path: Path, elements: list[str]) -> dict[str, 
 
     all_videos = deduplicate_videos(all_videos)
 
+    all_videos = [enrich_resource_metadata(video) for video in videos]
+
     all_scripts = deduplicate_scripts(all_scripts)
+
+    all_scripts = [enrich_resource_metadata(script) for script in all_scripts]
+
+    all_materials = [enrich_resource_metadata(material) for material in all_materials]
+
+    # exams = [
+    #     enrich_resource_metadata(exam)
+    #     for exam in exams
+    #     ]
 
     f_name = "_".join(f_path.stem.split("_")[:-1])
 
@@ -317,13 +427,14 @@ def prepare_lecture_compilation(f_path: Path, elements: list[str]) -> dict[str, 
     resource_data = {
         "videos": [vid.model_dump(mode="json") for vid in all_videos],
         "scripts": [script.model_dump(mode="json") for script in all_scripts],
-        "material": all_material,
+        "material": all_materials,
         # [mat.model_dump(mode="json") for mat in all_material],
         "other_links": all_other,
         # [other.model_dump(mode="json") for other in all_other],
     }
 
     resource_data.update({"report": validate_lecture_resources(resource_data)})
+
     save_dict(data=resource_data, path=save_path)
 
     return resource_data

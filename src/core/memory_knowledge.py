@@ -12,6 +12,8 @@ class KnowledgeContext(BaseModel):
     logger_f_name: str
     memory_f_name: str = Field(default_factory=str)
     save_folder: str = Field(default_factory=str)
+    provider: str = Field(default_factory=str)
+    course_name: str = Field(default_factory=str)
 
     # lecture compilation
     prepare_compilation: bool = False

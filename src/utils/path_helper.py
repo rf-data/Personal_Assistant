@@ -34,6 +34,7 @@ def find_folder_files(
     exact: bool = True,
     recursive: bool = False,
 ) -> list[Path]:
+    #
 
     folder = Path(folder)
 
@@ -51,14 +52,18 @@ def find_folder_files(
     else:
         pattern = f"{file_name}*.{suffix}" if suffix else f"{file_name}*"
 
-    iterator = folder.rglob(pattern) if recursive else folder.glob(pattern)
+    iterator = (
+        folder.rglob(pattern, case_sensitive=False)
+        if recursive
+        else folder.glob(pattern, case_sensitive=False)
+    )
 
     file_matches = [path for path in iterator if path.is_file()]
 
     app_session.logger.info(
         "Found %s matching file(s):\n%s",
         len(file_matches),
-        "\n".join(f"  {path}" for path in file_matches) or "  none",
+        "\n".join(f"  {shorten_path(path, 4)}" for path in file_matches) or "  none",
     )
 
     return file_matches

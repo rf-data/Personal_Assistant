@@ -42,6 +42,9 @@ class LectureResource(BaseModel):
     title: str | None = None
     source_url: str
 
+    lecture_no: str | None = None
+    topic: str | None = None
+
     resource_kind: Literal[
         "foundation",
         "supplement",
@@ -73,9 +76,6 @@ class ResourceTask(BaseModel):
 
 class LectureVideo(LectureResource):
     resource_type: Literal["video"] = "video"
-
-    lecture_no: str | None = None
-    topic: str | None = None
 
     youtube_url: str | None = None
     youtube_id: str | None = None
@@ -131,10 +131,13 @@ class LectureSection(BaseModel):
 
 
 class LectureCourse(BaseModel):
+    course_id: str
     title: str
-    source_url: str
+    provider: str
+    source_url: str | None
 
     sections: list[LectureSection] = Field(default_factory=list)
+    resources: list[LectureResource] = Field(default_factory=list)
 
     unassigned_resources: list[LectureResource] = Field(default_factory=list)
 

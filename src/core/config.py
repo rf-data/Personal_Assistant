@@ -70,6 +70,10 @@ class FolderEnvVars(BaseSettings):
         return self.data_dir / "audio"
 
     @property
+    def data_lectures(self) -> Path:
+        return self.data_dir / "lectures"
+
+    @property
     def data_image(self) -> Path:
         return self.data_dir / "images_ocr"
 
