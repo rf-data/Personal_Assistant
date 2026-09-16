@@ -9,7 +9,7 @@ from returns.result import Success
 # from gmp_compliance.src.model_parsing.classes_html_parsing import PDFPageExtract
 # from src.core.logger import create_logger
 from src.core.memory import app_session
-from src.model_tools_parsing.pdf_assembler import PDFAssembler
+from src.model_parsing.pdf_assembler import PDFAssembler
 
 # from src.tools.chunk import prepare_chunk_df
 # import src.utils.general_helper as gh

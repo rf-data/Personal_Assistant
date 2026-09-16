@@ -21,7 +21,7 @@ from markdown_it import MarkdownIt
 #     TextWordMeta,
 #     Word,
 # )
-from src.model_tools_parsing.base_extractor import BaseExtractor
+from src.model_parsing.base_extractor import BaseExtractor
 from src.utils.text_file_helper import read_text_file
 
 # @dataclass

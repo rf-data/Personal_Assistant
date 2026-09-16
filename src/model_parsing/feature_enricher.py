@@ -15,7 +15,7 @@ from dataclasses import dataclass  # , field
 import numpy as np
 
 # from tiktoken import encoding_for_model
-from src.model_classes_parsing.base_classes_parsing import (
+from src.model_parsing.base_classes_parsing import (
     Line,
     LineGroup,
     LineSplit,

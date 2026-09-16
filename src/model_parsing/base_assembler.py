@@ -7,7 +7,7 @@ from typing import Any, Literal
 
 from returns.result import Result, Success
 
-from src.model_classes_parsing.base_classes_parsing import DocumentExtract
+from src.model_parsing.base_classes_parsing import DocumentExtract
 
 # import src.utils.general_helper as gh
 from src.utils.general_helper import get_file_config

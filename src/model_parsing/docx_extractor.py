@@ -14,7 +14,7 @@ from docx.text.paragraph import Paragraph
 # import streamlit as st
 from returns.result import Result, Success
 
-from src.model_classes_parsing.base_classes_parsing import (
+from src.model_parsing.base_classes_parsing import (
     BulletItem,
     BulletList,
     Code,
@@ -34,7 +34,7 @@ from src.model_classes_parsing.base_classes_parsing import (
     Word,
     WordMeta,
 )
-from src.model_tools_parsing.base_extractor import BaseExtractor
+from src.model_parsing.base_extractor import BaseExtractor
 from src.utils.dict_helper import save_dict
 
 

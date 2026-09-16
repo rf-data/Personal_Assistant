@@ -7,9 +7,9 @@ import streamlit as st
 
 from src.core.config import folder_env_vars
 from src.core.memory import ParseContext, app_session
-from src.model_tools_parsing.base_assembler import BaseAssembler
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
-from src.model_tools_parsing.notebook_extractor import NoteBookCleanExtractor
+from src.model_parsing.base_assembler import BaseAssembler
+from src.model_parsing.feature_enricher import FeatureEnricher
+from src.model_parsing.notebook_extractor import NoteBookCleanExtractor
 from src.tools_parsing.extract_notebook import extract_notebook_json
 from src.utils.dict_helper import load_dict
 from src.utils.path_helper import shorten_path

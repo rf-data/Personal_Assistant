@@ -6,11 +6,11 @@ from dataclasses import dataclass
 #
 import pandas as pd
 
-from src.model_classes_parsing.base_classes_parsing import (
+from src.model_parsing.base_classes_parsing import (
     CollectionItem,
     PDFPageExtract,
 )
-from src.model_tools_parsing.base_assembler import BaseAssembler
+from src.model_parsing.base_assembler import BaseAssembler
 from src.utils.dict_helper import save_dict
 from src.utils.text_file_helper import save_text_file
 

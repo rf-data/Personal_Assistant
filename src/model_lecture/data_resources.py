@@ -4,8 +4,9 @@ from enum import Enum
 from datetime import datetime
 from pathlib import Path
 from typing import Literal
+from pydantic import BaseModel, Field  # , property
 
-from pydantic import BaseModel, Field
+from src.core.config import folder_env_vars
 
 
 class LectureResourceType(Enum):
@@ -29,11 +30,11 @@ class ResourceAction(Enum):
 
 
 class ActionStatus(Enum):
-    PENDING = ("pending",)
-    RUNNING = ("running",)
-    DONE = ("done",)
-    FAILED = ("failed",)
-    SKIPPED = ("skipped",)
+    PENDING = "pending"
+    RUNNING = "running"
+    DONE = "done"
+    FAILED = "failed"
+    SKIPPED = "skipped"
 
 
 class LectureResource(BaseModel):
@@ -69,13 +70,13 @@ class ResourceTask(BaseModel):
 
     actions: list[ResourceAction] = Field(default_factory=list)
 
-    status: ActionStatus = "pending"
+    status: ActionStatus = ActionStatus.PENDING
 
     error: str | None = None
 
 
 class LectureVideo(LectureResource):
-    resource_type: Literal["video"] = "video"
+    resource_type: LectureResourceType = LectureResourceType.VIDEO
 
     youtube_url: str | None = None
     youtube_id: str | None = None
@@ -83,19 +84,19 @@ class LectureVideo(LectureResource):
 
 
 class LectureNotebook(LectureResource):
-    resource_type: Literal["notebook"] = "notebook"
+    resource_type: LectureResourceType = LectureResourceType.NOTEBOOK
 
 
 class LectureExam(LectureResource):
-    resource_type: Literal["exam"] = "exam"
+    resource_type: LectureResourceType = LectureResourceType.EXAM
 
 
 class LectureScript(LectureResource):
-    resource_type: Literal["script"] = "script"
+    resource_type: LectureResourceType = LectureResourceType.SCRIPT
 
 
 class LectureMaterial(LectureResource):
-    resource_type: Literal["material"] = "material"
+    resource_type: LectureResourceType = LectureResourceType.MATERIAL
     material_type: Literal["repository", "other"] = "other"
 
 
@@ -132,9 +133,17 @@ class LectureSection(BaseModel):
 
 class LectureCourse(BaseModel):
     course_id: str
-    title: str
+    course_title: str
     provider: str
     source_url: str | None
+
+    @property
+    def root(self) -> Path:
+        return (
+            folder_env_vars.data_lectures
+            / self.provider  # loviscach"
+            / self.course_id  # "mathe_1"
+        )
 
     sections: list[LectureSection] = Field(default_factory=list)
     resources: list[LectureResource] = Field(default_factory=list)

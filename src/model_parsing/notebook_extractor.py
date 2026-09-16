@@ -16,15 +16,15 @@ from bs4 import BeautifulSoup as bs
 from returns.result import Failure, Result, Success
 
 from src.core.memory import ParseContext
-from src.model_classes_parsing.base_classes_parsing import (
+from src.model_parsing.base_classes_parsing import (
     Cell,
     CellMeta,
     DocumentExtract,
     RawDocument,
     Word,
 )
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
-from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
+from src.model_parsing.feature_enricher import FeatureEnricher
+from src.model_parsing.html_extractor import HTMLCleanExtractor
 
 # Element, ElementMeta,
 # from src.utils.text_file_helper import read_html_file

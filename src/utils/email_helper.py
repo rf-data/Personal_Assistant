@@ -21,7 +21,7 @@ from email.message import EmailMessage as ParsedEmailMessage
 # from functools import wraps
 
 from src.core.memory import app_session
-from src.model_organizer.model_email import Mailbox, EmailMessage
+from src.model_organizer.data_email import Mailbox, EmailMessage
 
 
 @contextmanager

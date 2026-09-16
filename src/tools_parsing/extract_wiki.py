@@ -13,10 +13,10 @@ from typing import Literal
 # from pyinputplus import inputYesNo
 # import browser_cookie3
 # from playwright.sync_api import sync_playwright
-from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
+from src.model_parsing.html_extractor import HTMLCleanExtractor
 
 # from src.core.feature_enricher import FeatureEnricher
-from src.model_tools_parsing.wiki_client import WikipediaClient
+from src.model_parsing.wiki_client import WikipediaClient
 
 # from src.core.logger import create_logger
 # from src.core.wiki_assembler import WikiPageAssembler

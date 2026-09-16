@@ -171,7 +171,7 @@ make pre_push_check            # Test pre-push stage hooks
    │
    └→ src/run_st_pdf_extract.py       (Main Function)
       │
-      ├→ src/model_tools_parsing/pdf_extractor.py
+      ├→ src/model_parsing/pdf_extractor.py
       │  └─ PDFCleanExtractor (PyMuPDF)
       │
       └→ src/tools_parsing/

@@ -7,10 +7,10 @@ import streamlit as st
 
 from src.core.config import folder_env_vars
 from src.core.memory import ParseContext, app_session
-from src.model_tools_parsing.apollo_extractor import ApolloCleanExtractor
-from src.model_tools_parsing.base_assembler import BaseAssembler
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
-from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
+from src.model_parsing.apollo_extractor import ApolloCleanExtractor
+from src.model_parsing.base_assembler import BaseAssembler
+from src.model_parsing.feature_enricher import FeatureEnricher
+from src.model_parsing.html_extractor import HTMLCleanExtractor
 from src.tools_parsing.extract_html import extract_html_file
 from src.utils.path_helper import move_file, shorten_path
 

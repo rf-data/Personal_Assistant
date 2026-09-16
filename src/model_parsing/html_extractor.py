@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup as bs
 from bs4 import NavigableString  # , Tag
 from returns.result import Failure, Result, Success
 
-from src.model_classes_parsing.base_classes_parsing import (
+from src.model_parsing.base_classes_parsing import (
     BulletList,
     Code,
     CodeMeta,
@@ -31,7 +31,7 @@ from src.model_classes_parsing.base_classes_parsing import (
     TextBlockMeta,
     Word,
 )
-from src.model_classes_parsing.classes_html_parsing import (
+from src.model_parsing.classes_html_parsing import (
     BulletNode,
     CiteNode,
     CodeNode,
@@ -40,7 +40,7 @@ from src.model_classes_parsing.classes_html_parsing import (
     OtherNode,
     TextNode,
 )
-from src.model_tools_parsing.base_extractor import BaseExtractor
+from src.model_parsing.base_extractor import BaseExtractor
 from src.utils.dict_helper import save_dict
 from src.utils.html_helper import (
     normalize_url,

@@ -9,7 +9,7 @@
 # from src.core.feature_enricher import FeatureEnricher
 # import src.utils.general_helper as gh
 # from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract
-from src.model_tools_parsing.text_classifier import TXTClassifier
+from src.model_parsing.text_classifier import TXTClassifier
 
 # import src.utils.dict_helper as dh
 from src.utils.dict_helper import save_dict

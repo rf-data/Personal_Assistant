@@ -7,10 +7,10 @@ from returns.result import Failure, Result, Success
 
 from src.core.config import folder_env_vars
 from src.core.memory import ParseContext
-from src.model_classes_parsing.base_classes_parsing import DocumentExtract
+from src.model_parsing.base_classes_parsing import DocumentExtract
 
 # from src.model_tools.base_assembler import BaseAssembler
-from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
+from src.model_parsing.html_extractor import HTMLCleanExtractor
 
 # from src.utils.dict_helper import save_dict
 from src.utils.path_helper import shorten_path

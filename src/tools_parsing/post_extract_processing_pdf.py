@@ -10,15 +10,15 @@ from returns.result import Result, Success
 # from datetime import datetime
 # from tiktoken import encoding_for_model
 from src.core.memory import app_session
-from src.model_classes_parsing.base_classes_parsing import PDFPageExtract
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
+from src.model_parsing.base_classes_parsing import PDFPageExtract
+from src.model_parsing.feature_enricher import FeatureEnricher
 
 # from src.core.logger import create_logger
 # from src.core.document_assembler import DocumentAssembler
 # from gmp_compliance.src.model_parsing.classes_html_parsing import PDFPageExtract
-from src.model_tools_parsing.pdf_classifier import PDFClassifier
-from src.model_tools_parsing.pdf_cleaner import PDFCleaner
-from src.model_tools_parsing.pdf_merger import PDFMerger
+from src.model_parsing.pdf_classifier import PDFClassifier
+from src.model_parsing.pdf_cleaner import PDFCleaner
+from src.model_parsing.pdf_merger import PDFMerger
 
 # from src.tools.chunk import prepare_chunk_df
 # import src.utils.general_helper as gh

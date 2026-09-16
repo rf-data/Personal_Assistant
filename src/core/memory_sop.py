@@ -13,14 +13,8 @@ from pydantic import Field
 # from openai import OpenAI
 from tiktoken import Encoding  # , encoding_for_model
 
-from src.core.config import (
-    ChunkSettings,
-    DownloadSettings,
-    GeneralSettings,
-    # NIRSettings,
-    ParseSettings,
-    TranscribeSettings,
-)
+from src.core.config import ChunkSettings, GeneralSettings, ParseSettings
+from src.core.config_transcribe import DownloadSettings, TranscribeSettings
 
 # from chromadb.api.models.Collection import Collection
 

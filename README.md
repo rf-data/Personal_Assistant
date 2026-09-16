@@ -122,7 +122,7 @@ gmp_compliance/
 ├── src/
 │   ├── core/                     # Kernel (Config, Logger, Memory)
 │   ├── tools_rag/                # RAG-Pipeline (Chunk, Embed, Retrieve)
-│   ├── model_tools_parsing/      # Parser-Infrastruktur (PDF, HTML, etc.)
+│   ├── model_parsing/      # Parser-Infrastruktur (PDF, HTML, etc.)
 │   ├── tools_parsing/            # Spezifische Pipelines pro Format
 │   ├── llm/                      # LLM-Integration (LiteLLM)
 │   ├── agent/                    # Prompts und Agent-Konfiguration

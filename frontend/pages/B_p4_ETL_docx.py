@@ -8,9 +8,9 @@ from docx import Document
 
 from src.core.config import folder_env_vars
 from src.core.memory import ParseContext, app_session
-from src.model_tools_parsing.base_assembler import BaseAssembler
-from src.model_tools_parsing.docx_extractor import DOCXCleanExtractor
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
+from src.model_parsing.base_assembler import BaseAssembler
+from src.model_parsing.docx_extractor import DOCXCleanExtractor
+from src.model_parsing.feature_enricher import FeatureEnricher
 from src.utils.path_helper import shorten_path
 from src.utils.streamlit_helper import st_file_preview
 

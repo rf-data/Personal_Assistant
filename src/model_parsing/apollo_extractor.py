@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup as bs
 from returns.result import Failure, Result, Success
 
 # from bs4 import NavigableString  # , Tag
-from src.model_classes_parsing.base_classes_parsing import (
+from src.model_parsing.base_classes_parsing import (
     BulletList,
     Code,
     CodeMeta,
@@ -30,7 +30,7 @@ from src.model_classes_parsing.base_classes_parsing import (
     # Quote,
     Word,
 )
-from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
+from src.model_parsing.html_extractor import HTMLCleanExtractor
 from src.utils.dict_helper import save_dict
 
 # from src.utils.html_helper import normalize_url

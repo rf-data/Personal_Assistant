@@ -4,8 +4,8 @@ from pathlib import Path
 
 from src.core.config import folder_env_vars
 from src.core.memory import ParseContext
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
-from src.model_tools_parsing.pdf_extractor import PDFCleanExtractor
+from src.model_parsing.feature_enricher import FeatureEnricher
+from src.model_parsing.pdf_extractor import PDFCleanExtractor
 from src.tools_parsing.assemble_pdf import assemble_single_pdf
 from src.tools_parsing.extract_pdf import extract_pdf_file
 from src.tools_parsing.post_extract_processing_pdf import post_process_pdf

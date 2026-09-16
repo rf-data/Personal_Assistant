@@ -10,7 +10,7 @@ import yt_dlp
 from yt_dlp.utils import download_range_func
 
 from src.core.memory import app_session
-from src.core.memory_knowledge import KnowledgeContext
+from src.core.memory_lecture import LectureContext
 from src.model_knowledge.data_knowledge import (
     DownloadedVideoSection,
     ExtractedFrame,
@@ -193,7 +193,7 @@ def extract_frame(
     section_id: str,  # DownloadedVideoSection,
     src_path: Path,
     frame_time: FrameTimestamp,
-    context: KnowledgeContext,
+    context: LectureContext,
     frame_id: str,
 ) -> ExtractedFrame:
 
@@ -251,7 +251,7 @@ def extract_frame(
 
 def extract_section_frames(
     section: DownloadedVideoSection,
-    context: KnowledgeContext,
+    context: LectureContext,
     # image_format: str = "png",
 ) -> DownloadedVideoSection:
     """
@@ -324,7 +324,7 @@ def extract_section_frames(
 
 def extract_all_frames(
     sections: list[DownloadedVideoSection],
-    context: KnowledgeContext,
+    context: LectureContext,
 ) -> list[DownloadedVideoSection]:
 
     for section in sections:
@@ -450,7 +450,7 @@ def extract_additional_frames(
     section: DownloadedVideoSection,
     add_frames: list[float],
     # FrameTimestamp
-    context: KnowledgeContext,
+    context: LectureContext,
 ) -> list[ExtractedFrame]:
 
     new_frames: list[ExtractedFrame] = []

@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 #
 # import src.utils.general_helper as gh
-from src.model_tools_parsing.base_assembler import BaseAssembler
+from src.model_parsing.base_assembler import BaseAssembler
 
 
 @dataclass

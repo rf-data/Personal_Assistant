@@ -8,7 +8,7 @@ from pathlib import Path
 # import pprint
 # from tiktoken import encoding_for_model
 # from src.core.logger import create_logger
-from src.model_tools_parsing.text_extractor import (
+from src.model_parsing.text_extractor import (
     TXTCleanExtractor,  # , MDCleanExtractor
 )
 

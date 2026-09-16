@@ -14,7 +14,7 @@ from returns.result import Result, Success
 from src.core.memory import ParseContext
 
 # from src.utils.pdf_helper import extract_text_pymupdf
-from src.model_classes_parsing.base_classes_parsing import (
+from src.model_parsing.base_classes_parsing import (
     BulletItem,
     BulletMeta,
     Drawing,
@@ -32,10 +32,10 @@ from src.model_classes_parsing.base_classes_parsing import (
     Word,
     WordMeta,
 )
-from src.model_tools_parsing.base_extractor import BaseExtractor
+from src.model_parsing.base_extractor import BaseExtractor
 
 # from tiktoken import encoding_for_model
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
+from src.model_parsing.feature_enricher import FeatureEnricher
 from src.utils.dict_helper import save_base_model_as_dict
 
 # @dataclass

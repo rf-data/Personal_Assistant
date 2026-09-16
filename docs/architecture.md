@@ -81,7 +81,7 @@ gmp-compliance ist eine mehrschichtige Anwendung für Dokumenten-Parsing und RAG
 
 ### Parsing & Text Extraction
 
-**`src/tools_parsing/`** + **`src/model_tools_parsing/`**
+**`src/tools_parsing/`** + **`src/model_parsing/`**
 
 ```
 Eingabedatei (PDF/HTML/DOCX/...)

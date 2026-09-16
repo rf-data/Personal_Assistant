@@ -29,6 +29,23 @@ from src.utils.path_helper import ensure_dir  # , shorten_path
 #     return
 
 
+def get_value(node, key: str, default=None):
+    if isinstance(node, BaseModel):
+        return getattr(node, key, default)
+
+    if isinstance(node, dict):
+        return node.get(key, default)
+
+    return default
+
+
+def normalize_whitespace(
+    text: str,
+) -> str:
+
+    return " ".join(text.split())
+
+
 def iter_chunks(df, chunk_size=25):
     for start in range(0, len(df), chunk_size):
         yield df.iloc[start : start + chunk_size]

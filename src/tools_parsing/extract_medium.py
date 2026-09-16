@@ -8,7 +8,7 @@ from src.core.memory import RunContext
 
 # from playwright.sync_api import sync_playwright
 # from src.tools.extract_html import extract_html_file
-from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
+from src.model_parsing.html_extractor import HTMLCleanExtractor
 from src.utils.dict_helper import get_yaml_config, save_dict
 
 # from src.utils.general_helper import load_env_vars

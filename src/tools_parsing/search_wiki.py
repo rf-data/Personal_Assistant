@@ -19,7 +19,7 @@ from src.core.config import folder_env_vars
 # from src.utils.dict_helper import get_yaml_config
 # from src.utils.general_helper import load_env_vars
 from src.core.memory import ParseContext
-from src.model_tools_parsing.wiki_client import WikipediaClient
+from src.model_parsing.wiki_client import WikipediaClient
 
 
 def wiki_article_search(parse_context: ParseContext):

@@ -14,7 +14,7 @@ from src.model_knowledge.data_knowledge import (
     VisualCandidate,
 )
 from src.model_transcribe.data_transcribe import TranscriptSegment, TranscriptDocument
-from src.core.memory_knowledge import KnowledgeContext
+from src.core.memory_lecture import LectureContext
 from src.agent.prompts.prompt_know_extract import build_knowledge_extraction_prompt
 
 from src.utils.general_helper import (
@@ -27,7 +27,7 @@ from src.utils.general_helper import (
 
 
 def build_transcript_chunks(
-    context: KnowledgeContext, transcript: TranscriptDocument
+    context: LectureContext, transcript: TranscriptDocument
 ) -> list[TranscriptChunk]:
 
     dur_target = context.target_duration  # float = 45,

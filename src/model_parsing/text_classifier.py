@@ -9,8 +9,8 @@ from dataclasses import dataclass  # , field
 # import pprint
 # import sys
 # import logging
-from src.model_classes_parsing.base_classes_parsing import DocumentExtract
-from src.model_tools_parsing.base_classifier import BaseClassifier
+from src.model_parsing.base_classes_parsing import DocumentExtract
+from src.model_parsing.base_classifier import BaseClassifier
 
 
 @dataclass

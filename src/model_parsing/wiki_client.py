@@ -18,7 +18,7 @@ import requests
 
 from src.core.config import folder_env_vars
 from src.core.memory import ParseContext
-from src.model_classes_parsing.data_classes_wiki import (
+from src.model_parsing.data_classes_wiki import (
     ResultItem,
     SearchResult,
     WikiPage,

@@ -6,7 +6,7 @@ from returns.result import Failure, Result, Success
 
 from src.core.config import folder_env_vars
 from src.core.memory import ParseContext
-from src.model_classes_parsing.base_classes_parsing import DocumentExtract
+from src.model_parsing.base_classes_parsing import DocumentExtract
 
 # # from src.core.feature_enricher import FeatureEnricher
 # from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract
@@ -14,7 +14,7 @@ from src.model_classes_parsing.base_classes_parsing import DocumentExtract
 # # import pprint
 # # from tiktoken import encoding_for_model
 # # from src.core.logger import create_logger
-from src.model_tools_parsing.notebook_extractor import NoteBookCleanExtractor
+from src.model_parsing.notebook_extractor import NoteBookCleanExtractor
 
 # # import src.utils.general_helper as gh
 # # import src.utils.dict_helper as dh

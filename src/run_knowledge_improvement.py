@@ -6,7 +6,7 @@ from datetime import datetime
 from src.core.config import folder_env_vars
 from src.core.memory import app_session
 from src.core.logger import create_logger
-from src.core.memory_knowledge import KnowledgeContext
+from src.core.memory_lecture import LectureContext
 from src.tools_knowledge.rebuild_knowledge import (
     # clean_frame_times,
     # add_frame_timestamps,

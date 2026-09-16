@@ -14,7 +14,7 @@ from src.model_transcribe.data_transcribe import (
     TranscriptProvenance,
     TranscriptSource,
 )
-from src.model_knowledge.data_resources import (
+from src.model_lecture.data_resources import (
     # LectureVideo,
     LectureResource_old,
 )

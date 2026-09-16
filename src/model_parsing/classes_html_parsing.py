@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import Field  # BaseModel,
 
-from src.model_classes_parsing.base_classes_parsing import (
+from src.model_parsing.base_classes_parsing import (
     BaseLeaf,
     # BaseContainer,
     ImageMeta,

@@ -6,7 +6,7 @@ import re
 from dataclasses import dataclass, field
 
 from src.core.memory import ParseContext
-from src.model_classes_parsing.base_classes_parsing import (
+from src.model_parsing.base_classes_parsing import (
     BulletItem,
     BulletList,
     LineGroup,

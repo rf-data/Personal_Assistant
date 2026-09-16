@@ -11,7 +11,7 @@
 # from src.core.logger import create_logger
 # from src.core.document_assembler import DocumentAssembler
 # from gmp_compliance.src.model_parsing.classes_html_parsing import DocumentExtract
-from src.model_tools_parsing.wiki_classifier import WikiClassifier
+from src.model_parsing.wiki_classifier import WikiClassifier
 
 # from src.core.pdf_cleaner import PDFCleaner
 # from src.core.pdf_merger import PDFMerger

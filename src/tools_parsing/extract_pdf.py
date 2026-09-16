@@ -9,12 +9,12 @@
 from returns.result import Result, Success
 
 from src.core.memory import ParseContext, app_session
-from src.model_classes_parsing.base_classes_parsing import PDFPageExtract
+from src.model_parsing.base_classes_parsing import PDFPageExtract
 
 # from src.core.logger import create_logger
 # from gmp_compliance.src.model_parsing.classes_html_parsing import PDFPageExtract
 # from gmp_compliance.src.tools.__dev__extraction import extract_text_per_page
-from src.model_tools_parsing.pdf_extractor import PDFCleanExtractor
+from src.model_parsing.pdf_extractor import PDFCleanExtractor
 
 # from src.core.feature_enricher import FeatureEnricher
 

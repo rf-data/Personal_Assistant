@@ -13,7 +13,7 @@ from src.agent.prompts.prompt_know_extract import (
 )
 from src.core.config import agentic_env_vars
 from src.core.memory import app_session
-from src.core.memory_knowledge import KnowledgeContext  # context
+from src.core.memory_lecture import LectureContext
 from src.model_knowledge.data_knowledge import (
     DownloadedVideoSection,
     ExtractedFrame,
@@ -370,7 +370,7 @@ def build_visual_batches(
     section: DownloadedVideoSection,
     selected_frames: list[ExtractedFrame],
     document: TranscriptKnowledgeDocument,
-    context: KnowledgeContext,
+    context: LectureContext,
     # batch_size: int = 8,
     # overlap: int = 1,
 ) -> list[VisualAnalysisBatch]:

@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from src.core.memory import ParseContext
 
 # from typing import Any
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
+from src.model_parsing.feature_enricher import FeatureEnricher
 from src.utils.general_helper import get_file_config
 
 
