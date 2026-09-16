@@ -19,7 +19,7 @@ from src.model_lecture.data_resources import (
     LectureResource_old,
 )
 from src.tools_transcribe.process_url import acquire_transcript_source
-from src.tools_transcribe.extract_subtitle import parse_subtitle
+from src.tools_transcribe.process_subtitle import parse_subtitle
 
 
 from src.utils.dict_helper import save_dict, load_dict

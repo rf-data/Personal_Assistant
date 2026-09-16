@@ -11,6 +11,7 @@ from src.core.logger import create_logger
 from src.model_transcribe.provider_transcript import get_transcription_provider
 from src.model_transcribe.data_transcribe import (
     DownloadResult,
+    TranscriptDocument,
     TranscriptProvenance,
     TranscriptSource,
 )
@@ -68,35 +69,7 @@ def run_audio_transcription():
     audio_transcription(context)
 
 
-def add_transcript_provenance(
-    transcript,
-    source_result: DownloadResult,
-    context: AudioContext,
-    src_file: Path,
-):
-    transcript.provenance = TranscriptProvenance(
-        transcript_source=source_result.transcript_source,
-        download_strategy=source_result.strategy,
-        source_url=context.url,
-        source_file=str(src_file),
-        language=source_result.language,
-        media_format=source_result.media_format,
-        transcription_provider=(
-            "faster-whisper"
-            if source_result.transcript_source == TranscriptSource.WHISPER
-            else None
-        ),
-        transcription_model=(
-            context.cfg_transcribe.model_size
-            if source_result.transcript_source == TranscriptSource.WHISPER
-            else None
-        ),
-    )
-
-    return transcript
-
-
-def audio_transcription(context: AudioContext):
+def audio_transcription(context: AudioContext) -> list[Path] | None:
     if app_session.logger is None:
         app_session.timestamp = datetime.today().strftime("%Y-%m-%d")
         app_session.logger = create_logger(
@@ -119,8 +92,6 @@ def audio_transcription(context: AudioContext):
         app_session.logger.error("Source file download failed: %s", context.url)
         return None
 
-    n_files = len(source_files)
-
     app_session.logger.info("Initializing transcription provider...")
 
     provider = get_transcription_provider(
@@ -130,29 +101,7 @@ def audio_transcription(context: AudioContext):
 
     app_session.logger.info("Transcription provider initialized.")
 
-    for idx, src_file in enumerate(source_files):
-        app_session.logger.info(
-            "[File %s / %s] Start processing source file.", idx + 1, n_files
-        )
-
-        transcript = provider.transcribe(src_file)
-
-        if transcript is None:
-            raise RuntimeError(f"No transcript generated for '{src_file}'")
-
-        transcript = add_transcript_provenance(
-            transcript=transcript,
-            source_result=source_result,
-            context=context,
-            src_file=src_file,
-        )
-
-        save_dict(
-            data=transcript.model_dump(mode="json"),
-            path=Path(f"{src_file.parent}/transcripts/{src_file.name}_trans"),
-        )
-
-    return transcript
+    return transcribe_files(source_result, provider, context)
 
 
 if __name__ == "__main__":

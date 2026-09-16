@@ -12,7 +12,7 @@ from src.model_transcribe.data_transcribe import (
     DownloadStrategy,
     TranscriptSource,
 )
-from src.tools_transcribe.extract_subtitle import download_subtitles
+from gmp_compliance.src.tools_transcribe.process_subtitle import download_subtitles
 from src.tools_transcribe.extract_audio import download_audio
 
 
@@ -222,7 +222,9 @@ def inspect_yt_file(context: AudioContext) -> dict | None:
 #                 )
 
 
-def acquire_transcript_source(context: AudioContext) -> DownloadResult:
+def acquire_transcript_source(
+    context: AudioContext, folder: Path = folder_env_vars.data_audio
+) -> DownloadResult:
     # list[Path]:
     # f_path: str = None, url: str = None) -> str:
 
@@ -241,7 +243,7 @@ def acquire_transcript_source(context: AudioContext) -> DownloadResult:
             path_list: list = []
 
             for path in file_paths:
-                path_list.append(Path(folder_env_vars.data_audio / path))
+                path_list.append(Path(folder / path))
 
             # path_list = [Path("/home/robfra/0_Portfolio_Projekte/gmp_compliance/data/test_900s.wav")]
 

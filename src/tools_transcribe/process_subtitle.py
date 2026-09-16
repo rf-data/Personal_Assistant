@@ -1,82 +1,83 @@
-## extract_subtitle.py
+## process_subtitle.py
 # import
 import html
 import re
 from pathlib import Path
-from yt_dlp import YoutubeDL
-from yt_dlp.utils import DownloadError
 
-from src.core.memory import app_session
-from src.core.config import folder_env_vars
 from src.core.memory_transcribe import AudioContext
+from src.core.memory import app_session
+
 from src.model_transcribe.data_transcribe import (
+    DownloadResult,
     TranscriptDocument,
+    TranscriptProvenance,
+    TranscriptSource,
     TranscriptSegment,
 )
-from src.utils.yt_helper import build_base_ydl_opts
-
-from src.utils.path_helper import ensure_dir
-from src.utils.text_file_helper import save_text_file
-from src.utils.dict_helper import save_dict
 
 
-def download_subtitles(
-    context: AudioContext, automatic: bool, language: str
+def transcribe_files(
+    source_result: DownloadResult, provider, context: AudioContext
 ) -> list[Path]:
-    # url: str, output_dir: str)
 
-    save_folder = Path(folder_env_vars.data_audio)
-    ensure_dir(save_folder)
+    f_paths = source_result.paths
+    n_files = len(f_paths)
 
-    cfg = context.cfg_download
-
-    # if cfg.no_playlist is True:
-    outtmpl = str(
-        save_folder
-        / f"{cfg.playlist_name or 'single'}"
-        / f"{'%(title)s.%(ext)s' if cfg.no_playlist is True else '%(playlist_index)03d_%(title)s.%(ext)s'}"
-    )
-    yt_opts = {
-        **build_base_ydl_opts(context),
-        "skip_download": True,
-        "writesubtitles": not automatic,
-        "writeautomaticsub": automatic,
-        "subtitleslangs": [language],
-        "subtitlesformat": "vtt",
-        "noplaylist": cfg.no_playlist,
-        "restrictfilenames": True,
-        "quiet": cfg.quiet,
-        "socket_timeout": cfg.socket_timeout,
-        "retries": cfg.retries,
-        "outtmpl": outtmpl,  # f"{output_dir}/%(id)s.%(ext)s",
-    }
-
-    try:
-        with YoutubeDL(yt_pts) as ydl:
-            info = ydl.extract_info(context.url, download=True)
-
-            if info is None:
-                raise RuntimeError(f"Could not download subtitles from {context.url}")
-
-    except DownloadError as exc:
-        app_session.logger.error(
-            "Subtitle download failed for %s: %s",
-            context.url,
-            exc,
+    trans_all: list = []
+    for idx, file in enumerate(f_paths, start=1):
+        app_session.logger.info(
+            "[File %s / %s] Start processing source file.", idx, n_files
         )
-        return []
 
-    requested_subtitles = info.get("requested_subtitles", {})
-    # print(requested_subtitles)
+        transcript = provider.transcribe(file)
 
-    subtitle = requested_subtitles.get("de", {})
+        if transcript is None:
+            raise RuntimeError(f"No transcript generated for '{file}'")
 
-    filepath = subtitle.get("filepath")
+        transcript = add_transcript_provenance(
+            transcript=transcript,
+            source_result=source_result,
+            context=context,
+            src_file=file,
+        )
 
-    if filepath and Path(filepath).exists():
-        return [Path(filepath)]
+        trans_path = Path(f"{file.parent}/transcripts/{file.name}_trans")
+        trans_all.append(trans_path)
 
-    return []
+        save_dict(
+            data=transcript.model_dump(mode="json"),
+            path=trans_path,
+        )
+
+    return trans_all
+
+
+def add_transcript_provenance(
+    transcript,
+    source_result: DownloadResult,
+    context: AudioContext,
+    src_file: Path,
+):
+    transcript.provenance = TranscriptProvenance(
+        transcript_source=source_result.transcript_source,
+        download_strategy=source_result.strategy,
+        source_url=context.url,
+        source_file=str(src_file),
+        language=source_result.language,
+        media_format=source_result.media_format,
+        transcription_provider=(
+            "faster-whisper"
+            if source_result.transcript_source == TranscriptSource.WHISPER
+            else None
+        ),
+        transcription_model=(
+            context.cfg_transcribe.model_size
+            if source_result.transcript_source == TranscriptSource.WHISPER
+            else None
+        ),
+    )
+
+    return transcript
 
 
 def parse_subtitle(

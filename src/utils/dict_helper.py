@@ -148,7 +148,7 @@ def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
 
 def load_dict(path: Path | str, cls=None) -> dict:
 
-    path = ensure_dir(path)
+    path = ensure_dir(f"{path}.json")
 
     with path.open("r", encoding="utf-8") as f:
         data = json.load(f)
