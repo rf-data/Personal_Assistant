@@ -23,21 +23,27 @@ def download_audio(
     # if context.url is None:
     #     raise ValueError("No URL provided.")
 
-    save_folder = Path(folder_env_vars.data_audio)
+    save_folder = context.save_folder / "audio"
+    # Path(folder_env_vars.data_audio)
     ensure_dir(save_folder)
 
     cfg = context.cfg_download
 
-    # if cfg.no_playlist is True:
-    outtmpl = str(
-        save_folder
-        / f"{cfg.playlist_name or 'single'}"
-        / f"{
-            '%(title)s.%(ext)s'
-            if cfg.no_playlist is True
-            else '%(playlist_index)03d_%(title)s.%(ext)s'
-        }"
-    )
+    # if context.f_name:
+    # outtmpl = str(save_folder / context.f_name)
+
+    # else:
+    title = context.f_name or "%(title)s"
+
+    outtmpl = str(save_folder / f"{title}.%(ext)s")
+
+    # / f"{cfg.playlist_name or 'single'}"
+    #         / f"{
+    #             '%(title)s.%(ext)s'
+    #             if cfg.no_playlist is True
+    #             else '%(playlist_index)03d_%(title)s.%(ext)s'
+    #         }"
+    # )
     # else:
     #     outtmpl = str(
     #                 save_folder

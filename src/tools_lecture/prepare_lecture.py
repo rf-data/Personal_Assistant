@@ -12,7 +12,7 @@ from src.model_parsing.base_classes_parsing import RawDocument
 from src.model_lecture.data_resources import (
     LectureResource,
     LectureScript,
-    LectureVideo,
+    LectureMedia,
 )
 
 from src.utils.general_helper import get_value
@@ -215,11 +215,11 @@ def deduplicate_scripts(
 
 
 def deduplicate_videos(
-    videos: list[LectureVideo],
-) -> list[LectureVideo]:
+    videos: list[LectureMedia],
+) -> list[LectureMedia]:
 
-    by_id: dict[str, LectureVideo] = {}
-    without_id: list[LectureVideo] = []
+    by_id: dict[str, LectureMedia] = {}
+    without_id: list[LectureMedia] = []
 
     for video in videos:
         if not video.youtube_id:

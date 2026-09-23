@@ -11,7 +11,8 @@ from pathlib import Path
 import fitz  # PyMuPDF
 from returns.result import Result, Success
 
-from src.core.memory import ParseContext
+from src.core.memory import app_session
+from src.core.memory_parsing import ParseContext
 
 # from src.utils.pdf_helper import extract_text_pymupdf
 from src.model_parsing.base_classes_parsing import (
@@ -64,7 +65,7 @@ class PDFCleanExtractor(BaseExtractor):
         # self.extraction_tags = run_context.general_settings.html.extraction_tags
         # self.header = run_context.header
 
-        self.logger = parse_context.logger
+        self.logger = app_session.logger
         # self.parser = self.extract_config.parser
         self.save_folder = parse_context.save_folder
         self.save_name = parse_context.save_name
@@ -74,7 +75,7 @@ class PDFCleanExtractor(BaseExtractor):
 
     def extract_text_per_page(
         self,
-        f_path: str,
+        f_path: str | Path,
     ) -> Result[list[PDFPageExtract], str]:
         self.logger.info("Preparing text for extraction.")
 

@@ -11,6 +11,9 @@ from returns.result import Success
 from src.core.memory import app_session
 from src.model_parsing.pdf_assembler import PDFAssembler
 
+
+from src.utils.text_file_helper import save_text_file
+
 # from src.tools.chunk import prepare_chunk_df
 # import src.utils.general_helper as gh
 # import src.utils.dict_helper as dh
@@ -65,10 +68,10 @@ def assemble_single_pdf(
     # assemble_config: dict,
     # save: bool = False
 ) -> dict:
-    parse_context = app_session.run_context
+    parse_context = app_session.parse_context
     assemble = parse_context.parse_settings.pdf.assemble
 
-    logger = parse_context.logger
+    logger = app_session.logger
 
     assembler = PDFAssembler(parse_context=parse_context)
 
@@ -80,10 +83,15 @@ def assemble_single_pdf(
 
     doc_dict = assembler.assemble_document()
 
-    if assemble:
-        if "md" in assemble:
-            md_file = assembler.create_md_from_extract(doc_dict["info_dict"])
+    # if "md" in assemble:
+    md_file = assembler.create_md_from_extract(doc_dict["info_dict"])
 
+    # save_text_file(
+    #             data=md_file,
+    #             file_name=parse_context.save_name,
+    #             folder=parse_context.save_folder
+    #             )
+    if assemble:
         if "txt" in assemble:
             logger.info("'Text assembling' script has not been build yet.")
 
@@ -92,7 +100,7 @@ def assemble_single_pdf(
             except ImportError:
                 pass
 
-    return ""
+    return
 
 
 # def assemble_related_pdf(file_names: List[str],

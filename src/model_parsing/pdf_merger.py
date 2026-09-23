@@ -5,13 +5,17 @@ import re
 # import logging
 from dataclasses import dataclass, field
 
-from src.core.memory import ParseContext
+from src.core.memory import app_session
+from src.core.memory_parsing import ParseContext
 from src.model_parsing.base_classes_parsing import (
     BulletItem,
     BulletList,
     LineGroup,
     TextBlock,
 )
+
+
+# lecture_compile
 
 
 @dataclass
@@ -23,7 +27,7 @@ class PDFMerger:
         self.general_config = parse_context.general_settings.pdf
         self.enricher = enricher
         # FeatureEnricher = field(default_factory=FeatureEnricher())
-        self.logger = parse_context.logger
+        self.logger = app_session.logger
 
         self.page_heigth: float = field(default_factory=float)
         self.page_width: float = field(default_factory=float)
@@ -256,6 +260,12 @@ class PDFMerger:
             words_sort = self._word_reading_order(curr_line.elements)
             curr_line.text = " ".join(w.text.strip() for w in words_sort)
 
+            # curr_line.text = " ".join(
+            #                     w.text.strip()
+            #                     for w in curr_line.elements
+            #                     if w.text.strip()
+            #                     )
+
             if current and is_bullet_mode and self._starts_new_bullet(curr_line):
                 # print("curr_type:\t", type(current[0]))
 
@@ -361,13 +371,48 @@ class PDFMerger:
     #     )
 
     def _word_reading_order(self, words):
-        return sorted(
+        # return sorted(
+        #     words,
+        #     key=lambda w: (
+        #         round(w.meta.y_start / 2) * 2,  # kleine y-Abweichungen gruppieren
+        #         w.meta.x_start,
+        #     ),
+        # )
+        if not words:
+            return []
+
+        y_tol = self.general_config.y_gap_words
+
+        words_y = sorted(
             words,
-            key=lambda w: (
-                round(w.meta.y_start / 2) * 2,  # kleine y-Abweichungen gruppieren
-                w.meta.x_start,
-            ),
+            key=lambda w: w.meta.y_start,
         )
+
+        rows = []
+
+        for word in words_y:
+            if not rows:
+                rows.append([word])
+                continue
+
+            row_y = sum(w.meta.y_start for w in rows[-1]) / len(rows[-1])
+
+            if abs(word.meta.y_start - row_y) <= y_tol:
+                rows[-1].append(word)
+            else:
+                rows.append([word])
+
+        result = []
+
+        for row in rows:
+            result.extend(
+                sorted(
+                    row,
+                    key=lambda w: w.meta.x_start,
+                )
+            )
+
+        return result
 
     def _finalize_body_text(self, blocks: list[TextBlock]) -> list[TextBlock]:
         # enricher = session.enricher

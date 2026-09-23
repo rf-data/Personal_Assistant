@@ -14,11 +14,14 @@ from src.core.config_transcribe import (
 
 
 class AudioContext(BaseModel):
-    source: Literal[
-        "local",
-        "url",
-        "youtube",
-    ] = "local"
+    source: (
+        Literal[
+            "local",
+            "url",
+            "youtube",
+        ]
+        | None
+    ) = "local"
 
     logger_name: str | None = None
     logger_f_name: str | None = None
@@ -42,4 +45,4 @@ class AudioContext(BaseModel):
 
     cfg_recording: RecordingSettings = Field(default_factory=RecordingSettings)
 
-    save_file: str = Field(default_factory=str)
+    save_folder: Path = Field(default_factory=Path)

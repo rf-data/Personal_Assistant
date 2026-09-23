@@ -9,7 +9,10 @@ import yaml
 from pydantic import BaseModel
 from dataclasses import is_dataclass
 
-from src.core.config import GeneralSettings, RunSettings, folder_env_vars
+from src.core.config import (
+    GeneralSettings,
+    ParseSettings,
+)  # RunSettings, folder_env_vars
 from src.core.memory import app_session
 from src.utils.general_helper import inspect_single_function
 from src.utils.path_helper import ensure_dir, shorten_path
@@ -18,35 +21,40 @@ from src.utils.path_helper import ensure_dir, shorten_path
 # -----------------------
 # CONFIGURATION METHODS
 # -----------------------
-def load_yaml_config(path: str | Path):
-    with open(path) as f:
-        return yaml.safe_load(f)
+def load_yaml_config(
+    path: str | Path, cls: GeneralSettings | ParseSettings | None = None
+):
+
+    f_path = Path(path).with_suffix(".yaml")
+
+    app_session.logger.info("Loading config_file: %s", shorten_path(f_path))
+
+    with open(f_path, mode="r") as f:
+        file = yaml.safe_load(f)
+
+        if not cls:
+            return file
+
+        return cls.model_validate(file)
 
 
-def load_yaml_as_base_model(path: str | Path, model: GeneralSettings | RunSettings):
-    cfg_dict = load_yaml_config(path)
+# def get_yaml_config(name: str, model: GeneralSettings | RunSettings | None = None):
+#     # (1) load config + logger
+#     # gh.load_env_vars()
+#     # logger = session.logger
 
-    return model.model_validate(cfg_dict)
+#     config_folder = folder_env_vars.config_dir
+
+#     config_path = Path(config_folder) / f"{name}.yaml"
 
 
-def get_yaml_config(name: str, model: GeneralSettings | RunSettings | None = None):
-    # (1) load config + logger
-    # gh.load_env_vars()
-    # logger = session.logger
+#     if model is None:
+#         config = load_yaml_config(config_path)
 
-    config_folder = folder_env_vars.config_dir
+#     else:
+#         config = load_yaml_as_base_model(path=config_path, model=model)
 
-    config_path = Path(config_folder) / f"{name}.yaml"
-
-    print(f"Loading config_file: {shorten_path(config_path)}")
-
-    if model is None:
-        config = load_yaml_config(config_path)
-
-    else:
-        config = load_yaml_as_base_model(path=config_path, model=model)
-
-    return config
+#     return config
 
 
 # ---------------------
@@ -90,10 +98,10 @@ def make_json_safe(obj):
     return str(obj)
 
 
-def save_dict(data: dict, path: Path, mode: str = "w") -> None:
+def save_dict(data: dict, path: str | Path, mode: str = "w") -> None:
     logger = app_session.logger
 
-    f_path = path.with_suffix(".json")
+    f_path = Path(path).with_suffix(".json")
     f_path = ensure_dir(f_path)
     data_new = make_json_safe(data)
 
@@ -148,7 +156,7 @@ def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
 
 def load_dict(path: Path | str, cls=None) -> dict:
 
-    path = ensure_dir(f"{path}.json")
+    path = ensure_dir(Path(path).with_suffix(".json"))
 
     with path.open("r", encoding="utf-8") as f:
         data = json.load(f)

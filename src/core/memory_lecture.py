@@ -2,6 +2,7 @@
 # import
 from pathlib import Path
 from pydantic import BaseModel, Field, field_validator  # , ConfigDict
+from typing import Literal
 
 from src.core.config_transcribe import DownloadSettings, ScreenshotSettings
 # from src.model_transcribe.data_transcribe import TranscriptDocument
@@ -10,6 +11,8 @@ from src.core.config_transcribe import DownloadSettings, ScreenshotSettings
 class LectureContext(BaseModel):
     logger_name: str
     logger_f_name: str
+
+    lecture_root: Path = Field(default_factory=Path)
     memory_f_name: str = Field(default_factory=str)
     # save_folder: str = Field(default_factory=str)
     provider: str = Field(default_factory=str)
@@ -18,7 +21,7 @@ class LectureContext(BaseModel):
     source_url: str = Field(default_factory=str)
 
     # lecture processing
-    prepare_lecture: bool = False
+    prepare_lecture: Literal["from_info", "from_folder"] | None = None
 
     # Parsed HTML / RawDocument inputs
     # info_path: list[Path] = Field(default_factory=list)

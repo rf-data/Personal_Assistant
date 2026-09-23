@@ -35,7 +35,7 @@ def run_pdf_extraction(parse_context):
     move_file(f_name, dst_path)
     # html_assembler.render_text_file)
 
-    parse_context.logger.info(
+    app_session.logger.info(
         "File '%s' has been moved to '%s'", shorten_path(f_name), shorten_path(dst_path)
     )
 

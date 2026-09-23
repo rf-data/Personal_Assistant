@@ -12,7 +12,7 @@ from src.model_transcribe.data_transcribe import (
     DownloadStrategy,
     TranscriptSource,
 )
-from gmp_compliance.src.tools_transcribe.process_subtitle import download_subtitles
+from src.tools_transcribe.extract_resources import download_subtitles
 from src.tools_transcribe.extract_audio import download_audio
 
 
@@ -125,14 +125,14 @@ def process_youtube_video(context: AudioContext) -> DownloadResult:
 
     files = []
 
-    cookie_file = context.cookie_file
+    cookie_file = folder_env_vars.yt_cookies
 
     if cookie_file and cookie_file.exists():
         files = download_audio(
             context,
             format_override="18",
             extra_ydl_opts={
-                # "cookiefile": str(cookie_file),
+                "cookiefile": str(cookie_file),
                 "extractor_args": {
                     "youtube": {
                         "player_client": ["default", "web_embedded"],

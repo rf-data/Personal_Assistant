@@ -13,7 +13,7 @@ from src.model_parsing.base_classes_parsing import RawDocument
 from src.model_lecture.data_resources import (
     # LectureResource,
     LectureScript,
-    LectureVideo,
+    LectureMedia,
     # RawLectureBlock
 )
 from src.tools_lecture.prepare_lecture import (
@@ -173,7 +173,7 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
     )
     lecture_blocks = lecture_block_extraction(info_dict)
 
-    all_videos: list[LectureVideo] = []
+    all_videos: list[LectureMedia] = []
     all_scripts: list[LectureScript] = []
 
     all_materials = []

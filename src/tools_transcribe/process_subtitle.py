@@ -15,6 +15,8 @@ from src.model_transcribe.data_transcribe import (
     TranscriptSegment,
 )
 
+from src.utils.dict_helper import save_dict
+
 
 def transcribe_files(
     source_result: DownloadResult, provider, context: AudioContext
@@ -41,7 +43,7 @@ def transcribe_files(
             src_file=file,
         )
 
-        trans_path = Path(f"{file.parent}/transcripts/{file.name}_trans")
+        trans_path = Path(f"{file.parent}/transcripts/{file.name}")
         trans_all.append(trans_path)
 
         save_dict(
@@ -81,17 +83,18 @@ def add_transcript_provenance(
 
 
 def parse_subtitle(
-    path: Path,
+    f_path: Path,
     language: str = "de",
-) -> TranscriptDocument:
+) -> list[Path]:
+    # TranscriptDocument:
 
-    if not path.exists():
-        raise FileNotFoundError(path)
+    if not f_path.exists():
+        raise FileNotFoundError(f_path)
 
-    if path.suffix.lower() != ".vtt":
-        raise ValueError(f"Unsupported subtitle format: {path.suffix}")
+    if f_path.suffix.lower() != ".vtt":
+        raise ValueError(f"Unsupported subtitle format: {f_path.suffix}")
 
-    content = path.read_text(
+    content = f_path.read_text(
         encoding="utf-8",
     )
 
@@ -169,7 +172,7 @@ def parse_subtitle(
         )
 
     if not segments:
-        raise ValueError(f"No subtitle segments found in {path}")
+        raise ValueError(f"No subtitle segments found in {f_path}")
 
     # text_final =
     # save_text_file(
@@ -178,8 +181,8 @@ def parse_subtitle(
     #         folder="/home/robfra/0_Portfolio_Projekte/gmp_compliance/data"
     #         )
 
-    trans_doc = TranscriptDocument(
-        source=str(path),
+    transcript = TranscriptDocument(
+        source=str(f_path),
         language=language,
         language_probability=None,
         duration=duration,
@@ -190,7 +193,12 @@ def parse_subtitle(
         text="\n\n".join(text_parts),
     )
 
-    return trans_doc
+    trans_path = Path(f"{f_path.parent.parent}/transcripts/{f_path.name}_trans")
+    save_dict(
+        data=transcript.model_dump(mode="json"),
+        path=trans_path,
+    )
+    return [trans_path]
 
 
 ###############################################

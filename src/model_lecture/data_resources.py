@@ -3,14 +3,17 @@
 from enum import Enum
 from datetime import datetime
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Annotated
 from pydantic import BaseModel, Field  # , property
 
 from src.core.config import folder_env_vars
 
 
 class LectureResourceType(Enum):
+    MEDIA = "media"
     VIDEO = "video"
+    AUDIO = "audio"
+    DOCUMENT = "document"
     SCRIPT = "script"
     MATERIAL = "material"
     NOTEBOOK = "notebook"
@@ -41,7 +44,7 @@ class LectureResource(BaseModel):
     # resource_id: str              # TODO: convert to new data models
 
     title: str | None = None
-    source_url: str
+    source_url: str | None = None
 
     lecture_no: str | None = None
     topic: str | None = None
@@ -65,18 +68,12 @@ class LectureResource(BaseModel):
     license: str | None = None
 
 
-class ResourceTask(BaseModel):
-    resource: LectureResource
+class LectureMedia(LectureResource):
+    resource_type: Literal["media"] = "media"
 
-    actions: list[ResourceAction] = Field(default_factory=list)
-
-    status: ActionStatus = ActionStatus.PENDING
-
-    error: str | None = None
-
-
-class LectureVideo(LectureResource):
-    resource_type: LectureResourceType = LectureResourceType.VIDEO
+    media_type: Literal["audio", "video"]
+    #     LectureResourceType.VIDEO
+    # ] = LectureResourceType.VIDEO
 
     youtube_url: str | None = None
     youtube_id: str | None = None
@@ -84,20 +81,65 @@ class LectureVideo(LectureResource):
 
 
 class LectureNotebook(LectureResource):
-    resource_type: LectureResourceType = LectureResourceType.NOTEBOOK
+    resource_type: Literal["notebook"] = "notebook"
+    #     LectureResourceType.NOTEBOOK
+    # ] = LectureResourceType.NOTEBOOK
 
 
 class LectureExam(LectureResource):
-    resource_type: LectureResourceType = LectureResourceType.EXAM
+    resource_type: Literal["exam"] = "exam"
+    #     LectureResourceType.EXAM
+    # ] = LectureResourceType.EXAM
+
+
+class LectureDocument(LectureResource):
+    resource_type: Literal["document"] = "document"
 
 
 class LectureScript(LectureResource):
-    resource_type: LectureResourceType = LectureResourceType.SCRIPT
+    resource_type: Literal["script"] = "script"
+    #     LectureResourceType.SCRIPT
+    # ] = LectureResourceType.SCRIPT
 
 
 class LectureMaterial(LectureResource):
-    resource_type: LectureResourceType = LectureResourceType.MATERIAL
+    resource_type: Literal["material"] = "material"
+    #     LectureResourceType.MATERIAL
+    # ] = LectureResourceType.MATERIAL
+
     material_type: Literal["repository", "other"] = "other"
+
+
+class LectureOther(LectureResource):
+    resource_type: Literal["other"] = "other"
+
+
+LectureResourceUnion = Annotated[
+    LectureMedia
+    # | "video"
+    | LectureDocument
+    | LectureScript
+    # | "script"
+    | LectureMaterial
+    # | "material"
+    | LectureExam
+    # | "exam"
+    | LectureNotebook
+    # | "notebook"
+    | LectureOther,
+    # )
+    Field(discriminator="resource_type"),
+]
+
+
+class ResourceTask(BaseModel):
+    resource: LectureResourceUnion
+    input_paths: list[Path] = Field(default_factory=list)
+
+    actions: list[ResourceAction] = Field(default_factory=list)
+
+    status: ActionStatus = ActionStatus.PENDING
+    error: str | None = None
 
 
 class RawLectureBlock(BaseModel):
@@ -109,7 +151,7 @@ class RawLectureBlock(BaseModel):
 
 
 class LectureResource_old(BaseModel):
-    videos: list[LectureVideo]
+    videos: list[LectureMedia]
     scripts: list[LectureScript]
     material: dict = Field(default_factory=dict)  # [str, LectureMaterial]
     other_links: dict[str, dict] = Field(default_factory=dict)
@@ -146,11 +188,32 @@ class LectureCourse(BaseModel):
         )
 
     sections: list[LectureSection] = Field(default_factory=list)
-    resources: list[LectureResource] = Field(default_factory=list)
+    resources: list[LectureResourceUnion] = Field(default_factory=list)
 
-    unassigned_resources: list[LectureResource] = Field(default_factory=list)
+    unassigned_resources: list[LectureResourceUnion] = Field(default_factory=list)
 
-    examen: list = Field(default_factory=list)
+    examen: list[LectureExam] = Field(default_factory=list)
+
+
+class ParsedLectureFilename(BaseModel):
+    stem: str
+
+    title: str | None = None
+    sequence_no: str | None = None
+    qualifier: str | None = None
+
+    extra_parts: list[str] | None = None
+
+
+class DiscoveredCourseFile(BaseModel):
+    path: Path
+    parsed_name: ParsedLectureFilename | None = None
+
+    course_id: str | None = None
+    course_title: str | None = None
+
+    resource_type: LectureResourceType | None = None
+    resource_format: str | None = None
 
 
 ##################################

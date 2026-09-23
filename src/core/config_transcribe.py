@@ -11,6 +11,15 @@ TranscriptionBackend = Literal[
 ]
 
 
+SUPPORTED_TRANSCRIPT_SUFFIXES = {
+    "vtt",
+}
+
+SUPPORTED_AUDIO_SUFFIXES = {"wav", "mp3", "m4a"}
+
+SUPPORTED_VIDEO_SUFFIXES = {"mkv", "webm", "mp4"}
+
+
 class TranscribeSettings(BaseModel):
     backend: TranscriptionBackend = "faster_whisper"
 

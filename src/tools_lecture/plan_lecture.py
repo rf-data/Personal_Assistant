@@ -3,28 +3,25 @@
 from pathlib import Path
 
 from src.core.memory import app_session
-
+from src.core.config_transcribe import (
+    SUPPORTED_AUDIO_SUFFIXES,
+    SUPPORTED_TRANSCRIPT_SUFFIXES,
+    SUPPORTED_VIDEO_SUFFIXES,
+)
 from src.model_lecture.data_resources import (
     LectureResource,
+    LectureResourceType,
     LectureScript,
-    LectureVideo,
+    LectureMedia,
     ResourceAction,
     ResourceTask,
 )
 
 from src.utils.path_helper import find_indexed_files
+# from src.run_lecture_planning import lecture_planning
 
 
-TRANSCRIPT_SOURCE_SUFFIXES = {
-    "vtt",
-}
-
-SUPPORTED_AUDIO_SUFFIXES = {
-    "wav",
-    "mp3",
-    "m4a",
-    "webm",
-}
+# lecture_compile
 
 
 def get_resource_path(
@@ -103,7 +100,10 @@ def classify_resource_file(
     # stem = path.stem.lower()
 
     if suffix == "json":
-        if path.stem.endswith("_know_extract_results"):
+        if path.stem.endswith("_parsed"):
+            return "parsed_document"
+
+        elif path.stem.endswith("_know_extract_results"):
             return "knowledge"
 
         elif path.stem.endswith("_visual_analysis"):
@@ -115,10 +115,10 @@ def classify_resource_file(
         else:
             return "transcript"
 
-    if suffix in TRANSCRIPT_SOURCE_SUFFIXES:
+    if suffix in SUPPORTED_TRANSCRIPT_SUFFIXES:
         return "subtitle"
 
-    if suffix in SUPPORTED_AUDIO_SUFFIXES:
+    if suffix in SUPPORTED_VIDEO_SUFFIXES:
         return "audio"
 
     if suffix in SUPPORTED_AUDIO_SUFFIXES:
@@ -154,17 +154,21 @@ def get_transcript_actions(
 
     # Subtitle ist günstiger als Whisper.
     elif "subtitle" in file_types:
-        return [
-            ResourceAction.PARSE_SUBTITLE,
-        ]
+        resource.local_path = get_path_by_type(
+            paths,
+            "subtitle",
+        )
+        return [ResourceAction.PARSE_SUBTITLE]
 
     # Audio ist vorhanden -> Whisper.
-    elif "audio" in file_types:
-        return [
-            ResourceAction.TRANSCRIBE,
-        ]
+    if "audio" in file_types:
+        resource.local_path = get_path_by_type(
+            paths,
+            "audio",
+        )
+        return [ResourceAction.TRANSCRIBE]
 
-    return []
+    return [ResourceAction.DOWNLOAD]
 
 
 def get_knowledge_actions(
@@ -224,6 +228,18 @@ def get_frame_actions(
     return [ResourceAction.DOWNLOAD]
 
 
+def get_path_by_type(
+    paths: list[Path],
+    file_type: str,
+) -> Path | None:
+
+    for path in paths:
+        if classify_resource_file(path) == file_type:
+            return path
+
+    return None
+
+
 def get_document_actions(
     resource: LectureResource, file_index: list[Path]
 ) -> list[ResourceAction]:
@@ -234,14 +250,33 @@ def get_document_actions(
     )
 
     if not paths:
-        app_session.logger.info("Found no transcript file for %s", resource.source_url)
+        app_session.logger.info("Found no document file for %s", resource.source_url)
 
         return [ResourceAction.DOWNLOAD]
 
-    file_types = {classify_resource_file(path) for path in paths}
+    document_path = get_path_by_type(
+        paths,
+        "document",
+    )
 
-    if "document" in file_types:
+    if document_path is not None:
+        resource.local_path = document_path
         return [ResourceAction.PARSE_DOCUMENT]
+
+    return [ResourceAction.DOWNLOAD]
+
+    # file_types = {classify_resource_file(path) for path in paths}
+
+    # if "document" in file_types:
+    #     document_paths = [
+    #         path
+    #         for path in paths
+    #         if classify_resource_file(path) == "document"
+    #     ]
+
+    #     resource.local_path = document_paths[0]
+
+    #     return [ResourceAction.PARSE_DOCUMENT]
 
     # if "parsed" in file_types:
     #         return []
@@ -252,7 +287,7 @@ def get_document_actions(
     # if "knowledge" in file_types:
     #         return []
 
-    return []
+    # return [ResourceAction.DOWNLOAD]
 
 
 def get_chunk_actions(
@@ -285,14 +320,17 @@ def select_resources_for_block(
 def load_lecture_resources(data: dict) -> list[LectureResource]:
     resources: list[LectureResource] = []
 
+    n_videos = len(data.get("videos", []))
     resources.extend(
-        LectureVideo.model_validate(video) for video in data.get("videos", [])
+        LectureMedia.model_validate(video) for video in data.get("videos", [])
     )
 
+    n_scripts = len(data.get("scripts", []))
     resources.extend(
         LectureScript.model_validate(script) for script in data.get("scripts", [])
     )
 
+    app_session.logger.info("Added %s videos and %s scripts", n_videos, n_scripts)
     # materials noch nicht implementiert
     # resources.extend(
     #     # LectureMaterial.model_validate(material)
@@ -304,33 +342,35 @@ def load_lecture_resources(data: dict) -> list[LectureResource]:
 
 
 def build_resource_tasks(
-    resources: list[LectureResource], file_index: list[Path]
-) -> list[ResourceTask]:
+    resources,
+    file_index,
+):
 
-    # for resource in resources:
-    #     course_root = (
-    #             folder_env_vars.data_lecture
-    #             / "loviscach"
-    #             / "mathe_1"
-    #             )
+    tasks = []
 
-    #     paths = get_resource_path(resource, file_index)
-
-    #     if paths:
-    #         for path in paths:
-    #             organize_resource_file(
-    #                 resource=resource,
-    #                 source_path=path,
-    #                 course_root=course_root,
-    #             )
-
-    return [
-        ResourceTask(
-            resource=resource,
-            actions=get_required_actions(resource, file_index=file_index),
+    for resource in resources:
+        paths = (
+            get_resource_path(
+                resource,
+                file_index,
+            )
+            or []
         )
-        for resource in resources
-    ]
+
+        actions = get_required_actions(
+            resource,
+            file_index,
+        )
+
+        tasks.append(
+            ResourceTask(
+                resource=resource,
+                input_paths=paths,
+                actions=actions,
+            )
+        )
+
+    return tasks
 
 
 def get_required_actions(
@@ -338,20 +378,32 @@ def get_required_actions(
 ) -> list[ResourceAction]:
 
     resource.title = resource.title.replace(
-        "Q](https://j3L7h2.de/videos/v.php?v=YiUD496LUyw)"
-        "[uotientenregel](https://j3L7h2.de/videos/v.php?v=YiUD496LUyw)",
+        "02A.4_Q",
         "Quotientenregel](https://j3L7h2.de/videos/v.php?v=YiUD496LUyw)",
+        # Q](https://j3L7h2.de/videos/v.php?v=YiUD496LUyw)"
+        # "[uotientenregel](https://j3L7h2.de/videos/v.php?v=YiUD496LUyw)",
     )
     resource.title = resource.title.replace(",", "")
 
     match resource.resource_type:
-        case "video":
+        case (
+            "video"
+            # | LectureResourceType.VIDEO
+        ):
             return get_transcript_actions(resource, file_index=file_index)
 
-        case "script" | "material" | "exam":
+        case (
+            # LectureResourceType.SCRIPT
+            # | LectureResourceType.MATERIAL
+            # | LectureResourceType.EXAM
+            "script" | "material" | "exam"
+        ):
             return get_document_actions(resource, file_index=file_index)
 
-        case "notebook":
+        case (
+            "notebook"
+            # | LectureResourceType.NOTEBOOK
+        ):
             return get_knowledge_actions(resource, file_index=file_index)
 
     return []

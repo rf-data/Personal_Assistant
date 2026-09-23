@@ -63,7 +63,7 @@ class WikipediaClient:
 
         self.save_folder = Path(save_dir)
         self.save = parse_context.save
-        self.logger = parse_context.logger
+        self.logger = app_session.logger
 
         return
 

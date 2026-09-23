@@ -54,19 +54,23 @@ def run_lecture_processing():
 
     task_list = load_dict(task_path, ResourceTask)
 
-    return lecture_processing(task_list, context)
+    return lecture_processing(task_list, course_root)
 
 
 def lecture_processing(
     task_list: list[ResourceTask],
-    context: LectureContext,
+    course_root: Path,
+    # context: LectureContext,
     # resource_task: ,
     # folder_path: Path,
     # course: LectureCourse
 ) -> None:
 
     n_resources = len(task_list)
-    for idx, task in enumerate(task_list):  # .items()
+    for idx, task in enumerate(task_list, start=1):  # .items()
+        if task.resource.title == "02A.4_Q":
+            task.resource.title = "02A.4_Quotientenregel"
+
         app_session.logger.info(
             "[%s/%s] Start processing resource '%s' [type=%s, n_task=%s]",
             idx,
@@ -79,7 +83,7 @@ def lecture_processing(
         if not task.actions:
             app_session.logger.info("  --> Found no actions.\n")
 
-        execute_task(task)
+        execute_task(task, course_root)
         # _new = lecture_processing(task, course_root)
 
     return

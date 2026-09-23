@@ -32,7 +32,7 @@ def show():
 
         parse_context = ParseContext(parse_settings=app_session.parse_settings)
 
-        parse_context.logger = app_session.logger
+        app_session.logger = app_session.logger
 
         # query_cmd = ["python", "-u", "-m", "src.tools.search_wiki"]
 

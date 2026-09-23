@@ -27,7 +27,7 @@ from src.tools_lecture.plan_lecture import (
 def run_lecture_planning() -> list[ResourceTask]:
 
     context_name = input("Enter name of context_file (no suffix): ")
-    context_path = folder_env_vars.config_dir / f"context_{context_name}.json"
+    context_path = folder_env_vars.config_dir / f"context_{context_name}"
     context = load_dict(context_path, LectureContext)
 
     app_session.timestamp = datetime.today().strftime("%Y-%m-%d")
@@ -41,45 +41,12 @@ def run_lecture_planning() -> list[ResourceTask]:
         course_title=context.course_title,
         provider=context.provider,
         source_url=context.source_url,
+        # root=(folder_env_vars. / "")
         # sections: list[LectureSection] = Field(default_factory=list)
         # resources: list[LectureResource] = Field(default_factory=list)
         # unassigned_resources: list[LectureResource] = Field(default_factory=list)
         # examen: list = Field(default_factory=list)
     )
-
-    if context.prepare_lecture:
-        info_path = (
-            course.root
-            / f"metadata"
-            / f"{course.provider}_{course.course_id}_info.json"
-        )
-        if not info_path.exists():
-            raise ValueError("Info_file does NOT exists.")
-
-        # context.info_paths
-        elements = context.extract_elements
-
-        # for path in info_paths:
-        lecture_info = lecture_preparation(f_path=info_path, elements=elements)
-
-        # if lecture_info is not None:
-        #     lectures_all.append(lecture_info)
-
-    else:
-        lecture_path = (
-            course.root
-            / f"metadata"
-            / f"{course.provider}_{course.course_id}_lectures_new.json"
-        )
-
-        if not lecture_path.exists():
-            raise ValueError("Lecture_paths does NOT exist.")
-
-        # for path in lecture_paths:
-        lecture_info = load_dict(lecture_path)
-
-        # if lecture_info is not None:
-        #     lectures_all.append(lecture_info)
 
     file_index = build_file_index(course.root)
 
@@ -95,24 +62,25 @@ def run_lecture_planning() -> list[ResourceTask]:
         )
 
     app_session.logger.info(
-        "Found %s todo's in lecture %s [block: %s]",
-        len(todo),
+        "Found %s todo's in lecture %s\n[block: %s]",
+        len([task for task in todo if len(task.actions) > 0]),
         f"{course.provider} / {course.course_title}",
         block_ids,
     )
 
-    task_open = []
-    for task in todo:
+    task_open = [task for task in todo if task.actions]
+
+    for task in task_open:
+        # if len(task.actions) > 0:
+        #     task_open.append({"name": task.resource.title, "task": task})
+
         print(f"""RESOURCE_TYPE:\t {task.resource.resource_type}
 RESOURCE_TITLE:\t {task.resource.title}
 ACTIONS:\t{task.actions}
 """)
 
-        if len(task.actions) > 0:
-            task_open.append({"name": task.resource.title, "task": task})
-
     save_dict(
-        data=[task["task"].model_dump(mode="json") for task in task_open],
+        data=[task.model_dump(mode="json") for task in task_open],
         path=(course.root / "metadata" / f"{course.course_id}_tasks"),
     )
 
@@ -143,10 +111,34 @@ ACTIONS:\t{task.actions}
 #             extract_visual_context(resource)
 
 
+def plan_course_tasks(lecture_info, block_ids: list[str], file_index):
+
+    # block_ids = [f"{block_id:02d}" for block_id in range(1, 29)]
+
+    task_list: list[ResourceTask] = []
+
+    if not block_ids:
+        app_session.logger.warning("'block_ids' is empty or 'None' -> set to ['1']")
+        block_ids = ["1"]
+
+    for block_id in block_ids:
+        task_list.extend(
+            lecture_planning(
+                lecture_info=lecture_info,
+                # context=
+                block_id=block_id,
+                file_index=file_index,
+            )
+        )
+
+    return [task for task in task_list if task.actions]
+
+
 def lecture_planning(
     lecture_info: dict,
     block_id: str,
     file_index: list[Path],
+    # context: LectureContext
     # course: LectureCourse
 ) -> list[ResourceTask]:
     # lecture = load_dict(lecture_path)
@@ -157,6 +149,10 @@ def lecture_planning(
     block_resources = select_resources_for_block(
         resources,
         block_id=block_id,
+    )
+
+    app_session.logger.info(
+        "Selected %s resources for block %s", len(block_resources), block_id
     )
 
     return build_resource_tasks(block_resources, file_index)

@@ -1,6 +1,7 @@
 # imports
 import shutil
 from pathlib import Path
+from collections import Counter
 
 from src.core.memory import app_session
 from src.model_lecture.data_resources import LectureResource
@@ -185,6 +186,42 @@ def ensure_dir(f_path: str | Path) -> Path:
     target_dir.mkdir(parents=True, exist_ok=True)
 
     return p
+
+
+def list_folder_files(folder: Path, recursive: bool = True) -> list[Path]:
+
+    folder = Path(folder)
+
+    app_session.logger.info(
+        "Start listing files in folder '%s'", shorten_path(folder, 4)
+    )
+
+    if not folder.exists():
+        raise FileNotFoundError(f"Folder does not exist: {folder}")
+
+    if not folder.is_dir():
+        raise NotADirectoryError(f"Path is not a directory: {folder}")
+
+    pattern = "*.*"
+
+    iterator = (
+        folder.rglob(pattern, case_sensitive=False)
+        if recursive
+        else folder.glob(pattern, case_sensitive=False)
+    )
+
+    files = [path for path in iterator if path.is_file()]
+
+    f_types = Counter(path.suffix.lower() or "<no_suffix>" for path in files)
+    f_types_sum = "\n".join(
+        f"  {suffix}: {count}" for suffix, count in f_types.most_common()
+    )
+
+    app_session.logger.info(
+        "Found %s file(s) in %s:\n%s", len(files), shorten_path(folder), f_types_sum
+    )
+
+    return files
 
 
 def find_folder_files(

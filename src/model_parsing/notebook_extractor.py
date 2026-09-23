@@ -43,7 +43,7 @@ class NoteBookCleanExtractor(HTMLCleanExtractor):
         self.extraction_tags = parse_context.general_settings.json_nb.extraction_tags
         self.header = parse_context.header
 
-        self.logger = parse_context.logger
+        self.logger = app_session.logger
         self.parser = self.extract_config.parser
         self.save_folder = parse_context.save_folder
         self.save_name = parse_context.save_name

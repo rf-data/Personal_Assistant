@@ -33,10 +33,14 @@ class ParseNotebookSettings(ParseFileSettings):
 
 class ParsePDFSettings(ParseFileSettings):
     extract_source: list[str] = Field(default_factory=list)
-    extraction_model: str = ""
+    extraction_model: str = Field(default_factory=str)
     extract_text_info: bool = False
     extract_graphics: bool = False
     percentiles: list[float] = Field(default_factory=list)
+
+    classify_header_footer: bool = True
+    classify_foot_notes: bool = True
+    classify_headings: bool = True
 
 
 class ParsePlainTextSettings(ParseFileSettings):
@@ -168,8 +172,8 @@ class GeneralSettings(BaseModel):
 
 
 class ParseSettings(BaseModel):
-    name_log: str = Field(default_factory=str)
-    name_logfile: str = Field(default_factory=str)
+    # name_log: str = Field(default_factory=str)
+    # name_logfile: str = Field(default_factory=str)
     llm_model: str = Field(default_factory=str)
     url_path: list[str] | None = Field(default=None)
     file_name: str | None = Field(default=None)
@@ -188,17 +192,25 @@ class ParseSettings(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
-ParseSettings_all = Annotated[
+# ParseSettings_all = Annotated[
+#     ParseHTMLSettings
+#     | ParseNotebookSettings
+#     | ParseMDSettings
+#     | ParsePDFSettings
+#     | ParsePlainTextSettings
+#     | ParseURLSettings
+#     | ParseWikiSettings,
+#     Field(discriminator="meta_type"),
+# ]
+
+RunSettings = Annotated[
     ParseHTMLSettings
     | ParseNotebookSettings
     | ParseMDSettings
     | ParsePDFSettings
     | ParsePlainTextSettings
     | ParseURLSettings
-    | ParseWikiSettings,
+    | ParseWikiSettings
+    | ChunkSettings,
     Field(discriminator="meta_type"),
-]
-
-RunSettings = Annotated[
-    ParseSettings_all | ChunkSettings, Field(discriminator="meta_type")
 ]

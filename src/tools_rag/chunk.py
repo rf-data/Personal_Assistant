@@ -74,7 +74,7 @@ def document_json_to_blocks(info_obj: dict, parse_context: ParseContext):
         c_type = element.get("container_type")
 
         if c_type not in c_types_to_filter:
-            parse_context.logger.info("[C_TYPE_MISMATCH]: %s", c_type)
+            app_session.logger.info("[C_TYPE_MISMATCH]: %s", c_type)
             continue
 
         text = element.get("text", "").strip()
@@ -96,7 +96,7 @@ def document_json_to_blocks(info_obj: dict, parse_context: ParseContext):
             }
         )
 
-    parse_context.logger.info("Length 'blocks': %s", len(blocks))
+    app_session.logger.info("Length 'blocks': %s", len(blocks))
 
     # try:
     #     st.write("Length 'blocks': %s",
@@ -182,7 +182,7 @@ def _normalize_text_value(value: Any) -> str:
 
 
 def prepare_chunk_df(blocks: list[dict], parse_context: ParseContext, encoder):
-    logger = parse_context.logger
+    logger = app_session.logger
 
     chunk_config = parse_context.chunk_settings
     spacy_lang = chunk_config.spacy_language

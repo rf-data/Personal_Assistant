@@ -3,6 +3,7 @@
 import logging
 from dataclasses import dataclass, field
 
+from src.core.memory import app_session
 from src.core.config import GeneralSettings
 
 # from src.core.feature_enricher import FeatureEnricher
@@ -29,7 +30,7 @@ class BaseClassifier:
         #     logging.getLogger(self.__class__.__name__)
         # )
 
-        self.logger = self.parse_context.logger
+        self.logger = app_session.logger
         self.text_type = self.parse_context.text_type
 
         self.general_config = get_file_config(

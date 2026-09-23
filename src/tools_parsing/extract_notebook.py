@@ -43,7 +43,7 @@ def extract_notebook_json(
 ) -> Result[DocumentExtract, str]:
     # from src.core.memory import app_session
 
-    logger = parse_context.logger
+    logger = app_session.logger
     logger.info("Starting extracting notebook from json-file")
 
     input_data = folder_env_vars.data_input

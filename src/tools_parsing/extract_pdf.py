@@ -51,7 +51,7 @@ def extract_pdf_file(
     # name_short = Path(f_path).name.split(".")[0]
 
     # extract content from file
-    f_name = parse_context.parse_settings.file_name
+    f_name = parse_context.local_path
     # f_path = f"{input_data}/{f_name}"
     extract_results = extractor.extract_text_per_page(f_name)
 

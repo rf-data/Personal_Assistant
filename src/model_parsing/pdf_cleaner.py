@@ -3,14 +3,15 @@
 import re
 from dataclasses import dataclass
 
-from src.core.memory import ParseContext  #  app_session,
+from src.core.memory_parsing import ParseContext  #  app_session,
+from src.core.memory import app_session
 
 
 @dataclass
 class PDFCleaner:
     def __init__(self, parse_context: ParseContext):
         self.clean_config = parse_context.parse_settings
-        self.logger = parse_context.logger
+        self.logger = app_session.logger
         # : dict = field(default_factory=dict)
         self.stop_words = ["und", "oder", "bzw.", "sowie", "als"]
 

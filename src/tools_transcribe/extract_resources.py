@@ -71,17 +71,16 @@ def download_subtitles(
 ) -> list[Path]:
     # url: str, output_dir: str)
 
-    save_folder = Path(folder_env_vars.data_audio)
+    save_folder = context.save_folder / "subtitles"
+    # Path(folder_env_vars.data_audio)
     ensure_dir(save_folder)
 
     cfg = context.cfg_download
 
-    # if cfg.no_playlist is True:
-    outtmpl = str(
-        save_folder
-        / f"{cfg.playlist_name or 'single'}"
-        / f"{'%(title)s.%(ext)s' if cfg.no_playlist is True else '%(playlist_index)03d_%(title)s.%(ext)s'}"
-    )
+    title = context.f_name or "%(title)s.%(ext)s"
+
+    outtmpl = str(save_folder / title)
+
     yt_opts = {
         **build_base_ydl_opts(context),
         "skip_download": True,

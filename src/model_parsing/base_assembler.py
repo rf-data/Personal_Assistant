@@ -8,6 +8,7 @@ from typing import Any, Literal
 from returns.result import Result, Success
 
 from src.model_parsing.base_classes_parsing import DocumentExtract
+from src.core.memory import app_session
 
 # import src.utils.general_helper as gh
 from src.utils.general_helper import get_file_config
@@ -28,7 +29,7 @@ class BaseAssembler:
     def __post_init__(self):  # , parse_context: ParseContext
         # from src.core.memory import session
 
-        self.logger = self.parse_context.logger
+        self.logger = app_session.logger
         self.text_type = self.parse_context.text_type
 
         self.save_folder = self.parse_context.save_folder

@@ -6,6 +6,7 @@ import sys
 
 # from collections.abc import Callable  # , , Any
 from dataclasses import dataclass  # , field
+from src.core.memory import app_session
 
 # # import pandas as pd
 # # from sklearn.cluster import KMeans
@@ -45,7 +46,7 @@ class FeatureEnricher:
         self.page_height = page_height
         self.page_width = page_width
 
-        self.logger = parse_context.logger
+        self.logger = app_session.logger
 
         self.encoder = parse_context.encoder
 

@@ -6,7 +6,8 @@ import re
 import unicodedata
 from dataclasses import dataclass, field
 
-from src.core.memory import ParseContext
+from src.core.memory import app_session
+from src.core.memory_parsing import ParseContext
 
 # from typing import Any
 from src.model_parsing.feature_enricher import FeatureEnricher
@@ -30,7 +31,7 @@ class BaseExtractor:
     #  parse_context: ParseContext
 
     def __post_init__(self):
-        self.logger = self.parse_context.logger
+        self.logger = app_session.logger
         self.text_type = self.parse_context.text_type
         # self.enricher = enricher
 

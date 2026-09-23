@@ -99,7 +99,7 @@ class HTMLCleanExtractor(BaseExtractor):
     #     self.enricher = enricher
     #     self.extract_config = parse_context.parse_settings.html
 
-    #     self.logger = parse_context.logger
+    #     self.logger = app_session.logger
     #     self.save_folder = parse_context.save_folder
     #     self.save_name = parse_context.save_name
     #     self.text_type = parse_context.text_type

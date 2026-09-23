@@ -392,7 +392,9 @@ class PDFAssembler(BaseAssembler):
         if self.save and "md" in str(self.save):
             save_text_file(text, self.save_name, self.save_folder)
 
-        return
+            print("MD_FILE (Ausschnitt):\n", text[:100], "\n")
+
+        return text
 
         # if extract.get("doc_type") == "nb_json":
         #     # elements_sorted = _flat_sort_nb_elements(extract)

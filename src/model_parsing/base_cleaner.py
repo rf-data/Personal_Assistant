@@ -3,6 +3,7 @@
 import logging
 from dataclasses import dataclass, field
 
+from src.core.memory import app_session
 # from src.model_classes_parsing.feature_enricher import FeatureEnricher
 
 

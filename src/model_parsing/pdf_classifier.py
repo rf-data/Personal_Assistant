@@ -75,17 +75,17 @@ class PDFClassifier(BaseClassifier):
 
         heading_score = 0
 
-        font_sizes = line.meta.font_size_mean
-        if font_sizes > median_size:  # (len(font_sizes) == 1 and
-            heading_score += 2
+        # font_sizes =
+        # if font_sizes > :  # (len(font_sizes) == 1 and
+        #     heading_score += 2
         # else:
         #     logger.warning("Line has more than one font size:\t", font_sizes)
 
         if re.match(self.toc_prefix, line.text):
             heading_score += 2
 
-        if line.meta.is_bold_rel > 0.5:
-            heading_score += 2
+        if line.meta.font_size_mean > median_size and line.meta.is_bold_rel > 0.5:
+            heading_score += 1
 
         if line.meta.n_words < 10:
             heading_score += 1
@@ -133,11 +133,11 @@ class PDFClassifier(BaseClassifier):
         median_size = self.page_attributes["median_size"]
         page_height = self.page_attributes["height"]
 
-        self.logger.info(
-            "Median font size = %s  | page:height = %s",
-            round(median_size, 2),
-            page_height,
-        )
+        # self.logger.info(
+        #     "Median font size = %s  | page:height = %s",
+        #     round(median_size, 2),
+        #     page_height,
+        # )
         font_size = line.meta.font_size_mean
         text = line.text.strip()
 
@@ -146,17 +146,21 @@ class PDFClassifier(BaseClassifier):
 
         score = 0
 
-        if line.meta.y_start_min > 0.8 * page_height:
-            score += 1
+        # if line.meta.y_start_min > 0.8 * page_height:
+        #     score += 1
 
-        if font_size < 0.8 * median_size:
-            score += 1
+        # if font_size < 0.9 * median_size:
+        #     score += 1
 
         if re.match(r"^\s*(\d+|\*|†)", text):
             score += 2
 
-        if prev_type == "foot_note":
-            score += 2
+        if (
+            prev_type == "foot_note"
+            and font_size < 0.9 * median_size
+            and line.meta.y_start_min > 0.8 * page_height
+        ):
+            score += 1
 
         # if line["n_words"] < 15:
         #     score += 1
@@ -350,16 +354,10 @@ class PDFClassifier(BaseClassifier):
             #     text_lines.append(line)
             #     container_id += 1
 
-            elif self._is_foot_note(line, prev_type):
-                line.line_type = "foot_note"
-
-                line.container_id = container_id
-                foot_notes.append(line)
-                self.logger.info("FOOT_NOTE:\t%s", line.text)
-
-                container_id += 1
-
-            elif self._heading_score(line) >= head_thresh:
+            elif (
+                self.classify_config.classify_headings
+                and self._heading_score(line) >= head_thresh
+            ):
                 # ((line["n_words"] < 6
                 #         or line["n_chars"] < 60)
                 #         and line["line_width"]):
@@ -385,11 +383,24 @@ class PDFClassifier(BaseClassifier):
                 text_lines.append(line)
                 container_id += 1
 
-            elif self._is_header_footer(line):
+            elif self.classify_config.classify_header_footer and self._is_header_footer(
+                line
+            ):
                 line.line_type = "header_footer"
 
                 line.container_id = container_id
                 header_footer.append(line)
+                container_id += 1
+
+            elif self.classify_config.classify_foot_notes and self._is_foot_note(
+                line, prev_type
+            ):
+                line.line_type = "foot_note"
+
+                line.container_id = container_id
+                foot_notes.append(line)
+                # self.logger.info("FOOT_NOTE:\t%s", line.text)
+
                 container_id += 1
 
             elif abs(line.meta.x_start_min - left_indent) < start_tol:  # "left_aligned"

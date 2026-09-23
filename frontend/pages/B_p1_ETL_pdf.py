@@ -193,7 +193,7 @@ def show():
                 timestamp=now,
             )
             parse_context.encoder = app_session.encoder
-            parse_context.logger = app_session.logger
+            app_session.logger = app_session.logger
 
             app_session.run_context = parse_context
 

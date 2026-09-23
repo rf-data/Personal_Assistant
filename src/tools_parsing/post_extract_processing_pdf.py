@@ -10,6 +10,8 @@ from returns.result import Result, Success
 # from datetime import datetime
 # from tiktoken import encoding_for_model
 from src.core.memory import app_session
+
+# from src.core.memory_parsing import pa
 from src.model_parsing.base_classes_parsing import PDFPageExtract
 from src.model_parsing.feature_enricher import FeatureEnricher
 
@@ -46,28 +48,33 @@ from src.utils.dict_helper import save_base_model_as_dict, save_dict
 #     return run_process_pdf()
 
 
+# lecture_compile
+
+
 def post_process_pdf(
     extracts: Result,
     # prepare_config: dict,
     # enricher
 ) -> Result[list[PDFPageExtract], str]:
-    parse_context = app_session.run_context
-    logger = parse_context.logger
+    context = app_session.parse_context
+    # logger = app_session.logger
 
-    classifier = PDFClassifier(parse_context=parse_context)
+    classifier = PDFClassifier(parse_context=context)
 
-    cleaner = PDFCleaner(parse_context=parse_context)
+    cleaner = PDFCleaner(parse_context=context)
 
     feat_enricher = FeatureEnricher(
-        parse_context=parse_context,
+        parse_context=context,
         # encoder=app_session.encoder
     )
-    merger = PDFMerger(parse_context=parse_context, enricher=feat_enricher)
+    merger = PDFMerger(parse_context=context, enricher=feat_enricher)
 
-    save = parse_context.parse_settings.pdf.save
+    save = context.parse_settings.pdf.save
     # if self.save and "assembled" in self.save:
     #         save_path = f"{self.save_folder}/{self.save_name}_assembled"
     #         save_dict(f_infos, save_path)
+
+    processed_pages: list[PDFPageExtract] = []
 
     for p_extract in extracts:
         if isinstance(p_extract, Success):
@@ -76,9 +83,9 @@ def post_process_pdf(
         line_groups = p_extract.elements
         page_no = p_extract.page_no
 
-        logger.info("\n\nStart preparating text from page %s", page_no)
+        app_session.logger.info("\n\nStart preparating text from page %s", page_no)
 
-        save_path = f"{parse_context.save_folder}/{parse_context.save_name}_p{page_no}"
+        # save_path = f"{context.save_folder}/{context.save_name}_p{page_no}"
 
         page_attributes = {
             "median_size": p_extract.meta.median_font_size,
@@ -95,6 +102,7 @@ def post_process_pdf(
         class_dict = classifier.classify_line(groups_sorted, page_attributes)
         # logger.info("Length 'text_segments' (after detect):\t%s", len(text_segments))
 
+        save_path = f"{context.save_folder}/{context.save_name}"
         if save and "class" in save:
             save_dict(class_dict, f"{save_path}_class")
 
@@ -115,8 +123,11 @@ def post_process_pdf(
         p_extract.content_table = class_dict["content_table"]
         p_extract.non_text = class_dict["other"]
 
-        if save and "info" in save:
-            save_base_model_as_dict(p_extract, f"{save_path}_info")
+        processed_pages.append(p_extract)
+        # if save and "info" in save:
+
+    save_dict([page.model_dump() for page in processed_pages], f"{save_path}_parsed")
+
     # save = parse_context.parse_settings.pdf
 
     # if save and "info" in save:
@@ -134,7 +145,7 @@ def post_process_pdf(
     #                        folder=session.state.save_folder)
     # CLASSIFICATION etc. --> 'run_text_preparation.py'
 
-    return Success(extracts)
+    return Success(processed_pages)
 
 
 # if __name__ == "__main__":

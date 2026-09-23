@@ -9,12 +9,13 @@ from src.core.memory_transcribe import AudioContext
 from src.core.memory import app_session
 from src.core.logger import create_logger
 from src.model_transcribe.provider_transcript import get_transcription_provider
-from src.model_transcribe.data_transcribe import (
-    DownloadResult,
-    TranscriptDocument,
-    TranscriptProvenance,
-    TranscriptSource,
-)
+from src.tools_transcribe.process_subtitle import transcribe_files
+# from src.model_transcribe.data_transcribe import (
+#     DownloadResult,
+#     TranscriptDocument,
+#     TranscriptProvenance,
+#     TranscriptSource,
+# )
 
 # from src.model_knowledge.data_resources import (
 #     # LectureVideo,

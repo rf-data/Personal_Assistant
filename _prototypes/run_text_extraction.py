@@ -6,13 +6,13 @@ from datetime import datetime
 from pathlib import Path
 
 import pyinputplus as pyip
-from src.model_tools_parsing.base_assembler import BaseAssembler
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
-from src.model_tools_parsing.html_extractor import HTMLCleanExtractor
-from src.model_tools_parsing.notebook_extractor import NoteBookCleanExtractor
-from src.model_tools_parsing.pdf_extractor import PDFCleanExtractor
-from src.model_tools_parsing.text_classifier import TXTClassifier
-from src.model_tools_parsing.text_extractor import MDCleanExtractor, TXTCleanExtractor
+from src.model_parsing.base_assembler import BaseAssembler
+from src.model_parsing.feature_enricher import FeatureEnricher
+from src.model_parsing.html_extractor import HTMLCleanExtractor
+from src.model_parsing.notebook_extractor import NoteBookCleanExtractor
+from src.model_parsing.pdf_extractor import PDFCleanExtractor
+from src.model_parsing.text_classifier import TXTClassifier
+from src.model_parsing.text_extractor import MDCleanExtractor, TXTCleanExtractor
 from tiktoken import encoding_for_model
 
 from src.core.config import folder_env_vars

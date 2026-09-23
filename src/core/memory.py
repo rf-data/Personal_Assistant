@@ -25,7 +25,7 @@ class AppSession(BaseModel):
     logger: Logger | None = None
     # logger: ClassVar = logging.getLogger(__name__)
     parse_settings: ParseSettings = Field(default_factory=ParseSettings)
-    run_context: ParseContext = Field(default_factory=ParseContext)
+    parse_context: ParseContext = Field(default_factory=ParseContext)
     timestamp: str = Field(default_factory=str)
 
     # frontend_config: FrontendConfig

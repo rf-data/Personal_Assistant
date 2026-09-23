@@ -11,7 +11,7 @@ from src.model_parsing.base_classes_parsing import RawDocument
 
 from src.utils.general_helper import get_value, normalize_whitespace
 from src.tools_lecture.prepare_lecture import extract_link_title, filter_html_elements
-from src.model_lecture.data_resources import LectureScript, LectureVideo
+from src.model_lecture.data_resources import LectureScript, LectureMedia
 
 
 LECTURE_TITLE_PATTERN = re.compile(
@@ -219,8 +219,8 @@ def infer_script_block(
 
 
 def assign_video_blocks_by_order(
-    videos: list[LectureVideo],
-) -> list[LectureVideo]:
+    videos: list[LectureMedia],
+) -> list[LectureMedia]:
     """
     Ergänzt lecture_blocks für Videos, deren lecture_no mit
     einem Buchstaben beginnt.
@@ -343,9 +343,9 @@ def infer_video_kind(
     return "foundation"
 
 
-def enrich_urls(urls: dict[str, dict]) -> list[LectureVideo]:
+def enrich_urls(urls: dict[str, dict]) -> list[LectureMedia]:
 
-    videos: list[LectureVideo] = []
+    videos: list[LectureMedia] = []
 
     for url_info in urls.values():
         href = url_info.get("href")
@@ -374,7 +374,7 @@ def enrich_urls(urls: dict[str, dict]) -> list[LectureVideo]:
         )
 
         videos.append(
-            LectureVideo(
+            LectureMedia(
                 title=safe_title,
                 lecture_no=lecture_no,
                 topic=topic,

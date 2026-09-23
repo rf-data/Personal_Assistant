@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from src.core.logger import create_logger
-from src.model_tools_parsing.feature_enricher import FeatureEnricher
+from src.model_parsing.feature_enricher import FeatureEnricher
 from src.tools_parsing.extract_wiki import extract_wiki_article
 from src.tools_parsing.post_extract_processing_wiki import process_wiki
 from src.utils.dict_helper import get_yaml_config

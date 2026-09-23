@@ -34,7 +34,7 @@ def extract_html_file(
     parse_context: ParseContext,
     f_text: str | None = None,
 ) -> Result[DocumentExtract, str]:
-    logger = parse_context.logger
+    logger = app_session.logger
 
     data_dir = folder_env_vars.data_dir
     # html_data = folder_env_vars.data_html

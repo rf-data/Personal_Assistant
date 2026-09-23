@@ -1,0 +1,77 @@
+# ------------------------------
+# PARSING
+# ------------------------------
+# general_args:
+llm_model: gpt-4o-mini
+
+url_path:
+file_name:
+
+# docx:
+#   tbl_text_mode: brief, "long"
+
+# HTML
+html:
+  parser: html.parser
+  assemble:   # Literal["txt", "md"]
+  scrape_images: True
+  save:
+    - info
+    - html
+    - md
+
+
+# Jupyter Notebooks
+json_nb:
+  assemble:     # Literal["txt", "md"]
+
+
+# PDF
+pdf:
+  extract_source:
+    - raw_dict
+    - words
+  extraction_model: pymupdf
+
+  classify_header_footer: False
+  classify_foot_notes: True
+  classify_headings: True
+
+  extract_text_info: True
+  extract_graphics: False
+  scrape_images: False
+
+  save:
+    - info
+    # - html
+    - md
+
+  assemble: # Literal["txt", "md"]
+    - md
+
+  percentiles:
+    - 0.01
+    - 0.05
+    - 0.10
+    - 0.25
+    - 0.50
+    - 0.75
+    - 0.90
+    - 0.95
+    - 0.99
+
+
+# WIKIPEDIA_QUERIES
+wiki:
+  parser: html.parser
+  query:      # Partial_least # turing
+  query_time:     # 2026-05-18_13-08-12
+  article_to_parse:
+    # - 314204
+  language: en        # Literal["en", "de"]
+  max_retries: 3
+  assemble:   # Literal["txt", "md"]
+  save:
+    - info
+    - html
+    - md

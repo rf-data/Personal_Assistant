@@ -28,7 +28,7 @@ def run_audio_recording():
 
     dict_name = "audio_record"
     # input("Enter name of context_file (no suffix): ")
-    dict_path = folder_env_vars.config_dir / f"context_{dict_name}.json"
+    dict_path = folder_env_vars.config_dir / f"context_{dict_name}"
     context = load_dict(dict_path, cls=AudioContext)
 
     app_session.timestamp = datetime.today().strftime("%Y-%m-%d")
@@ -226,8 +226,10 @@ def audio_recording(context: AudioContext):
 
     f_name = context.f_name
     # "test_audio_raw"
-    data_audio = folder_env_vars.data_audio
-    save_path = data_audio / f"{f_name}_%03d.wav"
+    data_audio = folder_env_vars.data_html
+    save_path = (
+        f"/home/robfra/0_Portfolio_Projekte/gmp_compliance/data/{f_name}_%03d.wav"
+    )
     # Path(f"/home/robfra/0_Portfolio_Projekte/gmp_compliance/data/{f_name}_2.wav")
     # folder_env_vars.audio_data / ".wav"
     # print(source)
