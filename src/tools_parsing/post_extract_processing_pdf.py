@@ -24,7 +24,7 @@ from src.model_parsing.pdf_merger import PDFMerger
 
 # from src.tools.chunk import prepare_chunk_df
 # import src.utils.general_helper as gh
-from src.utils.dict_helper import save_base_model_as_dict, save_dict
+from src.utils.dict_helper import save_dict
 
 # import src.utils.path_helper as ph
 # import src.utils.df_helper as dfh

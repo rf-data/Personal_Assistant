@@ -43,7 +43,7 @@ def transcribe_files(
             src_file=file,
         )
 
-        trans_path = Path(f"{file.parent}/transcripts/{file.name}")
+        trans_path = Path(f"{file.parent.parent}/transcripts/{file.name}")
         trans_all.append(trans_path)
 
         save_dict(

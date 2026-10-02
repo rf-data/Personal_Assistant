@@ -383,11 +383,13 @@ def get_required_actions(
         # Q](https://j3L7h2.de/videos/v.php?v=YiUD496LUyw)"
         # "[uotientenregel](https://j3L7h2.de/videos/v.php?v=YiUD496LUyw)",
     )
-    resource.title = resource.title.replace(",", "")
+
+    if resource.title:
+        resource.title = resource.title.replace(",", "")
 
     match resource.resource_type:
         case (
-            "video"
+            "media"
             # | LectureResourceType.VIDEO
         ):
             return get_transcript_actions(resource, file_index=file_index)
@@ -396,7 +398,7 @@ def get_required_actions(
             # LectureResourceType.SCRIPT
             # | LectureResourceType.MATERIAL
             # | LectureResourceType.EXAM
-            "script" | "material" | "exam"
+            "script" | "material" | "exam" | "document"
         ):
             return get_document_actions(resource, file_index=file_index)
 

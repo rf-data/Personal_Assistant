@@ -226,10 +226,8 @@ def audio_recording(context: AudioContext):
 
     f_name = context.f_name
     # "test_audio_raw"
-    data_audio = folder_env_vars.data_html
-    save_path = (
-        f"/home/robfra/0_Portfolio_Projekte/gmp_compliance/data/{f_name}_%03d.wav"
-    )
+    folder = folder_env_vars.data_lectures
+    save_path = folder / f"{f_name}_%03d.wav"
     # Path(f"/home/robfra/0_Portfolio_Projekte/gmp_compliance/data/{f_name}_2.wav")
     # folder_env_vars.audio_data / ".wav"
     # print(source)
@@ -259,7 +257,7 @@ def audio_recording(context: AudioContext):
     # audio_folder = save_path.parent
     audio_files = [
         f
-        for f in data_audio.iterdir()
+        for f in folder.iterdir()
         if f.stem.startswith(f_name) and f.suffix == save_path.suffix
     ]
 

@@ -2,6 +2,7 @@
 #  import yaml
 import inspect
 import json
+from enum import Enum
 import re
 from pathlib import Path
 import numpy as np
@@ -73,6 +74,9 @@ def safe_json_loads(text: str):
 
 
 def make_json_safe(obj):
+    if isinstance(obj, Enum):
+        return obj.value
+
     if isinstance(obj, dict):
         return {str(k): make_json_safe(v) for k, v in obj.items()}
     if isinstance(obj, (list, tuple)):
@@ -89,6 +93,7 @@ def make_json_safe(obj):
         return bool(obj)
     if isinstance(obj, Path):
         return str(obj)
+
     if inspect.isfunction(obj):
         return inspect_single_function(obj)
     # if isinstance(obj, torch.Tensor):           # Tensor handling
@@ -98,10 +103,22 @@ def make_json_safe(obj):
     return str(obj)
 
 
+def ensure_json_suffix(
+    path: str | Path,
+) -> Path:
+
+    path = Path(path)
+
+    if path.name.lower().endswith(".json"):
+        return path
+
+    return path.parent / (f"{path.name}.json")
+
+
 def save_dict(data: dict, path: str | Path, mode: str = "w") -> None:
     logger = app_session.logger
 
-    f_path = Path(path).with_suffix(".json")
+    f_path = ensure_json_suffix(path)
     f_path = ensure_dir(f_path)
     data_new = make_json_safe(data)
 
@@ -126,39 +143,13 @@ def save_dict(data: dict, path: str | Path, mode: str = "w") -> None:
             raise
 
 
-def save_base_model_as_dict(data: BaseModel, path: Path) -> None:
-    data_dict = data.model_dump()
-
-    return save_dict(data_dict, path)
-
-
-# def append_json(data: dict, path: Path) -> None:
-#     logger = app_session.logger
-
-#     f_path = Path(f"{path}.json")
-#     path = ensure_dir(f_path)
-#     data_new = make_json_safe(data)
-
-#     with path.open("a", encoding="utf-8") as f:
-#         try:
-#             f.write(json.dumps(data_new) + "\n")
-#             # print(f"Appending data on {shorten_path(path, 3)}")
-#             logger.info("Appending data on json_file in %s", shorten_path(f_path, 3))
-
-#         except TypeError as e:
-#             logger.error(
-#                 "ERROR (non_serializable):\n%s\n\ndtype=%s\nrepr=%s",
-#                 e,
-#                 type(data_new),
-#                 repr(data_new),
-#             )
-
-
 def load_dict(path: Path | str, cls=None) -> dict:
 
-    path = ensure_dir(Path(path).with_suffix(".json"))
+    f_path = ensure_json_suffix(path)
 
-    with path.open("r", encoding="utf-8") as f:
+    f_path = ensure_dir(f_path)
+
+    with f_path.open("r", encoding="utf-8") as f:
         data = json.load(f)
 
     if app_session.logger is not None:

@@ -10,6 +10,7 @@ LOG_DIR := $(ROOT)/logs
 		ai_code_review \
 		clean_linux \
 		dependency_check \
+		knowledge_extraction \
 		litellm_start \
 		monitoring_docker \
 		monitoring_stop \
@@ -66,6 +67,15 @@ mlflow_start:
 
 mlflow_stop:
 	pkill -f "mlflow server" || true
+
+
+knowledge_extraction:
+	# tmux new -s knowledge
+	PYTHONUNBUFFERED=1 \
+	uv run python -m src.run_knowledge_consolidation \
+	2>&1 | tee logs/knowledge_consolidation.log
+
+	# tmux attach -t knowledge
 
 
 monitoring_docker:

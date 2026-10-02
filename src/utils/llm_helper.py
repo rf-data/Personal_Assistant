@@ -130,6 +130,8 @@ def configure_marvin(
 
     Agent.instrument_all()
 
+    app_session.logger.info("Configurating 'marvin': DONE")
+
     return
 
 

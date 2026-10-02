@@ -187,7 +187,8 @@ class LectureCourse(BaseModel):
             / self.course_id  # "mathe_1"
         )
 
-    sections: list[LectureSection] = Field(default_factory=list)
+    lecture_blocks: list[str] = Field(default_factory=list)
+    # sections: list[LectureSection] = Field(default_factory=list)
     resources: list[LectureResourceUnion] = Field(default_factory=list)
 
     unassigned_resources: list[LectureResourceUnion] = Field(default_factory=list)

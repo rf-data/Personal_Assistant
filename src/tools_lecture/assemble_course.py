@@ -45,6 +45,7 @@ def build_lecture_course_from_folder(
         f_info = classify_course_file(path)
         f_info.course_id = course_id
         f_info.course_title = course_title
+        # f_info.lecture_blocks = context.
 
         f_info.parsed_name = parse_lecture_filename(path)
 
@@ -65,7 +66,7 @@ def build_lecture_course_from_folder(
 
     save_dict(
         data=[file.model_dump(mode="json") for file in manifest],
-        path=(input_folder / "metdata/course_manifest.json"),
+        path=(input_folder / "metadata/course_manifest.json"),
     )
     # grouped = group_files_into_lectures(discovered)
 
@@ -83,6 +84,7 @@ def build_lecture_course_from_folder(
         provider=input_folder.parent.name,
         resources=lectures,  # resources,
         source_url=None,
+        lecture_blocks=["2"],  # ! TODO
         # root_folder=input_folder
     )
 
@@ -92,7 +94,7 @@ def build_lecture_course_from_folder(
         #     file.model_dump(mode="json")
         #     for file in discovered
         #     ],
-        path=(input_folder / "metdata/course_info.json"),
+        path=(input_folder / "metadata/course_info.json"),
     )
 
     return course
@@ -111,6 +113,7 @@ def build_lecture_resource(
                 file_type=file.resource_format,
                 media_type=file.resource_type.value,
                 downloaded=True,
+                lecture_blocks=["2"],
             )
 
         case LectureResourceType.DOCUMENT:  # LectureResourceType.DOCUMENT:
@@ -121,6 +124,7 @@ def build_lecture_resource(
                 file_type=file.resource_format,
                 resource_type=file.resource_type.value,
                 downloaded=True,
+                lecture_blocks=["2"],
                 lecture_no=file.parsed_name.sequence_no,
             )
 

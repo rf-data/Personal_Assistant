@@ -1,7 +1,7 @@
 ## data_knowledge.py
 # imports
 from pathlib import Path
-from enum import Enum
+from enum import Enum, StrEnum
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Literal
 
@@ -191,20 +191,60 @@ class Domain(Enum):
     CHEMISTRY = "chemistry"
     PHARMACY = "pharmacy"
     MEDICINE = "medicine"
+    UNCLEAR = "unclear"
+
+
+class KnowledgeSource(StrEnum):
+    TRANSCRIPT = "transcript"
+    VISUAL = "visual"
+    VISUAL_TRANSCIPT = "transcript+visual"
 
 
 ##################################
 # KNOWLEDGE_TYPES
 ##################################
+
+
+class KnowledgeEntityType(StrEnum):
+    # general
+    CONCEPT = "concept"
+    METHOD = "method"
+    OPERATION = "operation"
+    ORGANIZATION = "organization"
+    OTHER = "other"
+    PERSON = "person"
+    QUANTITY = "quantity"
+    RULE = "rule"
+    SYMBOL = "symbol"
+
+    # math specific
+    ALGORITHM = "algorithm"
+    CONSTANT = "constant"
+    THEOREM = "theorem"
+
+    # chemistry / pharmacy specific
+    COMPOUND = "compound"
+    DISEASE = "disease"
+
+
+class StrictBaseModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+
 class KnowledgeEntity(BaseModel):
     entity_id: str  # ="math_cosine_rule",
     canonical_name: str  # ="Cosinussatz",
     aliases: list = Field(default_factory=list)
+
     #     "Cosinus-Satz",
     #     "Kosinussatz",
     # ],
-    entity_type: Literal["theorem"] = "theorem"
-    domain: Literal["mathematics"] = "mathematics"
+    entity_type: KnowledgeEntityType
+    domain: Domain = Domain.UNCLEAR
+
+    source_statement_ids: list[str] = Field(default_factory=list)
+
+    llm_confidence: float | None = None
 
 
 class KnowledgeRelation(BaseModel):
@@ -216,6 +256,93 @@ class KnowledgeRelation(BaseModel):
     segment_ids: list[int] = Field(default_factory=list)
 
     llm_confidence: float | None = None
+
+
+class LectureEntityLLM(StrictBaseModel):
+    canonical_name: str
+
+    aliases: list[str] = Field(default_factory=list)
+
+    entity_type: KnowledgeEntityType
+
+    source_statement_ids: list[str] = Field(min_length=1)
+
+    llm_confidence: float = Field(
+        ge=0.0,
+        le=1.0,
+    )
+
+
+class EntityExtractionLLMResult(StrictBaseModel):
+    entities: list[LectureEntityLLM] = Field(default_factory=list)
+
+
+class SemanticConsolidationStats(BaseModel):
+    statements_input: int = 0
+    statements_canonical: int = 0
+    statements_discarded: int = 0
+
+    formulas_preserved: int = 0
+
+    entities: int = 0
+
+    semantic_batches: int = 0
+    entity_batches: int = 0
+
+
+class KnowledgeEvidence(BaseModel):
+    segment_ids: list[int] = Field(default_factory=list)
+
+    start: float
+    end: float
+
+    source: Literal[
+        "transcript",
+        "visual",
+        "transcript+visual",
+    ] = "transcript"
+
+    llm_confidence: float | None = None
+
+
+class ConsolidatedEvidence(KnowledgeEvidence):
+    chunk_id: str
+    item_id: str
+
+
+class CanonicalStatement(BaseModel):
+    statement_id: str
+
+    text: str
+    semantic_type: KnowledgeSemanticType
+    topic: str | None = None
+
+    needs_review: bool = False
+    review_reason: str | None = None
+
+    source_statement_ids: list[str] = Field(default_factory=list)
+
+    evidence: list[ConsolidatedEvidence] = Field(default_factory=list)
+
+    llm_confidence: float | None = None
+
+
+class CanonicalStatementLLM(StrictBaseModel):
+    text: str
+
+    semantic_type: KnowledgeSemanticType
+
+    topic: str | None = None
+
+    needs_review: bool = False
+    review_reason: str | None = None
+
+    source_statement_ids: list[str] = Field(min_length=1)
+
+    llm_confidence: float = Field(
+        ge=0.0,
+        le=1.0,
+    )
 
 
 # class KnowledgeExtraction(BaseModel):
@@ -253,26 +380,11 @@ class ExtractedMathExpression(BaseModel):
     llm_confidence: float | None = None
 
 
-class KnowledgeEvidence(BaseModel):
-    segment_ids: list[int] = Field(default_factory=list)
-
-    start: float
-    end: float
-
-    source: Literal[
-        "transcript",
-        "visual",
-        "transcript+visual",
-    ] = "transcript"
-
-    llm_confidence: float | None = None
-
-
 class KnowledgeStatement(KnowledgeEvidence):
     statement_id: str  # =item.statement_id,
     text: str  # =item.text,
     semantic_type: KnowledgeSemanticType  # =item.semantic_type,
-    topic: str  # =item.topic,
+    topic: str | None = None  # =item.topic,
 
 
 class MathExpression(KnowledgeEvidence):
@@ -302,6 +414,64 @@ class VisualCandidate(BaseModel):
     reason: str | None = None
 
     # frame_times: list[float] = Field(default_factory=list)
+
+
+VisualVerificationTrigger = Literal[
+    "visual_candidate",
+    "statement_review",
+    "formula_reason",
+]
+
+
+class VisualVerificationTarget(BaseModel):
+    target_id: str
+
+    start: float
+    end: float
+
+    reasons: list[str] = Field(default_factory=list)
+
+    statement_ids: list[str] = Field(default_factory=list)
+
+    expression_ids: list[str] = Field(default_factory=list)
+
+    chunk_ids: list[str] = Field(default_factory=list)
+
+    triggers: list[VisualVerificationTrigger] = Field(default_factory=list)
+
+
+class DoclingFrameResult(BaseModel):
+    section_id: str
+    source_time: float
+    path: Path
+
+    mode: Literal[
+        "ocr",
+        "formula",
+    ]
+
+    text: str = ""
+
+    formulas: list[str] = Field(default_factory=list)
+
+
+class LocalVisualBatchResult(BaseModel):
+    batch_id: str
+    section_id: str
+
+    target_expression_ids: list[str] = Field(default_factory=list)
+
+    matched_expression_ids: list[str] = Field(default_factory=list)
+
+    unresolved_expression_ids: list[str] = Field(default_factory=list)
+
+    match_method: dict[str, str] = Field(default_factory=dict)
+
+    ocr_results: list[DoclingFrameResult] = Field(default_factory=list)
+
+    formula_results: list[DoclingFrameResult] = Field(default_factory=list)
+
+    requires_api_fallback: bool = False
 
 
 class ChunkAnalysis(BaseModel):
@@ -381,7 +551,7 @@ class ChunkKnowledgeResult(BaseModel):
 
 
 class TranscriptKnowledgeDocument(BaseModel):
-    transcript_url: str
+    transcript_url: str | None
     source_id: str
     chunks: list[ChunkKnowledgeResult]
     visual_candidates: list[VisualCandidate]
@@ -402,8 +572,124 @@ class VisualAnalysisBatch(BaseModel):
     transcript_formulas: list[str] = Field(default_factory=list)
 
 
-class StrictBaseModel(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+# ============================================================
+# OUTPUT MODELS
+# ============================================================
+
+# ============================================================
+# MODELS
+# ============================================================
+
+
+class DiscardedStatementLLM(StrictBaseModel):
+    statement_id: str
+    reason: str
+
+
+class SemanticBatchLLMResult(StrictBaseModel):
+    canonical_statements: list[CanonicalStatementLLM] = Field(default_factory=list)
+
+    discarded_statements: list[DiscardedStatementLLM] = Field(default_factory=list)
+
+
+class DiscardedStatement(BaseModel):
+    source_statement_id: str
+    text: str
+
+    reason: str
+
+    evidence: list[ConsolidatedEvidence] = Field(default_factory=list)
+
+
+class ConsolidatedStatement(BaseModel):
+    statement_id: str
+
+    text: str
+    semantic_type: KnowledgeSemanticType
+
+    topic: str | None = None
+
+    # Original formulations that were merged.
+    text_variants: list[str] = Field(default_factory=list)
+
+    evidence: list[ConsolidatedEvidence] = Field(default_factory=list)
+
+    llm_confidence: float | None = None
+
+
+class ConsolidatedMathExpression(BaseModel):
+    expression_id: str
+
+    name: str | None = None
+
+    latex: str | None = None
+    plain_text: str
+
+    expression_type: MathExpressionType
+
+    text_variants: list[str] = Field(default_factory=list)
+    latex_variants: list[str] = Field(default_factory=list)
+
+    evidence: list[ConsolidatedEvidence] = Field(default_factory=list)
+
+    verification_status: (
+        Literal[
+            "pending",
+            "verified",
+            "rejected",
+        ]
+        | None
+    ) = None
+
+    verification_reasons: list[str] = Field(default_factory=list)
+
+    llm_confidence: float | None = None
+
+
+class ConsolidationStats(BaseModel):
+    chunks_total: int = 0
+    chunks_relevant: int = 0
+
+    statements_raw: int = 0
+    statements_consolidated: int = 0
+
+    formulas_raw: int = 0
+    formulas_consolidated: int = 0
+
+
+class ConsolidatedKnowledgeDocument(BaseModel):
+    source_id: str
+    transcript_url: str | None = None
+
+    topics: list[str] = Field(default_factory=list)
+
+    statements: list[ConsolidatedStatement] = Field(default_factory=list)
+
+    formulas: list[ConsolidatedMathExpression] = Field(default_factory=list)
+
+    # Keep unresolved visual work visible.
+    visual_candidates: list[VisualCandidate] = Field(default_factory=list)
+
+    stats: ConsolidationStats
+
+
+class LectureKnowledgeDocument(BaseModel):
+    source_id: str
+    transcript_url: str | None = None
+
+    topics: list[str] = Field(default_factory=list)
+
+    statements: list[CanonicalStatement] = Field(default_factory=list)
+
+    formulas: list[ConsolidatedMathExpression] = Field(default_factory=list)
+
+    entities: list[KnowledgeEntity] = Field(default_factory=list)
+
+    discarded_statements: list[DiscardedStatement] = Field(default_factory=list)
+
+    visual_candidates: list[VisualCandidate] = Field(default_factory=list)
+
+    stats: SemanticConsolidationStats
 
 
 # ============================================================
@@ -429,6 +715,8 @@ class VisualVerificationItemLLM(StrictBaseModel):
     transcript_plain_text: str | None
     transcript_latex: str | None
 
+    target_expression_id: str | None
+
     visual_plain_text: str | None
     visual_latex: str | None
 
@@ -443,8 +731,7 @@ class VisualVerificationItemLLM(StrictBaseModel):
 
     evidence_type: (
         Literal[
-            "direct_visual",
-            "derived_from_visual",
+            "direct_visual", "derived_from_visual", "contextual_inference", "unknown"
         ]
         | None
     )
@@ -514,8 +801,7 @@ class VisualVerificationItem(KnowledgeEvidence):
 
     evidence_type: (
         Literal[
-            "direct_visual",
-            "derived_from_visual",
+            "direct_visual", "derived_from_visual", "contextual_inference", "unknown"
         ]
         | None
     )
@@ -528,6 +814,7 @@ class VisualVerificationItem(KnowledgeEvidence):
 class VisualKnowledgeResult(KnowledgeEvidence):
     batch_id: str
     section_id: str
+    transcript_url: str | None = None
 
     expressions: list[VisualExpression] = Field(default_factory=list)
     verifications: list[VisualVerificationItem] = Field(default_factory=list)

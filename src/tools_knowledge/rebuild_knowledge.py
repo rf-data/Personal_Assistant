@@ -1,11 +1,16 @@
 ## rebuild_knowledge.py
 # import
+import gc
 import json
 from pathlib import Path
 import base64
 import mimetypes
+import hashlib
 from openai import OpenAI
-from PIL import Image
+
+from docling_core.types.doc import (
+    DocItemLabel,
+)
 
 from src.agent.prompts.prompt_know_extract import (
     build_visual_verification_prompt,
@@ -16,15 +21,19 @@ from src.core.memory import app_session
 from src.core.memory_lecture import LectureContext
 from src.model_knowledge.data_knowledge import (
     DownloadedVideoSection,
+    DoclingFrameResult,
     ExtractedFrame,
     FrameTimestamp,
     TranscriptKnowledgeDocument,
+    LectureKnowledgeDocument,
+    LocalVisualBatchResult,
     VisualAnalysisBatch,
     VisualCandidate,
     VisualExpression,
     VisualKnowledgeResult,
     VisualKnowledgeResultLLM,
     VisualVerificationItem,
+    VisualVerificationTarget,
 )
 from src.utils.general_helper import (
     hash_text,
@@ -33,6 +42,640 @@ from src.utils.general_helper import (
     save_to_cache,
 )
 from src.utils.llm_helper import log_openai_usage
+from src.utils.latex_helper import normalize_math_text
+from src.utils.docling_helper import get_docling_image_converter
+
+VISUAL_REASON_TERMS = (
+    "visual verification",
+    "visual context",
+    "visuell",
+    "ambiguous",
+    "unclear",
+    "unklar",
+    "uneindeutig",
+    "incomplete",
+    "unvollständig",
+    "not fully reconstruct",
+    "not reliably reconstruct",
+    "nicht vollständig rekonstru",
+    "nicht zuverlässig rekonstru",
+    "transcriptfragment",
+    "transkriptfragment",
+    "deictic",
+    "deiktisch",
+)
+
+
+def evidence_overlaps_interval(
+    evidence: list,
+    start: float,
+    end: float,
+) -> bool:
+
+    return any(
+        intervals_overlap(
+            item.start,
+            item.end,
+            start,
+            end,
+        )
+        for item in evidence
+    )
+
+
+def evidence_time_range(
+    evidence: list,
+) -> tuple[float, float] | None:
+
+    if not evidence:
+        return None
+
+    return (
+        min(item.start for item in evidence),
+        max(item.end for item in evidence),
+    )
+
+
+def evidence_time_windows(
+    evidence: list,
+    *,
+    merge_gap: float = 2.0,
+) -> list[tuple[float, float]]:
+
+    if not evidence:
+        return []
+
+    windows = sorted(
+        (
+            item.start,
+            item.end,
+        )
+        for item in evidence
+    )
+
+    merged: list[list[float]] = []
+
+    for start, end in windows:
+        if not merged:
+            merged.append([start, end])
+            continue
+
+        last_start, last_end = merged[-1]
+
+        if start <= last_end + merge_gap:
+            merged[-1][1] = max(
+                last_end,
+                end,
+            )
+
+        else:
+            merged.append([start, end])
+
+    return [(start, end) for start, end in merged]
+
+
+def formula_requires_visual_verification(
+    formula,
+) -> bool:
+
+    if formula.verification_status == "verified":
+        return False
+
+    reasons = " ".join(formula.verification_reasons).casefold()
+
+    if not reasons:
+        return False
+
+    return any(term in reasons for term in VISUAL_REASON_TERMS)
+
+
+def select_visual_verification_targets(
+    document: LectureKnowledgeDocument,
+) -> list[VisualVerificationTarget]:
+
+    targets: list[VisualVerificationTarget] = []
+
+    # ========================================================
+    # 1. Original visual candidates
+    # ========================================================
+
+    for candidate in document.visual_candidates:
+        statement_ids = [
+            statement.statement_id
+            for statement in document.statements
+            if evidence_overlaps_interval(
+                statement.evidence,
+                candidate.start,
+                candidate.end,
+            )
+        ]
+
+        expression_ids = [
+            formula.expression_id
+            for formula in document.formulas
+            if evidence_overlaps_interval(
+                formula.evidence,
+                candidate.start,
+                candidate.end,
+            )
+        ]
+
+        targets.append(
+            VisualVerificationTarget(
+                target_id=(f"candidate_{candidate.chunk_id}"),
+                start=candidate.start,
+                end=candidate.end,
+                reasons=([candidate.reason] if candidate.reason else []),
+                statement_ids=statement_ids,
+                expression_ids=expression_ids,
+                chunk_ids=[candidate.chunk_id],
+                triggers=["visual_candidate"],
+            )
+        )
+
+    # ========================================================
+    # 2. Canonical statements marked needs_review
+    # ========================================================
+
+    for statement in document.statements:
+        if not statement.needs_review:
+            continue
+
+        time_range = evidence_time_windows(statement.evidence)
+
+        if time_range is None:
+            continue
+
+        for start, end in time_range:
+            expression_ids = [
+                formula.expression_id
+                for formula in document.formulas
+                if evidence_overlaps_interval(
+                    formula.evidence,
+                    start,
+                    end,
+                )
+            ]
+
+            targets.append(
+                VisualVerificationTarget(
+                    target_id=(f"review_{statement.statement_id}"),
+                    start=start,
+                    end=end,
+                    reasons=(
+                        [statement.review_reason] if statement.review_reason else []
+                    ),
+                    statement_ids=[statement.statement_id],
+                    expression_ids=expression_ids,
+                    chunk_ids=list(
+                        dict.fromkeys(
+                            evidence.chunk_id for evidence in statement.evidence
+                        )
+                    ),
+                    triggers=["statement_review"],
+                )
+            )
+
+    # ========================================================
+    # 3. Formulas with explicit visual ambiguity
+    # ========================================================
+
+    for formula in document.formulas:
+        if not formula_requires_visual_verification(formula):
+            continue
+
+        time_range = evidence_time_windows(formula.evidence)
+
+        if time_range is None:
+            continue
+
+        for start, end in time_range:
+            targets.append(
+                VisualVerificationTarget(
+                    target_id=(f"formula_{formula.expression_id}"),
+                    start=start,
+                    end=end,
+                    reasons=(formula.verification_reasons.copy()),
+                    expression_ids=[formula.expression_id],
+                    chunk_ids=list(
+                        dict.fromkeys(
+                            evidence.chunk_id for evidence in formula.evidence
+                        )
+                    ),
+                    triggers=["formula_reason"],
+                )
+            )
+
+    return merge_visual_verification_targets(targets)
+
+
+def merge_visual_verification_targets(
+    targets: list[VisualVerificationTarget],
+    merge_gap: float = 2.0,
+    max_window_seconds: float = 75.0,
+) -> list[VisualVerificationTarget]:
+
+    if not targets:
+        return []
+
+    ordered = sorted(
+        targets,
+        key=lambda item: (
+            item.start,
+            item.end,
+        ),
+    )
+
+    merged: list[VisualVerificationTarget] = []
+
+    for target in ordered:
+        if not merged:
+            merged.append(target.model_copy(deep=True))
+            continue
+
+        previous = merged[-1]
+
+        if target.start <= previous.end + merge_gap:
+            candidate_start = min(
+                previous.start,
+                target.start,
+            )
+
+            candidate_end = max(
+                previous.end,
+                target.end,
+            )
+
+            candidate_duration = candidate_end - candidate_start
+
+            can_merge = (
+                target.start <= previous.end + merge_gap
+                and candidate_duration <= max_window_seconds
+            )
+
+            if can_merge:
+                previous.start = candidate_start
+
+                previous.end = candidate_end
+
+                previous.reasons = list(
+                    dict.fromkeys(previous.reasons + target.reasons)
+                )
+
+                previous.statement_ids = list(
+                    dict.fromkeys(previous.statement_ids + target.statement_ids)
+                )
+
+                previous.expression_ids = list(
+                    dict.fromkeys(previous.expression_ids + target.expression_ids)
+                )
+
+            previous.chunk_ids = list(
+                dict.fromkeys(previous.chunk_ids + target.chunk_ids)
+            )
+
+            previous.triggers = list(dict.fromkeys(previous.triggers + target.triggers))
+
+        else:
+            merged.append(target.model_copy(deep=True))
+
+    for idx, item in enumerate(
+        merged,
+        start=1,
+    ):
+        item.target_id = f"visual_target_{idx:03d}"
+
+    return merged
+
+
+def hash_file(
+    path: Path,
+) -> str:
+
+    h = hashlib.sha256()
+
+    with path.open("rb") as f:
+        while chunk := f.read(8192):
+            h.update(chunk)
+
+    return h.hexdigest()
+
+
+def analyze_frame_with_docling(
+    frame: ExtractedFrame,
+    *,
+    formula_enrichment: bool,
+) -> DoclingFrameResult:
+
+    mode = "formula" if formula_enrichment else "ocr"
+
+    frame_hash = hash_file(frame.path)
+
+    cache_key = make_cache_key(
+        params={
+            "task": "docling_visual_frame_v1",
+            "frame_hash": frame_hash,
+            "source_time": frame.source_time,
+            "mode": mode,
+        }
+    )
+
+    cached = load_from_cache(
+        key=cache_key,
+        folder="visual_docling",
+        cls=DoclingFrameResult,
+    )
+
+    if cached is not None:
+        return cached
+
+    converter = None
+    conversion = None
+    document = None
+
+    try:
+        converter = get_docling_image_converter(formula_enrichment)
+
+        conversion = converter.convert(frame.path)
+
+        document = conversion.document
+
+        text = document.export_to_text().strip()
+
+        formulas: list[str] = []
+
+        for item in document.texts:
+            label = getattr(
+                item.label,
+                "value",
+                item.label,
+            )
+
+            if label != (DocItemLabel.FORMULA.value):
+                continue
+
+            value = (
+                getattr(item, "text", None) or getattr(item, "orig", None) or ""
+            ).strip()
+
+            if value:
+                formulas.append(value)
+
+        result = DoclingFrameResult(
+            section_id=frame.section_id,
+            source_time=frame.source_time,
+            path=frame.path,
+            mode=mode,
+            text=text,
+            formulas=list(dict.fromkeys(formulas)),
+        )
+
+        save_to_cache(
+            key=cache_key,
+            folder="visual_docling",
+            data=result.model_dump(mode="json"),
+            metadata={
+                "task": "docling_visual_frame_v1",
+                "mode": mode,
+                "source_time": frame.source_time,
+            },
+        )
+
+        return result
+
+    finally:
+        del document
+        del conversion
+        del converter
+
+        gc.collect()
+
+
+def analyze_frames_with_docling(
+    frames: list[ExtractedFrame],
+    *,
+    formula_enrichment: bool,
+) -> list[DoclingFrameResult]:
+
+    return [
+        analyze_frame_with_docling(
+            frame,
+            formula_enrichment=(formula_enrichment),
+        )
+        for frame in frames
+    ]
+
+
+def formula_variants(
+    formula,
+) -> set[str]:
+
+    values = [
+        formula.latex,
+        formula.plain_text,
+        *formula.latex_variants,
+        *formula.text_variants,
+    ]
+
+    return {normalize_math_text(value) for value in values if value}
+
+
+def docling_result_variants(
+    result: DoclingFrameResult,
+) -> set[str]:
+
+    values: list[str] = []
+
+    values.extend(result.formulas)
+
+    values.extend(line.strip() for line in result.text.splitlines() if line.strip())
+
+    return {normalize_math_text(value) for value in values if value}
+
+
+def match_formulas_against_docling(
+    formulas: list,
+    results: list[DoclingFrameResult],
+    *,
+    min_frame_matches: int,
+) -> set[str]:
+
+    matched: set[str] = set()
+
+    frame_variants = [docling_result_variants(result) for result in results]
+
+    for formula in formulas:
+        target_variants = formula_variants(formula)
+
+        n_matches = 0
+
+        for variants in frame_variants:
+            if target_variants & variants:
+                n_matches += 1
+
+        if n_matches >= min_frame_matches:
+            matched.add(formula.expression_id)
+
+    return matched
+
+
+def get_batch_target_ids(
+    targets: list[VisualVerificationTarget],
+    start: float,
+    end: float,
+) -> tuple[
+    set[str],
+    set[str],
+]:
+
+    statement_ids: set[str] = set()
+    expression_ids: set[str] = set()
+
+    for target in targets:
+        if not intervals_overlap(
+            target.start,
+            target.end,
+            start,
+            end,
+        ):
+            continue
+
+        statement_ids.update(target.statement_ids)
+
+        expression_ids.update(target.expression_ids)
+
+    return (
+        statement_ids,
+        expression_ids,
+    )
+
+
+def analyze_visual_batch_locally(
+    batch: VisualAnalysisBatch,
+    document: LectureKnowledgeDocument,
+    targets: list[VisualVerificationTarget],
+    *,
+    use_formula_enrichment: bool = True,
+) -> LocalVisualBatchResult:
+
+    (
+        target_statement_ids,
+        target_expression_ids,
+    ) = get_batch_target_ids(
+        targets=targets,
+        start=batch.source_start,
+        end=batch.source_end,
+    )
+
+    target_formulas = [
+        formula
+        for formula in document.formulas
+        if formula.expression_id in target_expression_ids
+    ]
+
+    # ========================================================
+    # Stage 1: cheap OCR
+    # ========================================================
+
+    ocr_results = analyze_frames_with_docling(
+        batch.frames,
+        formula_enrichment=False,
+    )
+
+    # OCR alone gets accepted only if the same
+    # expression is found in >= 2 distinct frames.
+    matched = match_formulas_against_docling(
+        formulas=target_formulas,
+        results=ocr_results,
+        min_frame_matches=2,
+    )
+
+    match_method = {expression_id: "ocr_consensus" for expression_id in matched}
+
+    unresolved = target_expression_ids - matched
+
+    formula_results: list[DoclingFrameResult] = []
+
+    # ========================================================
+    # Stage 2: local formula model
+    # ========================================================
+
+    if unresolved and use_formula_enrichment:
+        unresolved_formulas = [
+            formula
+            for formula in target_formulas
+            if formula.expression_id in unresolved
+        ]
+
+        formula_results = analyze_frames_with_docling(
+            batch.frames,
+            formula_enrichment=True,
+        )
+
+        formula_matches = match_formulas_against_docling(
+            formulas=(unresolved_formulas),
+            results=formula_results,
+            min_frame_matches=1,
+        )
+
+        matched.update(formula_matches)
+
+        for expression_id in formula_matches:
+            match_method[expression_id] = "docling_formula"
+
+        unresolved = target_expression_ids - matched
+
+    # A review statement without a formula cannot
+    # safely be declared verified by OCR alone.
+    statement_only_review = bool(target_statement_ids and not target_expression_ids)
+
+    requires_api_fallback = bool(unresolved) or statement_only_review
+
+    return LocalVisualBatchResult(
+        batch_id=batch.batch_id,
+        section_id=batch.section_id,
+        target_expression_ids=sorted(target_expression_ids),
+        matched_expression_ids=sorted(matched),
+        unresolved_expression_ids=sorted(unresolved),
+        match_method=match_method,
+        ocr_results=ocr_results,
+        formula_results=(formula_results),
+        requires_api_fallback=(requires_api_fallback),
+    )
+
+
+def apply_local_visual_verification(
+    document: LectureKnowledgeDocument,
+    result: LocalVisualBatchResult,
+) -> None:
+
+    matched = set(result.matched_expression_ids)
+
+    for formula in document.formulas:
+        if formula.expression_id not in matched:
+            continue
+
+        method = result.match_method.get(
+            formula.expression_id,
+            "docling",
+        )
+
+        formula.verification_status = "verified"
+
+        reason = (
+            "Matched against visual "
+            "evidence using local "
+            f"Docling processing "
+            f"({method})."
+        )
+
+        if reason not in formula.verification_reasons:
+            formula.verification_reasons.append(reason)
+
+
+#########################################
+#
+#########################################
 
 
 def add_frame_timestamps(
@@ -203,65 +846,79 @@ def intervals_overlap(
 
 
 def get_batch_knowledge(
-    document: TranscriptKnowledgeDocument,  # =document,
-    start: float,  #  =frames[0].source_time,
-    end: float,  # =frames[-1].source_time,
+    document: LectureKnowledgeDocument,
+    targets: list[VisualVerificationTarget],
+    start: float,
+    end: float,
     margin: float = 5.0,
-) -> tuple[list[str], list[str], list[str]]:
+) -> tuple[
+    list[str],
+    list[str],
+    list[str],
+]:
 
     if end < start:
         raise ValueError(f"Batch end ({end}) must be >= start ({start}).")
-
-    if margin < 0:
-        raise ValueError("margin must be >= 0.")
 
     context_start = max(
         0.0,
         start - margin,
     )
+
     context_end = end + margin
 
     statements: list[str] = []
     formulas: list[str] = []
     reasons: list[str] = []
 
-    for result in document.chunks:
-        extraction = result.extraction
+    # ========================================================
+    # Canonical statements
+    # ========================================================
 
-        if extraction is None:
+    for statement in document.statements:
+        if not evidence_overlaps_interval(
+            statement.evidence,
+            context_start,
+            context_end,
+        ):
             continue
 
-        for statement in extraction.statements:
-            if intervals_overlap(
-                statement.start,
-                statement.end,
-                context_start,
-                context_end,
-            ):
-                if statement.text:
-                    statements.append(statement.text)
+        statements.append((f"{statement.statement_id} | {statement.text}"))
 
-        for formula in extraction.formulas:
-            if intervals_overlap(
-                formula.start,
-                formula.end,
-                context_start,
-                context_end,
-            ):
-                formula_text = formula.latex or formula.plain_text
+    # ========================================================
+    # Consolidated formulas
+    # ========================================================
 
-                if formula_text:
-                    formulas.append(formula_text)
+    for formula in document.formulas:
+        if not evidence_overlaps_interval(
+            formula.evidence,
+            context_start,
+            context_end,
+        ):
+            continue
 
-        for candidate in document.visual_candidates:
-            if intervals_overlap(
-                candidate.start,
-                candidate.end,
-                context_start,
-                context_end,
-            ):
-                if candidate.reason:
-                    reasons.append(candidate.reason)
+        formulas.append(
+            (
+                f"{formula.expression_id}"
+                f" | latex="
+                f"{formula.latex or '-'}"
+                f" | plain="
+                f"{formula.plain_text}"
+            )
+        )
+
+    # ========================================================
+    # Reasons
+    # ========================================================
+
+    for target in targets:
+        if intervals_overlap(
+            target.start,
+            target.end,
+            context_start,
+            context_end,
+        ):
+            reasons.extend(target.reasons)
 
     return (
         list(dict.fromkeys(statements)),
@@ -370,6 +1027,7 @@ def build_visual_batches(
     section: DownloadedVideoSection,
     selected_frames: list[ExtractedFrame],
     document: TranscriptKnowledgeDocument,
+    targets: list[VisualVerificationTarget],
     context: LectureContext,
     # batch_size: int = 8,
     # overlap: int = 1,
@@ -390,6 +1048,7 @@ def build_visual_batches(
         statements, formulas, reasons = get_batch_knowledge(
             # batch=frame,
             document=document,
+            targets=targets,
             start=batch_start,
             end=batch_end,
             margin=context.visual_context_margin,
@@ -420,10 +1079,7 @@ def build_visual_batch_input_hash(
         "batch_id": batch.batch_id,
         "section_id": batch.section_id,
         "source_times": [f.source_time for f in batch.frames],
-        "frame_hashes": [
-            hash_text(base64.b64encode(Path(f.path).read_bytes()).decode("ascii"))
-            for f in batch.frames
-        ],
+        "frame_hashes": [hash_file(Path(frame.path)) for frame in batch.frames],
         "statements": batch.transcript_statements,
         "formulas": batch.transcript_formulas,
         "visual_reasons": batch.visual_reasons,
@@ -679,11 +1335,13 @@ def finalize_visual_result(
     verifications = [
         VisualVerificationItem(
             source="transcript+visual",
+            # target_expression_id="",
             evidence_type=item.evidence_type,
             start=(min(item.source_times) if item.source_times else batch.source_start),
             end=(max(item.source_times) if item.source_times else batch.source_end),
             verification_id=(f"{batch.batch_id}_ver_{idx:03d}"),
-            expression_id=(f"{batch.batch_id}_expr_{idx:03d}"),
+            expression_id=item.target_expression_id,
+            # (f"{batch.batch_id}_expr_{idx:03d}"),
             section_id=batch.section_id,
             batch_id=batch.batch_id,
             transcript_latex=item.transcript_latex,

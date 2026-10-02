@@ -1256,6 +1256,11 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/54/7b/2d409a66f230f1d455646e9cf33363dd02a2153d2344cd4421743ba983f2/docling-2.129.0-py3-none-any.whl", hash = "sha256:9541a7dcd80f24cbe73033c9b72240d0760b392b18ce45ea8165014fc9f6cbcb", size = 5229, upload-time = "2026-09-18T09:21:24.642Z" },
 ]
 
+[package.optional-dependencies]
+rapidocr = [
+    { name = "docling-slim", extra = ["feat-ocr-rapidocr-onnx"] },
+]
+
 [[package]]
 name = "docling-core"
 version = "2.97.2"
@@ -1357,6 +1362,10 @@ wheels = [
 ]
 
 [package.optional-dependencies]
+feat-ocr-rapidocr-onnx = [
+    { name = "onnxruntime" },
+    { name = "rapidocr" },
+]
 standard = [
     { name = "accelerate" },
     { name = "beautifulsoup4" },
@@ -2052,7 +2061,7 @@ dependencies = [
     { name = "bs4" },
     { name = "chromadb" },
     { name = "defusedxml" },
-    { name = "docling" },
+    { name = "docling", extra = ["rapidocr"] },
     { name = "docx" },
     { name = "dvc" },
     { name = "dvc-gdrive" },
@@ -2131,7 +2140,7 @@ requires-dist = [
     { name = "bs4", specifier = ">=0.0.2" },
     { name = "chromadb", specifier = ">=1.5.9" },
     { name = "defusedxml", specifier = ">=0.7.1" },
-    { name = "docling", specifier = ">=2.129.0" },
+    { name = "docling", extras = ["rapidocr"], specifier = ">=2.129.0" },
     { name = "docx", specifier = ">=0.2.4" },
     { name = "dvc", specifier = ">=3.67.1" },
     { name = "dvc-gdrive", specifier = ">=3.0.1" },

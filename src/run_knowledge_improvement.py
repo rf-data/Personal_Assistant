@@ -1,7 +1,8 @@
-## run_knowledge_improvement.py
+## run_visual_enrichment.py
 # imports
 from pathlib import Path
 from datetime import datetime
+import gc
 
 from src.core.config import folder_env_vars
 from src.core.memory import app_session
@@ -11,18 +12,24 @@ from src.tools_knowledge.rebuild_knowledge import (
     # clean_frame_times,
     # add_frame_timestamps,
     analyze_visual_batch,
+    analyze_visual_batch_locally,
+    apply_local_visual_verification,
     build_visual_batches,
     compile_download_windows,
     finalize_visual_result,
+    select_visual_verification_targets,
     # image_text_conversion,
 )
 from src.tools_transcribe.extract_video import (
     download_visual_sections,
     extract_additional_frames,
     extract_all_frames,
+    prepare_local_visual_sections,
     select_distinct_frames,
 )
 from src.model_knowledge.data_knowledge import (
+    LocalVisualBatchResult,
+    LectureKnowledgeDocument,
     TranscriptKnowledgeDocument,
     VisualCandidate,
     VisualKnowledgeResult,
@@ -32,225 +39,474 @@ from src.model_knowledge.data_knowledge import (
 
 # from src.utils.path_helper import shorten_path
 from src.utils.dict_helper import load_dict, save_dict
+from src.utils.path_helper import shorten_path
 
 
 def validate_knowledge_context(
-    context: KnowledgeContext,
+    context: LectureContext,
 ) -> None:
 
-    if not context.visual_model.strip():
-        raise ValueError("context.visual_model is not configured.")
+    cfg = context.cfg_knowledge
 
-    if context.visual_batch_size <= 0:
+    if cfg.visual_api_fallback and not cfg.visual_model.strip():
+        raise ValueError("visual_model is required when visual_api_fallback=True.")
+
+    if cfg.visual_batch_size <= 0:
         raise ValueError("visual_batch_size must be > 0.")
 
-    if context.visual_batch_overlap >= context.visual_batch_size:
+    if cfg.visual_batch_overlap >= cfg.visual_batch_size:
         raise ValueError("visual_batch_overlap must be smaller than visual_batch_size.")
 
 
-def run_knowledge_improvement():
+def run_visual_enrichment():
 
-    context_name = input("Enter name of context_file (no suffix): ")
+    import sys
+
+    context_name = "lecture_compile"
+    # input("Enter name of context_file (no suffix): ")
     context_path = folder_env_vars.config_dir / f"context_{context_name}.json"
-    context = load_dict(path=context_path, cls=KnowledgeContext)
+    context = load_dict(path=context_path, cls=LectureContext)
 
     validate_knowledge_context(context)
 
-    context.cfg_download.cookie_file = folder_env_vars.yt_cookies
+    context.cfg_knowledge.cfg_download.cookie_file = folder_env_vars.yt_cookies
 
     app_session.timestamp = datetime.today().strftime("%Y-%m-%d")
     app_session.logger = create_logger(
-        name=context.logger_name, file_name=context.logger_f_name
+        name=context.logger_f_name,
+        file_name=f"{context.logger_f_name}_{app_session.timestamp}",
     )
 
-    know_extract = load_dict(
-        path=Path(f"{context.save_folder}/{context.know_extract_file}.json"),
-        cls=TranscriptKnowledgeDocument,
+    context.lecture_root = (
+        folder_env_vars.data_lectures / f"{context.provider}" / f"{context.course_id}"
     )
 
-    url = know_extract.transcript_url
+    yt_urls = load_dict(
+        path="/home/robfra/0_Portfolio_Projekte/gmp_compliance/src/mathe_vorkurs_2013_urls.json"
+    )
 
-    # visual_candidates: set = set()
+    know_folder = context.lecture_root / "knowledge"
+    know_files = [file for file in know_folder.rglob("*_know_consol.json")]
 
-    # for res in results.values():
-    #     visual_candidates.add(res["visual_candidate"])
-
-    visual_candidates = know_extract.visual_candidates
     app_session.logger.info(
-        "Found %s visual candidates in media '%s'", len(visual_candidates), url
+        "Found %s 'consolidated knowledge' files in in '%s'",
+        len(know_files),
+        shorten_path(know_folder),
     )
-    # for cand in visual_candidates:
-    # f_times_raw = compile_frame_times(
-    #         candidates=visual_candidates,
-    #         interval=context.f_times_interval,
-    #         )
 
-    # f_times = clean_frame_times(
-    #         f_times_raw,
-    #         min_distance=context.min_distance,
-    #         )
+    for f_path in know_files:
+        # ["003_003_004_erste_zweite_kubische_binomische_Formel;_
+        # minus_mal_minus_know_consol"]:
 
-    # n_paths = len(context.transcript_names)
-    # for idx, t_name in enumerate(context.transcript_names):
+        # know_path = (
+        #     context.lecture_root
+        #     / f"knowledge/{know_name}.json"
+        #     )
 
-    #     t_path = Path(folder_env_vars.data_audio) / t_name
-    #     app_session.logger.info(
-    #                 "[File #%s / %s] Start extracting knowledge from '%s'",
-    #                 idx,
-    #                 n_paths,
-    #                 shorten_path(t_path)
-    #                 )
-
-    #     knowledge_improvement(context, t_path)
-
-    return knowledge_improvement(url, context, know_extract)
-
-
-def knowledge_improvement(
-    url: str,
-    context: KnowledgeContext,
-    know_extract: TranscriptKnowledgeDocument,
-    # list[VisualCandidate]
-):
-    # -> TranscriptKnowledgeDocument:
-    # list[ChunkKnowledgeResult]:
-
-    cfg_download = context.cfg_download
-    cfg_screenshot = context.cfg_screenshot
-
-    candidates = know_extract.visual_candidates
-    if candidates:
-        app_session.logger.info(
-            "Visual candidate range: %.2f - %.2f s (%s candidates)",
-            min(c.start for c in candidates),
-            max(c.end for c in candidates),
-            len(candidates),
-        )
-
-        for cand in candidates:
+        if Path(str(f_path).replace("_consol", "_visual")).exists():
+            # .stem.startswith("003_003"):
             app_session.logger.info(
-                "\nVisual candidate: %s | %.2f - %.2f | %s",
-                cand.chunk_id,
-                cand.start,
-                cand.end,
-                cand.reason,
-            )
-
-    down_windows = compile_download_windows(
-        candidates=candidates, merge_gap=cfg_screenshot.merge_gap
-    )
-    app_session.logger.info(
-        "Compiled %s download_windows:\n%s", len(down_windows), down_windows
-    )
-
-    down_sections = download_visual_sections(
-        url=url,
-        download_windows=down_windows,
-        output_dir=context.save_folder,
-        cfg_download=cfg_download,
-    )
-    app_session.logger.info("Downloaded %s sections", len(down_sections))
-
-    down_sections = extract_all_frames(sections=down_sections, context=context)
-    app_session.logger.info("Extracted frames...")
-
-    visual_results: list[VisualKnowledgeResult] = []
-
-    for section in down_sections:
-        frames = section.frames
-
-        if not frames:
-            app_session.logger.warning(
-                "No frames found for section '%s'",
-                section.section_id,
+                "[SKIPPING] File '%s' already processed", f_path.name
             )
             continue
 
+        doc = load_dict(
+            path=f_path,
+            # Path(f"{context.save_folder}/{context.know_extract_file}.json"),
+            cls=LectureKnowledgeDocument,
+            # TranscriptKnowledgeDocument
+        )
+
+        if doc.transcript_url is None:
+            url_new = yt_urls.get(f_path.stem.split("_")[0], []).get("url", None)
+
+            if not url_new:
+                app_session.logger.error(
+                    "No url available --> skipping visual enrichment of file '%s'",
+                    f_path.stem,
+                )
+                continue
+
+            doc.transcript_url = url_new
+
+            # "https://www.youtube.com/watch?v=KeCd7fs7rtc"
+        #     "003": {
+        # "lesson_code": "003_004",
+        # "title": "003_004 erste, zweite, kubische binomische Formel; minus mal minus",
+        # "video_id": "KeCd7fs7rtc",
+        # "url": """
+        src_id = "_".join(f_path.name.split("_")[:-2])
+
+        print("'Source_id': ", src_id)
+
+        # media_path = find_local_media_path(
+        #     source_id=src_id,
+        #     search_root=(
+        #         folder_env_vars.data_lectures
+        #         / f"loviscach/mathe_vorkurs/audio"
+        #         )
+        #     )
+        # (
+        #         folder_env_vars.data_lectures
+        #         / f"loviscach/mathe_vorkurs/audio"
+        #         / "003_003_004 erste, zweite, kubische binomische Formel; minus mal minus.webm"
+        # )
+        #
+
         app_session.logger.info(
-            "Processing download section '%s'\ncount: %s | min: %s | max: %s",
-            section.section_id,
-            len(frames),
-            min([f.source_time for f in frames]),
-            max([f.source_time for f in frames]),
+            "Knowledge file: %s",
+            f_path.name,
+        )
+
+        # app_session.logger.info(
+        #     "Local media: %s",
+        #     media_path,
+        # )
+        # (
+        #     /{}.webm"
+        #     )
+        # url = know_extract.transcript_url
+
+        # visual_candidates: set = set()
+
+        # for res in results.values():
+        #     visual_candidates.add(res["visual_candidate"])
+
+        # visual_candidates = know_extract.visual_candidates
+        # app_session.logger.info(
+        #     "Found %s visual candidates in media '%s'", len(visual_candidates), url
+        # )
+
+        # sys.exit(0)
+
+        # if media_path:
+        visual_enrichment(document=doc, context=context)
+        # , media_path=media_path)
+
+        # del result
+        gc.collect()
+
+    return None
+
+
+VIDEO_SUFFIXES = {
+    ".mp4",
+    ".mkv",
+    ".webm",
+    ".mov",
+    ".avi",
+}
+
+
+def find_local_media_path(
+    source_id: str,
+    search_root: Path,
+) -> Path:
+
+    search_root = Path(search_root)
+
+    app_session.logger.info(
+        "Start looking for '%s' in folder '%s'", source_id, search_root
+    )
+
+    if not search_root.is_dir():
+        raise NotADirectoryError(f"Media search root does not exist: {search_root}")
+
+    candidates: list[Path] = []
+
+    for path in search_root.rglob("*"):
+        if not path.is_file():
+            continue
+
+        if path.suffix.lower() not in VIDEO_SUFFIXES:
+            continue
+
+        if path.stem == source_id:
+            candidates.append(path)
+
+    if len(candidates) == 1:
+        return candidates[0]
+
+    if len(candidates) > 1:
+        raise ValueError(
+            "Multiple media files found for "
+            f"source_id='{source_id}':\n" + "\n".join(str(path) for path in candidates)
+        )
+
+    # fallback: filenames sometimes contain
+    # additional suffixes / prefixes
+    loose_matches: list[Path] = []
+
+    source_normalized = source_id.casefold().replace(" ", "_")
+
+    for path in search_root.rglob("*"):
+        if not path.is_file() or path.suffix.lower() not in VIDEO_SUFFIXES:
+            continue
+
+        stem_normalized = path.stem.casefold().replace(" ", "_").replace(",", "")
+
+        if source_normalized in stem_normalized or stem_normalized in source_normalized:
+            loose_matches.append(path)
+
+    if len(loose_matches) == 1:
+        return loose_matches[0]
+
+    # save_dict(
+    #     data=[f for f in search_root.rglob("*")],
+    #     path="/home/robfra/0_Portfolio_Projekte/gmp_compliance/data/loviscach/know/audio_files"
+    #     )
+
+    raise FileNotFoundError(
+        "Could not uniquely determine local media "
+        f"for source_id='{source_id}'.\n"
+        f"Search root: {search_root}\n"
+        f"Matches: {loose_matches}"
+    )
+
+
+# source_id='003_003_004_erste_zweite_kubische_binomische_
+# Formel;_minus_mal_minus'
+
+
+def visual_enrichment(
+    document: LectureKnowledgeDocument,
+    context: LectureContext,
+    *,
+    media_path: Path | None = None,
+) -> LectureKnowledgeDocument:
+    # -> TranscriptKnowledgeDocument:
+    # list[ChunkKnowledgeResult]:
+
+    cfg_knowledge = context.cfg_knowledge
+    cfg_download = cfg_knowledge.cfg_download
+    cfg_screenshot = cfg_knowledge.cfg_screenshot
+
+    # ========================================================
+    # SELECT TARGETS
+    # ========================================================
+    targets = select_visual_verification_targets(document)
+
+    app_session.logger.info(
+        "Selected %d visual verification targets",
+        len(targets),
+    )
+
+    if not targets:
+        app_session.logger.info("No visual verification needed.")
+        return document
+
+    # candidates = know_extract.visual_candidates
+    # if candidates:
+    #     app_session.logger.info(
+    #         "Visual candidate range: %.2f - %.2f s (%s candidates)",
+    #         min(c.start for c in candidates),
+    #         max(c.end for c in candidates),
+    #         len(candidates),
+    #     )
+
+    for target in targets:
+        app_session.logger.info(
+            ("Visual target: %s | %.2f - %.2f | statement=%s | formulas=%s"),
+            target.target_id,
+            target.start,
+            target.end,
+            target.statement_ids,
+            target.expression_ids,
+        )
+
+    down_windows = compile_download_windows(
+        candidates=targets, merge_gap=cfg_screenshot.merge_gap
+    )
+
+    app_session.logger.info(
+        "Compiled %s download_windows:\n%s", len(down_windows), down_windows
+    )
+    # ========================================================
+    # MEDIA SOURCE
+    # ========================================================
+    if media_path is not None:
+        sections = prepare_local_visual_sections(
+            media_path=media_path,
+            download_windows=(down_windows),
+        )
+
+    elif document.transcript_url:
+        cfg_download.playlist_name = document.source_id
+
+        sections = download_visual_sections(
+            url=document.transcript_url,
+            download_windows=down_windows,
+            output_dir=(context.lecture_root / "knowledge" / "frames"),
+            # context.save_folder,
+            cfg_download=cfg_download,
+        )
+
+    else:
+        raise ValueError(
+            "Visual verification requires "
+            "either a local media_path or "
+            "document.transcript_url."
+        )
+
+    # ========================================================
+    # EXISTING FRAME PIPELINE
+    # ========================================================
+
+    app_session.logger.info("Start extracting frames from %s sections", len(sections))
+
+    sections = extract_all_frames(
+        sections=sections, context=context, section_name=document.source_id
+    )
+
+    local_results: list[LocalVisualBatchResult] = []
+
+    api_results: list[VisualKnowledgeResult] = []
+
+    # ========================================================
+    # SECTIONS
+    # ========================================================
+    for idx, section in enumerate(sections, start=1):
+        if not section.frames:
+            continue
+
+        app_session.logger.info(
+            "Start selecting frames from section '%s' [total: %s]", idx, len(sections)
         )
 
         select_result = select_distinct_frames(
-            frames=frames,
-            min_hash_distance=cfg_screenshot.min_hash_distance,
-            max_hash_distance=cfg_screenshot.max_hash_distance,
-            max_time_gap=cfg_screenshot.max_time_gap,
+            frames=section.frames,
+            min_hash_distance=(cfg_screenshot.min_hash_distance),
+            max_hash_distance=(cfg_screenshot.max_hash_distance),
+            max_time_gap=(cfg_screenshot.max_time_gap),
         )
 
-        select_frames = select_result.selected_frames
-        app_session.logger.info(
-            "Selected frames (n=%s):\t%s",
-            len(select_frames),
-            sorted([sel.source_time for sel in select_frames]),
-        )
-
-        add_frames = select_result.additional_frame_times
-        app_session.logger.info(
-            "Additional frames are needed (n=%s):\t%s",
-            len(add_frames),
-            sorted(add_frames),
-        )
+        app_session.logger.info("Start extracting additional frames")
 
         section.additional_frames = extract_additional_frames(
             section=section,
-            add_frames=add_frames,
-            # list[float],
+            add_frames=(select_result.additional_frame_times),
+            section_name=document.source_id,
             context=context,
         )
 
-        frames_for_llm = sorted(
-            [*select_frames, *section.additional_frames],
-            key=lambda frame: frame.source_time,
+        frames = sorted(
+            [
+                *select_result.selected_frames,
+                *section.additional_frames,
+            ],
+            key=lambda item: item.source_time,
         )
-
-        for frame in frames_for_llm:
-            if not frame.path.is_file():
-                raise FileNotFoundError(
-                    f"Frame referenced but missing on disk: {frame.path}"
-                )
 
         batches = build_visual_batches(
             section=section,
-            selected_frames=frames_for_llm,
-            document=know_extract,
-            context=context,
-            # batch_size=context.visual_batch_size,
-            # overlap=context.visual_batch_overlap,
+            selected_frames=frames,
+            document=document,
+            targets=targets,
+            context=cfg_knowledge,
         )
 
-        for batch in batches:
-            result_llm = analyze_visual_batch(
-                batch=batch,
-                model_name=context.visual_model,
+        # ====================================================
+        # BATCHES
+        # ====================================================
+
+        for idx, batch in enumerate(batches, start=1):
+            app_session.logger.info(
+                "Start analyzing batch #%s [total: %s]", idx, len(batches)
             )
 
-            # # ! temporary to correct cached data
-            # result_llm.batch_id = batch.batch_id
-            # result_llm.section_id = batch.batch_id
+            local_result = None
+            result_llm = None
+            result = None
 
-            result = finalize_visual_result(
-                result_llm,
-                batch,
-                # .source_start,
-                # batch.source_end
-            )
-            visual_results.append(
-                # result.model_dump(mode="json")
-                result
-            )
+            # ----------------------------------------------
+            # LOCAL FIRST
+            # ----------------------------------------------
 
-    now = datetime.now().strftime("%Y-%m-%d_%Hh-%MM")
+            try:
+                local_result = analyze_visual_batch_locally(
+                    batch=batch,
+                    document=document,
+                    targets=targets,
+                    use_formula_enrichment=(cfg_knowledge.visual_formula_enrichment),
+                )
+
+                local_results.append(local_result)
+
+                apply_local_visual_verification(
+                    document=document,
+                    result=local_result,
+                )
+
+                if not local_result.requires_api_fallback:
+                    app_session.logger.info(
+                        ("Batch %s resolved locally; skipping API."),
+                        batch.batch_id,
+                    )
+                    continue
+
+                # ----------------------------------------------
+                # API FALLBACK
+                # ----------------------------------------------
+
+                if not cfg_knowledge.visual_api_fallback:
+                    app_session.logger.warning(
+                        ("Batch %s remains unresolved; API fallback disabled."),
+                        batch.batch_id,
+                    )
+                    continue
+
+                app_session.logger.info(
+                    ("Batch %s unresolved locally -> API fallback"),
+                    batch.batch_id,
+                )
+
+                result_llm = analyze_visual_batch(
+                    batch=batch,
+                    model_name=(cfg_knowledge.visual_model),
+                )
+
+                result = finalize_visual_result(
+                    result_llm,
+                    batch,
+                )
+
+                api_results.append(result)
+
+            finally:
+                del result_llm
+                del result
+                del local_result
+
+                gc.collect()
+
+    # ========================================================
+    # SAVE
+    # ========================================================
+
+    # now = datetime.now().strftime(
+    #     "%Y-%m-%d_%Hh-%MM"
+    # )
+
     save_dict(
-        data={"results": [res.model_dump(mode="json") for res in visual_results]},
-        path=Path(f"{context.save_folder}/{now}_visual_analysis"),
-        # f"{know_extract.source_id}_visual_sections"
+        data={
+            "source_id": document.source_id,
+            "local_results": [item.model_dump(mode="json") for item in local_results],
+            "api_results": [item.model_dump(mode="json") for item in api_results],
+        },
+        path=Path(context.lecture_root)
+        / f"knowledge/visual_analysis/{document.source_id}_visual",
     )
 
-    return visual_results
+    save_dict(
+        data=document.model_dump(mode="json"),
+        path=(
+            Path(context.lecture_root) / (f"knowledge/{document.source_id}_know_visual")
+        ),
+    )
+
+    del local_results, api_results
+
+    return document
 
     # visual_results.append(
     #         image_text_conversion(
@@ -367,7 +623,7 @@ def knowledge_improvement(
 
 
 if __name__ == "__main__":
-    run_knowledge_improvement()
+    run_visual_enrichment()
 
     # is True:
     #     chunk = ""

@@ -9,7 +9,7 @@ from src.core.memory import app_session
 from src.core.logger import create_logger
 
 from src.model_lecture.data_resources import (
-    # LectureCourse,
+    LectureCourse,
     # LectureResource,
     LectureResourceType,
     # LectureScript,
@@ -59,7 +59,7 @@ def run_lecture_processing():
 
 def lecture_processing(
     task_list: list[ResourceTask],
-    course_root: Path,
+    course: LectureCourse,
     # context: LectureContext,
     # resource_task: ,
     # folder_path: Path,
@@ -83,7 +83,7 @@ def lecture_processing(
         if not task.actions:
             app_session.logger.info("  --> Found no actions.\n")
 
-        execute_task(task, course_root)
+        execute_task(task, course)
         # _new = lecture_processing(task, course_root)
 
     return

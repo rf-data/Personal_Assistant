@@ -162,6 +162,16 @@ def save_text_file(data, file_name, folder, suffix="md"):
     return
 
 
+def extract_docx(path):
+    doc = Document(path)
+
+    doc_para = []
+    for para in doc.paragraphs:
+        doc_para.append(para.text)
+
+    return doc_para
+
+
 #####################
 # BINARY_FILE_PARSER
 #####################

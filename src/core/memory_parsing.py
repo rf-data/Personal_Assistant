@@ -2,6 +2,8 @@
 import logging
 from logging import Logger
 
+from enum import StrEnum
+
 # from dataclasses import dataclass, field
 from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime
@@ -23,6 +25,11 @@ from src.core.config_parsing import (
 )
 
 
+class PARSER_BACKEND(StrEnum):
+    DIY = "diy"
+    DOCLING = "docling"
+
+
 # @dataclass
 class ParseContext(BaseModel):
     model_config = ConfigDict(
@@ -33,6 +40,8 @@ class ParseContext(BaseModel):
     local_path: Path = Field(default_factory=Path)
     doc_id: str = Field(default_factory=str)
     run_id: str = Field(default_factory=str)
+
+    parser_backend: PARSER_BACKEND | None = None
     doc_kind: Literal["regulatory", "commentSOP", "lecture"] = Field(
         default="regulatory"
     )

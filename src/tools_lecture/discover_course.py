@@ -57,6 +57,7 @@ def parse_lecture_filename(
 
     parts = [part for part in re.split(r"[_\-\s]+", stem) if part]
 
+    lecture_no: int | None = None
     sequence_no: str | None = None
     qualifier: str | None = None
 
@@ -91,6 +92,8 @@ def parse_lecture_filename(
         sequence_no = str(parts[-1]).zfill(3)
         parts = parts[:-1]
 
+        # if parts[0].startswith
+
     # --------------------------------------------------
     # 2. bekannten Qualifier erkennen
     # --------------------------------------------------
@@ -110,7 +113,7 @@ def parse_lecture_filename(
         title_parts = parts
         extra_parts = None
 
-    title = " ".join(title_parts).strip() or None
+    title = "_".join(title_parts).strip() or None
 
     return ParsedLectureFilename(
         stem=stem,
@@ -140,3 +143,4 @@ def parse_lecture_filename(
 
 
 #     return
+# lecture_compile

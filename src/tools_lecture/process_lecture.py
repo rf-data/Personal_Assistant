@@ -8,6 +8,7 @@ from tiktoken import encoding_for_model
 from src.core.config import folder_env_vars
 from src.core.memory_transcribe import AudioContext
 from src.core.memory_parsing import ParseContext
+from src.core.memory_lecture import LectureContext
 from src.core.config_parsing import ParseSettings, GeneralSettings
 from src.core.memory import app_session
 from src.utils.general_helper import make_doc_id_by_content
@@ -42,7 +43,7 @@ from src.tools_transcribe.process_url import acquire_transcript_source
 ALLOWED_TEXT_TYPES = ("pdf", "txt", "md", "docx")
 
 
-def execute_task(task: ResourceTask, course_root: Path) -> None:
+def execute_task(task: ResourceTask, lecture_context: LectureContext) -> None:
     resource = task.resource
 
     # while True:
@@ -54,21 +55,23 @@ def execute_task(task: ResourceTask, course_root: Path) -> None:
     for action in task.actions:
         match resource.resource_type:
             case (
-                "video"
+                "media"
                 # | LectureResourceType.VIDEO
             ):
-                execute_video_action(
-                    resource=resource, action=action, course_root=course_root
+                execute_media_action(
+                    resource=resource,
+                    action=action,
+                    course_root=lecture_context.lecture_root,
                 )
 
             case (
                 # LectureResourceType.SCRIPT
                 # | LectureResourceType.EXAM
                 # | LectureResourceType.MATERIAL
-                "script" | "exam" | "material"
+                "script" | "exam" | "material" | "document"
             ):
                 execute_document_action(
-                    resource=resource, action=action, course_root=course_root
+                    resource=resource, action=action, lecture_context=lecture_context
                 )
 
             case (
@@ -94,8 +97,9 @@ def execute_task(task: ResourceTask, course_root: Path) -> None:
 #     --to json \
 #     --no-ocr \
 #     --enrich-formula \
-#     --output ./docling_test
+#     --output ./data/loviscach
 
+# /home/robfra/0_Portfolio_Projekte/gmp_compliance/data
 # def execute_document_action(
 #     resource: LectureResource,
 #     action: ResourceAction,
@@ -110,21 +114,22 @@ def execute_task(task: ResourceTask, course_root: Path) -> None:
 
 
 def execute_document_action(
-    resource: LectureResource, action: ResourceAction, course_root: Path
+    resource: LectureResource, action: ResourceAction, lecture_context: LectureContext
 ) -> None:
 
     match action:
         case ResourceAction.DOWNLOAD:
-            download_document(resource, course_root)
+            download_document(resource, lecture_context.lecture_root)
 
         case ResourceAction.PARSE_DOCUMENT:
             if resource.local_path is None:
                 raise ValueError(f"No local_path for resource: {resource.title}")
 
             parse_context = build_document_parse_context(
-                resource=resource, course_root=course_root
+                resource=resource, course_root=lecture_context.lecture_root
             )
 
+            parse_context.parser_backend = lecture_context.parser_backend
             # parse_document(resource, course_root)
             parse_document(resource.local_path, parse_context=parse_context)
 
@@ -192,7 +197,7 @@ def build_document_parse_context(resource, course_root) -> ParseContext:
 #     )
 
 
-def execute_video_action(
+def execute_media_action(
     resource: LectureMedia, action: ResourceAction, course_root: Path
 ) -> list[Path]:
 

@@ -37,7 +37,8 @@ from src.model_parsing.base_extractor import BaseExtractor
 
 # from tiktoken import encoding_for_model
 from src.model_parsing.feature_enricher import FeatureEnricher
-from src.utils.dict_helper import save_base_model_as_dict
+from src.utils.dict_helper import save_dict
+# save_base_model_as_dict
 
 # @dataclass
 # class CleaningStats:
@@ -184,7 +185,8 @@ class PDFCleanExtractor(BaseExtractor):
                 f"{self.save_folder}/{self.save_name}_p{page_no}_extracted"
             )
 
-            save_base_model_as_dict(extract, save_path)
+            save_dict(extract.model_dump(mode="json"), save_path)
+            # save_base_model_as_dict(, save_path)
 
             # text_comb = "\n\n".join(text)
             # dh.save_md_file(text_comb, f"{now}_{name_short}_text", f"{data_processed}/extract_from_words")

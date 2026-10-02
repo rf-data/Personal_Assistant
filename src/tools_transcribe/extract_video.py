@@ -34,6 +34,52 @@ def expand_download_window(
     )
 
 
+VIDEO_SUFFIXES = {
+    ".mp4",
+    ".mkv",
+    ".webm",
+    ".mov",
+    ".avi",
+}
+
+
+def prepare_local_visual_sections(
+    media_path: str | Path,
+    download_windows: list[tuple[float, float]],
+) -> list[DownloadedVideoSection]:
+
+    media_path = Path(media_path)
+
+    if not media_path.is_file():
+        raise FileNotFoundError(media_path)
+
+    if media_path.suffix.lower() not in VIDEO_SUFFIXES:
+        raise ValueError(
+            f"Expected a video file for visual verification, but got:\n{media_path}"
+        )
+    sections: list[DownloadedVideoSection] = []
+
+    for idx, (
+        start,
+        end,
+    ) in enumerate(download_windows):
+        sections.append(
+            DownloadedVideoSection(
+                section_id=(f"section_{idx:03d}"),
+                source_start=start,
+                source_end=end,
+                # Important:
+                # timestamps are relative to
+                # the complete local video.
+                download_start=0.0,
+                download_end=end,
+                path=media_path,
+            )
+        )
+
+    return sections
+
+
 def download_visual_sections(
     url: str,
     download_windows: list[tuple[float, float]],
@@ -88,7 +134,8 @@ def download_video_section(
     ensure_dir(output_dir)
     output_template = (
         Path(output_dir)
-        / f"{cfg_download.playlist_name or 'single'}/{section_id}.%(ext)s"
+        # / f"{cfg_download.playlist_name or 'single'}
+        / f"{section_id}.%(ext)s"
     )
 
     ydl_opts = {
@@ -195,16 +242,19 @@ def extract_frame(
     frame_time: FrameTimestamp,
     context: LectureContext,
     frame_id: str,
+    section_name: str,
 ) -> ExtractedFrame:
 
     output_path = (
-        Path(context.save_folder)
-        / f"{context.cfg_download.playlist_name or 'single'}"
+        # Path(context.save_folder)
+        (context.lecture_root / "knowledge")  # src_path.parent
+        # / f"{context.cfg_knowledge.cfg_download.playlist_name or 'single'}"
         / "frames"
+        / section_name
         / (
             f"{section_id}_{frame_id}"
             f"_t{frame_time.source_time:.2f}."
-            f"{context.cfg_screenshot.image_format}"
+            f"{context.cfg_knowledge.cfg_screenshot.image_format}"
         )
     )
 
@@ -241,6 +291,22 @@ def extract_frame(
         )
         raise
 
+    app_session.logger.info(
+        "Frame extraction result | exists=%s | size=%s",
+        output_path.exists(),
+        (output_path.stat().st_size if output_path.exists() else None),
+    )
+
+    if not output_path.is_file():
+        app_session.logger.warning(
+            "Frame extraction produced no file: section=%s | time=%.2f | path=%s",
+            section_id,
+            frame_time.source_time,
+            output_path,
+        )
+
+        return None
+
     return ExtractedFrame(
         section_id=section_id,
         source_time=frame_time.source_time,
@@ -252,6 +318,7 @@ def extract_frame(
 def extract_section_frames(
     section: DownloadedVideoSection,
     context: LectureContext,
+    section_name: str,
     # image_format: str = "png",
 ) -> DownloadedVideoSection:
     """
@@ -267,15 +334,36 @@ def extract_section_frames(
     section.frames = []
 
     for idx, frame_time in enumerate(section.frame_times):
-        section.frames.append(
-            extract_frame(
-                section_id=section.section_id,
-                src_path=section.path,
-                frame_time=frame_time,
-                context=context,
-                frame_id=f"{idx:03d}_regular",
-            )
+        src_time = frame_time.local_time
+        app_session.logger.info(
+            (
+                "Extract frame | "
+                "section=%s | "
+                "source=%.3f | "
+                "download_start=%.3f | "
+                "download_end=%.3f | "
+                "local=%.3f | "
+                # "output=%s"
+            ),
+            section.section_id,
+            src_time,
+            section.download_start,
+            section.download_end,
+            src_time - section.download_start,
+            # output_path,
         )
+
+        frame = extract_frame(
+            section_id=section.section_id,
+            src_path=section.path,
+            frame_time=frame_time,
+            context=context,
+            frame_id=f"{idx:03d}_regular",
+            section_name=section_name,
+        )
+
+        if frame:
+            section.frames.append(frame)
 
     return section
 
@@ -323,14 +411,17 @@ def extract_section_frames(
 
 
 def extract_all_frames(
-    sections: list[DownloadedVideoSection],
-    context: LectureContext,
+    sections: list[DownloadedVideoSection], context: LectureContext, section_name: str
 ) -> list[DownloadedVideoSection]:
 
     for section in sections:
-        add_frame_timestamps(section, interval=context.cfg_screenshot.f_times_interval)
+        add_frame_timestamps(
+            section, interval=context.cfg_knowledge.cfg_screenshot.f_times_interval
+        )
 
-        extract_section_frames(section=section, context=context)
+        extract_section_frames(
+            section=section, context=context, section_name=section_name
+        )
 
     return sections
 
@@ -370,14 +461,31 @@ def select_distinct_frames(
             be extracted because adjacent frames differ strongly.
     """
 
-    if not frames:
+    valid_frames = []
+
+    for frame in frames:
+        path = Path(frame.path)
+
+        if not path.is_file():
+            app_session.logger.warning(
+                "Frame file missing -> skipping: section=%s | time=%.2f | path=%s",
+                frame.section_id,
+                frame.source_time,
+                path,
+            )
+            continue
+
+        valid_frames.append(frame)
+
+    if not valid_frames:
+        app_session.logger.warning("No valid frame files available.")
         return FrameSelectionResult(
             selected_frames=[],
             additional_frame_times=[],
         )
 
     frames = sorted(
-        frames,
+        valid_frames,
         key=lambda frame: frame.source_time,
     )
 
@@ -389,13 +497,17 @@ def select_distinct_frames(
     last_selected_hash = imagehash.phash(Image.open(last_selected.path))
 
     previous_frame = frames[0]
-    previous_hash = last_selected_hash
+    # previous_hash = last_selected_hash
+    with Image.open(frames[0].path) as img:
+        previous_hash = imagehash.phash(img)
 
     distances_adjacent = []
     distances_selected = []
 
     for frame in frames[1:]:
-        current_hash = imagehash.phash(Image.open(frame.path))
+        # current_hash = imagehash.phash(Image.open(frame.path))
+        with Image.open(frame.path) as img:
+            current_hash = imagehash.phash(img)
 
         # Compare adjacent sampled frames.
         adjacent_distance = current_hash - previous_hash
@@ -449,6 +561,7 @@ def select_distinct_frames(
 def extract_additional_frames(
     section: DownloadedVideoSection,
     add_frames: list[float],
+    section_name: str,
     # FrameTimestamp
     context: LectureContext,
 ) -> list[ExtractedFrame]:
@@ -478,17 +591,45 @@ def extract_additional_frames(
         frame_time = FrameTimestamp(
             source_time=source_time, local_time=round(local_time, 3)
         )
+
+        src_time = frame_time.local_time
+        app_session.logger.info(
+            (
+                "Extract frame | "
+                "section=%s | "
+                "source=%.3f | "
+                "download_start=%.3f | "
+                "download_end=%.3f | "
+                "local=%.3f | "
+                # "output=%s"
+            ),
+            section.section_id,
+            src_time,
+            section.download_start,
+            section.download_end,
+            src_time - section.download_start,
+            # output_path,
+        )
+
         frame = extract_frame(
             section_id=section.section_id,
             src_path=section.path,
             frame_time=frame_time,
             context=context,
             frame_id=f"additional_{idx:03d}",
+            section_name=section_name,
         )
 
         # defensive check
+        if not frame:
+            app_session.logger.info(
+                "No additional frame #%s added from '%s'", idx, section.path
+            )
+            continue
+
         if not frame.path.is_file():
             raise FileNotFoundError(f"Additional frame was not created: {frame.path}")
+
         new_frames.append(frame)
 
     return new_frames

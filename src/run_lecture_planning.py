@@ -14,6 +14,7 @@ from src.utils.path_helper import build_file_index
 
 from src.model_lecture.data_resources import (
     LectureCourse,
+    LectureResourceUnion,
     ResourceTask,
 )
 
@@ -111,27 +112,44 @@ ACTIONS:\t{task.actions}
 #             extract_visual_context(resource)
 
 
-def plan_course_tasks(lecture_info, block_ids: list[str], file_index):
+def plan_course_tasks(
+    resources: list[LectureResourceUnion],
+    file_index: list[Path],
+    block_ids: list[str] | None = None,
+):
 
     # block_ids = [f"{block_id:02d}" for block_id in range(1, 29)]
 
-    task_list: list[ResourceTask] = []
+    # task_list: list[ResourceTask] = []
 
-    if not block_ids:
-        app_session.logger.warning("'block_ids' is empty or 'None' -> set to ['1']")
-        block_ids = ["1"]
+    if block_ids:
+        resources = [
+            resource
+            for resource in resources
+            if any(block_id in resource.lecture_blocks for block_id in block_ids)
+        ]
 
-    for block_id in block_ids:
-        task_list.extend(
-            lecture_planning(
-                lecture_info=lecture_info,
-                # context=
-                block_id=block_id,
-                file_index=file_index,
-            )
+        # for block_id in block_ids:
+        #     task_list.extend(
+        #         lecture_planning(
+        #             lecture_info=lecture_info,
+        #             # context=
+        #             block_id=block_id,
+        #             file_index=file_index,
+        #         )
+        #     )
+
+    return [
+        task
+        for task in build_resource_tasks(
+            resources=resources,
+            file_index=file_index,
         )
+        if task.actions
+    ]
 
-    return [task for task in task_list if task.actions]
+
+# task for task in task_list if task.actions
 
 
 def lecture_planning(
