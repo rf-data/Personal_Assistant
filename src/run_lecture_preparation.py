@@ -191,13 +191,13 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
         )
 
         links = classify_links(links)
-        print(
-            f"Block {block_id}: "
-            f"videos={len(links['video'])}, "
-            f"scripts={len(links['script'])}, "
-            f"material={len(links['material'])}, "
-            f"other={len(links['other'])}"
-        )
+        # print(
+        #     f"Block {block_id}: "
+        #     f"videos={len(links['video'])}, "
+        #     f"scripts={len(links['script'])}, "
+        #     f"material={len(links['material'])}, "
+        #     f"other={len(links['other'])}"
+        # )
 
         scripts = extract_scripts(links["script"])
         scripts = deduplicate_scripts(scripts)
@@ -269,13 +269,13 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
         elements=["link_node"],
     )
 
-    print("\nCOURSE LINKS:")
-    for key, link in course_links.items():
-        print(
-            key,
-            extract_link_title(link),
-            link.get("href"),
-        )
+    # print("\nCOURSE LINKS:")
+    # for key, link in course_links.items():
+    #     print(
+    #         key,
+    #         extract_link_title(link),
+    #         link.get("href"),
+    #     )
 
     course_materials = extract_course_materials(
         links=course_links,
@@ -309,17 +309,17 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
 
     save_path = f_path.with_stem(f"{f_name}_lectures_new")
 
-    print("\nFINAL RESOURCES")
-    print("videos:", len(all_videos))
-    print("scripts:", len(all_scripts))
-    print("materials:", len(all_materials))
+    # print("\nFINAL RESOURCES")
+    # print("videos:", len(all_videos))
+    # print("scripts:", len(all_scripts))
+    # print("materials:", len(all_materials))
 
-    for material in all_materials:
-        print(
-            "MATERIAL:",
-            material.title,
-            material.source_url,
-        )
+    # for material in all_materials:
+    #     print(
+    #         "MATERIAL:",
+    #         material.title,
+    #         material.source_url,
+    #     )
 
     resource_data = {
         "videos": [vid.model_dump(mode="json") for vid in all_videos],

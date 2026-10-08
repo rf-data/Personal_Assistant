@@ -27,8 +27,13 @@ def build_base_ydl_opts(context) -> dict:
         "retries": cfg.retries,
     }
 
+    if extractor_args:
+        opts["extractor_args"] = extractor_args
+
     if cfg.cookie_file and cfg.cookie_file.exists():
         opts["cookiefile"] = str(cfg.cookie_file)
+
+    print("YT-DLP BASE OPTS:", opts)
 
     return opts
 
