@@ -15,7 +15,7 @@ def build_base_ydl_opts(context) -> dict:
         "retries": cfg.retries,
         "extractor_args": {
             "youtube": {
-                "player_client": [cfg.retries.player_client],
+                "player_client": [cfg.player_client],
             },
             "youtubepot-bgutilhttp": {
                 "base_url": [cfg.pot_provider_url],
