@@ -195,15 +195,6 @@ def load_organizer_env_vars():
     return OrganizerEnvVars()
 
 
-# scp gmp_compliance/configuration/context_lecture_compile.json \
-#     root@188.245.182.180:/srv/personal-assistant/data
-
-# scp -r /mnt/chromeos/GoogleDrive/MyDrive/1_Projekte_Datensätze/1_Projekte/00_GMP_Compliance/data/lectures/loviscach/info_2_python \
-#   root@188.245.182.180:/srv/personal-assistant/data/lectures/loviscach/
-# gmp_compliance/configuration/context_know_extract.json
-# gmp_compliance/configuration/context_lecture_compile.json
-
-
 # ------------------------------------
 # FILE_TYPE SPECIFIC PARSING SETTINGS
 # ------------------------------------

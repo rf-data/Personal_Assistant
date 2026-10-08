@@ -14,6 +14,7 @@ from src.model_lecture.data_resources import (
     # LectureResource,
     LectureScript,
     LectureMedia,
+    LectureMaterial,
     # RawLectureBlock
 )
 from src.tools_lecture.prepare_lecture import (
@@ -23,12 +24,14 @@ from src.tools_lecture.prepare_lecture import (
     deduplicate_videos,
     enrich_resource_metadata,
     # enrich_urls,
+    extract_link_title,
     # extract_scripts,
     filter_html_elements,
     # lecture_block_extraction,
     # resolve_video_url,
     validate_lecture_resources,
 )
+
 from src.tools_lecture.prepare_loviscach import (
     assign_video_blocks_by_order,
     enrich_urls,
@@ -179,7 +182,7 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
     all_other = []
 
     for block in lecture_blocks:
-        # block_id = block["block_id"]
+        block_id = block["block_id"]
         block_node = block["node"]
 
         links = filter_html_elements(
@@ -188,15 +191,26 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
         )
 
         links = classify_links(links)
+        print(
+            f"Block {block_id}: "
+            f"videos={len(links['video'])}, "
+            f"scripts={len(links['script'])}, "
+            f"material={len(links['material'])}, "
+            f"other={len(links['other'])}"
+        )
+
+        scripts = extract_scripts(links["script"])
+        scripts = deduplicate_scripts(scripts)
+
+        for script in scripts:
+            if block_id not in script.lecture_blocks:
+                script.lecture_blocks.append(block_id)
 
         videos = enrich_urls(links["video"])
 
-        scripts = extract_scripts(links["script"])
-
-        scripts = deduplicate_scripts(scripts)
-
         for video in videos:
-            # video.lecture_blocks = [block_id]
+            if block_id not in video.lecture_blocks:
+                video.lecture_blocks.append(block_id)
 
             if video.media_url:
                 continue
@@ -207,10 +221,14 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
                 video.media_url = resolved_url
                 video.media_id = extract_media_id(resolved_url)
 
+        for script in scripts:
+            if block_id not in script.lecture_blocks:
+                script.lecture_blocks.append(block_id)
+
         all_videos.extend(videos)
         all_scripts.extend(scripts)
 
-        all_materials.extend(links["material"].values())
+        # all_materials.extend(links["material"].values())
 
         all_other.extend(links["other"].values())
 
@@ -224,7 +242,63 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
 
     all_scripts = [enrich_resource_metadata(script) for script in all_scripts]
 
-    all_materials = [enrich_resource_metadata(material) for material in all_materials]
+    # all_materials = [enrich_resource_metadata(material) for material in all_materials]
+
+    all_links = filter_html_elements(
+        block_node,
+        elements,
+    )
+    all_links = classify_links(all_links)
+
+    known_urls = {
+        resource.source_url
+        for resource in [
+            *all_videos,
+            *all_scripts,
+            # *all_materials,
+        ]
+        if resource.source_url
+    }
+
+    # -------------------------------------------------
+    # Course-wide resources
+    # -------------------------------------------------
+
+    course_links = filter_html_elements(
+        info_dict,
+        elements=["link_node"],
+    )
+
+    print("\nCOURSE LINKS:")
+    for key, link in course_links.items():
+        print(
+            key,
+            extract_link_title(link),
+            link.get("href"),
+        )
+
+    course_materials = extract_course_materials(
+        links=course_links,
+        known_urls=known_urls,
+    )
+
+    all_materials.extend(course_materials)
+    # course_resources = []
+
+    # for link in all_links["material"].values():
+    #     href = link.get("href")
+
+    #     if not href or href in known_urls:
+    #         continue
+
+    #     course_resources.append(
+    #         LectureMaterial(
+    #             title=extract_link_title(link),
+    #             source_url=href,
+    #             resource_kind="supplement",
+    #             lecture_blocks=[],
+    #         )
+    #     )
 
     # exams = [
     #     enrich_resource_metadata(exam)
@@ -234,6 +308,18 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
     f_name = "_".join(f_path.stem.split("_")[:-1])
 
     save_path = f_path.with_stem(f"{f_name}_lectures_new")
+
+    print("\nFINAL RESOURCES")
+    print("videos:", len(all_videos))
+    print("scripts:", len(all_scripts))
+    print("materials:", len(all_materials))
+
+    for material in all_materials:
+        print(
+            "MATERIAL:",
+            material.title,
+            material.source_url,
+        )
 
     resource_data = {
         "videos": [vid.model_dump(mode="json") for vid in all_videos],
@@ -249,6 +335,42 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
     save_dict(data=resource_data, path=save_path)
 
     return resource_data
+
+
+def extract_course_materials(
+    links: dict[str, dict],
+    known_urls: set[str],
+) -> list[LectureMaterial]:
+
+    resources = []
+
+    for link in links.values():
+        href = link.get("href", "")
+        title = extract_link_title(link).strip()
+
+        if not href:
+            continue
+
+        if href in known_urls:
+            continue
+
+        href_lower = href.lower()
+
+        is_course_material = "/material/" in href_lower or "/praktikum/" in href_lower
+
+        if not is_course_material:
+            continue
+
+        resources.append(
+            LectureMaterial(
+                title=title,
+                source_url=href,
+                resource_kind="supplement",
+                lecture_blocks=[],
+            )
+        )
+
+    return resources
 
 
 if __name__ == "__main__":

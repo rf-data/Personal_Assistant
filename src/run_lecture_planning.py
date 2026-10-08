@@ -34,7 +34,7 @@ def run_lecture_planning() -> list[ResourceTask]:
     app_session.timestamp = datetime.today().strftime("%Y-%m-%d")
     app_session.logger = create_logger(
         name=context.logger_name,  # "RF_LOG"),
-        file_name=context.logger_f_name,  #  "rf_log")
+        file_name=f"{context.logger_f_name}_{app_session.timestamp}",  #  "rf_log")
     )
 
     course = LectureCourse(
@@ -126,7 +126,10 @@ def plan_course_tasks(
         resources = [
             resource
             for resource in resources
-            if any(block_id in resource.lecture_blocks for block_id in block_ids)
+            if (
+                not resource.lecture_blocks
+                or any(block_id in resource.lecture_blocks for block_id in block_ids)
+            )
         ]
 
         # for block_id in block_ids:

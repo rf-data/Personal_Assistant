@@ -100,7 +100,7 @@ def classify_resource_file(
     # stem = path.stem.lower()
 
     if suffix == "json":
-        if path.stem.endswith("_parsed"):
+        if path.stem.endswith("_parsed") or path.stem.endswith("_docling"):
             return "parsed_document"
 
         elif path.stem.endswith("_know_extract_results"):
@@ -124,11 +124,14 @@ def classify_resource_file(
     if suffix in SUPPORTED_AUDIO_SUFFIXES:
         return "audio"
 
-    if suffix in {"pdf", "docx", "doc"}:
+    if suffix in {"pdf", "docx", "doc", "html", "htm"}:
         return "document"
 
     if suffix in {"jpg", "jpeg", "png", "webp"}:
         return "image"
+
+    if suffix in {"zip"}:
+        return "archive"
 
     if suffix in {"md", "txt"}:
         return "text"
@@ -168,6 +171,13 @@ def get_transcript_actions(
         )
         return [ResourceAction.TRANSCRIBE]
 
+    if "archive" in file_types:
+        resource.local_path = get_path_by_type(
+            paths,
+            "archive",
+        )
+        return [ResourceAction.DOWNLOAD]
+
     return [ResourceAction.DOWNLOAD]
 
 
@@ -185,7 +195,7 @@ def get_knowledge_actions(
 
         return [ResourceAction.DOWNLOAD]
 
-    file_types = {classify_resource_file(path) for path in paths}
+    # file_types = {classify_resource_file(path) for path in paths}
 
     return [ResourceAction.DOWNLOAD]
 
@@ -204,7 +214,7 @@ def get_visual_context_actions(
 
         return [ResourceAction.DOWNLOAD]
 
-    file_types = {classify_resource_file(path) for path in paths}
+    # file_types = {classify_resource_file(path) for path in paths}
 
     return [ResourceAction.DOWNLOAD]
 
@@ -223,7 +233,7 @@ def get_frame_actions(
 
         return [ResourceAction.DOWNLOAD]
 
-    file_types = {classify_resource_file(path) for path in paths}
+    # file_types = {classify_resource_file(path) for path in paths}
 
     return [ResourceAction.DOWNLOAD]
 
@@ -240,6 +250,23 @@ def get_path_by_type(
     return None
 
 
+def get_archive_actions(
+    resource: LectureResource, file_index: list[Path]
+) -> list[ResourceAction]:
+
+    paths = get_resource_path(
+        resource,
+        file_index=file_index,
+    )
+
+    if not paths:
+        app_session.logger.info("Found no document file for %s", resource.source_url)
+
+        return [ResourceAction.DOWNLOAD]
+
+    return []
+
+
 def get_document_actions(
     resource: LectureResource, file_index: list[Path]
 ) -> list[ResourceAction]:
@@ -253,6 +280,11 @@ def get_document_actions(
         app_session.logger.info("Found no document file for %s", resource.source_url)
 
         return [ResourceAction.DOWNLOAD]
+
+    file_types = {classify_resource_file(path) for path in paths}
+
+    if "parsed_document" in file_types:
+        return []
 
     document_path = get_path_by_type(
         paths,
@@ -304,7 +336,7 @@ def get_chunk_actions(
 
         return [ResourceAction.DOWNLOAD]
 
-    file_types = {classify_resource_file(path) for path in paths}
+    # file_types = {classify_resource_file(path) for path in paths}
 
     return [ResourceAction.DOWNLOAD]
 
@@ -407,5 +439,8 @@ def get_required_actions(
             # | LectureResourceType.NOTEBOOK
         ):
             return get_knowledge_actions(resource, file_index=file_index)
+
+        case "archive":
+            return get_archive_actions(resource, file_index=file_index)
 
     return []

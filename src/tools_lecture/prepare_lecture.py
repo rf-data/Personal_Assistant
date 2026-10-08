@@ -250,6 +250,8 @@ def filter_html_elements(html_doc: RawDocument, elements: list[str] | None = Non
     elements_filt: dict[str, dict] = {}
     match_idx = 0
 
+    seen_links: set[str] = set()
+
     def walk(node) -> None:
         nonlocal match_idx
 
@@ -257,20 +259,70 @@ def filter_html_elements(html_doc: RawDocument, elements: list[str] | None = Non
 
         if node_type in elements:
             if isinstance(node, BaseModel):
-                elements_filt[f"element_{match_idx}"] = node.model_dump(mode="python")
+                node_dict = node.model_dump(mode="python")
             else:
-                elements_filt[f"element_{match_idx}"] = node
+                node_dict = node
+
+            # Links anhand href deduplizieren
+            if node_type in {
+                "link_node",
+                "link",
+            }:
+                href = node_dict.get("href")
+
+                if href:
+                    if href in seen_links:
+                        return
+
+                    seen_links.add(href)
+
+            elements_filt[f"element_{match_idx}"] = node_dict
 
             match_idx += 1
 
-        for child_key in ("elements", "inline_elements"):
-            children = get_value(node, child_key, [])
+        for child_key in (
+            "elements",
+            "inline_elements",
+        ):
+            children = get_value(
+                node,
+                child_key,
+                [],
+            )
+
             if not children:
                 continue
 
             for child in children:
-                if isinstance(child, (BaseModel, dict)):
+                if isinstance(
+                    child,
+                    (BaseModel, dict),
+                ):
                     walk(child)
+
+        # if node_type in elements:
+        #     if isinstance(node, BaseModel):
+        #         node_dict = node.model_dump(
+        #             mode="python"
+        #         )
+        #     else:
+        #         node_dict = node
+
+        #     if isinstance(node, BaseModel):
+        #         elements_filt[f"element_{match_idx}"] = node.model_dump(mode="python")
+        #     else:
+        #         elements_filt[f"element_{match_idx}"] = node
+
+        #     match_idx += 1
+
+        # for child_key in ("elements", "inline_elements"):
+        #     children = get_value(node, child_key, [])
+        #     if not children:
+        #         continue
+
+        #     for child in children:
+        #         if isinstance(child, (BaseModel, dict)):
+        #             walk(child)
 
     walk(html_doc)
 
@@ -295,7 +347,14 @@ def classify_links(links: dict[str, dict]) -> dict[str, dict]:
         elif "skript" in safe_title.lower():  #  ==
             script_links[key] = link
 
-        elif "material" in safe_title.lower() or href.lower().endswith(".zip"):
+        elif (
+            "/material/" in href.lower()
+            or "/praktikum/" in href.lower()
+            or href.lower().endswith(".zip")
+        ):
+            material_links[key] = link
+
+        elif "github.com/" in href.lower():
             material_links[key] = link
 
         else:

@@ -209,7 +209,9 @@ def parse_document_docling(
         )
 
     save_text_file(
-        doc.export_to_dict(), file_name=f"{file_path.stem}_docling", folder=save_folder
+        doc.export_to_markdown(),
+        file_name=f"{file_path.stem}_docling",
+        folder=save_folder,
     )
     # with md_path.open("w", encoding="utf-8"):
 

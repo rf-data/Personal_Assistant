@@ -50,12 +50,18 @@ def contains_lecture_resources(
             return
 
         href = get_value(current, "href", "")
+        # text = get_value(current, "text", "")
 
         if href:
+            href_lower = href.lower()
+            title = extract_link_title(current).lower()
+
             if (
-                "/videos/v.php" in href
-                or "/Skript/" in href
-                or href.lower().endswith(".pdf")
+                "/videos/v.php" in href_lower
+                or "/skript/" in href_lower
+                # or "/material/" in href_lower
+                or href_lower.endswith(".pdf")
+                or "skript" in title
             ):
                 found = True
                 return
@@ -85,12 +91,48 @@ def get_lecture_block_nodes(
 
     blocks = []
 
-    for element in get_value(table, "inline_elements", []):
-        if get_value(element, "leaf_type") != "other_node":
-            continue
+    def walk(node) -> None:
 
-        if contains_lecture_resources(element):
-            blocks.append(element)
+        children = get_value(
+            node,
+            "inline_elements",
+            [],
+        )
+
+        if not children:
+            return
+
+        child_resource_nodes = [
+            child
+            for child in children
+            if (
+                isinstance(child, (BaseModel, dict))
+                and get_value(child, "leaf_type") == "other_node"
+                and contains_lecture_resources(child)
+            )
+        ]
+
+        if (
+            get_value(node, "leaf_type") == "other_node"
+            and contains_lecture_resources(node)
+            and not child_resource_nodes
+        ):
+            blocks.append(node)
+            return
+
+        for child in children:
+            if isinstance(child, (BaseModel, dict)):
+                walk(child)
+
+    walk(table)
+
+    # return blocks
+    # for element in get_value(table, "inline_elements", []):
+    #     if get_value(element, "leaf_type") != "other_node":
+    #         continue
+
+    #     if contains_lecture_resources(element):
+    #         blocks.append(element)
 
     return blocks
 
@@ -114,12 +156,19 @@ def lecture_block_extraction(
         )
 
     row_nodes = get_lecture_block_nodes(table)
+    print(f"Detected lecture rows: {len(row_nodes)}")
 
     blocks = []
 
     for idx, block_node in enumerate(row_nodes, start=1):
         # block_id = f"{block_idx:02d}"
         block_id = infer_block_id(block_node, fallback_idx=idx)
+
+        print(
+            f"Row {idx:02d} -> "
+            f"block_id={block_id} | "
+            f"{get_value(block_node, 'text', '')[:100]}"
+        )
 
         blocks.append(
             {
@@ -136,17 +185,27 @@ def infer_block_id(
     fallback_idx: int,
 ) -> str:
 
+    block_text = get_value(
+        block_node,
+        "text",
+        "",
+    ).lower()
+
+    # Klausur-/Prüfungsblock
+    if "klausurvorbereitung" in block_text or "prüfungsvorbereitung" in block_text:
+        return "exam"
+
     links = filter_html_elements(
         block_node,
         elements=["link_node", "link"],
     )
 
-    # (1.)
+    # (1.) scripts files
     for link in links.values():
         href = link.get("href", "")
 
         match = re.search(
-            r"/Skript/(\d{2})_",
+            r"/(?:Skript|Skripte)/(\d{2})_",
             href,
             flags=re.IGNORECASE,
         )
@@ -154,7 +213,7 @@ def infer_block_id(
         if match:
             return match.group(1)
 
-    # (2.)
+    # (2.) media files
     for link in links.values():
         href = link.get("href", "")
 
@@ -263,9 +322,12 @@ def assign_video_blocks_by_order(
         if direct_block:
             current_block = direct_block
 
-            if direct_block not in video.lecture_blocks:
+            if not video.lecture_blocks:
                 video.lecture_blocks.append(direct_block)
 
+            continue
+
+        if video.lecture_blocks:
             continue
 
         # Nur explizit buchstabenbasierte alte Erklärvideos
@@ -275,7 +337,8 @@ def assign_video_blocks_by_order(
 
         block_id = current_block or next_blocks[idx]
 
-        if block_id and block_id not in video.lecture_blocks:
+        if block_id:
+            # and block_id not in video.lecture_blocks:
             video.lecture_blocks.append(block_id)
 
     return videos
@@ -384,6 +447,7 @@ def enrich_urls(urls: dict[str, dict]) -> list[LectureMedia]:
                 source_url=href,
                 youtube_url=youtube_url,
                 media_id=media_id,
+                media_type="video",
                 duration=None,
                 # source_url="",
                 # youtube_url="",

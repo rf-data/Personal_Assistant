@@ -9,8 +9,12 @@ from src.core.config import folder_env_vars
 from src.core.memory import app_session
 from src.core.logger import create_logger
 
-from src.model_lecture.data_resources import LectureCourse, ResourceTask
-
+from src.model_lecture.data_resources import (
+    LectureCourse,
+    LectureMedia,
+    LectureScript,
+    ResourceTask,
+)
 from src.tools_lecture.assemble_course import build_lecture_course_from_folder
 from src.run_lecture_planning import plan_course_tasks
 from src.utils.dict_helper import load_dict, save_dict
@@ -30,7 +34,9 @@ def main(context_name: str = typer.Option(..., "--context", "-c")):
     )
 
 
-def run_lecture_compilation(context_name: str) -> None:
+def run_lecture_compilation(
+    context_name: str,
+) -> tuple[LectureCourse, list[ResourceTask]]:
 
     context_path = folder_env_vars.config_dir / f"context_{context_name}"
     context = load_dict(context_path, LectureContext)
@@ -41,37 +47,18 @@ def run_lecture_compilation(context_name: str) -> None:
         file_name=f"{context.logger_f_name}_{app_session.timestamp}",  #  "rf_log")
     )
 
-    # root=(folder_env_vars. / "")
-    # sections: list[LectureSection] = Field(default_factory=list)
-    # resources: list[LectureResource] = Field(default_factory=list)
-    # unassigned_resources: list[LectureResource] = Field(default_factory=list)
-    # examen: list = Field(default_factory=list)
-
-    # course_root = (
-    #     folder_env_vars.data_lectures
-    #     / context.provider  # loviscach"
-    #     / context.course_id  # "mathe_1"
-    # )
+    context.lecture_root = (
+        folder_env_vars.data_lectures
+        / context.provider  # loviscach"
+        / context.course_id  # "mathe_1"
+    )
 
     return lecture_compilation(context)  # , course)
 
-    # info_path = (
-    #         folder_env_vars.lectures_data / \
-    #             f"{context.provider}/"\
-    #             f"{context.course_id}/"\
-    #             "metadata/course_info.json"
-    #             )
 
-    # if info_path.exists:
-    #     course = load_dict(
-    #             path=info_path,
-    #             cls=LectureCourse
-    #             )
-
-    # else:
-
-
-def lecture_compilation(context: LectureContext):
+def lecture_compilation(
+    context: LectureContext,
+) -> tuple[LectureCourse, list[ResourceTask]]:
     # , course: LectureCourse):
 
     course = prepare_course(context)
@@ -86,7 +73,6 @@ def lecture_compilation(context: LectureContext):
 
 
 def prepare_course(context: LectureContext) -> LectureCourse:
-    # tuple[LectureCourse, dict]:
 
     match context.prepare_lecture:
         case "from_info":
@@ -97,20 +83,37 @@ def prepare_course(context: LectureContext) -> LectureCourse:
                 source_url=context.source_url,
             )
 
-            # info_path = (
-            #     course.root
-            #     / f"metadata"
-            #     / f"{course.provider}_{course.course_id}_info.json"
-            # )
+            info_path = (
+                context.lecture_root
+                / f"metadata"
+                / f"{course.provider}_{course.course_id}_info.json"
+            )
 
-            # if not info_path.exists():
-            #     raise ValueError(f"Info_file does NOT exists: {info_path}")
+            if not info_path.exists():
+                raise ValueError(f"Info_file does NOT exists: {info_path}")
 
-            # # for path in info_paths:
-            # lecture_info = lecture_preparation(f_path=info_path,
-            #    elements=context.extract_elements)
+            # for path in info_paths:
+            prep_dict = lecture_preparation(
+                f_path=info_path, elements=context.extract_elements
+            )
 
-            # lecture_info: list[int] = []
+            resources = []
+
+            for data in prep_dict.get("scripts", []):
+                resources.append(LectureScript.model_validate(data))
+
+            for data in prep_dict.get("videos", []):
+                resources.append(LectureMedia.model_validate(data))
+
+            course.resources = resources
+
+            course.lecture_blocks = sorted(
+                {
+                    block_id
+                    for resource in resources
+                    for block_id in resource.lecture_blocks
+                }
+            )
 
             # for key, resources in prep_dict.items():
             #     if key in ("scripts", "videos"):
@@ -123,10 +126,7 @@ def prepare_course(context: LectureContext) -> LectureCourse:
 
         case "from_folder":
             course = build_lecture_course_from_folder(
-                input_folder=(
-                    folder_env_vars.data_lectures
-                    / f"{context.provider}/{context.course_id}"
-                ),
+                input_folder=context.lecture_root,
                 course_title=context.course_title,
             )
 
@@ -154,12 +154,6 @@ def process_course_until_complete(
     *,
     max_cycles: int = 20,
 ) -> list[ResourceTask]:
-    # save_dict(
-    #         data=[
-    #             task.model_dump(mode="json") for task in task_list
-    #             ],
-    #         path=(course.root / "metadata" / f"{course.course_id}_tasks")
-    #     )
 
     context.lecture_root = course.root
 
@@ -245,47 +239,6 @@ def save_task_list(
     )
 
     return None
-
-    # task_state = Counter()
-    # n_states_old = sum(list(task_state.values()))
-    # state_types_old = list(task_state.keys())
-
-    # n_states: int | None = None
-    # state_types: list | None = None
-
-    # while (
-    #     (
-    #     not state_types and not n_states
-    #     ) or (
-    #     # state_types and state_types_new
-    #     # and
-    #     n_states and n_states_old > n_states
-    #     ) or (
-    #     state_types and state_types != state_types_old
-    #     )
-    # ):
-
-    #     lecture_processing(task_list)
-
-    #     save_dict(
-    #             data=[
-    #                 task.model_dump(mode="json") for task in task_list
-    #                 ],
-    #             path=(course.root / "metadata" / f"{course.course_id}_tasks")
-    #             )
-
-    #     task_state = Counter()
-    #     n_states = sum(list(task_state.values()))
-    #     state_types = list(task_state.keys())
-
-    #     n_states_new: int | None = None
-    #     state_types_new: list | None = None
-
-    # return None
-
-
-# if __name__ == "__main__":
-#     run_lecture_compilation()
 
 
 if __name__ == "__main__":

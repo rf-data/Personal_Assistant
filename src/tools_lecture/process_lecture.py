@@ -40,7 +40,7 @@ from src.tools_transcribe.process_url import acquire_transcript_source
 # audio_transcription
 
 
-ALLOWED_TEXT_TYPES = ("pdf", "txt", "md", "docx")
+ALLOWED_TEXT_TYPES = ("pdf", "txt", "md", "docx", "html", "htm")
 
 
 def execute_task(task: ResourceTask, lecture_context: LectureContext) -> None:
@@ -220,7 +220,7 @@ def execute_media_action(
     match action:
         case ResourceAction.DOWNLOAD:
             audio_context.source = "url"
-            audio_context.url = resource.youtube_url or resource.source_url
+            audio_context.url = resource.media_url or resource.source_url
 
             # transcript_paths = audio_transcription(audio_context)
             source_result = acquire_transcript_source(audio_context)
