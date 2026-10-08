@@ -9,18 +9,22 @@ from src.core.memory import app_session
 def build_base_ydl_opts(context) -> dict:
     cfg = context.cfg_download
 
+    extractor_args = {}
+
+    if cfg.player_client:
+        extractor_args["youtube"] = {
+            "player_client": [cfg.player_client],
+        }
+
+    if cfg.pot_provider_url:
+        extractor_args["youtubepot-bgutilhttp"] = {
+            "base_url": [cfg.pot_provider_url],
+        }
+
     opts = {
         "noplaylist": cfg.no_playlist,
         "socket_timeout": cfg.socket_timeout,
         "retries": cfg.retries,
-        "extractor_args": {
-            "youtube": {
-                "player_client": [cfg.player_client],
-            },
-            "youtubepot-bgutilhttp": {
-                "base_url": [cfg.pot_provider_url],
-            },
-        },
     }
 
     if cfg.cookie_file and cfg.cookie_file.exists():

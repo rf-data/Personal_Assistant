@@ -15,6 +15,8 @@ from src.model_transcribe.data_transcribe import (
 from src.tools_transcribe.extract_resources import download_subtitles
 from src.tools_transcribe.extract_audio import download_audio
 
+from src.utils.yt_helper import build_base_ydl_opts
+
 
 def process_youtube_video(context: AudioContext) -> DownloadResult:
 
@@ -76,14 +78,14 @@ def process_youtube_video(context: AudioContext) -> DownloadResult:
     files = download_audio(
         context,
         format_override="bestaudio[ext=m4a]/bestaudio/best",
-        extra_ydl_opts={
-            # "cookiefile": str(cookie_file),
-            "extractor_args": {
-                "youtube": {
-                    "player_client": ["default", "web_embedded"],
-                },
-            },
-        },
+        extra_ydl_opts=build_base_ydl_opts(context),
+        # "cookiefile": str(cookie_file),
+        #     "extractor_args": {
+        #         "youtube": {
+        #             "player_client": ["default", "web_embedded"],
+        #         },
+        #     },
+        # },
     )
 
     if files:
@@ -101,14 +103,7 @@ def process_youtube_video(context: AudioContext) -> DownloadResult:
     files = download_audio(
         context,
         format_override="bestaudio[abr<=96]/bestaudio[abr<=128]/worstaudio",
-        extra_ydl_opts={
-            # "cookiefile": str(cookie_file),
-            "extractor_args": {
-                "youtube": {
-                    "player_client": ["default", "web_embedded"],
-                },
-            },
-        },
+        extra_ydl_opts=build_base_ydl_opts(context),
     )
 
     if files:
@@ -125,21 +120,12 @@ def process_youtube_video(context: AudioContext) -> DownloadResult:
 
     files = []
 
-    cookie_file = folder_env_vars.yt_cookies
+    # cookie_file = folder_env_vars.yt_cookies
 
-    if cookie_file and cookie_file.exists():
-        files = download_audio(
-            context,
-            format_override="18",
-            extra_ydl_opts={
-                "cookiefile": str(cookie_file),
-                "extractor_args": {
-                    "youtube": {
-                        "player_client": ["default", "web_embedded"],
-                    },
-                },
-            },
-        )
+    # if cookie_file and cookie_file.exists():
+    files = download_audio(
+        context, format_override="18", extra_ydl_opts=build_base_ydl_opts(context)
+    )
 
     if files:
         return DownloadResult(
@@ -192,8 +178,13 @@ def inspect_yt_file(context: AudioContext) -> dict | None:
     if context.url is None:
         raise ValueError("No URL provided.")
 
+    ydl_opts = {
+        "skip_download": True,
+        **build_base_ydl_opts(context),
+    }
+
     try:
-        with YoutubeDL({"skip_download": True}) as ydl:
+        with YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(context.url, download=False)
 
             if info is None:
