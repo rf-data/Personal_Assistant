@@ -40,6 +40,56 @@ class ActionStatus(Enum):
     SKIPPED = "skipped"
 
 
+class ResourceKind(Enum):
+    FOUNDATION = (
+        "foundation",
+        (
+            "Primary course material that is part of the core learning path "
+            "and is expected to contain knowledge required to understand "
+            "the course or lecture."
+        ),
+        (
+            "Use for resources that form the main instructional content, "
+            "such as primary lecture videos, official lecture scripts, "
+            "or other materials that are intended to teach the core subject matter."
+        ),
+    )
+
+    SUPPLEMENT = (
+        "supplement",
+        (
+            "Additional material that supports, illustrates, extends, "
+            "or reinforces the primary course content."
+        ),
+        (
+            "Use for optional or secondary resources such as supplementary "
+            "videos, exercises, examples, references, or additional explanations. "
+            "Do not use when the resource is required to follow the main course content."
+        ),
+    )
+
+    def __init__(
+        self,
+        value: str,
+        description: str,
+        guidance: str,
+    ):
+        self._value_ = value
+        self.description = description
+        self.guidance = guidance
+
+    @classmethod
+    def prompt_description(cls) -> str:
+        return "\n".join(
+            f"""
+- {item.value}:
+  Description: {item.description}
+  Guidance: {item.guidance}
+"""
+            for item in cls
+        )
+
+
 class LectureResource(BaseModel):
     # resource_id: str              # TODO: convert to new data models
 
@@ -49,10 +99,7 @@ class LectureResource(BaseModel):
     lecture_no: str | None = None
     topic: str | None = None
 
-    resource_kind: Literal[
-        "foundation",
-        "supplement",
-    ] = "foundation"
+    resource_kind: ResourceKind = ResourceKind.FOUNDATION
 
     resource_type: LectureResourceType
 
@@ -68,6 +115,22 @@ class LectureResource(BaseModel):
     license: str | None = None
 
 
+class KnowledgeSourceMetadata(BaseModel):
+    source_id: str
+
+    resource_kind: ResourceKind
+
+    resource_type: str | None = None
+
+    course_id: str | None = None
+    lecture_no: str | None = None
+    topic: str | None = None
+    title: str | None = None
+
+    source_url: str | None = None
+    license: str | None = None
+
+
 class LectureMedia(LectureResource):
     resource_type: Literal["media"] = "media"
 
@@ -75,8 +138,8 @@ class LectureMedia(LectureResource):
     #     LectureResourceType.VIDEO
     # ] = LectureResourceType.VIDEO
 
-    youtube_url: str | None = None
-    youtube_id: str | None = None
+    media_url: str | None = None
+    media_id: str | None = None
     duration: int | None = None
 
 
@@ -238,22 +301,6 @@ class DiscoveredCourseFile(BaseModel):
 #     title: str | None = None
 #     source_url: str
 #     section: str | None = None
-
-
-# class LectureVideo(BaseModel):
-#     title: str
-#     kind: Literal["foundation", "supplement"]   #  = "foundation"
-
-#     lecture_no: str | None = None
-#     topic: str | None = None
-#     section: str | None = None
-
-#     source_url: str
-#     youtube_url: str | None #  = None
-#     youtube_id: str | None  #  = None
-
-#     # duration: str | None = None
-#     duration: int | None = None
 
 
 # class LectureMaterial(BaseModel):

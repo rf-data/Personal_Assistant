@@ -24,7 +24,6 @@ from src.tools_lecture.prepare_lecture import (
     enrich_resource_metadata,
     # enrich_urls,
     # extract_scripts,
-    # extract_youtube_id,
     filter_html_elements,
     # lecture_block_extraction,
     # resolve_video_url,
@@ -34,7 +33,7 @@ from src.tools_lecture.prepare_loviscach import (
     assign_video_blocks_by_order,
     enrich_urls,
     extract_scripts,
-    extract_youtube_id,
+    extract_media_id,
     lecture_block_extraction,
     resolve_video_url,
 )
@@ -199,14 +198,14 @@ def lecture_preparation(f_path: Path, elements: list[str]) -> dict[str, list]:
         for video in videos:
             # video.lecture_blocks = [block_id]
 
-            if video.youtube_url:
+            if video.media_url:
                 continue
 
             resolved_url = resolve_video_url(video.source_url)
 
             if resolved_url:
-                video.youtube_url = resolved_url
-                video.youtube_id = extract_youtube_id(resolved_url)
+                video.media_url = resolved_url
+                video.media_id = extract_media_id(resolved_url)
 
         all_videos.extend(videos)
         all_scripts.extend(scripts)

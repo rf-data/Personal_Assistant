@@ -9,6 +9,11 @@ import numpy as np
 import pandas as pd
 
 from src.core.memory import ParseContext, app_session
+from src.model_knowledge.data_knowledge import (
+    LectureKnowledgeDocument,
+    KnowledgeSourceMetadata,
+)
+from src.model_rag.data_records import RAGRecord
 from src.utils.dict_helper import load_dict
 from src.utils.general_helper import make_doc_id
 
@@ -18,6 +23,7 @@ from src.utils.spacy_helper import load_spacy_model
 # df_blocks = document_json_to_blocks(json_path)
 # df_chunks = prepare_chunk_df(df_blocks)
 # df_chunks.to_parquet("chunks.parquet")
+
 
 """
 CHUNK TECHNIQUES
@@ -373,6 +379,135 @@ def _chunk_by_sentences(
         )
 
     return chunks
+
+
+def build_statement_rag_records(
+    document: LectureKnowledgeDocument,
+    source_metadata: KnowledgeSourceMetadata,
+) -> list[RAGRecord]:
+
+    records: list[RAGRecord] = []
+
+    for statement in document.statements:
+        starts = [evidence.start for evidence in statement.evidence]
+
+        ends = [evidence.end for evidence in statement.evidence]
+
+        record = RAGRecord(
+            record_id=(f"{source_metadata.source_id}::{statement.statement_id}"),
+            text=statement.text,
+            record_type="knowledge_statement",
+            source=source_metadata,
+            metadata={
+                "statement_id": statement.statement_id,
+                "semantic_type": statement.semantic_type.value,
+                "topic": statement.topic,
+                "start": min(starts) if starts else None,
+                "end": max(ends) if ends else None,
+                "needs_review": statement.needs_review,
+                "review_reason": statement.review_reason,
+                "llm_confidence": statement.llm_confidence,
+                "source_statement_ids": (statement.source_statement_ids),
+            },
+        )
+
+        records.append(record)
+
+    return records
+
+
+def build_formula_rag_records(
+    document: LectureKnowledgeDocument,
+    source_metadata: KnowledgeSourceMetadata,
+) -> list[RAGRecord]:
+
+    records: list[RAGRecord] = []
+
+    for formula in document.formulas:
+        starts = [evidence.start for evidence in formula.evidence]
+
+        ends = [evidence.end for evidence in formula.evidence]
+
+        if formula.latex:
+            text = (
+                f"{formula.name + ': ' if formula.name else ''}"
+                f"{formula.plain_text}\n"
+                f"LaTeX: {formula.latex}"
+            )
+        else:
+            text = formula.plain_text
+
+        records.append(
+            RAGRecord(
+                record_id=(f"{source_metadata.source_id}::{formula.expression_id}"),
+                text=text,
+                record_type="formula",
+                source=source_metadata,
+                metadata={
+                    "expression_id": (formula.expression_id),
+                    "expression_type": (formula.expression_type.value),
+                    "name": formula.name,
+                    "latex": formula.latex,
+                    "verification_status": (formula.verification_status),
+                    "verification_reasons": (formula.verification_reasons),
+                    "start": (min(starts) if starts else None),
+                    "end": (max(ends) if ends else None),
+                    "llm_confidence": (formula.llm_confidence),
+                },
+            )
+        )
+
+    return records
+
+
+def build_knowledge_rag_records(
+    document: LectureKnowledgeDocument,
+    source_metadata: KnowledgeSourceMetadata,
+) -> list[RAGRecord]:
+
+    records = []
+
+    records.extend(
+        build_statement_rag_records(
+            document=document,
+            source_metadata=source_metadata,
+        )
+    )
+
+    records.extend(
+        build_formula_rag_records(
+            document=document,
+            source_metadata=source_metadata,
+        )
+    )
+
+    return records
+
+
+def rag_record_to_payload(
+    record: RAGRecord,
+) -> dict:
+
+    source = record.source
+
+    return {
+        "text": record.text,
+        "record_type": record.record_type,
+        # wichtige Filterfelder flach
+        "source_id": source.source_id,
+        "course_id": source.course_id,
+        "resource_kind": source.resource_kind.value,
+        "resource_type": source.resource_type,
+        "lecture_no": source.lecture_no,
+        "topic": source.topic,
+        "title": source.title,
+        # komplette Provenance trotzdem erhalten
+        "source": source.model_dump(
+            mode="json",
+            exclude_none=True,
+        ),
+        **{key: value for key, value in record.metadata.items() if value is not None},
+    }
 
 
 # def _chunk_text(text, chunk_size=300, overlap=50):

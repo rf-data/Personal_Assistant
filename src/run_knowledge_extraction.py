@@ -2,13 +2,14 @@
 # imports
 from pathlib import Path
 from datetime import datetime
+import typer
 
 from src.core.config import folder_env_vars
 from src.core.memory import app_session
 from src.core.logger import create_logger
 from src.core.memory_lecture import LectureContext
 from src.tools_knowledge.find_knowledge import (
-    analyze_and_extract_chunk,
+    analyze_chunk_with_retry,
     attach_chunk_provenance,
     build_transcript_chunks,
     enrich_chunks,
@@ -19,6 +20,7 @@ from src.model_knowledge.data_knowledge import (
     # ChunkKnowledgeResult,
     TranscriptKnowledgeDocument,
 )
+from src.tools_lecture.prepare_loviscach import extract_media_id
 from src.model_transcribe.data_transcribe import TranscriptDocument
 from src.utils.llm_helper import configure_marvin
 
@@ -26,10 +28,19 @@ from src.utils.path_helper import shorten_path
 from src.utils.dict_helper import load_dict, save_dict
 
 
-def run_knowledge_extraction():
+app = typer.Typer()
 
-    dict_name = input("Enter name of context_file (no suffix): ")
-    dict_path = folder_env_vars.config_dir / f"context_{dict_name}.json"
+
+@app.command()
+def main(context_name: str = typer.Option(..., "--context", "-c")):
+    run_knowledge_extraction(
+        context_name=context_name,
+    )
+
+
+def run_knowledge_extraction(context_name: str) -> None:
+
+    dict_path = folder_env_vars.config_dir / f"context_{context_name}.json"
     context = load_dict(
         path=dict_path,
         cls=LectureContext,
@@ -101,15 +112,23 @@ def run_knowledge_extraction():
             shorten_path(t_path),
         )
 
-        extract = knowledge_extraction(context, t_path)
-        save_dict(
-            data=extract.model_dump(mode="json"),
-            path=(
-                lecture_root
-                / f"knowledge/{t_path.name.removesuffix('.json')}_know_extract"
-                # _{context.course_id}
-            ),  # str(datetime.now().isoformat()).replace(':', '-').replace('T', '_')
-        )
+        try:
+            extract = knowledge_extraction(context, t_path)
+            save_dict(
+                data=extract.model_dump(mode="json"),
+                path=(
+                    lecture_root
+                    / f"knowledge/{t_path.name.removesuffix('.json')}_know_extract"
+                    # _{context.course_id}
+                ),  # str(datetime.now().isoformat()).replace(':', '-').replace('T', '_')
+            )
+
+        except:
+            app_session.logger.exception(
+                "Knowledge extraction finally failed for '%s'",
+                t_path,
+            )
+            continue
 
     return None
 
@@ -131,10 +150,6 @@ def is_regular_lecture(
     )
 
 
-# journalctl -k -b --since "24 h ago" \
-#     | grep -Ei "oom|out of memory|killed process"
-
-
 def knowledge_extraction(
     context: LectureContext, transcript_path: Path
 ) -> TranscriptKnowledgeDocument:
@@ -145,11 +160,14 @@ def knowledge_extraction(
 
     transcript = load_dict(path=transcript_path, cls=TranscriptDocument)
 
-    if not transcript.provenance:
-        transcript_id = transcript_path.stem
+    media_id = None
+    transcript_url = None
 
-    else:
-        transcript_id = transcript.provenance.youtube_id or "tba"
+    transcript_url = transcript.provenance.source_url if transcript.provenance else None
+
+    media_id = extract_media_id(transcript_url)
+
+    source_id = transcript_path.name.removesuffix(".json")
 
     chunks = build_transcript_chunks(cfg_know, transcript)
     chunks = enrich_chunks(chunks)
@@ -164,8 +182,11 @@ def knowledge_extraction(
 
     # lecture_compile
 
-    for idx, chunk in enumerate(chunks):
-        result = analyze_and_extract_chunk(chunk, cfg_know.llm_model)
+    for _, chunk in enumerate(chunks):
+        result = analyze_chunk_with_retry(
+            chunk,
+            cfg_know.llm_model,
+        )
 
         if not result.analysis.relevant:
             continue
@@ -220,76 +241,15 @@ def knowledge_extraction(
     # attach_chunk_provenance
     # validate_extraction
     return TranscriptKnowledgeDocument(
-        source_id=transcript_id,
+        source_id=source_id,
+        transcript_url=transcript_url,
+        media_id=media_id,
         chunks=results,  # _all,
         visual_candidates=visual_candidates,
-        transcript_url=(
-            None if not transcript.provenance else transcript.provenance.source_url
-        ),
     )
     # results
 
 
 if __name__ == "__main__":
-    run_knowledge_extraction()
-    # is True:
-    #     chunk = ""
-    #     hi = !
-
-    # if doc_rep: # BaseModel subclass =
-    #     hi = !
-
-    # for chunk in chunkdoc_rep.segments:
-
-
-"""
-Skizze Pipeline:
-JSON transcript
-      ↓
-LLM extraction
-      ↓
-Math candidates + timestamps
-      ↓
-ffmpeg
-      ↓
-frames
-      ↓
-formula OCR
-      ↓
-LLM validation / fusion
-      ↓
-structured knowledge JSON
-
-
-1. RAW
-   TranscriptSegment
-
-2. EXTRACTION
-   erkannte Begriffe, Formeln, Reaktionen, Aussagen
-
-(
-2.5 PREPARATION NORMALIZATION
-    Chemical OCR / structure recognition / SMILES normalization
-    Math OCR / LaTeX normalization
-)
-
-3. NORMALIZATION
-   canonical entities + relations
-
-4. KNOWLEDGE
-   VectorDB + optional GraphDB
-
-####
-
-Bsp.-Knowledge-JSON:
-{
-  "name": "Cosinussatz",
-  "kind": "formula",
-  "latex": "b^2 = a^2 + c^2 - 2ac\\cos(\\beta)",
-  "plain_text": "Quadrat von b gleich a² plus c² minus 2ac mal Cosinus beta",
-  "segment_ids": [92, 93],
-  "start": 245.16,
-  "end": 256.16,
-  "source": "transcript+visual"
-}
-"""
+    app()
+    # typer.run(run_knowledge_extraction)

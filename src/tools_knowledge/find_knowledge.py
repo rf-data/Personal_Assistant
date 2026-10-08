@@ -15,6 +15,7 @@ from src.model_knowledge.data_knowledge import (
 )
 from src.model_transcribe.data_transcribe import TranscriptSegment, TranscriptDocument
 from src.core.memory_lecture import LectureContext
+from src.core.retry import retry_llm_call
 from src.agent.prompts.prompt_know_extract import build_knowledge_extraction_prompt
 from src.core.config_knowledge import KnowledgeSettings
 from src.utils.general_helper import (
@@ -24,6 +25,65 @@ from src.utils.general_helper import (
     save_to_cache,
 )
 # from src.utils.dict_helper import load_dict
+
+
+from src.model_lecture.data_resources import (
+    LectureResource,
+    LectureResourceType,
+    KnowledgeSourceMetadata,
+    ResourceKind,
+)
+
+
+def build_knowledge_source_metadata(
+    resource: LectureResource,
+    *,
+    source_id: str,
+    course_id: str | None = None,
+) -> KnowledgeSourceMetadata:
+
+    resource_type = resource.resource_type
+
+    if isinstance(resource_type, LectureResourceType):
+        resource_type = resource_type.value
+
+    return KnowledgeSourceMetadata(
+        source_id=source_id,
+        resource_kind=ResourceKind(resource.resource_kind),
+        resource_type=resource_type,
+        course_id=course_id,
+        lecture_no=resource.lecture_no,
+        topic=resource.topic,
+        title=resource.title,
+        source_url=resource.source_url,
+        license=resource.license,
+    )
+
+
+def make_knowledge_source_metadata(
+    *,
+    source_id: str,
+    resource_kind: ResourceKind | str,
+    resource_type: str | None = None,
+    course_id: str | None = None,
+    lecture_no: str | None = None,
+    topic: str | None = None,
+    title: str | None = None,
+    source_url: str | None = None,
+    license: str | None = None,
+) -> KnowledgeSourceMetadata:
+
+    return KnowledgeSourceMetadata(
+        source_id=source_id,
+        resource_kind=ResourceKind(resource_kind),
+        resource_type=resource_type,
+        course_id=course_id,
+        lecture_no=lecture_no,
+        topic=topic,
+        title=title,
+        source_url=source_url,
+        license=license,
+    )
 
 
 def build_transcript_chunks(
@@ -121,6 +181,17 @@ def extract_knowledge(
     # end: float
 ) -> ChunkKnowledgeResult:
     ""
+
+
+@retry_llm_call
+def analyze_chunk_with_retry(
+    chunk,
+    model_name: str,
+):
+    return analyze_and_extract_chunk(
+        chunk,
+        model_name,
+    )
 
 
 def analyze_and_extract_chunk(

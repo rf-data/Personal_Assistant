@@ -8,10 +8,12 @@ from src.core.config import folder_env_vars
 from src.core.memory import app_session
 from src.core.logger import create_logger
 from src.core.memory_lecture import LectureContext
+
+from src.tools_lecture.prepare_loviscach import extract_media_id
 from src.tools_knowledge.rebuild_knowledge import (
     # clean_frame_times,
     # add_frame_timestamps,
-    analyze_visual_batch,
+    analyze_visual_with_retry,
     analyze_visual_batch_locally,
     apply_local_visual_verification,
     build_visual_batches,
@@ -21,7 +23,7 @@ from src.tools_knowledge.rebuild_knowledge import (
     # image_text_conversion,
 )
 from src.tools_transcribe.extract_video import (
-    download_visual_sections,
+    download_sections_with_retry,
     extract_additional_frames,
     extract_all_frames,
     prepare_local_visual_sections,
@@ -94,7 +96,7 @@ def run_visual_enrichment():
         shorten_path(know_folder),
     )
 
-    for f_path in know_files:
+    for f_path in sorted(know_files):
         # ["003_003_004_erste_zweite_kubische_binomische_Formel;_
         # minus_mal_minus_know_consol"]:
 
@@ -103,12 +105,12 @@ def run_visual_enrichment():
         #     / f"knowledge/{know_name}.json"
         #     )
 
-        if Path(str(f_path).replace("_consol", "_visual")).exists():
-            # .stem.startswith("003_003"):
-            app_session.logger.info(
-                "[SKIPPING] File '%s' already processed", f_path.name
-            )
-            continue
+        # if Path(str(f_path).replace("_consol", "_visual")).exists():
+        #     # .stem.startswith("003_003"):
+        #     app_session.logger.info(
+        #         "[SKIPPING] File '%s' already processed", f_path.name
+        #     )
+        #     continue
 
         doc = load_dict(
             path=f_path,
@@ -117,7 +119,7 @@ def run_visual_enrichment():
             # TranscriptKnowledgeDocument
         )
 
-        if doc.transcript_url is None:
+        if doc.transcript_url is None and context.course_id == "mathe_vorkurs":
             url_new = yt_urls.get(f_path.stem.split("_")[0], []).get("url", None)
 
             if not url_new:
@@ -128,6 +130,10 @@ def run_visual_enrichment():
                 continue
 
             doc.transcript_url = url_new
+
+        if doc.media_id is None:
+            # not getattr(doc, "media_id") or
+            doc.media_id = extract_media_id(doc.transcript_url)
 
             # "https://www.youtube.com/watch?v=KeCd7fs7rtc"
         #     "003": {
@@ -293,6 +299,15 @@ def visual_enrichment(
 
     if not targets:
         app_session.logger.info("No visual verification needed.")
+
+        save_dict(
+            data=document.model_dump(mode="json"),
+            path=(
+                Path(context.lecture_root)
+                / (f"knowledge/{document.source_id}_know_enriched")
+            ),
+        )
+
         return document
 
     # candidates = know_extract.visual_candidates
@@ -303,6 +318,13 @@ def visual_enrichment(
     #         max(c.end for c in candidates),
     #         len(candidates),
     #     )
+
+    app_session.logger.info(
+        ("VISUAL MEDIA SOURCE | source_id=%s | url=%s | media_id=%s"),
+        document.source_id,
+        document.transcript_url,
+        document.media_id,
+    )
 
     for target in targets:
         app_session.logger.info(
@@ -331,12 +353,25 @@ def visual_enrichment(
         )
 
     elif document.transcript_url:
-        cfg_download.playlist_name = document.source_id
+        # cfg_download.playlist_name = document.source_id
+        output_dir = (
+            context.lecture_root
+            / "knowledge"
+            / "frames"
+            / document.source_id
+            / "sections"
+        )
 
-        sections = download_visual_sections(
+        app_session.logger.info(
+            "Video section | source_id=%s | media_id=%s | ",
+            document.source_id,
+            document.media_id,
+        )
+
+        sections = download_sections_with_retry(
             url=document.transcript_url,
             download_windows=down_windows,
-            output_dir=(context.lecture_root / "knowledge" / "frames"),
+            output_dir=output_dir,
             # context.save_folder,
             cfg_download=cfg_download,
         )
@@ -460,7 +495,7 @@ def visual_enrichment(
                     batch.batch_id,
                 )
 
-                result_llm = analyze_visual_batch(
+                result_llm = analyze_visual_with_retry(
                     batch=batch,
                     model_name=(cfg_knowledge.visual_model),
                 )
@@ -490,6 +525,8 @@ def visual_enrichment(
     save_dict(
         data={
             "source_id": document.source_id,
+            "transcript_url": document.transcript_url,
+            "media_id": document.media_id,
             "local_results": [item.model_dump(mode="json") for item in local_results],
             "api_results": [item.model_dump(mode="json") for item in api_results],
         },
@@ -500,7 +537,8 @@ def visual_enrichment(
     save_dict(
         data=document.model_dump(mode="json"),
         path=(
-            Path(context.lecture_root) / (f"knowledge/{document.source_id}_know_visual")
+            Path(context.lecture_root)
+            / (f"knowledge/{document.source_id}_know_enriched")
         ),
     )
 
@@ -541,12 +579,6 @@ def visual_enrichment(
 #     # cookie_file: str | Path | None = None,
 # ) -> Path:
 # configure_marvin(context)
-
-# transcript = load_dict(
-#                     path=transcript_path,
-#                     cls=TranscriptDocument
-#                         )
-# transcript_id = (transcript.provenance.youtube_id or "tba")
 
 # chunks = build_transcript_chunks(context, transcript)
 # chunks = enrich_chunks(chunks)

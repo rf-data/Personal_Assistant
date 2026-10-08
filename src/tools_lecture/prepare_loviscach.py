@@ -367,10 +367,10 @@ def enrich_urls(urls: dict[str, dict]) -> list[LectureMedia]:
 
         block_id = infer_video_block(lecture_no)
 
-        youtube_id = extract_youtube_id(href)
+        media_id = extract_media_id(href)
 
         youtube_url = (
-            f"https://www.youtube.com/watch?v={youtube_id}" if youtube_id else None
+            f"https://www.youtube.com/watch?v={media_id}" if media_id else None
         )
 
         videos.append(
@@ -383,11 +383,11 @@ def enrich_urls(urls: dict[str, dict]) -> list[LectureMedia]:
                 lecture_blocks=([block_id] if block_id else []),
                 source_url=href,
                 youtube_url=youtube_url,
-                youtube_id=youtube_id,
+                media_id=media_id,
                 duration=None,
                 # source_url="",
                 # youtube_url="",
-                # youtube_id="",      # : str | None = None
+                # media_id="",      # : str | None = None
                 # duration="",        # : str | None = None
                 # section="",         # : str | None = None
                 # kind: str = "foundation"
@@ -397,11 +397,62 @@ def enrich_urls(urls: dict[str, dict]) -> list[LectureMedia]:
     return videos
 
 
-def extract_youtube_id(url: str) -> str | None:
-    parsed = urlparse(url)
-    query = parse_qs(parsed.query)
+def extract_media_id(
+    url: str | None,
+) -> str | None:
 
-    return query.get("v", [None])[0]
+    if not url:
+        return None
+
+    youtube_id = extract_youtube_id(url)
+
+    if youtube_id:
+        return youtube_id
+
+    return None
+
+
+def extract_youtube_id(url: str) -> str | None:
+
+    parsed = urlparse(url)
+
+    host = parsed.netloc.lower()
+    path = parsed.path.strip("/")
+
+    # youtube.com/watch?v=...
+    if host in {
+        "youtube.com",
+        "www.youtube.com",
+        "m.youtube.com",
+    }:
+        if path == "watch":
+            query = parse_qs(parsed.query)
+
+            return query.get(
+                "v",
+                [None],
+            )[0]
+
+        # /shorts/<id>
+        # /embed/<id>
+        # /live/<id>
+        parts = path.split("/")
+
+        if len(parts) >= 2 and parts[0] in {
+            "shorts",
+            "embed",
+            "live",
+        }:
+            return parts[1]
+
+    # youtu.be/<id>
+    if host in {
+        "youtu.be",
+        "www.youtu.be",
+    }:
+        return path.split("/")[0] if path else None
+
+    return None
 
 
 def resolve_video_url(url: str) -> str | None:

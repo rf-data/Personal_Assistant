@@ -57,7 +57,7 @@ class TranscriptProvenance(BaseModel):
     source_file: str | None = None
 
     language: str | None = None
-    youtube_id: str | None = None
+    media_id: str | None = None
 
     media_format: str | None = None
 
@@ -83,3 +83,26 @@ class TranscriptDocument(BaseModel):
     text: str
 
     provenance: TranscriptProvenance | None = None
+
+
+"""
+├── source
+│   ├── source_id
+│   ├── course_id
+│   ├── resource_kind
+│   ├── resource_type
+│   ├── lecture_no
+│   ├── topic
+│   ├── title
+│   ├── source_url
+│   └── license
+│
+└── metadata
+    ├── statement_id / expression_id
+    ├── semantic_type
+    ├── start
+    ├── end
+    ├── confidence
+    ├── verification
+    └── ...
+"""

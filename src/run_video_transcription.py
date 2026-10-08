@@ -105,7 +105,7 @@ def run_video_transcription():
                 continue
 
             # Bereits erfolgreich verarbeitet
-            video_id = vid.youtube_id or url
+            video_id = vid.media_id or url
 
             if video_id in video_list_clean:
                 app_session.logger.info(
@@ -114,7 +114,7 @@ def run_video_transcription():
                 continue
 
             context.f_name = (
-                f"{vid.lecture_no or 'noLecID'}__{vid.topic or 'noTop'}__{vid.youtube_id or 'noYTID'}",
+                f"{vid.lecture_no or 'noLecID'}__{vid.topic or 'noTop'}__{vid.media_id or 'noYTID'}",
             )
             context.url = url
             context.cfg_download.playlist_name = playlist_name
@@ -195,6 +195,7 @@ def add_transcript_provenance(
         download_strategy=source_result.strategy,
         source_url=context.url,
         source_file=str(src_file),
+        media_id=source_result.media_id,
         language=source_result.language,
         media_format=source_result.media_format,
         transcription_provider=(
@@ -279,19 +280,5 @@ def video_transcription(context: AudioContext):
 if __name__ == "__main__":
     run_video_transcription()
 
-
-# def build_media_filename(
-#             lecture_no: str | None,
-#             youtube_id: str | None,
-#             topic: str,
-#             ) -> str:
-
-#     safe_topic = "_".join(topic.replace(",", " ").split())
-
-#     parts = [
-#         lecture_no or "NA",
-#         safe_topic,
-#         youtube_id or "NOID",
-#     ]
 
 #     return "_".join(parts)

@@ -455,7 +455,7 @@ class DoclingFrameResult(BaseModel):
     formulas: list[str] = Field(default_factory=list)
 
 
-class LocalVisualBatchResult(BaseModel):
+class LocalVisualBatchResult(KnowledgeEvidence):
     batch_id: str
     section_id: str
 
@@ -552,7 +552,8 @@ class ChunkKnowledgeResult(BaseModel):
 
 class TranscriptKnowledgeDocument(BaseModel):
     transcript_url: str | None
-    source_id: str
+    media_id: str | None
+
     chunks: list[ChunkKnowledgeResult]
     visual_candidates: list[VisualCandidate]
 
@@ -676,6 +677,7 @@ class ConsolidatedKnowledgeDocument(BaseModel):
 class LectureKnowledgeDocument(BaseModel):
     source_id: str
     transcript_url: str | None = None
+    media_id: str | None = None
 
     topics: list[str] = Field(default_factory=list)
 
@@ -814,13 +816,22 @@ class VisualVerificationItem(KnowledgeEvidence):
 class VisualKnowledgeResult(KnowledgeEvidence):
     batch_id: str
     section_id: str
-    transcript_url: str | None = None
 
     expressions: list[VisualExpression] = Field(default_factory=list)
     verifications: list[VisualVerificationItem] = Field(default_factory=list)
     unresolved_content: list[str] = Field(default_factory=list)
 
     summary: str | None = None
+
+
+class VisualAnalysisDocument(BaseModel):
+    source_id: str | None = None
+    transcript_url: str | None = None
+    media_id: str | None = None
+
+    generated_at: str | None = None
+    local_results: list[LocalVisualBatchResult] = Field(default_factory=list)
+    api_results: list[VisualKnowledgeResult] = Field(default_factory=list)
 
 
 ##################################

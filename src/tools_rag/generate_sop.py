@@ -13,7 +13,7 @@ import marvin
 
 from src.core.config import folder_env_vars
 from src.core.memory import app_session
-from src.model_rag.data_chunk_fact import (
+from src.model_rag.data_records import (
     ConsolidatedFact,
     IngestedChunk,
     KnowledgePool,

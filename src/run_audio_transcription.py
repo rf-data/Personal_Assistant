@@ -107,20 +107,3 @@ def audio_transcription(context: AudioContext) -> list[Path] | None:
 
 if __name__ == "__main__":
     run_audio_transcription()
-
-
-# def build_media_filename(
-#             lecture_no: str | None,
-#             youtube_id: str | None,
-#             topic: str,
-#             ) -> str:
-
-#     safe_topic = "_".join(topic.replace(",", " ").split())
-
-#     parts = [
-#         lecture_no or "NA",
-#         safe_topic,
-#         youtube_id or "NOID",
-#     ]
-
-#     return "_".join(parts)

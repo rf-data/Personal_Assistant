@@ -4,16 +4,16 @@ PHASE 1 — DATA QUALITY
 [x] Transcript extraction
 [x] Knowledge extraction
 [x] Visual verification
-[ ] Visual enrichment remaining lectures
-[ ] Visual post-processing
+[x] Visual enrichment remaining lectures
+[x] Visual post-processing
 [ ] Quality checks
 
 
 PHASE 2 — KNOWLEDGE CORE
 ────────────────────────────────────
-[ ] Canonical Knowledge Merge
-[ ] Evidence / Provenance model
-[ ] Knowledge IDs
+[x] Canonical Knowledge Merge
+[x] Evidence / Provenance model
+[x] Knowledge IDs
 [ ] Relation model
 [ ] Basic relation extraction
 [ ] Knowledge validation

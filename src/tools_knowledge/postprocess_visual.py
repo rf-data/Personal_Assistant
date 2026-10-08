@@ -7,6 +7,7 @@ from typing import Literal, Any
 
 from src.model_knowledge.data_knowledge import (
     LectureKnowledgeDocument,
+    # VisualAnalysisDocument
     VisualKnowledgeResult,
 )
 
@@ -15,6 +16,13 @@ from src.utils.text_helper import (
     remove_illegal_control_chars,
 )
 from src.utils.latex_helper import normalize_latex, validate_latex_basic
+
+
+VisualProcessingStatus = Literal[
+    "not_required",
+    "processed",
+    "unavailable",
+]
 
 
 KnowledgeType = Literal[
@@ -395,6 +403,23 @@ def validate_canonical_item(
 
     if len({evidence.evidence_id for evidence in item.evidence}) != len(item.evidence):
         issues.append("duplicate_evidence_ids")
+
+    semantic_keys = [
+        (
+            ev.source_type,
+            ev.source_id,
+            ev.chunk_id,
+            ev.batch_id,
+            ev.start,
+            ev.end,
+            ev.text,
+            ev.latex,
+        )
+        for ev in item.evidence
+    ]
+
+    if len(set(semantic_keys)) != len(semantic_keys):
+        issues.append("duplicate_evidence_content")
 
     return issues
 
@@ -886,7 +911,18 @@ def apply_confirmed_visual_evidence(
 
     item.evidence.append(evidence)
 
-    item.status = "verified"
+    if verification.evidence_type == "direct_visual":
+        item.status = "verified"
+
+    elif verification.evidence_type in {
+        "derived_from_visual",
+        "contextual_inference",
+    }:
+        item.status = "usable_with_warning"
+
+    else:
+        item.status = "usable_with_warning"
+    # item.status = "verified"
     item.needs_review = False
     item.review_reason = None
 
@@ -966,8 +1002,11 @@ def apply_insufficient_visual_evidence(
 
     item.evidence.append(evidence_from_visual_verification(verification))
 
-    if item.status != "verified":
-        item.status = "usable_with_warning"
+    if item.status == "usable_with_warning":
+        item.needs_review = False
+
+    if item.status == "requires_review":
+        item.needs_review = True
 
     if item.review_reason is None:
         item.review_reason = (
@@ -1086,6 +1125,7 @@ def build_canonical_knowledge(
     )
 
     for item in canonical.knowledge_items:
+        item.evidence = deduplicate_evidence(item.evidence)
         item.confidence = derive_item_confidence(item)
 
     problems = validate_canonical_document(canonical)
@@ -1100,11 +1140,14 @@ def build_canonical_knowledge(
 
 
 if __name__ == "__main__":
+    from pathlib import Path
     from src.core.config import folder_env_vars
     from src.core.memory import app_session
     from src.core.logger import create_logger
     from src.core.memory_lecture import LectureContext
     from src.utils.dict_helper import load_dict, save_dict
+
+    from src.tools_lecture.prepare_loviscach import extract_media_id
 
     context_name = "lecture_compile"
     # input("Enter name of context_file (no suffix): ")
@@ -1146,111 +1189,118 @@ if __name__ == "__main__":
     #     result["problems"] = collect_problematic_expressions(result)
 
     #     for idx, prob in enumerate(result["problems"]):
-    #         print(f"[Problem #{idx}]: ", prob)
+    #         app_session.logger.warning(
+    #                         "[Problem #%s]: %s",
+    #                         idx,
+    #                         prob
+    #                         )
 
     #     save_dict(result, save_path)
 
-    visual_files = [file for file in analysis_folder.rglob("post_*.json")]
+    visual_files = [file for file in analysis_folder.rglob("post_*_visual.json")]
 
-    know_files = [file for file in know_folder.rglob("*know_visual.json")]
+    know_files = [file for file in know_folder.rglob("*know_consol.json")]
 
     app_session.logger.info(
         "Found %s knowledge files and %s visual results",
         len(know_files),
         len(visual_files),
     )
-    for know_path in know_files[:5]:
-        # for visual in visual_files:
+    # for know_path in sorted(know_files)[:5]:
+    # for visual in visual_files:
 
-        # source_name = know_path.name.removesuffix("_know_visual.json")
+    # source_name = know_path.name.removesuffix("_know_visual.json")
 
-        # matching_visuals = [
-        #                 path
-        #                 for path in visual_files
-        #                 if source_name in know_path.name
-        #             ]
+    # matching_visuals = [
+    #                 path
+    #                 for path in visual_files
+    #                 if source_name in know_path.name
+    #             ]
 
-        visual_by_source = {}
+    yt_urls = load_dict(
+        path="/home/robfra/0_Portfolio_Projekte/gmp_compliance/src/mathe_vorkurs_2013_urls.json"
+    )
 
-        for visual_path in visual_files:
-            visual_data = load_dict(visual_path)
+    visual_by_source: dict[str, Path] = {}
 
-            source_id = visual_data.get("source_id")
+    for visual_path in sorted(visual_files):
+        visual_data = load_dict(visual_path)
 
-            if source_id in visual_by_source:
-                raise ValueError(f"Duplicate visual source_id: {source_id}")
+        source_id = visual_data.get("source_id")
 
-            visual_by_source[source_id] = visual_path
+        if source_id in visual_by_source:
+            raise ValueError(f"Duplicate visual source_id: {source_id}")
 
-        for know_path in know_files:
-            document = load_dict(
-                know_path,
-                cls=LectureKnowledgeDocument,
-            )
+        visual_by_source[source_id] = visual_path
 
-            app_session.logger.info(
-                ("Visual source check | source_id=%s | url=%s | video_id=%s"),
-                document.source_id,
-                document.transcript_url,
-                document.youtube_id,
-            )
+    for know_path in sorted(know_files):
+        document = load_dict(know_path, cls=LectureKnowledgeDocument)
 
-            visual_path = visual_by_source.get(document.source_id)
+        if document.transcript_url is None and context.course_id == "mathe_vorkurs":
+            url_new = yt_urls.get(know_path.stem.split("_")[0], []).get("url", None)
 
-            if visual_path is None:
-                app_session.logger.warning(
-                    "No visual result for %s",
-                    document.source_id,
+            if not url_new:
+                app_session.logger.error(
+                    "No url available --> skipping visual enrichment of file '%s'",
+                    know_path.stem,
                 )
                 continue
 
+            document.transcript_url = url_new
+
+        if not getattr(document, "media_id") or document.media_id is None:
+            document.media_id = extract_media_id(document.transcript_url)
+            # document.pop("source_id")
+            #
+
+        app_session.logger.info(
+            ("Visual source check | source_id=%s | url=%s | video_id=%s"),
+            document.source_id,
+            document.transcript_url,
+            document.media_id,
+        )
+
+        visual_path = visual_by_source.get(document.source_id)
+
+        api_results = []
+
+        if visual_path is not None:
             visual_data = load_dict(visual_path)
 
-            assert visual_data["source_id"] == document.source_id
+            assert document.source_id and document.transcript_url
 
-            assert document.youtube_id == visual_data["youtube_id"]
+            assert visual_data.get("source_id") == document.source_id
+            # assert document.media_id == visual_data["source_id"]
 
-        # if not matching_visuals:
-        #     app_session.logger.warning(
-        #         "No postprocessed visual result "
-        #         "found for %s",
-        #         source_name,
-        #     )
-        #     continue
+            # assert document.transcript_url == visual_data.get("transcript_url")]
 
-        # if len(matching_visuals) > 1:
-        #     app_session.logger.warning(
-        #         "Multiple visual files found "
-        #         "for %s: %s",
-        #         source_name,
-        #         matching_visuals,
-        #     )
+            # validate_source_identity(
+            #     document=document,
+            #     visual_data=visual_data,
+            # )
 
-        # visual_path = matching_visuals[0]
+            visual_results = [
+                VisualKnowledgeResult.model_validate(item)
+                for item in visual_data.get(
+                    "api_results",
+                    [],
+                )
+            ]
 
-        document = load_dict(know_path, cls=LectureKnowledgeDocument)
+        else:
+            app_session.logger.info(
+                "No visual evidence for %s; "
+                "building transcript-only "
+                "canonical knowledge.",
+                document.source_id,
+            )
 
-        visual_data = load_dict(visual_path)
-        # , cls=)
-
-        api_results = [
-            VisualKnowledgeResult.model_validate(item)
-            for item in visual_data.get("api_results", [])
-        ]
+            visual_results = []
 
         canonical = build_canonical_knowledge(
             document=document,
-            visual_results=api_results,
+            visual_results=visual_results,
         )
-
-        # assert all(
-        #     evidence_source_belongs_to_document(
-        #         evidence,
-        #         document,
-        #     )
-        #     for item in canonical.knowledge_items
-        #     for evidence in item.evidence
-        # )
 
         save_dict(
             data=canonical.model_dump(mode="json"),
@@ -1260,7 +1310,7 @@ if __name__ == "__main__":
         app_session.logger.info(
             "Canonical knowledge created: %s items | %s",
             len(canonical.knowledge_items),
-            source_name,
+            document.source_id,
         )
         # -> CanonicalKnowledgeDocument:
         # postprocess_visual_enrichment

@@ -162,8 +162,8 @@ def validate_lecture_resources(
             for video in videos
             if not video.get("lecture_blocks")
         ],
-        "videos_without_youtube_id": [
-            video.get("title") for video in videos if not video.get("youtube_id")
+        "videos_without_media_id": [
+            video.get("title") for video in videos if not video.get("media_id")
         ],
         "scripts_without_block": [
             script.get("source_url")
@@ -222,14 +222,14 @@ def deduplicate_videos(
     without_id: list[LectureMedia] = []
 
     for video in videos:
-        if not video.youtube_id:
+        if not video.media_id:
             without_id.append(video)
             continue
 
-        existing = by_id.get(video.youtube_id)
+        existing = by_id.get(video.media_id)
 
         if existing is None:
-            by_id[video.youtube_id] = video
+            by_id[video.media_id] = video
             continue
 
         for block_id in video.lecture_blocks:

@@ -8,7 +8,7 @@ import marvin
 import numpy as np
 
 from src.core.memory import SOPGenContext, app_session
-from src.model_rag.data_chunk_fact import (
+from src.model_rag.data_records import (
     # MergedFact,
     ConsolidatedFact,
     ExtractedFact,

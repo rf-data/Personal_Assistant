@@ -6,7 +6,7 @@
 from typing import Any  # , Literal
 
 from src.core.memory import SOPGenContext, app_session
-from src.model_rag.data_chunk_fact import RetrievalResult, RetrievedChunk
+from src.model_rag.data_records import RetrievalResult, RetrievedChunk
 from src.model_rag.templates_sop import SOP_BASE_TEMPLATE, SOPTemplate
 from src.tools_rag.create_embeds import load_embedding_model
 

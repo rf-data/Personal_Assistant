@@ -17,6 +17,7 @@ from src.agent.prompts.prompt_know_extract import (
     extract_visual_knowledge_prompt,
 )
 from src.core.config import agentic_env_vars
+from src.core.retry import retry_llm_call
 from src.core.memory import app_session
 from src.core.memory_lecture import LectureContext
 from src.model_knowledge.data_knowledge import (
@@ -634,6 +635,8 @@ def analyze_visual_batch_locally(
     return LocalVisualBatchResult(
         batch_id=batch.batch_id,
         section_id=batch.section_id,
+        start=batch.source_start,
+        end=batch.source_end,
         target_expression_ids=sorted(target_expression_ids),
         matched_expression_ids=sorted(matched),
         unresolved_expression_ids=sorted(unresolved),
@@ -1152,6 +1155,18 @@ def validate_openai_strict_schema(
     check_object(
         schema,
         "$",
+    )
+
+
+@retry_llm_call
+def analyze_visual_batch_with_retry(
+    *,
+    batch,
+    model_name,
+):
+    return analyze_visual_batch(
+        batch=batch,
+        model_name=model_name,
     )
 
 

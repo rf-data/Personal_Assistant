@@ -119,10 +119,18 @@ class AgenticEnvVars(BaseSettings):
     openai_api_key: str
     # claude_token: str
     # gemini_token: str
+
+    # llm monitoring credentials
     langfuse_public_key: str
     langfuse_secret_key: str
     langfuse_host: str
     langfuse_base_url: str
+
+    # db credentials
+    qdrant_cloud_api_key: str  # API key for authentication
+    qdrant_cloud_account_id: str  # Account ID to operate against
+    qdrant_cloud_endpoint: str  # API endpoint URL (defaults to Qdrant Cloud)
+    qdrant_cloud_context: str  # Name of the context to use
 
 
 agentic_env_vars = AgenticEnvVars()

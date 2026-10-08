@@ -1,9 +1,50 @@
-## chunks_retrieval.py
+## data_records.py
 # import
 # from dataclasses import dataclass, field
 from typing import Any, Literal
-
 from pydantic import BaseModel, Field
+
+from src.model_knowledge.data_knowledge import KnowledgeSourceMetadata
+
+
+class RAGRecord(BaseModel):
+    record_id: str
+    text: str
+    record_type: Literal[
+        "transcript_chunk", "knowledge_item", "math_expression", "chemistry_expression"
+    ]
+
+    source: KnowledgeSourceMetadata
+
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+"""
+RAGRecord
+├── record_id
+├── text
+├── record_type
+│
+├── source
+│   ├── source_id
+│   ├── course_id
+│   ├── resource_kind
+│   ├── resource_type
+│   ├── lecture_no
+│   ├── topic
+│   ├── title
+│   ├── source_url
+│   └── license
+│
+└── metadata
+    ├── statement_id / expression_id
+    ├── semantic_type
+    ├── start
+    ├── end
+    ├── confidence
+    ├── verification
+    └── ...
+"""
 
 
 # @dataclass

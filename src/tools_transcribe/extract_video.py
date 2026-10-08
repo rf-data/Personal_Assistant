@@ -9,6 +9,7 @@ import imagehash
 import yt_dlp
 from yt_dlp.utils import download_range_func
 
+from src.core.retry import retry_download
 from src.core.memory import app_session
 from src.core.memory_lecture import LectureContext
 from src.model_knowledge.data_knowledge import (
@@ -19,7 +20,7 @@ from src.model_knowledge.data_knowledge import (
 )
 from src.tools_knowledge.rebuild_knowledge import add_frame_timestamps
 from src.core.config_transcribe import DownloadSettings
-from src.utils.path_helper import ensure_dir
+from src.utils.path_helper import ensure_dir, shorten_path
 
 
 def expand_download_window(
@@ -80,6 +81,11 @@ def prepare_local_visual_sections(
     return sections
 
 
+@retry_download
+def download_sections_with_retry(**kwargs):
+    return download_visual_sections(**kwargs)
+
+
 def download_visual_sections(
     url: str,
     download_windows: list[tuple[float, float]],
@@ -138,6 +144,9 @@ def download_video_section(
         / f"{section_id}.%(ext)s"
     )
 
+    app_session.logger.info(
+        "section=%s | path=%s", section_id, shorten_path(output_template)
+    )
     ydl_opts = {
         # Video only; audio is unnecessary for screenshots.
         "format": cfg_download.video_format,  # "bv/b",
@@ -243,7 +252,7 @@ def extract_frame(
     context: LectureContext,
     frame_id: str,
     section_name: str,
-) -> ExtractedFrame:
+) -> ExtractedFrame | None:
 
     output_path = (
         # Path(context.save_folder)
@@ -289,7 +298,7 @@ def extract_frame(
             frame_time.local_time,
             exc.stderr,
         )
-        raise
+        return None
 
     app_session.logger.info(
         "Frame extraction result | exists=%s | size=%s",
@@ -334,7 +343,6 @@ def extract_section_frames(
     section.frames = []
 
     for idx, frame_time in enumerate(section.frame_times):
-        src_time = frame_time.local_time
         app_session.logger.info(
             (
                 "Extract frame | "
@@ -346,10 +354,10 @@ def extract_section_frames(
                 # "output=%s"
             ),
             section.section_id,
-            src_time,
+            frame_time.source_time,
             section.download_start,
             section.download_end,
-            src_time - section.download_start,
+            frame_time.local_time,
             # output_path,
         )
 

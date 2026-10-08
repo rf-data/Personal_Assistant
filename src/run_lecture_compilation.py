@@ -2,6 +2,7 @@
 # imports
 # from pathlib import Path
 from datetime import datetime
+import typer
 
 from src.core.memory_lecture import LectureContext
 from src.core.config import folder_env_vars
@@ -19,16 +20,25 @@ from src.run_lecture_preparation import lecture_preparation
 from src.run_lecture_processing import lecture_processing
 
 
-def run_lecture_compilation():
+app = typer.Typer()
 
-    context_name = input("Enter name of context_file (no suffix): ")
+
+@app.command()
+def main(context_name: str = typer.Option(..., "--context", "-c")):
+    run_lecture_compilation(
+        context_name=context_name,
+    )
+
+
+def run_lecture_compilation(context_name: str) -> None:
+
     context_path = folder_env_vars.config_dir / f"context_{context_name}"
     context = load_dict(context_path, LectureContext)
 
     app_session.timestamp = datetime.today().strftime("%Y-%m-%d")
     app_session.logger = create_logger(
         name=context.logger_name,  # "RF_LOG"),
-        file_name=context.logger_f_name,  #  "rf_log")
+        file_name=f"{context.logger_f_name}_{app_session.timestamp}",  #  "rf_log")
     )
 
     # root=(folder_env_vars. / "")
@@ -127,72 +137,6 @@ def prepare_course(context: LectureContext) -> LectureCourse:
             raise ValueError(f"Unknown prepare_lecture mode: {context.prepare_lecture}")
 
     return course
-
-
-# , lecture_info
-
-
-# def convert_course_data(course: LectureCourse) -> dict:
-#     """
-#       {
-#     "course_id": "Cannabinoide",
-#     "course_title": "Cannabinoide - Ungleiche Geschwister",
-#     "examen": [],
-#     "provider": "lakbb",
-#     "resources": [
-#       {
-#         "content_hash": null,
-#         "downloaded": true,
-#         "duration": null,
-#         "file_type": "wav",
-#         "lecture_blocks": [],
-#         "lecture_no": null,
-#         "license": null,
-#         "local_path": "/mnt/chromeos/GoogleDrive/MyDrive/1_Projekte_Datensätze/1_Projekte/00_GMP_Compliance/data/lectures/lakbb/Cannabinoide/audio/2_Cannabinoide_CBD_000.wav",
-#         "media_type": "audio",
-#         "resource_kind": "foundation",
-#         "resource_type": "media",
-#         "source_url": null,
-#         "title": "2 Cannabinoide CBD 000",
-#         "topic": null,
-#         "youtube_id": null,
-#         "youtube_url": null
-#       },
-#       [...]
-#     """
-
-#     lecture_blocks: list[int] = []
-#     for res in course.resources:
-#         if res.lecture_blocks:
-#             lecture_blocks.extend(res.lecture_blocks)
-
-#     return {
-#         "lecture_blocks": lecture_blocks
-#         }
-
-# lecture_path = (
-#         course.root
-#         / f"metadata"
-#         / f"{course.provider}_{course.course_id}_lectures_new.json"
-#     )
-
-#     if not lecture_path.exists():
-#         raise ValueError(f"Lecture_path does NOT exist: {lecture_path}")
-
-#     # for path in lecture_paths:
-#     lecture_info = load_dict(lecture_path)
-
-# if lecture_info is not None:
-#     lectures_all.append(lecture_info)
-
-# for task in task_list:
-#         # if len(task.actions) > 0:
-#         #     task_open.append({"name": task.resource.title, "task": task})
-
-#     print(f"""RESOURCE_TYPE:\t {task.resource.resource_type}
-# RESOURCE_TITLE:\t {task.resource.title}
-# ACTIONS:\t{task.actions}
-# """)
 
 
 def get_block_ids(course: LectureCourse) -> list[str]:
@@ -340,5 +284,9 @@ def save_task_list(
     # return None
 
 
+# if __name__ == "__main__":
+#     run_lecture_compilation()
+
+
 if __name__ == "__main__":
-    run_lecture_compilation()
+    app()
