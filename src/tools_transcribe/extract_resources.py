@@ -94,6 +94,13 @@ def download_subtitles(
         "socket_timeout": cfg.socket_timeout,
         "retries": cfg.retries,
         "outtmpl": outtmpl,  # f"{output_dir}/%(id)s.%(ext)s",
+        "postprocessors": [
+            {
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "wav",
+            }
+        ],
+        "verbose": True,
     }
 
     try:

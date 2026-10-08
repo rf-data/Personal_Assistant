@@ -13,6 +13,14 @@ def build_base_ydl_opts(context) -> dict:
         "noplaylist": cfg.no_playlist,
         "socket_timeout": cfg.socket_timeout,
         "retries": cfg.retries,
+        "extractor_args": {
+            "youtube": {
+                "player_client": [cfg.retries.player_client],
+            },
+            "youtubepot-bgutilhttp": {
+                "base_url": [cfg.pot_provider_url],
+            },
+        },
     }
 
     if cfg.cookie_file and cfg.cookie_file.exists():

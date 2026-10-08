@@ -64,7 +64,8 @@ class DownloadSettings(BaseModel):
     show_progress: bool = True
 
     cookie_file: Path | None = None
-
+    player_client: str | None = None
+    pot_provider_url: str | None = None
     # relevant for video
     video_format: str = "bv/b"
     force_keyframes_at_cuts: bool = True
