@@ -105,6 +105,10 @@ class FolderEnvVars(BaseSettings):
 folder_env_vars = FolderEnvVars()
 
 
+def load_folder_env_vars():
+    return FolderEnvVars()
+
+
 class AgenticEnvVars(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env.agentic",
@@ -121,19 +125,25 @@ class AgenticEnvVars(BaseSettings):
     # gemini_token: str
 
     # llm monitoring credentials
-    langfuse_public_key: str
-    langfuse_secret_key: str
-    langfuse_host: str
-    langfuse_base_url: str
+    langfuse_public_key: str | None = None
+    langfuse_secret_key: str | None = None
+    langfuse_host: str | None = None
+    langfuse_base_url: str | None = None
 
     # db credentials
-    qdrant_cloud_api_key: str  # API key for authentication
-    qdrant_cloud_account_id: str  # Account ID to operate against
-    qdrant_cloud_endpoint: str  # API endpoint URL (defaults to Qdrant Cloud)
-    qdrant_cloud_context: str  # Name of the context to use
+    qdrant_cloud_api_key: str | None = None  # API key for authentication
+    qdrant_cloud_account_id: str | None = None  # Account ID to operate against
+    qdrant_cloud_endpoint: str | None = (
+        None  # API endpoint URL (defaults to Qdrant Cloud)
+    )
+    qdrant_cloud_context: str | None = None  # Name of the context to use
 
 
 agentic_env_vars = AgenticEnvVars()
+
+
+def load_agentic_env_vars():
+    return AgenticEnvVars()
 
 
 class MLOpsEnvVars(BaseSettings):
@@ -153,7 +163,8 @@ class MLOpsEnvVars(BaseSettings):
     fingerprint_run: str
 
 
-mlops_env_vars = MLOpsEnvVars()
+def load_mlops_env_vars():
+    return MLOpsEnvVars()
 
 
 # from pydantic import BaseModel, model_validator, field_validator, Field
@@ -180,8 +191,17 @@ class OrganizerEnvVars(BaseSettings):
     email_llf_pw: str
 
 
-organizer_env_vars = OrganizerEnvVars()
-""""""
+def load_organizer_env_vars():
+    return OrganizerEnvVars()
+
+
+# scp gmp_compliance/configuration/context_lecture_compile.json \
+#     root@188.245.182.180:/srv/personal-assistant/data
+
+# scp -r /mnt/chromeos/GoogleDrive/MyDrive/1_Projekte_Datensätze/1_Projekte/00_GMP_Compliance/data/lectures/loviscach/info_2_python \
+#   root@188.245.182.180:/srv/personal-assistant/data/lectures/loviscach/
+# gmp_compliance/configuration/context_know_extract.json
+# gmp_compliance/configuration/context_lecture_compile.json
 
 
 # ------------------------------------
