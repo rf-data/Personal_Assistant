@@ -52,6 +52,15 @@ def execute_task(task: ResourceTask, lecture_context: LectureContext) -> None:
     # if not actionable_tasks:
     #     break
 
+    audio_context = load_dict(
+        path=(folder_env_vars.config_dir / "cfg_lecture_transcribe"), cls=AudioContext
+    )
+
+    provider = get_transcription_provider(
+        context=audio_context,
+        logger=app_session.logger,
+    )
+
     for action in task.actions:
         match resource.resource_type:
             case (
@@ -61,6 +70,8 @@ def execute_task(task: ResourceTask, lecture_context: LectureContext) -> None:
                 execute_media_action(
                     resource=resource,
                     action=action,
+                    audio_context=audio_context,
+                    provider=provider,
                     course_root=lecture_context.lecture_root,
                 )
 
@@ -198,12 +209,12 @@ def build_document_parse_context(resource, course_root) -> ParseContext:
 
 
 def execute_media_action(
-    resource: LectureMedia, action: ResourceAction, course_root: Path
+    resource: LectureMedia,
+    action: ResourceAction,
+    provider,
+    audio_context,
+    course_root: Path,
 ) -> list[Path]:
-
-    audio_context = load_dict(
-        path=(folder_env_vars.config_dir / "cfg_lecture_transcribe"), cls=AudioContext
-    )
 
     audio_context.cfg_download.cookie_file = folder_env_vars.yt_cookies
     audio_context.save_folder = course_root
@@ -235,20 +246,22 @@ def execute_media_action(
                 success=True, transcript_source="whisper", paths=[resource.local_path]
             )
 
-            provider = get_transcription_provider(
-                context=audio_context,
-                logger=app_session.logger,
-            )
-
             transcript_paths = transcribe_files(source_result, provider, audio_context)
 
         case ResourceAction.PARSE_SUBTITLE:
             # audio_context["source"] = "local"
             # audio_context["local_path"] = [resource.local_path]
 
-            transcript_paths = parse_subtitle(
-                f_path=(course_root / f"subtitles/{resource.title}.de.vtt")
-            )
+            if resource.local_path is None:
+                raise FileNotFoundError(
+                    f"No subtitle path found for resource: {resource.title}"
+                )
+
+            transcript_paths = parse_subtitle(f_path=Path(resource.local_path))
+
+            # transcript_paths = parse_subtitle(
+            #     f_path=(course_root / f"subtitles/{resource.title}.de.vtt")
+            # )
 
         # case ResourceAction.PARSE_DOCUMENT:
         #     ...

@@ -101,6 +101,7 @@ def get_resource_target_folder(
 def normalize_name(name: str) -> str:
     return (
         name.casefold()
+        .replace(",", "")
         .replace("ä", "a")
         .replace("ö", "o")
         .replace("ü", "u")

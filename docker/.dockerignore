@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Python
+.venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.mypy_cache
+.ruff_cache
+
+# Runtime/persistent data
+data
+logs
+.cache
+
+# IDE
+.vscode
+.idea
+
+# DVC/local artifacts
+.dvc/cache
+
+# Media
+*.mp4
+*.mkv
+*.webm
+*.wav
+*.mp3
+*.m4a
+
+# Misc
+*.log
+.env
+.env.*

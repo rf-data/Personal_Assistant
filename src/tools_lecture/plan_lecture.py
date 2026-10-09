@@ -17,11 +17,22 @@ from src.model_lecture.data_resources import (
     ResourceTask,
 )
 
-from src.utils.path_helper import find_indexed_files
+from src.utils.path_helper import normalize_name, find_indexed_files
 # from src.run_lecture_planning import lecture_planning
 
 
 # lecture_compile
+
+
+def matches_lecture_no(path: Path, lecture_no: str) -> bool:
+    stem = path.stem.lower()
+    lecture_no = lecture_no.lower()
+
+    return (
+        stem == lecture_no
+        or stem.startswith(f"{lecture_no}_")
+        or stem.startswith(f"{lecture_no}.")
+    )
 
 
 def get_resource_path(
@@ -140,10 +151,8 @@ def classify_resource_file(
 
 
 def get_transcript_actions(
-    resource: LectureResource, file_index: list[Path]
+    resource: LectureResource, paths: list[Path]
 ) -> list[ResourceAction]:
-
-    paths = get_resource_path(resource, file_index=file_index)
 
     if paths is None:
         app_session.logger.info("Found no transcript file for %s", resource.title)
@@ -182,13 +191,8 @@ def get_transcript_actions(
 
 
 def get_knowledge_actions(
-    resource: LectureResource, file_index: list[Path]
+    resource: LectureResource, paths: list[Path]
 ) -> list[ResourceAction]:
-
-    paths = get_resource_path(
-        resource,
-        file_index=file_index,
-    )
 
     if paths is None:
         app_session.logger.info("Found no knowledge file for %s", resource.source_url)
@@ -251,13 +255,8 @@ def get_path_by_type(
 
 
 def get_archive_actions(
-    resource: LectureResource, file_index: list[Path]
+    resource: LectureResource, paths: list[Path]
 ) -> list[ResourceAction]:
-
-    paths = get_resource_path(
-        resource,
-        file_index=file_index,
-    )
 
     if not paths:
         app_session.logger.info("Found no document file for %s", resource.source_url)
@@ -268,13 +267,8 @@ def get_archive_actions(
 
 
 def get_document_actions(
-    resource: LectureResource, file_index: list[Path]
+    resource: LectureResource, paths: list[Path]
 ) -> list[ResourceAction]:
-
-    paths = get_resource_path(
-        resource,
-        file_index=file_index,
-    )
 
     if not paths:
         app_session.logger.info("Found no document file for %s", resource.source_url)
@@ -381,6 +375,8 @@ def build_resource_tasks(
     tasks = []
 
     for resource in resources:
+        normalize_name(resource)
+
         paths = (
             get_resource_path(
                 resource,
@@ -391,7 +387,7 @@ def build_resource_tasks(
 
         actions = get_required_actions(
             resource,
-            file_index,
+            paths,
         )
 
         tasks.append(
@@ -406,7 +402,7 @@ def build_resource_tasks(
 
 
 def get_required_actions(
-    resource: LectureResource, file_index: list[Path]
+    resource: LectureResource, paths: list[Path]
 ) -> list[ResourceAction]:
 
     resource.title = resource.title.replace(
@@ -424,7 +420,7 @@ def get_required_actions(
             "media"
             # | LectureResourceType.VIDEO
         ):
-            return get_transcript_actions(resource, file_index=file_index)
+            return get_transcript_actions(resource, paths=paths)
 
         case (
             # LectureResourceType.SCRIPT
@@ -432,15 +428,15 @@ def get_required_actions(
             # | LectureResourceType.EXAM
             "script" | "material" | "exam" | "document"
         ):
-            return get_document_actions(resource, file_index=file_index)
+            return get_document_actions(resource, paths=paths)
 
         case (
             "notebook"
             # | LectureResourceType.NOTEBOOK
         ):
-            return get_knowledge_actions(resource, file_index=file_index)
+            return get_knowledge_actions(resource, paths=paths)
 
         case "archive":
-            return get_archive_actions(resource, file_index=file_index)
+            return get_archive_actions(resource, paths=paths)
 
     return []

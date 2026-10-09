@@ -82,8 +82,20 @@ def lecture_processing(
 
         if not task.actions:
             app_session.logger.info("  --> Found no actions.\n")
+            continue
 
-        execute_task(task, course)
+        try:
+            execute_task(task, course)
+
+        except FileNotFoundError as exc:
+            app_session.logger.error(
+                "[%s/%s] File not found for resource '%s': %s -- skipping resource",
+                idx,
+                n_resources,
+                task.resource.title,
+                exc,
+            )
+            continue
         # _new = lecture_processing(task, course_root)
 
     return
