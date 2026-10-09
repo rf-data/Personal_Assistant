@@ -1608,7 +1608,6 @@ lecture-worker = [
     { name = "python-docx" },
     { name = "returns" },
     { name = "sounddevice" },
-    { name = "streamlit", extra = ["pdf"] },
     { name = "tiktoken" },
     { name = "yt-dlp" },
 ]
@@ -1704,7 +1703,6 @@ requires-dist = [
     { name = "sounddevice", marker = "extra == 'lecture-worker'", specifier = ">=0.5.5" },
     { name = "spacy", marker = "extra == 'nlp'", specifier = ">=3.8.14" },
     { name = "streamlit", extras = ["pdf"], marker = "extra == 'frontend'", specifier = ">=1.56.0" },
-    { name = "streamlit", extras = ["pdf"], marker = "extra == 'lecture-worker'", specifier = ">=1.56.0" },
     { name = "streamlit-pdf-viewer", marker = "extra == 'frontend'", specifier = ">=0.0.29" },
     { name = "tenacity", specifier = ">=9.1.4" },
     { name = "tiktoken", marker = "extra == 'lecture-worker'", specifier = ">=0.12.0" },

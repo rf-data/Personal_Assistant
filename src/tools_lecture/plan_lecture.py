@@ -54,6 +54,8 @@ def get_resource_path(
         )
         return None
 
+    resource.title = normalize_name(resource.title)
+
     f_paths = find_indexed_files(
         file_name=resource.title, files=file_index, exact=False
     )
@@ -375,8 +377,6 @@ def build_resource_tasks(
     tasks = []
 
     for resource in resources:
-        normalize_name(resource)
-
         paths = (
             get_resource_path(
                 resource,
