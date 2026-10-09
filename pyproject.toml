@@ -22,6 +22,18 @@ lecture-worker = [
     "faster-whisper>=1.2.1",
     "sounddevice>=0.5.5",
     "pydub>=0.25.1",
+    "bs4>=0.0.2",
+    "defusedxml>=0.7.1",
+    "docling[rapidocr]>=2.129.0",
+    "pymupdf>=1.27.2.2",
+    "pypdf>=6.11.0",
+    "python-docx>=1.2.0",
+    "markdown>=3.10.2",
+    "docling[rapidocr]>=2.129.0",
+    "pymupdf>=1.27.2.2",
+    "tiktoken>=0.12.0",
+    "returns",
+    "pydantic_settings"
 ]
 
 nlp = [
@@ -34,11 +46,9 @@ nlp = [
 vision = [
     "imagehash>=4.3.2",
     "opencv-python>=4",
-    "pymupdf>=1.27.2.2",
 ]
 
 ocr = [
-    "docling[rapidocr]>=2.129.0",
     "torch==2.13.0",
     "torchvision==0.28.0",
 ]
@@ -65,7 +75,6 @@ llm = [
     "marvin>=3.2.7",
     "openai>=2.44.0",
     "pydantic-ai>=1.9,<1.20",
-    "tiktoken>=0.12.0",
 ]
 
 monitoring = [
@@ -76,13 +85,6 @@ monitoring = [
 ]
 
 documents = [
-    "bs4>=0.0.2",
-    "defusedxml>=0.7.1",
-    "docling[rapidocr]>=2.129.0",
-    "pymupdf>=1.27.2.2",
-    "pypdf>=6.11.0",
-    "python-docx>=1.2.0",
-    "markdown>=3.10.2",
 ]
 
 

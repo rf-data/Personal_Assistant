@@ -5,11 +5,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal
 
-from docx import Document
-from docx.oxml.table import CT_Tbl
-from docx.oxml.text.paragraph import CT_P
-from docx.table import Table
-from docx.text.paragraph import Paragraph
+# from docx import Document
+# from docx.oxml.table import CT_Tbl
+# from docx.oxml.text.paragraph import CT_P
+# from docx.table import Table
+# from docx.text.paragraph import Paragraph
 
 # import streamlit as st
 from returns.result import Result, Success

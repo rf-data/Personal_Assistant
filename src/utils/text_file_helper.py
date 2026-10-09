@@ -6,7 +6,7 @@ from collections.abc import Iterator
 from pathlib import Path
 
 import pandas as pd
-from docx import Document
+# from docx import Document
 
 from src.core.config import folder_env_vars
 from src.core.memory import app_session

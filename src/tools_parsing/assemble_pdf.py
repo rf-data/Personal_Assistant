@@ -1,7 +1,7 @@
 ## assemble_pdf.py
 # import
 # import click
-import streamlit as st
+# import streamlit as st
 
 # from collections import defaultdict
 from returns.result import Success
@@ -95,10 +95,10 @@ def assemble_single_pdf(
         if "txt" in assemble:
             logger.info("'Text assembling' script has not been build yet.")
 
-            try:
-                st.warning("'Text assembling' script has not been build yet.")
-            except ImportError:
-                pass
+            # try:
+            #     st.warning("'Text assembling' script has not been build yet.")
+            # except ImportError:
+            #     pass
 
     return
 
