@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 
 import streamlit as st
-from docx import Document
+# from docx import Document
 
 from src.core.config import folder_env_vars
 from src.core.memory import ParseContext, app_session
