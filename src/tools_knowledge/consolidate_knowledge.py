@@ -25,8 +25,8 @@ from src.model_knowledge.data_knowledge import (
 
 from src.utils.path_helper import shorten_path
 from src.utils.dict_helper import save_dict, load_dict
+from src.utils.latex_helper import normalize_math_text
 from src.utils.text_helper import (
-    normalize_math_text,
     normalize_text_for_matching,
     text_similarity,
 )
