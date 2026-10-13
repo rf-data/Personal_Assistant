@@ -90,6 +90,12 @@ def build_transcript_chunks(
     cfg_know: KnowledgeSettings, transcript: TranscriptDocument
 ) -> list[TranscriptChunk]:
 
+    if any(seg.start is None or seg.end is None for seg in transcript.segments):
+        raise ValueError(
+            "Timed knowledge chunking requires known segment timestamps; "
+            "plain-text transcripts need a text-based chunking strategy."
+        )
+
     dur_target = cfg_know.target_duration  # float = 45,
     # dur_max = context.max_duration         # float = 75
     seg_overlap = cfg_know.overlap_segments  # : int = 2

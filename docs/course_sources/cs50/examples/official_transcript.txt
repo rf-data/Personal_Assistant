@@ -1,0 +1,4 @@
+This is a synthetic CS50 import example.
+Café and Unicode remain intact.
+
+No media timestamps are available.

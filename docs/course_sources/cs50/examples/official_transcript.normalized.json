@@ -1,0 +1,40 @@
+{
+  "source": "docs/course_sources/cs50/examples/official_transcript.txt",
+  "language": "en",
+  "language_probability": null,
+  "duration": null,
+  "duration_after_vad": null,
+  "runtime": null,
+  "realtime_factor": null,
+  "segments": [
+    {
+      "seg_id": 0,
+      "start": null,
+      "end": null,
+      "text": "This is a synthetic CS50 import example.\nCafé and Unicode remain intact.",
+      "speaker": null,
+      "confidence": null
+    },
+    {
+      "seg_id": 1,
+      "start": null,
+      "end": null,
+      "text": "No media timestamps are available.",
+      "speaker": null,
+      "confidence": null
+    }
+  ],
+  "text": "This is a synthetic CS50 import example.\nCafé and Unicode remain intact.\n\nNo media timestamps are available.",
+  "provenance": {
+    "transcript_source": "official_transcript",
+    "download_strategy": null,
+    "source_url": "https://example.com/cs50/official_transcript.txt",
+    "source_file": "docs/course_sources/cs50/examples/official_transcript.txt",
+    "language": "en",
+    "media_id": null,
+    "media_format": "txt",
+    "transcription_provider": null,
+    "transcription_model": null,
+    "acquired_at": "2026-10-13T12:00:00"
+  }
+}
