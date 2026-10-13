@@ -2,7 +2,7 @@
 
 from typing import Literal
 
-from pydantic import Field, HttpUrl
+from pydantic import Field, HttpUrl, model_serializer
 
 from src.model_discovery.cs50 import (
     CourseDiscovery,
@@ -16,12 +16,21 @@ ProposedAction = Literal["download", "parse_subtitle", "transcribe"]
 
 
 class SelectionPolicy(DiscoveryModel):
+    text_strategy: Literal["transcript_first", "timed_knowledge"] = "transcript_first"
     preferred_language: NonEmpty = "en"
     preferred_video_resolution: Literal["360p", "720p", "1080p", "4k"] = "720p"
     prefer_sdr: bool = True
     require_video: bool = False
     allow_unknown_language: bool = False
     allow_transcription: bool = False
+
+    @model_serializer(mode="wrap")
+    def serialize_policy(self, handler):
+        data = handler(self)
+        # Preserve existing default JSON/snapshots, including nested previews.
+        if self.text_strategy == "transcript_first":
+            data.pop("text_strategy", None)
+        return data
 
 
 class SelectionOption(DiscoveryModel):
