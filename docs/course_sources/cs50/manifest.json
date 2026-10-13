@@ -1,0 +1,120 @@
+{
+    "provider": "Harvard",
+    "platform": "CS50",
+    "courses": [
+        {
+            "course_id": "cs50x",
+            "source_url": "https://cs50.harvard.edu/x/",
+            "pages": [
+                {
+                    "file": "cs50x/index.html",
+                    "url": "https://cs50.harvard.edu/x/",
+                    "role": "course_index"
+                },
+                {
+                    "file": "cs50x/lecture_0.html",
+                    "url": "https://cs50.harvard.edu/x/notes/0/",
+                    "role": "lecture_notes"
+                },
+                {
+                    "file": "cs50x/practice_problems.html",
+                    "url": "https://cs50.harvard.edu/x/practice/",
+                    "role": "practice_overview"
+                },
+                {
+                    "file": "cs50x/week_0.html",
+                    "url": "https://cs50.harvard.edu/x/weeks/0/",
+                    "role": "week_overview"
+                },
+                {
+                    "file": "cs50x/week_1.html",
+                    "url": "https://cs50.harvard.edu/x/weeks/1/",
+                    "role": "week_overview"
+                }
+            ]
+        },
+        {
+            "course_id": "cs50_python",
+            "source_url": "https://cs50.harvard.edu/python/",
+            "pages": [
+                {
+                    "file": "cs50_python/index.html",
+                    "url": "https://cs50.harvard.edu/python/",
+                    "role": "course_index"
+                },
+                {
+                    "file": "cs50_python/lecture_5.html",
+                    "url": "https://cs50.harvard.edu/python/notes/5/",
+                    "role": "lecture_notes"
+                },
+                {
+                    "file": "cs50_python/cdn.html",
+                    "url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/",
+                    "role": "source_code_index"
+                },
+                {
+                    "file": "cs50_python/practice_1.html",
+                    "url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+                    "role": "assignment"
+                },
+                {
+                    "file": "cs50_python/week_0.html",
+                    "url": "https://cs50.harvard.edu/python/weeks/0/",
+                    "role": "week_overview"
+                },
+                {
+                    "file": "cs50_python/week_5.html",
+                    "url": "https://cs50.harvard.edu/python/weeks/5/",
+                    "role": "week_overview"
+                }
+            ]
+        },
+        {
+            "course_id": "cs50_sql",
+            "source_url": "https://cs50.harvard.edu/sql/",
+            "pages": [
+                {
+                    "file": "cs50_sql/index.html",
+                    "url": "https://cs50.harvard.edu/sql/",
+                    "role": "course_index"
+                },
+                {
+                    "file": "cs50_sql/week_0.html",
+                    "url": "https://cs50.harvard.edu/sql/weeks/0/",
+                    "role": "week_overview"
+                },
+                {
+                    "file": "cs50_sql/week_6.html",
+                    "url": "https://cs50.harvard.edu/sql/weeks/6/",
+                    "role": "week_overview"
+                }
+            ]
+        },
+        {
+            "course_id": "cs50_ai",
+            "source_url": "https://cs50.harvard.edu/ai/",
+            "pages": [
+                {
+                    "file": "cs50_ai/index.html",
+                    "url": "https://cs50.harvard.edu/ai/",
+                    "role": "course_index"
+                },
+                {
+                    "file": "cs50_ai/lecture_1.html",
+                    "url": "https://cs50.harvard.edu/ai/notes/1/",
+                    "role": "lecture_notes"
+                },
+                {
+                    "file": "cs50_ai/practice.html",
+                    "url": "https://cs50.harvard.edu/ai/projects/4/shopping/",
+                    "role": "assignment"
+                },
+                {
+                    "file": "cs50_ai/week_1.html",
+                    "url": "https://cs50.harvard.edu/ai/weeks/1/",
+                    "role": "week_overview"
+                }
+            ]
+        }
+    ]
+}
