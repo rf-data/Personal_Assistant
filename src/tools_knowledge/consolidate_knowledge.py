@@ -252,6 +252,14 @@ def consolidate_knowledge(
     expression_similarity: float = 0.96,
 ) -> ConsolidatedKnowledgeDocument:
 
+    if document.source_id is None or not document.source_id.strip():
+        raise ValueError(
+            "Knowledge consolidation requires a non-empty source_id. "
+            "Legacy extraction JSON can be loaded without it, but consolidation "
+            "requires an explicitly verified transcript source identity; "
+            "no identity is inferred from the extraction filename or URL."
+        )
+
     statement_groups: list[dict] = []
     expression_groups: list[dict] = []
 

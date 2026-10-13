@@ -551,6 +551,9 @@ class ChunkKnowledgeResult(BaseModel):
 
 
 class TranscriptKnowledgeDocument(BaseModel):
+    # Legacy extraction JSON may lack identity; consumers must require it explicitly.
+    source_id: str | None = Field(default=None, min_length=1, pattern=r"\S")
+
     transcript_url: str | None
     media_id: str | None
 
