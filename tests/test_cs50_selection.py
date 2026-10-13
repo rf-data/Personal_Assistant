@@ -26,7 +26,11 @@ def no_network(monkeypatch):
 
 @pytest.fixture
 def courses():
-    return discover_fixture_courses(ROOT / "docs/course_sources/cs50/manifest.json")
+    # Preserve the original four-course regression matrix; six-course cases have
+    # their own tests including fully parsed Web/Cybersecurity fixtures.
+    return discover_fixture_courses(
+        ROOT / "docs/course_sources/cs50/regression_manifest.json"
+    )[:4]
 
 
 def video(preview):

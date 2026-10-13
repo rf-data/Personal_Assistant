@@ -100,7 +100,8 @@ def no_network(monkeypatch):
 def courses():
     return {
         course.course_id: course
-        for course in discover_fixture_courses(FIXTURES / "manifest.json")
+        for course in discover_fixture_courses(FIXTURES / "regression_manifest.json")
+        if course.course_id in ROOTS
     }
 
 
@@ -299,7 +300,7 @@ def test_short_lists_and_deferred_details(courses, monkeypatch):
 
     monkeypatch.setattr(prepare_cs50, "_parse_fixture", tracked)
     discover_fixture_courses(FIXTURES / "manifest.json")
-    assert Counter(seen) == {"course_index": 4, "week_overview": 7}
+    assert Counter(seen) == {"course_index": 6, "week_overview": 50}
 
 
 def test_report_warnings_and_deterministic_results(courses):
@@ -314,7 +315,8 @@ def test_report_warnings_and_deterministic_results(courses):
         ] == [s.key for s in course.sections if s.status == "referenced"]
     assert [c.model_dump_json() for c in courses.values()] == [
         c.model_dump_json()
-        for c in discover_fixture_courses(FIXTURES / "manifest.json")
+        for c in discover_fixture_courses(FIXTURES / "regression_manifest.json")
+        if c.course_id in ROOTS
     ]
     python = courses["cs50_python"]
     assert python.sections[0].title == "Functions, Variables"

@@ -180,14 +180,22 @@ def _role(context: tuple[str, ...]) -> ResourceRole:
         label = label.casefold()
         if label in LIST_ROLES:
             return LIST_ROLES[label]
+        if label == "final project":
+            return ResourceRole.PROJECT
         for prefix, role in (
             ("problem set", ResourceRole.PROBLEM_SET),
             ("quiz", ResourceRole.QUIZ),
             ("project", ResourceRole.PROJECT),
+            ("assignment", ResourceRole.PROBLEM_SET),
         ):
             if label == prefix or label.startswith(prefix + " "):
                 return role
     return ResourceRole.OTHER
+
+
+def _is_lecture_label(label: str) -> bool:
+    # Web fixtures use the imperative "Watch lecture." as the list root.
+    return label.casefold() in {"lecture", "watch lecture."}
 
 
 def _language(context: tuple[str, ...], url: str) -> str | None:
@@ -369,7 +377,7 @@ def parse_week_page(
         for item in list_node.find_all("li", recursive=False):
             label = _label(item, skip_links=True) or _label(item)
             path = context + ((label,) if label else ())
-            if not context and label.casefold() == "lecture":
+            if not context and _is_lecture_label(label):
                 lecture_nodes.append(item)
             for link in item.find_all("a", href=True):
                 if link.find_parent("li") is not item:
@@ -386,12 +394,13 @@ def parse_week_page(
                     continue
                 if url is None:
                     continue
-                role = _role(path)
+                # Project links may occur inside "Start <a>Project 0</a>.".
+                role = _role((*path, _label(link)))
                 variant = _variant(url, path, evidence)
                 if (
                     role == ResourceRole.LECTURE_VIDEO
                     and context
-                    and context[0].casefold() == "lecture"
+                    and _is_lecture_label(context[0])
                     and variant
                     and variant.media_type == "video"
                 ):
@@ -478,6 +487,19 @@ def parse_week_page(
                 "unrecognized_embed", f"Cannot identify lecture embed: {raw}", evidence
             )
     if lecture_nodes or primary_variants:
+        for language in _unique(variant.language for variant in primary_variants):
+            ids = {
+                variant.media_id
+                for variant in primary_variants
+                if variant.language == language and variant.media_id
+            }
+            if len(ids) > 1:
+                warn(
+                    "multiple_lecture_media_ids",
+                    f"Lecture player/embed IDs differ for language {language or 'unknown'}: "
+                    + ", ".join(sorted(ids)),
+                    section.provenance[0],
+                )
         resources.insert(
             0,
             ResourceCandidate(

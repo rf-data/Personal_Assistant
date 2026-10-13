@@ -7,7 +7,9 @@ from typing import Annotated, Literal, Self
 
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, model_validator
 
-CourseId = Literal["cs50x", "cs50_python", "cs50_sql", "cs50_ai"]
+CourseId = Literal[
+    "cs50x", "cs50_python", "cs50_sql", "cs50_ai", "cs50_web", "cs50_cybersecurity"
+]
 NonEmpty = Annotated[str, Field(min_length=1, pattern=r"\S")]
 
 

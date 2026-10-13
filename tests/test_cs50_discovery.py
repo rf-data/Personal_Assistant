@@ -43,20 +43,51 @@ def write_manifest(tmp_path, mutate=lambda data: None):
     return path
 
 
-def test_all_18_fixtures_are_referenced():
+def test_all_63_fixtures_are_referenced_and_original_18_preserved():
     manifest = load_fixture_manifest(FIXTURES / "manifest.json")
     files = [page.file for course in manifest.courses for page in course.pages]
-    assert len(files) == 18
+    assert len(files) == 63
+    historical = load_fixture_manifest(FIXTURES / "regression_manifest.json")
+    assert sum(len(course.pages) for course in historical.courses[:4]) == 18
     assert set(files) == {
         str(path.relative_to(FIXTURES)) for path in FIXTURES.glob("*/*.html")
     }
-    assert [len(course.pages) for course in manifest.courses] == [5, 6, 3, 4]
+    assert [len(course.pages) for course in manifest.courses] == [15, 14, 8, 10, 10, 6]
     assert {course.course_id for course in manifest.courses} == {
         "cs50x",
         "cs50_python",
         "cs50_sql",
         "cs50_ai",
+        "cs50_web",
+        "cs50_cybersecurity",
     }
+
+
+def test_fixture_checksum_mismatch(tmp_path):
+    path = write_manifest(tmp_path)
+    fixture = tmp_path / "cs50_web/week_0.html"
+    fixture.write_bytes(fixture.read_bytes() + b"\n<!-- modified -->")
+    with pytest.raises(ManifestError, match="cs50_web/week_0.html: SHA-256 mismatch"):
+        load_fixture_manifest(path)
+
+
+def test_legacy_manifest_without_checksums(tmp_path):
+    def remove_checksums(data):
+        for course in data["courses"]:
+            for page in course["pages"]:
+                page.pop("sha256")
+
+    manifest = load_fixture_manifest(write_manifest(tmp_path, remove_checksums))
+    assert all(p.sha256 is None for c in manifest.courses for p in c.pages)
+
+
+@pytest.mark.parametrize("digest", ["not-a-hash", "A" * 64, "1" * 63])
+def test_invalid_checksum(tmp_path, digest):
+    path = write_manifest(
+        tmp_path, lambda d: d["courses"][0]["pages"][0].update(sha256=digest)
+    )
+    with pytest.raises(ManifestError, match="sha256"):
+        load_fixture_manifest(path)
 
 
 def test_invalid_json(tmp_path):

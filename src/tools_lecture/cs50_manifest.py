@@ -1,12 +1,13 @@
 """Validate CS50 HTML fixtures without fetching or extracting course content."""
 
+import hashlib
 import json
 import re
 from pathlib import Path, PurePosixPath
 from typing import Literal, Self
 from urllib.parse import urlsplit
 
-from pydantic import HttpUrl, ValidationError, field_validator, model_validator
+from pydantic import Field, HttpUrl, ValidationError, field_validator, model_validator
 
 from src.model_discovery.cs50 import CourseId, DiscoveryModel
 
@@ -15,6 +16,8 @@ COURSE_PATHS = {
     "cs50_python": "python",
     "cs50_sql": "sql",
     "cs50_ai": "ai",
+    "cs50_web": "web",
+    "cs50_cybersecurity": "cybersecurity",
 }
 FixtureRole = Literal[
     "course_index",
@@ -34,6 +37,7 @@ class FixturePage(DiscoveryModel):
     file: str
     url: HttpUrl
     role: FixtureRole
+    sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
 
     @field_validator("file")
     @classmethod
@@ -156,7 +160,8 @@ def load_fixture_manifest(path: Path | str) -> FixtureManifest:
             if not fixture.is_file():
                 raise ManifestError(f"{page.file}: fixture file not found: {fixture}")
             try:
-                html = fixture.read_text(encoding="utf-8")
+                raw = fixture.read_bytes()
+                html = raw.decode("utf-8")
             except (OSError, UnicodeError) as exc:
                 raise ManifestError(f"{page.file}: cannot read fixture: {exc}") from exc
             original = re.search(
@@ -165,5 +170,12 @@ def load_fixture_manifest(path: Path | str) -> FixtureManifest:
             if original and original.group(1) != str(page.url):
                 raise ManifestError(
                     f"{page.file}: URL {page.url} contradicts saved original {original.group(1)}"
+                )
+            if (
+                page.sha256 is not None
+                and hashlib.sha256(raw).hexdigest() != page.sha256
+            ):
+                raise ManifestError(
+                    f"{page.file}: SHA-256 mismatch; fixture content changed"
                 )
     return manifest

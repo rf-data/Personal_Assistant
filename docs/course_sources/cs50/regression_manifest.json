@@ -1,0 +1,246 @@
+{
+    "provider": "Harvard",
+    "platform": "CS50",
+    "courses": [
+        {
+            "course_id": "cs50x",
+            "source_url": "https://cs50.harvard.edu/x/",
+            "pages": [
+                {
+                    "file": "cs50x/index.html",
+                    "url": "https://cs50.harvard.edu/x/",
+                    "role": "course_index",
+                    "sha256": "0eeb560036aff94b426d37336dd28faa0083ee1bf0f0769fbaa4d5700f75176f"
+                },
+                {
+                    "file": "cs50x/lecture_0.html",
+                    "url": "https://cs50.harvard.edu/x/notes/0/",
+                    "role": "lecture_notes",
+                    "sha256": "e966a32e53130acdc6c821ab77343f8a251688e52e93eb1dd12312451be2280b"
+                },
+                {
+                    "file": "cs50x/practice_problems.html",
+                    "url": "https://cs50.harvard.edu/x/practice/",
+                    "role": "practice_overview",
+                    "sha256": "ce44888d4a4386c5c1ed7d315d16669fb6008c0806a13d8e8586338d84957d0f"
+                },
+                {
+                    "file": "cs50x/week_0.html",
+                    "url": "https://cs50.harvard.edu/x/weeks/0/",
+                    "role": "week_overview",
+                    "sha256": "5bf4af8a04f302a2c863eda0fb65589428b1f9fcaa1f8a545e1df93fcb21abd7"
+                },
+                {
+                    "file": "cs50x/week_1.html",
+                    "url": "https://cs50.harvard.edu/x/weeks/1/",
+                    "role": "week_overview",
+                    "sha256": "f54d03c14aa361627a0a984de82032ead4f04467e19565612826e60ac33cbe64"
+                }
+            ]
+        },
+        {
+            "course_id": "cs50_python",
+            "source_url": "https://cs50.harvard.edu/python/",
+            "pages": [
+                {
+                    "file": "cs50_python/index.html",
+                    "url": "https://cs50.harvard.edu/python/",
+                    "role": "course_index",
+                    "sha256": "228fd09a21987bc55147b7c9660c9f496dda49d234ebc1cb620e58fcb2963efe"
+                },
+                {
+                    "file": "cs50_python/lecture_5.html",
+                    "url": "https://cs50.harvard.edu/python/notes/5/",
+                    "role": "lecture_notes",
+                    "sha256": "0855465b0458067ce5b6889d5e3929a49de108aa8d01d877c25e80bea0cd8367"
+                },
+                {
+                    "file": "cs50_python/cdn.html",
+                    "url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/",
+                    "role": "source_code_index",
+                    "sha256": "fbedb5c020f2ec86b225ef43b2a30bd4f4849310f65d4bcaff98fa3748e875e0"
+                },
+                {
+                    "file": "cs50_python/practice_1.html",
+                    "url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+                    "role": "assignment",
+                    "sha256": "e01e960e04562376f0381732f8a72f3883012e945bc10d2dbb93cf791a1ef6cd"
+                },
+                {
+                    "file": "cs50_python/week_0.html",
+                    "url": "https://cs50.harvard.edu/python/weeks/0/",
+                    "role": "week_overview",
+                    "sha256": "8526668d7cffb93fed9e32f66888dd8b77eed2d643b4527dba0df44a5c6f08e0"
+                },
+                {
+                    "file": "cs50_python/week_5.html",
+                    "url": "https://cs50.harvard.edu/python/weeks/5/",
+                    "role": "week_overview",
+                    "sha256": "1af9d9d6e121e71c9ba30f6e128aca138ac573167862ff6eaf21afb7481627b4"
+                }
+            ]
+        },
+        {
+            "course_id": "cs50_sql",
+            "source_url": "https://cs50.harvard.edu/sql/",
+            "pages": [
+                {
+                    "file": "cs50_sql/index.html",
+                    "url": "https://cs50.harvard.edu/sql/",
+                    "role": "course_index",
+                    "sha256": "b866c60d990ab9d4968dc91205e678392b3f2ef22d70926f8871d4fa9c5b91f2"
+                },
+                {
+                    "file": "cs50_sql/week_0.html",
+                    "url": "https://cs50.harvard.edu/sql/weeks/0/",
+                    "role": "week_overview",
+                    "sha256": "ae3d0c43b36f2353d85b6aa644f8e76bf82a11421f4c339ab3f47a044381f80e"
+                },
+                {
+                    "file": "cs50_sql/week_6.html",
+                    "url": "https://cs50.harvard.edu/sql/weeks/6/",
+                    "role": "week_overview",
+                    "sha256": "fa5453307c6430bf0b484b4be85e16e2f7f5d83a6311055c0b97641fada285f4"
+                }
+            ]
+        },
+        {
+            "course_id": "cs50_ai",
+            "source_url": "https://cs50.harvard.edu/ai/",
+            "pages": [
+                {
+                    "file": "cs50_ai/index.html",
+                    "url": "https://cs50.harvard.edu/ai/",
+                    "role": "course_index",
+                    "sha256": "e289bf931f532f05d703d05f916c074b646258d173b398e8c7b67e4a396dd9ab"
+                },
+                {
+                    "file": "cs50_ai/lecture_1.html",
+                    "url": "https://cs50.harvard.edu/ai/notes/1/",
+                    "role": "lecture_notes",
+                    "sha256": "27f12cea52cf1fb33444ed63dd50cdec230f1b48bd8f370f208a743db5aa4e40"
+                },
+                {
+                    "file": "cs50_ai/practice.html",
+                    "url": "https://cs50.harvard.edu/ai/projects/4/shopping/",
+                    "role": "assignment",
+                    "sha256": "27dd092c335a06c6f52e7e22dcdb64349c6492c73d340642f83bc881357e000b"
+                },
+                {
+                    "file": "cs50_ai/week_1.html",
+                    "url": "https://cs50.harvard.edu/ai/weeks/1/",
+                    "role": "week_overview",
+                    "sha256": "5b6415efe5dbccf363810301824d82063b4705dca65cf157d09ba05197cf8b34"
+                }
+            ]
+        },
+        {
+            "course_id": "cs50_web",
+            "source_url": "https://cs50.harvard.edu/web/",
+            "pages": [
+                {
+                    "file": "cs50_web/index.html",
+                    "url": "https://cs50.harvard.edu/web/",
+                    "role": "course_index",
+                    "sha256": "a1209219a539c0a0560e7dd59034f62c5fd73365097320e224c64d2816e24316"
+                },
+                {
+                    "file": "cs50_web/week_0.html",
+                    "url": "https://cs50.harvard.edu/web/weeks/0/",
+                    "role": "week_overview",
+                    "sha256": "69106e298c139e62fd32f30273aa19a4dcc8432aa51b67cd0befb58b0cb41dfd"
+                },
+                {
+                    "file": "cs50_web/week_1.html",
+                    "url": "https://cs50.harvard.edu/web/weeks/1/",
+                    "role": "week_overview",
+                    "sha256": "52c792f73a42b9be9935f34e035fcb54cc4fb8ff1c19b6773576fdc4a0e4f96e"
+                },
+                {
+                    "file": "cs50_web/week_2.html",
+                    "url": "https://cs50.harvard.edu/web/weeks/2/",
+                    "role": "week_overview",
+                    "sha256": "4792a7a961eeb0f96e3c41c6a1b082ef6d1f70806b8afad7c0b3ea3d3137f0a8"
+                },
+                {
+                    "file": "cs50_web/week_3.html",
+                    "url": "https://cs50.harvard.edu/web/weeks/3/",
+                    "role": "week_overview",
+                    "sha256": "ae237b8ec2ea62268d5fa7ebd4c748c3f7222d1fd982e8715d8ef1cf7e3bc695"
+                },
+                {
+                    "file": "cs50_web/week_4.html",
+                    "url": "https://cs50.harvard.edu/web/weeks/4/",
+                    "role": "week_overview",
+                    "sha256": "852037c9acce3ea048dbbcd917b087ef6cef80dc308ee7e505fcf22e8a9c57a9"
+                },
+                {
+                    "file": "cs50_web/week_5.html",
+                    "url": "https://cs50.harvard.edu/web/weeks/5/",
+                    "role": "week_overview",
+                    "sha256": "246ec2083314a90f3acc45e3ffee20c976144f2c64a40a5059997f3faae2e3f2"
+                },
+                {
+                    "file": "cs50_web/week_6.html",
+                    "url": "https://cs50.harvard.edu/web/weeks/6/",
+                    "role": "week_overview",
+                    "sha256": "31890c143bee729b5df1e4f5f86fce35af6e7b666e3fa72219d1d861c9b93d08"
+                },
+                {
+                    "file": "cs50_web/week_7.html",
+                    "url": "https://cs50.harvard.edu/web/weeks/7/",
+                    "role": "week_overview",
+                    "sha256": "6f4443500027e87b5c8a0e05c22b98d7562a7a6cc4e280c1f35f10a407fec267"
+                },
+                {
+                    "file": "cs50_web/week_8.html",
+                    "url": "https://cs50.harvard.edu/web/weeks/8/",
+                    "role": "week_overview",
+                    "sha256": "c776304be52bb02add12db75a1234df0ec1d46b9f9997bf93c460c143654e85d"
+                }
+            ]
+        },
+        {
+            "course_id": "cs50_cybersecurity",
+            "source_url": "https://cs50.harvard.edu/cybersecurity/",
+            "pages": [
+                {
+                    "file": "cs50_cybersecurity/index.html",
+                    "url": "https://cs50.harvard.edu/cybersecurity/",
+                    "role": "course_index",
+                    "sha256": "bb42d5314e428026672af3bcf9effa59c29a1048d564a3484ab32bc782b57784"
+                },
+                {
+                    "file": "cs50_cybersecurity/week_0.html",
+                    "url": "https://cs50.harvard.edu/cybersecurity/weeks/0/",
+                    "role": "week_overview",
+                    "sha256": "89ef2ddb3c610003001ab170aa27e2f980da66eb1e9a97d060017ef57f4bca21"
+                },
+                {
+                    "file": "cs50_cybersecurity/week_1.html",
+                    "url": "https://cs50.harvard.edu/cybersecurity/weeks/1/",
+                    "role": "week_overview",
+                    "sha256": "5359f6674001e21b570b8353ad57b180542f1edd765548adb2d7bd0614bd9c8b"
+                },
+                {
+                    "file": "cs50_cybersecurity/week_2.html",
+                    "url": "https://cs50.harvard.edu/cybersecurity/weeks/2/",
+                    "role": "week_overview",
+                    "sha256": "79e063046f05b6a5fced08361247d0ae9cb81f2412c92903327f2589e7fb0e64"
+                },
+                {
+                    "file": "cs50_cybersecurity/week_3.html",
+                    "url": "https://cs50.harvard.edu/cybersecurity/weeks/3/",
+                    "role": "week_overview",
+                    "sha256": "67943c0bf689f991b6f149680e5ec355e78171caf8c1ef4ec163e2237b6ba178"
+                },
+                {
+                    "file": "cs50_cybersecurity/week_4.html",
+                    "url": "https://cs50.harvard.edu/cybersecurity/weeks/4/",
+                    "role": "week_overview",
+                    "sha256": "7186979e676f6d26d904c311d92bc8a953dd8fc6abe585543d972d8de37f101d"
+                }
+            ]
+        }
+    ]
+}
