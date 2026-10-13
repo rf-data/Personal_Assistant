@@ -94,6 +94,7 @@ dev = [
     "ruff>=0.15.14",
     "pytest>=9.0.3",
     "detect-secrets>=1.5.0",
+    "pre-commit>=4.7.0",
 ]
 
 unclear = [
