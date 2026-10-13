@@ -2,8 +2,10 @@
 # imports
 from pathlib import Path
 from enum import Enum, StrEnum
-from pydantic import BaseModel, Field, ConfigDict
-from typing import Literal
+from pydantic import BaseModel, Field, ConfigDict, model_validator
+from typing import Literal, Self
+
+from src.model_transcribe.data_transcribe import TranscriptProvenance
 
 # ? TODO: implement "theorem", "lemma", "proof",  "corollary,
 # ? "algorithm", "inequality", "function", "expression",
@@ -550,7 +552,41 @@ class ChunkKnowledgeResult(BaseModel):
     extraction: KnowledgeExtract | None = None
 
 
-class TranscriptKnowledgeDocument(BaseModel):
+class TranscriptKnowledgeMetadata(BaseModel):
+    """Optional source metadata shared by extraction and consolidation outputs."""
+
+    language: str | None = Field(default=None, min_length=1, pattern=r"\S")
+    transcript_provenance: TranscriptProvenance | None = None
+    course_id: str | None = Field(default=None, min_length=1, pattern=r"\S")
+    lecture_id: str | None = Field(default=None, min_length=1, pattern=r"\S")
+
+    def transcript_metadata(self) -> dict:
+        return {
+            name: getattr(self, name)
+            for name in (
+                "language",
+                "transcript_provenance",
+                "course_id",
+                "lecture_id",
+            )
+        }
+
+    @model_validator(mode="after")
+    def consistent_transcript_metadata(self) -> Self:
+        provenance = self.transcript_provenance
+        if provenance is not None:
+            for field, value in (
+                ("language", provenance.language),
+                ("transcript_url", provenance.source_url),
+                ("media_id", provenance.media_id),
+            ):
+                declared = getattr(self, field, None)
+                if declared is not None and value is not None and declared != value:
+                    raise ValueError(f"{field} contradicts transcript_provenance")
+        return self
+
+
+class TranscriptKnowledgeDocument(TranscriptKnowledgeMetadata):
     # Legacy extraction JSON may lack identity; consumers must require it explicitly.
     source_id: str | None = Field(default=None, min_length=1, pattern=r"\S")
 
@@ -661,7 +697,8 @@ class ConsolidationStats(BaseModel):
     formulas_consolidated: int = 0
 
 
-class ConsolidatedKnowledgeDocument(BaseModel):
+class ConsolidatedKnowledgeDocument(TranscriptKnowledgeMetadata):
+    media_id: str | None = None
     source_id: str
     transcript_url: str | None = None
 
@@ -677,7 +714,7 @@ class ConsolidatedKnowledgeDocument(BaseModel):
     stats: ConsolidationStats
 
 
-class LectureKnowledgeDocument(BaseModel):
+class LectureKnowledgeDocument(TranscriptKnowledgeMetadata):
     source_id: str
     transcript_url: str | None = None
     media_id: str | None = None
