@@ -132,3 +132,15 @@ def test_fake_http_failures_reserve_before_dispatch(tmp_path, failure):
             "job", "b", {"reserved_tokens": 1}
         )
     assert len(calls) == 1
+
+
+def test_usage_over_reserved_bound_blocks_future_spend(tmp_path):
+    journal = BudgetJournal(tmp_path, identity(2, 200))
+    journal.reserve("job", "a", {"reserved_tokens": 100})
+    with pytest.raises(CheckpointConflict, match="usage exceeded"):
+        journal.finish("job", "a", status="done", usage={"total_tokens": 150})
+    state = journal.snapshot()
+    assert next(iter(state.attempts.values())).status == "unknown"
+    assert next(iter(state.attempts.values())).usage["total_tokens"] == 150
+    with pytest.raises(CheckpointConflict, match="usage exceeded"):
+        journal.reserve("job", "b", {"reserved_tokens": 100})
