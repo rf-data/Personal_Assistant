@@ -266,3 +266,44 @@ def test_ack_without_points_is_not_complete(index_case, tmp_path, monkeypatch):
             )
         receipt = tmp_path / "state" / plan.collection.name / (plan.plan_id + ".json")
         assert UploadState.model_validate_json(receipt.read_bytes()).status == "failed"
+
+
+def test_replaced_source_in_same_lecture_cannot_leave_old_points(index_case, tmp_path):
+    from qdrant_client.models import PointStruct
+
+    adapter, workspace, _, _, plan, vectors = index_case
+    with closing(QdrantClient(":memory:")) as client:
+        upsert_plan(
+            client,
+            plan,
+            vectors,
+            adapter,
+            workspace=workspace,
+            state_root=tmp_path / "state",
+            execute=True,
+            allow_create=True,
+        )
+        old = plan.units[0].model_copy(
+            update={"source_id": "prior-source", "resource_id": "prior-resource"}
+        )
+        client.upsert(
+            plan.collection.name,
+            points=[
+                PointStruct(
+                    id=old.point_id,
+                    vector=list(vectors.vectors[0]),
+                    payload=old.model_dump(mode="json"),
+                )
+            ],
+            wait=True,
+        )
+        with pytest.raises(ValueError, match="Replaced source"):
+            upsert_plan(
+                client,
+                plan,
+                vectors,
+                adapter,
+                workspace=workspace,
+                state_root=tmp_path / "state",
+                execute=True,
+            )

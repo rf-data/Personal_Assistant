@@ -33,6 +33,9 @@ __init__.py
 
 # exclude folder from pushing
 .cache/**
+
+# Source-grounded questions only; no local transcript/receipt artifacts.
+!/docs/cs50/evaluation/python0_retrieval_questions.v1.json
 configuration/**
 data/**
 logs/**

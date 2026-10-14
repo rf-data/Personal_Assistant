@@ -407,6 +407,14 @@ def checked_existing(client, plan, artifact):
         p.point_id: (p, v) for p, v in zip(plan.units, artifact.vectors, strict=True)
     }
     selected = {s.input["source_id"] for s in plan.sources}
+    slots = {
+        (s.input["course_id"], s.input["section_key"]): (
+            s.input["lecture_id"],
+            s.input["resource_id"],
+            s.input["source_id"],
+        )
+        for s in plan.sources
+    }
     matched = set()
     for record in all_points(client, plan.collection):
         payload = TranscriptPayload.model_validate(record.payload)
@@ -414,6 +422,15 @@ def checked_existing(client, plan, artifact):
         if str(record.id) != payload.point_id:
             raise ValueError("Foreign point ID/payload conflict")
         checked_vectors([record.vector], plan.collection.embedding, 1)
+        slot = slots.get((payload.course_id, payload.section_key))
+        if slot is not None and slot != (
+            payload.lecture_id,
+            payload.resource_id,
+            payload.source_id,
+        ):
+            raise ValueError(
+                "Replaced source in selected lecture; old points require an explicit new index"
+            )
         if payload.source_id not in selected:
             continue
         if payload.point_id not in expected:

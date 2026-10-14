@@ -6,7 +6,17 @@ from pathlib import Path
 from unittest.mock import patch
 
 
-def demonstrate(adapter, directory, *, course=None, section=None, all_six=False):
+def demonstrate(
+    adapter,
+    directory,
+    *,
+    course=None,
+    section=None,
+    all_six=False,
+    simulate_interruption=False,
+):
+    import json
+
     import httpx
     from qdrant_client import QdrantClient
 
@@ -84,17 +94,56 @@ def demonstrate(adapter, directory, *, course=None, section=None, all_six=False)
             workspace=workspace,
             destination=directory / "vectors.v1.json",
         )
+        partial_points = None
         with closing(QdrantClient(path=str(directory / "qdrant"))) as client:
-            done = upsert_plan(
-                client,
-                plan,
-                artifact,
-                adapter,
-                workspace=workspace,
-                state_root=directory / "status",
-                execute=True,
-                allow_create=True,
-            )
+            if simulate_interruption:
+                real_upsert = client.upsert
+
+                def lost_ack(*args, **kwargs):
+                    real_upsert(*args, **kwargs)
+                    raise TimeoutError(
+                        "Synthetic acknowledgement loss after real local write"
+                    )
+
+                with patch.object(client, "upsert", lost_ack):
+                    try:
+                        upsert_plan(
+                            client,
+                            plan,
+                            artifact,
+                            adapter,
+                            workspace=workspace,
+                            state_root=directory / "status",
+                            execute=True,
+                            allow_create=True,
+                            batch_size=4,
+                        )
+                    except TimeoutError:
+                        partial_points = client.count(plan.collection.name).count
+                if partial_points is None or not 0 < partial_points < len(plan.units):
+                    raise AssertionError(
+                        "Expected an actually interrupted partial upload"
+                    )
+                done = upsert_plan(
+                    client,
+                    plan,
+                    artifact,
+                    adapter,
+                    workspace=workspace,
+                    state_root=directory / "status",
+                    execute=True,
+                )
+            else:
+                done = upsert_plan(
+                    client,
+                    plan,
+                    artifact,
+                    adapter,
+                    workspace=workspace,
+                    state_root=directory / "status",
+                    execute=True,
+                    allow_create=True,
+                )
         # Reopen the actual persisted local DB for resume/readback, not only memory.
         with closing(QdrantClient(path=str(directory / "qdrant"))) as client:
             resumed = upsert_plan(
@@ -131,11 +180,23 @@ def demonstrate(adapter, directory, *, course=None, section=None, all_six=False)
             "embedding_provider": "fake",
             "sources": len(inputs),
             "planned_source_tasks": report["tasks"],
+            "completed_source_tasks": sum(
+                len(json.loads(i.receipt_path.read_bytes())["actions"]) for i in inputs
+            ),
+            "unique_source_task_ids": len(
+                {
+                    task
+                    for i in inputs
+                    for task in json.loads(i.receipt_path.read_bytes())["actions"]
+                }
+            ),
             "fake_http_requests": len(requests),
             "units": len(plan.units),
             "unique_points": len({p.point_id for p in plan.units}),
             "complete": status["complete"],
             "resume_equal": done == resumed,
+            "initial_partial_points": partial_points,
+            "empty_cues_excluded": all(1 not in p.segment_ids for p in plan.units),
             "hits_original_checked": all(h.original_source_checked for h in hits),
             "recall_at_k": None,
             "mrr": None,
