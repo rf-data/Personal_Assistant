@@ -22,6 +22,8 @@ class TranscriptSource(str, Enum):
     MANUAL_SUBTITLE = "manual_subtitle"
     AUTO_SUBTITLE = "auto_subtitle"
     WHISPER = "whisper"
+    OFFICIAL_TRANSCRIPT = "official_transcript"
+    OFFICIAL_SUBTITLE = "official_subtitle"
 
 
 class DownloadStrategy(str, Enum):

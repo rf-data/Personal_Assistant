@@ -119,7 +119,9 @@ def worker(plan_path):
         from src.model_knowledge.data_knowledge import ChunkKnowledgeResult
         from src.model_transcribe.data_transcribe import TranscriptDocument
         from src.tools_knowledge.find_knowledge import (
-            _get_extract_knowledge,
+            _get_knowledge_extractor as _get_extract_knowledge,
+        )
+        from src.tools_knowledge.find_knowledge import (
             attach_chunk_provenance,
             build_transcript_chunks,
             extract_knowledge,

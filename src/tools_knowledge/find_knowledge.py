@@ -3,7 +3,7 @@
 import json
 
 # from pathlib import Path
-import marvin
+from functools import lru_cache
 
 from src.core.memory import app_session
 from src.model_knowledge.data_knowledge import (
@@ -172,8 +172,7 @@ def enrich_chunks(chunks: list[TranscriptChunk]) -> list[TranscriptChunk]:
 KNOWLEDGE_EXTRACTION_PROMPT = build_knowledge_extraction_prompt()
 
 
-@marvin.fn(instructions=KNOWLEDGE_EXTRACTION_PROMPT)
-def extract_knowledge(
+def _extract_knowledge_contract(
     target_chunk: str,
     previous_context: str | None,
     next_context: str | None,
@@ -181,6 +180,23 @@ def extract_knowledge(
     # end: float
 ) -> ChunkKnowledgeResult:
     ""
+
+
+@lru_cache(maxsize=1)
+def _get_knowledge_extractor():
+    import marvin
+
+    _extract_knowledge_contract.__name__ = "extract_knowledge"
+    _extract_knowledge_contract.__qualname__ = "extract_knowledge"
+    return marvin.fn(instructions=KNOWLEDGE_EXTRACTION_PROMPT)(
+        _extract_knowledge_contract
+    )
+
+
+def extract_knowledge(
+    target_chunk: str, previous_context: str | None, next_context: str | None
+) -> ChunkKnowledgeResult:
+    return _get_knowledge_extractor()(target_chunk, previous_context, next_context)
 
 
 @retry_llm_call
