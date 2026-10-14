@@ -27,7 +27,9 @@ lokalen Dateien. `git merge --ff-only origin/master` meldete „Already up to da
 kein Reset/erzwungener Checkout. SHA-256-Vergleich bestätigt unveränderte drei
 geschützte Dateien vor/nach dem Aufruf.
 
-Dokumentations-PR: wird nach abgeschlossenen Prüfungen erstellt, kein Merge.
+Dokumentations-PR: [#38](https://github.com/rf-data/Personal_Assistant/pull/38)
+gegen master erstellt; nicht gemergt. Lokale Archivierung ist auf dem PR-Branch
+umgesetzt und verifiziert, in master erst nach manueller Review/Integration.
 Bereinigung nach verifiziert identischem Baselinestatus und erneuter Einzelprüfung:
 **ein physischer Worktree** (Personal_Assistant-pilot-tests) entfernt und dessen
 integrierter Branch test/portable-cs50-pilot mit git branch -d gelöscht.
