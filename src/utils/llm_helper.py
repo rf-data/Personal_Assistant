@@ -1,21 +1,20 @@
 ## llm_helper.py
 # imports
-import os
 import hashlib
 import json
+import os
 import re
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+from typing import TYPE_CHECKING
 
-from openai import OpenAI
-import marvin
-from pydantic_ai import Agent
+if TYPE_CHECKING:
+    from openai import OpenAI
 
 import src.utils.path_helper as ph
-from src.core.config import folder_env_vars, agentic_env_vars
+from src.core.config import agentic_env_vars, folder_env_vars
 from src.core.memory import app_session
-from src.llm.data_llm import LLMUsage, LLMProvider
-
+from src.llm.data_llm import LLMProvider, LLMUsage
 from src.utils.dict_helper import save_dict
 
 
@@ -114,6 +113,9 @@ def configure_marvin(
     # model: str = "openai:gpt-4o-mini",
 ) -> None:
 
+    import marvin
+    from pydantic_ai import Agent
+
     api_key = agentic_env_vars.openai_api_key
 
     if not api_key:
@@ -135,7 +137,9 @@ def configure_marvin(
     return
 
 
-def get_openai_client() -> OpenAI:
+def get_openai_client() -> "OpenAI":
+    from openai import OpenAI
+
     # if not hasattr(_thread_local, "client"):
     client = OpenAI()
     return client
