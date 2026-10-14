@@ -171,7 +171,20 @@ sys.exit(module['worker'](Path(sys.argv[2])))
     assert chunk["segment_ids"] == [17] and chunk["start"] == 2 and chunk["end"] == 12
 
 
+@pytest.mark.optional_sdk
 def test_installed_provider_configuration_without_api(tmp_path):
+    profile = os.environ.get("CS50_TEST_PROFILE", "offline")
+    if profile not in ("offline", "sdk"):
+        pytest.fail("CS50_TEST_PROFILE must be offline or sdk")
+    if profile == "offline":
+        pytest.skip("Explicit default SDK-free CS50 profile; use CS50_TEST_PROFILE=sdk")
+    missing = [
+        name
+        for name in ("openai", "pydantic_ai")
+        if importlib.util.find_spec(name) is None
+    ]
+    if missing:
+        pytest.fail("SDK profile requires installed packages: " + ", ".join(missing))
     code = """
 import asyncio, socket
 def forbidden(*args, **kwargs):
