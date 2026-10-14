@@ -69,6 +69,7 @@ class RequestBudget:
         self.requests = 0
         self.reserved = 0
         self.chunk_attempted = False
+        self.before_dispatch = None  # Optional durable A01/A02 reservation hook.
 
     def begin_chunk(self):
         self.chunk_attempted = False
@@ -86,6 +87,15 @@ class RequestBudget:
         self.requests += 1
         self.chunk_attempted = True
         self.reserved += bound + self.output_limit
+        if self.before_dispatch is not None:
+            self.before_dispatch(
+                {
+                    "attempt": self.requests,
+                    "input_upper_bound": bound,
+                    "output_limit": self.output_limit,
+                    "reserved_tokens": bound + self.output_limit,
+                }
+            )
         return bound
 
 

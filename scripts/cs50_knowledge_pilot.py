@@ -6,6 +6,7 @@ import json
 import os
 import sys
 import time
+from contextlib import ExitStack
 from pathlib import Path
 
 from scripts.cs50_llm_smoke import supervise
@@ -14,8 +15,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def save(path, value):
-    with path.open("x", encoding="utf-8") as stream:
-        stream.write(json.dumps(value, indent=2, ensure_ascii=False) + "\n")
+    from src.tools_knowledge.cs50_checkpoint import atomic_json
+
+    atomic_json(path, value)
 
 
 def worker(configuration):
@@ -35,6 +37,9 @@ def worker(configuration):
         "phase": "initialization",
     }
     provider = None
+    checkpoint = None
+    current_chunk = None
+    resources = ExitStack()
     try:
         if not config["execute_llm"]:
             import socket
@@ -69,6 +74,7 @@ def worker(configuration):
             OpenAIHTTPProvider,
             RequestBudget,
             build_knowledge_extraction_prompt,
+            messages_for,
         )
 
         plan = CS50AdapterPlan.model_validate_json(Path(config["plan"]).read_bytes())
@@ -80,8 +86,9 @@ def worker(configuration):
         input = manifest.inputs[0]
         if input.course_id != "cs50_python" or input.section_key != "0":
             raise ValueError("Only CS50 Python week 0 pilot is authorized")
+        settings = KnowledgeSettings()
         available_chunks = build_cs50_knowledge_chunks(
-            plan, input, KnowledgeSettings(), workspace=config["workspace"]
+            plan, input, settings, workspace=config["workspace"]
         )
         start_index = config.get("chunk_index", 0)
         if not isinstance(start_index, int) or start_index < 0:
@@ -135,25 +142,154 @@ def worker(configuration):
         report["evidence_input_version"] = (
             "cs50_segment_evidence_v1" if segment_map is not None else None
         )
-        init = time.monotonic()
-        if config["execute_llm"]:
-            save(
-                directory / "initialization_started.json", {"phase": config["provider"]}
+        if config.get("checkpoint_dir"):
+            from src.tools_knowledge.cs50_checkpoint import (
+                CheckpointStore,
+                JobIdentity,
+                fingerprint,
             )
-            factory = (
-                MarvinProvider if config["provider"] == "marvin" else OpenAIHTTPProvider
+
+            checkpoint_path = Path(config["checkpoint_dir"]).absolute()
+            course = next(
+                c for c in plan.courses if c.lecture_course.course_id == input.course_id
             )
-            extra = {"segments": segment_map} if segment_map is not None else {}
-            provider = factory(
-                api_key=os.environ.get("OPENAI_API_KEY"),
+            source_root = course.artifact_root
+            if not source_root.is_absolute():
+                source_root = Path(config["workspace"]) / source_root
+            if (
+                checkpoint_path.resolve().is_relative_to(source_root.resolve())
+                or checkpoint_path.resolve().is_relative_to((ROOT / "data").resolve())
+                or checkpoint_path.resolve().is_relative_to(directory.resolve())
+                or directory.resolve().is_relative_to(checkpoint_path.resolve())
+            ):
+                raise ValueError(
+                    "Checkpoint must be separate from source artifacts and run output"
+                )
+            identity = JobIdentity(
+                **{
+                    key: getattr(input, key)
+                    for key in (
+                        "course_id",
+                        "section_key",
+                        "lecture_id",
+                        "resource_id",
+                        "source_id",
+                        "transcript_sha256",
+                    )
+                },
+                raw_sha256=input.raw_sha256,
+                input_binding_sha256=fingerprint(input.model_dump(mode="json")),
+                chunking=settings.model_dump(mode="json"),
+                chunk_plan_sha256=fingerprint(
+                    [c.model_dump(mode="json") for c in available_chunks]
+                ),
+                selected_chunks=tuple(c.chunk_id for c in chunks),
+                prompt_version=report["prompt_version"],
+                prompt_sha256=fingerprint(
+                    [messages_for(c, segments=segment_map) for c in chunks]
+                ),
+                result_schema_sha256=fingerprint(
+                    ChunkKnowledgeResult.model_json_schema()
+                ),
+                evidence_mode=evidence_mode,
+                evidence_version="cs50_segment_evidence_v1"
+                if segment_map is not None
+                else "chunk_v1",
+                provider=config["provider"],
                 model=config["model"],
-                budget=budget,
-                **extra,
+                execution_mode="llm" if config["execute_llm"] else "offline",
+                request_limits={
+                    k: config[k]
+                    for k in (
+                        "token_budget",
+                        "input_limit",
+                        "output_limit",
+                        "max_chunks",
+                    )
+                },
             )
+            checkpoint = resources.enter_context(
+                CheckpointStore(config["checkpoint_dir"], identity, chunks).locked()
+            )
+            report["checkpoint_job_id"] = identity.job_id
+        init = time.monotonic()
         report["initialization_seconds"] = time.monotonic() - init
         report["phase"] = "extraction"
         results = []
+
+        def validate_checkpoint(values, chunk):
+            result = ChunkKnowledgeResult.model_validate(values["result"])
+            fresh_audit = []
+            checked = build_cs50_knowledge_document(
+                input,
+                [chunk],
+                [result],
+                plan=plan,
+                workspace=config["workspace"],
+                evidence_mode=evidence_mode,
+                evidence_audit=fresh_audit,
+            ).chunks[0]
+            expected = {
+                "schema_version": 1,
+                "source_id": input.source_id,
+                "chunk_id": chunk.chunk_id,
+                "evidence_mode": evidence_mode,
+                "items": fresh_audit,
+            }
+            if (
+                checked != result
+                or values["evidence"] != expected
+                or not isinstance(values["provider"], dict)
+            ):
+                raise ValueError("Checkpoint result/evidence/source conflict")
+            return checked
+
+        # Validate the entire selected window before initializing a provider.
+        cached = {}
+        if checkpoint:
+            for selected in chunks:
+                current_chunk = selected.chunk_id
+                cached[selected.chunk_id] = checkpoint.reuse(
+                    selected.chunk_id,
+                    lambda values, selected=selected: validate_checkpoint(
+                        values, selected
+                    ),
+                )
         for chunk in chunks:
+            current_chunk = chunk.chunk_id
+            chunk_audit = []
+            reused = cached.get(chunk.chunk_id)
+            if reused is not None:
+                result, values, metadata = reused
+                results.append(result)
+                evidence_audit.extend(values["evidence"]["items"])
+                report["results"].append({**metadata, "reused": True})
+                save(directory / f"{chunk.chunk_id}.provider.json", values["provider"])
+                save(directory / f"{chunk.chunk_id}.json", values["result"])
+                continue
+            if checkpoint:
+                budget.before_dispatch = lambda reservation, cid=chunk.chunk_id: (
+                    checkpoint.reserve(cid, reservation)
+                )
+            if config["execute_llm"] and provider is None:
+                init = time.monotonic()
+                save(
+                    directory / "initialization_started.json",
+                    {"phase": config["provider"]},
+                )
+                factory = (
+                    MarvinProvider
+                    if config["provider"] == "marvin"
+                    else OpenAIHTTPProvider
+                )
+                extra = {"segments": segment_map} if segment_map is not None else {}
+                provider = factory(
+                    api_key=os.environ.get("OPENAI_API_KEY"),
+                    model=config["model"],
+                    budget=budget,
+                    **extra,
+                )
+                report["initialization_seconds"] = time.monotonic() - init
             record = {"chunk_id": chunk.chunk_id, "validated": False, "usage": None}
             report["results"].append(record)
             if provider:
@@ -192,11 +328,10 @@ def worker(configuration):
                     }
                 )
             # Keep explicitly provided model fields before evidence/identity overwrites.
-            save(
-                directory / f"{chunk.chunk_id}.provider.json",
-                record.pop("provider_fields", None)
-                or result.model_dump(mode="json", exclude_unset=True),
+            provider_fields = record.pop("provider_fields", None) or result.model_dump(
+                mode="json", exclude_unset=True
             )
+            save(directory / f"{chunk.chunk_id}.provider.json", provider_fields)
             # Chunk identity originates in the trusted input, not in the LLM response.
             if evidence_mode == "chunk":
                 result.analysis.chunk_id = chunk.chunk_id
@@ -209,11 +344,29 @@ def worker(configuration):
                 plan=plan,
                 workspace=config["workspace"],
                 evidence_mode=evidence_mode,
-                evidence_audit=evidence_audit,
+                evidence_audit=chunk_audit,
             )
+            evidence_audit.extend(chunk_audit)
             result = document.chunks[0]
             record["validated"] = True
             results.append(result)
+            if checkpoint:
+                checkpoint.complete(
+                    chunk.chunk_id,
+                    {
+                        "provider": provider_fields,
+                        "result": result.model_dump(mode="json"),
+                        "evidence": {
+                            "schema_version": 1,
+                            "source_id": input.source_id,
+                            "chunk_id": chunk.chunk_id,
+                            "evidence_mode": evidence_mode,
+                            "items": chunk_audit,
+                        },
+                    },
+                    record,
+                    lambda values, chunk=chunk: validate_checkpoint(values, chunk),
+                )
             save(directory / f"{chunk.chunk_id}.json", result.model_dump(mode="json"))
         document = build_cs50_knowledge_document(
             input,
@@ -258,7 +411,7 @@ def worker(configuration):
                 evidence_audit=evidence_audit,
                 worker_report={
                     "validated": True,
-                    "result_origin": "LLM" if provider else "synthetic",
+                    "result_origin": "LLM" if config["execute_llm"] else "synthetic",
                 },
             ),
         )
@@ -267,10 +420,13 @@ def worker(configuration):
             phase="complete",
             requests=budget.requests,
             reserved_tokens=budget.reserved,
-            result_origin="LLM" if provider else "synthetic",
+            result_origin="LLM" if config["execute_llm"] else "synthetic",
         )
         return 0
     except Exception as error:
+        if checkpoint is not None and current_chunk is not None:
+            checkpoint.interrupted(current_chunk)
+            report["checkpoint_status"] = checkpoint.state.chunks[current_chunk].status
         report["error"] = type(
             error
         ).__name__  # No credentials or provider response bodies.
@@ -281,9 +437,12 @@ def worker(configuration):
         report["runtime_seconds"] = time.monotonic() - started
         if "init" in locals() and "initialization_seconds" not in report:
             report["initialization_seconds"] = time.monotonic() - init
-        save(directory / "worker_result.json", report)
-        if provider:
-            provider.close()
+        try:
+            save(directory / "worker_result.json", report)
+        finally:
+            resources.close()
+            if provider:
+                provider.close()
 
 
 def main(argv=None):
@@ -309,6 +468,11 @@ def main(argv=None):
     parser.add_argument(
         "--evidence-mode", choices=["chunk", "segment_v1"], default="chunk"
     )
+    parser.add_argument(
+        "--checkpoint-dir",
+        type=Path,
+        help="Explicit durable job directory; verified done chunks may be reused",
+    )
     parser.add_argument("--execute-llm", action="store_true")
     parser.add_argument("--probe-marvin", action="store_true")
     args = parser.parse_args(argv)
@@ -333,6 +497,17 @@ def main(argv=None):
     output = args.output.resolve()
     if output.is_relative_to((ROOT / "data").resolve()):
         parser.error("Pilot output must be outside production data")
+    if args.checkpoint_dir:
+        checkpoint_path = args.checkpoint_dir.absolute()
+        if (
+            checkpoint_path.resolve().is_relative_to((ROOT / "data").resolve())
+            or checkpoint_path == output
+            or checkpoint_path.is_relative_to(output)
+            or output.is_relative_to(checkpoint_path)
+        ):
+            parser.error(
+                "Checkpoint must be outside production data and separate from output"
+            )
     # Exclusive new run directory; never reuse or overwrite results.
     output.mkdir(parents=True, exist_ok=False)
     config = vars(args).copy()
@@ -341,6 +516,9 @@ def main(argv=None):
         manifest=str(args.manifest.absolute()),
         output=str(output),
         workspace=str(Path.cwd()),
+        checkpoint_dir=str(args.checkpoint_dir.absolute())
+        if args.checkpoint_dir
+        else None,
     )
     save(output / "configuration.json", config)
     env = {
