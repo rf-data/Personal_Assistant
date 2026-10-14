@@ -66,3 +66,50 @@ def test_explicit_six_ids_and_cli_gate(context, tmp_path, monkeypatch):
             ]
         )
     assert not (tmp_path / "output").exists()
+
+
+def test_isolated_course_cli_v2_resume(context, tmp_path):
+    import json
+    from pathlib import Path
+
+    from test_cs50_schedule import schedule
+
+    from scripts.cs50_schedule import main
+    from src.tools_knowledge.bind_cs50_transcript import save_portable_manifest
+
+    scope = schedule(context, tmp_path, cues=3)
+    manifest = tmp_path / "inputs.v2.json"
+    save_portable_manifest(
+        [j.input for j in scope.jobs], manifest, workspace=scope.jobs[0].workspace
+    )
+    plan = (
+        Path(__file__).resolve().parents[1]
+        / "docs/course_sources/cs50/cs50_lecture_plan.v1.json"
+    )
+    args = [
+        "--plan",
+        str(plan),
+        "--manifest",
+        str(manifest),
+        "--workspace",
+        str(scope.jobs[0].workspace),
+        "--output",
+        str(tmp_path / "cli"),
+        "--course",
+        "cs50_python",
+        "--timeout",
+        "3600",
+    ]
+    assert main(args) == 0
+    assert main([*args, "--audit-only"]) == 0
+    reports = [
+        json.loads(p.read_text())
+        for p in (tmp_path / "cli" / "runs").glob("*/report.json")
+    ]
+    assert len(reports) == 2 and all(
+        r["complete"] and r["completed_lectures"] == 10 for r in reports
+    )
+    assert all(
+        r["requests_reserved"] == 0 and r["result_origin"] == "synthetic"
+        for r in reports
+    )
