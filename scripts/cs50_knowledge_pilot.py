@@ -80,9 +80,19 @@ def worker(configuration):
         input = manifest.inputs[0]
         if input.course_id != "cs50_python" or input.section_key != "0":
             raise ValueError("Only CS50 Python week 0 pilot is authorized")
-        chunks = build_cs50_knowledge_chunks(
+        available_chunks = build_cs50_knowledge_chunks(
             plan, input, KnowledgeSettings(), workspace=config["workspace"]
-        )[: config["max_chunks"]]
+        )
+        start_index = config.get("chunk_index", 0)
+        if not isinstance(start_index, int) or start_index < 0:
+            raise ValueError("chunk_index must be a non-negative integer")
+        chunks = available_chunks[start_index : start_index + config["max_chunks"]]
+        report["chunk_index"] = start_index
+        report["available_chunks"] = len(available_chunks)
+        if len(chunks) != config["max_chunks"]:
+            report["selection_error"] = (
+                "Requested chunk window exceeds available chunks"
+            )
         if len(chunks) != config["max_chunks"] or any(
             len(c.text) > 6000 for c in chunks
         ):
@@ -131,6 +141,11 @@ def worker(configuration):
                         "extraction": None,
                     }
                 )
+            # Keep explicitly provided model fields before evidence/identity overwrites.
+            save(
+                directory / f"{chunk.chunk_id}.provider.json",
+                result.model_dump(mode="json", exclude_unset=True),
+            )
             # Chunk identity originates in the trusted input, not in the LLM response.
             result.analysis.chunk_id = chunk.chunk_id
             if result.extraction is not None:
@@ -156,6 +171,19 @@ def worker(configuration):
                 (directory / "consolidated.json").read_bytes()
             )
             == consolidated
+        )
+        from src.tools_knowledge.cs50_quality import quality_report
+
+        save(
+            directory / "quality_report.json",
+            quality_report(
+                document,
+                chunks,
+                worker_report={
+                    "validated": True,
+                    "result_origin": "LLM" if provider else "synthetic",
+                },
+            ),
         )
         report.update(
             validated=True,
@@ -191,6 +219,12 @@ def main(argv=None):
     )
     parser.add_argument("--model", default="gpt-4o-mini")
     parser.add_argument("--max-chunks", type=int, choices=[1, 2], default=1)
+    parser.add_argument(
+        "--chunk-index",
+        type=int,
+        default=0,
+        help="Zero-based starting index; selects max-chunks consecutive chunks",
+    )
     parser.add_argument("--timeout", type=float, default=45)
     parser.add_argument("--token-budget", type=int, default=60000)
     parser.add_argument("--input-limit", type=int, default=28000)
@@ -199,12 +233,13 @@ def main(argv=None):
     parser.add_argument("--probe-marvin", action="store_true")
     args = parser.parse_args(argv)
     if (
-        not 0 < args.timeout <= 120
+        args.chunk_index < 0
+        or not 0 < args.timeout <= 120
         or not 1 <= args.token_budget <= 64000
         or not 1 <= args.input_limit <= 30000
         or not 1 <= args.output_limit <= 2000
     ):
-        parser.error("Invalid bounded timeout/token configuration")
+        parser.error("Invalid bounded chunk-index/timeout/token configuration")
     if args.probe_marvin and args.execute_llm:
         parser.error("Initialization probe cannot execute LLM requests")
     if args.execute_llm and not os.environ.get("OPENAI_API_KEY"):
