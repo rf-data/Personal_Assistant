@@ -81,13 +81,11 @@ def test_no_evidence_ratio_not_invented():
 
 
 @pytest.mark.parametrize(
-    "index,count", [(20, 1), (20, 2), ("last", 1), ("last", 2), ("past", 1)]
+    "index,count", [(20, 1), (20, 2), (156, 1), (156, 2), (157, 1)]
 )
 def test_offline_index_selection(
-    controlled_settings, portable_cs50_pilot, tmp_path, monkeypatch, index, count
+    controlled_settings, tmp_path, monkeypatch, index, count
 ):
-    total = len(portable_cs50_pilot.chunks)
-    index = total - 1 if index == "last" else total if index == "past" else index
     monkeypatch.chdir(ROOT)
     output = tmp_path / "run"
     code = cli.main(
@@ -106,7 +104,7 @@ def test_offline_index_selection(
     )
     report = json.loads((output / "worker_result.json").read_text())
     assert report["requests"] == 0
-    if index + count > total:
+    if index + count > 157:
         assert code == 1 and not (output / "chunks.json").exists()
     else:
         assert code == 0
@@ -122,8 +120,7 @@ def test_offline_index_selection(
         )
         if index == 20:
             assert "input function" in chunk["text"] and "argument" in chunk["text"]
-            assert chunk["start"] == portable_cs50_pilot.chunks[index].start
-            assert chunk["end"] == portable_cs50_pilot.chunks[index].end
+            assert chunk["start"] == 792.44 and chunk["end"] == 837.44
 
 
 def test_negative_index_before_output(tmp_path):
@@ -143,7 +140,7 @@ def test_negative_index_before_output(tmp_path):
     assert not (tmp_path / "run").exists()
 
 
-def test_capture_before_overwrite_on_synthetic_concept_fixture(
+def test_capture_before_overwrite_on_real_concept_fixture(
     controlled_settings, tmp_path, monkeypatch
 ):
     from src.model_transcribe.data_transcribe import TranscriptDocument
