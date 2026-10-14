@@ -90,6 +90,78 @@ class CS50KnowledgeInputManifest(BaseModel):
         return self
 
 
+class CS50PortableInput(CS50KnowledgeInput):
+    """v2 persistence: explicit relative references; business identities unchanged."""
+
+    @model_validator(mode="after")
+    def relative_paths(self):
+        paths = (
+            self.raw_srt_path,
+            self.transcript_json_path,
+            self.receipt_path,
+            self.binding.raw_srt_path,
+            self.binding.transcript_json_path,
+        )
+        if any(p.is_absolute() or ".." in p.parts for p in paths):
+            raise ValueError("Portable input requires relative paths without traversal")
+        return self
+
+
+class CS50PortableManifest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    schema_version: Literal[2] = 2
+    workspace_binding: Literal["explicit_cli_workspace"] = "explicit_cli_workspace"
+    inputs: tuple[CS50PortableInput, ...]
+
+    @model_validator(mode="after")
+    def unique(self):
+        if len({i.source_id for i in self.inputs}) != len(self.inputs):
+            raise ValueError("Duplicate Knowledge source identity")
+        return self
+
+
+def portable_input(input, *, workspace):
+    root = Path(workspace).absolute()
+    values = input.model_dump(mode="python")
+    for field in ("raw_srt_path", "transcript_json_path", "receipt_path"):
+        path = getattr(input, field)
+        path = path if path.is_absolute() else root / path
+        values[field] = safe_path(root, path).relative_to(root)
+    return CS50PortableInput.model_validate(values)
+
+
+def resolve_knowledge_input(input, *, workspace):
+    if not isinstance(input, CS50PortableInput):
+        return CS50KnowledgeInput.model_validate(input.model_dump())
+    root = Path(workspace).absolute()
+    values = input.model_dump(mode="python")
+    for field in ("raw_srt_path", "transcript_json_path", "receipt_path"):
+        values[field] = safe_path(root, root / getattr(input, field))
+    return CS50KnowledgeInput.model_validate(values)
+
+
+def load_knowledge_manifest(path):
+    import json
+
+    value = json.loads(Path(path).read_bytes())
+    version = value.get("schema_version")
+    if version == 1:
+        return CS50KnowledgeInputManifest.model_validate(value)
+    if version == 2:
+        return CS50PortableManifest.model_validate(value)
+    raise ValueError("Unsupported Knowledge input manifest version")
+
+
+def save_portable_manifest(inputs, destination, *, workspace):
+    from src.tools_knowledge.cs50_checkpoint import atomic_json
+
+    manifest = CS50PortableManifest(
+        inputs=tuple(portable_input(i, workspace=workspace) for i in inputs)
+    )
+    atomic_json(Path(destination), manifest.model_dump(mode="json"))
+    return manifest
+
+
 def bind_cs50_knowledge_input(plan, binding, *, workspace):
     """Validate completed receipts and both artifacts; never modify any of them."""
     import json
@@ -169,6 +241,7 @@ def bind_cs50_knowledge_input(plan, binding, *, workspace):
 
 
 def load_knowledge_transcript(plan, input, *, workspace):
+    input = resolve_knowledge_input(input, workspace=workspace)
     checked = bind_cs50_knowledge_input(plan, input.binding, workspace=workspace)
     if checked != input:
         raise ExecutionConflict(
@@ -208,7 +281,7 @@ def build_cs50_knowledge_document(
     """Attach trusted chunk evidence to supplied extraction results; never call an LLM."""
     if evidence_mode not in ("chunk", "segment_v1"):
         raise ValueError("Unknown evidence mode")
-    input = CS50KnowledgeInput.model_validate(input.model_dump())
+    input = resolve_knowledge_input(input, workspace=workspace)
     load_knowledge_transcript(plan, input, workspace=workspace)
     if digest(input.transcript_json_path) != input.transcript_sha256:
         raise ExecutionConflict("Transcript changed before evidence binding")

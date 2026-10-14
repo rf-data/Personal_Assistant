@@ -244,6 +244,10 @@ def knowledge_extraction(
         source_id=source_id,
         transcript_url=transcript_url,
         media_id=media_id,
+        language=transcript.language,
+        transcript_provenance=transcript.provenance,
+        course_id=context.course_id or None,
+        lecture_id=getattr(context, "lecture_id", None),
         chunks=results,  # _all,
         visual_candidates=visual_candidates,
     )
