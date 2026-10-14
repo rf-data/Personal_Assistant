@@ -212,9 +212,7 @@ def test_execute_needs_key(tmp_path, monkeypatch):
     assert not (tmp_path / "run").exists()
 
 
-def test_offline_real_subprocess(tmp_path, monkeypatch):
-    if not MANIFEST.exists():
-        pytest.skip("Local pilot manifest unavailable")
+def test_offline_synthetic_subprocess(tmp_path, monkeypatch):
     monkeypatch.chdir(ROOT)
     monkeypatch.setenv("OPENAI_API_KEY", "secret-must-not-leak")
     output = tmp_path / "run"
@@ -281,6 +279,13 @@ def test_fake_llm_full_pilot_binding(tmp_path, monkeypatch):
             type(value).model_validate_json((tmp_path / f"{name}.json").read_bytes())
             == value
         )
+
+
+def test_offline_local_original_pilot(tmp_path, monkeypatch):
+    """Optional original-pilot check; never substitute synthetic artifacts here."""
+    if not MANIFEST.exists():
+        pytest.skip("Optional local original pilot manifest unavailable")
+    test_offline_synthetic_subprocess(tmp_path, monkeypatch)
 
 
 @pytest.fixture(scope="module", autouse=True)
