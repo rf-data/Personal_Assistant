@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://cdn.cs50.net/python/2022/x/lectures/0/src0/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+
+        <!-- https://aws.amazon.com/ -->
+        <link href="https://a0.awsstatic.com/main/images/site/fav/favicon.ico" rel="icon">
+
+        <!-- https://getbootstrap.com/ -->
+        <link href="./CS50 CDN_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="./CS50 CDN_files/bootstrap.bundle.min.js.Herunterladen" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        <!-- https://jquery.com/ -->
+        <!-- https://www.jsdelivr.com/package/npm/jquery?tab=files&path=dist -->
+        <script src="./CS50 CDN_files/jquery.min.js.Herunterladen" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+        <!-- https://momentjs.com/ -->
+        <!-- https://www.jsdelivr.com/package/npm/moment?path=min&tab=files -->
+        <script src="./CS50 CDN_files/moment-with-locales.min.js.Herunterladen" integrity="sha256-QwcluVRoJ33LzMJ+COPYcydsAIJzcxCwsa0zA5JRGEc=" crossorigin="anonymous"></script>
+
+        <script>
+
+            $(function() {
+
+                // When Size is clicked, display bytes instead (and ignore further clicking)
+                $('.readable.Size').click(function() {
+                    $(this).removeClass('readable').text($(this).attr('data-Size')).off();
+                });
+
+                // When LastModified is clicked, display localized ISO 8601
+                $('.readable.LastModified').click(function() {
+                    $(this).removeClass('readable').text(moment($(this).attr('data-LastModified')).format()).off();
+                });
+
+                // Display LastModified as relative time by default
+                $('.readable.LastModified').each(function(index, element) {
+                    $(this).text(moment($(this).attr('data-LastModified')).fromNow());
+                });
+            });
+
+        </script>
+
+        <style>
+
+            /* Wrap long strings */
+            * {
+                word-break: break-all;
+            }
+
+            /* Underline links on hover */
+            a {
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+
+            /* Muted */
+            .download, .highlight, .view, .Size, .LastModified {
+                color: #ccc;
+                font-size: smaller;
+            }
+
+            /* Small thumbnails */
+            .img-thumbnail {
+                height: 240px;
+            }
+
+            /* Make ../ easier to click */
+            .parent {
+                letter-spacing: .4em;
+            }
+
+            /* Draw attention to clickability of Size and LastModified */
+            .readable.Size:hover, .readable.LastModified:hover {
+                cursor: zoom-in;
+            }
+
+            /* Right-align Size and LastModified */
+            .Size, .LastModified {
+                text-align: right;
+            }
+
+            /* Add padding to cells */
+            .table > :not(caption) > * > * {
+                padding: .75rem;
+            }
+
+            /* Hide all secondary text except Size on small screens */
+            @media only screen and (max-width: 640px) {
+                .download, .highlight, .view, .Size, .LastModified {
+                    display: none;
+                }
+            }
+
+            /* Move search to own line on small screens */
+            @media only screen and (max-width: 640px) {
+                input[type="search"] {
+                    display: block;
+                    margin-top: .5rem;
+                }
+            }
+
+        </style>
+
+        <title>CS50 CDN</title>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="https://cdn.cs50.net/">CS50 CDN</a>
+            </div>
+        </nav>
+
+        <main>
+            
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="3" scope="col">
+                    <nav aria-label="breadcrumb">
+                        
+                        <a href="https://cdn.cs50.net/">cdn.cs50.net</a><span class="text-primary">/</span><a href="https://cdn.cs50.net/python/">python</a><span class="text-primary">/</span><a href="https://cdn.cs50.net/python/2022/">2022</a><span class="text-primary">/</span><a href="https://cdn.cs50.net/python/2022/x/">x</a><span class="text-primary">/</span><a href="https://cdn.cs50.net/python/2022/x/lectures/">lectures</a><span class="text-primary">/</span><a href="https://cdn.cs50.net/python/2022/x/lectures/0/">0</a><span class="text-primary">/</span><a aria-current="page" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/">src0</a><span class="text-primary">/</span><input autocomplete="off" autofocus="" class="d-inline form-control form-control-sm ms-1 w-auto" placeholder="Search" type="search">
+                    </nav>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr data-basename="../" style="background-color: rgba(0, 0, 0, 0.05);">
+                <td colspan="3">
+                    <a class="parent" href="https://cdn.cs50.net/python/2022/x/lectures/0/">..</a><span class="text-primary">/</span>
+                </td>
+                </tr>
+            
+            
+                
+                    <tr data-basename="calculator0.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator0.py">calculator0.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator0.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator0.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator0.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="58">
+                            58 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:30+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator1.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator1.py">calculator1.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator1.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator1.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator1.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="165">
+                            165 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:32+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator2.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator2.py">calculator2.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator2.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator2.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator2.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="122">
+                            122 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:34+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator3.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator3.py">calculator3.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator3.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator3.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator3.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="121">
+                            121 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:34+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator4.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator4.py">calculator4.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator4.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator4.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator4.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="126">
+                            126 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:31+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator5.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator5.py">calculator5.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator5.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator5.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator5.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="130">
+                            130 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:32+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator6.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator6.py">calculator6.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator6.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator6.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator6.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="115">
+                            115 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:33+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator7.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator7.py">calculator7.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator7.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator7.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator7.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="136">
+                            136 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:35+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator8.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator8.py">calculator8.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator8.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator8.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator8.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="108">
+                            108 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:36+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator9.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator9.py">calculator9.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator9.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator9.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator9.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="142">
+                            142 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:28+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator10.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator10.py">calculator10.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator10.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator10.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator10.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="139">
+                            139 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:34+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="calculator11.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator11.py">calculator11.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator11.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator11.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator11.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="182">
+                            182 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:35+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello0.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello0.py">hello0.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello0.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello0.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello0.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="76">
+                            76 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:32+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello1.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello1.py">hello1.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello1.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello1.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello1.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="136">
+                            136 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:30+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello2.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello2.py">hello2.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello2.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello2.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello2.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="100">
+                            100 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:34+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello3.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello3.py">hello3.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello3.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello3.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello3.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="114">
+                            114 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:33+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello4.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello4.py">hello4.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello4.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello4.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello4.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="147">
+                            147 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:31+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello5.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello5.py">hello5.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello5.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello5.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello5.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="91">
+                            91 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:31+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello6.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello6.py">hello6.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello6.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello6.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello6.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="105">
+                            105 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:35+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello7.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello7.py">hello7.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello7.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello7.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello7.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="136">
+                            136 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:33+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello8.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello8.py">hello8.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello8.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello8.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello8.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="145">
+                            145 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:36+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello9.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello9.py">hello9.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello9.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello9.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello9.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="142">
+                            142 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:36+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello10.py" style="background-color: rgba(0, 0, 0, 0);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello10.py">hello10.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello10.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello10.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello10.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="179">
+                            179 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:30+00:00">4 years ago</td>
+                
+                </tr>
+            
+                
+                    <tr data-basename="hello11.py" style="background-color: rgba(0, 0, 0, 0.05);">
+                        <td>
+                            <a class="me-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello11.py">hello11.py</a>
+                            <a class="download mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello11.py?download">download</a>
+                            
+                                <a class="highlight mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello11.py?highlight">highlight</a>
+                                <a class="view mx-1" href="https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello11.py?view">view</a>
+                            
+                        </td>
+                        <td class="readable Size" data-size="167">
+                            167 B
+                        </td>
+                        <td class="readable LastModified" data-lastmodified="2022-06-02 00:49:32+00:00">4 years ago</td>
+                
+                </tr>
+            
+        </tbody>
+    </table>
+
+    <script>
+
+        // Populate input's value from hash
+        $('input').val(window.location.hash.substring(1));
+
+        // Filter rows
+        $('input').on('keyup search', function() {
+
+            // Get input's value
+            const value = $(this).val().trim().toLowerCase();
+
+            // Store input's value in hash
+            if (value) {
+                window.location.hash = value;
+            }
+            else {
+                window.location.hash = '';
+            }
+
+            // Iterate over rows with basenames
+            $('tr[data-basename]').each(function(index, element) {
+
+                // Show if matched
+                if (!value || $(this).attr('data-basename').toLowerCase().indexOf(value) !== -1) {
+                    $(this).show();
+                }
+
+                // Hide if not matched
+                else {
+                    $(this).hide();
+                }
+            });
+
+            // Re-stripe table
+            // https://stackoverflow.com/a/52553884/5156190
+            $('tbody tr:visible').each(function(index) {
+                $(this).css('background-color', !!(index & 1) ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,.05)');
+            });
+        }).trigger('search');
+
+    </script>
+
+
+        </main>
+
+    
+
+</body></html>

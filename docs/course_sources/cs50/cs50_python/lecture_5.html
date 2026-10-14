@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://cs50.harvard.edu/python/notes/5/ -->
+<html lang="en-us" class="wf-ptsans-n4-active wf-ptsans-n7-active wf-active"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+        
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+
+        <meta property="og:image" content="https://prod-discovery.edx-cdn.org/media/course/image/2cc794d0-316d-42f7-bbfd-25c34e4cd5df-033e46d516c0.small.png">
+
+        <meta property="og:title" content="Lecture 5 - CS50's Introduction to Programming with Python">
+
+        <link href="https://cs50.harvard.edu/python/favicon.ico?1790967530" rel="icon">
+
+        <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/webfont.js.Herunterladen"></script>
+
+        <!-- https://getbootstrap.com/docs/ -->
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/jquery.min.js.Herunterladen"></script>
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/bootstrap.bundle.min.js.Herunterladen"></script>
+
+        <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
+        <link href="./Lecture 5 - CS50's Introduction to Programming with Python_files/bootstrap-table.min.css" rel="stylesheet">
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/bootstrap-table.min.js.Herunterladen"></script>
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/bootstrap-table-mobile.min.js.Herunterladen"></script>
+
+        <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
+        <!-- cs50.fontawesome: "self-hosted" loads CS50's self-hosted Font Awesome Pro (the site's domain must be
+             allowlisted in cs50/font-awesome); a Font Awesome kit ID loads that kit; unset loads Font Awesome Free. -->
+        
+        <link crossorigin="anonymous" href="./Lecture 5 - CS50's Introduction to Programming with Python_files/all.min.css" rel="stylesheet">
+        
+
+        <!-- https://moment.github.io/luxon/ -->
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/luxon.min.js.Herunterladen"></script>
+
+        <!-- http://docs.mathjax.org/ -->
+        <!-- http://docs.mathjax.org/en/latest/options/output/chtml.html?highlight=displayAlign#the-configuration-block -->
+        <!-- https://docs.mathjax.org/en/latest/output/fonts.html -->
+        <script>
+            MathJax = {
+                loader: {
+                    paths: {
+                        'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+                    }
+                },
+                output: {
+                    displayAlign: 'left'
+                }
+            };
+        </script>
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/tex-mml-chtml.js.Herunterladen"></script><style id="MJX-LE-styles">:root {
+  --mjx-fg-red: 255, 0, 0;
+  --mjx-fg-green: 0, 255, 0;
+  --mjx-fg-blue: 0, 0, 255;
+  --mjx-fg-yellow: 255, 255, 0;
+  --mjx-fg-cyan: 0, 255, 255;
+  --mjx-fg-magenta: 255, 0, 255;
+  --mjx-fg-white: 255, 255, 255;
+  --mjx-fg-black: 0, 0, 0;
+  --mjx-bg-red: 255, 0, 0;
+  --mjx-bg-green: 0, 255, 0;
+  --mjx-bg-blue: 0, 0, 255;
+  --mjx-bg-yellow: 255, 255, 0;
+  --mjx-bg-cyan: 0, 255, 255;
+  --mjx-bg-magenta: 255, 0, 255;
+  --mjx-bg-white: 255, 255, 255;
+  --mjx-bg-black: 0, 0, 0;
+  --mjx-live-bg-color: white;
+  --mjx-live-shadow-color: #888;
+  --mjx-live-border-color: #CCCCCC;
+  --mjx-bg1-color: rgba(var(--mjx-bg-blue), var(--mjx-bg-alpha));
+  --mjx-fg1-color: rgba(var(--mjx-fg-black), 1);
+  --mjx-bg2-color: rgba(var(--mjx-bg-red), 1);
+  --mjx-fg2-color: rgba(var(--mjx-fg-black), 1);
+  --mjx-bg1-alpha: 0.2;
+  --mjx-fg1-alpha: 1;
+  --mjx-bg2-alpha: 1;
+  --mjx-fg2-alpha: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --mjx-bg-blue: 132, 132, 255;
+      --mjx-bg-white: 0, 0, 0;
+      --mjx-bg-black: 255, 255, 255;
+      --mjx-fg-white: 0, 0, 0;
+      --mjx-fg-black: 255, 255, 255;
+      --mjx-live-bg-color: #222025;
+      --mjx-live-shadow-color: black;
+      --mjx-live-border-color: #7C7C7C;
+      --mjx-bg1-alpha: 0.3;
+      --mjx-fg1-alpha: 1;
+      --mjx-bg2-alpha: 1;
+      --mjx-fg2-alpha: 1;
+  }
+}
+
+.MJX_LiveRegion {
+  position: absolute;
+  top: 0;
+  display: none;
+  width: auto;
+  height: auto;
+  padding: 0;
+  opacity: 1;
+  z-index: 202;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background-color: var(--mjx-live-bg-color);
+  box-shadow: 0px 5px 20px var(--mjx-live-shadow-color);
+  border: 2px solid var(--mjx-live-border-color);
+}
+
+.MJX_LiveRegion_Show {
+  display: block;
+}
+
+.MJX_LiveRegion > div {
+  color: var(--mjx-fg1-color);
+  background-color: var(--mjx-bg1-color);
+}
+
+mjx-container [data-sre-highlight-1]:not([data-mjx-collapsed], rect) {
+  color: var(--mjx-fg1-color) ! important;
+  fill: var(--mjx-fg1-color) ! important;
+}
+
+mjx-container:not([data-mjx-clone-container]) [data-sre-highlight-1]:not([data-sre-enclosed], rect) {
+  background-color: var(--mjx-bg1-color) ! important;
+}
+
+mjx-container rect[data-sre-highlight-1]:not([data-sre-enclosed]) {
+  fill: var(--mjx-bg1-color) ! important;
+}
+
+mjx-container [data-sre-highlight-2] {
+  color: var(--mjx-fg2-color) ! important;
+  background-color: var(--mjx-bg2-color) ! important;
+  fill: var(--mjx-fg2-color) ! important;
+}
+
+mjx-container rect[data-sre-highlight-2] {
+  fill: var(--mjx-bg2-color) ! important;
+}</style><style id="MJX-RE-styles">.MJX_HoverRegion {
+  display: block;
+  position: absolute;
+  width: max-content;
+  height: auto;
+  padding: 0;
+  opacity: 1;
+  z-index: 202;
+  margin: 0 auto;
+  background-color: white;
+  line-height: 0;
+  box-shadow: 0px 10px 20px #888;
+  border: 2px solid #CCCCCC;
+}
+
+.MJX_HoverRegion > div {
+  overflow: hidden;
+  color: var(--mjx-fg1-color);
+  background-color: var(--mjx-bg1-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  .MJX_HoverRegion {
+    background-color: #222025;
+      box-shadow: 0px 5px 20px #000;
+      border: 1px solid #7C7C7C;
+  }
+}
+
+mjx-container[data-mjx-clone-container] {
+  padding: 2px ! important;
+}
+
+mjx-math > mjx-mlabeledtr {
+  display: inline-block;
+  margin-right: .5em ! important;
+}
+
+mjx-math > mjx-mtd {
+  float: right;
+}</style><style id="MJX-_E-styles">.MJX_ToolTip {
+  width: auto;
+  height: auto;
+  opacity: 1;
+  text-align: center;
+  border-radius: 4px;
+  padding: 0;
+  border-bottom: 1px dotted black;
+  position: absolute;
+  display: inline-block;
+  background-color: white;
+  z-index: 202;
+}
+
+.MJX_ToolTip > div {
+  border-radius: inherit;
+  padding: 0 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .MJX_ToolTip {
+    background-color: #222025;
+      box-shadow: 0px 5px 20px #000;
+      border: 1px solid #7C7C7C;
+  }
+}</style><style id="MJX-Menu-styles">.CtxtMenu_Menu {
+  position: absolute;
+  background-color: white;
+  color: black;
+  width: auto;
+  padding: 5px 0px;
+  border: 1px solid #CCCCCC;
+  margin: 0;
+  cursor: default;
+  font: menu;
+  text-align: left;
+  text-indent: 0;
+  text-transform: none;
+  line-height: normal;
+  letter-spacing: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  float: none;
+  z-index: 1001;
+  border-radius: 5px;
+  box-shadow: 0px 10px 20px #808080;
+}
+.CtxtMenu_MenuItem {
+  padding: 1px 2em;
+  background: transparent;
+}
+.CtxtMenu_MenuArrow {
+  position: absolute;
+  right: 0.5em;
+  padding-top: 0.25em;
+  color: #666666;
+  font-family: null;
+  font-size: 0.75em;
+}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {
+  color: white;
+}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {
+  left: 0.5em;
+  right: auto;
+}
+.CtxtMenu_MenuCheck {
+  position: absolute;
+  left: 0.7em;
+  font-family: null;
+}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL {
+  right: 0.7em;
+  left: auto;
+}
+.CtxtMenu_MenuRadioCheck {
+  position: absolute;
+  left: 0.7em;
+}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {
+  right: 0.7em;
+  left: auto;
+}
+.CtxtMenu_MenuInputBox {
+  padding-left: 1em;
+  right: 0.5em;
+  color: #666666;
+  font-family: null;
+}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {
+  left: 0.1em;
+}
+.CtxtMenu_MenuComboBox {
+  left: 0.1em;
+  padding-bottom: 0.5em;
+}
+.CtxtMenu_MenuSlider {
+  left: 0.1em;
+}
+.CtxtMenu_SliderValue {
+  position: absolute;
+  right: 0.1em;
+  padding-top: 0.25em;
+  color: #333333;
+  font-size: 0.75em;
+}
+.CtxtMenu_MenuActive .CtxtMenu_SliderValue {
+  color: #DDDDDD;
+}
+.CtxtMenu_SliderBar {
+  outline: none;
+  background: #D3D3D3;
+}
+.CtxtMenu_MenuLabel {
+  padding: 1px 2em 3px 1.33em;
+  font-style: italic;
+}
+.CtxtMenu_MenuRule {
+  border-top: 1px solid #DDDDDD;
+  margin: 4px 3px;
+}
+.CtxtMenu_MenuDisabled {
+  color: #999;
+}
+.CtxtMenu_MenuActive {
+  background-color: #606872;
+  color: white;
+}
+.CtxtMenu_MenuDisabled:focus {
+  background-color: #E8E8E8;
+}
+.CtxtMenu_MenuLabel:focus {
+  background-color: #E8E8E8;
+}
+.CtxtMenu_ContextMenu:focus {
+  outline: none;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {
+  outline: none;
+}
+.CtxtMenu_SelectionMenu {
+  position: relative;
+  float: left;
+  border-bottom: none;
+  box-shadow: none ! important;
+  border-radius: 0px !important;
+}
+.CtxtMenu_SelectionItem {
+  padding-right: 1em;
+}
+.CtxtMenu_Selection {
+  right: 40%;
+  width: 50%;
+}
+.CtxtMenu_SelectionBox {
+  padding: 0em;
+  max-height: 20em;
+  max-width: none;
+  background-color: #FFFFFF;
+}
+.CtxtMenu_SelectionDivider {
+  clear: both;
+  border-top: 2px solid #000000;
+}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {
+  top: -10px;
+  left: -10px;
+}
+@media (prefers-color-scheme: dark) /* menu */ {
+  .CtxtMenu_Menu {
+  color: #E0E0E0;
+  background-color: #242436;
+  box-shadow: 0px 10px 20px #000;
+  border: 1px solid #808080;
+}
+  .CtxtMenu_SliderValue {
+  color: #D0D0D0;
+}
+  .CtxtMenu_MenuDisabled:focus {
+  background-color: #383838;
+}
+  .CtxtMenu_MenuLabel:focus {
+  background-color: #585858;
+}
+  .CtxtMenu_MenuRule {
+  border-top: 1px solid #808080;
+}
+  .CtxtMenu_SelectionDivider {
+  border-top: 2px solid #808080;
+};
+}
+.CtxtMenu_MenuClose {
+  position: absolute;
+  cursor: pointer;
+  display: inline-block;
+  border: 2px solid #AAA;
+  border-radius: 18px;
+  font-family:  "Courier New", Courier;
+  font-size: 24px;
+  color: #F0F0F0;
+}
+.CtxtMenu_MenuClose span {
+  display: block;
+  background-color: #AAA;
+  border: 1.5px solid;
+  border-radius: 18px;
+  line-height: 0;
+  padding: 8px 0 6px;
+}
+.CtxtMenu_MenuClose:hover {
+  color: white !important;
+  border: 2px solid #CCC !important;
+}
+.CtxtMenu_MenuClose:hover span {
+  background-color: #CCC !important;
+}
+.CtxtMenu_MenuClose:hover:focus {
+  outline: none;
+}</style>
+
+        <!-- https://github.com/verlok/vanilla-lazyload -->
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/lazyload.min.js.Herunterladen"></script>
+
+        <!-- https://iframe-resizer.com/ -->
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/index.umd.js.Herunterladen"></script>
+
+        <!-- https://github.com/scratchblocks/scratchblocks/releases -->
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/scratchblocks.min.js.Herunterladen"></script><style>.sb-label{font-family:Lucida Grande,Verdana,Arial,DejaVu Sans,sans-serif;font-weight:700;fill:#fff;font-size:10px;word-spacing:1px}.sb-obsolete{fill:#d42828}.sb-motion{fill:#4a6cd4}.sb-looks{fill:#8a55d7}.sb-sound{fill:#bb42c3}.sb-pen{fill:#0e9a6c}.sb-events{fill:#c88330}.sb-control{fill:#e1a91a}.sb-sensing{fill:#2ca5e2}.sb-operators{fill:#5cb712}.sb-variables{fill:#ee7d16}.sb-list{fill:#cc5b22}.sb-custom{fill:#632d99}.sb-custom-arg{fill:#5947b1}.sb-extension{fill:#4b4a60}.sb-grey{fill:#969696}.sb-bevel{filter:url(#bevelFilter)}.sb-input{filter:url(#inputBevelFilter)}.sb-input-number,.sb-input-number-dropdown,.sb-input-string{fill:#fff}.sb-literal-dropdown,.sb-literal-number,.sb-literal-number-dropdown,.sb-literal-string{font-weight:400;font-size:9px;word-spacing:0}.sb-literal-number,.sb-literal-number-dropdown,.sb-literal-string{fill:#000}.sb-darker{filter:url(#inputDarkFilter)}.sb-outline{stroke:#fff;stroke-opacity:.2;stroke-width:2;fill:none}.sb-comment,.sb-define-hat-cap{stroke:#632d99;stroke-width:1;fill:#8e2ec2}.sb-comment{fill:#ffffa5;stroke:#d0d1d2}.sb-comment-line{fill:#ffff80}.sb-comment-label{font-family:Helvetica,Arial,DejaVu Sans,sans-serif;font-weight:700;fill:#5c5d5f;word-spacing:0;font-size:12px}.sb-diff{fill:none;stroke:#000}.sb-diff-ins{stroke-width:2px}.sb-diff-del{stroke-width:3px}</style><style>.sb3-label{font:500 12pt Helvetica Neue,Helvetica,sans-serif;word-spacing:1pt}.sb3-literal-dropdown,.sb3-literal-number,.sb3-literal-number-dropdown,.sb3-literal-string{word-spacing:0}.sb3-diff{fill:none;stroke:#000}.sb3-diff-ins{stroke-width:2px}.sb3-diff-del{stroke-width:3px}svg .sb3-motion{fill:#4c97ff;stroke:#3373cc}svg .sb3-motion-alt{fill:#4280d7}svg .sb3-motion-dark{fill:#3373cc}svg .sb3-looks{fill:#96f;stroke:#774dcb}svg .sb3-looks-alt{fill:#855cd6}svg .sb3-looks-dark{fill:#774dcb}svg .sb3-sound{fill:#cf63cf;stroke:#bd42bd}svg .sb3-sound-alt{fill:#c94fc9}svg .sb3-sound-dark{fill:#bd42bd}svg .sb3-control{fill:#ffab19;stroke:#cf8b17}svg .sb3-control-alt{fill:#ec9c13}svg .sb3-control-dark{fill:#cf8b17}svg .sb3-events{fill:#ffbf00;stroke:#c90}svg .sb3-events-alt{fill:#e6ac00}svg .sb3-events-dark{fill:#c90}svg .sb3-sensing{fill:#5cb1d6;stroke:#2e8eb8}svg .sb3-sensing-alt{fill:#47a8d1}svg .sb3-sensing-dark{fill:#2e8eb8}svg .sb3-operators{fill:#59c059;stroke:#389438}svg .sb3-operators-alt{fill:#46b946}svg .sb3-operators-dark{fill:#389438}svg .sb3-variables{fill:#ff8c1a;stroke:#db6e00}svg .sb3-variables-alt{fill:#ff8000}svg .sb3-variables-dark{fill:#db6e00}svg .sb3-list{fill:#ff661a;stroke:#e64d00}svg .sb3-list-alt{fill:#f50}svg .sb3-list-dark{fill:#e64d00}svg .sb3-custom{fill:#ff6680;stroke:#f35}svg .sb3-custom-alt{fill:#ff4d6a}svg .sb3-custom-dark{fill:#f35}svg .sb3-extension{fill:#0fbd8c;stroke:#0b8e69}svg .sb3-extension-alt{fill:#0da57a}svg .sb3-extension-dark{fill:#0b8e69}svg .sb3-obsolete{fill:#ed4242;stroke:#ca2b2b}svg .sb3-obsolete-alt{fill:#db3333}svg .sb3-obsolete-dark{fill:#ca2b2b}svg .sb3-grey{fill:#bfbfbf;stroke:#909090}svg .sb3-grey-alt{fill:#b2b2b2}svg .sb3-grey-dark{fill:#909090}svg .sb3-label{fill:#fff}svg .sb3-input-color{stroke:#fff}svg .sb3-input-number,svg .sb3-input-string{fill:#fff}svg .sb3-literal-number,svg .sb3-literal-string{fill:#575e75}svg .sb3-custom-arg{fill:#ff6680;stroke:#f35}svg.scratchblocks-style-scratch3-high-contrast .sb3-motion{fill:#80b5ff;stroke:#3373cc}svg.scratchblocks-style-scratch3-high-contrast .sb3-motion-alt{fill:#b3d2ff}svg.scratchblocks-style-scratch3-high-contrast .sb3-motion-dark{fill:#3373cc}svg.scratchblocks-style-scratch3-high-contrast .sb3-looks{fill:#ccb3ff;stroke:#774dcb}svg.scratchblocks-style-scratch3-high-contrast .sb3-looks-alt{fill:#dcf}svg.scratchblocks-style-scratch3-high-contrast .sb3-looks-dark{fill:#774dcb}svg.scratchblocks-style-scratch3-high-contrast .sb3-sound{fill:#e19de1;stroke:#bd42bd}svg.scratchblocks-style-scratch3-high-contrast .sb3-sound-alt{fill:#ffb3ff}svg.scratchblocks-style-scratch3-high-contrast .sb3-sound-dark{fill:#bd42bd}svg.scratchblocks-style-scratch3-high-contrast .sb3-control{fill:#ffbe4c;stroke:#cf8b17}svg.scratchblocks-style-scratch3-high-contrast .sb3-control-alt{fill:#ffda99}svg.scratchblocks-style-scratch3-high-contrast .sb3-control-dark{fill:#cf8b17}svg.scratchblocks-style-scratch3-high-contrast .sb3-events{fill:#ffd966;stroke:#c90}svg.scratchblocks-style-scratch3-high-contrast .sb3-events-alt{fill:#ffecb3}svg.scratchblocks-style-scratch3-high-contrast .sb3-events-dark{fill:#c90}svg.scratchblocks-style-scratch3-high-contrast .sb3-sensing{fill:#85c4e0;stroke:#2e8eb8}svg.scratchblocks-style-scratch3-high-contrast .sb3-sensing-alt{fill:#aed8ea}svg.scratchblocks-style-scratch3-high-contrast .sb3-sensing-dark{fill:#2e8eb8}svg.scratchblocks-style-scratch3-high-contrast .sb3-operators{fill:#7ece7e;stroke:#389438}svg.scratchblocks-style-scratch3-high-contrast .sb3-operators-alt{fill:#b5e3b5}svg.scratchblocks-style-scratch3-high-contrast .sb3-operators-dark{fill:#389438}svg.scratchblocks-style-scratch3-high-contrast .sb3-variables{fill:#ffa54c;stroke:#db6e00}svg.scratchblocks-style-scratch3-high-contrast .sb3-variables-alt{fill:#fc9}svg.scratchblocks-style-scratch3-high-contrast .sb3-variables-dark{fill:#db6e00}svg.scratchblocks-style-scratch3-high-contrast .sb3-list{fill:#f96;stroke:#e64d00}svg.scratchblocks-style-scratch3-high-contrast .sb3-list-alt{fill:#ffcab0}svg.scratchblocks-style-scratch3-high-contrast .sb3-list-dark{fill:#e64d00}svg.scratchblocks-style-scratch3-high-contrast .sb3-custom{fill:#f9a;stroke:#e64d00}svg.scratchblocks-style-scratch3-high-contrast .sb3-custom-alt{fill:#ffccd5}svg.scratchblocks-style-scratch3-high-contrast .sb3-custom-dark{fill:#e64d00}svg.scratchblocks-style-scratch3-high-contrast .sb3-extension{fill:#13ecaf;stroke:#0b8e69}svg.scratchblocks-style-scratch3-high-contrast .sb3-extension-alt{fill:#75f0cd}svg.scratchblocks-style-scratch3-high-contrast .sb3-extension-dark{fill:#0b8e69}svg.scratchblocks-style-scratch3-high-contrast .sb3-obsolete{fill:#fc6666;stroke:#d32121}svg.scratchblocks-style-scratch3-high-contrast .sb3-obsolete-alt{fill:#fcb0b0}svg.scratchblocks-style-scratch3-high-contrast .sb3-obsolete-dark{fill:#d32121}svg.scratchblocks-style-scratch3-high-contrast .sb3-grey{fill:#bfbfbf;stroke:#959595}svg.scratchblocks-style-scratch3-high-contrast .sb3-grey-alt{fill:#b2b2b2}svg.scratchblocks-style-scratch3-high-contrast .sb3-grey-dark{fill:#959595}svg.scratchblocks-style-scratch3-high-contrast .sb3-label{fill:#000}svg.scratchblocks-style-scratch3-high-contrast .sb3-input-color{stroke:#fff}svg.scratchblocks-style-scratch3-high-contrast .sb3-input-number,svg.scratchblocks-style-scratch3-high-contrast .sb3-input-string{fill:#fff}svg.scratchblocks-style-scratch3-high-contrast .sb3-literal-number,svg.scratchblocks-style-scratch3-high-contrast .sb3-literal-string{fill:#000}svg.scratchblocks-style-scratch3-high-contrast .sb3-custom-arg{fill:#f9a;stroke:#e64d00}.sb3-comment{fill:#ffffa5;stroke:#d0d1d2;stroke-width:1}.sb3-comment-line{fill:#ffff80}.sb3-comment-label,.sb3-label.sb3-comment-label{font:400 12pt Helvetica Neue,Helvetica,sans-serif;fill:#000;word-spacing:0}</style>
+
+        <!-- https://mermaid-js.github.io/ -->
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/mermaid.min.js.Herunterladen"></script>
+
+        <!-- https://github.com/twitter/twemoji -->
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/twemoji.min.js.Herunterladen"></script>
+
+        
+
+        <link href="./Lecture 5 - CS50's Introduction to Programming with Python_files/page.css" rel="stylesheet">
+        <link rel="stylesheet" href="./Lecture 5 - CS50's Introduction to Programming with Python_files/css" media="all"><script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/jekyll-theme-cs50.js.Herunterladen"></script>
+
+        <script>
+            window.CS50 = {
+                local: {"day":"numeric","hour":"numeric","minute":"numeric","month":"long","timeZoneName":"short","weekday":"long","year":"numeric"},
+                locale: "en",
+                tz: "Etc/Zulu"
+            };
+        </script>
+
+        <title>Lecture 5 - CS50's Introduction to Programming with Python</title>
+
+
+    <meta property="og:description" content="Unit Tests Up until now, you have likely been testing your own code using print statements. Alternatively, you may have been relying upon CS50 to test your...">
+<style id="MJX-CHTML-styles">
+mjx-container[overflow="scroll"][display] {
+  overflow: auto clip;
+  min-width: initial !important;
+}
+
+mjx-container[overflow="truncate"][display] {
+  overflow: hidden clip;
+  min-width: initial !important;
+}
+
+mjx-container[display] {
+  display: block;
+  text-align: center;
+  justify-content: center;
+  margin: .7em 0;
+  padding: .3em 2px;
+}
+
+mjx-container[display][width="full"] {
+  display: flex;
+}
+
+mjx-container[justify="left"] {
+  text-align: left;
+  justify-content: left;
+}
+
+mjx-container[justify="right"] {
+  text-align: right;
+  justify-content: right;
+}
+
+mjx-container[jax="CHTML"] {
+  white-space: nowrap;
+}
+
+mjx-mo > mjx-c, mjx-mi > mjx-c, mjx-mn > mjx-c, mjx-ms > mjx-c, mjx-mtext > mjx-c {
+  clip-path: padding-box polygon(-1em -2px, calc(100% + 1em) -2px, calc(100% + 1em) calc(100% + 2px), -1em calc(100% + 2px));
+}
+
+mjx-stretchy-h {
+  clip-path: padding-box polygon(0 -2px, 100% -2px, 100% calc(100% + 2px), 0 calc(100% + 2px));
+}
+
+mjx-stretchy-v {
+  clip-path: padding-box polygon(-2px 0, calc(100% + 2px) 0, calc(100% + 2px) 100%, -2px 100%);
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > mjx-cell, mjx-row > mjx-base, mjx-row > mjx-under, mjx-row > mjx-over, mjx-row > mjx-den {
+  display: table-cell;
+}
+
+mjx-container [inline-breaks] {
+  display: inline;
+}
+
+mjx-container .mjx-selected {
+  outline: 2px solid black;
+}
+
+@media (prefers-color-scheme: dark) {
+  mjx-container .mjx-selected {
+    outline: 2px solid #C8C8C8;
+  }
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+mjx-container[has-speech="true"] {
+  position: relative;
+  cursor: default;
+}
+
+mjx-speech {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+mjx-speech:focus {
+  outline: none;
+}
+
+mjx-container a[data-mjx-href] {
+  color: LinkText;
+  cursor: pointer;
+}
+
+mjx-container a[data-mjx-href].mjx-visited {
+  color: VisitedText;
+}
+
+mjx-container > mjx-help {
+  display: none;
+  position: absolute;
+  top: -.3em;
+  right: -.5em;
+  width: .6em;
+  height: .6em;
+  cursor: pointer;
+}
+
+mjx-container[display="true"] > mjx-help {
+  position: sticky;
+  inset: -100% 0 100% 0;
+  margin: -.3em -.5em 0 -.1em;
+  right: 0;
+  top: initial;
+}
+
+mjx-help > svg {
+  stroke: black;
+  width: 100%;
+  height: 100%;
+}
+
+mjx-help > svg > circle {
+  stroke-width: 1.5px;
+  cx: 9px;
+  cy: 9px;
+  r: 9px;
+  fill: white;
+}
+
+mjx-help > svg > circle:nth-child(2) {
+  fill: var(--mjx-bg1-color);
+  r: 7px;
+}
+
+mjx-help > svg > line {
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+}
+
+mjx-help:hover > svg > circle:nth-child(2) {
+  fill: white;
+}
+
+mjx-container.mjx-explorer-active > mjx-help {
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (prefers-color-scheme: dark) /* explorer */ {
+  mjx-help > svg {
+    stroke: #E0E0E0;
+  }
+  mjx-help > svg > circle {
+    fill: #404040;
+  }
+  mjx-help > svg > circle:nth-child(2) {
+    fill: rgba(132, 132, 255, .3);
+  }
+  mjx-help:hover > svg > circle:nth-child(2) {
+    stroke: #AAAAAA;
+      fill: #404040;
+  }
+}
+
+mjx-container[jax="CHTML"] > mjx-math.NCM-N[breakable] > * {
+  font-family: MJX-NCM-ZERO, MJX-NCM-N;
+}
+
+.NCM-N {
+  font-family: MJX-NCM-ZERO, MJX-NCM-N;
+}
+
+.NCM-B {
+  font-family: MJX-NCM-ZERO, MJX-NCM-B;
+}
+
+.NCM-I {
+  font-family: MJX-NCM-ZERO, MJX-NCM-I;
+}
+
+.NCM-BI {
+  font-family: MJX-NCM-ZERO, MJX-NCM-BI;
+}
+
+.NCM-DS {
+  font-family: MJX-NCM-ZERO, MJX-NCM-DS;
+}
+
+.NCM-F {
+  font-family: MJX-NCM-ZERO, MJX-NCM-F;
+}
+
+.NCM-FB {
+  font-family: MJX-NCM-ZERO, MJX-NCM-FB;
+}
+
+.NCM-SS {
+  font-family: MJX-NCM-ZERO, MJX-NCM-SS;
+}
+
+.NCM-SSB {
+  font-family: MJX-NCM-ZERO, MJX-NCM-SSB;
+}
+
+.NCM-SSI {
+  font-family: MJX-NCM-ZERO, MJX-NCM-SSI;
+}
+
+.NCM-SSBI {
+  font-family: MJX-NCM-ZERO, MJX-NCM-SSBI;
+}
+
+.NCM-M {
+  font-family: MJX-NCM-ZERO, MJX-NCM-M;
+}
+
+.NCM-SO {
+  font-family: MJX-NCM-ZERO, MJX-NCM-SO;
+}
+
+.NCM-LO {
+  font-family: MJX-NCM-ZERO, MJX-NCM-LO;
+}
+
+.NCM-S3 {
+  font-family: MJX-NCM-ZERO, MJX-NCM-S3;
+}
+
+.NCM-S4 {
+  font-family: MJX-NCM-ZERO, MJX-NCM-S4;
+}
+
+.NCM-S5 {
+  font-family: MJX-NCM-ZERO, MJX-NCM-S5;
+}
+
+.NCM-S6 {
+  font-family: MJX-NCM-ZERO, MJX-NCM-S6;
+}
+
+.NCM-S7 {
+  font-family: MJX-NCM-ZERO, MJX-NCM-S7;
+}
+
+.NCM-MI {
+  font-family: MJX-NCM-ZERO, MJX-NCM-MI;
+}
+
+.NCM-C {
+  font-family: MJX-NCM-ZERO, MJX-NCM-C;
+}
+
+.NCM-CB {
+  font-family: MJX-NCM-ZERO, MJX-NCM-CB;
+}
+
+.NCM-OS {
+  font-family: MJX-NCM-ZERO, MJX-NCM-OS;
+}
+
+.NCM-OB {
+  font-family: MJX-NCM-ZERO, MJX-NCM-OB;
+}
+
+.NCM-V {
+  font-family: MJX-NCM-ZERO, MJX-NCM-V;
+}
+
+.NCM-LT {
+  font-family: MJX-NCM-ZERO, MJX-NCM-LT;
+}
+
+.NCM-RB {
+  font-family: MJX-NCM-ZERO, MJX-NCM-RB;
+}
+
+.NCM-EM {
+  font-family: MJX-NCM-ZERO, MJX-NCM-EM;
+}
+
+.NCM-B-a {
+  font-family: MJX-NCM-ZERO, MJX-NCM-B-a;
+}
+
+.NCM-U {
+  font-family: MJX-NCM-ZERO, MJX-NCM-U;
+}
+
+.NCM-U-a {
+  font-family: MJX-NCM-ZERO, MJX-NCM-U-a;
+}
+
+.NCM-S {
+  font-family: MJX-NCM-ZERO, MJX-NCM-S;
+}
+
+.NCM-SB {
+  font-family: MJX-NCM-ZERO, MJX-NCM-SB;
+}
+
+@font-face /* MJX-NCM-ZERO */ {
+  font-family: MJX-NCM-ZERO;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-zero.woff2") format("woff2");
+}
+
+@font-face /* MJX-BRK */ {
+  font-family: MJX-BRK;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-brk.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-N */ {
+  font-family: MJX-NCM-N;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-n.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-B */ {
+  font-family: MJX-NCM-B;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-b.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-I */ {
+  font-family: MJX-NCM-I;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-i.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-BI */ {
+  font-family: MJX-NCM-BI;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-bi.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-DS */ {
+  font-family: MJX-NCM-DS;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-ds.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-F */ {
+  font-family: MJX-NCM-F;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-f.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-FB */ {
+  font-family: MJX-NCM-FB;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-fb.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-SS */ {
+  font-family: MJX-NCM-SS;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-ss.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-SSB */ {
+  font-family: MJX-NCM-SSB;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-ssb.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-SSI */ {
+  font-family: MJX-NCM-SSI;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-ssi.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-SSBI */ {
+  font-family: MJX-NCM-SSBI;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-ssbi.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-M */ {
+  font-family: MJX-NCM-M;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-m.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-SO */ {
+  font-family: MJX-NCM-SO;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-so.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-LO */ {
+  font-family: MJX-NCM-LO;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-lo.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-S3 */ {
+  font-family: MJX-NCM-S3;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-s3.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-S4 */ {
+  font-family: MJX-NCM-S4;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-s4.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-S5 */ {
+  font-family: MJX-NCM-S5;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-s5.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-S6 */ {
+  font-family: MJX-NCM-S6;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-s6.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-S7 */ {
+  font-family: MJX-NCM-S7;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-s7.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-MI */ {
+  font-family: MJX-NCM-MI;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-mi.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-C */ {
+  font-family: MJX-NCM-C;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-c.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-CB */ {
+  font-family: MJX-NCM-CB;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-cb.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-OS */ {
+  font-family: MJX-NCM-OS;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-os.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-OB */ {
+  font-family: MJX-NCM-OB;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-ob.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-V */ {
+  font-family: MJX-NCM-V;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-v.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-LT */ {
+  font-family: MJX-NCM-LT;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-lt.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-RB */ {
+  font-family: MJX-NCM-RB;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-rb.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-EM */ {
+  font-family: MJX-NCM-EM;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-em.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-B-a */ {
+  font-family: MJX-NCM-B-a;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-b-a.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-U */ {
+  font-family: MJX-NCM-U;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-u.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-U-a */ {
+  font-family: MJX-NCM-U-a;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-u-a.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-S */ {
+  font-family: MJX-NCM-S;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-s.woff2") format("woff2");
+}
+
+@font-face /* MJX-NCM-SB */ {
+  font-family: MJX-NCM-SB;
+  src: url("https://cs50.harvard.edu/python/assets/mathjax/../@mathjax/mathjax-newcm-font/chtml/woff2/mjx-ncm-sb.woff2") format("woff2");
+}
+</style></head>
+
+    <body class="">
+
+        <div class="alert fixed-top mb-0 rounded-0 alert-success alert-dismissible" data-alert="success dismissible" data-hash="7effc11d8ee370d9f3e0a53f1b0b1824" id="alert" role="alert">
+            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button><p>Interested in <a href="https://cs50.harvard.edu/python/#how-to-take-this-course" class="alert-link">a verified certificate or a professional certificate</a>?</p>
+</div>
+        
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <aside class="col-lg" style="height: 834px; top: 58px;">
+ 
+                    <header><h1 data-id="cs50s-introduction-to-programming-with-python"><a href="https://cs50.harvard.edu/python/">CS50’s Introduction to Programming with Python</a></h1>
+
+<p>OpenCourseWare</p>
+
+<p><a class="pr-1 small" href="https://cs50.harvard.edu/donate">Donate<i aria-hidden="true" class="fas fa-external-link-alt ps-2"></i></a></p>
+
+<p><a href="https://cs.harvard.edu/malan/">David J. Malan</a>
+<br>
+<a href="mailto:malan@harvard.edu">malan@harvard.edu</a>
+<br>
+<a class="mr-1" href="https://www.facebook.com/dmalan"><i aria-hidden="true" class="fa-brands fa-facebook-f" title="Facebook"></i><span class="visually-hidden">Facebook</span></a>
+<a class="mr-1" href="https://github.com/dmalan"><i aria-hidden="true" class="fa-brands fa-github" title="GitHub"></i><span class="visually-hidden">GitHub</span></a>
+<a class="mr-1" href="https://www.instagram.com/davidjmalan/"><i aria-hidden="true" class="fa-brands fa-instagram" title="Instagram"></i><span class="visually-hidden">Instagram</span></a>
+<a class="mr-1" href="https://www.linkedin.com/in/malan/"><i aria-hidden="true" class="fa-brands fa-linkedin" title="LinkedIn"></i><span class="visually-hidden">LinkedIn</span></a>
+<a class="mr-1" href="https://www.reddit.com/user/davidjmalan"><i aria-hidden="true" class="fa-brands fa-reddit-alien" title="Reddit"></i><span class="visually-hidden">Reddit</span></a>
+<a class="mr-1" href="https://x.com/davidjmalan"><i aria-hidden="true" class="fa-brands fa-x-twitter" title="X"></i><span class="visually-hidden">X</span></a></p></header>
+
+                    
+
+                    <button aria-controls="nav" aria-expanded="false" class="btn btn-sm collapsed d-lg-none" data-bs-target="aside &gt; nav" data-bs-toggle="collapse">
+                        Menu
+                    </button>
+
+                    <nav class="collapse d-lg-block" id="nav"><hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/x/puzzles/"><i class="fa-solid fa-puzzle-piece pe-2"></i>CS50x Puzzle Day</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.ly/pt"><i class="fa-solid fa-language pe-2"></i>CS50x em português</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.ly/es"><i class="fa-solid fa-globe pe-2"></i>CS50x en español</a></li>
+</ul>
+
+<!-- Tools -->
+<hr class="small">
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.ai/"><i class="fa-solid fa-duck pe-2 text-decoration-none"></i>CS50.ai</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+<a href="https://cs50.edx.org/ed"><i class="fa-solid fa-comment-question pe-2 text-decoration-none"></i>Ed Discussion</a> for Q&amp;A</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.dev/"><i class="fa-solid fa-laptop pe-2 text-decoration-none"></i>Visual Studio Code</a></li>
+</ul>
+
+<!-- Course Nav -->
+<hr>
+
+<ol start="0">
+  <li><a href="https://cs50.harvard.edu/python/weeks/0/">Functions, Variables</a></li>
+  <li><a href="https://cs50.harvard.edu/python/weeks/1/">Conditionals</a></li>
+  <li><a href="https://cs50.harvard.edu/python/weeks/2/">Loops</a></li>
+  <li><a href="https://cs50.harvard.edu/python/weeks/3/">Exceptions</a></li>
+  <li><a href="https://cs50.harvard.edu/python/weeks/4/">Libraries</a></li>
+  <li><a href="https://cs50.harvard.edu/python/weeks/5/">Unit Tests</a></li>
+  <li><a href="https://cs50.harvard.edu/python/weeks/6/">File I/O</a></li>
+  <li><a href="https://cs50.harvard.edu/python/weeks/7/">Regular Expressions</a></li>
+  <li><a href="https://cs50.harvard.edu/python/weeks/8/">Object-Oriented Programming</a></li>
+  <li><a href="https://cs50.harvard.edu/python/weeks/9/">Et Cetera</a></li>
+</ol>
+
+<hr>
+
+<!-- Final project spec, seminars, shorts -->
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/python/project/">Final Project</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/python/gallery/">Gallery of Final Projects<span aria-hidden="true" class="ps-2 text-decoration-none"><img draggable="false" class="emoji" alt="🖼️" src="./Lecture 5 - CS50's Introduction to Programming with Python_files/1f5bc.png"> </span></a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+  </li><li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/python/shorts/">Shorts</a></li>
+</ul>
+
+<!-- Items that might usually appear in an academic syllabus -->
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/python/honesty/">Academic Honesty</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/python/certificate/">CS50 Certificate</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/python/faqs/">FAQs</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.me/cs50p">Gradebook</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/python/staff/">Staff</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+</li></ul>
+
+<!-- Where to watch or take the class course -->
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://apps.apple.com/us/app/cs50/id1631064453">Apple TV</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.edx.org/python">edX</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://www.youtube.com/watch?v=nLRL_NcnK-4">freeCodeCamp</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://play.google.com/store/apps/details?id=edu.harvard.cs50.googletv">Google TV</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+  </li><li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+  </li><li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+  </li><li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://channelstore.roku.com/details/e338f60adfb133abc19eac2da9e5c505:40cee2a1909355bc4496086c8fa4a86f/cs50">Roku</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V">YouTube</a></li>
+</ul>
+
+<!-- Manual page, style guide, other docs -->
+
+<!-- Status Page -->
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.statuspage.io/">Status Page</a></li>
+</ul>
+
+<!-- Communities -->
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/python/communities/"><strong>Communities</strong></a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://bsky.app/profile/cs50.harvard.edu">Bluesky</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+<a href="https://discord.gg/cs50">Discord</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span>
+</li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+<a href="https://cs50.edx.org/ed">Ed</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span>
+</li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+<a href="https://www.facebook.com/groups/cs50/">Facebook Group</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span>
+</li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://www.facebook.com/cs50/">Facebook Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://github.com/cs50">GitHub</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://instagram.com/cs50">Instagram</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://www.linkedin.com/groups/7437240/">LinkedIn Group</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://www.linkedin.com/school/CS50/">LinkedIn Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.medium.com/">Medium</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+<a href="https://www.reddit.com/r/cs50/">Reddit</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span>
+</li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+<a href="https://cs50.edx.org/slack">Slack</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span>
+</li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://soundcloud.com/cs50">SoundCloud</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://t.me/cs50x">Telegram</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://www.tiktok.com/@cs50">TikTok</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://www.threads.net/@cs50">Threads</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://x.com/cs50">X Account</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://x.com/i/communities/1722308663522594923">X Community</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://www.youtube.com/subscription_center?add_user=cs50tv">YouTube</a></li>
+</ul>
+
+<!-- Courses -->
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/python/courses/"><strong>Courses</strong></a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/x">CS50x</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/games">CS50 2D</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/ai">CS50 AI</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/business">CS50 Business</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/cybersecurity">CS50 Cybersecurity</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/law">CS50 for Lawyers</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/python">CS50 Python</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/r">CS50 R</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/scratch">CS50 Scratch</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/sql">CS50 SQL</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fa-solid fa-square"></i></span><a href="https://cs50.harvard.edu/web">CS50 Web</a></li>
+</ul>
+
+<!-- Harvard Shop -->
+<hr>
+
+<p><a href="https://cs50.harvardshop.com/"><img src="./Lecture 5 - CS50's Introduction to Programming with Python_files/shop.png" alt="Harvard Shop"></a></p>
+
+<!-- Legal -->
+<hr>
+
+<p><a href="https://cs50.harvard.edu/python/license/" class="small"><i class="fab fa-creative-commons me-1"></i>License</a></p></nav>
+
+                    <footer></footer>
+
+                </aside>
+
+                <main class="col-lg" style="margin-bottom: 586px; margin-top: 58px;">
+
+                    <a data-id="" id="lecture-5" style="top: -58px;"></a><h1 class="no_toc"><a data-id="" href="https://cs50.harvard.edu/python/notes/5/#lecture-5">Lecture 5</a></h1>
+
+<ul id="markdown-toc">
+  <li><a href="https://cs50.harvard.edu/python/notes/5/#unit-tests" id="markdown-toc-unit-tests">Unit Tests</a></li>
+  <li><a href="https://cs50.harvard.edu/python/notes/5/#assert" id="markdown-toc-assert"><code class="language-plaintext highlighter-rouge">assert</code></a></li>
+  <li><a href="https://cs50.harvard.edu/python/notes/5/#pytest" id="markdown-toc-pytest"><code class="language-plaintext highlighter-rouge">pytest</code></a></li>
+  <li><a href="https://cs50.harvard.edu/python/notes/5/#testing-strings" id="markdown-toc-testing-strings">Testing Strings</a></li>
+  <li><a href="https://cs50.harvard.edu/python/notes/5/#organizing-tests-into-folders" id="markdown-toc-organizing-tests-into-folders">Organizing Tests into Folders</a></li>
+  <li><a href="https://cs50.harvard.edu/python/notes/5/#summing-up" id="markdown-toc-summing-up">Summing Up</a></li>
+</ul>
+
+<a data-id="" id="unit-tests" style="top: -58px;"></a><h2><a data-id="" href="https://cs50.harvard.edu/python/notes/5/#unit-tests">Unit Tests</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>Up until now, you have likely been testing your own code using <code class="language-plaintext highlighter-rouge">print</code> statements.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>Alternatively, you may have been relying upon CS50 to test your code for you!</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>It’s most common in industry to write code to test your own programs.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>In your terminal window, type <code class="language-plaintext highlighter-rouge">code calculator.py</code>. Note that you may have coded this file in a previous lecture. In the text editor, make sure that your code appears as follows:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">(</span><span class="sh">"</span><span class="s">What</span><span class="sh">'</span><span class="s">s x? </span><span class="sh">"</span><span class="p">))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">x squared is</span><span class="sh">"</span><span class="p">,</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>Notice that you could plausibly test the above code on your own using some obvious numbers such as <code class="language-plaintext highlighter-rouge">2</code>. However, consider why you might want to create a test that ensures that the above code functions appropriately.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Following convention, let’s create a new test program by typing <code class="language-plaintext highlighter-rouge">code test_calculator.py</code> and modifying your code in the text editor as follows:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">calculator</span> <span class="kn">import</span> <span class="n">square</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="nf">test_square</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">test_square</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nf">square</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">2 squared was not 4</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nf">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">3 squared was not 9</span><span class="sh">"</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>Notice that we are importing the <code class="language-plaintext highlighter-rouge">square</code> function from <code class="language-plaintext highlighter-rouge">calculator.py</code> on the first line of code.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>In the terminal window, type <code class="language-plaintext highlighter-rouge">python test_calculator.py</code>. You’ll notice that nothing is being outputted. It could be that everything is running fine! Alternatively, it could be that our test function did not discover one of the “corner cases” that could produce an error.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>Right now, our code tests two conditions. If we wanted to test many more conditions, our test code could easily become bloated. How could we expand our test capabilities without expanding our test code?</li>
+</ul>
+
+<a data-id="" id="assert" style="top: -58px;"></a><h2><a data-id="" href="https://cs50.harvard.edu/python/notes/5/#assert"><code class="language-plaintext highlighter-rouge">assert</code></a></h2>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Python’s <code class="language-plaintext highlighter-rouge">assert</code> command allows us to tell the interpreter that something, some assertion, is true. We can apply this to our test code as follows:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">calculator</span> <span class="kn">import</span> <span class="n">square</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="nf">test_square</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">test_square</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>Notice that we are definitively asserting what <code class="language-plaintext highlighter-rouge">square(2)</code> and <code class="language-plaintext highlighter-rouge">square(3)</code> should equal. Our code is reduced from four test lines down to two.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>We can purposely break our calculator code by modifying it as follows:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">(</span><span class="sh">"</span><span class="s">What</span><span class="sh">'</span><span class="s">s x? </span><span class="sh">"</span><span class="p">))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">x squared is</span><span class="sh">"</span><span class="p">,</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">+</span> <span class="n">n</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>Notice that we have changed the <code class="language-plaintext highlighter-rouge">*</code> operator to a <code class="language-plaintext highlighter-rouge">+</code> in the square function.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>Now running <code class="language-plaintext highlighter-rouge">python test_calculator.py</code> in the terminal window, you will notice that an <code class="language-plaintext highlighter-rouge">AssertionError</code> is raised by the interpreter. Essentially, this is the interpreter telling us that one of our conditions was not met.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>One of the challenges that we are now facing is that our code could become even more burdensome if we wanted to provide more descriptive error output to our users. Plausibly, we could code as follows:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">calculator</span> <span class="kn">import</span> <span class="n">square</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="nf">test_square</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">test_square</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">except</span> <span class="nb">AssertionError</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">2 squared is not 4</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+    <span class="k">except</span> <span class="nb">AssertionError</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">3 squared is not 9</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">except</span> <span class="nb">AssertionError</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-2 squared is not 4</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+    <span class="k">except</span> <span class="nb">AssertionError</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-3 squared is not 9</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">except</span> <span class="nb">AssertionError</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">0 squared is not 0</span><span class="sh">"</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>Notice that running this code will produce multiple errors. However, it’s not producing all the errors above. This is a good illustration that it’s worth testing multiple cases such that you might catch situations where there are coding mistakes.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>The above code illustrates a major challenge: How could we make it easier to test our code without dozens of lines of code like the above?</li>
+</ul>
+
+<p>You can learn more in Python’s documentation of <a href="https://docs.python.org/3/reference/simple_stmts.html#assert"><code class="language-plaintext highlighter-rouge">assert</code></a>.</p>
+
+<a data-id="" id="pytest" style="top: -58px;"></a><h2><a data-id="" href="https://cs50.harvard.edu/python/notes/5/#pytest"><code class="language-plaintext highlighter-rouge">pytest</code></a></h2>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+<code class="language-plaintext highlighter-rouge">pytest</code> is a third-party library that allows you to unit test your program. That is, you can test your functions within your program.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>To utilize <code class="language-plaintext highlighter-rouge">pytest</code> please type <code class="language-plaintext highlighter-rouge">pip install pytest</code> into your terminal window.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Before applying <code class="language-plaintext highlighter-rouge">pytest</code> to our own program, modify your <code class="language-plaintext highlighter-rouge">test_square</code> function as follows:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">calculator</span> <span class="kn">import</span> <span class="n">square</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="nf">test_square</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">test_square</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</code></pre></div>    </div>
+    <p>Notice how the above code asserts all the conditions that we want to test.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+<code class="language-plaintext highlighter-rouge">pytest</code> allows us to run our program directly through it, such that we can more easily view the results of our test conditions.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>In the terminal window, type <code class="language-plaintext highlighter-rouge">pytest test_calculator.py</code>. You’ll immediately notice that output will be provided. Notice the red <code class="language-plaintext highlighter-rouge">F</code> near the top of the output, indicating that something in your code failed. Further, notice that the red <code class="language-plaintext highlighter-rouge">E</code> provides some hints about the errors in your <code class="language-plaintext highlighter-rouge">calculator.py</code> program. Based upon the output, you can imagine a scenario where squaring <code class="language-plaintext highlighter-rouge">3</code> outputted <code class="language-plaintext highlighter-rouge">6</code> instead of <code class="language-plaintext highlighter-rouge">9</code>. Based on the results of this test, we can go correct our <code class="language-plaintext highlighter-rouge">calculator.py</code> code as follows:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">(</span><span class="sh">"</span><span class="s">What</span><span class="sh">'</span><span class="s">s x? </span><span class="sh">"</span><span class="p">))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">x squared is</span><span class="sh">"</span><span class="p">,</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>Notice that we have changed the <code class="language-plaintext highlighter-rouge">+</code> operator to a <code class="language-plaintext highlighter-rouge">*</code> in the square function, returning it to a working state.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Re-running <code class="language-plaintext highlighter-rouge">pytest test_calculator.py</code>, notice how no errors are produced. Congratulations!</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>At the moment, it is not ideal that <code class="language-plaintext highlighter-rouge">pytest</code> will stop running after the first failed test. Again, let’s return our <code class="language-plaintext highlighter-rouge">calculator.py</code> code back to its broken state:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">(</span><span class="sh">"</span><span class="s">What</span><span class="sh">'</span><span class="s">s x? </span><span class="sh">"</span><span class="p">))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">x squared is</span><span class="sh">"</span><span class="p">,</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">+</span> <span class="n">n</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>Notice that we have changed the <code class="language-plaintext highlighter-rouge">*</code> operator to a <code class="language-plaintext highlighter-rouge">+</code> in the square function, returning it to a broken state.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>To improve our test code, let’s modify <code class="language-plaintext highlighter-rouge">test_calculator.py</code> to divide the code into different groups of tests:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">calculator</span> <span class="kn">import</span> <span class="n">square</span>
+
+
+<span class="k">def</span> <span class="nf">test_positive</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+
+
+<span class="k">def</span> <span class="nf">test_negative</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+
+
+<span class="k">def</span> <span class="nf">test_zero</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</code></pre></div>    </div>
+    <p>Notice that we have divided the same five tests into three different functions. Testing frameworks like <code class="language-plaintext highlighter-rouge">pytest</code> will run each function, even if there was a failure in one of them. Re-running <code class="language-plaintext highlighter-rouge">pytest test_calculator.py</code>, you will notice that many more errors are being displayed. More error output allows you to further explore what might be producing the problems within your code.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Having improved our test code, return your <code class="language-plaintext highlighter-rouge">calculator.py</code> code to fully working order:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">(</span><span class="sh">"</span><span class="s">What</span><span class="sh">'</span><span class="s">s x? </span><span class="sh">"</span><span class="p">))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">x squared is</span><span class="sh">"</span><span class="p">,</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>Notice that we have changed the <code class="language-plaintext highlighter-rouge">+</code> operator to a <code class="language-plaintext highlighter-rouge">*</code> in the square function, returning it to a working state.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Re-running <code class="language-plaintext highlighter-rouge">pytest test_calculator.py</code>, you will notice that no errors are found.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Finally, we can test that our program raises exceptions as expected. Let’s modify <code class="language-plaintext highlighter-rouge">test_calculator.py</code> to do just that.</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pytest</span>
+
+<span class="kn">from</span> <span class="n">calculator</span> <span class="kn">import</span> <span class="n">square</span>
+
+
+<span class="k">def</span> <span class="nf">test_positive</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+
+
+<span class="k">def</span> <span class="nf">test_negative</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+
+
+<span class="k">def</span> <span class="nf">test_zero</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">square</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+
+
+<span class="k">def</span> <span class="nf">test_str</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="p">.</span><span class="nf">raises</span><span class="p">(</span><span class="nb">TypeError</span><span class="p">):</span>
+        <span class="nf">square</span><span class="p">(</span><span class="sh">"</span><span class="s">cat</span><span class="sh">"</span><span class="p">)</span>
+
+</code></pre></div>    </div>
+    <p>Notice that instead of using <code class="language-plaintext highlighter-rouge">assert</code>, we are taking advantage of a function within the <code class="language-plaintext highlighter-rouge">pytest</code> library itself called <code class="language-plaintext highlighter-rouge">raises</code> which allows you to express that you expect an error to be raised. We need to go to the top of our program and add <code class="language-plaintext highlighter-rouge">import pytest</code> and then call <code class="language-plaintext highlighter-rouge">pytest.raises</code> with the type of error we are expecting.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Again, re-running <code class="language-plaintext highlighter-rouge">pytest test_calculator.py</code>, you will notice that no errors are found.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>In summary, it’s up to you as a coder to define as many test conditions as you see fit!</li>
+</ul>
+
+<p>You can learn more in Pytest’s documentation of <a href="https://docs.pytest.org/en/7.1.x/getting-started.html"><code class="language-plaintext highlighter-rouge">pytest</code></a>.</p>
+
+<a data-id="" id="testing-strings" style="top: -58px;"></a><h2><a data-id="" href="https://cs50.harvard.edu/python/notes/5/#testing-strings">Testing Strings</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Going back in time, consider the following code <code class="language-plaintext highlighter-rouge">hello.py</code>:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="nf">input</span><span class="p">(</span><span class="sh">"</span><span class="s">What</span><span class="sh">'</span><span class="s">s your name? </span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">hello</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">to</span><span class="o">=</span><span class="sh">"</span><span class="s">world</span><span class="sh">"</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">hello,</span><span class="sh">"</span><span class="p">,</span> <span class="n">to</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>Notice that we may wish to test the result of the <code class="language-plaintext highlighter-rouge">hello</code> function.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Consider the following code for <code class="language-plaintext highlighter-rouge">test_hello.py</code>:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">hello</span> <span class="kn">import</span> <span class="n">hello</span>
+
+
+<span class="k">def</span> <span class="nf">test_hello</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">hello</span><span class="p">(</span><span class="sh">"</span><span class="s">David</span><span class="sh">"</span><span class="p">)</span> <span class="o">==</span> <span class="sh">"</span><span class="s">hello, David</span><span class="sh">"</span>
+    <span class="k">assert</span> <span class="nf">hello</span><span class="p">()</span> <span class="o">==</span> <span class="sh">"</span><span class="s">hello, world</span><span class="sh">"</span>
+</code></pre></div>    </div>
+    <p>Looking at this code, do you think that this approach to testing will work well? Why might this test not work well? Notice that the <code class="language-plaintext highlighter-rouge">hello</code> function in <code class="language-plaintext highlighter-rouge">hello.py</code> prints something: That is, it does not return a value!</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>We can change our <code class="language-plaintext highlighter-rouge">hello</code> function within <code class="language-plaintext highlighter-rouge">hello.py</code> as follows:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="nf">input</span><span class="p">(</span><span class="sh">"</span><span class="s">What</span><span class="sh">'</span><span class="s">s your name? </span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="nf">hello</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">to</span><span class="o">=</span><span class="sh">"</span><span class="s">world</span><span class="sh">"</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="s">hello, </span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="sh">"</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p>Notice that we changed our <code class="language-plaintext highlighter-rouge">hello</code> function to return a string. This effectively means that we can now use <code class="language-plaintext highlighter-rouge">pytest</code> to test the <code class="language-plaintext highlighter-rouge">hello</code> function.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>Running <code class="language-plaintext highlighter-rouge">pytest test_hello.py</code>, our code will pass all tests!</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+    <p>As with our previous test case in this lesson, we can break out our tests separately:</p>
+
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">hello</span> <span class="kn">import</span> <span class="n">hello</span>
+
+
+<span class="k">def</span> <span class="nf">test_default</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">hello</span><span class="p">()</span> <span class="o">==</span> <span class="sh">"</span><span class="s">hello, world</span><span class="sh">"</span>
+
+
+<span class="k">def</span> <span class="nf">test_argument</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">hello</span><span class="p">(</span><span class="sh">"</span><span class="s">David</span><span class="sh">"</span><span class="p">)</span> <span class="o">==</span> <span class="sh">"</span><span class="s">hello, David</span><span class="sh">"</span>
+</code></pre></div>    </div>
+    <p>Notice that the above code separates our test into multiple functions such that they will all run, even if an error is produced.</p>
+  </li>
+</ul>
+
+<a data-id="" id="organizing-tests-into-folders" style="top: -58px;"></a><h2><a data-id="" href="https://cs50.harvard.edu/python/notes/5/#organizing-tests-into-folders">Organizing Tests into Folders</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>Unit testing code using multiple tests is so common that you have the ability to run a whole folder of tests with a single command.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>First, in the terminal window, execute <code class="language-plaintext highlighter-rouge">mkdir test</code> to create a folder called <code class="language-plaintext highlighter-rouge">test</code>.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>Then, to create a test within that folder, type in the terminal window <code class="language-plaintext highlighter-rouge">code test/test_hello.py</code>. Notice that <code class="language-plaintext highlighter-rouge">test/</code> instructs the terminal to create <code class="language-plaintext highlighter-rouge">test_hello.py</code> in the folder called <code class="language-plaintext highlighter-rouge">test</code>.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>In the text editor window, modify the file to include the following code:
+    <div class="language-py highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">hello</span> <span class="kn">import</span> <span class="n">hello</span>
+
+
+<span class="k">def</span> <span class="nf">test_default</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">hello</span><span class="p">()</span> <span class="o">==</span> <span class="sh">"</span><span class="s">hello, world</span><span class="sh">"</span>
+
+
+<span class="k">def</span> <span class="nf">test_argument</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nf">hello</span><span class="p">(</span><span class="sh">"</span><span class="s">David</span><span class="sh">"</span><span class="p">)</span> <span class="o">==</span> <span class="sh">"</span><span class="s">hello, David</span><span class="sh">"</span>
+</code></pre></div>    </div>
+    <p>Notice that we are creating a test just as we did before.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>
+<code class="language-plaintext highlighter-rouge">pytest</code> will not allow us to run tests as a folder simply with this file (or a whole set of files) alone without a special <code class="language-plaintext highlighter-rouge">__init__</code> file. In your terminal window, create this file by typing <code class="language-plaintext highlighter-rouge">code test/__init__.py</code>. Note the <code class="language-plaintext highlighter-rouge">test/</code> as before, as well as the double underscores on either side of <code class="language-plaintext highlighter-rouge">init</code>. Even leaving this <code class="language-plaintext highlighter-rouge">__init__.py</code> file empty, <code class="language-plaintext highlighter-rouge">pytest</code> is informed that the whole folder containing <code class="language-plaintext highlighter-rouge">__init__.py</code> has tests that can be run.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>Now, typing <code class="language-plaintext highlighter-rouge">pytest test</code> in the terminal, you can run the entire <code class="language-plaintext highlighter-rouge">test</code> folder of code.</li>
+</ul>
+
+<p>You can learn more in Pytest’s documentation of <a href="https://docs.pytest.org/en/7.1.x/explanation/pythonpath.html?highlight=folder#pytest-import-mechanisms-and-sys-path-pythonpath">import mechanisms</a>.</p>
+
+<a data-id="" id="summing-up" style="top: -58px;"></a><h2><a data-id="" href="https://cs50.harvard.edu/python/notes/5/#summing-up">Summing Up</a></h2>
+<p>Testing your code is a natural part of the programming process. Unit tests allow you to test specific aspects of your code. You can create your own programs that test your code. Alternatively, you can utilize frameworks like <code class="language-plaintext highlighter-rouge">pytest</code> to run your unit tests for you. In this lecture, you learned about…</p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span>Unit tests</li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><code class="language-plaintext highlighter-rouge">assert</code></li>
+  <li data-marker="*"><span class="fa-li"><i class="fa-solid fa-square"></i></span><code class="language-plaintext highlighter-rouge">pytest</code></li>
+</ul>
+
+
+                </main>
+
+            </div>
+
+        </div>
+
+        
+ 
+        <script src="./Lecture 5 - CS50's Introduction to Programming with Python_files/page.js.Herunterladen"></script>
+
+    
+
+
+</body></html>
