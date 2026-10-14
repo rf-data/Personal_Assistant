@@ -332,6 +332,9 @@ def run_lecture(job, directory, budget, *, indices=None, provider_factory=None):
                 local = RequestBudget(1, 64000, cfg.input_limit, cfg.output_limit)
 
                 def reserve(reservation, chunk=chunk):
+                    load_knowledge_transcript(
+                        job.plan, job.input, workspace=job.workspace
+                    )
                     check_runtime(budget, cfg.max_seconds, dispatch=True)
                     reference = budget.reserve(
                         job.identity.job_id, chunk.chunk_id, reservation
@@ -407,6 +410,13 @@ def run_lecture(job, directory, budget, *, indices=None, provider_factory=None):
                     verify_budget(budget, store, chunk.chunk_id, validated=True)
                 except Exception:
                     store.interrupted(chunk.chunk_id)
+                    if store.state.chunks[chunk.chunk_id].status == "unknown":
+                        budget.finish(
+                            job.identity.job_id,
+                            chunk.chunk_id,
+                            status="unknown",
+                            usage=record.get("usage"),
+                        )
                     verify_budget(budget, store, chunk.chunk_id)
                     raise
                 finally:
