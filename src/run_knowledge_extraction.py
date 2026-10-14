@@ -242,6 +242,9 @@ def knowledge_extraction(
     # validate_extraction
     return TranscriptKnowledgeDocument(
         source_id=source_id,
+        language=transcript.language,
+        transcript_provenance=transcript.provenance,
+        course_id=context.course_id or None,
         transcript_url=transcript_url,
         media_id=media_id,
         chunks=results,  # _all,
