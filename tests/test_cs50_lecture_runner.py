@@ -223,3 +223,53 @@ def test_execute_gate(context, tmp_path, monkeypatch):
     with pytest.raises(ValueError, match="parent authorization"):
         run_lecture(job, tmp_path / "job", budget)
     assert not (tmp_path / "job").exists()
+
+
+def test_invalid_precise_response_sidecar_preserved(context, tmp_path):
+    import httpx
+
+    from src.tools_knowledge.cs50_extraction_provider import OpenAIHTTPProvider
+    from src.tools_knowledge.run_cs50_lecture import lecture_budget, run_lecture
+
+    job = planned(context, tmp_path, cues=10)
+    budget = lecture_budget([job], tmp_path / "budget")
+
+    def handle(request):
+        data = json.loads(json.loads(request.content)["messages"][1]["content"])
+        raw = {
+            "analysis": {"chunk_id": data["chunk_id"], "relevant": True},
+            "extraction": {
+                "chunk_id": data["chunk_id"],
+                "statements": [
+                    {
+                        "statement_id": "bad",
+                        "text": "Unvalidated technical fixture",
+                        "semantic_type": "statement",
+                        "segment_ids": [99999],
+                    }
+                ],
+            },
+        }
+        return httpx.Response(
+            200,
+            json={
+                "usage": {"total_tokens": 10},
+                "choices": [
+                    {"finish_reason": "stop", "message": {"content": json.dumps(raw)}}
+                ],
+            },
+        )
+
+    def factory(**kw):
+        kw["api_key"] = "offline-fake"
+        return OpenAIHTTPProvider(**kw, transport=httpx.MockTransport(handle))
+
+    with pytest.raises(ValueError):
+        run_lecture(job, tmp_path / "job", budget, provider_factory=factory)
+    sidecars = list((tmp_path / "job").glob("failed-provider.*.v1.json"))
+    assert len(sidecars) == 1
+    raw = json.loads(sidecars[0].read_text())
+    assert not raw["validated"] and raw["provider_fields"]["extraction"]["statements"][
+        0
+    ]["segment_ids"] == [99999]
+    assert next(iter(budget.snapshot().attempts.values())).usage["total_tokens"] == 10

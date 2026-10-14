@@ -410,6 +410,24 @@ def run_lecture(job, directory, budget, *, indices=None, provider_factory=None):
                     verify_budget(budget, store, chunk.chunk_id, validated=True)
                 except Exception:
                     store.interrupted(chunk.chunk_id)
+                    if "provider_fields" in record:
+                        atomic_json(
+                            directory
+                            / (
+                                "failed-provider."
+                                + fingerprint(chunk.chunk_id)
+                                + ".v1.json"
+                            ),
+                            {
+                                "schema_version": 1,
+                                "job_id": job.identity.job_id,
+                                "chunk_id": chunk.chunk_id,
+                                "provider_fields": record.pop("provider_fields"),
+                                "usage": record.get("usage"),
+                                "result_origin": record["result_origin"],
+                                "validated": False,
+                            },
+                        )
                     if store.state.chunks[chunk.chunk_id].status == "unknown":
                         budget.finish(
                             job.identity.job_id,
