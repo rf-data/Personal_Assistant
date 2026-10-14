@@ -124,6 +124,15 @@ class BudgetJournal:
             raise CheckpointConflict("Positive integer token reservation required")
         key = fingerprint([job_id, chunk_id])
         with self.locked() as (state, path):
+            if any(
+                a.usage
+                and type(a.usage.get("total_tokens")) is int
+                and a.usage["total_tokens"] > a.reserved_tokens
+                for a in state.attempts.values()
+            ):
+                raise CheckpointConflict(
+                    "Provider usage exceeded reserved bound; scope blocked"
+                )
             if job_id not in self.identity.allowed_jobs:
                 raise CheckpointConflict("Foreign job cannot spend this budget")
             if key in state.attempts:
@@ -159,6 +168,13 @@ class BudgetJournal:
                 if k in ("prompt_tokens", "completion_tokens", "total_tokens")
             ):
                 raise CheckpointConflict("Invalid provider usage")
+            overshoot = (
+                usage is not None
+                and type(usage.get("total_tokens")) is int
+                and usage["total_tokens"] > attempt.reserved_tokens
+            )
+            if overshoot:
+                status = "unknown"
             attempts = {
                 **state.attempts,
                 key: attempt.model_copy(update={"status": status, "usage": usage}),
@@ -170,6 +186,10 @@ class BudgetJournal:
                 }
             )
             atomic_json(path, updated.model_dump(mode="json"), replace=True)
+            if overshoot:
+                raise CheckpointConflict(
+                    "Provider usage exceeded reserved bound; scope blocked"
+                )
 
     def snapshot(self):
         with self.locked() as (state, _):
