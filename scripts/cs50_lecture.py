@@ -62,6 +62,14 @@ def worker(path):
         report.update(
             run_lecture(job, Path(value["output"]) / "lecture", budget, indices=indices)
         )
+        report["lecture_complete"] = False
+        if report["status"] == "done":
+            from src.tools_knowledge.complete_cs50_lecture import complete_lecture
+
+            completion, _ = complete_lecture(
+                job, Path(value["output"]) / "lecture", budget
+            )
+            report["lecture_complete"] = completion.phase == "done"
         report["validated"] = True
         report["budget"] = budget.snapshot().model_dump(mode="json")
         return 0
