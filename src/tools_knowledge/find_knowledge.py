@@ -3,9 +3,12 @@
 import json
 
 # from pathlib import Path
-import marvin
+from functools import lru_cache
 
+from src.agent.prompts.prompt_know_extract import build_knowledge_extraction_prompt
+from src.core.config_knowledge import KnowledgeSettings
 from src.core.memory import app_session
+from src.core.retry import retry_llm_call
 from src.model_knowledge.data_knowledge import (
     ChunkKnowledgeResult,
     # KnowledgeSemanticType,
@@ -13,25 +16,20 @@ from src.model_knowledge.data_knowledge import (
     TranscriptChunk,
     VisualCandidate,
 )
-from src.model_transcribe.data_transcribe import TranscriptSegment, TranscriptDocument
-from src.core.memory_lecture import LectureContext
-from src.core.retry import retry_llm_call
-from src.agent.prompts.prompt_know_extract import build_knowledge_extraction_prompt
-from src.core.config_knowledge import KnowledgeSettings
+
+# from src.utils.dict_helper import load_dict
+from src.model_lecture.data_resources import (
+    KnowledgeSourceMetadata,
+    LectureResource,
+    LectureResourceType,
+    ResourceKind,
+)
+from src.model_transcribe.data_transcribe import TranscriptDocument, TranscriptSegment
 from src.utils.general_helper import (
     hash_text,
     load_from_cache,
     make_cache_key,
     save_to_cache,
-)
-# from src.utils.dict_helper import load_dict
-
-
-from src.model_lecture.data_resources import (
-    LectureResource,
-    LectureResourceType,
-    KnowledgeSourceMetadata,
-    ResourceKind,
 )
 
 
@@ -172,15 +170,33 @@ def enrich_chunks(chunks: list[TranscriptChunk]) -> list[TranscriptChunk]:
 KNOWLEDGE_EXTRACTION_PROMPT = build_knowledge_extraction_prompt()
 
 
-@marvin.fn(instructions=KNOWLEDGE_EXTRACTION_PROMPT)
+@lru_cache(maxsize=1)
+def _get_extract_knowledge():
+    """Construct the unchanged Marvin function only when extraction is requested."""
+    import marvin
+
+    def extract_knowledge(
+        target_chunk: str,
+        previous_context: str | None,
+        next_context: str | None,
+        # start: float,
+        # end: float
+    ) -> ChunkKnowledgeResult:
+        ""
+
+    return marvin.fn(instructions=KNOWLEDGE_EXTRACTION_PROMPT)(extract_knowledge)
+
+
 def extract_knowledge(
     target_chunk: str,
     previous_context: str | None,
     next_context: str | None,
-    # start: float,
-    # end: float
 ) -> ChunkKnowledgeResult:
-    ""
+    return _get_extract_knowledge()(
+        target_chunk=target_chunk,
+        previous_context=previous_context,
+        next_context=next_context,
+    )
 
 
 @retry_llm_call
