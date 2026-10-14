@@ -1,5 +1,8 @@
 """Pure offline resource selection. Never creates or executes ResourceTasks."""
 
+import re
+from urllib.parse import urlsplit
+
 from src.model_discovery.cs50 import CourseDiscovery, ResourceCandidate, ResourceRole
 from src.model_discovery.cs50_selection import (
     CoursePreview,
@@ -8,6 +11,7 @@ from src.model_discovery.cs50_selection import (
     SelectionOption,
     SelectionPolicy,
 )
+from src.tools_lecture.cs50_manifest import COURSE_PATHS
 
 
 def _options(resources: tuple[ResourceCandidate, ...]) -> tuple[SelectionOption, ...]:
@@ -55,6 +59,110 @@ def _language_rank(option: SelectionOption, policy: SelectionPolicy) -> int | No
     if option.language is None and policy.allow_unknown_language:
         return 1
     return None
+
+
+def _official_srt(resource: ResourceCandidate, lecture: ResourceCandidate) -> bool:
+    url = urlsplit(str(resource.original_url))
+    # Official CDN source plus evidence on an official course page. No HTTP check
+    # or claim about subtitle contents; both must be validated during import.
+    prefix = COURSE_PATHS[resource.course_id]
+    expected_pages = {
+        f"https://cs50.harvard.edu/{prefix}/weeks/{key}/"
+        for key in lecture.section_keys
+    }
+    cdn_prefix = "" if resource.course_id == "cs50x" else f"{prefix}/"
+    match = re.fullmatch(
+        rf"/{cdn_prefix}\d{{4}}/[^/]+/lectures/([^/]+)/lang/([^/]+)/[^/]+\.srt",
+        url.path,
+    )
+    return (
+        resource.role == ResourceRole.SUBTITLES
+        and resource.format == "srt"
+        and url.scheme == "https"
+        and url.netloc == "cdn.cs50.net"
+        and match is not None
+        and match[1] in resource.section_keys
+        and match[2] == resource.language
+        and bool(resource.section_keys)
+        and set(resource.section_keys) <= set(lecture.section_keys)
+        and any(str(p.original_url) in expected_pages for p in resource.provenance)
+    )
+
+
+def _choose_timed(
+    resources: list[ResourceCandidate],
+    policy: SelectionPolicy,
+    ambiguous: bool,
+    lecture: ResourceCandidate,
+) -> SelectionDecision:
+    alternatives = _options(tuple(resources))
+    candidates = [
+        r
+        for r in resources
+        if _official_srt(r, lecture)
+        and r.language == policy.preferred_language
+        and not r.variants
+    ]
+    if ambiguous or len(candidates) > 1:
+        return SelectionDecision(
+            purpose="text",
+            alternatives=alternatives,
+            reason="SRT-Angebot oder Vorlesungszuordnung ist mehrdeutig; keine Auswahl.",
+            warnings=(
+                "ambiguous_selection: Eindeutige offizielle SRT-Quelle erforderlich.",
+            ),
+        )
+    if not candidates:
+        return SelectionDecision(
+            purpose="text",
+            alternatives=alternatives,
+            reason=f"Kein eindeutig zugeordnetes offizielles SRT in Sprache {policy.preferred_language}; "
+            "kein TXT-, VTT-, Audio- oder Video-Fallback.",
+        )
+    return SelectionDecision(
+        purpose="text",
+        selected=_options((candidates[0],))[0],
+        alternatives=alternatives,
+        actions=("download", "parse_subtitle"),
+        reason="Offizielles SRT in exakter bevorzugter Sprache; zeitbasierter Knowledge-Primärinput.",
+        warnings=(
+            "integration_pending: Offizieller SRT-Importer vorhanden; Lecture-Runner-Anbindung folgt separat.",
+        ),
+    )
+
+
+def select_optional_txt(
+    candidates: tuple[ResourceCandidate, ...],
+    policy: SelectionPolicy | None = None,
+) -> SelectionDecision:
+    """Select explicitly scoped lecture candidates as a separate TXT supplement.
+
+    The caller must resolve lecture ownership first. This decision never becomes
+    a primary input and is never added automatically by preview_course.
+    """
+    policy = policy or SelectionPolicy()
+    options = _options(
+        tuple(
+            r
+            for r in candidates
+            if r.role == ResourceRole.TRANSCRIPT
+            and r.format == "txt"
+            and r.language == policy.preferred_language
+        )
+    )
+    decision = _choose(
+        options,
+        policy.model_copy(
+            update={"allow_unknown_language": False, "allow_transcription": False}
+        ),
+        "text",
+    )
+    return decision.model_copy(
+        update={
+            "reason": "Optionale TXT-Ergänzung; kein zeitbasierter Knowledge-Primärinput. "
+            + decision.reason
+        }
+    )
 
 
 def _choose(options, policy, purpose):
@@ -197,8 +305,18 @@ def preview_course(
                 if len(owners) == 1:
                     related.append(resource)
                 else:
-                    ambiguous = True
-        text = _choose(_options(tuple(related)), policy, "text")
+                    if policy.text_strategy != "timed_knowledge" or (
+                        resource.role == ResourceRole.SUBTITLES
+                        and resource.format == "srt"
+                        and resource.language == policy.preferred_language
+                    ):
+                        ambiguous = True
+        timed = policy.text_strategy == "timed_knowledge"
+        text = (
+            _choose_timed(related, policy, ambiguous, lecture)
+            if timed
+            else _choose(_options(tuple(related)), policy, "text")
+        )
         if ambiguous:
             text = text.model_copy(
                 update={
@@ -211,14 +329,18 @@ def preview_course(
         videos = _options((lecture,))
         video = (
             _choose(videos, policy, "video")
-            if policy.require_video
+            if policy.require_video and not timed
             else SelectionDecision(
                 purpose="video",
                 alternatives=videos,
-                reason="Video ist in dieser Policy nicht angefordert.",
+                reason=(
+                    "timed_knowledge wählt keine Videos oder Transkription."
+                    if timed
+                    else "Video ist in dieser Policy nicht angefordert."
+                ),
             )
         )
-        if text.selected is None and policy.allow_transcription:
+        if text.selected is None and policy.allow_transcription and not timed:
             fallback = video if video.selected else _choose(videos, policy, "video")
             if fallback.selected:
                 text = SelectionDecision(

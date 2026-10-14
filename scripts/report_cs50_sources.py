@@ -132,9 +132,21 @@ def main():
     parser.add_argument(
         "--output", type=Path, default=ROOT / "docs/course_sources/cs50"
     )
+    parser.add_argument(
+        "--knowledge-preview",
+        action="store_true",
+        help="Write only the timed_knowledge SRT-first dry-run preview.",
+    )
     args = parser.parse_args()
     courses = discover_fixture_courses(args.manifest)
     args.output.mkdir(parents=True, exist_ok=True)
+    if args.knowledge_preview:
+        policy = SelectionPolicy(text_strategy="timed_knowledge")
+        (args.output / "knowledge_selection_preview.md").write_text(
+            render_preview(tuple(preview_course(c, policy) for c in courses)),
+            encoding="utf-8",
+        )
+        return
     (args.output / "six_course_overview.md").write_text(
         overview(courses), encoding="utf-8"
     )
