@@ -5,6 +5,8 @@ from enum import Enum, StrEnum
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Literal
 
+from src.model_transcribe.data_transcribe import TranscriptProvenance
+
 # ? TODO: implement "theorem", "lemma", "proof",  "corollary,
 # ? "algorithm", "inequality", "function", "expression",
 # ? "constraint", ""assumption"
@@ -551,6 +553,11 @@ class ChunkKnowledgeResult(BaseModel):
 
 
 class TranscriptKnowledgeDocument(BaseModel):
+    source_id: str | None = Field(default=None, min_length=1, pattern=r"\S")
+    language: str | None = None
+    transcript_provenance: TranscriptProvenance | None = None
+    course_id: str | None = None
+    lecture_id: str | None = None
     transcript_url: str | None
     media_id: str | None
 
@@ -659,6 +666,11 @@ class ConsolidationStats(BaseModel):
 
 
 class ConsolidatedKnowledgeDocument(BaseModel):
+    language: str | None = None
+    transcript_provenance: TranscriptProvenance | None = None
+    course_id: str | None = None
+    lecture_id: str | None = None
+    media_id: str | None = None
     source_id: str
     transcript_url: str | None = None
 

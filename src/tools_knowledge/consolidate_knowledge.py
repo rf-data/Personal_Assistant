@@ -25,8 +25,8 @@ from src.model_knowledge.data_knowledge import (
 
 from src.utils.path_helper import shorten_path
 from src.utils.dict_helper import save_dict, load_dict
+from src.utils.latex_helper import normalize_math_text
 from src.utils.text_helper import (
-    normalize_math_text,
     normalize_text_for_matching,
     text_similarity,
 )
@@ -252,6 +252,9 @@ def consolidate_knowledge(
     expression_similarity: float = 0.96,
 ) -> ConsolidatedKnowledgeDocument:
 
+    if not document.source_id or not document.source_id.strip():
+        raise ValueError("Consolidation requires a non-empty source_id from verified context")
+
     statement_groups: list[dict] = []
     expression_groups: list[dict] = []
 
@@ -476,6 +479,11 @@ def consolidate_knowledge(
     )
 
     return ConsolidatedKnowledgeDocument(
+        language=document.language,
+        transcript_provenance=document.transcript_provenance,
+        course_id=document.course_id,
+        lecture_id=document.lecture_id,
+        media_id=document.media_id,
         source_id=document.source_id,
         transcript_url=(document.transcript_url),
         topics=topics,
