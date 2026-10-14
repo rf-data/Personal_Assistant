@@ -12,7 +12,11 @@ from pydantic import Field, model_validator
 from src.model_discovery.cs50_index import CollectionContract, Hash, TranscriptPayload
 from src.tools_knowledge.cs50_checkpoint import Contract, atomic_json, fingerprint
 from src.tools_rag.cs50_collection import check_collection, ensure_collection
-from src.tools_rag.cs50_embeddings import checked_vectors, map_transcript
+from src.tools_rag.cs50_embeddings import (
+    checked_vectors,
+    chunking_configuration,
+    map_transcript,
+)
 
 
 class SourceIndexPlan(Contract):
@@ -214,14 +218,12 @@ def revalidate_plan(plan, adapter, *, workspace, source_ids=None):
 
         doc = load_knowledge_transcript(adapter, input, workspace=workspace)
         record = source.units[0].chunking
-        defaults = KnowledgeSettings().model_dump(mode="json")
-        # Legacy visual_model has a nonvalidated empty default. Do not change it
-        # or invent a visual model for transcript indexing. Validate all deviations
-        # and require the complete roundtrip to match the original config exactly.
-        settings = KnowledgeSettings.model_validate(
-            {k: v for k, v in record.items() if k not in defaults or v != defaults[k]}
-        )
-        if settings.model_dump(mode="json") != record:
+        if set(record) != {"target_duration", "max_duration", "overlap_segments"}:
+            raise ValueError(
+                "Only the complete actual chunker configuration belongs in index payloads"
+            )
+        settings = KnowledgeSettings.model_validate(record)
+        if fingerprint(chunking_configuration(settings)) != fingerprint(record):
             raise ValueError("Incomplete/coerced chunking configuration")
         chunks = build_cs50_knowledge_chunks(
             adapter, input, settings, workspace=workspace

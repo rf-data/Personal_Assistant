@@ -35,8 +35,10 @@ Source-/Embeddingwechsel: neue explizit benannte Collection, komplette Prüfung,
 erst danach separat freigegebener Retrieval-Ziel-/Aliaswechsel. Kein automatischer
 Aliaswechsel, keine Migration, keine produktive Verbindung in Tests.
 
-Integrationsbefund: KnowledgeSettings.visual_model besitzt einen leeren, bei
-Defaultkonstruktion nicht validierten Legacy-Default. Ein vollständiges direktes
-model_validate(model_dump()) scheitert daran. Der Indexadapter validiert Abweichungen
-von unveränderten Defaults und fordert exakte vollständige Configgleichheit; kein
-erfundener Visual-Modellname und keine Änderung am bestehenden Modell.
+Integrationsbefund: KnowledgeSettings enthält auch nicht für Chunking benötigte
+Visual-/Download-/Dateikonfiguration. Indexpayloads speichern ausschließlich die
+vollständigen drei tatsächlich verwendeten Chunkerparameter (target_duration,
+max_duration, overlap_segments), nicht private Pfade oder sonstige LLM-Konfiguration.
+Dies vermeidet zugleich den leeren Legacy-Visual-Default beim Config-Roundtrip,
+ohne KnowledgeSettings oder den Chunker zu ändern. Konfigurationsgleichheit wird
+kanonisch und exakt geprüft, einschließlich Typkonvertierung.

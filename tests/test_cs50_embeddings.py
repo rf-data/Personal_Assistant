@@ -57,8 +57,25 @@ def test_real_import_chunk_mapping_and_empty_cues(context, tmp_path, course):
     )
     assert all(v.original_chunk_text == chunks[0].text for v in values)
     assert digest(input.transcript_json_path) == before
+    assert set(values[0].chunking) == {
+        "target_duration",
+        "max_duration",
+        "overlap_segments",
+    }
     if course == "cs50_cybersecurity":
         assert all(v.media_id is None for v in values)
+
+
+def test_unrelated_private_configuration_not_exported(context, tmp_path):
+    from src.core.config_knowledge import KnowledgeSettings
+
+    _, _, _, plan = context
+    _, input = imported(context, tmp_path)
+    settings = KnowledgeSettings(transcript_names=["/private/transcript.json"])
+    values = map_transcript(
+        plan, input, settings, FakeEmbedder(EmbeddingConfig.fake()), workspace=tmp_path
+    )
+    assert all("/private/" not in p.model_dump_json() for p in values)
 
 
 def test_partial_cue_keeps_real_cue_times(context, tmp_path):

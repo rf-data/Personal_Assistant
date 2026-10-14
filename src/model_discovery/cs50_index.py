@@ -149,6 +149,28 @@ class TranscriptPayload(Contract):
 
     @model_validator(mode="after")
     def consistent_unit(self):
+        import math
+
+        if set(self.chunking) != {
+            "target_duration",
+            "max_duration",
+            "overlap_segments",
+        }:
+            raise ValueError(
+                "Only complete timed-chunker parameters may enter the payload"
+            )
+        if (
+            type(self.chunking["overlap_segments"]) is not int
+            or self.chunking["overlap_segments"] < 1
+        ):
+            raise ValueError("Invalid overlap configuration")
+        if any(
+            type(self.chunking[k]) not in (float, int)
+            or not math.isfinite(self.chunking[k])
+            or self.chunking[k] <= 0
+            for k in ("target_duration", "max_duration")
+        ):
+            raise ValueError("Invalid timed chunking configuration")
         u = urlsplit(self.original_url)
         if (
             u.scheme != "https"
