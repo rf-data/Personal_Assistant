@@ -1,9 +1,10 @@
 ## data_knowledge.py
 # imports
-from pathlib import Path
 from enum import Enum, StrEnum
-from pydantic import BaseModel, Field, ConfigDict
-from typing import Literal
+from pathlib import Path
+from typing import Literal, Self
+
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from src.model_transcribe.data_transcribe import TranscriptProvenance
 
@@ -552,14 +553,48 @@ class ChunkKnowledgeResult(BaseModel):
     extraction: KnowledgeExtract | None = None
 
 
-class TranscriptKnowledgeDocument(BaseModel):
-    source_id: str | None = Field(default=None, min_length=1, pattern=r"\S")
+class TranscriptKnowledgeMetadata(BaseModel):
+    """Shared optional metadata; explicit identities retain their model contracts."""
+
     language: str | None = None
     transcript_provenance: TranscriptProvenance | None = None
     course_id: str | None = None
     lecture_id: str | None = None
-    transcript_url: str | None
-    media_id: str | None
+    transcript_url: str | None = None
+    media_id: str | None = None
+
+    def transcript_metadata(self) -> dict:
+        """Additional metadata; source_id, transcript_url and media_id stay explicit."""
+        return {
+            name: getattr(self, name)
+            for name in (
+                "language",
+                "transcript_provenance",
+                "course_id",
+                "lecture_id",
+            )
+        }
+
+    @model_validator(mode="after")
+    def consistent_transcript_metadata(self) -> Self:
+        if self.transcript_provenance is not None:
+            for field, source_value in (
+                ("language", self.transcript_provenance.language),
+                ("transcript_url", self.transcript_provenance.source_url),
+                ("media_id", self.transcript_provenance.media_id),
+            ):
+                declared = getattr(self, field)
+                if (
+                    declared is not None
+                    and source_value is not None
+                    and declared != source_value
+                ):
+                    raise ValueError(f"{field} contradicts transcript_provenance")
+        return self
+
+
+class TranscriptKnowledgeDocument(TranscriptKnowledgeMetadata):
+    source_id: str | None = Field(default=None, min_length=1, pattern=r"\S")
 
     chunks: list[ChunkKnowledgeResult]
     visual_candidates: list[VisualCandidate]
@@ -665,14 +700,8 @@ class ConsolidationStats(BaseModel):
     formulas_consolidated: int = 0
 
 
-class ConsolidatedKnowledgeDocument(BaseModel):
-    language: str | None = None
-    transcript_provenance: TranscriptProvenance | None = None
-    course_id: str | None = None
-    lecture_id: str | None = None
-    media_id: str | None = None
+class ConsolidatedKnowledgeDocument(TranscriptKnowledgeMetadata):
     source_id: str
-    transcript_url: str | None = None
 
     topics: list[str] = Field(default_factory=list)
 
@@ -686,10 +715,8 @@ class ConsolidatedKnowledgeDocument(BaseModel):
     stats: ConsolidationStats
 
 
-class LectureKnowledgeDocument(BaseModel):
+class LectureKnowledgeDocument(TranscriptKnowledgeMetadata):
     source_id: str
-    transcript_url: str | None = None
-    media_id: str | None = None
 
     topics: list[str] = Field(default_factory=list)
 

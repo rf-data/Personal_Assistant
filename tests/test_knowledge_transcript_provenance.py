@@ -3,6 +3,7 @@
 import __future__
 
 import ast
+import json
 import socket
 from pathlib import Path
 from types import SimpleNamespace
@@ -167,8 +168,10 @@ def semantic(document):
 
 
 @pytest.mark.parametrize("kind", list(TranscriptSource))
-def test_metadata_roundtrip_for_all_supported_origins(kind):
-    document = models.TranscriptKnowledgeDocument(
+def test_metadata_roundtrip_for_all_supported_origins(kind, metadata_model):
+    model, payload = metadata_model
+    document = model(
+        **payload,
         source_id="verified_source",
         language="en",
         transcript_provenance=provenance(kind),
@@ -176,8 +179,6 @@ def test_metadata_roundtrip_for_all_supported_origins(kind):
         lecture_id="0",
         transcript_url="https://example.com/official.srt",
         media_id=None,
-        chunks=[],
-        visual_candidates=[],
     )
     assert type(document).model_validate_json(document.model_dump_json()) == document
     assert document.transcript_provenance.transcript_source == kind
@@ -280,3 +281,107 @@ def test_contradictory_provenance_rejected(model, field, value):
     }
     with pytest.raises(ValidationError, match="contradicts transcript_provenance"):
         model.model_validate(payload)
+    with pytest.raises(ValidationError, match="contradicts transcript_provenance"):
+        model.model_validate_json(
+            json.dumps(
+                {**payload, "transcript_provenance": prov.model_dump(mode="json")}
+            )
+        )
+
+
+@pytest.fixture(
+    params=[
+        models.TranscriptKnowledgeDocument,
+        models.ConsolidatedKnowledgeDocument,
+        models.LectureKnowledgeDocument,
+    ],
+    ids=lambda model: model.__name__,
+)
+def metadata_model(request):
+    model = request.param
+    payload = (
+        {"chunks": [], "visual_candidates": []}
+        if model is models.TranscriptKnowledgeDocument
+        else {"stats": {}}
+    )
+    return model, payload
+
+
+def test_shared_metadata_contract_roundtrip(metadata_model):
+    model, payload = metadata_model
+    prov = provenance().model_copy(update={"media_id": "media"})
+    values = dict(
+        source_id="verified-source",
+        language="en",
+        transcript_url=prov.source_url,
+        transcript_provenance=prov,
+        media_id="media",
+        course_id="verified-course",
+        lecture_id="ai",
+    )
+    document = model(**payload, **values)
+    assert set(values) <= set(model.model_fields)
+    assert document.transcript_metadata() == {
+        name: values[name]
+        for name in ("language", "transcript_provenance", "course_id", "lecture_id")
+    }
+    assert all(getattr(document, name) == value for name, value in values.items())
+    assert model.model_validate_json(document.model_dump_json()) == document
+    assert model.model_validate(document.model_dump()) == document
+    assert document.model_dump()["source_id"] == "verified-source"
+
+
+def test_provenance_does_not_fill_unknown_document_fields(metadata_model):
+    model, payload = metadata_model
+    prov = provenance().model_copy(update={"media_id": "proven-media"})
+    document = model(**payload, source_id="verified", transcript_provenance=prov)
+    for name in ("language", "transcript_url", "media_id", "course_id", "lecture_id"):
+        assert getattr(document, name) is None
+    assert document.source_id == "verified"
+    assert model.model_validate_json(document.model_dump_json()) == document
+
+
+def test_missing_provenance_values_do_not_contradict_document(metadata_model):
+    model, payload = metadata_model
+    prov = TranscriptProvenance(
+        transcript_source=TranscriptSource.WHISPER,
+        source_file="local/audio.mp3",
+    )
+    document = model(
+        **payload,
+        source_id="verified",
+        language="de",
+        transcript_url="https://example.com/media",
+        media_id="media",
+        transcript_provenance=prov,
+    )
+    assert document.language == "de"
+    assert document.transcript_provenance.language is None
+    assert model.model_validate_json(document.model_dump_json()) == document
+
+
+def test_completely_absent_metadata_preserves_identity_contract(metadata_model):
+    model, payload = metadata_model
+    if model is models.TranscriptKnowledgeDocument:
+        document = model(**payload)
+        assert document.source_id is None
+        for identity in ("", " ", "\n\t", 123):
+            with pytest.raises(ValidationError):
+                model(**payload, source_id=identity)
+    else:
+        for identity in ({}, {"source_id": None}, {"source_id": 123}):
+            with pytest.raises(ValidationError):
+                model(**payload, **identity)
+        # Preserve the existing plain-str contract of consolidated documents.
+        assert model(**payload, source_id="").source_id == ""
+        document = model(**payload, source_id="verified")
+    for name in (
+        "language",
+        "transcript_url",
+        "transcript_provenance",
+        "media_id",
+        "course_id",
+        "lecture_id",
+    ):
+        assert getattr(document, name) is None
+    assert model.model_validate_json(document.model_dump_json()) == document
