@@ -1,7 +1,7 @@
 # CS50: Offline-Extraktionsreport
 
 Grundlage: die vier Kursindex- und sieben Wochen-Fixtures aus dem validierten
-`manifest.json`. Die übrigen sieben Detail-Fixtures werden nicht extrahiert.
+`docs/course_sources/cs50/manifest.json`. Die übrigen sieben Detail-Fixtures werden nicht extrahiert.
 Erzeugt mit `discover_fixture_courses()`; keine HTTP-Anfragen, Downloads,
 Transkriptionen oder LLM-Aufrufe. Der PR baut auf dem Modell-PR #6 auf.
 

@@ -227,4 +227,6 @@ def test_cli_writes_only_separate_knowledge_preview(courses, monkeypatch, tmp_pa
         tuple(preview_course(course, TIMED) for course in courses)
     )
     assert (tmp_path / "knowledge_selection_preview.md").read_text() == expected
-    assert (ROOT / "knowledge_selection_preview.md").read_text() == expected
+    assert (
+        ROOT.parents[1] / "cs50/operations/knowledge_selection_preview.md"
+    ).read_text() == expected

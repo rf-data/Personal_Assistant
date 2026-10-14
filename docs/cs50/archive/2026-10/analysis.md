@@ -1,6 +1,6 @@
 # Analyse: gemeinsamer Course-Discovery-Adapter für CS50
 
-Stand: 13. Oktober 2026. Grundlage sind sämtliche **18 lokalen HTML-Dateien**, das unveränderte `manifest.json` und der vorhandene Python-Code im aktuellen Arbeitsbaum. Die Original-URLs wurden anhand der HTML-Speicherkommentare (`saved from url`), interner Links und Seiteninhalte verglichen. Es wurden keine Webseiten nachgeladen, Videos heruntergeladen oder Transkriptionen gestartet. Aussagen über die Webseiten beziehen sich auf diese Snapshots, nicht auf einen verifizierten aktuellen Serverstand.
+Stand: 13. Oktober 2026. Grundlage sind sämtliche **18 lokalen HTML-Dateien**, das unveränderte `docs/course_sources/cs50/manifest.json` und der vorhandene Python-Code im aktuellen Arbeitsbaum. Die Original-URLs wurden anhand der HTML-Speicherkommentare (`saved from url`), interner Links und Seiteninhalte verglichen. Es wurden keine Webseiten nachgeladen, Videos heruntergeladen oder Transkriptionen gestartet. Aussagen über die Webseiten beziehen sich auf diese Snapshots, nicht auf einen verifizierten aktuellen Serverstand.
 
 ## 1. Vergleich der HTML-Strukturen
 

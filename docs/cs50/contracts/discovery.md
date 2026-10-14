@@ -195,4 +195,4 @@ und erhält keine erfundene Vorlesungsressource.
 
 Fixtures, Modelle und bisherige Lecture-/Loviscach-Pipeline bleiben unverändert.
 Ein Export nach `LectureCourse` ist weiterhin nicht implementiert. Der aktuelle
-[Extraktionsreport](extraction_report.md) enthält die Ergebnisse pro Kurs.
+[Extraktionsreport](../archive/2026-10/extraction_report.md) enthält die Ergebnisse pro Kurs.

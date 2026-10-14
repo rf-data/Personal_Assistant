@@ -76,7 +76,7 @@ lokaler Betrieb ist vorgesehen, kein Schutz gegen einen gleichzeitig böswillig
 manipulierten Dateisystembaum. Nach hartem Prozessabbruch können temporäre Dateien
 zurückbleiben; sie werden weder gesucht noch als fertige Artefakte übernommen.
 
-Die bestehende Datei `cs50_lecture_plan.v1.json` bleibt die vollständige Discovery-
+Die bestehende Datei `docs/course_sources/cs50/cs50_lecture_plan.v1.json` bleibt die vollständige Discovery-
 und Identitätsreferenz. Kurs-/Lecture-/Resource-/Source-IDs passen nicht vollständig
 in `TranscriptDocument`; sie bleiben deshalb im separaten Beleg und im Plan erhalten.
 Kein Knowledge-Aufruf findet statt.

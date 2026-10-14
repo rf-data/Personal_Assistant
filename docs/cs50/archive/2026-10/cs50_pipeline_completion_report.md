@@ -92,8 +92,8 @@ Cybersecurity 0 behält media_id=None; CS50x ai und Woche 0 bleiben unverändert
 - `python -m scripts.cs50_review_template`: acht prüfbare unannotierte Fenster;
   --origin muss ausdrücklich deklarieren, ob original oder synthetic.
 
-[Ausführungsbeschreibung](cs50_batch_execution.md), [Gold-/Freigabecheckliste](cs50_quality_evaluation.md)
-und [Testmatrix](cs50_pipeline_test_matrix.md) erläutern die tatsächlichen Grenzen.
+[Ausführungsbeschreibung](../../operations/cs50_batch_execution.md), [Gold-/Freigabecheckliste](../../evaluation/cs50_quality_evaluation.md)
+und [Testmatrix](../../operations/cs50_pipeline_test_matrix.md) erläutern die tatsächlichen Grenzen.
 Defaultlimits autorisieren weder vollständige kostenpflichtige Großläufe noch
 Downloads. Es gibt keinen automatischen Retry/Unknown-Reset oder Budget-Neustart.
 
