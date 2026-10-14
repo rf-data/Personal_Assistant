@@ -81,7 +81,7 @@ Python 3.12.12, pytest 9.1.1, Pydantic 2.13.4, HTTPX 0.28.1,
 BeautifulSoup 4.15.0, pydantic-settings 2.15.0, tiktoken 0.14.0.
 OpenAI, Marvin und pydantic-ai sind in dieser bestehenden lecture-worker-
 Umgebung nicht installiert. Der vollständige Paketstand steht in
-`post_merge_environment.txt`; pyproject.toml und uv.lock wurden nicht geändert.
+`docs/course_sources/cs50/post_merge_environment.txt`; pyproject.toml und uv.lock wurden nicht geändert.
 
 Versucht wurde im frischen Worktree:
 

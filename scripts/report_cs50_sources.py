@@ -129,9 +129,7 @@ def main():
     parser.add_argument(
         "--manifest", type=Path, default=ROOT / "docs/course_sources/cs50/manifest.json"
     )
-    parser.add_argument(
-        "--output", type=Path, default=ROOT / "docs/course_sources/cs50"
-    )
+    parser.add_argument("--output", type=Path, default=ROOT / "docs/cs50/operations")
     parser.add_argument(
         "--knowledge-preview",
         action="store_true",

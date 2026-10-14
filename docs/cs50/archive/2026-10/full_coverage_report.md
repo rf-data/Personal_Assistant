@@ -20,7 +20,7 @@ Audio, Video, TXT, SRT, Notes-, Assignment- und CDN-Detailseiten wurden nicht ab
 ## Manifest und unveränderte Daten
 
 63 HTML-Fixtures = 6 Indizes + 50 Wochen + 7 bereits vorhandene Detail-Fixtures.
-`manifest.json` enthält für jeden Eintrag Original-URL, lokale Datei, Rolle und
+`docs/course_sources/cs50/manifest.json` enthält für jeden Eintrag Original-URL, lokale Datei, Rolle und
 SHA-256 der tatsächlichen Dateibytes. Der Loader prüft den Hash und meldet bei
 Abweichung Dateipfad und `SHA-256 mismatch`. Das optionale `FixturePage.sha256`
 ist die einzige notwendige Modellergänzung; alte Manifest-Dateien ohne Hash bleiben
@@ -28,9 +28,9 @@ lesbar. Lecture-/Knowledge-/Discovery-Ergebnismodelle wurden nicht geändert.
 Hashes im aktuellen Manifest sind vollständig, nicht optional ausgelassen.
 
 Die ursprünglichen 34 HTML-Dateien wurden nicht geändert. Das zusätzliche
-`regression_manifest.json` hält die bisherige Teilabdeckung (21 Wochen) fest,
+`docs/course_sources/cs50/regression_manifest.json` hält die bisherige Teilabdeckung (21 Wochen) fest,
 verweist auf dieselben unveränderten Dateien und dient ausschließlich Regressionstests.
-Produktive Discovery und die generierten Berichte verwenden `manifest.json` mit
+Produktive Discovery und die generierten Berichte verwenden `docs/course_sources/cs50/manifest.json` mit
 vollständiger Coverage. So bleiben Tests für `referenced`, fehlende Fixtures und
 die vor Erweiterung gesicherten Discovery-/Preview-Verträge erhalten.
 
@@ -69,7 +69,7 @@ Python-Woche-0-Pilot ersetzt diese Prüfung für die übrigen Quellen nicht.
 
 Insgesamt 653 eindeutige ResourceCandidates, 700 Medienvarianten einschließlich
 Player/YouTube/Audio. Die vollständige Verteilung pro Kurs, Titel, Reihenfolge,
-IDs und Original-URLs stehen in [six_course_overview.md](six_course_overview.md).
+IDs und Original-URLs stehen in [six_course_overview.md](../../operations/six_course_overview.md).
 
 | Rolle | Angebote |
 | --- | ---: |
@@ -140,7 +140,7 @@ UV_CACHE_DIR=/tmp/cs50-uv-cache uv run --offline --no-sync python scripts/report
 ```
 
 Die Übersicht, beiden bisherigen Selection-Previews und
-[six_course_fixture_provenance.md](six_course_fixture_provenance.md) wurden aus
+[six_course_fixture_provenance.md](../../operations/six_course_fixture_provenance.md) wurden aus
 dem vollständigen Manifest neu generiert. Der bisherige
 `six_course_completion_report.md` beschreibt weiterhin den historischen Stand
 21/50; dieser Coverage-Bericht ist der aktuelle Stand.

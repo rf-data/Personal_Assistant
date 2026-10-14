@@ -56,9 +56,9 @@ und 227 Medienvarianten einschließlich Audio, Player- und YouTube-Alternativen.
 | quiz | 1 |
 
 Die vollständigen Abschnitte, Ressourcen-IDs, Original-URLs, Variantenverteilungen
-und Warnungen stehen in [six_course_overview.md](six_course_overview.md).
+und Warnungen stehen in [six_course_overview.md](../../operations/six_course_overview.md).
 Alle Fixture-URLs und SHA256-Werte stehen in
-[six_course_fixture_provenance.md](six_course_fixture_provenance.md).
+[six_course_fixture_provenance.md](../../operations/six_course_fixture_provenance.md).
 
 ## Nachgewiesene HTML-Abweichungen und kleine Parserergänzungen
 
@@ -98,12 +98,12 @@ Die eindeutig bezeichneten direkten CDN-Qualitätsangebote bleiben auswählbar.
 
 ## Selection und spätere Lecture-Verarbeitung
 
-[six_course_preview.md](six_course_preview.md) nutzt unverändert die Standard-Policy:
+[six_course_preview.md](../../operations/six_course_preview.md) nutzt unverändert die Standard-Policy:
 Englisch, TXT vor Untertiteln, Video nicht angefordert, Transkription nicht erlaubt.
 Ergebnis: 21 vorgeschlagene TXT-Downloads; **keine** Audio-/Video-/SRT-Downloads.
 Die vollständigen Alternativen bleiben erhalten.
 
-[six_course_video_preview.md](six_course_video_preview.md) ist eine separate,
+[six_course_video_preview.md](../../operations/six_course_video_preview.md) ist eine separate,
 ausdrücklich konfigurierte Preview mit `require_video=True` und
 `allow_unknown_language=True`. Sie schlägt zusätzlich genau ein 720p-MP4 pro
 logischer Vorlesung vor. Cybersecurity wählt SDR; Web und AI behalten unbekannten

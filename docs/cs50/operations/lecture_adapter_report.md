@@ -4,7 +4,7 @@
 
 Der Adapter verwendet den expliziten `timed_knowledge`-Modus aus PR 2 / #14.
 Er erzeugt Referenzen und Metadaten, führt aber keine ResourceTasks aus. Die
-versionierte Datei [cs50_lecture_plan.v1.json](cs50_lecture_plan.v1.json) enthält
+versionierte Datei [cs50_lecture_plan.v1.json](../../course_sources/cs50/cs50_lecture_plan.v1.json) enthält
 für alle sechs Kurse den vollständigen Discovery-Graphen einschließlich Varianten,
 Sprachen, Hierarchie und HTML-Provenienz, die geprüfte Preview, echte LectureCourse-
 Objekte und alle Ressourcen-/Quellen-/Task-/Artefaktbindungen.

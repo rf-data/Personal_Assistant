@@ -216,7 +216,7 @@ UV_CACHE_DIR=/tmp/cs50-uv-cache uv run --offline --no-sync python -m pytest test
 git worktree add --detach /tmp/cs50-integration-audit-20261014/master-clean master
 git worktree add --detach /tmp/cs50-integration-audit-20261014/feature origin/feat/cs50-bounded-llm-pilot
 # In jeweiligem Worktree dieselbe tatsächlich installierte Umgebung verwenden
-UV_CACHE_DIR=/tmp/cs50-uv-cache UV_PROJECT_ENVIRONMENT=/home/robfra/0_Portfolio_Projekte/gmp_compliance/.venv uv run --offline --no-sync python -m pytest tests/test*.py -q
+UV_CACHE_DIR=/tmp/cs50-uv-cache UV_PROJECT_ENVIRONMENT=<workspace>/gmp_compliance/.venv uv run --offline --no-sync python -m pytest tests/test*.py -q
 ```
 
 Die vorhandenen temporären Worktrees nicht erneut mit gleichem Zielnamen anlegen.

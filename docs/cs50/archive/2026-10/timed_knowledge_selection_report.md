@@ -21,7 +21,7 @@ unverändert. Lecture-/Knowledge-Modelle und Runner wurden nicht geändert.
 Dies sind ausschließlich Vorschläge, keine ausgeführten Downloads oder Imports.
 Video-/Audio-/Whisper-Auswahlen: **0**. Die vollständigen Original-URLs,
 Resource-IDs, Zuordnungen, Alternativen und Warnungen stehen separat in
-[knowledge_selection_preview.md](knowledge_selection_preview.md).
+[knowledge_selection_preview.md](../../operations/knowledge_selection_preview.md).
 
 ## Auswahlvertrag
 

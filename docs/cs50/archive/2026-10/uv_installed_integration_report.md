@@ -35,7 +35,7 @@ vollständigen Agentenlauf, geprüft.
 
 Aufruf über `uv run --offline --no-sync`: kein Sync, keine Installation, keine
 Downloads. uv 0.9.15; Interpreter im Pilot:
-`/home/robfra/0_Portfolio_Projekte/gmp_compliance/.venv/bin/python3`.
+`<workspace>/gmp_compliance/.venv/bin/python3`.
 Python 3.12.12, Pydantic 2.13.4, pytest 9.1.1, Marvin 3.2.7, tiktoken 0.14.0.
 Es wurde nicht die frühere `/tmp`-Test-Python-Umgebung verwendet.
 

@@ -154,6 +154,6 @@ Unknown-Auflösung ergänzen, bevor ein Batchrunner sinnvoll ist.
 
 ## Tests
 
-Siehe [Testbericht](cs50_knowledge_checkpoint_test_report.md). Ausschließlich
+Siehe [Testbericht](../archive/2026-10/cs50_knowledge_checkpoint_test_report.md). Ausschließlich
 synthetische SRTs, echte Executor-/Import-/Binding-/Chunk-/Evidence-/Consolidation-
 Funktionen und Fake-HTTP; keine neuen produktiven Dateien oder SDK-Installationen.

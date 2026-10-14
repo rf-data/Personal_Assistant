@@ -166,6 +166,7 @@ Siehe [docs/development.md#konfiguration](docs/development.md#konfiguration) fü
 
 ## Dokumentation
 
+- [CS50-Pipeline und Betrieb](docs/cs50/README.md) — Sechs Kurse, Offline-Tests, Quellenverträge und historisches Archiv
 - [docs/architecture.md](docs/architecture.md) — Technische Architektur und Datenfluss
 - [docs/development.md](docs/development.md) — Entwickler-Setup und Workflows
 

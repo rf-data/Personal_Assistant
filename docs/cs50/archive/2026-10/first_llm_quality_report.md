@@ -3,7 +3,7 @@
 ## Geprüfter Stand und Grenzen
 
 Analysiert wurden ausschließlich vorhandene lokale Ergebnisse unter
-`/home/robfra/0_Portfolio_Projekte/_test_folder/cs50-python0-llm-manual` sowie die
+`<workspace>/_test_folder/cs50-python0-llm-manual` sowie die
 bestehende geprüfte CS50-Python-Woche-0-SRT. Der echte API-Lauf wurde vom Nutzer
 zuvor ausgeführt; Codex hat keinen neuen API-Aufruf gestartet und diese Dateien
 nicht verändert. Keine `.env`-Inhalte oder API-Keys wurden ausgegeben;
@@ -178,9 +178,9 @@ Vorhandenen realen Lauf nur lesen, Report in eine neue Datei schreiben:
 
 ```bash
 uv run --offline --no-sync python -m scripts.report_cs50_quality \
-  --extraction /home/robfra/0_Portfolio_Projekte/_test_folder/cs50-python0-llm-manual/extraction.json \
-  --chunks /home/robfra/0_Portfolio_Projekte/_test_folder/cs50-python0-llm-manual/chunks.json \
-  --worker-report /home/robfra/0_Portfolio_Projekte/_test_folder/cs50-python0-llm-manual/worker_result.json \
+  --extraction <workspace>/_test_folder/cs50-python0-llm-manual/extraction.json \
+  --chunks <workspace>/_test_folder/cs50-python0-llm-manual/chunks.json \
+  --worker-report <workspace>/_test_folder/cs50-python0-llm-manual/worker_result.json \
   --output /tmp/cs50-first-real-quality-new.json
 ```
 
