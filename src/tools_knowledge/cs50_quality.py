@@ -5,7 +5,7 @@ from collections import Counter
 
 from src.model_knowledge.data_knowledge import TranscriptKnowledgeDocument
 
-QUALITY_VERSION = "cs50_quality_v1"
+QUALITY_VERSION = "cs50_quality_v2"
 LOW_VALUE_CUES = (
     (
         "speaker_or_course_intro",
@@ -20,7 +20,7 @@ LOW_VALUE_CUES = (
 )
 
 
-def quality_report(document, chunks, *, worker_report=None):
+def quality_report(document, chunks, *, worker_report=None, evidence_audit=None):
     document = TranscriptKnowledgeDocument.model_validate(document.model_dump())
     by_id = {chunk.chunk_id: chunk for chunk in chunks}
     if len(by_id) != len(chunks):
@@ -29,6 +29,11 @@ def quality_report(document, chunks, *, worker_report=None):
     irrelevant = 0
     coarse = 0
     signatures = []
+    scopes = []
+    audit_by_id = {
+        (a.get("chunk_id"), a.get("kind"), a.get("item_id")): a
+        for a in evidence_audit or []
+    }
     mismatched = 0
     for result in document.chunks:
         chunk_id = result.analysis.chunk_id
@@ -52,12 +57,44 @@ def quality_report(document, chunks, *, worker_report=None):
             signatures.append((chunk_id, tuple(item.segment_ids), item.start, item.end))
             invalid = (
                 not item.segment_ids
+                or len(set(item.segment_ids)) != len(item.segment_ids)
                 or not set(item.segment_ids).issubset(chunk.segment_ids)
                 or item.start < chunk.start
                 or item.end > chunk.end
                 or item.start > item.end
             )
+            kind = "statement" if hasattr(item, "statement_id") else "formula"
+            item_id = item.statement_id if kind == "statement" else item.expression_id
+            proof = audit_by_id.get((chunk_id, kind, item_id))
+            precise = (
+                proof is not None
+                and proof.get("scope") == "statement_precise"
+                and proof.get("source_id") == document.source_id
+                and document.source_id is not None
+                and (
+                    proof.get("segment_ids") == item.segment_ids
+                    and proof.get("start") == item.start
+                    and proof.get("end") == item.end
+                )
+            )
+            if precise:
+                # Trusted cue unions may exceed chunk.end for overlapping source cues.
+                invalid = not item.segment_ids or not set(item.segment_ids).issubset(
+                    chunk.segment_ids
+                )
             mismatched += invalid
+            scopes.append(
+                {
+                    "chunk_id": chunk_id,
+                    "kind": kind,
+                    "item_id": item_id,
+                    "scope": "invalid"
+                    if invalid
+                    else "statement_precise"
+                    if precise
+                    else "chunk_only",
+                }
+            )
         for statement in result.extraction.statements:
             reasons = [
                 name
@@ -108,6 +145,8 @@ def quality_report(document, chunks, *, worker_report=None):
             "distinct_evidence_signatures": len(set(signatures)),
             "invalid_evidence_references": mismatched,
         },
+        "evidence_scopes": scopes,
+        "evidence_scope_counts": dict(Counter(s["scope"] for s in scopes)),
         "low_learning_value_proxies": findings,
         "validation": {"pydantic_document": True, "llm_worker_status": validation},
         "limits": [
