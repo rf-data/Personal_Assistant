@@ -153,6 +153,7 @@ exclude_dirs = [
 ]
 
 [tool.pytest.ini_options]
+markers = ["optional_sdk: requires explicitly enabled installed SDK profile; no API calls"]
 testpaths = ["tests"]
 addopts = "-v --tb=short"
 pythonpath = ["."]
