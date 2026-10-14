@@ -150,6 +150,12 @@ def job_directory(root, job):
     return Path(root) / "jobs" / fingerprint(job.input.source_id)
 
 
+class InspectionFailure(CheckpointConflict):
+    def __init__(self, done_chunks, error):
+        self.done_chunks = done_chunks
+        super().__init__("Chunk inspection blocked: " + type(error).__name__)
+
+
 def inspect_job(job, directory, budget):
     from src.tools_knowledge.bind_cs50_transcript import load_knowledge_transcript
 
@@ -159,14 +165,17 @@ def inspect_job(job, directory, budget):
     ).locked() as store:
         done = 0
         for chunk in job.chunks:
-            verify_budget(budget, store, chunk.chunk_id)
-            reused = store.reuse(
-                chunk.chunk_id,
-                lambda values, chunk=chunk: validate_chunk(job, chunk, values),
-            )
-            if reused is not None:
-                verify_budget(budget, store, chunk.chunk_id, validated=True)
-                done += 1
+            try:
+                verify_budget(budget, store, chunk.chunk_id)
+                reused = store.reuse(
+                    chunk.chunk_id,
+                    lambda values, chunk=chunk: validate_chunk(job, chunk, values),
+                )
+                if reused is not None:
+                    verify_budget(budget, store, chunk.chunk_id, validated=True)
+                    done += 1
+            except (OSError, ValueError) as error:
+                raise InspectionFailure(done, error) from error
         return done
 
 
@@ -246,6 +255,7 @@ def run_schedule(
                 rows[source] = LectureStatus(
                     status="unknown" if unknown else "failed",
                     expected_chunks=len(job.chunks),
+                    done_chunks=getattr(error, "done_chunks", 0),
                     error_class=type(error).__name__,
                 )
                 blocked = True
