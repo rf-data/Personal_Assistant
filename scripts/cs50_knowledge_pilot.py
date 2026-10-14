@@ -109,6 +109,32 @@ def worker(configuration):
             config["input_limit"],
             config["output_limit"],
         )
+        evidence_mode = config.get("evidence_mode", "chunk")
+        evidence_audit = []
+        segment_map = None
+        if evidence_mode == "segment_v1":
+            from src.tools_knowledge.bind_cs50_transcript import (
+                load_knowledge_transcript,
+            )
+
+            transcript = load_knowledge_transcript(
+                plan, input, workspace=config["workspace"]
+            )
+            segment_map = {s.seg_id: s for s in transcript.segments}
+        elif evidence_mode != "chunk":
+            raise ValueError("Unknown evidence mode")
+        if (
+            evidence_mode == "segment_v1"
+            and config["execute_llm"]
+            and config["provider"] != "openai_http"
+        ):
+            raise ValueError(
+                "segment_v1 currently requires explicit openai_http provider"
+            )
+        report["evidence_mode"] = evidence_mode
+        report["evidence_input_version"] = (
+            "cs50_segment_evidence_v1" if segment_map is not None else None
+        )
         init = time.monotonic()
         if config["execute_llm"]:
             save(
@@ -117,10 +143,12 @@ def worker(configuration):
             factory = (
                 MarvinProvider if config["provider"] == "marvin" else OpenAIHTTPProvider
             )
+            extra = {"segments": segment_map} if segment_map is not None else {}
             provider = factory(
                 api_key=os.environ.get("OPENAI_API_KEY"),
                 model=config["model"],
                 budget=budget,
+                **extra,
             )
         report["initialization_seconds"] = time.monotonic() - init
         report["phase"] = "extraction"
@@ -129,7 +157,29 @@ def worker(configuration):
             record = {"chunk_id": chunk.chunk_id, "validated": False, "usage": None}
             report["results"].append(record)
             if provider:
-                result = provider.extract(chunk, record)
+                try:
+                    result = provider.extract(chunk, record)
+                except Exception as error:
+                    if "provider_fields" in record:
+                        save(
+                            directory / f"{chunk.chunk_id}.provider.json",
+                            record.pop("provider_fields"),
+                        )
+                    from src.tools_knowledge.cs50_precise_evidence import (
+                        EvidenceValidationError,
+                    )
+
+                    if isinstance(error, EvidenceValidationError):
+                        save(
+                            directory / "quality_report.json",
+                            {
+                                "quality_version": "cs50_quality_v2",
+                                "evidence_mode": evidence_mode,
+                                "evidence_scopes": error.audit,
+                                "validation": {"precise_binding": False},
+                            },
+                        )
+                    raise
             else:
                 result = ChunkKnowledgeResult.model_validate(
                     {
@@ -144,21 +194,47 @@ def worker(configuration):
             # Keep explicitly provided model fields before evidence/identity overwrites.
             save(
                 directory / f"{chunk.chunk_id}.provider.json",
-                result.model_dump(mode="json", exclude_unset=True),
+                record.pop("provider_fields", None)
+                or result.model_dump(mode="json", exclude_unset=True),
             )
             # Chunk identity originates in the trusted input, not in the LLM response.
-            result.analysis.chunk_id = chunk.chunk_id
-            if result.extraction is not None:
-                result.extraction.chunk_id = chunk.chunk_id
+            if evidence_mode == "chunk":
+                result.analysis.chunk_id = chunk.chunk_id
+                if result.extraction is not None:
+                    result.extraction.chunk_id = chunk.chunk_id
             document = build_cs50_knowledge_document(
-                input, [chunk], [result], plan=plan, workspace=config["workspace"]
+                input,
+                [chunk],
+                [result],
+                plan=plan,
+                workspace=config["workspace"],
+                evidence_mode=evidence_mode,
+                evidence_audit=evidence_audit,
             )
             result = document.chunks[0]
             record["validated"] = True
             results.append(result)
             save(directory / f"{chunk.chunk_id}.json", result.model_dump(mode="json"))
         document = build_cs50_knowledge_document(
-            input, chunks, results, plan=plan, workspace=config["workspace"]
+            input,
+            chunks,
+            results,
+            plan=plan,
+            workspace=config["workspace"],
+            evidence_mode=evidence_mode,
+        )
+        save(
+            directory / "evidence_bindings.v1.json",
+            {
+                "schema_version": 1,
+                "evidence_mode": evidence_mode,
+                "course_id": input.course_id,
+                "lecture_id": input.lecture_id,
+                "resource_id": input.resource_id,
+                "source_id": input.source_id,
+                "transcript_sha256": input.transcript_sha256,
+                "items": evidence_audit,
+            },
         )
         save(directory / "extraction.json", document.model_dump(mode="json"))
         document = type(document).model_validate_json(
@@ -179,6 +255,7 @@ def worker(configuration):
             quality_report(
                 document,
                 chunks,
+                evidence_audit=evidence_audit,
                 worker_report={
                     "validated": True,
                     "result_origin": "LLM" if provider else "synthetic",
@@ -229,6 +306,9 @@ def main(argv=None):
     parser.add_argument("--token-budget", type=int, default=60000)
     parser.add_argument("--input-limit", type=int, default=28000)
     parser.add_argument("--output-limit", type=int, default=1200)
+    parser.add_argument(
+        "--evidence-mode", choices=["chunk", "segment_v1"], default="chunk"
+    )
     parser.add_argument("--execute-llm", action="store_true")
     parser.add_argument("--probe-marvin", action="store_true")
     args = parser.parse_args(argv)
@@ -240,6 +320,12 @@ def main(argv=None):
         or not 1 <= args.output_limit <= 2000
     ):
         parser.error("Invalid bounded chunk-index/timeout/token configuration")
+    if (
+        args.execute_llm
+        and args.evidence_mode == "segment_v1"
+        and args.provider != "openai_http"
+    ):
+        parser.error("segment_v1 requires explicit --provider openai_http")
     if args.probe_marvin and args.execute_llm:
         parser.error("Initialization probe cannot execute LLM requests")
     if args.execute_llm and not os.environ.get("OPENAI_API_KEY"):

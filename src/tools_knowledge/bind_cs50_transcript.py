@@ -195,8 +195,19 @@ def build_cs50_knowledge_chunks(plan, input, settings, *, workspace):
     return chunks
 
 
-def build_cs50_knowledge_document(input, chunks, results, *, plan, workspace):
+def build_cs50_knowledge_document(
+    input,
+    chunks,
+    results,
+    *,
+    plan,
+    workspace,
+    evidence_mode="chunk",
+    evidence_audit=None,
+):
     """Attach trusted chunk evidence to supplied extraction results; never call an LLM."""
+    if evidence_mode not in ("chunk", "segment_v1"):
+        raise ValueError("Unknown evidence mode")
     input = CS50KnowledgeInput.model_validate(input.model_dump())
     load_knowledge_transcript(plan, input, workspace=workspace)
     if digest(input.transcript_json_path) != input.transcript_sha256:
@@ -235,9 +246,23 @@ def build_cs50_knowledge_document(input, chunks, results, *, plan, workspace):
         if chunk_id not in by_id or chunk_id in seen:
             raise ExecutionConflict("Unknown or duplicate result chunk identity")
         seen.add(chunk_id)
-        validated = validate_extraction(
-            attach_chunk_provenance(result, by_id[chunk_id])
-        )
+        if evidence_mode == "segment_v1":
+            from src.tools_knowledge.cs50_precise_evidence import (
+                bind_precise_candidates,
+            )
+
+            audit_start = len(evidence_audit) if evidence_audit is not None else 0
+            result = bind_precise_candidates(
+                supplied.model_dump(), by_id[chunk_id], segments, evidence_audit
+            )
+            if evidence_audit is not None:
+                for proof in evidence_audit[audit_start:]:
+                    proof["source_id"] = input.source_id
+            validated = validate_extraction(result)
+        else:
+            validated = validate_extraction(
+                attach_chunk_provenance(result, by_id[chunk_id])
+            )
         output.append(validated)
         candidate = make_visual_candidate(validated, by_id[chunk_id])
         if candidate is not None:

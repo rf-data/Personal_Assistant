@@ -11,7 +11,30 @@ from src.model_knowledge.data_knowledge import ChunkKnowledgeResult
 ENDPOINT = "https://api.openai.com/v1/chat/completions"
 
 
-def messages_for(chunk):
+def messages_for(chunk, *, segments=None):
+    if segments is not None:
+        from src.tools_knowledge.cs50_precise_evidence import precise_input
+
+        schema = ChunkKnowledgeResult.model_json_schema()
+        for name in ("KnowledgeStatement", "MathExpression"):
+            definition = schema["$defs"][name]
+            for field in ("start", "end", "source"):
+                definition["properties"].pop(field, None)
+                if field in definition.get("required", []):
+                    definition["required"].remove(field)
+            definition["required"] = list(
+                dict.fromkeys(definition.get("required", []) + ["segment_ids"])
+            )
+        return [
+            {"role": "system", "content": build_knowledge_extraction_prompt()},
+            {
+                "role": "user",
+                "content": json.dumps(
+                    {**precise_input(chunk, segments), "schema": schema},
+                    ensure_ascii=False,
+                ),
+            },
+        ]
     return [
         {"role": "system", "content": build_knowledge_extraction_prompt()},
         {
@@ -77,10 +100,11 @@ def validate_response(body):
 
 
 class OpenAIHTTPProvider:
-    def __init__(self, *, api_key, model, budget, transport=None):
+    def __init__(self, *, api_key, model, budget, transport=None, segments=None):
         if not api_key:
             raise ValueError("Explicit OPENAI_API_KEY is required")
         self.model, self.budget = model, budget
+        self.segments = segments
         self.client = httpx.Client(
             transport=transport,
             timeout=20,
@@ -92,7 +116,7 @@ class OpenAIHTTPProvider:
     def extract(self, chunk, record):
         payload = {
             "model": self.model.removeprefix("openai:"),
-            "messages": messages_for(chunk),
+            "messages": messages_for(chunk, segments=self.segments),
             "response_format": {"type": "json_object"},
             "max_completion_tokens": self.budget.output_limit,
             "n": 1,
@@ -110,6 +134,21 @@ class OpenAIHTTPProvider:
             body = response.json()
             record["usage"] = body.get("usage")
             record["response_model"] = body.get("model")
+            if self.segments is not None:
+                from src.tools_knowledge.cs50_precise_evidence import (
+                    bind_precise_candidates,
+                )
+
+                choices = body.get("choices", [])
+                if (
+                    len(choices) != 1
+                    or choices[0].get("finish_reason") != "stop"
+                    or choices[0]["message"].get("refusal")
+                ):
+                    raise ValueError("Missing, refused or truncated precise result")
+                raw = json.loads(choices[0]["message"]["content"])
+                record["provider_fields"] = raw
+                return bind_precise_candidates(raw, chunk, self.segments)
             return validate_response(body)
         finally:
             record["runtime_seconds"] = time.monotonic() - started
