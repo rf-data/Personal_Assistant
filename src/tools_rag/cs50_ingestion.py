@@ -417,6 +417,12 @@ def checked_existing(client, plan, artifact):
     }
     matched = set()
     for record in all_points(client, plan.collection):
+        if record.payload is None or any(
+            key not in record.payload for key in plan.collection.required_payload_fields
+        ):
+            raise ValueError(
+                "Missing explicit required payload fields/version; never infer defaults"
+            )
         payload = TranscriptPayload.model_validate(record.payload)
         payload.check_collection(plan.collection)
         if str(record.id) != payload.point_id:

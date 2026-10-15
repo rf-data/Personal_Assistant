@@ -307,3 +307,33 @@ def test_replaced_source_in_same_lecture_cannot_leave_old_points(index_case, tmp
                 state_root=tmp_path / "state",
                 execute=True,
             )
+
+
+def test_missing_declared_version_not_filled_by_pydantic_defaults(index_case, tmp_path):
+    adapter, workspace, _, _, plan, vectors = index_case
+    with closing(QdrantClient(":memory:")) as client:
+        upsert_plan(
+            client,
+            plan,
+            vectors,
+            adapter,
+            workspace=workspace,
+            state_root=tmp_path / "state",
+            execute=True,
+            allow_create=True,
+        )
+        client.delete_payload(
+            plan.collection.name,
+            ["ingestion_schema_version"],
+            points=[plan.units[0].point_id],
+        )
+        with pytest.raises(ValueError, match="explicit required"):
+            upsert_plan(
+                client,
+                plan,
+                vectors,
+                adapter,
+                workspace=workspace,
+                state_root=tmp_path / "state",
+                execute=True,
+            )

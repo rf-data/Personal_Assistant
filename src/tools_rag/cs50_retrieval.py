@@ -88,6 +88,10 @@ def search_cs50_transcripts(
     expected = {p.point_id: p for p in plan.units}
     hits = []
     for record in response.points:
+        if record.payload is None or any(
+            key not in record.payload for key in plan.collection.required_payload_fields
+        ):
+            raise ValueError("Missing explicit retrieval payload/version fields")
         payload = TranscriptPayload.model_validate(record.payload)
         payload.check_collection(plan.collection)
         if str(record.id) != payload.point_id or payload != expected.get(

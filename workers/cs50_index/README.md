@@ -23,7 +23,7 @@ Zwei-Umgebungen-Aufbau werden Base-Site-Packages explizit angegeben:
 
 ```bash
 PYTHONPATH="$BASE_WORKER/lib/python3.12/site-packages" \
-  "$QDRANT_WORKER/bin/python" -m pytest tests -q
+  "$QDRANT_WORKER/bin/python" -m pytest tests/test_cs50_index_contract.py -q
 ```
 
 Keine festen Maschinenpfade in Tests. Vollständig hermetische Vorbereitung des
@@ -31,3 +31,32 @@ Keine festen Maschinenpfade in Tests. Vollständig hermetische Vorbereitung des
 Paketbereitstellung. SentenceTransformers wird nur für ausdrücklich aktivierte
 lokale Inferenz benötigt; Version aus dem Root-Lock und vorab bereitgestellte
 immutable Modelrevision. Gewichte werden von der Pipeline niemals heruntergeladen.
+
+Die vollständige Suite startet bestehende CLI-Worker mit Python -I, das PYTHONPATH
+absichtlich ignoriert. Der obige kombinierte Einzeltestaufbau reicht dafür nicht.
+Für die tatsächliche Gesamtregression wird eine zusätzliche temporäre venv ohne
+Paketinstallation erzeugt; zwei .pth-Dateien binden die bereits bereitgestellten
+SDK-/Worker-Site-Packages auch in isolierten Kindprozessen ein:
+
+```bash
+"$QDRANT_WORKER/bin/python" -m venv --without-pip "$REGRESSION_WORKER"
+export BASE_WORKER QDRANT_WORKER REGRESSION_WORKER
+python3 - <<'PY'
+import os
+from pathlib import Path
+sites = Path(os.environ['REGRESSION_WORKER']) / 'lib/python3.12/site-packages'
+for filename, variable in [('00-sdk.pth', 'QDRANT_WORKER'), ('01-base.pth', 'BASE_WORKER')]:
+    target = Path(os.environ[variable]) / 'lib/python3.12/site-packages'
+    (sites / filename).write_text(str(target.resolve()) + '\n')
+PY
+"$REGRESSION_WORKER/bin/python" -I -c 'import pydantic_settings, qdrant_client, pytest'
+UV_PROJECT_ENVIRONMENT="$REGRESSION_WORKER" UV_CACHE_DIR=/tmp/cs50-index-uvcache \
+  uv run --offline --no-sync python -I -c 'import pydantic_settings, qdrant_client, tiktoken'
+CS50_TEST_PROFILE=offline "$REGRESSION_WORKER/bin/python" -m pytest tests -q
+```
+
+Nur neue externe Testumgebung, keine Änderung vorhandener uv-Umgebungen oder
+Dependencyversionen. Die .pth-Konfiguration ist ein expliziter lokaler
+Reproduktionsaufbau, keine portable auszuliefernde Installation. Ein vollständig
+bereitgestelltes deklaratives Profil bleibt der reguläre Betriebsweg.
+Auch der gezeigte uv-run-Aufruf mit isolierten Imports wurde tatsächlich ausgeführt.
