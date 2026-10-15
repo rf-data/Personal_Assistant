@@ -121,3 +121,33 @@ Testergebnisse und Kommandos sind keine aktuelle Betriebsfreigabe. Inhalte wurde
 erhalten; Links und persönliche Maschinenpfadbeispiele wurden portabel gemacht.
 Die [Archivierungs- und Bereinigungsbilanz](operations/archive_cleanup_report.md)
 führt die tatsächlich ausgeführten Schritte und verbleibenden Kandidaten auf.
+
+
+## Course materials (offline-first)
+
+- [Snapshot inventory and gaps](operations/material_gap_analysis.md), [coverage](operations/material_coverage.md).
+- [CLI / manual download release / demos](operations/material_ingestion.md).
+- [Resource and normalized document contract](contracts/material_artifacts.md),
+  [download](contracts/material_download.md), [processing/resume](contracts/material_processing.md),
+  [code](contracts/material_code.md), [future material mapping](contracts/material_mapping.md).
+- [Parser support/quality limits](evaluation/material_parser_matrix.md),
+  [offline regression matrix](evaluation/material_tests.md),
+  [completion and remaining release gates](operations/material_completion.md).
+
+This additive path prepares structured source blocks. Existing transcript Knowledge,
+Whisper, extraction prompts, collections and production artifacts remain unchanged.
+
+
+```mermaid
+flowchart LR
+    F[Verified local snapshots] --> C[Discovery graph and material catalog]
+    C --> P[Explicit scoped plan]
+    P --> R[Raw archive and receipt]
+    L[Explicit local file] --> R
+    H[Approved official HTTPS download] --> R
+    R --> N[Bounded parser and normalized blocks/images]
+    N --> V[Hash/config/source-checked resume]
+    V --> M[Read-only material input mapping]
+```
+
+Material mapping does not execute Knowledge extraction or upload vectors.
