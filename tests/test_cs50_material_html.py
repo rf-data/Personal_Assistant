@@ -31,12 +31,11 @@ def test_structured_html_assignment_and_refs():
     assert "Hidden footer" not in str(d.blocks)
     assert "Outside nav" not in str(d.blocks)
     assert all(b.location.dom for b in d.blocks)
-    assert (
-        next(b for b in d.blocks if b.type == "list").data["items"][0]["children"][0][
-            "items"
-        ][0]["text"]
-        == "Then write"
-    )
+    lists = [b for b in d.blocks if b.type == "list"]
+    nested = next(b for b in d.blocks if b.text == "Then write")
+    assert len(lists) == 2 and all(b.text == "" for b in lists)
+    assert [c["ordered"] for c in nested.data["list_context"]] == [True, False]
+    assert nested.data["list_context"][-1]["item_dom"] in lists[1].data["item_doms"]
     assert (
         d.images[0].original_url == "https://cs50.harvard.edu/python/notes/0/figure.png"
     )
@@ -62,7 +61,9 @@ def test_empty_or_invalid(raw):
 
 def test_limit():
     with pytest.raises(ValueError, match="limit"):
-        parse_html(binding(), HTML, ParserConfig(name="html", max_blocks=1))
+        parse_html(
+            binding(), HTML, ParserConfig(name="html", version="2", max_blocks=1)
+        )
 
 
 def test_existing_notes_assignment_snapshots_read_only():

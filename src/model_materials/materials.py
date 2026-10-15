@@ -70,13 +70,19 @@ class MaterialResource(DiscoveryModel):
 
 class ParserConfig(DiscoveryModel):
     name: Literal["html", "pdf", "code", "image"]
-    version: Literal["1"] = "1"
+    version: Literal["1", "2"] = "1"
     max_bytes: int = Field(default=16 * 1024 * 1024, ge=1, le=64 * 1024 * 1024)
     max_pages: int = Field(default=100, ge=1, le=500)
     max_blocks: int = Field(default=20000, ge=1, le=50000)
     max_images: int = Field(default=100, ge=0, le=500)
     timeout: float = Field(default=20, gt=0, le=120, allow_inf_nan=False)
     memory_mb: int = Field(default=1024, ge=256, le=4096)
+
+    @model_validator(mode="after")
+    def supported_version(self):
+        if self.version == "2" and self.name != "html":
+            raise ValueError("Parser v2 is only implemented for HTML")
+        return self
 
     @property
     def config_id(self):

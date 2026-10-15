@@ -131,7 +131,7 @@ def parser_for(binding):
     else:
         return None, "unsupported", "No reviewed parser"
     return (
-        ParserConfig(name=name),
+        ParserConfig(name=name, version="2" if name == "html" else "1"),
         "selected",
         "Supported local parser; remote content not checked",
     )
