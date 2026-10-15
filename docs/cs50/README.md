@@ -114,6 +114,10 @@ Visual- und Whisper-Refactorings sind außerhalb dieses Entwicklungsabschnitts.
 
 ## Historisches Archiv
 
+Die [öffentliche Konsolidierungszusammenfassung](../project_consolidation_report.md)
+führt Vorgehen, Offline-Regression und Sicherheitsgrenzen auf. Private lokale
+Inventare sind darin nicht enthalten.
+
 [archive/2026-10](archive/2026-10/) enthält Entwicklungsberichte mit ihren
 damaligen Commit-/Testständen, einschließlich der vormals unversionierten
 Abschlussanalyse und des inzwischen behobenen Integrationsblockers. Historische
