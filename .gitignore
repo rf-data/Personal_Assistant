@@ -217,3 +217,7 @@ company_research/*.json
 !/docs/course_sources/cs50/regression_manifest.json
 !/docs/course_sources/cs50/cs50_lecture_plan.v1.json
 .cache/**
+
+**/prio_list.md
+**/test.py
+src/prio_list.md

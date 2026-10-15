@@ -1,3 +1,34 @@
+Worktree	Status	Empfehlung
+Personal_Assistant-audit	Kleine virtuelle Umgebung	Später prüfen
+Personal_Assistant-completion	CS50-Worker-Umgebung	Später prüfen
+Personal_Assistant-completion-audit	Zwei gesicherte Originalberichte	Später prüfen
+Personal_Assistant-materials	Letzter Materialentwicklungsstand	Vorerst behalten
+Personal_Assistant-materials-finalcheck	Vollständig getesteter Materialstand	Vorerst behalten
+Personal_Assistant-provenance-models	VS Code verwendet den Ordner	Nach Schließen der IDE erneut prüfen
+
+#############################
+
+uv run --offline --no-sync python -m scripts.cs50_materials inventory \
+  --output /home/robfra/0_Portfolio_Projekte/gmp_compliance/docs/cs50-material-inventory.v1.json
+
+uv run --offline --no-sync python -m scripts.cs50_materials plan \
+  --course cs50_python \
+  --section 0 \
+  --output /home/robfra/0_Portfolio_Projekte/gmp_compliance/docs/python0-material-plan.v1.json
+
+uv run --offline --no-sync python -m scripts.cs50_materials plan \
+  --resource "$RESOURCE_ID" \
+  --license-reviewed \
+  --output /home/robfra/0_Portfolio_Projekte/gmp_compliance/docs/reviewed-one-material.v1.json
+
+
+uv run --offline --no-sync python -m scripts.cs50_materials download \
+  --plan /home/robfra/0_Portfolio_Projekte/gmp_compliance/docs/reviewed-one-material.v1.json \
+  --workspace /tmp/python0-notes-artifacts \
+  --resource "$RESOURCE_ID" \
+  --max-resources 1
+
+
 Codex-Aufgabenplanung für beide Repositories
 Ich habe die aktuelle docs/ROADMAP.md vom 12. Oktober 2026 gelesen und sie mit dem heute auf GitHub sichtbaren Code abgeglichen.
 Die Roadmap enthält bereits neun konkrete Codex-Aufgaben (C01–C09). Meine wichtigste Erkenntnis ist aber: Die Roadmap sollte aktualisiert werden, bevor du die nächsten größeren Codex-Arbeiten verteilst. Der aktuelle CS50-Entwicklungsstand und einige Abweichungen zwischen den Repositories werden darin noch nicht ausreichend berücksichtigt.
