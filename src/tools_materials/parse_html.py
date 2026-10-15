@@ -107,6 +107,11 @@ def parse_html(binding, raw, config=None):
         if not src:
             return
         url = urljoin(binding.original_url, src)
+        if "_files/" in src or src.startswith(("file:", "blob:")):
+            url = None
+            warnings.append(
+                "Browser-local image reference; original remote URL unknown"
+            )
         location = Location(dom=dom_path(tag))
         image_id = deterministic_id(
             "image_ref",
@@ -144,7 +149,15 @@ def parse_html(binding, raw, config=None):
                 **kwargs,
             )
         )
-        emit(tag, "image_reference", tag.get("alt", ""), dict(image_id=image_id))
+        emit(
+            tag,
+            "image_reference",
+            tag.get("alt", ""),
+            dict(
+                image_id=image_id,
+                source_reference="inline:raster" if src.startswith("data:") else src,
+            ),
+        )
 
     def walk(tag):
         if not isinstance(tag, Tag):

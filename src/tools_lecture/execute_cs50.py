@@ -17,8 +17,16 @@ from urllib.parse import urlsplit
 import httpx
 
 from src.model_transcribe.data_transcribe import TranscriptDocument
-from src.tools_lecture.adapt_cs50 import CS50AdapterPlan
 from src.tools_transcribe.import_transcript import import_srt
+
+
+def __getattr__(name):
+    """Preserve the existing plan-model re-export without eager settings imports."""
+    if name == "CS50AdapterPlan":
+        from src.tools_lecture.adapt_cs50 import CS50AdapterPlan
+
+        return CS50AdapterPlan
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 class ExecutionConflict(ValueError):
@@ -120,6 +128,8 @@ class CS50Executor:
         total_timeout=60.0,
         sleep=time.sleep,
     ):
+        from src.tools_lecture.adapt_cs50 import CS50AdapterPlan
+
         self.plan = CS50AdapterPlan.model_validate_json(plan.model_dump_json())
         self.workspace = Path(workspace).absolute()
         self.transport, self.sleep = transport, sleep
@@ -340,6 +350,8 @@ def main(argv=None):
     mode.add_argument("--dry-run", action="store_true")
     mode.add_argument("--execute", action="store_true")
     args = parser.parse_args(argv)
+    from src.tools_lecture.adapt_cs50 import CS50AdapterPlan
+
     plan = CS50AdapterPlan.model_validate_json(args.plan.read_bytes())
     executor = CS50Executor(plan, workspace=Path.cwd())
     bindings = executor.select(

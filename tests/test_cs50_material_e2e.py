@@ -51,8 +51,15 @@ sys.meta_path.insert(0,Guard())
 sys.argv=['cs50_materials','--help']
 runpy.run_module('scripts.cs50_materials',run_name='__main__')
 """
+    import os
+
+    controlled = {"PATH": os.environ["PATH"]}
     result = subprocess.run(
-        [sys.executable, "-c", code], capture_output=True, text=True, timeout=15
+        [sys.executable, "-c", code],
+        capture_output=True,
+        text=True,
+        timeout=15,
+        env=controlled,
     )
     assert result.returncode == 0, result.stderr
     assert "execute-download" in result.stdout

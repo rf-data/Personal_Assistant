@@ -5,10 +5,10 @@ navigation, external tools and fragments; they are references, not unique downlo
 
 | Course | Sections | Candidates | Media variants | Raw link/image occurrences | Eligible references |
 |---|---:|---:|---:|---:|---:|
-| cs50x | 12 | 233 | 375 | 2108 | 913 |
-| cs50_python | 10 | 145 | 80 | 1365 | 583 |
-| cs50_sql | 7 | 77 | 77 | 806 | 266 |
-| cs50_ai | 7 | 77 | 49 | 937 | 322 |
+| cs50x | 12 | 233 | 375 | 2108 | 851 |
+| cs50_python | 10 | 145 | 80 | 1365 | 572 |
+| cs50_sql | 7 | 77 | 77 | 806 | 263 |
+| cs50_ai | 7 | 77 | 49 | 937 | 298 |
 | cs50_web | 9 | 77 | 63 | 926 | 295 |
 | cs50_cybersecurity | 5 | 44 | 56 | 532 | 159 |
 

@@ -40,6 +40,7 @@ def test_download_resume_hash_and_no_overwrite(tmp_path):
 
     def handler(req):
         calls.append(req)
+        assert req.headers["accept-encoding"] == "identity"
         return httpx.Response(
             200, content=b"<main>Hello</main>", headers={"content-type": "text/html"}
         )
@@ -68,6 +69,10 @@ def test_http_errors_and_bounded_retries(tmp_path, code, attempts):
     with pytest.raises((ValueError, httpx.HTTPStatusError)):
         w.obtain(binding(), execute=True, license_reviewed=True)
     assert len(calls) == attempts
+    from src.tools_materials.processing import MaterialProcessor
+
+    observed = MaterialProcessor(w.workspace).inspect(binding())
+    assert observed.status == "failed" and observed.error
     assert not w.paths(binding())[0].exists()
     assert not list(w.workspace.rglob(".download-*"))
 
@@ -112,6 +117,7 @@ def test_local_conflict_and_symlink(tmp_path):
     w = worker(tmp_path, lambda _: pytest.fail("HTTP forbidden"))
     r = w.obtain(binding(), execute=True, local_file=source)
     assert r.origin == "local_import"
+    assert r.mime_type is None
     source.write_bytes(b"changed")
     with pytest.raises(ExecutionConflict):
         w.obtain(binding(), execute=True, local_file=source)

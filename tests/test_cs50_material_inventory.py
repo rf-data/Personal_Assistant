@@ -31,5 +31,13 @@ def test_complete_snapshot_catalog(monkeypatch):
     ]
     assert len({r["resource_id"] for r in refs}) == len(refs)
     assert all(r["license_status"] == "not_assessed" for r in refs)
+    local = [
+        r
+        for r in refs
+        if "_files/" in r["raw_reference"]
+        or r["raw_reference"].startswith(("file:", "blob:", "data:"))
+    ]
+    assert len(local) == 100
+    assert all(r["download_capability"] == "blocked" for r in local)
     assert "local_snapshot" in data["coverage"]
     assert "cs50x" in coverage_report(data)

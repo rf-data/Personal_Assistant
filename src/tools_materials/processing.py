@@ -170,6 +170,19 @@ class MaterialProcessor:
         self.workspace = self.downloader.workspace
 
     def inspect(self, binding, config=None):
+        binding = MaterialResource.model_validate_json(binding.model_dump_json())
+        raw, path = self.downloader.paths(binding)
+        if path.exists():
+            pending = ArtifactReceipt.model_validate_json(path.read_bytes())
+            if pending.binding != binding:
+                raise ExecutionConflict("Material receipt binding conflict")
+            if (
+                pending.status == "failed"
+                and "verified" not in pending.history
+                and not raw.exists()
+            ):
+                # Read-only failure observation is not permission to parse/resume an unverified source.
+                return pending
         receipt = self.downloader.validate(binding)
         if receipt.status != "completed":
             return receipt

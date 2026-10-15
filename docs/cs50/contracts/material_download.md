@@ -3,14 +3,15 @@
 MaterialDownloader reuses CS50Executor.download unchanged, plus its digest,
 safe_path, sync_directory and atomic receipt primitives. A guarding transport
 validates the exact selected HTTPS URL, official host, MIME/Content-Length and
-uncompressed transfer. Redirects are refused entirely: no unvalidated target
+uncompressed transfer (explicit Accept-Encoding: identity). Redirects are refused entirely: no unvalidated target
 request. Proxy/environment credentials are disabled by the existing primitive.
 Allowlist: cs50.harvard.edu and cdn.cs50.net. External/unreviewed sources remain
 blocked; audio/video/archive/subtitle processing remains separate.
 
 Default preview performs no writes or HTTP. Execution requires explicit approval
 and license-reviewed binding plus --license-reviewed. Local import does no HTTP
-and labels its origin separately; hash proves bytes, not remote authenticity.
+and labels its origin separately; MIME stays unknown without HTTP metadata.
+Hash proves bytes, not remote authenticity.
 Default serial concurrency one, 16MiB/10s socket/45s total/one retry; upper size
 64MiB, retry maximum two. Network/429/5xx retries only; redirects/404/MIME/size
 conflicts fail. Existing executor timeout is checked during streaming; a single

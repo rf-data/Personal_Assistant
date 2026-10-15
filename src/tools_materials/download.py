@@ -52,6 +52,7 @@ class CheckedTransport(httpx.BaseTransport):
             str(request.url)
         ):
             raise ExecutionConflict("Unapproved download source/redirect")
+        request.headers["Accept-Encoding"] = "identity"
         response = self.inner.handle_request(request)
         if response.status_code == 200:
             self.mime = (
@@ -228,7 +229,7 @@ class MaterialDownloader:
                             out.write(block)
                         out.flush()
                         os.fsync(out.fileno())
-                    mime = sorted(MIMES[binding.format])[0]
+                    mime = None  # Local bytes have no authoritative HTTP Content-Type.
                 else:
                     guard = CheckedTransport(
                         self.transport or httpx.HTTPTransport(retries=0),

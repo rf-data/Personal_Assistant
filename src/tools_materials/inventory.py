@@ -152,7 +152,8 @@ def catalog(manifest):
                     )
                 )
             for order, tag in enumerate(soup.select("a[href], img[src]")):
-                url = urljoin(str(page.url), tag.get("href", tag.get("src")))
+                raw_reference = tag.get("href", tag.get("src"))
+                url = urljoin(str(page.url), raw_reference)
                 append(
                     deterministic_id(
                         "snapshot_ref", course.course_id, page.file, str(order)
@@ -172,6 +173,17 @@ def catalog(manifest):
                         )
                     ],
                 )
+                rows[-1]["raw_reference"] = raw_reference
+                if "_files/" in raw_reference or raw_reference.startswith(
+                    ("file:", "blob:", "data:")
+                ):
+                    rows[-1]["download_capability"] = "blocked"
+                    rows[-1]["parse_capability"] = (
+                        "partial" if raw_reference.startswith("data:") else "blocked"
+                    )
+                    rows[-1]["reason"] = (
+                        "Browser-local/inline reference; no proven remote URL"
+                    )
     candidates = {}
     for row in rows:
         if row["reference_kind"] == "candidate":
