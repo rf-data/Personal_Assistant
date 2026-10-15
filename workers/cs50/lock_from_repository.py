@@ -1,10 +1,13 @@
 """Project the already reviewed root lock; never resolve or upgrade packages."""
 
+import argparse
 import json
 import tomllib
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--project", type=Path, default=Path(__file__).resolve().parent)
+HERE = parser.parse_args().project.resolve()
 root = tomllib.loads((HERE.parents[1] / "uv.lock").read_text())
 project = tomllib.loads((HERE / "pyproject.toml").read_text())
 requirements = project["project"]["dependencies"]

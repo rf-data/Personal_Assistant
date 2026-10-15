@@ -30,7 +30,7 @@ def payload():
         receipt_sha256="c" * 64,
         input_binding_sha256="d" * 64,
         chunk_plan_sha256="e" * 64,
-        chunking={"overlap_segments": 2},
+        chunking={"target_duration": 45.0, "max_duration": 75.0, "overlap_segments": 2},
         transcript_provenance={
             "source_url": "https://cdn.cs50.net/python/2022/lectures/0/lang/en/lecture0.srt",
             "language": "en",

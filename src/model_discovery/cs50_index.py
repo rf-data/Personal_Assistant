@@ -11,6 +11,43 @@ from src.tools_knowledge.cs50_checkpoint import Contract, fingerprint
 Hash = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
 Name = Annotated[str, Field(min_length=1, pattern=r"\S")]
 NAMESPACE = UUID("428d0c9d-1dd6-5cfb-b218-b82bf9d11a70")
+REQUIRED_PAYLOAD_FIELDS = (
+    "course_id",
+    "section_key",
+    "lecture_id",
+    "resource_id",
+    "source_id",
+    "chunk_id",
+    "language",
+    "text",
+    "start",
+    "end",
+    "segment_ids",
+    "original_url",
+    "transcript_sha256",
+    "chunk_plan_sha256",
+    "embedding_model",
+    "embedding_version",
+    "ingestion_schema_version",
+    "collection_contract_id",
+    "raw_sha256",
+    "receipt_sha256",
+    "input_binding_sha256",
+    "provenance_sha256",
+    "chunking",
+    "transcript_provenance",
+    "discovery_provenance",
+    "original_chunk_text",
+    "original_chunk_segment_ids",
+    "original_chunk_start",
+    "original_chunk_end",
+    "unit_index",
+    "unit_count",
+    "char_start",
+    "char_end",
+    "source_origin",
+    "media_id",
+)
 
 
 class EmbeddingConfig(Contract):
@@ -91,12 +128,24 @@ class CollectionContract(Contract):
     embedding: EmbeddingConfig
     ingestion_schema_version: Literal[1] = 1
     payload_schema: Literal["cs50_transcript_payload_v1"] = "cs50_transcript_payload_v1"
+    payload_schema_sha256: Hash = Field(
+        default_factory=lambda: fingerprint(TranscriptPayload.model_json_schema())
+    )
+    required_payload_fields: tuple[str, ...] = REQUIRED_PAYLOAD_FIELDS
     filter_indexes: tuple[
         Literal["course_id", "lecture_id", "source_id", "language"], ...
     ] = ("course_id", "lecture_id", "source_id", "language")
 
     @model_validator(mode="after")
     def all_indexes(self):
+        if (
+            self.required_payload_fields != REQUIRED_PAYLOAD_FIELDS
+            or self.payload_schema_sha256
+            != fingerprint(TranscriptPayload.model_json_schema())
+        ):
+            raise ValueError(
+                "Payload field/schema contract conflicts with this implementation"
+            )
         if (
             set(self.filter_indexes)
             != {"course_id", "lecture_id", "source_id", "language"}
@@ -149,6 +198,28 @@ class TranscriptPayload(Contract):
 
     @model_validator(mode="after")
     def consistent_unit(self):
+        import math
+
+        if set(self.chunking) != {
+            "target_duration",
+            "max_duration",
+            "overlap_segments",
+        }:
+            raise ValueError(
+                "Only complete timed-chunker parameters may enter the payload"
+            )
+        if (
+            type(self.chunking["overlap_segments"]) is not int
+            or self.chunking["overlap_segments"] < 1
+        ):
+            raise ValueError("Invalid overlap configuration")
+        if any(
+            type(self.chunking[k]) not in (float, int)
+            or not math.isfinite(self.chunking[k])
+            or self.chunking[k] <= 0
+            for k in ("target_duration", "max_duration")
+        ):
+            raise ValueError("Invalid timed chunking configuration")
         u = urlsplit(self.original_url)
         if (
             u.scheme != "https"

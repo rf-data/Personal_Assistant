@@ -136,6 +136,15 @@ def offset_windows(text, embedder):
     return result
 
 
+def chunking_configuration(settings):
+    """Complete timed-chunker parameters, not unrelated file/download/LLM settings."""
+    return {
+        "target_duration": float(settings.target_duration),
+        "max_duration": float(settings.max_duration),
+        "overlap_segments": int(settings.overlap_segments),
+    }
+
+
 def map_transcript(
     plan,
     input,
@@ -185,7 +194,7 @@ def map_transcript(
         "receipt_sha256": digest(input.receipt_path),
         "input_binding_sha256": fingerprint(input.binding.model_dump(mode="json")),
         "chunk_plan_sha256": fingerprint([c.model_dump(mode="json") for c in chunks]),
-        "chunking": settings.model_dump(mode="json"),
+        "chunking": chunking_configuration(settings),
         "transcript_provenance": provenance,
         "provenance_sha256": original_provenance_hash,
         "discovery_provenance": tuple(

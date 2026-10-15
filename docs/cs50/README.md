@@ -7,6 +7,18 @@ einer vollständigen LLM-Kursverarbeitung ist damit noch nicht nachgewiesen.
 
 ## Architektur und Umfang
 
+Der neue, separat freizugebende Transcript-Suchindex ergänzt diese Pipeline:
+[Architektur](operations/transcript_index_architecture.md),
+[CLI](operations/transcript_index_cli.md),
+[Collectionvertrag](contracts/transcript_index.md),
+[Embeddingvertrag](contracts/transcript_embeddings.md),
+[Upload/Resume](operations/transcript_ingestion.md),
+[Retrieval](operations/transcript_retrieval.md),
+[Evaluation](evaluation/transcript_retrieval.md) und
+[künftiges Knowledge-Mapping](contracts/knowledge_index.md).
+Die [Abschlussbilanz](operations/transcript_index_completion.md) trennt technische
+Offline-Nachweise von noch ausstehender Inferenz und fachlicher Evaluation.
+
 Discovery → SRT-first Selection → Lecture-Adapter/Taskplan → kontrollierter
 SRT-Download → offizieller Import → geprüfte Knowledge-Eingabebindung → zeitbasiertes
 Chunking → isolierte Extraktion → Evidence-Bindung → deterministische Consolidation
