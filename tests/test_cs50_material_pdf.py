@@ -29,7 +29,10 @@ def test_multipage_images_formula_and_slide_role():
     doc, blobs = parse_pdf(binding("pdf", "slides"), pdf_bytes())
     assert doc.metadata["page_count"] == 2
     assert {b.location.page for b in doc.blocks} == {1, 2}
-    assert any(b.type == "math" and b.uncertainty for b in doc.blocks)
+    assert any(
+        b.type == "paragraph" and b.text == "x = y + 1" and b.uncertainty
+        for b in doc.blocks
+    )
     assert doc.images and blobs
     assert doc.images[0].source_location.page == 1
     assert doc.binding.role == "slides"
@@ -43,7 +46,11 @@ def test_invalid(raw):
 
 def test_page_limit():
     with pytest.raises(ValueError, match="page limit"):
-        parse_pdf(binding("pdf"), pdf_bytes(), ParserConfig(name="pdf", max_pages=1))
+        parse_pdf(
+            binding("pdf"),
+            pdf_bytes(),
+            ParserConfig(name="pdf", version="2", max_pages=1),
+        )
 
 
 def test_actual_subprocess_timeout():

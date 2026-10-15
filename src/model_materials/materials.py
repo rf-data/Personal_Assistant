@@ -80,8 +80,8 @@ class ParserConfig(DiscoveryModel):
 
     @model_validator(mode="after")
     def supported_version(self):
-        if self.version == "2" and self.name != "html":
-            raise ValueError("Parser v2 is only implemented for HTML")
+        if self.version == "2" and self.name not in {"html", "pdf"}:
+            raise ValueError("Parser v2 is only implemented for HTML/PDF")
         return self
 
     @property

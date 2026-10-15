@@ -1,10 +1,161 @@
 """Private bounded subprocess entrypoint. Stdout is a capped result file."""
 
+import ast
 import base64
 import hashlib
 import json
+import re
 import resource
 import sys
+
+
+def numbered_lines(text):
+    """Candidate only: consecutive numbers and a constant two-space gutter.
+
+    Leading alignment spaces belong to the gutter; indentation after its two
+    separator spaces belongs to code. No stripping/dedenting of the payload.
+    """
+    lines = text.split("\n")
+    rows = []
+    payload = []
+    for index, line in enumerate(lines):
+        match = re.fullmatch(r"( *)([0-9]{1,5})(  )(.*)", line)
+        if not match:
+            return None
+        prefix = match[1] + match[2] + match[3]
+        rows.append(dict(line_index=index, number=int(match[2]), prefix=prefix))
+        payload.append(match[4])
+    if len(rows) < 3 or len({len(r["prefix"]) for r in rows}) != 1:
+        return None
+    numbers = [r["number"] for r in rows]
+    if numbers != list(range(numbers[0], numbers[0] + len(numbers))):
+        return None
+    return rows, "\n".join(payload)
+
+
+def classify_text(text, spans, typical):
+    """Source-backed heuristics only; ast.parse never compiles or runs code."""
+    fonts = ("mono", "courier", "consolas", "menlo", "monaco", "typewriter", "cmtt")
+    total = sum(len(s["text"]) for s in spans)
+    mono = sum(
+        len(s["text"])
+        for s in spans
+        if s.get("flags", 0) & 8 or any(f in s.get("font", "").lower() for f in fonts)
+    )
+    ratio = mono / total if total else 0
+    monospaced = ratio >= 0.6
+    numbered = numbered_lines(text)
+    candidate = numbered[1] if numbered and monospaced else text
+    signals = set()
+    if monospaced:
+        signals.add("monospace")
+    if "\n" in candidate:
+        signals.add("multiline")
+    if re.search(r"(?m)^\s*#", candidate):
+        signals.add("python_comment")
+    if re.search(
+        r"(?m)^[ \t]*(?:async[ \t]+)?(?:def[ \t]+\w+[ \t]*\([^\n]*\)|class[ \t]+\w+(?:\([^\n]*\))?)[ \t]*(?:->[^\n:]+)?[ \t]*:",
+        candidate,
+    ):
+        signals.add("python_definition")
+    if re.search(
+        r"(?m)^[ \t]*(?:from[ \t]+\w+[ \t]+import[ \t]+|import[ \t]+\w+|(?:if|elif|for|while|with|try|except)[ \t:].*:[ \t]*$)",
+        candidate,
+    ):
+        signals.add("python_statement")
+    # Documentation signatures can be incomplete Python but still have a
+    # distinctive builtin call form. Generic f(x) is deliberately insufficient.
+    builtin = r"(?:print|input|len|str|int|float|range|enumerate|isinstance|open)"
+    if re.search(
+        r"(?m)^[ \t]*(?:\w+[ \t]*=[ \t]*)?" + builtin + r"[ \t]*\(", candidate
+    ):
+        signals.add("python_builtin_call")
+    tree = None
+    try:
+        tree = ast.parse(candidate)
+    except (SyntaxError, ValueError, RecursionError):
+        pass
+    if tree:
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign)):
+                signals.add("assignment")
+                if isinstance(node.value, (ast.JoinedStr, ast.Constant)) and isinstance(
+                    getattr(node.value, "value", ""), str
+                ):
+                    signals.add("python_string_assignment")
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+                signals.add("python_method_call")
+            if isinstance(
+                node, (ast.Return, ast.Raise, ast.Pass, ast.Break, ast.Continue)
+            ):
+                signals.add("python_control")
+    if re.search(r"(?m)^[ \t]*python(?:3)?[ \t]+[\w./-]+\.py(?:[ \t]|$)", candidate):
+        signals.add("python_cli")
+    decisive = signals & {
+        "python_definition",
+        "python_builtin_call",
+        "python_string_assignment",
+    }
+    supported = monospaced and signals & {
+        "python_statement",
+        "python_method_call",
+        "python_control",
+        "python_cli",
+    }
+    comment_fragment = monospaced and "python_comment" in signals and tree is not None
+    uncertainty = ()
+    if decisive or supported or comment_fragment:
+        kind = "code"
+        uncertainty = (
+            "Python-shaped source; heuristic classification, not execution or semantic verification",
+        )
+        if tree is None:
+            uncertainty += (
+                "Incomplete/non-parseable Python fragment or documentation signature",
+            )
+    elif re.search(
+        r"[∑Σ∫√∂∞∈≠≤≥²³]|\\(?:sum|int|frac|sqrt)\b|\^\s*(?:\w|\{)", candidate
+    ) or (
+        "=" in candidate
+        and "assignment" not in signals
+        and re.search(r"[+*/()]", candidate)
+    ):
+        kind = "math"
+        signals.add("mathematical_notation")
+        uncertainty = (
+            "Literal mathematical notation candidate; not semantically verified or reconstructed",
+        )
+    elif "assignment" in signals or "=" in candidate:
+        kind = "paragraph"
+        uncertainty = (
+            "Ambiguous assignment/equation; insufficient Python or mathematical evidence",
+        )
+    elif monospaced:
+        kind = "paragraph"
+        uncertainty = ("Monospace font alone is insufficient to identify code",)
+    elif spans and min(s["size"] for s in spans) > typical * 1.2:
+        kind = "heading"
+        uncertainty = ("font-size heading heuristic",)
+    else:
+        kind = "paragraph"
+    data = dict(
+        classification=dict(
+            strategy="python_math_v2",
+            signals=sorted(signals),
+            monospace_ratio=ratio,
+            python_syntax_valid=tree is not None,
+        )
+    )
+    if numbered and monospaced and kind == "code":
+        data.update(
+            line_numbers=numbered[0],
+            code_view=numbered[1],
+            line_number_strategy="sequential_aligned_two_space_gutter_v1",
+        )
+        uncertainty += (
+            "Line-number gutter inferred from consecutive aligned numbers; original text retained",
+        )
+    return kind, data, uncertainty
 
 
 def main():
@@ -14,6 +165,8 @@ def main():
     )  # Native-library diagnostics must never corrupt the JSON channel.
     request = json.loads(sys.stdin.read())
     config = request["config"]
+    if config["name"] != "pdf" or config["version"] != "2":
+        raise ValueError("Only PDF-v2 normalization is supported by this worker")
     memory = config["memory_mb"] * 1024 * 1024
     resource.setrlimit(resource.RLIMIT_AS, (memory, memory))
     resource.setrlimit(
@@ -65,31 +218,16 @@ def main():
                     continue
                 text = "\n".join(
                     "".join(s["text"] for s in line["spans"]) for line in b["lines"]
-                ).strip()
-                if not text:
+                )
+                if not text.strip():
                     continue
                 ss = [s for line in b["lines"] for s in line["spans"]]
-                kind = (
-                    "code"
-                    if ss
-                    and all(
-                        "mono" in s["font"].lower() or "courier" in s["font"].lower()
-                        for s in ss
-                    )
-                    else "paragraph"
-                )
-                uncertain = ()
-                if any(c in text for c in "=∑√∫"):
-                    kind = "math"
-                    uncertain = (
-                        "PDF literal formula candidate; not verified or reconstructed",
-                    )
-                elif ss and min(s["size"] for s in ss) > typical * 1.2:
-                    kind = "heading"
-                    uncertain = ("font-size heading heuristic",)
+                kind, data, uncertain = classify_text(text, ss, typical)
+                data["line_bboxes"] = [line["bbox"] for line in b["lines"]]
                 emit(
                     kind,
                     text,
+                    data=data,
                     location=dict(page=number, bbox=b["bbox"]),
                     uncertainty=uncertain,
                 )

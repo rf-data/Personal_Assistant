@@ -45,8 +45,10 @@ def run_worker(command, request, timeout):
 
 
 def parse_pdf(binding, raw, config=None):
-    config = config or ParserConfig(name="pdf")
+    config = config or ParserConfig(name="pdf", version="2")
     check_input(raw, config, "pdf")
+    if config.version != "2":
+        raise ValueError("PDF parser v1 is read-only; use v2 in a new workspace")
     if not raw.startswith(b"%PDF-"):
         raise ValueError("Expected PDF magic")
     data = run_worker(

@@ -325,7 +325,7 @@ def test_non_html_versions_and_missing_legacy_version_stay_unchanged():
     assert ParserConfig.model_validate({"name": "html"}).version == "1"
     assert ParserConfig(name="pdf").version == ParserConfig(name="code").version == "1"
     with pytest.raises(ValueError, match="only implemented for HTML"):
-        ParserConfig(name="pdf", version="2")
+        ParserConfig(name="code", version="2")
 
 
 def test_equal_list_entries_keep_distinct_source_positions():
