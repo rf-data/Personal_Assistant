@@ -3,7 +3,7 @@
 Baseline: origin/master ad3078f59851fa71d076a8982bcab8b5b700c1a9,
 15 October 2026. #39–#45 were confirmed merged through GitHub and the actual
 master code tree. No automatic merges, actual course material/model downloads,
-LLM/API execution, embedding inference, Qdrant uploads or production-data changes.
+LLM-provider API execution, embedding inference, Qdrant uploads or production-data changes.
 Existing Discovery/Selection/Lecture/Transcript/Knowledge/index algorithms remain
 unchanged; the executor SRT-plan import is now delayed until actual SRT construction/CLI use. Materials are an additive input layer, not a parallel Knowledge model.
 
@@ -20,7 +20,7 @@ unchanged; the executor SRT-plan import is now delayed until actual SRT construc
 | 7 | [#54](https://github.com/rf-data/Personal_Assistant/pull/54) | processing plan/status/resume | #53 |
 | 8 | [#55](https://github.com/rf-data/Personal_Assistant/pull/55) | isolated future Knowledge/index mapping | #54 |
 | 9 | [#56](https://github.com/rf-data/Personal_Assistant/pull/56) | CLI and six-course offline E2E | #55 |
-| 10 | completion follow-up | manuals, coverage, regression and verified boundary fixes | #56 |
+| 10 | this completion PR | manuals, coverage, regression and verified boundary fixes | #56 |
 
 All PR trees were constructed from the tested final additive files. Public stage-9
 source tree equals local implementation c2e31dd exactly. There are no private
@@ -80,6 +80,12 @@ transport reason; this observation does not authorize parsing an unverified sour
 The planned
 stages describe the material path, not general Legacy ResourceTask execution.
 
+HTML/code currently rely on input-byte/output-block limits; process wall-time and
+address-space isolation are PDF-specific. This is a reviewed course-material path,
+not an arbitrary untrusted-file execution service. Raw snapshot references still
+require explicit classification before promotion into planned ResourceCandidates;
+there is no automatic recursive crawl or implicit linked-image download.
+
 Partial HTML boilerplate/layout, PDF reading order/table overlap/code classification,
 unverified math, missing OCR and unknown live licenses/availability are explicit.
 The normalized material index contract is read-only, distinct from transcript
@@ -115,8 +121,19 @@ A four-case failing regression also showed that failed raw-download status had
 been obscured by missing-artifact verification. Read-only inspection now returns
 the checked failed receipt/error; parse still requires actual raw verification.
 
-Full regression and final follow-up results are recorded in the linked
-[test matrix](../evaluation/material_tests.md); known TXT failures remain separate.
+Full regression: **570 passed, six unchanged TXT failures, five skips, zero setup
+errors**, 581 cases in **2611.39s (43:31)** on frozen `699be27` (public identical
+[source commit](https://github.com/rf-data/Personal_Assistant/commit/d0e8ea8c7df92b3fa821518b3d9a7da25d8138d2)).
+All 60 new cases pass. No code/test changes occurred during this authoritative run.
+See the [test matrix](../evaluation/material_tests.md) and
+[module-level JUnit report](../archive/2026-10/material_regression_report.md).
+
+An earlier run was superseded during review; the first frozen attempt then hit
+filesystem ENOSPC, also reproducible independently/outside the sandbox. Only stopped
+own synthetic scratch roots were removed, preserving logs and all original/private
+artifacts. Standard pytest failed-only retention prevents accumulation of passed
+temporary outputs. The final unchanged-source run completed without ENOSPC; no
+filesystem balance/mount/database/global setting or test assertion was altered.
 
 ## Remaining approvals and next operation
 

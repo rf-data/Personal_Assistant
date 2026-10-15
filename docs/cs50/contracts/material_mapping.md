@@ -13,8 +13,11 @@ upload must bind complete immutable embedding config, dimensionality, tokenizer,
 normalization and collection metadata, as the existing transcript contract does.
 There is no implicit reuse of transcript embeddings or vector schema.
 
-These are unverified source inputs, not Knowledge facts. Schema validation proves
-structure and byte locations, not semantic truth. A future Knowledge bridge needs
+These are unverified source inputs, not Knowledge facts. Schema validation checks
+structure, identity-bound block IDs and exact normalized character windows. It
+does not authenticate raw bytes or source semantics. Before future ingestion,
+callers must use MaterialProcessor.inspect to revalidate raw/output/image hashes
+and bindings; map_material itself is deliberately read-only and performs no I/O. A future Knowledge bridge needs
 non-temporal source evidence/quality review and must preserve block/image refs;
 existing TranscriptKnowledgeDocument remains unchanged. Mapping is implemented,
 Knowledge extraction and material vector upload are deliberately not implemented.

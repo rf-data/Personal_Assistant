@@ -33,6 +33,7 @@ Reproduction in the existing uv worker:
 ```bash
 CS50_TEST_PROFILE=offline uv run --offline --no-sync python -m pytest tests/test_cs50_material_*.py -q
 CS50_TEST_PROFILE=offline uv run --offline --no-sync python -m pytest tests -q \
+  -o tmp_path_retention_policy=failed \
   --basetemp=/tmp/new-exclusive-materials-tests --junitxml=/tmp/materials.xml
 ```
 
@@ -62,3 +63,25 @@ HTTP-status regression preserves failed-download reasons without accepting an
 absent raw artifact as verified. No assertions were weakened.
 
 Six known TXT errors must remain visible, not xfailed or fixed in this project.
+
+
+## Completed frozen-source full suite
+
+**570 passed, six unchanged TXT failures, five skips, zero setup errors**;
+581 cases in **2611.39 seconds (43:31)**. All 60 material cases pass in this full
+run, in addition to the earlier focused checks. Relative to the clean index baseline
+510/6/5, exactly 60 passing cases were added; no new regression or skip.
+
+Tested local source: `699be27b0b274c24f1b4197658c3cee6ef130b9c`; identical public
+[source-freeze commit](https://github.com/rf-data/Personal_Assistant/commit/d0e8ea8c7df92b3fa821518b3d9a7da25d8138d2),
+tree `fe4ac476366cbbd63a681bd88c4d368f05c67a75`. Only documentation changed afterwards.
+The full per-module counts, failure/skip IDs, environment versions, command and
+filesystem recovery are in the [final module-level regression report](../archive/2026-10/material_regression_report.md).
+
+The earlier frozen attempt encountered reproducible ENOSPC even with free data
+space reported by df. Removing only five exact stopped own scratch directories
+(about 98 MiB, with symlinks unlinked rather than followed) restored atomic file
+replacement. The eight embedding tests then passed unchanged. The authoritative
+43-minute run uses pytest's built-in failed retention policy and completed without
+another ENOSPC. No worktree, cache, environment, backup or original artifact was
+removed, and no OS/database configuration or assertion was changed.

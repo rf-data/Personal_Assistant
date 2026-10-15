@@ -3,7 +3,7 @@
 | Type | Capability | Provenance | Limit / unproven quality |
 |---|---|---|---|
 | Notes/public assignment HTML | Supported structure, partial semantic classification | DOM, URL, original role/IDs/raw SHA | JS not rendered; no-landmark boilerplate partial; unknown leaves retained |
-| Lists/tables/code in HTML | Supported | DOM, ordered nesting/cells/literal code | complex rowspan/colspan layout not reconstructed |
+| Lists/tables/code in HTML | Supported | DOM, ordered nesting/cells/literal code | complex rowspan/colspan layout not reconstructed; DOM paths describe the filtered parser tree |
 | MathML/LaTeX | Partial: literal source notation | DOM/source markup | no formula reconstruction or semantic verification |
 | PDF/exported slides | Partial | original page/bbox/role/raw SHA | font heuristics, geometric table candidates; no OCR; reading order/layout not gold-reviewed |
 | Embedded PDF/raster HTML image data | Supported archive/reference | exact bytes/hash, DOM/page/bbox/context | no pictured-content validation; captions only when explicit |
