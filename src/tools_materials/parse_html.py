@@ -5,7 +5,7 @@ import hashlib
 import re
 from urllib.parse import urljoin
 
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup, Comment, NavigableString, Tag
 
 from src.model_discovery.cs50 import deterministic_id
 from src.model_materials.materials import (
@@ -63,8 +63,10 @@ def dom_path(tag):
 
 
 def parse_html(binding, raw, config=None):
-    config = config or ParserConfig(name="html")
+    config = config or ParserConfig(name="html", version="2")
     check_input(raw, config, "html")
+    if config.version != "2":
+        raise ValueError("HTML parser v1 is read-only; use v2 in a new workspace")
     soup = BeautifulSoup(raw, "html.parser")
     if not soup.find():
         raise ValueError("Expected HTML markup")
@@ -80,9 +82,6 @@ def parse_html(binding, raw, config=None):
         if main.name in {"main", "article"}
         else ["No explicit main/article landmark; boilerplate filtering is partial"]
     )
-    for tag in list(main.select("nav, footer, aside, style, noscript, script")):
-        if not (tag.name == "script" and str(tag.get("type", "")).startswith("math/")):
-            tag.decompose()
     parts = []
     images = []
     blobs = {}
@@ -94,7 +93,7 @@ def parse_html(binding, raw, config=None):
             dict(
                 type=kind,
                 text=text,
-                data=data or {},
+                data={**context(tag), **(data or {})},
                 location=Location(dom=dom_path(tag)),
                 uncertainty=uncertainty,
             )
@@ -159,67 +158,267 @@ def parse_html(binding, raw, config=None):
             ),
         )
 
+    def toc(tag):
+        # Explicit publisher markup, never a guess from a list of anchor links.
+        return (
+            tag.get("id") in {"markdown-toc", "toc", "table-of-contents"}
+            or bool(set(tag.get("class", ())) & {"toc", "table-of-contents"})
+            or tag.get("role") == "doc-toc"
+            or str(tag.get("aria-label", "")).casefold()
+            in {"table of contents", "inhaltsverzeichnis"}
+        )
+
+    def context(tag):
+        ancestors = list(reversed([tag, *tag.parents]))
+        data = {}
+        if any(toc(a) for a in ancestors if isinstance(a, Tag)):
+            data["content_role"] = "table_of_contents"
+        items = []
+        for li in ancestors:
+            if not isinstance(li, Tag) or li.name != "li":
+                continue
+            parent = li.parent
+            if not isinstance(parent, Tag) or parent.name not in {"ul", "ol"}:
+                continue
+            items.append(
+                dict(
+                    list_dom=dom_path(parent),
+                    item_dom=dom_path(li),
+                    item_index=sum(
+                        isinstance(s, Tag) and s.name == "li"
+                        for s in li.previous_siblings
+                    ),
+                    ordered=parent.name == "ol",
+                    value=li.get("value"),
+                )
+            )
+        if items:
+            data["list_context"] = items
+        return data
+
+    def language(tag):
+        for ancestor in [tag, *tag.parents]:
+            if not isinstance(ancestor, Tag):
+                continue
+            if ancestor.name in {"main", "body", "html"}:
+                break
+            for attr in ("data-language", "lang"):
+                if ancestor.get(attr):
+                    return ancestor[attr]
+            for cls in ancestor.get("class", ()):
+                if cls.startswith(("language-", "lang-")):
+                    return cls.split("-", 1)[1]
+        return None
+
+    ignored = {"footer", "aside", "style", "noscript", "title", "meta"}
+    inline_tags = {
+        "a",
+        "abbr",
+        "b",
+        "bdi",
+        "bdo",
+        "br",
+        "cite",
+        "code",
+        "del",
+        "em",
+        "i",
+        "img",
+        "ins",
+        "kbd",
+        "mark",
+        "math",
+        "q",
+        "s",
+        "samp",
+        "small",
+        "span",
+        "strong",
+        "sub",
+        "sup",
+        "time",
+        "u",
+        "var",
+        "wbr",
+        "script",
+    }
+
+    def hidden(tag):
+        return (
+            tag.name in ignored
+            or (tag.name == "nav" and not toc(tag))
+            or (
+                tag.name == "script"
+                and not str(tag.get("type", "")).startswith("math/")
+            )
+        )
+
+    def inline(nodes):
+        chunks = []
+
+        def visit(node):
+            if isinstance(node, Comment):
+                return
+            if isinstance(node, NavigableString):
+                chunks.append([re.sub(r"\s+", " ", str(node)), None])
+            elif isinstance(node, Tag) and not hidden(node):
+                if node.name == "code":
+                    chunks.append([node.get_text("", strip=False), node])
+                elif node.name == "br":
+                    chunks.append(["\n", None])
+                elif node.name != "img":
+                    for child in node.children:
+                        visit(child)
+
+        for node in nodes:
+            visit(node)
+        # Trim only ordinary HTML whitespace, never code's own whitespace.
+        while chunks and chunks[0][1] is None and not chunks[0][0].strip():
+            chunks.pop(0)
+        while chunks and chunks[-1][1] is None and not chunks[-1][0].strip():
+            chunks.pop()
+        if chunks and chunks[0][1] is None:
+            chunks[0][0] = chunks[0][0].lstrip()
+        if chunks and chunks[-1][1] is None:
+            chunks[-1][0] = chunks[-1][0].rstrip()
+        text = ""
+        spans = []
+        for value, code in chunks:
+            if code is not None:
+                spans.append(
+                    dict(
+                        start=len(text),
+                        end=len(text) + len(value),
+                        text=value,
+                        dom=dom_path(code),
+                        language=language(code),
+                    )
+                )
+            text += value
+        return text, spans
+
+    def references(node):
+        if not isinstance(node, Tag) or hidden(node):
+            return
+        if node.name == "img":
+            image(node)
+            return
+        if node.name == "a" and node.get("href"):
+            text, spans = inline(node.children)
+            emit(
+                node,
+                "link",
+                text,
+                dict(
+                    original_url=urljoin(binding.original_url, node["href"]),
+                    reference_only=True,
+                    inline_code=spans,
+                ),
+            )
+        elif node.name in {"math", "script"}:
+            emit(
+                node,
+                "math",
+                node.get_text(),
+                dict(source_markup=str(node), reference_only=True),
+                ("source notation; not semantically verified",),
+            )
+            return
+        for child in node.children:
+            references(child)
+
+    def flow(tag, kind="paragraph", data=None):
+        run = []
+        fragment = 0
+
+        def flush():
+            nonlocal fragment
+            if not run:
+                return
+            text, spans = inline(run)
+            if text:
+                emit(
+                    tag,
+                    kind,
+                    text,
+                    dict(
+                        **(data or {}),
+                        fragment_index=fragment,
+                        inline_code=spans,
+                    ),
+                )
+                fragment += 1
+                for expression in re.findall(r"\\\(.+?\\\)|\$\$.+?\$\$", text):
+                    emit(
+                        tag,
+                        "math",
+                        expression,
+                        dict(reference_only=True),
+                        ("literal notation candidate; not verified",),
+                    )
+            for child in run:
+                references(child)
+            run.clear()
+
+        for child in tag.children:
+            if isinstance(child, Tag) and (
+                child.name not in inline_tags
+                or child.name == "img"
+                or child.find(["pre", "ul", "ol", "p", "div", "figure", "img", "table"])
+                is not None
+            ):
+                flush()
+                walk(child)
+            else:
+                run.append(child)
+        flush()
+
     def walk(tag):
-        if not isinstance(tag, Tag):
+        if not isinstance(tag, Tag) or hidden(tag):
             return
         name = tag.name
         if name == "img":
             image(tag)
-            return
-        if name == "a" and tag.get("href"):
+        elif name == "a" and tag.get("href"):
+            text, spans = inline(tag.children)
             emit(
                 tag,
                 "link",
-                tag.get_text(" ", strip=True),
-                dict(original_url=urljoin(binding.original_url, tag["href"])),
+                text,
+                dict(
+                    original_url=urljoin(binding.original_url, tag["href"]),
+                    reference_only=True,
+                    inline_code=spans,
+                ),
             )
-        elif name in {"math", "script"}:
-            emit(
-                tag,
-                "math",
-                tag.get_text(),
-                dict(source_markup=str(tag)),
-                ("source notation; not semantically verified",),
-            )
-            return
-        elif name in {"pre"}:
+            flow(tag)
+        elif name == "pre":
             code = tag.find("code")
             emit(
                 tag,
                 "code",
-                tag.get_text(),
-                dict(language=(code or tag).get("class", [])),
+                tag.get_text("", strip=False),
+                dict(
+                    language=language(code or tag),
+                    language_classes=(code or tag).get("class", []),
+                ),
             )
-            return
         elif name in {"ul", "ol"}:
-
-            def items(node):
-                return [
-                    dict(
-                        text=" ".join(
-                            str(c)
-                            if not isinstance(c, Tag)
-                            else c.get_text(" ", strip=True)
-                            for c in li.contents
-                            if not isinstance(c, Tag) or c.name not in {"ul", "ol"}
-                        ).strip(),
-                        children=[
-                            dict(ordered=sub.name == "ol", items=items(sub))
-                            for sub in li.find_all(["ul", "ol"], recursive=False)
-                        ],
-                    )
-                    for li in node.find_all("li", recursive=False)
-                ]
-
             emit(
                 tag,
                 "list",
-                tag.get_text(" ", strip=True),
-                dict(ordered=name == "ol", items=items(tag)),
+                data=dict(
+                    ordered=name == "ol",
+                    start=tag.get("start"),
+                    reversed=tag.has_attr("reversed"),
+                    item_doms=[
+                        dom_path(li) for li in tag.find_all("li", recursive=False)
+                    ],
+                ),
             )
-            for child in tag.find_all(["a", "img", "math", "pre"]):
-                walk(child)
-            return
+            for child in tag.children:
+                if isinstance(child, Tag):
+                    walk(child)
         elif name == "table":
             rows = [
                 [
@@ -229,33 +428,32 @@ def parse_html(binding, raw, config=None):
                 for tr in tag.find_all("tr")
             ]
             emit(
-                tag,
-                "table",
-                "\n".join("\t".join(row) for row in rows),
-                data=dict(rows=rows),
+                tag, "table", "\n".join("\t".join(row) for row in rows), dict(rows=rows)
             )
-            for child in tag.find_all(["a", "img", "math"]):
-                walk(child)
-            return
+            references(tag)
         elif re.fullmatch(r"h[1-6]", name or ""):
-            emit(
-                tag, "heading", tag.get_text(" ", strip=True), dict(level=int(name[1]))
-            )
-        elif name in {"p", "figcaption", "blockquote", "dt", "dd"}:
-            text = tag.get_text(" ", strip=True)
-            if text:
-                emit(tag, "paragraph", text)
-                for expression in re.findall(r"\\\(.+?\\\)|\$\$.+?\$\$", text):
-                    emit(
-                        tag,
-                        "math",
-                        expression,
-                        uncertainty=("literal notation candidate; not verified",),
-                    )
+            flow(tag, "heading", dict(level=int(name[1])))
+        elif name in inline_tags:
+            flow(tag)
         elif (
             not tag.find(True, recursive=False)
             and tag.get_text(strip=True)
-            and name not in {"title", "meta", "br", "hr"}
+            and name
+            not in {
+                "main",
+                "article",
+                "body",
+                "div",
+                "section",
+                "li",
+                "p",
+                "figcaption",
+                "blockquote",
+                "dt",
+                "dd",
+                "header",
+                "hr",
+            }
         ):
             emit(
                 tag,
@@ -264,21 +462,8 @@ def parse_html(binding, raw, config=None):
                 dict(tag=name),
                 ("unclassified HTML element",),
             )
-            return
-        for child in tag.children:
-            if isinstance(child, Tag) and not (name == "pre" and child.name == "code"):
-                # inline text already belongs to its containing semantic block
-                if name in {
-                    "p",
-                    "figcaption",
-                    "blockquote",
-                    "dt",
-                    "dd",
-                } and child.name not in {"a", "img", "math", "script"}:
-                    for nested in child.find_all(["a", "img", "math", "script"]):
-                        walk(nested)
-                else:
-                    walk(child)
+        else:
+            flow(tag)
 
     walk(main)
     return build_document(

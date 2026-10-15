@@ -155,3 +155,5 @@ flowchart LR
 ```
 
 Material mapping does not execute Knowledge extraction or upload vectors.
+
+HTML-Notes-Normalisierung v2: [Evaluation, Verträge und kontrolliertes Reprocessing](evaluation/html_notes_v2.md).
