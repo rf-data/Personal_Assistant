@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "structural_errors": [],
+  "native_checks": [
+    {
+      "check": "check",
+      "tool": "promtool",
+      "status": "not_run",
+      "reason": "not installed"
+    },
+    {
+      "check": "test",
+      "tool": "promtool",
+      "status": "not_run",
+      "reason": "not installed"
+    },
+    {
+      "check": "check-config",
+      "tool": "amtool",
+      "status": "not_run",
+      "reason": "not installed"
+    },
+    {
+      "check": "compose",
+      "tool": "docker",
+      "status": "passed",
+      "exit_code": 0
+    }
+  ],
+  "limitations": [
+    "Structural checks do not parse PromQL or execute Grafana.",
+    "No container, image pull, secret, live service or productive data access."
+  ]
+}

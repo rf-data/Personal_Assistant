@@ -221,3 +221,25 @@ company_research/*.json
 **/prio_list.md
 **/test.py
 src/prio_list.md
+
+# Reviewed monitoring configuration only. Runtime data, targets and secrets stay ignored.
+!/monitoring/grafana/
+!/monitoring/grafana/provisioning/
+!/monitoring/grafana/provisioning/datasources/
+!/monitoring/grafana/provisioning/datasources/prometheus.yaml
+!/monitoring/grafana/provisioning/dashboards/
+!/monitoring/grafana/provisioning/dashboards/default.yaml
+!/monitoring/grafana/dashboards/
+!/monitoring/grafana/dashboards/pa-system-v1.json
+!/monitoring/grafana/dashboards/pa-pipeline-v1.json
+!/monitoring/prometheus/
+!/monitoring/prometheus/rules/
+!/monitoring/prometheus/rules/recording.yaml
+!/monitoring/prometheus/targets/
+!/monitoring/prometheus/targets/README.md
+!/monitoring/prometheus/target-examples/
+!/monitoring/prometheus/target-examples/host.json.example
+!/monitoring/prometheus/target-examples/containers.json.example
+!/monitoring/prometheus/target-examples/pipeline.json.example
+!/monitoring/pipeline-metrics.v1.json
+!/docs/monitoring/validation.example.json

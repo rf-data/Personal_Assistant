@@ -1,0 +1,7 @@
+groups:
+- name: pipeline_recording
+  rules:
+  - record: personal_assistant:jobs_terminal:rate5m
+    expr: sum by (process, outcome) (rate(personal_assistant_jobs_completed_total[5m]))
+  - record: personal_assistant:job_duration:p95_5m
+    expr: histogram_quantile(0.95, sum by (process, le) (rate(personal_assistant_job_duration_seconds_bucket[5m])))

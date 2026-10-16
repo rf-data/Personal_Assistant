@@ -1,31 +1,43 @@
 global:
   scrape_interval: 15s
+  scrape_timeout: 10s
   evaluation_interval: 15s
-
 alerting:
   alertmanagers:
-    - static_configs:
-      - targets:
-        - "alertmanager: 9093"
-
+  - static_configs:
+    - targets:
+      - alert_manager:9093
 rule_files:
-  - rules/*.yaml
-  - rules/*.yml
-
+- /etc/prometheus/rules/*.yaml
+- /etc/prometheus/rules/*.yml
 scrape_configs:
-  - job_name: prometheus
-    static_configs:
-      - targets: ['localhost:9090']
-
-  # - job_name: 'fastapi'
-  #   static_configs:
-  #     - targets: ['fastapi:8001']
-
-  - job_name: 'node_exporter'
-    static_configs:
-      - targets: ['node-exporter:9100']
-
-  - job_name: 'cAdvisor'
-    static_configs:
-      - targets:
-        - cAdvisor:8080
+- job_name: prometheus
+  static_configs:
+  - targets:
+    - localhost:9090
+- job_name: alertmanager
+  static_configs:
+  - targets:
+    - alert_manager:9093
+- job_name: node_exporter
+  file_sd_configs:
+  - files:
+    - /etc/prometheus/targets/host*.json
+- job_name: cAdvisor
+  file_sd_configs:
+  - files:
+    - /etc/prometheus/targets/containers*.json
+  sample_limit: 20000
+- job_name: personal_assistant_workers
+  file_sd_configs:
+  - files:
+    - /etc/prometheus/targets/pipeline*.json
+  sample_limit: 5000
+  target_limit: 32
+  body_size_limit: 2MB
+  honor_labels: false
+  metric_relabel_configs:
+  - source_labels:
+    - __name__
+    regex: personal_assistant_.+
+    action: keep
