@@ -1,0 +1,152 @@
+{
+  "source_id": "synthetic-1-notes",
+  "course_id": "synthetic-calculus",
+  "lecture_id": "lecture1",
+  "language": "en",
+  "transcript_url": "https://example.invalid/synthetic/1/notes",
+  "media_id": "synthetic-1",
+  "transcript_provenance": {
+    "transcript_source": "manual_subtitle",
+    "source_url": "https://example.invalid/synthetic/1/notes",
+    "language": "en",
+    "media_id": "synthetic-1",
+    "acquired_at": "2026-01-01T00:00:00",
+    "media_format": "srt"
+  },
+  "chunks": [
+    {
+      "analysis": {
+        "chunk_id": "chunk0",
+        "relevant": true,
+        "topic": "Synthetic polynomials"
+      },
+      "extraction": {
+        "chunk_id": "chunk0",
+        "statements": [
+          {
+            "statement_id": "S1",
+            "text": "The function is continuous on the closed interval.",
+            "semantic_type": "statement",
+            "segment_ids": [
+              0
+            ],
+            "start": 0,
+            "end": 10,
+            "source": "transcript",
+            "llm_confidence": 0.8
+          },
+          {
+            "statement_id": "S2",
+            "text": "The function is not continuous on the closed interval.",
+            "semantic_type": "statement",
+            "segment_ids": [
+              0
+            ],
+            "start": 0,
+            "end": 10,
+            "source": "transcript",
+            "llm_confidence": 0.8
+          },
+          {
+            "statement_id": "S3",
+            "text": "x = a + b",
+            "semantic_type": "statement",
+            "segment_ids": [
+              0
+            ],
+            "start": 0,
+            "end": 10,
+            "source": "transcript",
+            "llm_confidence": 0.8
+          },
+          {
+            "statement_id": "S4",
+            "text": "x = a - b",
+            "semantic_type": "statement",
+            "segment_ids": [
+              0
+            ],
+            "start": 0,
+            "end": 10,
+            "source": "transcript",
+            "llm_confidence": 0.8
+          }
+        ],
+        "formulas": [
+          {
+            "expression_id": "F1",
+            "plain_text": "x^2 + y^2 = 1",
+            "latex": "x^2 + y^2 = 1",
+            "expression_type": "equation",
+            "segment_ids": [
+              0
+            ],
+            "start": 0,
+            "end": 10,
+            "source": "transcript",
+            "verification_status": "verified",
+            "verification_reason": "Synthetic reviewer label",
+            "llm_confidence": 0.8
+          },
+          {
+            "expression_id": "F2",
+            "plain_text": "x^3 + y^2 = 1",
+            "latex": "x^3 + y^2 = 1",
+            "expression_type": "equation",
+            "segment_ids": [
+              0
+            ],
+            "start": 0,
+            "end": 10,
+            "source": "transcript",
+            "verification_status": "verified",
+            "verification_reason": "Synthetic reviewer label",
+            "llm_confidence": 0.8
+          }
+        ]
+      }
+    },
+    {
+      "analysis": {
+        "chunk_id": "chunk1",
+        "relevant": true,
+        "topic": "Synthetic polynomials"
+      },
+      "extraction": {
+        "chunk_id": "chunk1",
+        "statements": [
+          {
+            "statement_id": "S1",
+            "text": "The function is continuous on the closed interval.",
+            "semantic_type": "statement",
+            "segment_ids": [
+              1
+            ],
+            "start": 15,
+            "end": 25,
+            "source": "transcript",
+            "llm_confidence": 0.8
+          }
+        ],
+        "formulas": [
+          {
+            "expression_id": "F1",
+            "plain_text": "x^2 + y^2 = 1",
+            "latex": "x^2 + y^2 = 1",
+            "expression_type": "equation",
+            "segment_ids": [
+              1
+            ],
+            "start": 15,
+            "end": 25,
+            "source": "transcript",
+            "verification_status": "rejected",
+            "verification_reason": "Synthetic reviewer label",
+            "llm_confidence": 0.8
+          }
+        ]
+      }
+    }
+  ],
+  "visual_candidates": []
+}
