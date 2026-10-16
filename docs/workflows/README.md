@@ -1,5 +1,13 @@
 # CS50-Offline-Workflows (C18, Vertrag v1)
 
+C20-B stellt die vorhandenen Services jetzt zusätzlich über den
+[versionierten HTTP-Vertrag](http.md) bereit: schreibfreie Stufenprüfung,
+bestätigtes Execute/Resume, Status, Run-Historie und ursprüngliche Run-Reports.
+[Vollständige synthetische HTTP-Beispiele](example-http.v1.json),
+[Offline-Validierung und Grenzen](http_validation.md).
+Die Engine, Queue, PDF-Parser und Stageverträge bleiben bestehen; Workflows sind
+weiterhin standardmäßig deaktiviert. Es gibt keine UI-Änderungen in diesem Paket.
+
 Die [Architekturentscheidung](architecture.md) beschreibt den untersuchten Bestand
 und die Integration in C16. Dieses Paket orchestriert vorhandene Runner für
 maximal drei ausdrücklich ausgewählte lokale Materialien. Es ruft keine Provider

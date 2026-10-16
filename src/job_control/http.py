@@ -52,7 +52,63 @@ class Application:
             if any(len(v) != 1 for v in query.values()):
                 raise ValueError("Duplicate query parameters")
             query = {k: v[0] for k, v in query.items()}
-            if method == "GET" and route[2:] == ["processes"]:
+            if route[2:3] == ["workflows"]:
+                from src.workflows.http import WorkflowHTTP
+
+                workflows = WorkflowHTTP(self.controller)
+                action = route[3] if len(route) == 4 else None
+                if method == "GET" and len(route) == 6 and route[4] == "runs":
+                    if value or set(query) != {"source_ref"}:
+                        raise ValueError("Run report requires only source_ref")
+                    result = workflows.run_report(
+                        actor, route[3], route[5], query["source_ref"]
+                    )
+                elif (
+                    method == "GET"
+                    and action == "capabilities"
+                    and "source_ref" not in query
+                ):
+                    if query or value:
+                        raise ValueError("Capabilities takes no parameters")
+                    result = workflows.capabilities()
+                elif method == "POST" and action in {"inspect", "execute", "resume"}:
+                    if query:
+                        raise ValueError("Workflow POST takes no query")
+                    if action == "inspect":
+                        result = workflows.read(actor, value)
+                    else:
+                        result = workflows.submit(
+                            actor,
+                            value,
+                            headers.get("Idempotency-Key"),
+                            resume=action == "resume",
+                        )
+                elif method == "GET" and action:
+                    if (
+                        value
+                        or "source_ref" not in query
+                        or set(query) - {"source_ref", "offset", "limit"}
+                    ):
+                        raise ValueError("Invalid workflow status parameters")
+                    result = workflows.read(
+                        actor,
+                        dict(workflow_id=action, source_ref=query["source_ref"]),
+                        offset=int(query.get("offset", 0)),
+                        limit=int(query.get("limit", 10)),
+                    )
+                else:
+                    raise KeyError("Unknown workflow method/route")
+                data = encode(result)
+                if len(data) > 524288:
+                    raise Unavailable("Workflow response limit")
+                return (
+                    202
+                    if method == "POST" and action in {"execute", "resume"}
+                    else 200,
+                    data,
+                    "application/json",
+                )
+            elif method == "GET" and route[2:] == ["processes"]:
                 result = self.controller.processes(actor)
             elif method == "GET" and route[2:] == ["capabilities"]:
                 result = {

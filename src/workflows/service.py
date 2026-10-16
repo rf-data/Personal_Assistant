@@ -1,11 +1,14 @@
 """Workflow lifecycle delegates every actual run/cancel to the existing C16 queue."""
 
 import sqlite3
+from contextlib import closing
 from urllib.parse import quote
 
 from src.job_control.catalog import safe_path
 from src.job_control.controller import Controller
 from src.job_control.models import TERMINAL, Job, fingerprint
+from src.job_control.registry import registry_document
+from src.job_control.store import Conflict
 from src.workflows.definition import prepare
 from src.workflows.engine import preview, sealed
 from src.workflows.models import VALID
@@ -16,8 +19,10 @@ def jobs(settings):
     path = safe_path(settings.root, "jobs.sqlite3")
     if not path.exists():
         return ()
-    with sqlite3.connect(
-        "file:" + quote(str(path), safe="/") + "?mode=ro", uri=True, timeout=2
+    with closing(
+        sqlite3.connect(
+            "file:" + quote(str(path), safe="/") + "?mode=ro", uri=True, timeout=2
+        )
     ) as db:
         return tuple(
             Job.model_validate_json(r[0])
@@ -44,6 +49,8 @@ def inspect(settings, actor, source_ref, workflow_id):
     entry = settings.catalog.get(source_ref)
     if entry is None or entry.kind != "workflow_bundle":
         raise ValueError("Approved workflow bundle required")
+    if not set(entry.course_ids) & set(actor.courses):
+        raise PermissionError("Course denied")
     prepared = prepare(entry, strict=False)
     if prepared.definition.course_id not in actor.courses:
         raise PermissionError("Course denied")
@@ -55,6 +62,8 @@ def inspect(settings, actor, source_ref, workflow_id):
         raise ValueError("Stable workflow identity/source scope conflict")
     report = preview(prepared, settings.root, workflow_id, source_ref, actor, previous)
     current = latest(settings, actor, workflow_id)
+    if current and current.input_refs != (source_ref,):
+        raise ValueError("Stable workflow source scope conflict")
     if current and current.status not in TERMINAL:
         # Read only; no reconciliation or process control in preview/status.
         active = (
@@ -129,10 +138,74 @@ def inspect(settings, actor, source_ref, workflow_id):
     return report, prepared, current
 
 
-def submit(settings, actor, source_ref, workflow_id, *, resume=False):
+def preview_id(settings, actor, source_ref, report, prepared, current):
+    """Bind confirmation to C18 decisions, approved bytes and execution policy."""
+    return fingerprint(
+        dict(
+            protocol="personal_assistant_workflows_v1",
+            subject=actor.subject,
+            role=actor.role,
+            courses=actor.courses,
+            report=report.model_dump(mode="json"),
+            current=current.model_dump(mode="json") if current else None,
+            catalog=settings.catalog[source_ref].model_dump(mode="json"),
+            definition=prepared.definition.model_dump(mode="json"),
+            input_errors=prepared.input_errors,
+            files={
+                name: fingerprint_bytes(data) for name, data in prepared.files.items()
+            },
+            policy={
+                name: getattr(settings, name)
+                for name in (
+                    "execution_enabled",
+                    "workflows_enabled",
+                    "pdf_enabled",
+                    "max_jobs",
+                    "max_queued",
+                    "max_parallel",
+                    "worker_ttl",
+                )
+            },
+            registry=registry_document(workflows=True, pdf=True),
+        )
+    )
+
+
+def fingerprint_bytes(data):
+    import hashlib
+
+    return hashlib.sha256(data).hexdigest()
+
+
+def request_key(actor, workflow_id, previous):
+    return (
+        "workflow_"
+        + fingerprint(
+            dict(owner=actor.subject, workflow_id=workflow_id, previous=previous)
+        )[:48]
+    )
+
+
+def submit(
+    settings,
+    actor,
+    source_ref,
+    workflow_id,
+    *,
+    resume=False,
+    expected_preview_id=None,
+    expected_run_id=None,
+):
     if actor.role != "operator" or not settings.workflows_enabled:
         raise PermissionError("Explicit workflow/operator approval required")
     report, prepared, current = inspect(settings, actor, source_ref, workflow_id)
+    if expected_preview_id is not None:
+        if (current.job_id if current else None) != expected_run_id or preview_id(
+            settings, actor, source_ref, report, prepared, current
+        ) != expected_preview_id:
+            raise Conflict("Workflow preview/run changed")
+        if prepared.input_errors:
+            raise ValueError("Approved input hashes/files are missing or invalid")
     if current and current.status not in TERMINAL:
         return current
     if current and not resume:
@@ -159,12 +232,7 @@ def submit(settings, actor, source_ref, workflow_id, *, resume=False):
             ),
         ),
     )
-    key = (
-        "workflow_"
-        + fingerprint(
-            dict(owner=actor.subject, workflow_id=workflow_id, previous=previous)
-        )[:48]
-    )
+    key = request_key(actor, workflow_id, previous)
     return controller.create(
         actor, dict(preview=checked.model_dump(mode="json"), confirmed=True), key
     )
