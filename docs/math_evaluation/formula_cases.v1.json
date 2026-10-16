@@ -1,0 +1,688 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "schema_version": 1,
+      "case_id": "M01",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G01",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G01",
+      "gold_origin": "synthetic",
+      "reference_formula": "(a+b)^2=a^2+2ab+b^2",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "(a+b)^2=a^2+2ab+b^2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M02",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G01",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G01",
+      "gold_origin": "synthetic",
+      "reference_formula": "(a+b)^2=a^2+2ab+b^2",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": " $ (a + b)^2 = a^2 + 2 a b + b^2 $ ",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M03",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G01",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G01",
+      "gold_origin": "synthetic",
+      "reference_formula": "(a+b)^2=a^2+2ab+b^2",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "a^2+b^2+2ab=(a+b)^2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M04",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G01",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G01",
+      "gold_origin": "synthetic",
+      "reference_formula": "(a+b)^2=a^2+2ab+b^2",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "(a+b)^2=a^2-2ab+b^2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M05",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G02",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G02",
+      "gold_origin": "synthetic",
+      "reference_formula": "(a-b)^2=a^2-2ab+b^2",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "(a-b)^2=a^2-2ab+b^2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M06",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G02",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G02",
+      "gold_origin": "synthetic",
+      "reference_formula": "(a-b)^2=a^2-2ab+b^2",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "(a-b)^2=a^3-2ab+b^2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M07",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G03",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G03",
+      "gold_origin": "synthetic",
+      "reference_formula": "(a+b)(a-b)=a^2-b^2",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "(a+b)(a-b)=a^2-b^2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M08",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G04",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G04",
+      "gold_origin": "synthetic",
+      "reference_formula": "2x+4=0",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x=-2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M09",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G04",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G04",
+      "gold_origin": "synthetic",
+      "reference_formula": "2x+4=0",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x=2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M10",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G05",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G05",
+      "gold_origin": "synthetic",
+      "reference_formula": "x^2-5x+6=0",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "(x-2)(x-3)=0",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M11",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G05",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G05",
+      "gold_origin": "synthetic",
+      "reference_formula": "x^2-5x+6=0",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x^2-6x+5=0",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M12",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G06",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G06",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\frac{x+1}{2}",
+      "reference_status": "confirmed",
+      "reference_parts": [
+        "x+1"
+      ],
+      "predicted_formula": "(x+1)/2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M13",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G06",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G06",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\frac{x+1}{2}",
+      "reference_status": "confirmed",
+      "reference_parts": [
+        "x+1"
+      ],
+      "predicted_formula": "\\frac{x-1}{2}",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M14",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G07",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G07",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\frac{x+1}{x-1}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "\\frac{x+1}{x-1}",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M15",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G07",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G07",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\frac{x+1}{x-1}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "1",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M16",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G08",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G08",
+      "gold_origin": "synthetic",
+      "reference_formula": "x^2+y^2=z^2",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x^3+y^2=z^2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M17",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G09",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G09",
+      "gold_origin": "synthetic",
+      "reference_formula": "x^3",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x^2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M18",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G10",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G10",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\sqrt{16}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "4",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M19",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G11",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G11",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\sqrt{x^2}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M20",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G12",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G12",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\sum_{i=1}^{n}i=\\frac{n*(n+1)}{2}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "\\sum_{i=1}^{n}i=\\frac{n*(n+1)}{2}",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M21",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G12",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G12",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\sum_{i=1}^{n}i=\\frac{n*(n+1)}{2}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "\\sum_{i=1}^{m}i=\\frac{n*(n+1)}{2}",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M22",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G13",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G13",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\int_{0}^{1}x^2\\,dx=\\frac{1}{3}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "\\int_{0}^{1}x^2\\,dx=\\frac{1}{3}",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M23",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G13",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G13",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\int_{0}^{1}x^2\\,dx=\\frac{1}{3}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "\\frac{1}{3}",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M24",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G14",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G14",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\vec{a}+\\vec{b}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "\\vec{a}+\\vec{b}",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M25",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G14",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G14",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\vec{a}+\\vec{b}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "a+b",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M26",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G15",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G15",
+      "gold_origin": "synthetic",
+      "reference_formula": "x_{1}+x_{2}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x_1+x_2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M27",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G15",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G15",
+      "gold_origin": "synthetic",
+      "reference_formula": "x_{1}+x_{2}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x_1+x_3",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M28",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G16",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G16",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\alpha+\\beta",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "α + β",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M29",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G17",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G17",
+      "gold_origin": "synthetic",
+      "reference_formula": "2x+1",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "3x+1",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M30",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G18",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G18",
+      "gold_origin": "synthetic",
+      "reference_formula": "x\\cdot y",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x×y",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M31",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G19",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G19",
+      "gold_origin": "synthetic",
+      "reference_formula": null,
+      "reference_status": "absent",
+      "reference_parts": [],
+      "predicted_formula": null,
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M32",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G19",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G19",
+      "gold_origin": "synthetic",
+      "reference_formula": null,
+      "reference_status": "absent",
+      "reference_parts": [],
+      "predicted_formula": "x+y",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M33",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G01",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G01",
+      "gold_origin": "synthetic",
+      "reference_formula": "(a+b)^2=a^2+2ab+b^2",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": null,
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M34",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G20",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G20",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\ell",
+      "reference_status": "ambiguous",
+      "reference_parts": [],
+      "predicted_formula": "1",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M35",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G21",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G21",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\begin{matrix}1&0\\\\0&1\\end{matrix}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "\\begin{matrix}1&0\\\\0&1\\end{matrix}",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M36",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G22",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G22",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\sin{x}",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "\\sin{x}",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M37",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G06",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G06",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\frac{x+1}{2}",
+      "reference_status": "confirmed",
+      "reference_parts": [
+        "x+1"
+      ],
+      "predicted_formula": "\\frac{x+1}{2",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M38",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G06",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G06",
+      "gold_origin": "synthetic",
+      "reference_formula": "\\frac{x+1}{2}",
+      "reference_status": "confirmed",
+      "reference_parts": [
+        "x+1"
+      ],
+      "predicted_formula": "x+1",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M39",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G23",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G23",
+      "gold_origin": "synthetic",
+      "reference_formula": "(a+b)^2",
+      "reference_status": "confirmed",
+      "reference_parts": [
+        "a+b"
+      ],
+      "predicted_formula": "a+b",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M40",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G24",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G24",
+      "gold_origin": "synthetic",
+      "reference_formula": "x+1",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x-1",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M41",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G25",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G25",
+      "gold_origin": "synthetic",
+      "reference_formula": "<math><mi>x</mi></math>",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "<math><mi>x</mi></math>",
+      "formula_format": "mathml",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case_id": "M42",
+      "source_document_id": "synthetic:math-reference-sheet-v1",
+      "section": "G24",
+      "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G24",
+      "gold_origin": "synthetic",
+      "reference_formula": "x+1",
+      "reference_status": "confirmed",
+      "reference_parts": [],
+      "predicted_formula": "x+1",
+      "formula_format": "latex",
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ],
+      "prediction_ambiguous": true
+    }
+  ]
+}

@@ -162,3 +162,6 @@ PDF-v2: [Code-/Matheklassifizierung, Evaluation und sicheres Reprocessing](evalu
 
 C10: [Offline Material Quality Gate, Lecture-Handoff und CLI](contracts/material_quality.md),
 [Offline-Prüfbericht und Grenzen](evaluation/material_quality.md).
+
+C11: [Offline-Evaluation mathematischer Notation und Formelrekonstruktion](../math_evaluation/README.md)
+mit unabhängigem synthetischem Goldset und optionaler isolierter Polynomprüfung.
