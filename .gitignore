@@ -243,3 +243,9 @@ src/prio_list.md
 !/monitoring/prometheus/target-examples/pipeline.json.example
 !/monitoring/pipeline-metrics.v1.json
 !/docs/monitoring/validation.example.json
+
+# Explicit C16 contract/demo references; private controller workspaces stay external.
+!/docs/job_control/contract.v1.json
+!/docs/job_control/example-run.v1.json
+!/tests/fixtures/job_control/c15-metrics-reference.v1.json
+!/src/job_control/__init__.py
