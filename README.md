@@ -192,3 +192,9 @@ python -m scripts.job_control_demo --output /tmp/neue-c16-demo
 
 Dies erstellt neue synthetische Fixtures außerhalb des Repositorys und führt
 beide echten Offline-Adapter aus. Keine produktiven Daten oder Server verwenden.
+
+## CS50-Offline-Workflows (C18)
+
+[Workflow-Verträge, CLI, Resume und Beispielreport](docs/workflows/README.md).
+Optionaler C16-Prozess für lokale HTML-/Code-Materialien bis zum bestehenden
+Lecture-Material-Handoff. Im Default deaktiviert; keine Streamlitänderung.

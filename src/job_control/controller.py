@@ -15,6 +15,21 @@ class AuthenticationError(PermissionError):
     pass
 
 
+def authenticate(settings, authorization):
+    if not isinstance(authorization, str) or not re.fullmatch(
+        r"Bearer [A-Za-z0-9_-]{32,256}", authorization
+    ):
+        raise AuthenticationError("Authentication required")
+    digest = hashlib.sha256(authorization[7:].encode()).hexdigest()
+    actor = None
+    for identity in settings.identities:
+        if hmac.compare_digest(digest, identity.token_sha256):
+            actor = identity
+    if actor is None:
+        raise AuthenticationError("Authentication required")
+    return actor
+
+
 class Controller:
     def __init__(self, settings):
         self.settings = settings
@@ -22,18 +37,7 @@ class Controller:
         self.indexes = prepare_indexes(settings)
 
     def authenticate(self, authorization):
-        if not isinstance(authorization, str) or not re.fullmatch(
-            r"Bearer [A-Za-z0-9_-]{32,256}", authorization
-        ):
-            raise AuthenticationError("Authentication required")
-        digest = hashlib.sha256(authorization[7:].encode()).hexdigest()
-        actor = None
-        for identity in self.settings.identities:
-            if hmac.compare_digest(digest, identity.token_sha256):
-                actor = identity
-        if actor is None:
-            raise AuthenticationError("Authentication required")
-        return actor
+        return authenticate(self.settings, authorization)
 
     @staticmethod
     def operator(actor):
@@ -196,7 +200,7 @@ class Controller:
 
     def processes(self, actor):
         return {
-            **registry_document(),
+            **registry_document(workflows=self.settings.workflows_enabled),
             "worker_available": self.store.worker_available(self.settings.worker_ttl),
             "execution_enabled": self.settings.execution_enabled,
             "courses": list(actor.courses),

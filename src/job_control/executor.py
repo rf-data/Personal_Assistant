@@ -126,6 +126,10 @@ class Executor:
             entry = self.settings.catalog.get(job.input_refs[0])
             if (
                 identity is None
+                or (
+                    job.process_id == "cs50_offline_workflow"
+                    and not self.settings.workflows_enabled
+                )
                 or identity.role != "operator"
                 or job.parameters["course_id"] not in identity.courses
                 or entry != self.store.entry(job.job_id)

@@ -44,3 +44,12 @@ python -m scripts.job_control api --config /tmp/neue-c16-demo/config.json --port
 Nur der explizite worker-Befehl startet Ausführungen; der API-Prozess tut dies
 nie. Bindadresse ist fest 127.0.0.1. Ohne Identitäten sind alle Endpunkte gesperrt,
 ohne execution_enabled sind neue Jobs/Starts deaktiviert.
+
+## Optionaler Workflowprozess (C18)
+
+`workflows_enabled=true` ergänzt ausdrücklich den Prozess
+`cs50_offline_workflow`; der Default enthält weiterhin die zwei Einzeladapter.
+Der Workflow verwendet dieselbe Queue, Jobhistorie, Guardian- und Cancelkontrolle.
+[Verträge, separate Konfiguration und CLI](../workflows/README.md).
+C17-UI-DTOs unterstützen diesen optionalen Prozess bisher nicht; dafür ein eigenes
+C16-Profil/Workspace verwenden.

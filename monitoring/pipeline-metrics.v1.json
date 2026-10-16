@@ -28,6 +28,7 @@
     "process": [
       "audio_transcription",
       "course_discovery",
+      "cs50_offline_workflow",
       "knowledge_consolidation",
       "knowledge_extraction",
       "material_download",
@@ -40,6 +41,7 @@
     "stage": [
       "audio_transcription",
       "course_discovery",
+      "cs50_offline_workflow",
       "knowledge_consolidation",
       "knowledge_extraction",
       "material_download",

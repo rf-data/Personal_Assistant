@@ -40,7 +40,7 @@ class Identity(Principal):
 
 
 class CatalogEntry(Contract):
-    kind: Literal["manifest", "material_bundle"]
+    kind: Literal["manifest", "material_bundle", "workflow_bundle"]
     root: Path
     files: dict[str, Sha] = Field(min_length=1, max_length=128)
     roles: dict[str, str]
@@ -60,6 +60,8 @@ class CatalogEntry(Contract):
         expected = (
             {"manifest"}
             if self.kind == "manifest"
+            else {"manifest", "workflow"}
+            if self.kind == "workflow_bundle"
             else {"plan", "normalized", "receipt", "raw"}
         )
         if set(self.roles) != expected or not set(self.roles.values()) <= set(
@@ -77,6 +79,7 @@ class Settings(Contract):
     catalog: dict[Identifier, CatalogEntry] = Field(default_factory=dict, max_length=32)
     identities: tuple[Identity, ...] = ()
     execution_enabled: bool = Field(default=False, strict=True)
+    workflows_enabled: bool = Field(default=False, strict=True)
     max_jobs: int = Field(default=100, ge=1, le=1000)
     max_queued: int = Field(default=8, ge=1, le=32)
     max_parallel: int = Field(default=1, ge=1, le=2)
@@ -126,6 +129,14 @@ class QualityParams(Contract):
     output_name: Identifier = "quality-report"
 
 
+class WorkflowParams(Contract):
+    source_ref: Identifier
+    course_id: Course
+    workflow_id: Identifier
+    previous_run_id: Identifier | None = None
+    output_name: Identifier = "workflow-report"
+
+
 class PreviewRequest(Contract):
     schema_version: Literal[1] = 1
     process_id: Identifier
@@ -159,7 +170,7 @@ class Artifact(Contract):
     schema_version: Literal[1] = 1
     artifact_id: Identifier
     job_id: Identifier
-    kind: Literal["material_plan", "quality_report"]
+    kind: Literal["material_plan", "quality_report", "workflow_report"]
     size_bytes: int = Field(ge=0)
     sha256: Sha
     created_at: str

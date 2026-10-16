@@ -1,6 +1,6 @@
 """Pull-only SQLite aggregates following the published C15 contract, if present."""
 
-from src.job_control.registry import REGISTRY
+from src.job_control.registry import REGISTRY, WORKFLOW_PROCESS
 
 BUCKETS = (1, 5, 15, 60, 300, 900, 1800, 3600)
 
@@ -23,7 +23,15 @@ def render_metrics(store, ttl, courses=None):
             "workers_available", int(store.worker_available(ttl)), worker_pool="default"
         )
     queues = []
-    for process in REGISTRY:
+    processes = (
+        *REGISTRY,
+        *(
+            (WORKFLOW_PROCESS.process_id,)
+            if any(j.process_id == WORKFLOW_PROCESS.process_id for j in jobs)
+            else ()
+        ),
+    )
+    for process in processes:
         labels = dict(process=process, worker_pool="default")
         attempts = [j for j in jobs if j.process_id == process and j.started_at]
         sample("jobs_started_total", len(attempts), **labels)

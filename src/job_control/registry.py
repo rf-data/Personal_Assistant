@@ -1,8 +1,8 @@
-"""Only two reviewed fixed entry points. No command/path parameters."""
+"""Two default entries and one opt-in workflow. No command/path parameters."""
 
 from dataclasses import dataclass
 
-from src.job_control.models import PlanningParams, QualityParams
+from src.job_control.models import PlanningParams, QualityParams, WorkflowParams
 
 
 @dataclass(frozen=True)
@@ -51,14 +51,26 @@ DISABLED = (
     "knowledge_consolidation",
 )
 
+WORKFLOW_PROCESS = Process(
+    "cs50_offline_workflow",
+    WorkflowParams,
+    "workflow_bundle",
+    "workflow_report",
+    "src.workflows.engine.run",
+    timeout_seconds=90,
+    cpu_seconds=60,
+)
+
 
 def process_for(process_id):
+    if process_id == WORKFLOW_PROCESS.process_id:
+        return WORKFLOW_PROCESS
     if process_id not in REGISTRY:
         raise ValueError("Process is not enabled")
     return REGISTRY[process_id]
 
 
-def registry_document():
+def registry_document(*, workflows=False):
     return {
         "schema_version": 1,
         "processes": [
@@ -79,7 +91,7 @@ def registry_document():
                 required_role="operator",
                 runner=p.reviewed_runner,
             )
-            for p in REGISTRY.values()
+            for p in (*REGISTRY.values(), *((WORKFLOW_PROCESS,) if workflows else ()))
         ],
         "disabled_processes": list(DISABLED),
     }

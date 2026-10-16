@@ -28,7 +28,8 @@
         "kind": {
           "enum": [
             "material_plan",
-            "quality_report"
+            "quality_report",
+            "workflow_report"
           ],
           "title": "Kind",
           "type": "string"
@@ -92,7 +93,8 @@
             "kind": {
               "enum": [
                 "material_plan",
-                "quality_report"
+                "quality_report",
+                "workflow_report"
               ],
               "title": "Kind",
               "type": "string"
@@ -420,7 +422,8 @@
             "kind": {
               "enum": [
                 "manifest",
-                "material_bundle"
+                "material_bundle",
+                "workflow_bundle"
               ],
               "title": "Kind",
               "type": "string"
@@ -558,6 +561,11 @@
           "minimum": 1,
           "title": "Worker Ttl",
           "type": "number"
+        },
+        "workflows_enabled": {
+          "default": false,
+          "title": "Workflows Enabled",
+          "type": "boolean"
         }
       },
       "required": [
