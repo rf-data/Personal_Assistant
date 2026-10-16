@@ -18,7 +18,7 @@ Status-Legende: [x] = bisher als abgeschlossen geführt / Code vorhanden; [~] = 
 
 ## Kurzfristig: Qualitäts- und Testfundament (Personal_Assistant)
 
-- [~] Kursweise Knowledge-Consolidation mit Skip/Resume vorhanden (src/run_knowledge_consolidation.py); Verhalten noch nicht systematisch getestet.
+- [x] C12: Kursweise Knowledge-Consolidation offline gehärtet und deterministisch getestet; lesender Standard, hashgebundenes Resume, kein Overwrite ([Vertrag](knowledge_consolidation_hardening.md)).
 - [ ] Deterministische Unit-Tests für Resume/Skip, Pfadgenerierung und Ausnahmen (ohne echte LLM-Aufrufe).
 - [ ] Echte Stage-Dateinamen aus Datenbestand erfassen und Naming-Konvention fixieren.
 - [ ] Quality Checks und Gold-Eval-Set (zunächst 30–50 manuell geprüfte Fälle).
@@ -131,7 +131,7 @@ Jede Aufgabe in genau **einem** Repo und mit eigener PR, ohne Live-Server-Zugrif
 | C04 | personal-assistant-ui | Sicherer Log-Viewer mit Tail-Begrenzung | Pfadtraversal-/Symlink-Tests; nur LOG_DIR |
 | C05 | personal-assistant-ui | Dashboard aus gemeinsamem Datei-Inventar | Keine wiederholte Scanlogik, leere Ordner funktionieren |
 | C06 | personal-assistant-ui | Docker/Coolify README und Mount-Konfiguration | Lokal und Coolify dokumentiert; read-only Mounts |
-| C07 | Personal_Assistant | Tests der bestehenden Knowledge-Consolidation-Resume-Logik | tmp_path/mocks, keine API-Aufrufe |
+| C07 → C12 | Personal_Assistant | Knowledge Consolidation Hardening implementiert: Resume/Skip, Evidence, Identitäten, Reports | Synthetische Offline-Tests; [Vertrag](knowledge_consolidation_hardening.md) |
 | C08 | Personal_Assistant | pyproject.toml: doppelte lecture-worker Dependencies beseitigen | Lock/Tests ohne ungefragte Upgrades |
 | C09 | Personal_Assistant | README und docs/architecture.md gegen aktuellen Repo-Code abgleichen | Keine unbelegten Aussagen; kleine Doku-PR |
 

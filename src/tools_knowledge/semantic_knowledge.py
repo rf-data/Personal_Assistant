@@ -1,11 +1,11 @@
 ## semantic_knowledge.py
 # import
 import json
+
 # from typing import Literal
-
 import marvin
-# from pydantic import BaseModel, ConfigDict, Field
 
+# from pydantic import BaseModel, ConfigDict, Field
 from src.agent.prompts.prompts_know_consolidate import (
     ENTITY_EXTRACTION_PROMPT,
     SEMANTIC_CONSOLIDATION_PROMPT,
@@ -31,8 +31,7 @@ from src.utils.general_helper import (
     make_cache_key,
     save_to_cache,
 )
-from src.utils.text_helper import normalize_label, normalize_text_for_matching
-
+from src.utils.text_helper import normalize_label
 
 # ============================================================
 # SEMANTIC CONSOLIDATION
@@ -157,6 +156,7 @@ def consolidate_semantic_batch(
     )
 
     if cached is not None:
+        validate_semantic_batch_result(statements=statements, result=cached)
         # if app_session.logger:
         app_session.logger.info(
             "CACHE HIT | semantic batch=%s",
@@ -214,13 +214,15 @@ def validate_semantic_batch_result(
 
     allowed_ids = {statement.statement_id for statement in statements}
 
-    returned_ids: set[str] = set()
-
-    for item in result.canonical_statements:
-        returned_ids.update(item.source_statement_ids)
-
-    for item in result.discarded_statements:
-        returned_ids.add(item.statement_id)
+    assignments = [
+        source_id
+        for item in result.canonical_statements
+        for source_id in item.source_statement_ids
+    ]
+    assignments.extend(item.statement_id for item in result.discarded_statements)
+    if len(assignments) != len(set(assignments)):
+        raise ValueError("Semantic consolidation assigned a statement more than once")
+    returned_ids = set(assignments)
 
     invalid_ids = returned_ids - allowed_ids
 
@@ -236,14 +238,11 @@ def merge_statement_evidence(
 
     result: list[ConsolidatedEvidence] = []
 
-    known: set[tuple[str, str]] = set()
+    known: set[str] = set()
 
     for statement in statements:
         for evidence in statement.evidence:
-            key = (
-                evidence.chunk_id,
-                evidence.item_id,
-            )
+            key = evidence.model_dump_json()
 
             if key in known:
                 continue
@@ -360,10 +359,18 @@ def merge_exact_canonical_statements(
     statements: list[CanonicalStatement],
 ) -> list[CanonicalStatement]:
 
-    groups: dict[str, CanonicalStatement] = {}
+    from src.tools_knowledge.consolidation_validation import exact_text
+
+    groups: dict[tuple, CanonicalStatement] = {}
 
     for statement in statements:
-        key = normalize_text_for_matching(statement.text)
+        key = (
+            exact_text(statement.text),
+            statement.semantic_type,
+            statement.topic,
+            statement.needs_review,
+            statement.review_reason,
+        )
 
         if key not in groups:
             groups[key] = statement.model_copy(deep=True)
@@ -373,9 +380,7 @@ def merge_exact_canonical_statements(
         target = groups[key]
 
         target.source_statement_ids = list(
-            dict.fromkeys(
-                (target.source_statement_ids + statement.source_statement_ids)
-            )
+            dict.fromkeys(target.source_statement_ids + statement.source_statement_ids)
         )
 
         target.evidence = merge_statement_evidence_from_canonical(
@@ -421,14 +426,11 @@ def merge_statement_evidence_from_canonical(
 
     result: list[ConsolidatedEvidence] = []
 
-    known: set[tuple[str, str]] = set()
+    known: set[str] = set()
 
     for statement in statements:
         for evidence in statement.evidence:
-            key = (
-                evidence.chunk_id,
-                evidence.item_id,
-            )
+            key = evidence.model_dump_json()
 
             if key in known:
                 continue
@@ -569,9 +571,7 @@ def merge_lecture_entities(
             target.aliases = list(dict.fromkeys(target.aliases + entity.aliases))
 
             target.source_statement_ids = list(
-                dict.fromkeys(
-                    (target.source_statement_ids + entity.source_statement_ids)
-                )
+                dict.fromkeys(target.source_statement_ids + entity.source_statement_ids)
             )
 
             if entity.llm_confidence > target.llm_confidence:
