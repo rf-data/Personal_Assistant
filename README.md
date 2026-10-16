@@ -81,18 +81,22 @@ make mlflow_fingerprint
 
 ### Monitoring
 
+Der lokale Stack ist auf Loopback beschränkt. Host-/Container-Exporter und
+Portainer benötigen explizite Profile; die vier bisherigen Datenpfade bleiben
+erhalten. Vor einer späteren Anwendung sind freigegebene Image-Digests und eine
+externe Grafana-Secretdatei erforderlich. Echte Pipeline-Metriken sind noch nicht
+angebunden; provisionierte Dashboards zeigen ohne Exporter fehlende Daten.
+
 ```bash
-# Prometheus/Grafana/AlertManager Stack starten
-make monitoring_docker
-
-# UI unter:
-# - http://localhost:3000 (Grafana)
-# - http://localhost:9090 (Prometheus)
-# - http://localhost:9093 (AlertManager)
-
-# Stack beenden
-make monitoring_stop
+# Offline-Konfigurationsprüfung; startet keine Container
+python -m scripts.validate_monitoring --native
 ```
+
+[Ist-Analyse, Betrieb/Migration, Metrics-Vertrag und Testnachweise](docs/monitoring/README.md).
+Die vorhandenen Make-Targets `monitoring_docker`/`monitoring_stop` sind weiterhin
+operative Start-/Stopp-Befehle mit Projektkennung `personal_assistence`, keine
+Validierungsbefehle. Vor Nutzung die Betriebsanleitung und bestehende Installation
+prüfen; kein automatisches Deployment oder Volume-Löschen.
 
 ### Pre-commit Hooks
 

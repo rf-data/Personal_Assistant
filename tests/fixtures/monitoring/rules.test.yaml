@@ -1,0 +1,112 @@
+# Synthetic rule inputs only. Never mount this file into Prometheus.
+rule_files:
+- ../../../monitoring/prometheus/rules/alerts.yaml
+- ../../../monitoring/prometheus/rules/recording.yaml
+evaluation_interval: 1m
+tests:
+- name: configured target down
+  interval: 1m
+  input_series:
+  - series: up{job="prometheus",instance="localhost:9090"}
+    values: 0+0x10
+  alert_rule_test:
+  - eval_time: 3m
+    alertname: PrometheusTargetDown
+    exp_alerts:
+    - exp_labels:
+        job: prometheus
+        instance: localhost:9090
+        severity: critical
+      exp_annotations:
+        summary: Configured scrape target is unavailable
+- name: healthy target
+  interval: 1m
+  input_series:
+  - series: up{job="prometheus",instance="localhost:9090"}
+    values: 1+0x10
+  alert_rule_test:
+  - eval_time: 3m
+    alertname: PrometheusTargetDown
+    exp_alerts: []
+- name: disabled pipeline means no worker-down alert
+  interval: 1m
+  input_series: []
+  alert_rule_test:
+  - eval_time: 10m
+    alertname: PipelineWorkerUnavailable
+    exp_alerts: []
+- name: missing exporter contract
+  interval: 1m
+  input_series:
+  - series: up{job="personal_assistant_workers",instance="controller:9101"}
+    values: 1+0x10
+  alert_rule_test:
+  - eval_time: 6m
+    alertname: PipelineMetricsMissing
+    exp_alerts:
+    - exp_labels:
+        job: personal_assistant_workers
+        instance: controller:9101
+        severity: warning
+      exp_annotations:
+        summary: Exporter responds but required worker availability metric is absent
+- name: zero real worker availability
+  interval: 1m
+  input_series:
+  - series: personal_assistant_workers_available{worker_pool="cpu"}
+    values: 0+0x10
+  alert_rule_test:
+  - eval_time: 3m
+    alertname: PipelineWorkerUnavailable
+    exp_alerts:
+    - exp_labels:
+        worker_pool: cpu
+        severity: critical
+      exp_annotations:
+        summary: Configured worker pool has no ready workers
+- name: oldest active job
+  interval: 1m
+  input_series:
+  - series: personal_assistant_job_oldest_running_start_timestamp_seconds{process="material_parsing",worker_pool="cpu"}
+    values: 1+0x45
+  - series: personal_assistant_jobs_running{process="material_parsing",worker_pool="cpu"}
+    values: 1+0x45
+  alert_rule_test:
+  - eval_time: 40m
+    alertname: PipelineLongRunningJob
+    exp_alerts:
+    - exp_labels:
+        process: material_parsing
+        worker_pool: cpu
+        severity: warning
+      exp_annotations:
+        summary: Confirmed running attempt exceeds 30 minutes
+- name: no running jobs ignores retained timestamp
+  interval: 1m
+  input_series:
+  - series: personal_assistant_job_oldest_running_start_timestamp_seconds{process="material_parsing",worker_pool="cpu"}
+    values: 1+0x45
+  - series: personal_assistant_jobs_running{process="material_parsing",worker_pool="cpu"}
+    values: 0+0x45
+  alert_rule_test:
+  - eval_time: 40m
+    alertname: PipelineLongRunningJob
+    exp_alerts: []
+- name: confirmed high failure ratio
+  interval: 1m
+  input_series:
+  - series: personal_assistant_jobs_failed_total{process="material_parsing",worker_pool="cpu",error_class="input"}
+    values: 0+3x40
+  - series: personal_assistant_jobs_completed_total{process="material_parsing",worker_pool="cpu",outcome="failure"}
+    values: 0+3x40
+  - series: personal_assistant_jobs_completed_total{process="material_parsing",worker_pool="cpu",outcome="success"}
+    values: 0+7x40
+  alert_rule_test:
+  - eval_time: 25m
+    alertname: PipelineHighFailureRate
+    exp_alerts:
+    - exp_labels:
+        process: material_parsing
+        severity: warning
+      exp_annotations:
+        summary: More than 20 percent failures among at least five finished attempts
