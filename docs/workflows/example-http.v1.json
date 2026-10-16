@@ -1,0 +1,1554 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "transport": "real Application router; no socket",
+  "authentication": "existing C16 Bearer verifier; token omitted",
+  "workflow_engine": "existing C18 service/engine via C16 queue and C19 PDF-v2",
+  "resume_same_job": true,
+  "stage_count": 5,
+  "job_count": 1,
+  "messages": [
+    {
+      "method": "GET",
+      "path": "/v1/workflows/capabilities",
+      "body": null,
+      "idempotency_key": null,
+      "status": 200,
+      "response": {
+        "schema_version": 1,
+        "protocol": "personal_assistant_workflows_v1",
+        "enabled": true,
+        "execution_enabled": true,
+        "worker_available": true,
+        "max_response_bytes": 524288,
+        "history_max_limit": 100,
+        "inspect_route": "/v1/workflows/inspect",
+        "execute_route": "/v1/workflows/execute",
+        "resume_route": "/v1/workflows/resume",
+        "status_route": "/v1/workflows/{workflow_id}",
+        "run_route": "/v1/workflows/{workflow_id}/runs/{run_id}"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/workflows/inspect",
+      "body": {
+        "source_ref": "synthetic_pdf",
+        "workflow_id": "synthetic_http_workflow"
+      },
+      "idempotency_key": null,
+      "status": 200,
+      "response": {
+        "schema_version": 1,
+        "protocol": "personal_assistant_workflows_v1",
+        "preview_id": "31742e7b2dbfb06865542219943bfa5f0ed336b987207656858043f44812bd38",
+        "workflow": {
+          "schema_version": 1,
+          "workflow_id": "synthetic_http_workflow",
+          "workflow_type": "cs50_offline_materials_v1",
+          "course_id": "cs50_python",
+          "lecture_ids": [
+            "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+          ],
+          "created_at": null,
+          "status": "ready",
+          "stages": [
+            {
+              "stage_id": "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2",
+              "process_id": "material_planning",
+              "material_id": null,
+              "dependencies": [],
+              "expected_inputs": [
+                "manifest"
+              ],
+              "expected_outputs": [
+                "plan"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "133131970afbff385a7de1f9da56760b432ade35e04dfdf06fe1d9d43e629b00",
+              "status": "ready",
+              "decision": "new_stage_workspace",
+              "input_hashes": {
+                "manifest.json": "18a6d7a04677b3f2fcedffee3712fb1bedf0dd8127d6114f4eafb75faa2d0ff7",
+                "cs50_python/week0.html": "0089e40860e9c6ecd90b9f1b28a2f60eaa3805cc881abc3a17f98438b71035d3",
+                "cs50_python/index.html": "94c7cecb1ff479f8bd500056648d6db503a7c03d897c4c42039af18f5b36e9bc"
+              },
+              "output_refs": [],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": null,
+              "finished_at": null,
+              "duration_seconds": null,
+              "job_id": null
+            },
+            {
+              "stage_id": "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75",
+              "process_id": "local_material_import",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2"
+              ],
+              "expected_inputs": [
+                "plan",
+                "local_raw"
+              ],
+              "expected_outputs": [
+                "raw",
+                "receipt"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "58262a37373ab3a46ddeea83cf1ebc53ca1e197405c86f365fb528aa1dc5c4af",
+              "status": "blocked",
+              "decision": "blocked_dependency",
+              "input_hashes": {
+                "local_source": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                "binding": "3008e817a71599162ce61674d0bc552555afa4e000dcf5cb09334c031adacf9e"
+              },
+              "output_refs": [],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": null,
+              "finished_at": null,
+              "duration_seconds": null,
+              "job_id": null
+            },
+            {
+              "stage_id": "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40",
+              "process_id": "material_parsing",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75"
+              ],
+              "expected_inputs": [
+                "raw",
+                "receipt"
+              ],
+              "expected_outputs": [
+                "raw",
+                "receipt",
+                "normalized"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "d47671073047b76b183d74c6742c88c8129780e571e2a288427d45e856de77ba",
+              "status": "blocked",
+              "decision": "blocked_dependency",
+              "input_hashes": {},
+              "output_refs": [],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": null,
+              "finished_at": null,
+              "duration_seconds": null,
+              "job_id": null
+            },
+            {
+              "stage_id": "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81",
+              "process_id": "quality_evaluation",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40"
+              ],
+              "expected_inputs": [
+                "plan",
+                "normalized",
+                "receipt",
+                "raw"
+              ],
+              "expected_outputs": [
+                "quality"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "34b3440606a82a05c1656d3021e1b49982762498ca2700d810a936a48b2b18c8",
+              "status": "blocked",
+              "decision": "blocked_dependency",
+              "input_hashes": {},
+              "output_refs": [],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": null,
+              "finished_at": null,
+              "duration_seconds": null,
+              "job_id": null
+            },
+            {
+              "stage_id": "material_task:049bd1ce449a36bf7d7ffca8585fb89fd3fea8d1b64fecdc6ed476522025e986",
+              "process_id": "lecture_material_handoff",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81"
+              ],
+              "expected_inputs": [
+                "quality",
+                "plan",
+                "normalized",
+                "receipt",
+                "raw"
+              ],
+              "expected_outputs": [
+                "handoff"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "c57fbd45eb878300f82a146d0c516a61b5910b809002f22fb541b3c42ed11cf4",
+              "status": "blocked",
+              "decision": "blocked_dependency",
+              "input_hashes": {},
+              "output_refs": [],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": null,
+              "finished_at": null,
+              "duration_seconds": null,
+              "job_id": null
+            }
+          ],
+          "dependencies": {
+            "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2": [],
+            "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75": [
+              "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2"
+            ],
+            "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40": [
+              "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75"
+            ],
+            "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81": [
+              "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40"
+            ],
+            "material_task:049bd1ce449a36bf7d7ffca8585fb89fd3fea8d1b64fecdc6ed476522025e986": [
+              "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81"
+            ]
+          },
+          "input_refs": [
+            "synthetic_pdf"
+          ],
+          "output_refs": [],
+          "configuration_hash": "16743ca25c419aeb1933571183c676a3b0cc4db6f09196b6183fdc814998ae24",
+          "run_id": null,
+          "initiated_by": "synthetic_operator",
+          "started_at": null,
+          "finished_at": null,
+          "expected_changes": [
+            "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2:new_workspace",
+            "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75:new_workspace",
+            "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40:new_workspace",
+            "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81:new_workspace",
+            "material_task:049bd1ce449a36bf7d7ffca8585fb89fd3fea8d1b64fecdc6ed476522025e986:new_workspace"
+          ],
+          "errors": [],
+          "report_sha256": "6ca8d86777575b04f6775a47c80e2f0844a7f36defb8a1f1a126c4740fef052b"
+        },
+        "persisted_report": null,
+        "current_job": null,
+        "previous_run_id": null,
+        "report_artifact": null,
+        "history": [],
+        "history_total": 0,
+        "history_offset": 0,
+        "history_limit": 10
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/workflows/execute",
+      "body": {
+        "source_ref": "synthetic_pdf",
+        "workflow_id": "synthetic_http_workflow",
+        "preview_id": "31742e7b2dbfb06865542219943bfa5f0ed336b987207656858043f44812bd38",
+        "current_run_id": null,
+        "confirmed": true
+      },
+      "idempotency_key": "synthetic_http_demo_execute_001",
+      "status": 202,
+      "response": {
+        "schema_version": 1,
+        "protocol": "personal_assistant_workflows_v1",
+        "workflow_id": "synthetic_http_workflow",
+        "run_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+        "job": {
+          "schema_version": 1,
+          "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+          "process_id": "cs50_offline_workflow",
+          "status": "queued",
+          "created_at": "2026-10-16T22:03:22.934745+00:00",
+          "started_at": null,
+          "finished_at": null,
+          "parameters": {
+            "source_ref": "synthetic_pdf",
+            "course_id": "cs50_python",
+            "workflow_id": "synthetic_http_workflow",
+            "previous_run_id": null,
+            "output_name": "workflow-report"
+          },
+          "progress": null,
+          "phase": "queued",
+          "exit_code": null,
+          "error": null,
+          "error_class": null,
+          "artifact_refs": [],
+          "initiated_by": "synthetic_operator",
+          "input_refs": [
+            "synthetic_pdf"
+          ],
+          "output_refs": [],
+          "cancellable": true,
+          "duration_seconds": null
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workflows/synthetic_http_workflow?source_ref=synthetic_pdf",
+      "body": null,
+      "idempotency_key": null,
+      "status": 200,
+      "response": {
+        "schema_version": 1,
+        "protocol": "personal_assistant_workflows_v1",
+        "preview_id": "0c11f78ec00b3aa720cbef3a13f891dfe1e1e278b2e75475a453614088c89061",
+        "workflow": {
+          "schema_version": 1,
+          "workflow_id": "synthetic_http_workflow",
+          "workflow_type": "cs50_offline_materials_v1",
+          "course_id": "cs50_python",
+          "lecture_ids": [
+            "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+          ],
+          "created_at": "2026-10-16T22:03:24.543576+00:00",
+          "status": "completed",
+          "stages": [
+            {
+              "stage_id": "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2",
+              "process_id": "material_planning",
+              "material_id": null,
+              "dependencies": [],
+              "expected_inputs": [
+                "manifest"
+              ],
+              "expected_outputs": [
+                "plan"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "133131970afbff385a7de1f9da56760b432ade35e04dfdf06fe1d9d43e629b00",
+              "status": "skipped",
+              "decision": "verified_reuse",
+              "input_hashes": {
+                "manifest.json": "18a6d7a04677b3f2fcedffee3712fb1bedf0dd8127d6114f4eafb75faa2d0ff7",
+                "cs50_python/week0.html": "0089e40860e9c6ecd90b9f1b28a2f60eaa3805cc881abc3a17f98438b71035d3",
+                "cs50_python/index.html": "94c7cecb1ff479f8bd500056648d6db503a7c03d897c4c42039af18f5b36e9bc"
+              },
+              "output_refs": [
+                {
+                  "kind": "plan",
+                  "identity": "cs50_python",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/c484097e0213674dfdbae7f7bcafc71e/plan.v1.json",
+                  "sha256": "2bb86de825cf453a72fd6f0b108f5bd733660131318f10f9b065294210ecd923",
+                  "size_bytes": 6398
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:24.543907+00:00",
+              "finished_at": "2026-10-16T22:03:24.549342+00:00",
+              "duration_seconds": 0.002252559002954513,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75",
+              "process_id": "local_material_import",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2"
+              ],
+              "expected_inputs": [
+                "plan",
+                "local_raw"
+              ],
+              "expected_outputs": [
+                "raw",
+                "receipt"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "58262a37373ab3a46ddeea83cf1ebc53ca1e197405c86f365fb528aa1dc5c4af",
+              "status": "skipped",
+              "decision": "verified_reuse",
+              "input_hashes": {
+                "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2:plan:cs50_python": "2bb86de825cf453a72fd6f0b108f5bd733660131318f10f9b065294210ecd923",
+                "local_source": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                "binding": "3008e817a71599162ce61674d0bc552555afa4e000dcf5cb09334c031adacf9e"
+              },
+              "output_refs": [
+                {
+                  "kind": "raw",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/raw/source",
+                  "sha256": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                  "size_bytes": 1056
+                },
+                {
+                  "kind": "receipt",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+                  "sha256": "53d30f499780a7b47c1e4979a061f8378a0c62891fd03407be8bc3bdc06effa3",
+                  "size_bytes": 1557
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:24.552283+00:00",
+              "finished_at": "2026-10-16T22:03:24.559138+00:00",
+              "duration_seconds": 0.005250364003586583,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40",
+              "process_id": "material_parsing",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75"
+              ],
+              "expected_inputs": [
+                "raw",
+                "receipt"
+              ],
+              "expected_outputs": [
+                "raw",
+                "receipt",
+                "normalized"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "d47671073047b76b183d74c6742c88c8129780e571e2a288427d45e856de77ba",
+              "status": "skipped",
+              "decision": "verified_reuse",
+              "input_hashes": {
+                "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75:raw:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75:receipt:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "53d30f499780a7b47c1e4979a061f8378a0c62891fd03407be8bc3bdc06effa3"
+              },
+              "output_refs": [
+                {
+                  "kind": "raw",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/raw/source",
+                  "sha256": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                  "size_bytes": 1056
+                },
+                {
+                  "kind": "receipt",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+                  "sha256": "d7847e26ecbff243a8a5382d2332ea8de721fe094791f68be51c41b33fec34ae",
+                  "size_bytes": 1989
+                },
+                {
+                  "kind": "normalized",
+                  "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e/normalized.v1.json",
+                  "sha256": "b61aaa7cda0a31fe7561c51beeb07192deb5f7b7a3573efa1eac6a23099dde8c",
+                  "size_bytes": 3669
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:24.562104+00:00",
+              "finished_at": "2026-10-16T22:03:25.032191+00:00",
+              "duration_seconds": 0.4683613730012439,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81",
+              "process_id": "quality_evaluation",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40"
+              ],
+              "expected_inputs": [
+                "plan",
+                "normalized",
+                "receipt",
+                "raw"
+              ],
+              "expected_outputs": [
+                "quality"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "34b3440606a82a05c1656d3021e1b49982762498ca2700d810a936a48b2b18c8",
+              "status": "skipped",
+              "decision": "verified_reuse",
+              "input_hashes": {
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40:raw:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40:receipt:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "d7847e26ecbff243a8a5382d2332ea8de721fe094791f68be51c41b33fec34ae",
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40:normalized:material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e": "b61aaa7cda0a31fe7561c51beeb07192deb5f7b7a3573efa1eac6a23099dde8c"
+              },
+              "output_refs": [
+                {
+                  "kind": "quality",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/25dfaf3b5c20e672f07f339ef0ed1cfb/quality.v1.json",
+                  "sha256": "ed19173a3488ab8ad3229e7f57a52dd9dd523a04e1af3b897ce041337b046318",
+                  "size_bytes": 16882
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:25.049794+00:00",
+              "finished_at": "2026-10-16T22:03:25.062926+00:00",
+              "duration_seconds": 0.010694561002310365,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:049bd1ce449a36bf7d7ffca8585fb89fd3fea8d1b64fecdc6ed476522025e986",
+              "process_id": "lecture_material_handoff",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81"
+              ],
+              "expected_inputs": [
+                "quality",
+                "plan",
+                "normalized",
+                "receipt",
+                "raw"
+              ],
+              "expected_outputs": [
+                "handoff"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "c57fbd45eb878300f82a146d0c516a61b5910b809002f22fb541b3c42ed11cf4",
+              "status": "skipped",
+              "decision": "verified_reuse",
+              "input_hashes": {
+                "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81:quality:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "ed19173a3488ab8ad3229e7f57a52dd9dd523a04e1af3b897ce041337b046318"
+              },
+              "output_refs": [
+                {
+                  "kind": "handoff",
+                  "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/9443ec80dab035021e196ec1414c9596/handoff.v1.json",
+                  "sha256": "553426e6b7f38b2589d012c21be88b7d95c742458ea8309017cc4fe664bf5568",
+                  "size_bytes": 12816
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:25.077791+00:00",
+              "finished_at": "2026-10-16T22:03:25.098957+00:00",
+              "duration_seconds": 0.011449680998339318,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            }
+          ],
+          "dependencies": {
+            "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2": [],
+            "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75": [
+              "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2"
+            ],
+            "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40": [
+              "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75"
+            ],
+            "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81": [
+              "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40"
+            ],
+            "material_task:049bd1ce449a36bf7d7ffca8585fb89fd3fea8d1b64fecdc6ed476522025e986": [
+              "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81"
+            ]
+          },
+          "input_refs": [
+            "synthetic_pdf"
+          ],
+          "output_refs": [
+            {
+              "kind": "handoff",
+              "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/9443ec80dab035021e196ec1414c9596/handoff.v1.json",
+              "sha256": "553426e6b7f38b2589d012c21be88b7d95c742458ea8309017cc4fe664bf5568",
+              "size_bytes": 12816
+            },
+            {
+              "kind": "normalized",
+              "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e/normalized.v1.json",
+              "sha256": "b61aaa7cda0a31fe7561c51beeb07192deb5f7b7a3573efa1eac6a23099dde8c",
+              "size_bytes": 3669
+            },
+            {
+              "kind": "plan",
+              "identity": "cs50_python",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/c484097e0213674dfdbae7f7bcafc71e/plan.v1.json",
+              "sha256": "2bb86de825cf453a72fd6f0b108f5bd733660131318f10f9b065294210ecd923",
+              "size_bytes": 6398
+            },
+            {
+              "kind": "quality",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/25dfaf3b5c20e672f07f339ef0ed1cfb/quality.v1.json",
+              "sha256": "ed19173a3488ab8ad3229e7f57a52dd9dd523a04e1af3b897ce041337b046318",
+              "size_bytes": 16882
+            },
+            {
+              "kind": "raw",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/raw/source",
+              "sha256": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+              "size_bytes": 1056
+            },
+            {
+              "kind": "receipt",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+              "sha256": "53d30f499780a7b47c1e4979a061f8378a0c62891fd03407be8bc3bdc06effa3",
+              "size_bytes": 1557
+            },
+            {
+              "kind": "receipt",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+              "sha256": "d7847e26ecbff243a8a5382d2332ea8de721fe094791f68be51c41b33fec34ae",
+              "size_bytes": 1989
+            }
+          ],
+          "configuration_hash": "16743ca25c419aeb1933571183c676a3b0cc4db6f09196b6183fdc814998ae24",
+          "run_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+          "initiated_by": "synthetic_operator",
+          "started_at": "2026-10-16T22:03:24.543599+00:00",
+          "finished_at": "2026-10-16T22:03:25.117075+00:00",
+          "expected_changes": [],
+          "errors": [],
+          "report_sha256": "1941f72e0848a752b8fe2bc5b511b3e3a01cd447c552c88b21657c5ccbaa5189"
+        },
+        "persisted_report": {
+          "schema_version": 1,
+          "workflow_id": "synthetic_http_workflow",
+          "workflow_type": "cs50_offline_materials_v1",
+          "course_id": "cs50_python",
+          "lecture_ids": [
+            "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+          ],
+          "created_at": "2026-10-16T22:03:24.543576+00:00",
+          "status": "completed",
+          "stages": [
+            {
+              "stage_id": "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2",
+              "process_id": "material_planning",
+              "material_id": null,
+              "dependencies": [],
+              "expected_inputs": [
+                "manifest"
+              ],
+              "expected_outputs": [
+                "plan"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "133131970afbff385a7de1f9da56760b432ade35e04dfdf06fe1d9d43e629b00",
+              "status": "completed",
+              "decision": "execute_new_workspace",
+              "input_hashes": {
+                "manifest.json": "18a6d7a04677b3f2fcedffee3712fb1bedf0dd8127d6114f4eafb75faa2d0ff7",
+                "cs50_python/week0.html": "0089e40860e9c6ecd90b9f1b28a2f60eaa3805cc881abc3a17f98438b71035d3",
+                "cs50_python/index.html": "94c7cecb1ff479f8bd500056648d6db503a7c03d897c4c42039af18f5b36e9bc"
+              },
+              "output_refs": [
+                {
+                  "kind": "plan",
+                  "identity": "cs50_python",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/c484097e0213674dfdbae7f7bcafc71e/plan.v1.json",
+                  "sha256": "2bb86de825cf453a72fd6f0b108f5bd733660131318f10f9b065294210ecd923",
+                  "size_bytes": 6398
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:24.543907+00:00",
+              "finished_at": "2026-10-16T22:03:24.549342+00:00",
+              "duration_seconds": 0.002252559002954513,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75",
+              "process_id": "local_material_import",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2"
+              ],
+              "expected_inputs": [
+                "plan",
+                "local_raw"
+              ],
+              "expected_outputs": [
+                "raw",
+                "receipt"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "58262a37373ab3a46ddeea83cf1ebc53ca1e197405c86f365fb528aa1dc5c4af",
+              "status": "completed",
+              "decision": "execute_new_workspace",
+              "input_hashes": {
+                "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2:plan:cs50_python": "2bb86de825cf453a72fd6f0b108f5bd733660131318f10f9b065294210ecd923",
+                "local_source": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                "binding": "3008e817a71599162ce61674d0bc552555afa4e000dcf5cb09334c031adacf9e"
+              },
+              "output_refs": [
+                {
+                  "kind": "raw",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/raw/source",
+                  "sha256": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                  "size_bytes": 1056
+                },
+                {
+                  "kind": "receipt",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+                  "sha256": "53d30f499780a7b47c1e4979a061f8378a0c62891fd03407be8bc3bdc06effa3",
+                  "size_bytes": 1557
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:24.552283+00:00",
+              "finished_at": "2026-10-16T22:03:24.559138+00:00",
+              "duration_seconds": 0.005250364003586583,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40",
+              "process_id": "material_parsing",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75"
+              ],
+              "expected_inputs": [
+                "raw",
+                "receipt"
+              ],
+              "expected_outputs": [
+                "raw",
+                "receipt",
+                "normalized"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "d47671073047b76b183d74c6742c88c8129780e571e2a288427d45e856de77ba",
+              "status": "completed",
+              "decision": "execute_new_workspace",
+              "input_hashes": {
+                "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75:raw:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75:receipt:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "53d30f499780a7b47c1e4979a061f8378a0c62891fd03407be8bc3bdc06effa3"
+              },
+              "output_refs": [
+                {
+                  "kind": "raw",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/raw/source",
+                  "sha256": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                  "size_bytes": 1056
+                },
+                {
+                  "kind": "receipt",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+                  "sha256": "d7847e26ecbff243a8a5382d2332ea8de721fe094791f68be51c41b33fec34ae",
+                  "size_bytes": 1989
+                },
+                {
+                  "kind": "normalized",
+                  "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e/normalized.v1.json",
+                  "sha256": "b61aaa7cda0a31fe7561c51beeb07192deb5f7b7a3573efa1eac6a23099dde8c",
+                  "size_bytes": 3669
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:24.562104+00:00",
+              "finished_at": "2026-10-16T22:03:25.032191+00:00",
+              "duration_seconds": 0.4683613730012439,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81",
+              "process_id": "quality_evaluation",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40"
+              ],
+              "expected_inputs": [
+                "plan",
+                "normalized",
+                "receipt",
+                "raw"
+              ],
+              "expected_outputs": [
+                "quality"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "34b3440606a82a05c1656d3021e1b49982762498ca2700d810a936a48b2b18c8",
+              "status": "completed",
+              "decision": "execute_new_workspace",
+              "input_hashes": {
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40:raw:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40:receipt:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "d7847e26ecbff243a8a5382d2332ea8de721fe094791f68be51c41b33fec34ae",
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40:normalized:material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e": "b61aaa7cda0a31fe7561c51beeb07192deb5f7b7a3573efa1eac6a23099dde8c"
+              },
+              "output_refs": [
+                {
+                  "kind": "quality",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/25dfaf3b5c20e672f07f339ef0ed1cfb/quality.v1.json",
+                  "sha256": "ed19173a3488ab8ad3229e7f57a52dd9dd523a04e1af3b897ce041337b046318",
+                  "size_bytes": 16882
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:25.049794+00:00",
+              "finished_at": "2026-10-16T22:03:25.062926+00:00",
+              "duration_seconds": 0.010694561002310365,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:049bd1ce449a36bf7d7ffca8585fb89fd3fea8d1b64fecdc6ed476522025e986",
+              "process_id": "lecture_material_handoff",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81"
+              ],
+              "expected_inputs": [
+                "quality",
+                "plan",
+                "normalized",
+                "receipt",
+                "raw"
+              ],
+              "expected_outputs": [
+                "handoff"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "c57fbd45eb878300f82a146d0c516a61b5910b809002f22fb541b3c42ed11cf4",
+              "status": "completed",
+              "decision": "execute_new_workspace",
+              "input_hashes": {
+                "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81:quality:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "ed19173a3488ab8ad3229e7f57a52dd9dd523a04e1af3b897ce041337b046318"
+              },
+              "output_refs": [
+                {
+                  "kind": "handoff",
+                  "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/9443ec80dab035021e196ec1414c9596/handoff.v1.json",
+                  "sha256": "553426e6b7f38b2589d012c21be88b7d95c742458ea8309017cc4fe664bf5568",
+                  "size_bytes": 12816
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:25.077791+00:00",
+              "finished_at": "2026-10-16T22:03:25.098957+00:00",
+              "duration_seconds": 0.011449680998339318,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            }
+          ],
+          "dependencies": {
+            "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2": [],
+            "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75": [
+              "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2"
+            ],
+            "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40": [
+              "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75"
+            ],
+            "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81": [
+              "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40"
+            ],
+            "material_task:049bd1ce449a36bf7d7ffca8585fb89fd3fea8d1b64fecdc6ed476522025e986": [
+              "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81"
+            ]
+          },
+          "input_refs": [
+            "synthetic_pdf"
+          ],
+          "output_refs": [
+            {
+              "kind": "handoff",
+              "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/9443ec80dab035021e196ec1414c9596/handoff.v1.json",
+              "sha256": "553426e6b7f38b2589d012c21be88b7d95c742458ea8309017cc4fe664bf5568",
+              "size_bytes": 12816
+            },
+            {
+              "kind": "normalized",
+              "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e/normalized.v1.json",
+              "sha256": "b61aaa7cda0a31fe7561c51beeb07192deb5f7b7a3573efa1eac6a23099dde8c",
+              "size_bytes": 3669
+            },
+            {
+              "kind": "plan",
+              "identity": "cs50_python",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/c484097e0213674dfdbae7f7bcafc71e/plan.v1.json",
+              "sha256": "2bb86de825cf453a72fd6f0b108f5bd733660131318f10f9b065294210ecd923",
+              "size_bytes": 6398
+            },
+            {
+              "kind": "quality",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/25dfaf3b5c20e672f07f339ef0ed1cfb/quality.v1.json",
+              "sha256": "ed19173a3488ab8ad3229e7f57a52dd9dd523a04e1af3b897ce041337b046318",
+              "size_bytes": 16882
+            },
+            {
+              "kind": "raw",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/raw/source",
+              "sha256": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+              "size_bytes": 1056
+            },
+            {
+              "kind": "receipt",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+              "sha256": "53d30f499780a7b47c1e4979a061f8378a0c62891fd03407be8bc3bdc06effa3",
+              "size_bytes": 1557
+            },
+            {
+              "kind": "receipt",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+              "sha256": "d7847e26ecbff243a8a5382d2332ea8de721fe094791f68be51c41b33fec34ae",
+              "size_bytes": 1989
+            }
+          ],
+          "configuration_hash": "16743ca25c419aeb1933571183c676a3b0cc4db6f09196b6183fdc814998ae24",
+          "run_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+          "initiated_by": "synthetic_operator",
+          "started_at": "2026-10-16T22:03:24.543599+00:00",
+          "finished_at": "2026-10-16T22:03:25.117075+00:00",
+          "expected_changes": [],
+          "errors": [],
+          "report_sha256": "36ffb6459a91b409437e7ccd6240c839708b411af647b607be5659268993fca9"
+        },
+        "current_job": {
+          "schema_version": 1,
+          "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+          "process_id": "cs50_offline_workflow",
+          "status": "completed",
+          "created_at": "2026-10-16T22:03:22.934745+00:00",
+          "started_at": "2026-10-16T22:03:23.791580+00:00",
+          "finished_at": "2026-10-16T22:03:25.371131+00:00",
+          "parameters": {
+            "source_ref": "synthetic_pdf",
+            "course_id": "cs50_python",
+            "workflow_id": "synthetic_http_workflow",
+            "previous_run_id": null,
+            "output_name": "workflow-report"
+          },
+          "progress": null,
+          "phase": "completed",
+          "exit_code": 0,
+          "error": null,
+          "error_class": null,
+          "artifact_refs": [
+            {
+              "schema_version": 1,
+              "artifact_id": "art_084ffc6f19c8462aa40fd356320f3eb1",
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+              "kind": "workflow_report",
+              "size_bytes": 15361,
+              "sha256": "544f5f52cb2eac593978ee05e75e69a3f38556800f179428b8ac9e904e9bac03",
+              "created_at": "2026-10-16T22:03:25.370177+00:00",
+              "input_refs": [
+                "synthetic_pdf"
+              ]
+            }
+          ],
+          "initiated_by": "synthetic_operator",
+          "input_refs": [
+            "synthetic_pdf"
+          ],
+          "output_refs": [
+            "art_084ffc6f19c8462aa40fd356320f3eb1"
+          ],
+          "cancellable": false,
+          "duration_seconds": 1.5769652649978525
+        },
+        "previous_run_id": null,
+        "report_artifact": {
+          "schema_version": 1,
+          "artifact_id": "art_084ffc6f19c8462aa40fd356320f3eb1",
+          "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+          "kind": "workflow_report",
+          "size_bytes": 15361,
+          "sha256": "544f5f52cb2eac593978ee05e75e69a3f38556800f179428b8ac9e904e9bac03",
+          "created_at": "2026-10-16T22:03:25.370177+00:00",
+          "input_refs": [
+            "synthetic_pdf"
+          ]
+        },
+        "history": [
+          {
+            "schema_version": 1,
+            "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+            "process_id": "cs50_offline_workflow",
+            "status": "completed",
+            "created_at": "2026-10-16T22:03:22.934745+00:00",
+            "started_at": "2026-10-16T22:03:23.791580+00:00",
+            "finished_at": "2026-10-16T22:03:25.371131+00:00",
+            "parameters": {
+              "source_ref": "synthetic_pdf",
+              "course_id": "cs50_python",
+              "workflow_id": "synthetic_http_workflow",
+              "previous_run_id": null,
+              "output_name": "workflow-report"
+            },
+            "progress": null,
+            "phase": "completed",
+            "exit_code": 0,
+            "error": null,
+            "error_class": null,
+            "artifact_refs": [
+              {
+                "schema_version": 1,
+                "artifact_id": "art_084ffc6f19c8462aa40fd356320f3eb1",
+                "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+                "kind": "workflow_report",
+                "size_bytes": 15361,
+                "sha256": "544f5f52cb2eac593978ee05e75e69a3f38556800f179428b8ac9e904e9bac03",
+                "created_at": "2026-10-16T22:03:25.370177+00:00",
+                "input_refs": [
+                  "synthetic_pdf"
+                ]
+              }
+            ],
+            "initiated_by": "synthetic_operator",
+            "input_refs": [
+              "synthetic_pdf"
+            ],
+            "output_refs": [
+              "art_084ffc6f19c8462aa40fd356320f3eb1"
+            ],
+            "cancellable": false,
+            "duration_seconds": 1.5769652649978525
+          }
+        ],
+        "history_total": 1,
+        "history_offset": 0,
+        "history_limit": 10
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/workflows/synthetic_http_workflow/runs/job_084ffc6f19c8462aa40fd356320f3eb1?source_ref=synthetic_pdf",
+      "body": null,
+      "idempotency_key": null,
+      "status": 200,
+      "response": {
+        "schema_version": 1,
+        "protocol": "personal_assistant_workflows_v1",
+        "workflow_id": "synthetic_http_workflow",
+        "run_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+        "job": {
+          "schema_version": 1,
+          "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+          "process_id": "cs50_offline_workflow",
+          "status": "completed",
+          "created_at": "2026-10-16T22:03:22.934745+00:00",
+          "started_at": "2026-10-16T22:03:23.791580+00:00",
+          "finished_at": "2026-10-16T22:03:25.371131+00:00",
+          "parameters": {
+            "source_ref": "synthetic_pdf",
+            "course_id": "cs50_python",
+            "workflow_id": "synthetic_http_workflow",
+            "previous_run_id": null,
+            "output_name": "workflow-report"
+          },
+          "progress": null,
+          "phase": "completed",
+          "exit_code": 0,
+          "error": null,
+          "error_class": null,
+          "artifact_refs": [
+            {
+              "schema_version": 1,
+              "artifact_id": "art_084ffc6f19c8462aa40fd356320f3eb1",
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+              "kind": "workflow_report",
+              "size_bytes": 15361,
+              "sha256": "544f5f52cb2eac593978ee05e75e69a3f38556800f179428b8ac9e904e9bac03",
+              "created_at": "2026-10-16T22:03:25.370177+00:00",
+              "input_refs": [
+                "synthetic_pdf"
+              ]
+            }
+          ],
+          "initiated_by": "synthetic_operator",
+          "input_refs": [
+            "synthetic_pdf"
+          ],
+          "output_refs": [
+            "art_084ffc6f19c8462aa40fd356320f3eb1"
+          ],
+          "cancellable": false,
+          "duration_seconds": 1.5769652649978525
+        },
+        "report": {
+          "schema_version": 1,
+          "workflow_id": "synthetic_http_workflow",
+          "workflow_type": "cs50_offline_materials_v1",
+          "course_id": "cs50_python",
+          "lecture_ids": [
+            "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+          ],
+          "created_at": "2026-10-16T22:03:24.543576+00:00",
+          "status": "completed",
+          "stages": [
+            {
+              "stage_id": "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2",
+              "process_id": "material_planning",
+              "material_id": null,
+              "dependencies": [],
+              "expected_inputs": [
+                "manifest"
+              ],
+              "expected_outputs": [
+                "plan"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "133131970afbff385a7de1f9da56760b432ade35e04dfdf06fe1d9d43e629b00",
+              "status": "completed",
+              "decision": "execute_new_workspace",
+              "input_hashes": {
+                "manifest.json": "18a6d7a04677b3f2fcedffee3712fb1bedf0dd8127d6114f4eafb75faa2d0ff7",
+                "cs50_python/week0.html": "0089e40860e9c6ecd90b9f1b28a2f60eaa3805cc881abc3a17f98438b71035d3",
+                "cs50_python/index.html": "94c7cecb1ff479f8bd500056648d6db503a7c03d897c4c42039af18f5b36e9bc"
+              },
+              "output_refs": [
+                {
+                  "kind": "plan",
+                  "identity": "cs50_python",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/c484097e0213674dfdbae7f7bcafc71e/plan.v1.json",
+                  "sha256": "2bb86de825cf453a72fd6f0b108f5bd733660131318f10f9b065294210ecd923",
+                  "size_bytes": 6398
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:24.543907+00:00",
+              "finished_at": "2026-10-16T22:03:24.549342+00:00",
+              "duration_seconds": 0.002252559002954513,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75",
+              "process_id": "local_material_import",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2"
+              ],
+              "expected_inputs": [
+                "plan",
+                "local_raw"
+              ],
+              "expected_outputs": [
+                "raw",
+                "receipt"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "58262a37373ab3a46ddeea83cf1ebc53ca1e197405c86f365fb528aa1dc5c4af",
+              "status": "completed",
+              "decision": "execute_new_workspace",
+              "input_hashes": {
+                "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2:plan:cs50_python": "2bb86de825cf453a72fd6f0b108f5bd733660131318f10f9b065294210ecd923",
+                "local_source": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                "binding": "3008e817a71599162ce61674d0bc552555afa4e000dcf5cb09334c031adacf9e"
+              },
+              "output_refs": [
+                {
+                  "kind": "raw",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/raw/source",
+                  "sha256": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                  "size_bytes": 1056
+                },
+                {
+                  "kind": "receipt",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+                  "sha256": "53d30f499780a7b47c1e4979a061f8378a0c62891fd03407be8bc3bdc06effa3",
+                  "size_bytes": 1557
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:24.552283+00:00",
+              "finished_at": "2026-10-16T22:03:24.559138+00:00",
+              "duration_seconds": 0.005250364003586583,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40",
+              "process_id": "material_parsing",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75"
+              ],
+              "expected_inputs": [
+                "raw",
+                "receipt"
+              ],
+              "expected_outputs": [
+                "raw",
+                "receipt",
+                "normalized"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "d47671073047b76b183d74c6742c88c8129780e571e2a288427d45e856de77ba",
+              "status": "completed",
+              "decision": "execute_new_workspace",
+              "input_hashes": {
+                "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75:raw:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75:receipt:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "53d30f499780a7b47c1e4979a061f8378a0c62891fd03407be8bc3bdc06effa3"
+              },
+              "output_refs": [
+                {
+                  "kind": "raw",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/raw/source",
+                  "sha256": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                  "size_bytes": 1056
+                },
+                {
+                  "kind": "receipt",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+                  "sha256": "d7847e26ecbff243a8a5382d2332ea8de721fe094791f68be51c41b33fec34ae",
+                  "size_bytes": 1989
+                },
+                {
+                  "kind": "normalized",
+                  "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e/normalized.v1.json",
+                  "sha256": "b61aaa7cda0a31fe7561c51beeb07192deb5f7b7a3573efa1eac6a23099dde8c",
+                  "size_bytes": 3669
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:24.562104+00:00",
+              "finished_at": "2026-10-16T22:03:25.032191+00:00",
+              "duration_seconds": 0.4683613730012439,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81",
+              "process_id": "quality_evaluation",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40"
+              ],
+              "expected_inputs": [
+                "plan",
+                "normalized",
+                "receipt",
+                "raw"
+              ],
+              "expected_outputs": [
+                "quality"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "34b3440606a82a05c1656d3021e1b49982762498ca2700d810a936a48b2b18c8",
+              "status": "completed",
+              "decision": "execute_new_workspace",
+              "input_hashes": {
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40:raw:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40:receipt:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "d7847e26ecbff243a8a5382d2332ea8de721fe094791f68be51c41b33fec34ae",
+                "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40:normalized:material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e": "b61aaa7cda0a31fe7561c51beeb07192deb5f7b7a3573efa1eac6a23099dde8c"
+              },
+              "output_refs": [
+                {
+                  "kind": "quality",
+                  "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/25dfaf3b5c20e672f07f339ef0ed1cfb/quality.v1.json",
+                  "sha256": "ed19173a3488ab8ad3229e7f57a52dd9dd523a04e1af3b897ce041337b046318",
+                  "size_bytes": 16882
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:25.049794+00:00",
+              "finished_at": "2026-10-16T22:03:25.062926+00:00",
+              "duration_seconds": 0.010694561002310365,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            },
+            {
+              "stage_id": "material_task:049bd1ce449a36bf7d7ffca8585fb89fd3fea8d1b64fecdc6ed476522025e986",
+              "process_id": "lecture_material_handoff",
+              "material_id": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "dependencies": [
+                "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81"
+              ],
+              "expected_inputs": [
+                "quality",
+                "plan",
+                "normalized",
+                "receipt",
+                "raw"
+              ],
+              "expected_outputs": [
+                "handoff"
+              ],
+              "missing_inputs": [],
+              "contract_version": 1,
+              "configuration_hash": "c57fbd45eb878300f82a146d0c516a61b5910b809002f22fb541b3c42ed11cf4",
+              "status": "completed",
+              "decision": "execute_new_workspace",
+              "input_hashes": {
+                "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81:quality:material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611": "ed19173a3488ab8ad3229e7f57a52dd9dd523a04e1af3b897ce041337b046318"
+              },
+              "output_refs": [
+                {
+                  "kind": "handoff",
+                  "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+                  "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/9443ec80dab035021e196ec1414c9596/handoff.v1.json",
+                  "sha256": "553426e6b7f38b2589d012c21be88b7d95c742458ea8309017cc4fe664bf5568",
+                  "size_bytes": 12816
+                }
+              ],
+              "stale_reasons": [],
+              "error": null,
+              "started_at": "2026-10-16T22:03:25.077791+00:00",
+              "finished_at": "2026-10-16T22:03:25.098957+00:00",
+              "duration_seconds": 0.011449680998339318,
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1"
+            }
+          ],
+          "dependencies": {
+            "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2": [],
+            "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75": [
+              "material_task:ebd93064895ad56aca16464f87845c840eade34da5ac0c5f9e722a0a68ce72b2"
+            ],
+            "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40": [
+              "material_task:fc6463afb1f7c3ef5b92d372a75edee22c6bd184464b6cd055e6d521b1066b75"
+            ],
+            "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81": [
+              "material_task:99d53e2b870cf2d4af33ca17a679ffdebd3bb1f3ee50f29837440ce3ca2f5e40"
+            ],
+            "material_task:049bd1ce449a36bf7d7ffca8585fb89fd3fea8d1b64fecdc6ed476522025e986": [
+              "material_task:b25cdd2104ffc739adc0c842ff9956d8069114549767b464def6cf9ea08ebe81"
+            ]
+          },
+          "input_refs": [
+            "synthetic_pdf"
+          ],
+          "output_refs": [
+            {
+              "kind": "handoff",
+              "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/9443ec80dab035021e196ec1414c9596/handoff.v1.json",
+              "sha256": "553426e6b7f38b2589d012c21be88b7d95c742458ea8309017cc4fe664bf5568",
+              "size_bytes": 12816
+            },
+            {
+              "kind": "normalized",
+              "identity": "material_doc:377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/377e38f0863412b92cf60fdf81522f8ece63cfe465ed26912fb3034d5b8a2e8e/normalized.v1.json",
+              "sha256": "b61aaa7cda0a31fe7561c51beeb07192deb5f7b7a3573efa1eac6a23099dde8c",
+              "size_bytes": 3669
+            },
+            {
+              "kind": "plan",
+              "identity": "cs50_python",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/c484097e0213674dfdbae7f7bcafc71e/plan.v1.json",
+              "sha256": "2bb86de825cf453a72fd6f0b108f5bd733660131318f10f9b065294210ecd923",
+              "size_bytes": 6398
+            },
+            {
+              "kind": "quality",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/25dfaf3b5c20e672f07f339ef0ed1cfb/quality.v1.json",
+              "sha256": "ed19173a3488ab8ad3229e7f57a52dd9dd523a04e1af3b897ce041337b046318",
+              "size_bytes": 16882
+            },
+            {
+              "kind": "raw",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/raw/source",
+              "sha256": "3418563d1c843a124ba25ee130a710c8989fd4ca98fcb4c79496d12300c47801",
+              "size_bytes": 1056
+            },
+            {
+              "kind": "receipt",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/b1045b2037d0dece0ba70627bf6a6879/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+              "sha256": "53d30f499780a7b47c1e4979a061f8378a0c62891fd03407be8bc3bdc06effa3",
+              "size_bytes": 1557
+            },
+            {
+              "kind": "receipt",
+              "identity": "material:21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611",
+              "path": "jobs/job_084ffc6f19c8462aa40fd356320f3eb1/results/stages/8c0d0e4599623bcb9fd007c8abada2ac/materials/21d20f584142c504cabdb2e6db5f424f7bbea2a5e5be0c567997ddcc1b265611/receipt.v1.json",
+              "sha256": "d7847e26ecbff243a8a5382d2332ea8de721fe094791f68be51c41b33fec34ae",
+              "size_bytes": 1989
+            }
+          ],
+          "configuration_hash": "16743ca25c419aeb1933571183c676a3b0cc4db6f09196b6183fdc814998ae24",
+          "run_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+          "initiated_by": "synthetic_operator",
+          "started_at": "2026-10-16T22:03:24.543599+00:00",
+          "finished_at": "2026-10-16T22:03:25.117075+00:00",
+          "expected_changes": [],
+          "errors": [],
+          "report_sha256": "36ffb6459a91b409437e7ccd6240c839708b411af647b607be5659268993fca9"
+        },
+        "report_artifact": {
+          "schema_version": 1,
+          "artifact_id": "art_084ffc6f19c8462aa40fd356320f3eb1",
+          "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+          "kind": "workflow_report",
+          "size_bytes": 15361,
+          "sha256": "544f5f52cb2eac593978ee05e75e69a3f38556800f179428b8ac9e904e9bac03",
+          "created_at": "2026-10-16T22:03:25.370177+00:00",
+          "input_refs": [
+            "synthetic_pdf"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/workflows/resume",
+      "body": {
+        "source_ref": "synthetic_pdf",
+        "workflow_id": "synthetic_http_workflow",
+        "preview_id": "0c11f78ec00b3aa720cbef3a13f891dfe1e1e278b2e75475a453614088c89061",
+        "current_run_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+        "confirmed": true
+      },
+      "idempotency_key": "synthetic_http_demo_resume_001",
+      "status": 202,
+      "response": {
+        "schema_version": 1,
+        "protocol": "personal_assistant_workflows_v1",
+        "workflow_id": "synthetic_http_workflow",
+        "run_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+        "job": {
+          "schema_version": 1,
+          "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+          "process_id": "cs50_offline_workflow",
+          "status": "completed",
+          "created_at": "2026-10-16T22:03:22.934745+00:00",
+          "started_at": "2026-10-16T22:03:23.791580+00:00",
+          "finished_at": "2026-10-16T22:03:25.371131+00:00",
+          "parameters": {
+            "source_ref": "synthetic_pdf",
+            "course_id": "cs50_python",
+            "workflow_id": "synthetic_http_workflow",
+            "previous_run_id": null,
+            "output_name": "workflow-report"
+          },
+          "progress": null,
+          "phase": "completed",
+          "exit_code": 0,
+          "error": null,
+          "error_class": null,
+          "artifact_refs": [
+            {
+              "schema_version": 1,
+              "artifact_id": "art_084ffc6f19c8462aa40fd356320f3eb1",
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+              "kind": "workflow_report",
+              "size_bytes": 15361,
+              "sha256": "544f5f52cb2eac593978ee05e75e69a3f38556800f179428b8ac9e904e9bac03",
+              "created_at": "2026-10-16T22:03:25.370177+00:00",
+              "input_refs": [
+                "synthetic_pdf"
+              ]
+            }
+          ],
+          "initiated_by": "synthetic_operator",
+          "input_refs": [
+            "synthetic_pdf"
+          ],
+          "output_refs": [
+            "art_084ffc6f19c8462aa40fd356320f3eb1"
+          ],
+          "cancellable": false,
+          "duration_seconds": 1.5769652649978525
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/workflows/execute",
+      "body": {
+        "source_ref": "synthetic_pdf",
+        "workflow_id": "synthetic_http_workflow",
+        "preview_id": "31742e7b2dbfb06865542219943bfa5f0ed336b987207656858043f44812bd38",
+        "current_run_id": null,
+        "confirmed": true
+      },
+      "idempotency_key": "synthetic_http_demo_execute_001",
+      "status": 202,
+      "response": {
+        "schema_version": 1,
+        "protocol": "personal_assistant_workflows_v1",
+        "workflow_id": "synthetic_http_workflow",
+        "run_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+        "job": {
+          "schema_version": 1,
+          "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+          "process_id": "cs50_offline_workflow",
+          "status": "completed",
+          "created_at": "2026-10-16T22:03:22.934745+00:00",
+          "started_at": "2026-10-16T22:03:23.791580+00:00",
+          "finished_at": "2026-10-16T22:03:25.371131+00:00",
+          "parameters": {
+            "source_ref": "synthetic_pdf",
+            "course_id": "cs50_python",
+            "workflow_id": "synthetic_http_workflow",
+            "previous_run_id": null,
+            "output_name": "workflow-report"
+          },
+          "progress": null,
+          "phase": "completed",
+          "exit_code": 0,
+          "error": null,
+          "error_class": null,
+          "artifact_refs": [
+            {
+              "schema_version": 1,
+              "artifact_id": "art_084ffc6f19c8462aa40fd356320f3eb1",
+              "job_id": "job_084ffc6f19c8462aa40fd356320f3eb1",
+              "kind": "workflow_report",
+              "size_bytes": 15361,
+              "sha256": "544f5f52cb2eac593978ee05e75e69a3f38556800f179428b8ac9e904e9bac03",
+              "created_at": "2026-10-16T22:03:25.370177+00:00",
+              "input_refs": [
+                "synthetic_pdf"
+              ]
+            }
+          ],
+          "initiated_by": "synthetic_operator",
+          "input_refs": [
+            "synthetic_pdf"
+          ],
+          "output_refs": [
+            "art_084ffc6f19c8462aa40fd356320f3eb1"
+          ],
+          "cancellable": false,
+          "duration_seconds": 1.5769652649978525
+        }
+      }
+    }
+  ]
+}

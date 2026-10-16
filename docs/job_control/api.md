@@ -1,5 +1,36 @@
 # HTTP- und Datenvertrag v1
 
+C20-B ergänzt den separaten, optionalen Vertrag
+[`personal_assistant_workflows_v1`](../workflows/http.md). Die bisherigen
+Capabilities, Prozesse, Previews, Job-, Log-, Cancel- und Artefaktantworten bleiben
+unverändert. Workflow-Capabilities werden ausschließlich über die neue Route
+geliefert, damit bestehende C17-/C20-DTOs mit `extra=forbid` kompatibel bleiben.
+
+| Methode/Route | Versionierter Workflow-Vertrag |
+| --- | --- |
+| GET /v1/workflows/capabilities | WorkflowCapabilities, auch bei deaktivierten Workflows lesbar |
+| POST /v1/workflows/inspect | WorkflowInspectRequest → WorkflowInspection; C18-Stufenpreview |
+| POST /v1/workflows/execute | WorkflowExecuteRequest → WorkflowSubmission, HTTP 202 |
+| POST /v1/workflows/resume | WorkflowResumeRequest → WorkflowSubmission, HTTP 202 |
+| GET /v1/workflows/{workflow_id}?source_ref={ref}&offset=0&limit=10 | WorkflowInspection; Status, Stufen, aktuelle/persistierte Reports und paginierte Run-Historie |
+| GET /v1/workflows/{workflow_id}/runs/{run_id}?source_ref={ref} | WorkflowRunReport; ursprünglicher Report eines konkreten Versuchs, falls vorhanden |
+
+Jede neue Route verwendet dieselbe Bearer-Authentifizierung und unveränderte
+Fehlerhülle. Die Workflow-Routen prüfen zusätzlich Eigentümerschaft für **alle**
+Leser, Kursfreigaben, Katalogbindung und `workflows_enabled`. Execute/Resume
+benötigen Operator, `confirmed: true`, aktuelle `preview_id`, explizite
+`current_run_id` und einen Idempotency-Key. Ein frisches Execute ohne Vorlauf
+sendet `current_run_id: null`; Resume benötigt eine konkrete aktuelle Job-ID.
+Idempotency-Keys gelten innerhalb des Workflow-HTTP-Vertrags für
+`(Subject, Key)` über Execute, Resume und alle Workflow-IDs hinweg.
+Sie sind getrennt von den Keys der generischen C16-Jobroute.
+
+Vollständige JSON-Nachrichten einschließlich aller fünf Stufen und unveränderter
+Antworten stehen in [example-http.v1.json](../workflows/example-http.v1.json).
+[Ablauf, Fehlercodes, Sicherheitsgrenzen und konkrete C20-UI-Übergabe](../workflows/http.md).
+Die veröffentlichten Contract-Dateien enthalten die ergänzenden Pydantic-Schemas
+unter `workflow_http`; ihre bisherigen `models`/Registry-Blöcke bleiben erhalten.
+
 C19 ergänzt optional `material_parsing` (`pdf_enabled=true`, `PdfParams`,
 `pdf_bundle` → `material_receipt`) auf den bestehenden Routen.
 [PDF-v2-Eingabe-/Ausgabevertrag und Limits](pdf_lifecycle.md).
