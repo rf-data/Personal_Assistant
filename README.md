@@ -1,200 +1,79 @@
-# gmp-compliance
+# Personal Assistant
 
-Streamlit-basierte Analyseanwendung für Dokumenten-Parsing, Text-Extraktion und RAG-gestützte SOP-Generierung in regulatorischen Kontexten.
+Backend und Offline-Werkzeuge für Kursmaterialien, Lecture-/Transkriptverarbeitung,
+Knowledge mit Quellenbelegen und reproduzierbare Evaluation. Das lokale
+Arbeitsverzeichnis und der Python-Projektname heißen weiterhin `gmp_compliance`
+bzw. `gmp-compliance`; dieses Audit benennt weder Paket noch Datenpfade um.
 
-## Übersicht
+Stand: 16.10.2026, gemergter Backend-`master` `78b35a5` und
+[separates UI-Repository](https://github.com/rf-data/personal-assistant-ui).
+Die frühere GMP-/SOP-/Streamlit-Anwendung bleibt als Legacy-Code vorhanden und
+ist nicht der Einstieg in die neue Admin-UI.
 
-Das Projekt kombiniert mehrere Funktionsbereiche:
+## Einstieg nach Aufgabe
 
-- **Text-Extraktion**: Parser für PDF, HTML, Word, Markdown, Jupyter Notebooks, CSV/Excel und Wiki-Seiten
-- **RAG-System**: ChromaDB-backed Retrieval mit Chunk- und Embedding-Pipeline
-- **SOP-Generierung**: LLM-gestützte Erstellung von Standardarbeitsanweisungen (⚠️ teilweise implementiert)
-- **Monitoring**: Prometheus/Grafana Stack für Systemüberwachung
-- **MLflow-Integration**: Experiment-Tracking für ML-Workflows
+| Bereich | Implementierung und belegter Umfang | Dokumentation |
+| --- | --- | --- |
+| CS50-Materialien | vorhandene Snapshots → Auswahl/Plan → expliziter Import → HTML-v2/PDF-v2/Code-v1 → normalisierte Blöcke mit Provenienz | [CS50](docs/cs50/README.md), [Materialbetrieb](docs/cs50/operations/material_ingestion.md) |
+| Qualität und Lecture-Handoff | C10 validiert offline und liefert referenzierbare Materialien; keine automatische Knowledge-Extraktion | [Quality-Vertrag](docs/cs50/contracts/material_quality.md) |
+| Lectures und Transkripte | SRT-first, explizite Quellenbindung, Chunk-/Kurspläne, begrenzte Runner und Resume; Liveausführung getrennt freizugeben | [Lecturebetrieb](docs/cs50/operations/cs50_lecture_runner.md) |
+| Knowledge | Evidence-/Source-IDs, kontrollierte Extraktionsgrenzen und konservative Offline-Konsolidierung | [C12](docs/knowledge_consolidation_hardening.md) |
+| Mathematik und Visuals | synthetische Formelpaar-Evaluation; technische Bild-/SVG-/Vektorinventur; keine semantische Goldfreigabe | [C11](docs/math_evaluation/README.md), [C13](docs/visual_inventory.md) |
+| Job-Control und Workflows | C16: private SQLite-Queue und begrenzter Linux-Executor; C18: optionaler Offline-Materialworkflow mit Resume | [C16](docs/job_control/README.md), [C18](docs/workflows/README.md) |
+| Admin-UI | C14/C17 im separaten Repository gemergt; echter C16-Client für Planung/Qualitätscheck | [UI-Einstieg](https://github.com/rf-data/personal-assistant-ui/blob/main/README.md) |
+| Monitoring | geprüfte Konfiguration und endlicher Metrikvertrag; C16 liefert authentifizierte Jobmetriken; keine bestätigte Liveinstallation | [C15](docs/monitoring/README.md) |
 
-**Aktueller Zustand**: Kern-Parser und RAG-Infrastruktur sind funktionsfähig. Frontend zeigt viele Platzhalter. SOP-Generierung ist teilweise implementiert.
+„Offline getestet“ beschreibt technische Verträge und synthetische Nachweise,
+keine fachliche Modellqualität und keine produktive Betriebsfreigabe. Die
+[Architektur](docs/architecture.md) trennt aktuelle, experimentelle und geplante
+Pfade. [Roadmap](docs/ROADMAP.md) und [Audit](docs/documentation_audit.md) belegen
+Status und verbleibende Lücken anhand von Code, Commits und gemergten PRs.
 
-## Voraussetzungen
+## Lokal und offline beginnen
 
-- Python 3.12–3.13
-- `uv` (Package Manager) — [Installation](https://docs.astral.sh/uv/getting-started/installation/)
-- Docker + Docker Compose (optional, für Monitoring und MLflow)
-
-## Installation
-
-```bash
-# 1. Repository klonen und in Verzeichnis wechseln
-cd gmp_compliance
-
-# 2. Mit uv installieren (empfohlen)
-uv sync
-
-# 3. Umgebungsvariablen konfigurieren
-cp .env.parse.example .env.parse
-cp .env.agentic.example .env.agentic
-cp .env.mlops.example .env.mlops
-cp .env.organizer.example .env.organizer
-
-# Danach .env.parse, .env.agentic, .env.mlops und .env.organizer mit echten Werten füllen
-# Siehe docs/development.md für Konfigurationsdetails
-```
-
-## Schnellstart
-
-### Hauptanwendung (Streamlit)
+Python `>=3.12,<3.14` laut `pyproject.toml`. Vorhandene passende Umgebung
+verwenden; die deklarativen Workerprofile und deren Offline-Cachegrenzen stehen
+in [Entwicklung](docs/development.md). Für die folgenden Hilfepfade sind keine
+API-Schlüssel oder produktiven Daten erforderlich:
 
 ```bash
-make streamlit
-# Öffne http://localhost:8501 im Browser
+python -m scripts.cs50_materials --help
+python -m scripts.cs50_material_quality --help
+python -m scripts.evaluate_math_formulas --help
+python -m scripts.cs50_visual_inventory --help
+python -m scripts.job_control --help
+python -m scripts.cs50_workflow --help
 ```
 
-Die Anwendung ist in sechs Hauptbereiche unterteilt:
-
-| Bereich | Funktion | Status |
-|---------|----------|--------|
-| **General Features** | Cockpit, LLM-Aktionen, Dateisystem, Transkription, E-Mails | ⚠️ teilweise |
-| **Extract Text** | HTML, PDF, Wiki, Notebooks, Word, Markdown, OCR, Plain Text | ✅ arbeitet |
-| **Extract Data** | Excel, CSV/Parquet, MatLab | ⚠️ teilweise |
-| **DataViz & Dashboards** | EDA, PCA | ⚠️ teilweise |
-| **RAG System** | Status, Chunk & Embed, SOP-Generierung, File Chat | ⚠️ teilweise |
-| **Development** | Entwicklertools | 🔵 intern |
-
-### Abhängigkeits-Audit
+Demos schreiben ausschließlich in einen **neuen externen** Scratchordner und
+führen echte begrenzte Offlineadapter mit synthetischen Inputs aus:
 
 ```bash
-make dependency_check
-# Generiert Vulnerability-Berichte in logs/
+python -m scripts.job_control_demo --output /tmp/new-c16-demo
+python -m scripts.cs50_workflow_demo --output /tmp/new-c18-demo
 ```
 
-### MLflow
+Keiner dieser Befehle startet die separate Streamlit-App. C18 bleibt in der
+C16-Konfiguration standardmäßig deaktiviert und unterstützt zunächst lokale
+HTML-/Code-Materialien. PDF bleibt im Workflow wegen der noch nicht bestätigten
+Cancel-/Timeout-Lebensdauer seines Subprozesses gesperrt; der einzelne PDF-v2-
+Parser bleibt vorhanden. Die C17-UI kennt diesen zusätzlichen Workflowprozess
+noch nicht und benötigt dafür einen eigenen Integrationsschritt.
 
-```bash
-# Server starten (SQLite lokal oder PostgreSQL via Docker)
-make mlflow_start
+## Repository und Dokumentation
 
-# Server beenden
-make mlflow_stop
+- `src/model_*`, `src/tools_*`: fachliche Verträge und Verarbeitung;
+  `src/job_control`, `src/workflows`: begrenzte Ausführungssteuerung.
+- `scripts/`: explizite CLIs und Offline-Demos; `tests/`: Offlineprüfungen/Fixtures.
+- `workers/`: deklarierte minimale Profile; `docker/`, `monitoring/`: Konfiguration.
+- `frontend/`, `streamlit_app.py`, `_prototypes/`: erhaltene Legacy-/Experimentpfade;
+  aktive Referenzen verhindern eine pauschale Entfernung.
+- [Dokumentationsindex](docs/README.md), [Inventar](docs/repository_inventory.md),
+  [Bereinigungsplan mit Freigabeliste](docs/cleanup_plan.md),
+  [frühere Konsolidierung](docs/project_consolidation_report.md).
 
-# Fingerprint-Experiment anlegen
-make mlflow_fingerprint
-```
-
-### Monitoring
-
-Der lokale Stack ist auf Loopback beschränkt. Host-/Container-Exporter und
-Portainer benötigen explizite Profile; die vier bisherigen Datenpfade bleiben
-erhalten. Vor einer späteren Anwendung sind freigegebene Image-Digests und eine
-externe Grafana-Secretdatei erforderlich. Echte Pipeline-Metriken sind noch nicht
-angebunden; provisionierte Dashboards zeigen ohne Exporter fehlende Daten.
-
-```bash
-# Offline-Konfigurationsprüfung; startet keine Container
-python -m scripts.validate_monitoring --native
-```
-
-[Ist-Analyse, Betrieb/Migration, Metrics-Vertrag und Testnachweise](docs/monitoring/README.md).
-Die vorhandenen Make-Targets `monitoring_docker`/`monitoring_stop` sind weiterhin
-operative Start-/Stopp-Befehle mit Projektkennung `personal_assistence`, keine
-Validierungsbefehle. Vor Nutzung die Betriebsanleitung und bestehende Installation
-prüfen; kein automatisches Deployment oder Volume-Löschen.
-
-### Pre-commit Hooks
-
-```bash
-# Alle Hooks manuell ausführen
-make pre_commit_check
-
-# Hooks aktualisieren und durchlaufen lassen
-make pre_commit_update
-
-# Pre-push Hooks testen
-make pre_push_check
-```
-
-## Repository-Struktur
-
-```
-gmp_compliance/
-├── streamlit_app.py              # Haupt-Einstiegspunkt
-├── frontend/pages/               # Streamlit UI-Module (25 Seiten)
-│   ├── A_p*.py                   # General Features
-│   ├── B_p*.py                   # Text Extraction
-│   ├── C_p*.py                   # Data Extraction
-│   ├── D_p*.py                   # Data Viz
-│   ├── E_p*.py                   # RAG System
-│   └── F_p*.py                   # Development
-├── src/
-│   ├── core/                     # Kernel (Config, Logger, Memory)
-│   ├── tools_rag/                # RAG-Pipeline (Chunk, Embed, Retrieve)
-│   ├── model_parsing/      # Parser-Infrastruktur (PDF, HTML, etc.)
-│   ├── tools_parsing/            # Spezifische Pipelines pro Format
-│   ├── llm/                      # LLM-Integration (LiteLLM)
-│   ├── agent/                    # Prompts und Agent-Konfiguration
-│   ├── utils/                    # Hilfsfunktionen
-│   └── run_*.py                  # Ausführbare Scripts
-├── docker/                       # Docker Compose Definitionen
-│   ├── docker-compose.monitoring.yaml
-│   └── docker-compose.ml.yaml
-├── configuration/                # YAML-Konfiguration
-├── scripts/                      # Shell-Skripte (MLflow, Cleanup)
-├── tests/                        # Tests (minimal)
-├── _prototypes/                  # Experimente/Archiviert
-└── Makefile                      # Build/Dev-Automatisierung
-```
-
-Detaillierte Architekturübersicht siehe [docs/architecture.md](docs/architecture.md).
-
-## Konfiguration
-
-Vier Umgebungsdateien:
-
-| Datei | Zweck | Pflichtfelder |
-|-------|-------|---|
-| `.env.parse` | Pfade für Daten, Logs, Cache | `DATA_DIR`, `LOG_DIR`, `CACHE_DIR` |
-| `.env.agentic` | LLM-API-Keys | `OPENAI_API_KEY` (optional: HF, Langfuse) |
-| `.env.mlops` | MLflow-Persistenz | optional |
-| `.env.organizer` | E-Mail/Kalender (nicht implementiert) | optional |
-
-Siehe [docs/development.md#konfiguration](docs/development.md#konfiguration) für Details.
-
-## Bekannte Einschränkungen
-
-- ⚠️ **Streamlit-UI**: Viele Pages zeigen Platzhalter ("Under Construction")
-- ⚠️ **SOP-Generierung**: Noch nicht vollständig implementiert
-- ⚠️ **E-Mail/Kalender**: Nur Stubs vorhanden, nicht funktionsfähig
-- ⚠️ **Tests**: Minimale Testabdeckung
-- ☑️ **Pre-commit Hooks**:
-- ☑️ **Parser**: PDF, HTML, Word, Markdown sind funktionsfähig
-- ☑️ **RAG-Infrastruktur**: Chunk & Embed funktionieren
-- ☑️ **Monitoring**: Prometheus/Grafana Stack läuft
-
-## Dokumentation
-
-- [CS50-Pipeline und Betrieb](docs/cs50/README.md) — Sechs Kurse, Offline-Tests, Quellenverträge und historisches Archiv
-- [docs/architecture.md](docs/architecture.md) — Technische Architektur und Datenfluss
-- [docs/development.md](docs/development.md) — Entwickler-Setup und Workflows
-
-## Lizenz
-
-Siehe LICENSE (falls vorhanden).
-
-## Lokale Job-Control-API (C16)
-
-[Architektur, API, sichere lokale Ausführung und Offline-Demo](docs/job_control/README.md).
-Zunächst ausschließlich Materialplanung und Offline-Materialqualität; keine
-Downloads/LLMs oder automatische Ausführung weiterer Pipelinearten. Der
-authentifizierte HTTP-Controller und der begrenzte Executor laufen getrennt.
-Eine private SQLite-Jobhistorie erhält Idempotenz und Status über Neustarts.
-
-```bash
-python -m scripts.job_control_demo --output /tmp/neue-c16-demo
-```
-
-Dies erstellt neue synthetische Fixtures außerhalb des Repositorys und führt
-beide echten Offline-Adapter aus. Keine produktiven Daten oder Server verwenden.
-
-## CS50-Offline-Workflows (C18)
-
-[Workflow-Verträge, CLI, Resume und Beispielreport](docs/workflows/README.md).
-Optionaler C16-Prozess für lokale HTML-/Code-Materialien bis zum bestehenden
-Lecture-Material-Handoff. Im Default deaktiviert; keine Streamlitänderung.
+Persistente Kursdaten, Modelle, Transkripte, Knowledge-Dateien, Logs, DVC-Objekte,
+`.env`-Dateien und produktive Volumes sind keine Bereinigungskandidaten dieses
+Auftrags. Make-Targets für Monitoring/MLflow, Backups und Systembereinigung sind
+operative Befehle; sie gehören nicht zur Offlinevalidierung. Kein Deployment
+oder Datenbankzugriff ist allein durch vorhandene Compose-Dateien nachgewiesen.

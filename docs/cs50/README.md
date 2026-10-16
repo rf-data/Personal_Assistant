@@ -1,7 +1,9 @@
 # CS50: Pipeline und Dokumentation
 
-Geprüfte Entwicklungsbasis: master `8ba519ed04c04c92573594ebe74b69a3c00aab1b`.
-Alle Abschlussänderungen aus #27–#37 sind enthalten. Der technische Funktionsumfang
+Aktueller Abgleich: gemergter Backend-`master` `78b35a5` am 16.10.2026.
+Die nachfolgenden historischen Abschlusszahlen zu #27–#37 stammen aus der
+ursprünglich geprüften Basis `8ba519e`; sie sind keine neue Gesamtregression.
+[Aktuelle Paketstände C10–C18](../ROADMAP.md). Der technische Funktionsumfang
 ist offline mit echten Kernfunktionen und Fake-HTTP getestet; fachliche Qualität
 einer vollständigen LLM-Kursverarbeitung ist damit noch nicht nachgewiesen.
 
@@ -108,7 +110,8 @@ Ein echter segment_v1-Qualitätstest und manuell geprüftes Gold-Set bleiben off
 keine automatische Vollkursfreigabe allein wegen grüner Offline-Tests.
 
 Weitere Aufgaben: TXT mit unbekannten Zeitstempeln; optionales SDK-Testprofil;
-sicherer Resume-Vertrag der allgemeinen Legacy-Consolidation. Bestehende
+zusätzliche fachliche Freigabe der semantischen Konsolidierung; der konservative
+Offline-Resume-Vertrag ist inzwischen durch [C12](../knowledge_consolidation_hardening.md) implementiert. Bestehende
 zeitbasierte SRT-/Whisper-Verarbeitung bleibt unverändert. Legacy-Document-,
 Visual- und Whisper-Refactorings sind außerhalb dieses Entwicklungsabschnitts.
 
@@ -165,3 +168,10 @@ C10: [Offline Material Quality Gate, Lecture-Handoff und CLI](contracts/material
 
 C11: [Offline-Evaluation mathematischer Notation und Formelrekonstruktion](../math_evaluation/README.md)
 mit unabhängigem synthetischem Goldset und optionaler isolierter Polynomprüfung.
+
+C12: [Konsolidierung und Resume](../knowledge_consolidation_hardening.md).
+C13: [Technisches Visual Inventory](../visual_inventory.md).
+C16/C18: [Job-Control](../job_control/README.md), [optional orchestrierter
+Offline-Materialworkflow](../workflows/README.md).
+Die separate [C17-Admin-UI](https://github.com/rf-data/personal-assistant-ui/blob/main/README.md)
+steuert aktuell die zwei C16-Defaultprozesse.

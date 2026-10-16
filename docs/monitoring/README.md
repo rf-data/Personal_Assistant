@@ -23,3 +23,12 @@ python -m pytest -q tests/test_monitoring_config.py tests/test_pipeline_metrics.
 Vorhandene Reports werden nicht überschrieben. Fehlende native Werkzeuge
 erscheinen als `not_run`; strukturelle Gültigkeit bestätigt weder PromQL
 noch Image-Kompatibilität oder Laufzeitverhalten.
+
+## Integrationsstand nach C16/C18
+
+C15/PR 65, C16/PR 66 und C18/PR 67 sind inzwischen gemergt. Der
+[authentifizierte C16-Jobexporter](../job_control/integration.md) liefert reale
+Queue-/Job-/Heartbeatbeobachtungen. Ein Scrape ist ausdrücklich zu konfigurieren;
+vorhandene Dashboards belegen kein laufendes Target. C18 ergänzt genau einen
+festen Prozess-/Stage-Labelwert. Die früheren Paket-Testzahlen bleiben historische
+Nachweise; aktuelle Auditprüfungen stehen in [audit/validation.md](../audit/validation.md).

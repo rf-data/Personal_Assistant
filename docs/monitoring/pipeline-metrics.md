@@ -2,8 +2,10 @@
 
 Implementiert: `src/core/pipeline_metrics.py`, maschinenlesbarer Snapshot
 `monitoring/pipeline-metrics.v1.json`, Offline-Validator und Prometheus-Text-
-Renderer. Kein Exporter/HTTP-Server, Workerdispatch, Statusscanner oder globaler
-Counter-Speicher. Keine neuen Dependencies.
+Renderer. Das C15-Basismodul enthält keinen Exporter/HTTP-Server, Workerdispatch,
+Statusscanner oder globalen Counter-Speicher. C16 ergänzt inzwischen den
+authentifizierten Exporter `src/job_control/metrics.py` mit `/v1/metrics`;
+[Betrieb und Integration](../job_control/integration.md). Keine neuen Dependencies.
 
 Der Vertrag nimmt **bereits aggregierte reale Beobachtungen** an.
 Leere Eingabe erzeugt leeren Text, keine Nullmesswerte. Unbekannte Zustände
@@ -21,9 +23,11 @@ Messhistorie behandelt.
 | job_duration_seconds | Histogramm | process, worker_pool, outcome | Dauer bestätigter terminaler Versuche |
 | pipeline_stage_duration_seconds | Histogramm | process, worker_pool, stage | Dauer abgeschlossener Stufen; nicht zusätzlich als Job zählen |
 
-Eine Queue-Länge wird nicht angeboten: kein persistenter Queue-Service wurde
-nachgewiesen. Optionalen Backlog später ausdrücklich definieren, statt Scheduler-
-Listen oder pending Chunks als Queue auszugeben.
+Das C15-Basisschema bietet keine Queue-Familie. C16 hat inzwischen eine echte
+persistente SQLitequeue und exportiert zusätzlich
+`personal_assistant_queue_jobs{process,worker_pool}`. Das ist eine explizite
+Erweiterung außerhalb der acht C15-Basisfamilien; Schedulerlisten oder pending
+Chunks werden weiterhin nicht als Queue ausgegeben.
 
 workers_available meint zugelassene gesunde Worker mit aktuellem Heartbeat,
 einschließlich beschäftigter Worker, nicht freie Ausführungsslots. Die gleiche
@@ -33,7 +37,7 @@ Bereich oder eine gesondert geprüfte Leader-/Dedupstrategie ist erforderlich.
 
 ## Labels, Grenzen und Textformat
 
-Vokabular ist endlich und im Snapshot festgehalten: zehn Prozess-/Stufennamen,
+Vokabular ist endlich und im Snapshot festgehalten: elf Prozess-/Stufennamen (C18 ergänzt `cs50_offline_workflow`),
 vier Worker-Pools (default/cpu/io/llm), drei Outcomes, sieben Fehlerklassen.
 Mögliche Stufen sind keine Startberechtigung und kein Nachweis angebundener Worker.
 Keine Run-/Lecture-/Course-IDs, Dateinamen, URLs, Exceptiontexte, Hashes oder

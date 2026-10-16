@@ -60,3 +60,11 @@ Dependencyversionen. Die .pth-Konfiguration ist ein expliziter lokaler
 Reproduktionsaufbau, keine portable auszuliefernde Installation. Ein vollständig
 bereitgestelltes deklaratives Profil bleibt der reguläre Betriebsweg.
 Auch der gezeigte uv-run-Aufruf mit isolierten Imports wurde tatsächlich ausgeführt.
+
+## Abgleich C17.0 (16.10.2026)
+
+Profil-/Lockdateien bleiben unverändert. Die oben aufgeführten Installations-
+und Testergebnisse sind historische Paketnachweise; eine vollständige frische
+Offlineinstallation wurde in diesem Audit nicht behauptet. Aktuelle Paketgrenzen,
+Testauswahl und bekannte TXT-/SDK-Lücken stehen in
+[Entwicklung](../../docs/development.md) und [Auditvalidierung](../../docs/audit/validation.md).

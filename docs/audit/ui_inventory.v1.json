@@ -1,0 +1,503 @@
+{
+  "baseline_commit": "9d9ed61a02913d2f884358aff9d3ce556094d386",
+  "baseline_tree": "495ab64ab6f860840afc7a2c104816f5ef5e5255",
+  "documents": [
+    {
+      "baseline_sha256": "7a3cfac7d05513ee3f30e74d3b8593b257f7d5ad39a721890cedf09625fd8d3f",
+      "implementation_references": [
+        {
+          "exists": true,
+          "path": "scripts/demo_admin.py"
+        }
+      ],
+      "link_findings": [
+        {
+          "status": "private_target_not_inspected",
+          "target": ".env.job-control.example"
+        }
+      ],
+      "path": "README.md",
+      "sha256": "7a3cfac7d05513ee3f30e74d3b8593b257f7d5ad39a721890cedf09625fd8d3f",
+      "status": "identical_to_baseline"
+    },
+    {
+      "baseline_sha256": "121ef5daf3b047570833b2e0d8967e066a2c71dfde66bda81cfef205aea58f49",
+      "implementation_references": [],
+      "link_findings": [],
+      "path": "admin_ui_package/README.md",
+      "sha256": "121ef5daf3b047570833b2e0d8967e066a2c71dfde66bda81cfef205aea58f49",
+      "status": "identical_to_baseline"
+    },
+    {
+      "baseline_sha256": "bf2aac7b691545165ed01cd2224711646289e58ede0fc175ecdc83abf2615cab",
+      "implementation_references": [
+        {
+          "exists": false,
+          "path": "frontend/chat_app/streamlit_app.py"
+        }
+      ],
+      "link_findings": [],
+      "path": "app_chat/README.md",
+      "sha256": "bf2aac7b691545165ed01cd2224711646289e58ede0fc175ecdc83abf2615cab",
+      "status": "identical_to_baseline"
+    },
+    {
+      "baseline_sha256": "71ed6f1586b6093687ee28398b7bf2046e787f1a0f668b4a6c4521f87374cbfa",
+      "implementation_references": [
+        {
+          "exists": false,
+          "path": "scripts/cs50_material_quality.py"
+        }
+      ],
+      "link_findings": [],
+      "path": "docs/admin_architecture.md",
+      "sha256": "71ed6f1586b6093687ee28398b7bf2046e787f1a0f668b4a6c4521f87374cbfa",
+      "status": "identical_to_baseline"
+    },
+    {
+      "baseline_sha256": "f35fa36351e31971ea68d88199747783ebd4bc16ab2665bb1f8b9027c3f0e1d8",
+      "implementation_references": [
+        {
+          "exists": true,
+          "path": "scripts/demo_job_backend.py"
+        }
+      ],
+      "link_findings": [
+        {
+          "status": "private_target_not_inspected",
+          "target": "../.env.job-control.example"
+        }
+      ],
+      "path": "docs/c17_integration.md",
+      "sha256": "f35fa36351e31971ea68d88199747783ebd4bc16ab2665bb1f8b9027c3f0e1d8",
+      "status": "identical_to_baseline"
+    },
+    {
+      "baseline_sha256": "a2e92e661d254bc0ce05a215a265f711129b13215365aca9a32018c706f21c1f",
+      "implementation_references": [],
+      "link_findings": [],
+      "path": "docs/c17_validation.md",
+      "sha256": "a2e92e661d254bc0ce05a215a265f711129b13215365aca9a32018c706f21c1f",
+      "status": "identical_to_baseline"
+    },
+    {
+      "baseline_sha256": "a493805edb576148e64873142292b0b5b81257450edaa3837f58c15b9949d49e",
+      "implementation_references": [
+        {
+          "exists": true,
+          "path": "scripts/demo_admin.py"
+        }
+      ],
+      "link_findings": [],
+      "path": "docs/demo.md",
+      "sha256": "a493805edb576148e64873142292b0b5b81257450edaa3837f58c15b9949d49e",
+      "status": "identical_to_baseline"
+    },
+    {
+      "baseline_sha256": "799e455e783cecdfd943330782949208463c7ecca01af535a5f78dbde6e93d15",
+      "implementation_references": [
+        {
+          "exists": true,
+          "path": "docker/docker-compose.ui.yaml"
+        }
+      ],
+      "link_findings": [
+        {
+          "status": "private_target_not_inspected",
+          "target": "../.env.job-control.example"
+        }
+      ],
+      "path": "docs/deployment.md",
+      "sha256": "799e455e783cecdfd943330782949208463c7ecca01af535a5f78dbde6e93d15",
+      "status": "identical_to_baseline"
+    },
+    {
+      "baseline_sha256": "5b88f9437e69e1b2a8bec2fc3c4b0616c3886afe053b4c56705d240732402bb6",
+      "implementation_references": [],
+      "link_findings": [],
+      "path": "docs/job_control_v1.md",
+      "sha256": "5b88f9437e69e1b2a8bec2fc3c4b0616c3886afe053b4c56705d240732402bb6",
+      "status": "identical_to_baseline"
+    },
+    {
+      "baseline_sha256": "c31a5873b27839b05602391dfc310a84a58640e3d79a1a9552ec7468a95476ed",
+      "implementation_references": [
+        {
+          "exists": true,
+          "path": "scripts/demo_admin.py"
+        }
+      ],
+      "link_findings": [],
+      "path": "docs/test_results.md",
+      "sha256": "c31a5873b27839b05602391dfc310a84a58640e3d79a1a9552ec7468a95476ed",
+      "status": "identical_to_baseline"
+    }
+  ],
+  "remote_main_commit": "137651eb6d2a30c4f3177ca4d2252ac34f28035b",
+  "remote_main_tree": "495ab64ab6f860840afc7a2c104816f5ef5e5255",
+  "repository": "rf-data/personal-assistant-ui",
+  "schema_version": 1,
+  "scope": "Published UI tree and documentation metadata only; local observations kept private; UI files unchanged",
+  "tracked_files": [
+    {
+      "category": "other",
+      "git_blob": "e732aae3a22b3b95adf0b52b4474bb596b71bb1a",
+      "mode": "100644",
+      "path": ".dockerignore"
+    },
+    {
+      "category": "other",
+      "git_blob": "87cdb01a3d1c386990d5f4a65e589765bed969dd",
+      "mode": "100644",
+      "path": ".env"
+    },
+    {
+      "category": "other",
+      "git_blob": "8ae3a74a5e58d154309176b07029b0c994efcab5",
+      "mode": "100644",
+      "path": ".env.job-control.example"
+    },
+    {
+      "category": "other",
+      "git_blob": "869bd479dac908890128d7ec688cb63bcb25c814",
+      "mode": "100644",
+      "path": ".gitignore"
+    },
+    {
+      "category": "other",
+      "git_blob": "e4fba2183587225f216eeada4c78dfab6b2e65f5",
+      "mode": "100644",
+      "path": ".python-version"
+    },
+    {
+      "category": "documentation",
+      "git_blob": "ce3d22f2d07b3cd8862324b1a64aca23e502b2fa",
+      "mode": "100644",
+      "path": "README.md"
+    },
+    {
+      "category": "documentation",
+      "git_blob": "d5ae84f4e26c250675a628684f061aae7e564153",
+      "mode": "100644",
+      "path": "admin_ui_package/README.md"
+    },
+    {
+      "category": "python",
+      "git_blob": "b82e2949dff1c136125150ad0bc7f0d3ac5d4974",
+      "mode": "100644",
+      "path": "admin_ui_package/app_admin.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "17ac3c54f0d0cea863c95a0375505f63ed1f3cff",
+      "mode": "100644",
+      "path": "admin_ui_package/c16_client.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "d68fb43d08f9cba650410c8b349956528d44272f",
+      "mode": "100644",
+      "path": "admin_ui_package/c16_contract.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "337869600a09dc9208587e41dbe1b0073d04fdfd",
+      "mode": "100644",
+      "path": "admin_ui_package/contracts.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "5a18cae0538df7ac2897edb8f96831ffca2b7bfe",
+      "mode": "100644",
+      "path": "admin_ui_package/controller.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "dbcf4214b8ba281708963c5c266d5382909ebce5",
+      "mode": "100644",
+      "path": "admin_ui_package/environment.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "442c3f37fce4e98127a5883892a2d3890ce65978",
+      "mode": "100644",
+      "path": "admin_ui_package/inventory.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "e9ec0fe18a94349cc2dff4652c90a69ed1149d5c",
+      "mode": "100644",
+      "path": "admin_ui_package/live_app.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "ff31cc35058918a2ad9d978bf3642c11a48e26d8",
+      "mode": "100644",
+      "path": "admin_ui_package/live_config.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "9c8d4ebd5e556f841921bd37cecda1f45cd28918",
+      "mode": "100644",
+      "path": "admin_ui_package/live_forms.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "8f710162fa03fea516a0daf70a6362a64fb0322d",
+      "mode": "100644",
+      "path": "admin_ui_package/live_state.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "9885362cd1d1d77489472785c13609e1d49ab929",
+      "mode": "100644",
+      "path": "admin_ui_package/logs.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "99ba4b0867b9196a0ba31cf0887b8357b3fe1f0d",
+      "mode": "100644",
+      "path": "admin_ui_package/registry.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "c2bc75847f9e62ed5dba04c200a8447c024037d7",
+      "mode": "100644",
+      "path": "admin_ui_package/security.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "7f3524930b6b3a8f7c53e29186082df1c27c3f66",
+      "mode": "100644",
+      "path": "app_admin.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "8330a868bfacd89ebf3f8f36ed10e4126c8b6ff8",
+      "mode": "100644",
+      "path": "app_admin/F_p0_ingestion_admin.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "8e71ba8389303ab3c32523474c57d1ecc66a3b97",
+      "mode": "100644",
+      "path": "app_admin_new.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "e9930a1b215a1fb26d516ea7a911076ea00ab604",
+      "mode": "100644",
+      "path": "app_chat.py"
+    },
+    {
+      "category": "documentation",
+      "git_blob": "a9923de5b831b0f688c0a856564cd896d87401b7",
+      "mode": "100644",
+      "path": "app_chat/README.md"
+    },
+    {
+      "category": "python",
+      "git_blob": "bb0fe872dc1e3ea589f2fa4d515e379888673c30",
+      "mode": "100644",
+      "path": "app_chat/chat_page.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "b36440d72892dd5f20e2e267d1ce86806aae2b96",
+      "mode": "100644",
+      "path": "app_chat/services.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "383402ed1be6bcbde779c5fd8940c8bc6b004b2a",
+      "mode": "100644",
+      "path": "app_ui.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "f7cd0fff6652e323e29cd249038625e80f48f391",
+      "mode": "100644",
+      "path": "core/config.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "487802b3834392928be33c9d067ad17055fd49f7",
+      "mode": "100644",
+      "path": "core/environment.py"
+    },
+    {
+      "category": "deployment",
+      "git_blob": "bb29e6be96024ea2fe9784fe18170aeb13069c95",
+      "mode": "100644",
+      "path": "docker/DockerFile.UI"
+    },
+    {
+      "category": "deployment",
+      "git_blob": "242a57cd1eaa26ce80a274fe6304e8405415f862",
+      "mode": "100644",
+      "path": "docker/docker-compose.ui.yaml"
+    },
+    {
+      "category": "documentation",
+      "git_blob": "c319143f4ae3af0c54f51416593f28daf0089cdd",
+      "mode": "100644",
+      "path": "docs/admin_architecture.md"
+    },
+    {
+      "category": "documentation",
+      "git_blob": "51eb7e391d70fbd64d29ab16087391466bc72f16",
+      "mode": "100644",
+      "path": "docs/c17_integration.md"
+    },
+    {
+      "category": "documentation",
+      "git_blob": "afb44f45b553418d24d21b8845ebcde01ac28632",
+      "mode": "100644",
+      "path": "docs/c17_validation.md"
+    },
+    {
+      "category": "documentation",
+      "git_blob": "f2bc53adaa1fc422ec42b564365a1949207c0bf1",
+      "mode": "100644",
+      "path": "docs/demo.md"
+    },
+    {
+      "category": "documentation",
+      "git_blob": "56532e4ec72b5d4e578bdf233609edf81904a1e5",
+      "mode": "100644",
+      "path": "docs/deployment.md"
+    },
+    {
+      "category": "other",
+      "git_blob": "902e4f0cb6ce214d00cf8b5c11f78217c9bf2c79",
+      "mode": "100644",
+      "path": "docs/examples/admin-demo.v1.json"
+    },
+    {
+      "category": "other",
+      "git_blob": "834759c0d96927855daf62b9deb82d8c2663f833",
+      "mode": "100644",
+      "path": "docs/examples/c17-e2e.v1.json"
+    },
+    {
+      "category": "other",
+      "git_blob": "8b37c545308897092a1a2dbdbcbead874317e6a0",
+      "mode": "100644",
+      "path": "docs/job-control-v1.schemas.json"
+    },
+    {
+      "category": "documentation",
+      "git_blob": "b71f8c0dea8ea1ab6eb8598af80c9ca357e456a4",
+      "mode": "100644",
+      "path": "docs/job_control_v1.md"
+    },
+    {
+      "category": "documentation",
+      "git_blob": "04a86b1c8bb2719ef9d58cea3b8943e09f428386",
+      "mode": "100644",
+      "path": "docs/test_results.md"
+    },
+    {
+      "category": "other",
+      "git_blob": "ebad0a9b4c104bc123eaed01ca84bc8a294555c9",
+      "mode": "100644",
+      "path": "draft.txt"
+    },
+    {
+      "category": "python",
+      "git_blob": "dbcf4214b8ba281708963c5c266d5382909ebce5",
+      "mode": "100644",
+      "path": "environment_2.py"
+    },
+    {
+      "category": "python",
+      "git_blob": "6e414cbdae666fc20ae1381c877bb2a8d8fa8421",
+      "mode": "100644",
+      "path": "main.py"
+    },
+    {
+      "category": "other",
+      "git_blob": "8a3e1fb9742034f12524ce4513184b3a21aa9fd2",
+      "mode": "100644",
+      "path": "personal_assistant_admin_ui.zip"
+    },
+    {
+      "category": "configuration",
+      "git_blob": "340ee95ff6c85fd84b452b0ae6eaa68939f0057e",
+      "mode": "100644",
+      "path": "pyproject.toml"
+    },
+    {
+      "category": "runner",
+      "git_blob": "73c640a891cd4f72472368db2251c47e0281c9e1",
+      "mode": "100644",
+      "path": "scripts/demo_admin.py"
+    },
+    {
+      "category": "runner",
+      "git_blob": "3e9812ff9c8689d6bdf2f5bd370614bec97e0d60",
+      "mode": "100644",
+      "path": "scripts/demo_job_backend.py"
+    },
+    {
+      "category": "test",
+      "git_blob": "c7da61e97b2550754b308fec5636139a1dfa7d8f",
+      "mode": "100644",
+      "path": "tests/c16_harness.py"
+    },
+    {
+      "category": "test",
+      "git_blob": "f88e6b3656c42ec345be8d6f113864785bba1246",
+      "mode": "100644",
+      "path": "tests/c16_support.py"
+    },
+    {
+      "category": "fixture",
+      "git_blob": "1acf2f2835bfb900e0c337ed905e60016ec8a216",
+      "mode": "100644",
+      "path": "tests/fixtures/c16-v1.json"
+    },
+    {
+      "category": "test",
+      "git_blob": "8bb33c018d1bcb522272f054c436814c5143151d",
+      "mode": "100644",
+      "path": "tests/test_c16_e2e.py"
+    },
+    {
+      "category": "test",
+      "git_blob": "a6e78b2157543e5d2969f1d6bb908fe78a1bc0f1",
+      "mode": "100644",
+      "path": "tests/test_controller.py"
+    },
+    {
+      "category": "test",
+      "git_blob": "622f081976f2740687b8ca0e6482d4b6ef576b89",
+      "mode": "100644",
+      "path": "tests/test_deployment.py"
+    },
+    {
+      "category": "test",
+      "git_blob": "6ffdc0f3a30bdfbc6be6a33d03f8dd97e9990647",
+      "mode": "100644",
+      "path": "tests/test_live_client.py"
+    },
+    {
+      "category": "test",
+      "git_blob": "e3217b1860e541771b845378b6c9ae1af6cdc9ab",
+      "mode": "100644",
+      "path": "tests/test_live_ui.py"
+    },
+    {
+      "category": "test",
+      "git_blob": "e52cd620b57cb0dd07386db41cfc482e6d648d16",
+      "mode": "100644",
+      "path": "tests/test_ui.py"
+    },
+    {
+      "category": "other",
+      "git_blob": "b291b43af239db85d85b9a58be22c675d574036f",
+      "mode": "100644",
+      "path": "uv.lock"
+    }
+  ]
+}

@@ -94,20 +94,25 @@ Fehler: 401 unauthenticated, 403 forbidden, 404 not_found,
 Transportfehler liefern http_rejected. Payload 32 KiB, Socketzeitlimit 3 s,
 kein Chunked-Encoding/mehrdeutige Content-Length, eine Anfrage pro Verbindung.
 
-## Unterschied zum C14-Vertrag
+## Historischer C14-Vertrag und aktueller C17-Client
 
 Referenz: UI-PR 1 bei b003a870, inzwischen gemergt. /v1/capabilities,
 previews, jobs, start/cancel, Logs und Artefaktoperationen folgen dessen Entwurf.
-C14 besitzt noch keinen HTTP-Adapter und startet weiterhin ausschließlich Fakejobs.
+Der ursprüngliche C14-Stand besaß nur den Fakeadapter. C17/
+[UI-PR #2](https://github.com/rf-data/personal-assistant-ui/pull/2) ist inzwischen
+gemergt und implementiert den echten C16-HTTP-Client mit eigenen Wire-DTOs und
+getrennter Fake-Demo. Die folgenden Unterschiede erklären das historische Mapping.
 
 Notwendiges Mapping: job_id ↔ run_id, initiated_by ↔ owner,
-finished_at ↔ ended_at, completed ↔ succeeded. interrupted muss im UI ausdrücklich
-ergänzt werden, nicht als succeeded versteckt werden. Logs sind strukturierte
+finished_at ↔ ended_at, completed ↔ succeeded. C17 bildet `interrupted`
+ausdrücklich ab und deutet es nicht als Erfolg um. Logs sind strukturierte
 Cursorereignisse statt einer reinen Zeilenliste. Artifact-DTOs ergänzen Größe/Hash;
 private Speicherorte bleiben auf dem Server. C16 nutzt echte freigegebene
 Manifest-/Materialbundles, keine Fake-discovery_ref/normalized_ref.
 
 Für C14-create/start-Trennung start=false senden und danach /start aufrufen.
 C16s Standard ist ein atomar angenommener queued-Auftrag mit bestätigter Preview.
-Ein UI-Client muss Registry/Schemas prüfen und ausschließlich diese beiden
-echten Prozessadapter anbieten. Keine Änderungen am UI-Repository in diesem PR.
+Der C17-Client prüft Registry/Schemas und bietet diese beiden Defaultadapter an.
+Der optionale C18-Prozess `cs50_offline_workflow` benötigt eine gesonderte
+UI-Vertragserweiterung; [Backend-Workflowvertrag](../workflows/README.md).
+Dieses Dokumentationsaudit ändert keinen UI-Code.
