@@ -177,3 +177,18 @@ Siehe [docs/development.md#konfiguration](docs/development.md#konfiguration) fü
 ## Lizenz
 
 Siehe LICENSE (falls vorhanden).
+
+## Lokale Job-Control-API (C16)
+
+[Architektur, API, sichere lokale Ausführung und Offline-Demo](docs/job_control/README.md).
+Zunächst ausschließlich Materialplanung und Offline-Materialqualität; keine
+Downloads/LLMs oder automatische Ausführung weiterer Pipelinearten. Der
+authentifizierte HTTP-Controller und der begrenzte Executor laufen getrennt.
+Eine private SQLite-Jobhistorie erhält Idempotenz und Status über Neustarts.
+
+```bash
+python -m scripts.job_control_demo --output /tmp/neue-c16-demo
+```
+
+Dies erstellt neue synthetische Fixtures außerhalb des Repositorys und führt
+beide echten Offline-Adapter aus. Keine produktiven Daten oder Server verwenden.

@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "source": "synthetic_offline_demo",
+  "jobs": [
+    {
+      "job": {
+        "schema_version": 1,
+        "job_id": "job_e7a6fd49e55a4c35a0945cbc176fb57c",
+        "process_id": "material_planning",
+        "status": "completed",
+        "created_at": "2026-10-16T14:58:18.200171+00:00",
+        "started_at": "2026-10-16T14:58:18.732163+00:00",
+        "finished_at": "2026-10-16T14:58:19.921009+00:00",
+        "parameters": {
+          "source_ref": "demo_snapshots",
+          "course_id": "cs50_python",
+          "section": "0",
+          "resource_id": null,
+          "output_name": "material-plan"
+        },
+        "progress": null,
+        "phase": "completed",
+        "exit_code": 0,
+        "error": null,
+        "error_class": null,
+        "artifact_refs": [
+          {
+            "schema_version": 1,
+            "artifact_id": "art_e7a6fd49e55a4c35a0945cbc176fb57c",
+            "job_id": "job_e7a6fd49e55a4c35a0945cbc176fb57c",
+            "kind": "material_plan",
+            "size_bytes": 7406,
+            "sha256": "2cd189b8cc5e8564673ffe1ec0846a6186dd99b2d977979afcf4ab01984a69f1",
+            "created_at": "2026-10-16T14:58:19.888636+00:00",
+            "input_refs": [
+              "demo_snapshots"
+            ]
+          }
+        ],
+        "initiated_by": "synthetic-operator",
+        "input_refs": [
+          "demo_snapshots"
+        ],
+        "output_refs": [
+          "art_e7a6fd49e55a4c35a0945cbc176fb57c"
+        ],
+        "cancellable": false,
+        "duration_seconds": 1.1539177279992145
+      },
+      "logs": {
+        "schema_version": 1,
+        "events": [
+          {
+            "sequence": 1,
+            "at": "2026-10-16T14:58:18.200646+00:00",
+            "job_id": "job_e7a6fd49e55a4c35a0945cbc176fb57c",
+            "status": "queued",
+            "phase": "queued",
+            "message": "Confirmed offline request accepted",
+            "process_id": "material_planning",
+            "exit_code": null,
+            "duration_seconds": null,
+            "error": null,
+            "artifact_refs": []
+          },
+          {
+            "sequence": 2,
+            "at": "2026-10-16T14:58:18.243430+00:00",
+            "job_id": "job_e7a6fd49e55a4c35a0945cbc176fb57c",
+            "status": "running",
+            "phase": "dispatching",
+            "message": "Claimed by the single local executor",
+            "process_id": "material_planning",
+            "exit_code": null,
+            "duration_seconds": null,
+            "error": null,
+            "artifact_refs": []
+          },
+          {
+            "sequence": 3,
+            "at": "2026-10-16T14:58:18.733588+00:00",
+            "job_id": "job_e7a6fd49e55a4c35a0945cbc176fb57c",
+            "status": "running",
+            "phase": "offline_adapter",
+            "message": "Known offline adapter launched",
+            "process_id": "material_planning",
+            "exit_code": null,
+            "duration_seconds": null,
+            "error": null,
+            "artifact_refs": []
+          },
+          {
+            "sequence": 4,
+            "at": "2026-10-16T14:58:19.921178+00:00",
+            "job_id": "job_e7a6fd49e55a4c35a0945cbc176fb57c",
+            "status": "completed",
+            "phase": "completed",
+            "message": "Payload and descendants ended; final result recorded",
+            "process_id": "material_planning",
+            "exit_code": 0,
+            "duration_seconds": 1.1539177279992145,
+            "error": null,
+            "artifact_refs": [
+              "art_e7a6fd49e55a4c35a0945cbc176fb57c"
+            ]
+          }
+        ],
+        "next_cursor": 4,
+        "truncated": false
+      }
+    },
+    {
+      "job": {
+        "schema_version": 1,
+        "job_id": "job_abb7b131c2224c268c8fb6c35fc1f9c6",
+        "process_id": "quality_evaluation",
+        "status": "completed",
+        "created_at": "2026-10-16T14:58:20.076124+00:00",
+        "started_at": "2026-10-16T14:58:20.729013+00:00",
+        "finished_at": "2026-10-16T14:58:21.631149+00:00",
+        "parameters": {
+          "material_ref": "demo_material",
+          "course_id": "cs50_python",
+          "output_name": "quality-report"
+        },
+        "progress": null,
+        "phase": "completed",
+        "exit_code": 0,
+        "error": null,
+        "error_class": null,
+        "artifact_refs": [
+          {
+            "schema_version": 1,
+            "artifact_id": "art_abb7b131c2224c268c8fb6c35fc1f9c6",
+            "job_id": "job_abb7b131c2224c268c8fb6c35fc1f9c6",
+            "kind": "quality_report",
+            "size_bytes": 18816,
+            "sha256": "8420cb9e17498a1175c77ad1088681482942c36c67ca3e9aca5cdcc9097e6bf4",
+            "created_at": "2026-10-16T14:58:21.610288+00:00",
+            "input_refs": [
+              "demo_material"
+            ]
+          }
+        ],
+        "initiated_by": "synthetic-operator",
+        "input_refs": [
+          "demo_material"
+        ],
+        "output_refs": [
+          "art_abb7b131c2224c268c8fb6c35fc1f9c6"
+        ],
+        "cancellable": false,
+        "duration_seconds": 0.879843290997087
+      },
+      "logs": {
+        "schema_version": 1,
+        "events": [
+          {
+            "sequence": 5,
+            "at": "2026-10-16T14:58:20.076371+00:00",
+            "job_id": "job_abb7b131c2224c268c8fb6c35fc1f9c6",
+            "status": "queued",
+            "phase": "queued",
+            "message": "Confirmed offline request accepted",
+            "process_id": "quality_evaluation",
+            "exit_code": null,
+            "duration_seconds": null,
+            "error": null,
+            "artifact_refs": []
+          },
+          {
+            "sequence": 6,
+            "at": "2026-10-16T14:58:20.259976+00:00",
+            "job_id": "job_abb7b131c2224c268c8fb6c35fc1f9c6",
+            "status": "running",
+            "phase": "dispatching",
+            "message": "Claimed by the single local executor",
+            "process_id": "quality_evaluation",
+            "exit_code": null,
+            "duration_seconds": null,
+            "error": null,
+            "artifact_refs": []
+          },
+          {
+            "sequence": 7,
+            "at": "2026-10-16T14:58:20.730574+00:00",
+            "job_id": "job_abb7b131c2224c268c8fb6c35fc1f9c6",
+            "status": "running",
+            "phase": "offline_adapter",
+            "message": "Known offline adapter launched",
+            "process_id": "quality_evaluation",
+            "exit_code": null,
+            "duration_seconds": null,
+            "error": null,
+            "artifact_refs": []
+          },
+          {
+            "sequence": 8,
+            "at": "2026-10-16T14:58:21.632985+00:00",
+            "job_id": "job_abb7b131c2224c268c8fb6c35fc1f9c6",
+            "status": "completed",
+            "phase": "completed",
+            "message": "Payload and descendants ended; final result recorded",
+            "process_id": "quality_evaluation",
+            "exit_code": 0,
+            "duration_seconds": 0.879843290997087,
+            "error": null,
+            "artifact_refs": [
+              "art_abb7b131c2224c268c8fb6c35fc1f9c6"
+            ]
+          }
+        ],
+        "next_cursor": 8,
+        "truncated": false
+      }
+    }
+  ]
+}
