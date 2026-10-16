@@ -2,11 +2,8 @@
 
 import hashlib
 from pathlib import Path
-from typing import Literal
 
-from pydantic import model_validator
-
-from src.model_discovery.cs50 import CourseDiscovery, DiscoveryModel, deterministic_id
+from src.model_discovery.cs50 import deterministic_id
 from src.model_materials.materials import (
     ArtifactReceipt,
     ImageArtifact,
@@ -15,59 +12,12 @@ from src.model_materials.materials import (
     NormalizedDocument,
     ParserConfig,
 )
+from src.model_materials.materials import MaterialPlan as MaterialPlan
 from src.tools_lecture.execute_cs50 import ExecutionConflict, digest, write_state
 from src.tools_lecture.prepare_cs50 import discover_fixture_courses
 from src.tools_materials.download import MaterialDownloader
 from src.tools_materials.inventory import CODE, capability, format_of
 from src.tools_materials.storage import locate, locked, publish_bytes
-
-
-class MaterialPlan(DiscoveryModel):
-    schema_version: Literal[1] = 1
-    snapshot_coverage: Literal["local_snapshot_only"] = "local_snapshot_only"
-    courses: tuple[CourseDiscovery, ...]
-    materials: tuple[MaterialResource, ...]
-
-    @model_validator(mode="after")
-    def validate_bindings(self):
-        courses = {c.course_id: c for c in self.courses}
-        if len(courses) != len(self.courses) or len(
-            {b.material_id for b in self.materials}
-        ) != len(self.materials):
-            raise ValueError("Duplicate course/material identity")
-        for b in self.materials:
-            course = courses.get(b.resource.course_id)
-            if course is None or b.resource not in course.resources:
-                raise ValueError(
-                    "Material resource contradicts complete discovery graph"
-                )
-            # Main logical lecture IDs already exist in the graph; never infer from filename.
-            expected = sorted(
-                {
-                    r.resource_id
-                    for r in course.resources
-                    if r.role == "lecture_video"
-                    and set(r.section_keys) & set(b.resource.section_keys)
-                }
-            )
-            if sorted(b.lecture_ids) != expected:
-                raise ValueError(
-                    "Logical lecture assignment contradicts discovery graph"
-                )
-        return self
-
-    def select(self, *, course=None, section=None, lecture=None, resource=None):
-        rows = tuple(
-            b
-            for b in self.materials
-            if (course is None or b.resource.course_id == course)
-            and (section is None or section in b.resource.section_keys)
-            and (lecture is None or lecture in b.lecture_ids)
-            and (resource is None or resource in {b.source_id, b.material_id})
-        )
-        if not rows:
-            raise ValueError("No resources match explicit scope")
-        return rows
 
 
 def make_plan(manifest):
