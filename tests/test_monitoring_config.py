@@ -25,18 +25,87 @@ from src.core.monitoring_validation import (
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def versioned_monitoring(root):
+    """Never scan/copy ignored runtime volumes or operator configuration."""
+    names = (
+        subprocess.check_output(
+            [
+                "git",
+                "--no-optional-locks",
+                "-C",
+                str(root),
+                "ls-files",
+                "-z",
+                "--",
+                "monitoring",
+            ]
+        )
+        .decode()
+        .split("\0")
+    )
+    return tuple(root / name for name in names if name)
+
+
+def copy_monitoring_configs(source, target):
+    for path in versioned_monitoring(source):
+        if any(parent.is_symlink() for parent in (path, *path.parents)):
+            raise ValueError("Symlinked configuration fixture forbidden")
+        destination = target / path.relative_to(source)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(path, destination)
+
+
+def test_config_fixture_excludes_untracked_runtime_and_secrets(tmp_path):
+    source, target = tmp_path / "source", tmp_path / "target"
+    source.mkdir()
+    subprocess.run(["git", "init", "--quiet", str(source)], check=True)
+    (source / "monitoring/service/data").mkdir(parents=True)
+    (source / "monitoring/prometheus.yaml").write_text("global: {}\n")
+    (source / "monitoring/service/data/private.db").write_text(
+        "synthetic private bytes"
+    )
+    (source / "monitoring/.env").write_text("synthetic private config")
+    subprocess.run(
+        ["git", "-C", str(source), "add", "monitoring/prometheus.yaml"], check=True
+    )
+    copy_monitoring_configs(source, target)
+    assert (target / "monitoring/prometheus.yaml").read_text() == "global: {}\n"
+    assert not (target / "monitoring/service").exists()
+    assert not (target / "monitoring/.env").exists()
+    assert (
+        source / "monitoring/service/data/private.db"
+    ).read_text() == "synthetic private bytes"
+
+
+def test_config_fixture_rejects_versioned_symlinks(tmp_path):
+    source, target = tmp_path / "source", tmp_path / "target"
+    (source / "monitoring").mkdir(parents=True)
+    subprocess.run(["git", "init", "--quiet", str(source)], check=True)
+    private = tmp_path / "private.yaml"
+    private.write_text("synthetic: private\n")
+    (source / "monitoring/prometheus.yaml").symlink_to(private)
+    subprocess.run(
+        ["git", "-C", str(source), "add", "monitoring/prometheus.yaml"], check=True
+    )
+    with pytest.raises(ValueError, match="Symlinked"):
+        copy_monitoring_configs(source, target)
+    assert not target.exists()
+
+
 @pytest.fixture
 def configs(tmp_path):
     root = tmp_path / "repo"
     (root / "docker").mkdir(parents=True)
     shutil.copy(ROOT / "docker/docker-compose.monitoring.yaml", root / "docker")
-    shutil.copytree(ROOT / "monitoring", root / "monitoring")
+    copy_monitoring_configs(ROOT, root)
     return root
 
 
 def test_checked_in_contract_and_yaml():
     assert validate_monitoring(ROOT) == []
-    for path in (ROOT / "monitoring").rglob("*.yaml"):
+    for path in versioned_monitoring(ROOT):
+        if path.suffix != ".yaml":
+            continue
         assert load_yaml(path)
     assert load_yaml(ROOT / "docker/docker-compose.ml.yaml")  # observed, not modified
 
@@ -58,7 +127,9 @@ def test_no_inline_credentials_or_active_synthetic_targets():
             assert not re.search(r"://[^/\s]+:[^/\s]+@", value)
 
     walk(load_yaml(ROOT / "docker/docker-compose.monitoring.yaml"))
-    for path in (ROOT / "monitoring").rglob("*.yaml"):
+    for path in versioned_monitoring(ROOT):
+        if path.suffix != ".yaml":
+            continue
         walk(load_yaml(path))
     assert not list((ROOT / "monitoring/prometheus/targets").glob("*.json"))
     for path in (ROOT / "monitoring/prometheus/target-examples").glob("*.example"):

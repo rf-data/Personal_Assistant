@@ -1,7 +1,9 @@
 # C14/C15 und späteres Deployment
 
-C14-API-Mapping: [HTTP-Vertrag](api.md). Der reale UI-Client bleibt ein eigener
-Folgeschritt im UI-Repository. Serverseitige Beareridentität darf niemals durch
+C14-/C17-API-Mapping: [HTTP-Vertrag](api.md). Der reale UI-Client ist inzwischen
+im separaten UI-Repository durch [PR #2](https://github.com/rf-data/personal-assistant-ui/pull/2)
+gemergt. Er steuert die zwei C16-Defaultprozesse; der zusätzliche C18-Workflow
+ist noch nicht im UI-Vertrag freigegeben. [Aktuelle Integration](https://github.com/rf-data/personal-assistant-ui/blob/main/docs/c17_integration.md). Serverseitige Beareridentität darf niemals durch
 ein aus dem Browser übermitteltes actor/role-Feld ersetzt werden. Keine Tokens
 oder internen Speicherorte im Streamlit-Session-State. Lokales CLI und
 identitätsgeschützter HTTP-Transport existieren in C16, kein Live-Deployment.

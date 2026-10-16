@@ -1,0 +1,227 @@
+{
+  "backend_baseline": "78b35a53b7fc7148a1cbaeb93c4152d35a0725f1",
+  "backend_regression": {
+    "collected": 674,
+    "duration_seconds": 239.02,
+    "errors": 0,
+    "failed": 0,
+    "passed": 671,
+    "profile": "selected offline material/evaluation/knowledge/job/workflow/monitoring/audit modules",
+    "skipped": 3
+  },
+  "backend_tree": "d67a1115855ac0a78b555a6a6067aa8788a7e321",
+  "documentation_checks": {
+    "archived_overviews_verified": 4,
+    "baseline_document_hashes_verified": 130,
+    "inline_file_target_findings": [],
+    "scope": "local inline file links only; no external or anchor semantic validation",
+    "syntax_valid_baseline_python": 353,
+    "versioned_markdown_rst_documents": 139
+  },
+  "final_audit_monitoring_focus": {
+    "collected": 36,
+    "duration_seconds": 4.46,
+    "note": "after adding five additional sensitive-name cases; no changed production pipeline logic",
+    "passed": 36
+  },
+  "initial_environment_issue": {
+    "original_data_modified": false,
+    "passed": 655,
+    "reason": "pre-existing monitoring fixture traversed local runtime volume directories; corrected to versioned configuration only",
+    "setup_errors": 14,
+    "skipped": 3
+  },
+  "known_txt_baseline": {
+    "duration_seconds": 1.11,
+    "failed": 6,
+    "passed": 33,
+    "reason": "None timestamps rejected by existing numeric TranscriptSegment contract",
+    "unchanged_paths": [
+      "src/model_transcribe/data_transcribe.py",
+      "src/tools_transcribe/import_transcript.py",
+      "tests/test_official_transcript_import.py"
+    ]
+  },
+  "mlflow_compose": {
+    "check": "compose_config_only",
+    "exit_code": 0,
+    "limitations": [
+      "No build or runtime confirmation",
+      "Referenced build context/Dockerfile remains unresolved"
+    ],
+    "schema_version": 1,
+    "uses_synthetic_environment": true
+  },
+  "monitoring": {
+    "limitations": [
+      "Structural checks do not parse PromQL or execute Grafana.",
+      "No container, image pull, secret, live service or productive data access."
+    ],
+    "native_checks": [
+      {
+        "check": "check",
+        "reason": "not installed",
+        "status": "not_run",
+        "tool": "promtool"
+      },
+      {
+        "check": "test",
+        "reason": "not installed",
+        "status": "not_run",
+        "tool": "promtool"
+      },
+      {
+        "check": "check-config",
+        "reason": "not installed",
+        "status": "not_run",
+        "tool": "amtool"
+      },
+      {
+        "check": "compose",
+        "exit_code": 0,
+        "status": "passed",
+        "tool": "docker"
+      }
+    ],
+    "schema_version": 1,
+    "structural_errors": []
+  },
+  "publication_scope": "Sanitized public repository metadata only; full local audit observations remain ignored/private",
+  "ruff": {
+    "backend": "3 files: check/format passed",
+    "ui": "31 files: check/format passed"
+  },
+  "schema_version": 1,
+  "scope": "No production pipeline modifications or productive jobs, no UI edits, no history/branch/worktree cleanup; legacy monitoring fixture issue and known TXT failures explicitly disclosed",
+  "smoke_checks": [
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.model_discovery.cs50"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.model_materials.materials"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.model_materials.quality"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.model_materials.visual_inventory"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.model_evaluation.math_evaluation"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.model_transcribe.data_transcribe"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.tools_transcribe.import_transcript"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.tools_knowledge.consolidation_run"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.job_control.models"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.job_control.registry"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.workflows.models"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "src.workflows.graph"
+    },
+    {
+      "exit_code": 0,
+      "kind": "import",
+      "module": "scripts.repository_audit"
+    },
+    {
+      "exit_code": 0,
+      "kind": "cli_help",
+      "module": "scripts.cs50_materials"
+    },
+    {
+      "exit_code": 0,
+      "kind": "cli_help",
+      "module": "scripts.cs50_material_quality"
+    },
+    {
+      "exit_code": 0,
+      "kind": "cli_help",
+      "module": "scripts.evaluate_math_formulas"
+    },
+    {
+      "exit_code": 0,
+      "kind": "cli_help",
+      "module": "scripts.cs50_visual_inventory"
+    },
+    {
+      "exit_code": 0,
+      "kind": "cli_help",
+      "module": "scripts.job_control"
+    },
+    {
+      "exit_code": 0,
+      "kind": "cli_help",
+      "module": "scripts.cs50_workflow"
+    },
+    {
+      "exit_code": 0,
+      "kind": "cli_help",
+      "module": "src.run_knowledge_consolidation"
+    },
+    {
+      "exit_code": 0,
+      "kind": "cli_help",
+      "module": "scripts.repository_audit"
+    }
+  ],
+  "ui_regression": {
+    "duration_seconds": 21.559,
+    "passed": 71,
+    "tests": 71,
+    "transport": "serialized offline C16 integration",
+    "tree": "495ab64ab6f860840afc7a2c104816f5ef5e5255"
+  },
+  "user_document": {
+    "details_kept_in_private_local_report": true,
+    "not_tracked": true,
+    "unchanged": true
+  },
+  "worker_lock_checks": [
+    {
+      "packages": 32,
+      "profile": "workers/cs50",
+      "status": "passed"
+    },
+    {
+      "packages": 43,
+      "profile": "workers/cs50_index",
+      "status": "passed"
+    }
+  ]
+}

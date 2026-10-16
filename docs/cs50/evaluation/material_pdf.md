@@ -1,5 +1,9 @@
 # PDF/slides/images v1
 
+> Historical v1 regression record. Current parser behavior and version-specific
+> limits are documented in the [v2 evaluation](pdf_v2.md).
+> These original test counts are retained as a dated package result.
+
 PyMuPDF is already declared/installed. Docling is installed but not selected:
 its richer layout/OCR/formula pipelines can require model assets and have broader
 initialization dependencies. No dependency or model installation was performed.

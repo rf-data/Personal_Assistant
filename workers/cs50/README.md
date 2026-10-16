@@ -36,3 +36,11 @@ Tatsächlich geprüft: SDK-freier Smoke/Lazy-Import-Lauf **12 passed, 1 skipped 
 15,44 s**. Explizites SDK-Profil scheitert erwartungsgemäß an fehlenden openai/
 pydantic_ai. Kein echter SDK-/API-/Marvin-/SQLite-Aufruf. Bei installierten SDKs
 bleibt der echte isolierte Konstruktionstest mit gesperrtem HTTP-Transport aktiv.
+
+## Abgleich C17.0 (16.10.2026)
+
+Profil-/Lockdateien bleiben unverändert. Die oben aufgeführten Installations-
+und Testergebnisse sind historische Paketnachweise; eine vollständige frische
+Offlineinstallation wurde in diesem Audit nicht behauptet. Aktuelle Paketgrenzen,
+Testauswahl und bekannte TXT-/SDK-Lücken stehen in
+[Entwicklung](../../docs/development.md) und [Auditvalidierung](../../docs/audit/validation.md).

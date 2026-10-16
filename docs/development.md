@@ -1,376 +1,146 @@
-# Entwickler-Dokumentation
+# Entwicklung und Offlineprüfungen
 
-## Umgebungs-Setup
+Stand: 16.10.2026. [Architektur](architecture.md), [Roadmap](ROADMAP.md) und
+[Dokumentationsindex](README.md) beschreiben die aktuelle Lecture-/Materialbasis.
+Die frühere GMP-/SOP-Anleitung bleibt im [historischen Überblick](archive/2026-10/repository-overview/README.md)
+erhalten und ist keine aktuelle Installations- oder Betriebsfreigabe.
 
-### 1. Repository klonen
+## Umgebung
 
-```bash
-git clone <repository-url>
-cd gmp_compliance
-```
+Der Rootvertrag in `pyproject.toml` verlangt Python `>=3.12,<3.14` und trennt
+kleine Basisdependencies von optionalen `lecture-worker`-, `llm`-, `rag`-,
+`frontend`-, `vision`-/`ocr`- und Monitoringprofilen. Der Root-Projektname ist
+weiterhin `gmp-compliance`. Eine Umbenennung oder Dependencybereinigung ist nicht
+Bestandteil dieses Dokumentationsaudits.
 
-### 2. Python-Umgebung
+Für Offlinearbeiten eine **bereits bereitgestellte** passende Umgebung verwenden.
+`uv sync` ohne Offline-/Lockbegrenzung kann neue Pakete herunterladen und ist
+kein Prüfkommando dieses Auftrags. Auch `--offline` funktioniert bei fehlenden
+Wheels nicht automatisch. Die vorhandenen Profile dokumentieren ihre tatsächlichen
+Cache-/Installationsgrenzen:
 
-```bash
-# Mit uv (empfohlen)
-uv sync
+- [Minimaler CS50-Worker](../workers/cs50/README.md): SDK-freier Kern.
+- [Indexworker](../workers/cs50_index/README.md): zusätzlich isoliertes Qdrant/
+  tiktoken; frühere kombinierte Testumgebung ist ein expliziter lokaler Aufbau.
+- Das UI hat ein eigenes `pyproject.toml`, Lockfile und Testprofil im
+  [UI-Repository](https://github.com/rf-data/personal-assistant-ui).
 
-# Alternativ (nicht getestet):
-pip install -e .
-```
-
-Prüfe `pyproject.toml` für Dependencies (`main` + `dev`-Gruppe).
-
-### 3. Umgebungsvariablen
-
-```bash
-# Datei kopieren
-cp .env.parse.example .env.parse
-cp .env.agentic.example .env.agentic
-cp .env.mlops.example .env.mlops
-cp .env.organizer.example .env.organizer
-
-# Werte in .env-Dateien nachtragen (siehe nächster Abschnitt)
-```
-
-Prüfe nie Secrets in Git ein:
-```bash
-# .gitignore sollte enthalten:
-.env.parse
-.env.agentic
-.env.mlops
-.env.organizer
-```
+Es gibt noch doppelte `docling[rapidocr]`-/`pymupdf`-Deklarationen im Root-Extra
+`lecture-worker`. Sie bleiben als nachgewiesener Bereinigungskandidat dokumentiert;
+keine Lock-Neuauflösung oder Paketänderung wird hier durchgeführt.
 
 ## Konfiguration
 
-### .env.parse
+Die modernen Offline-CLIs nehmen Eingabe-, Workspace- und Reportpfade explizit
+entgegen. C16 verwendet eine explizite Settings-JSON mit zugelassenem Hashkatalog,
+Identitäten, Coursegrants und privatem Workspace. C18 benötigt zusätzlich
+`workflows_enabled=true`; ohne diese Freigabe bleibt der Default bei zwei
+C16-Einzeladaptern. [C16-Betrieb](job_control/operations.md),
+[C18-Vertrag](workflows/README.md).
 
-Daten-Pfade und Logging.
+Die Legacy-Konfiguration in `src/core/config.py` und die Sessionobjekte in
+`src/core/memory*.py` können `.env`-Dateien, globale Settings, SDKs und Datenpfade
+initialisieren. Diese Module nicht als allgemeine Import-Smokes verwenden.
+`.env.parse`, `.env.agentic`, `.env.mlops`, `.env.organizer`, Tokens und private
+Settings bleiben lokal. Vorhandene `.env.*.example`-Dateien sind keine Garantie,
+dass für jede Settingsklasse eine aktuelle Vorlage existiert. Keine echten Werte
+in Testausgaben oder Reports übernehmen.
 
-```env
-# Erforderlich
-DATA_DIR = "/path/to/data"        # Übergeordnetes Datenverzeichnis
-LOG_DIR = "/path/to/logs"         # Log-Ausgaben
-CACHE_DIR = "/path/to/.cache"     # Cache für Parser
+## Sichere Hilfepfade und Tests
 
-# Optional (Format-spezifisch)
-DATA_PDF = "$DATA_DIR/pdf"
-DATA_HTML = "$DATA_DIR/html"
-DATA_DOCX = "$DATA_DIR/docx"
-DATA_JSON_NB = "$DATA_DIR/notebooks"
-DATA_TXT_MD = "$DATA_DIR/txt_md"
-DATA_WIKI = "$DATA_DIR/wiki"
-DATA_AUDIO = "$DATA_DIR/audio"      # Für Transkription (nicht impl.)
-DATA_IMAGE = "$DATA_DIR/images_ocr" # Für OCR (nicht impl.)
-
-PROMPT_DIR = "/path/to/prompts"
-REPORT_DIR = "/path/to/reports"
-CONFIG_DIR = "/path/to/configuration"
-CHROMA_DIR = "/path/to/chroma_db"
-
-# API-Endpoints (Wikipedia, etc.)
-WIKI_EN_API = "https://en.wikipedia.org/w/api.php"
-WIKI_DE_API = "https://de.wikipedia.org/w/api.php"
-HEADER_AGENT = "YourBot/1.0 (contact@example.com)"
-```
-
-### .env.agentic
-
-LLM-API-Keys und Observability.
-
-```env
-# Erforderlich für Text-Generierung
-OPENAI_API_KEY = "<your-openai-api-key>"         # ChatGPT API
-
-# Optional
-HF_API_KEY = "<your-huggingface-api-key>"            # HuggingFace (für Open-Source Models)
-
-# Optional: Langfuse (LLM Observability)
-LANGFUSE_PUBLIC_KEY = ""
-LANGFUSE_SECRET_KEY = ""
-LANGFUSE_BASE_URL = "https://cloud.langfuse.com"
-LANGFUSE_HOST = ""
-```
-
-### .env.mlops
-
-MLflow Backend-Konfiguration.
-
-```env
-# Optional (wenn leer, nutzt lokal SQLite)
-MLFLOW_DB = "sqlite:///mlflow/mlflow.db"              # Default
-# oder PostgreSQL:
-# MLFLOW_DB = "postgresql://<user>:<password>@localhost:5432/mlflow_db"
-
-MLFLOW_ARTIFACTS = "mlflow/artifacts"
-MLFLOW_TRACKING_URI = "http://127.0.0.1:5000"
-
-FINGERPRINT_EXP = "default_exp"
-FINGERPRINT_RUN = "default_run"
-MLFLOW_BACKUP = "mlflow/backup"
-```
-
-### .env.organizer
-
-E-Mail/Kalender (nicht implementiert).
-
-```env
-# Nicht funktionsfähig, placeholder
-IMAP_SERVER = ""
-IMAP_PORT = ""
-SMTP_SERVER = ""
-SMTP_PORT = ""
-EMAIL_RF_ADDRESS = ""
-EMAIL_RF_PW = ""
-```
-
-### configuration/ YAML-Dateien
-
-**`configuration/streamlit_general.yaml`**
-- Parser-Standardeinstellungen (PDF-Parameter, HTML-Tags, etc.)
-- Wird beim App-Start geladen
-
-**`configuration/streamlit_run.yaml`**
-- Laufzeit-Einstellungen für aktuellen Parse-Job
-- LLM-Modell, Pfade, Ausgabeformate
-
-## Makefile-Targets
-
-Alle verfügbaren Targets:
+Vom Repositoryroot in der vorhandenen Umgebung:
 
 ```bash
-# UI
-make streamlit                  # Streamlit-App starten auf http://localhost:8501
-
-# Dependenzen & Maintenance
-make dependency_check           # Vulnerability-Scan (pip-audit)
-make clean_linux               # Caches löschen (APT, Python, Jupyter, Logs)
-
-# MLflow
-make mlflow_start              # MLflow-Server starten (lokal auf Port 5000)
-make mlflow_stop               # MLflow beenden
-make mlflow_fingerprint        # Experiment-Fingerprint erstellen
-
-# Monitoring
-make monitoring_docker         # Prometheus/Grafana/AlertManager hochfahren
-make monitoring_stop           # Monitoring-Stack beenden
-
-# Pre-commit (Hooks nur auf _prototypes/)
-make pre_commit_check          # Run hooks manually
-make pre_commit_update         # Update + run all hooks
-make pre_push_check            # Test pre-push stage hooks
+python -m scripts.cs50_materials --help
+python -m scripts.cs50_material_quality --help
+python -m scripts.evaluate_math_formulas --help
+python -m scripts.cs50_visual_inventory --help
+python -m scripts.job_control --help
+python -m scripts.cs50_workflow --help
+python -m src.run_knowledge_consolidation --help
 ```
 
-## Wichtige Workflows
-
-### Text Extraction (PDF)
-
-```
-1. frontend/pages/B_p1_ETL_pdf.py     (UI)
-   │
-   └→ src/run_st_pdf_extract.py       (Main Function)
-      │
-      ├→ src/model_parsing/pdf_extractor.py
-      │  └─ PDFCleanExtractor (PyMuPDF)
-      │
-      └→ src/tools_parsing/
-         ├─ extract_pdf.py
-         ├─ post_extract_processing_pdf.py
-         └─ assemble_pdf.py
-
-   Ausgabe: JSON _info.json, Markdown, HTML
-```
-
-**Ausführung in Streamlit:**
-```python
-from src.run_st_pdf_extract import run_pdf_extraction
-result = run_pdf_extraction(parse_context)
-```
-
-### RAG Pipeline (Chunking & Embedding)
-
-```
-1. Data-Pfad mit _info.json Files
-   │
-   ├→ src/tools_rag/chunk.py
-   │  ├─ Spacy-Tokenization
-   │  ├─ Chunk-Größe (configurable)
-   │  └─ Overlap (Sätze)
-   │
-   ├→ src/tools_rag/create_embeds.py
-   │  ├─ Sentence-Transformers
-   │  └─ ChromaDB Upload
-   │
-   └→ Persistenz: Parquet Files + ChromaDB Collections
-```
-
-**Manuell ausführbar:**
-```bash
-uv run python -c "from src.run_chunk_embed import run_chunk_and_embed; run_chunk_and_embed('/path/to/ready_folder')"
-```
-
-### SOP-Generierung (teilweise implementiert)
-
-```
-1. frontend/pages/E_p2_sop_generation.py    (UI)
-   │
-   └→ src/run_st_SOP_generation.py
-      │
-      ├→ Chroma-Collections auswählen
-      ├→ Retrieval via src/tools_rag/retrieve.py
-      |  └─ ⚠️ NotImplementedError bei SOP-Update
-      ├→ Fact-Extraktion
-      ├→ Konsolidierung
-      └→ LLM-generierte SOP (teilweise impl.)
-
-   Ausgabe: JSON Facts, Knowledge Pool, Chapter Plans
-```
-
-**Status:** Retrieval-Logik funktioniert, SOP-Generierung teilweise.
-
-## Testing
+Aktuelle deterministische Suiten liegen unter `tests/test_cs50_material_*.py`,
+`test_cs50_visual_inventory.py`, `test_math_formula_evaluation.py`,
+`test_consolidation_hardening.py`, `test_job_control.py`, `test_job_executor.py`,
+`test_cs50_workflows.py` sowie Monitoring-/Discovery-/Knowledge-/Indexsuiten.
+Die alte Aussage „nur Fragmenttests“ ist überholt. Es gibt dennoch keinen hier
+behaupteten fehlerfreien Repository-Gesamtlauf mit allen optionalen SDKs.
 
 ```bash
-# Tests ausführen (minimal coverage)
-uv run pytest tests/
-
-# Spezifischen Test laufen:
-uv run pytest tests/__dev__medium.py -v
+CS50_TEST_PROFILE=offline python -m pytest -q \
+  tests/test_cs50_material_quality.py tests/test_math_formula_evaluation.py \
+  tests/test_consolidation_hardening.py tests/test_cs50_visual_inventory.py \
+  tests/test_job_control.py tests/test_job_executor.py tests/test_cs50_workflows.py \
+  tests/test_pipeline_metrics.py tests/test_monitoring_config.py \
+  --basetemp=/tmp/new-isolated-test-root
 ```
 
-**Status:** Nur Fragment-Tests vorhanden. Für neue Features Tests bitte manuell schreiben.
+Immer einen neuen ausschließlich für Tests vorgesehenen Scratchordner verwenden.
+Einige End-to-End-Demos verlangen einen externen Ausgabeordner; optionale
+Originalartefakte werden ohne lokale Bereitstellung ausdrücklich übersprungen.
+Kein Test darf dafür Material, Modelle oder Wheels nachladen. Manche Linux-
+Prozessprüfungen benötigen die im jeweiligen Paket dokumentierten Berechtigungen.
+Die aktuellen [Audit-Testresultate](audit/validation.md) trennen bekannte Fehler,
+Umgebungsgrenzen und neue Regressionen.
 
-## Linting & Type-Checking
-
-Alle Tools sind in `pyproject.toml` konfiguriert:
+Für Änderungen nur die betroffenen Dateien prüfen, kein pauschales Reformatting:
 
 ```bash
-# Ruff (Formatter + Linter)
-uv run ruff format src/
-uv run ruff check src/ --fix
-
-# MyPy (Type-Checking)
-uv run mypy src/
-
-# Pre-commit (manuell)
-make pre_commit_check
+ruff check --no-cache scripts/repository_audit.py tests/test_repository_audit.py
+ruff format --check --no-cache scripts/repository_audit.py tests/test_repository_audit.py
+git diff --check
 ```
 
-⚠️ **Aktueller Status:**
+Die vorhandenen Pre-commit-Hooks prüfen unter anderem AST, JSON, Dateigröße und
+Format. `pre_commit_update` aktualisiert Hookumgebungen und ist kein reiner
+Offlinecheck. `tests/__dev__medium.py` und `src/run_mlflow_setup_test.py` sind keine
+Freigabe für Daten-/MLflowzugriffe; sie bleiben als Legacy-Kandidaten erfasst.
 
-## Code-Struktur Conventions
+## Repository-/Dokumentenaudit wiederholen
 
-### Module-Hierarchie
-
-```
-src/
-├── core/              → Kernel (Config, Logger, Memory)
-├── llm/               → LLM-Integration
-├── agent/             → Prompts, Agenten
-├── model_*.py         → Datenmodelle (Pydantic)
-├── tools_*.py         → Business Logic
-├── model_tools_*.py   → Tool-Infrastruktur
-├── utils/             → Utilities
-└── run_*.py           → Entry Points für Scripts
-```
-
-### Imports
-
-```python
-# OK
-from src.core.config import parsing_env_vars
-from src.tools_rag.chunk import chunk_text
-
-# Vermeide
-from tools_rag.chunk import chunk_text  # Relativ, unklar
-import chunk  # Zu kurz, Name-Collision-Gefahr
-```
-
-### Logging
-
-```python
-from src.core.logger import create_logger
-
-logger = create_logger(
-    name="MyModule",
-    file_name="mymodule",
-    level="info"
-)
-
-logger.info("Message: %s", value)
-logger.error("Error occurred", exc_info=True)  # Mit Stack-Trace
-```
-
-### Konfiguration
-
-```python
-from src.core.config import parsing_env_vars, agentic_env_vars
-
-data_dir = parsing_env_vars.data_dir
-api_key = agentic_env_vars.openai_api_key
-```
-
-## Known Issues & Workarounds
-
-| Problem | Ursache | Workaround |
-|---------|--------|-----------|
-| **Streamlit reloads beim File Save** | Streamlit Dev-Feature | Normal; nutze `streamlit run --logger.level=debug` für Diagnostik |
-| **ChromaDB Memory** | Add große Models → OutOfMemory | Nutze kleinere Transformer-Modelle (z.B. all-MiniLM-L6-v2) |
-| **Parser fehlen Features** | Teilweise Implementierung | Siehe `_prototypes/` für alte Versionen |
-
-
-## Nächste Schritte für Entwickler
-
-1. **Verstehe die Config-Kette**: `.env.parse` → `src/core/config.py` → `app_session`
-2. **Tracke Data-Flow**: Text-Datei → Parser → TextBlocks → Chunks → Embeddings → ChromaDB
-3. **Nutze Logger überall**: `create_logger("ModuleName")` für Instrumentation
-4. **Schreib Tests**: Für neue Parser/Tools, besonders für Datenmodelle
-5. **Kommentiere Komplexes**: Regex, Heuristics, Format-spezifische Handler
-
-## Debugging
-
-### Streamlit Debug-Mode
+Der neue reine Standardbibliotheks-Scanner liest Git-Metadaten und freigegebene
+versionierte Textdateien. Ignorierte/unversionierte Dateien werden grundsätzlich
+nur nach Pfadgruppe, Anzahl und Statmetadaten gezählt; zugelassene nichtprivate
+Markdown-Dokumente anderer Worktrees werden zusätzlich nach SHA-256 verglichen.
+Sensitive Namen, private lokale Konsolidierungsberichte, Runtime-/Datenpfade
+und Symlinks werden nicht inhaltlich gelesen. Keine Git-/Dateimutationen außer
+dem expliziten neuen Report, kein Netz, kein Import des untersuchten Codes.
 
 ```bash
-streamlit run streamlit_app.py --logger.level=debug
+python -m scripts.repository_audit --repository . \
+  --baseline 78b35a53b7fc7148a1cbaeb93c4152d35a0725f1 \
+  --output /tmp/new-repository-audit.json
 ```
 
-### Manual Python Execution
+`baseline` ist ein expliziter bereits lokal vorhandener Commit. Der Scanner
+inventarisiert dessen Tree und vergleicht aktuelle Arbeitskopie/Worktrees;
+Git-Metadaten sind keine Remoteabfrage. Die Remote-Metadaten wurden für dieses
+Audit separat read-only abgeglichen. Linkprüfung umfasst lokale Inline-Markdown-
+Dateiziele, keine externen URLs oder Ankersemantik. Historische Dateiverweise in
+Codebeispielen bleiben als solche erkennbar; ein fehlender Beispielpfad beweist
+keinen Laufzeitfehler. Große ignorierte Bibliotheks-/Datenbestände bleiben nur
+aggregiert, und nicht lesbare Verzeichnisse machen die Zählung unvollständig.
 
-```bash
-# Umgebung laden
-cd /home/robfra/0_Portfolio_Projekte/gmp_compliance
-source .venv/bin/activate  # Oder: uv shell
+## Betrieb und aktive Befehle
 
-# Modul testen
-python -c "from src.core.config import parsing_env_vars; print(parsing_env_vars.data_dir)"
+`make streamlit` startet die erhaltene Legacy-App, nicht die neue Admin-UI.
+`make knowledge_extraction` ruft tatsächlich `src.run_knowledge_consolidation`
+auf; die Bezeichnung ist irreführend und wird hier nicht still geändert.
+`monitoring_docker`, `monitoring_stop`, MLflow-Start/-Stop, Backups,
+`clean_linux.sh` und Setupskripte sind operative Aktionen. Sie gehören nicht zu
+Smoke-/Regressionstests und werden im Audit nicht ausgeführt.
 
-# Script ausführen
-uv run python src/run_dependency_check.py
-```
+Docker-/Composeprüfungen sind ausschließlich lesende `config`-Validierungen mit
+synthetischer Umgebung ohne `.env`-Laden. Der vorhandene Monitoringvalidator
+bietet dafür einen begrenzten Einstieg und meldet fehlende native Werkzeuge als
+`not_run`. Keine Container, Images oder Volumes starten/ziehen/verändern.
+[Monitoringbetrieb](monitoring/operations.md), [Jobintegration](job_control/integration.md).
 
-### ChromaDB Inspection
-
-```python
-from src.utils.chroma_helper import get_chroma_client
-
-client = get_chroma_client()
-collections = client.list_collections()
-for col in collections:
-    print(f"Collection: {col.name}, Count: {col.count()}")
-
-# Beispiel-Query
-results = col.query(query_texts=["sample text"], n_results=3)
-print(results)
-```
-
-### Log-Dateien
-
-```bash
-# Tagesaktuelle Logs
-ls -la logs/YYYY-MM-DD*.log
-
-# Tail live
-tail -f logs/streamlit_demo.log
-```
+Für öffentliche Audit-PRs nur eine ausdrücklich bereinigte Inventur verwenden.
+Der vollständige Scannerreport kann lokale Worktree-/Pfad-/Hashdetails enthalten
+und bleibt privat. Die öffentliche C17.0-Fassung exportiert ausschließlich
+gegen den bereits veröffentlichten Git-Tree verifizierte Basispfade und
+Dokumentations-/Testbelege; der vollständige lokale Bericht liegt ignoriert unter
+`docs/_local_audit_c170/`. Ein GitHub-Ziel ist vor Veröffentlichung mit dem
+ausdrücklich benannten Repository und dessen Remote-Tree abzugleichen.

@@ -22,3 +22,13 @@ Konkrete Produktionsnachweise: `src/model_discovery/cs50.py`,
 Ungeklärter TXT-Rest ist kein SRT-Integrationsfehler und wurde in diesem
 Dokumentations-/Bereinigungsauftrag nicht repariert. Keine Assertions,
 Knowledge-Modelle, Chunking- oder Evidence-Algorithmen geändert.
+
+## Erneuter Abgleich C17.0 am 16.10.2026
+
+Die API bestätigt weiterhin vier offene PRs #6, #9, #10 und #11; die aktuellen
+Changed-File-Listen wurden erneut mit `master` `78b35a5` verglichen. Die fachliche
+Einordnung oben bleibt bestehen. Die sechs TXT-Fälle wurden unverändert erneut
+reproduziert (33 weitere Importfälle bestanden). Source-ID-/Provenienz-/Lazy-
+Import- und Formelkonsolidierungstests sind Bestandteil der neuen Auditregression.
+Kein alter PR wurde gemergt oder geschlossen. [Snapshot](../../audit/remote_snapshot.v1.json),
+[aktuelle Prüfungen](../../audit/validation.md).

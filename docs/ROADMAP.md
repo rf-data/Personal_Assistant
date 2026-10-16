@@ -1,155 +1,85 @@
 # Roadmap — Personal Assistant
-Stand: 2026-10-12
 
-Gültig für: Personal_Assistant (master) und personal-assistant-ui (main).
+Stand: 16.10.2026. Verifiziert gegen Backend-`master` `78b35a5` und UI-`main`
+`137651e`; [Commit-/PR-Snapshot](audit/remote_snapshot.v1.json).
+Die [lokale Inventur](repository_inventory.md) trennt gemergte Funktionen von
+alten Arbeitskopien. Ein Merge und technische Offline-Tests sind keine Freigabe
+für produktive Dienste, reale Kursqualität oder kostenpflichtige Verarbeitung.
 
-Status-Legende: [x] = bisher als abgeschlossen geführt / Code vorhanden; [~] = Prototyp, teilweise oder nicht end-to-end geprüft; [ ] = offen. Der Status berücksichtigt Repository-Stichproben, **nicht** die tatsächlich auf Hetzner vorliegenden Datensätze oder laufende Dienste.
+## C10–C18: belegter Stand
 
-## Kurzfristig: stabiler Admin-Prototyp (personal-assistant-ui)
+| Paket | Repository / gemergter PR | Status und tatsächlicher Umfang | Verbleibende Grenze |
+| --- | --- | --- | --- |
+| C10 Material Quality Gate | Backend [#61](https://github.com/rf-data/Personal_Assistant/pull/61) | implementiert, offline getestet, gemergt: Hash-/Schema-/Provenienzprüfung und read-only Lecture-Material-Handoff | keine automatische Knowledge-Extraktion oder fachliche Semantikfreigabe |
+| C11 Mathematical Evaluation | Backend [#62](https://github.com/rf-data/Personal_Assistant/pull/62) | implementiert, offline getestet, gemergt: 40 synthetische Fälle, exakter/normalisierter/struktureller Vergleich, optionale isolierte Polynomprüfung | unabhängige reale Goldreferenzen und breitere mathematische Syntax offen |
+| C12 Consolidation Hardening | Backend [#63](https://github.com/rf-data/Personal_Assistant/pull/63) | implementiert, offline getestet, gemergt: konservative Deduplikation, Evidence, hashgebundenes Resume und No-Overwrite | semantischer/live Adapter bleibt explizit freizugeben |
+| C13 Visual Inventory | Backend [#64](https://github.com/rf-data/Personal_Assistant/pull/64) | implementiert, offline getestet, gemergt: technische Raster-/SVG-/Vektor-/Dokumentprovenienz | kein neues Enrichment, keine OCR oder fachliche Diagrammbewertung |
+| C14 Admin UI | UI [#1](https://github.com/rf-data/personal-assistant-ui/pull/1) | implementiert, getestet, gemergt: kanonische Admin-App, Rollen, Inventar/Logs und getrennte Fake-Demo | keine Aussage zu Live-Deployment oder Knowledge-Chatqualität |
+| C15 Monitoring | Backend [#65](https://github.com/rf-data/Personal_Assistant/pull/65) | implementiert, offline getestet, gemergt: begrenzte Composeprofile, Provisionierung und endlicher Metricsvertrag | explizite Images/Secrets/Targets und Runtime-/Lastfreigabe offen |
+| C16 Job Execution Backend | Backend [#66](https://github.com/rf-data/Personal_Assistant/pull/66) | implementiert, offline getestet, gemergt: zwei Defaultadapter, Auth/Owner/Course, SQLitequeue, Executor/Guardian, Cancel/Restart/Metriken | lokaler HTTPServer; kein dediziertes Produktionsimage/TLS-/Mehrhostmodell |
+| C17 UI Integration | UI [#2](https://github.com/rf-data/personal-assistant-ui/pull/2) | implementiert, technisch E2E getestet, gemergt: echter C16-Client für Planung/Qualitätsjobs | C18-Workflow-DTOs noch nicht integriert; kein Live-Deployment belegt |
+| C18 Pipeline Orchestration | Backend [#67](https://github.com/rf-data/Personal_Assistant/pull/67) | implementiert, offline getestet, gemergt: optionaler lokaler Materialworkflow mit DAG, Preview, Skip/Stale/Resume und Reports | drei HTML-/Code-Materialien; PDF-Lebensdauer, UI und automatische Folgestufen offen |
 
-- [~] Separates UI-Repo mit Streamlit app_ui.py, Dockerfile und Coolify-Compose vorhanden; derzeit nur einfacher Dateibrowser.
-- [ ] Einheitliche BaseSettings-Konfiguration mit APP_ENV, DATA_DIR, LOG_DIR und Tests.
-- [ ] Admin-Einstiegspunkt: Dashboard, Dateiansicht, Logs (keine Duplikation von app_ui.py).
-- [ ] Read-only Dateiinventar, Stage-Zählung (zunächst exakt *_know_extract.json und *_know_consol.json) und konfigurierbare weitere Muster.
-- [ ] Zählung nach Kurs und Lecture ID statt nur nach einzelnen Dateien; fehlende Folgestufen erkennen.
-- [ ] Sicherer Log-Viewer: read-only, Pfadvalidierung, begrenztes Lesen, Server-Log-Mount prüfen.
-- [ ] Coolify-Konfiguration dokumentieren und UI-Zugang absichern.
-- [ ] Zweiten Einstiegspunkt Knowledge Assistant vorbereiten; Chat/Evidence/Quiz getrennt von Serveradministration.
+Beim Auditabruf waren diese PRs alle gemergt. Es wurde kein offener PR als
+fertige Masterfunktion dargestellt. Die Begrenzungen der jeweiligen Verträge
+bleiben verbindlich, auch wenn das Arbeitspaket technisch abgeschlossen ist.
 
-## Kurzfristig: Qualitäts- und Testfundament (Personal_Assistant)
+## Priorisierte nächste Integrationsschritte
 
-- [x] C12: Kursweise Knowledge-Consolidation offline gehärtet und deterministisch getestet; lesender Standard, hashgebundenes Resume, kein Overwrite ([Vertrag](knowledge_consolidation_hardening.md)).
-- [ ] Deterministische Unit-Tests für Resume/Skip, Pfadgenerierung und Ausnahmen (ohne echte LLM-Aufrufe).
-- [ ] Echte Stage-Dateinamen aus Datenbestand erfassen und Naming-Konvention fixieren.
-- [ ] Quality Checks und Gold-Eval-Set (zunächst 30–50 manuell geprüfte Fälle).
-- [ ] Alte Dokumentation auf aktuellen Lecture-Fokus und UI-Trennung aktualisieren.
+1. **PDF unter C16 kontrollieren:** bestätigte vollständige Cancel-/Timeout-/
+   Worker-Restart-Lebensdauer des vorhandenen PDF-Subprozesses nachweisen;
+   erst danach C18-Parsing freigeben. Keine Ersatzparser entwickeln.
+2. **C18 in C17 sichtbar machen:** eigener UI-PR für versionierte Workflow-
+   Capabilities/DTOs, Preview, Status, Artefakte, Stale-/Resume-/Cancelanzeigen;
+   bestehende zwei Defaultprozesse müssen kompatibel bleiben.
+3. **Fachliche Evaluation:** reale unabhängig annotierte Formel-/Evidencefälle,
+   nachvollziehbare Herkunft und manuelle Review; synthetische Erfolgsquoten
+   nicht als Modellqualität darstellen. C13-Dokumentpositionen separat an den
+   bisherigen zeit-/framebasierten Visualvertrag anbinden.
+4. **Deploymentfreigabe:** dedizierte API-/Executorprofile, private gemeinsame
+   Persistenz, TLS/Ingress, Secretdateien, Ressourcengrenzen und Last-/Recoverytests;
+   getrenntes UI-Deployment und autoritative Metrics-Scrapeidentität.
+5. **Bekannte technische Lücken:** TXT ohne Zeitstempel (`TranscriptSegment`
+   verlangt Zahlen), optionale SDK-/Indexprofile und unvollständige Legacy-
+   Visualverdrahtung gezielt behandeln; keine künstlichen Zeitstempel oder
+   Tests mit abgeschwächten Assertions.
+6. **Bereinigung mit konkreter Freigabe:** [Cleanupplan](cleanup_plan.md) für
+   Legacy-UI, alte API-/MLflow-Buildpfade, Dependencyduplikate, Prototypen,
+   unerwartete Artefakte und alte Worktrees. Keine pauschale Löschung.
 
----
+## Vorhandene zusätzliche Fähigkeiten
 
-## Bestehende Phasen (bisheriger Stand, nicht automatisch hochgestuft)
+Discovery-/SRT-first-Verträge für sechs CS50-Kurse, Lecture-/Kursrunner,
+Checkpoint/Budget/Evidence, Transcript-Ingestion und quellgebundenes Retrieval
+sind implementiert und besitzen Offline-Nachweise. Lokale Inferenz, echte
+LLM-Kursverarbeitung und kanonischer Knowledge-Index sind davon getrennte
+Freigabe-/Evaluationsschritte. [CS50-Einstieg](cs50/README.md),
+[Indexgrenzen](cs50/operations/transcript_index_completion.md).
 
-PHASE 1 — DATA QUALITY
-────────────────────────────────────
-[x] Transcript extraction
-[x] Knowledge extraction
-[x] Visual verification
-[x] Visual enrichment remaining lectures
-[x] Visual post-processing
-[ ] Quality checks
+Allgemeines Dokumentparsing, Chroma-/SOP-RAG und yt-dlp-/Whisperpfade bleiben
+als Legacy-/optionale Implementierungen vorhanden. Sie werden nicht wegen
+vorhandener Dateien pauschal als produktionsreif markiert. E-Mail/Kalender,
+SOP-Updates, Knowledge-Graph, Lernchat, Quiz/Flashcards, Grounded QA und
+Studydokumentexport bleiben geplant oder experimentell, soweit kein eigener
+aktueller Nachweis vorliegt.
 
+## Audit C17.0
 
-PHASE 2 — KNOWLEDGE CORE
-────────────────────────────────────
-[x] Canonical Knowledge Merge
-[x] Evidence / Provenance model
-[x] Knowledge IDs
-[ ] Relation model
-[ ] Basic relation extraction
-[ ] Knowledge validation
+Dieses Paket ist ein Dokumentations-/Konsolidierungsaudit und nicht das bereits
+gemergte UI-Paket C17. Es aktualisiert Einstiegspunkte, Status und Referenzen,
+erfasst alle verfügbaren Dokumentvarianten und legt riskante Maßnahmen als
+Freigabeliste vor. Kein History-Rewrite, keine Worktree-/Branchentfernung,
+kein automatisches Merge oder Deployment. Die lokale unversionierte
+Roadmap-Ergänzung und private ignorierte Berichte bleiben unverändert.
 
+Die vorherigen pauschalen Phasenhäkchen und C01–C09-Planungen sind im
+[historischen Überblick](archive/2026-10/repository-overview/ROADMAP.md) erhalten.
+Sie sind weder ein aktueller Fertigstellungsnachweis noch ein aktiver Jobauftrag.
 
-PHASE 3 — EVALUATION
-────────────────────────────────────
-[ ] Gold/eval dataset
-[ ] Retrieval evaluation
-[ ] Formula reconstruction evaluation
-[ ] Transcript conflict evaluation
-[ ] Answer grounding evaluation
+## Weiterhin offene historische PRs
 
-
-PHASE 4 — RETRIEVAL
-────────────────────────────────────
-[ ] Embeddings
-[ ] Vector DB
-[ ] Semantic Search
-[ ] Metadata filtering
-[ ] Evidence retrieval
-[ ] Hybrid retrieval
-
-
-PHASE 5 — LEARNING APPLICATION
-────────────────────────────────────
-[ ] Ask the Lecture
-[ ] Source / evidence display
-[ ] Jump to video timestamp
-[ ] Quiz generation
-[ ] Flashcards
-[ ] Voice query
-
-
-PHASE 6 — DOCUMENT GENERATION
-────────────────────────────────────
-[ ] Study-document model
-[ ] LaTeX template
-[ ] Summary export
-[ ] Quiz export
-[ ] Formula sheet export
-[ ] PDF generation
-
-
-PHASE 7 — KNOWLEDGE GRAPH
-────────────────────────────────────
-[ ] Relation extraction
-[ ] Relation validation
-[ ] Graph construction
-[ ] Graph visualization
-[ ] Graph-assisted retrieval
-
-
-PHASE 8 — PRODUCT
-────────────────────────────────────
-[ ] FastAPI backend
-[ ] Streamlit / web frontend
-[ ] Evaluation dashboard
-[ ] Observability
-[ ] Deployment
-
-
-PHASE 9 — PORTFOLIO / DOCUMENTATION
-────────────────────────────────────
-[ ] Architecture diagram
-[ ] Dataset description
-[ ] Evaluation methodology
-[ ] Benchmark results
-[ ] Example failure cases
-[ ] Demo video
-[ ] README
-[ ] Technical case study
-
----
-
-## Codex-Backlog — kurze, kontrollierbare PRs
-
-Priorität: C01 → C02 → C03/C04 → C05 → C06 → C07/C08/C09.
-Jede Aufgabe in genau **einem** Repo und mit eigener PR, ohne Live-Server-Zugriff.
-
-| ID | Repo | Konkrete Aufgabe | Fertig, wenn |
-|---|---|---|---|
-| C01 | personal-assistant-ui | Environment-Konfiguration als BaseSettings (local/server/auto), klare Defaults | Tests für env overrides und Pfade bestehen |
-| C02 | personal-assistant-ui | Reine Stage-Klassifikation + Read-only Dateiinventar | Testdateien *_know_extract.json, *_know_consol.json werden eindeutig gezählt, unbekannte separat |
-| C03 | personal-assistant-ui | Dateiansicht mit Filter nach Stage, Größe und mtime | Kein Schreibzugriff, keine unbeschränkte Dateivorschau |
-| C04 | personal-assistant-ui | Sicherer Log-Viewer mit Tail-Begrenzung | Pfadtraversal-/Symlink-Tests; nur LOG_DIR |
-| C05 | personal-assistant-ui | Dashboard aus gemeinsamem Datei-Inventar | Keine wiederholte Scanlogik, leere Ordner funktionieren |
-| C06 | personal-assistant-ui | Docker/Coolify README und Mount-Konfiguration | Lokal und Coolify dokumentiert; read-only Mounts |
-| C07 → C12 | Personal_Assistant | Knowledge Consolidation Hardening implementiert: Resume/Skip, Evidence, Identitäten, Reports | Synthetische Offline-Tests; [Vertrag](knowledge_consolidation_hardening.md) |
-| C08 | Personal_Assistant | pyproject.toml: doppelte lecture-worker Dependencies beseitigen | Lock/Tests ohne ungefragte Upgrades |
-| C09 | Personal_Assistant | README und docs/architecture.md gegen aktuellen Repo-Code abgleichen | Keine unbelegten Aussagen; kleine Doku-PR |
-| C13 | Personal_Assistant | Read-only Visual-Asset-Inventur implementiert: Raster-/SVG-/Vektorkandidaten und Dokumentprovenienz | [Vertrag, CLI und Grenzen](visual_inventory.md); deterministische Offline-Tests und HTML-/PDF-Beispielreports |
-
-### Größere Arbeiten: erst nach Evaluation / Architekturentscheidung
-- Canonical Knowledge Embedding/Vector DB, Retrieval, Hybrid Search und Grounded QA.
-- Knowledge-Graph, große Refactorings, Agenten und produktive Job-Steuerung.
-- Live-LLM-Jobs, umfangreiche Cloud-Tests oder Änderungen an produktiven Servern.
-
-### Arbeitsregeln für Codex
-1. Ein Ticket = ein Repo = ein PR; niemals direkt deployen oder mergen.
-2. Kein Zugriff auf echte Daten, Geheimnisse, .env-Dateien oder produktive Volumes.
-3. Vorhandene Interfaces und Ausgabeformate beibehalten.
-4. Neue Logik mit Tests, Ruff/Pytest-Resultate in der PR-Beschreibung.
-5. Kein pauschales Reformatting und keine neuen Dependencies ohne Begründung.
-
-### Beobachtete Risiken (Stand 2026-10-12)
-- UI-Repo auf GitHub enthält bisher app_ui.py als einfachen Dateibrowser, nicht die lokal besprochene Admin-App.
-- UI-Container mountet /srv/personal-assistant/data read-only; Logs sind noch nicht als separater Mount belegt.
-- Im Haupt-Repo existiert allgemeine RAG/Chroma-Infrastruktur, ein Index kanonischer Lecture-Knowledge-Objekte ist **nicht** belegt.
-- Die README/architecture.md im Haupt-Repo beschreiben noch stark die frühere GMP-Anwendung.
+Backend #6, #9, #10 und #11 sind laut API weiterhin offen. Ihre Existenz bedeutet
+nicht, dass ihre alten Patches ungeprüft in den aktuellen Master gehören:
+Discovery, Source-IDs und der Importfix sind fachlich ersetzt; #9 enthält den
+noch offenen TXT-Unknown-Time-Rest. [Einzelprüfung und Empfehlung](cs50/operations/historical_pr_review.md).
+Schließung oder Komplettübernahme erfolgt hier nicht automatisch.
