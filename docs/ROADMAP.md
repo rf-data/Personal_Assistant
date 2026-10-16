@@ -134,6 +134,7 @@ Jede Aufgabe in genau **einem** Repo und mit eigener PR, ohne Live-Server-Zugrif
 | C07 | Personal_Assistant | Tests der bestehenden Knowledge-Consolidation-Resume-Logik | tmp_path/mocks, keine API-Aufrufe |
 | C08 | Personal_Assistant | pyproject.toml: doppelte lecture-worker Dependencies beseitigen | Lock/Tests ohne ungefragte Upgrades |
 | C09 | Personal_Assistant | README und docs/architecture.md gegen aktuellen Repo-Code abgleichen | Keine unbelegten Aussagen; kleine Doku-PR |
+| C13 | Personal_Assistant | Read-only Visual-Asset-Inventur implementiert: Raster-/SVG-/Vektorkandidaten und Dokumentprovenienz | [Vertrag, CLI und Grenzen](visual_inventory.md); deterministische Offline-Tests und HTML-/PDF-Beispielreports |
 
 ### Größere Arbeiten: erst nach Evaluation / Architekturentscheidung
 - Canonical Knowledge Embedding/Vector DB, Retrieval, Hybrid Search und Grounded QA.

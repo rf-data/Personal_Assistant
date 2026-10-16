@@ -1,0 +1,11 @@
+<!doctype html><html><head><title>Synthetic visuals</title></head><body>
+<main><h1>Synthetic visual fixture</h1>
+<figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAADklEQVR4nGNoAAMGCAUAKg4GARWeQtcAAAAASUVORK5CYII=" alt="synthetic square"><figcaption>Synthetic gray square, no scientific meaning.</figcaption></figure>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAADklEQVR4nGNoAAMGCAUAKg4GARWeQtcAAAAASUVORK5CYII=" alt="same bytes, other position">
+<img src="plots/local.png" alt="relative reference">
+<img src="https://example.invalid/plot.svg" alt="external SVG reference">
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><path id="shape" d="M0 0 L50 40"/><use href="#shape"/></svg>
+<object type="image/svg+xml" data="figures/extra.svg"></object>
+<img><img src=""><img src="javascript:alert(1)"><img src="file:///never-read.png">
+<picture><source srcset="small.png 1x, large.png 2x"><img srcset="fallback.png 1x"></picture>
+</main></body></html>
