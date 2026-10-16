@@ -145,5 +145,10 @@ def test_contract_is_finite_and_queue_not_claimed():
     assert contract["schema_version"] == 1
     assert len(METRICS) == len({m.name for m in METRICS}) == 8
     assert all(m.name.startswith(PREFIX) for m in METRICS)
-    assert all(len(values) <= 10 for values in contract["labels"].values())
+    # C18 adds exactly one reviewed workflow process, never workflow/run IDs.
+    assert len(contract["labels"]["process"]) == 11
+    assert all(
+        len(values) <= (11 if key in {"process", "stage"} else 10)
+        for key, values in contract["labels"].items()
+    )
     assert "no persistent queue" in contract["queue"].lower()

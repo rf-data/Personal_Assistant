@@ -40,6 +40,38 @@ def execute(store, job_id):
     results = safe_path(directory, "results")
     results.mkdir(mode=0o700)
     output = results / (job.parameters["output_name"] + ".json")
+    if job.process_id == "cs50_offline_workflow":
+        from src.job_control.models import Principal
+        from src.tools_materials.storage import save_model
+        from src.workflows.definition import prepare
+        from src.workflows.engine import run
+
+        if job.parameters["previous_run_id"]:
+            prior = store.get(job.parameters["previous_run_id"])
+            from src.job_control.models import TERMINAL
+
+            if (
+                prior.status not in TERMINAL
+                or prior.process_id != job.process_id
+                or prior.initiated_by != job.initiated_by
+                or prior.parameters["workflow_id"] != job.parameters["workflow_id"]
+                or prior.parameters["course_id"] != job.parameters["course_id"]
+            ):
+                raise ValueError("Resume parent identity/status mismatch")
+        pinned = entry.model_copy(update={"root": inputs})
+        prepared = prepare(pinned)
+        report = run(
+            store,
+            job,
+            prepared,
+            Principal(
+                subject=job.initiated_by,
+                role="operator",
+                courses=(job.parameters["course_id"],),
+            ),
+        )
+        save_model(output, report)
+        return 0 if report.status == "completed" else 1
     if job.process_id == "material_planning":
         from src.tools_materials.processing import MaterialPlan, make_plan
         from src.tools_materials.storage import save_model

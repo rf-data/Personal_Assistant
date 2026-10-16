@@ -249,3 +249,7 @@ src/prio_list.md
 !/docs/job_control/example-run.v1.json
 !/tests/fixtures/job_control/c15-metrics-reference.v1.json
 !/src/job_control/__init__.py
+
+# Reviewed workflow schemas and synthetic report only; runtime state stays external.
+!/docs/workflows/contract.v1.json
+!/docs/workflows/example-report.v1.json

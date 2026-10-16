@@ -48,7 +48,7 @@ def verified_files(entry):
         if total > MAX_TOTAL or hashlib.sha256(data).hexdigest() != expected:
             raise ValueError("Input hash or total size limit")
         values[relative] = data
-    if entry.kind == "manifest":
+    if entry.kind in {"manifest", "workflow_bundle"}:
         manifest = json.loads(values[entry.roles["manifest"]])
         parent = Path(entry.roles["manifest"]).parent
         for course in manifest["courses"]:
@@ -65,7 +65,7 @@ def prepare_indexes(settings):
 
     indexes = {}
     for ref, entry in settings.catalog.items():
-        if entry.kind != "manifest":
+        if entry.kind not in {"manifest", "workflow_bundle"}:
             continue
         try:
             verified_files(entry)
@@ -78,6 +78,8 @@ def prepare_indexes(settings):
 
 def resolve_preview(settings, request, actor, indexes):
     process = process_for(request.process_id)
+    if process.process_id == "cs50_offline_workflow" and not settings.workflows_enabled:
+        raise PermissionError("Workflows require explicit operator configuration")
     params = process.model.model_validate(request.parameters).model_dump(mode="json")
     course = params["course_id"]
     if course not in actor.courses:
@@ -102,6 +104,12 @@ def resolve_preview(settings, request, actor, indexes):
         )
         if len(rows) > 100:
             raise ValueError("Selection exceeds 100 materials")
+    elif process.process_id == "cs50_offline_workflow":
+        from src.workflows.definition import prepare
+
+        prepared = prepare(entry, plan=indexes.get(ref))
+        if prepared.definition.course_id != course:
+            raise ValueError("Workflow course contradicts requested scope")
     else:
         from src.model_materials.materials import NormalizedDocument
 

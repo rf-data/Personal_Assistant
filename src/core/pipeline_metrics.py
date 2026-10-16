@@ -22,6 +22,7 @@ PROCESSES = frozenset(
         "quality_evaluation",
         "knowledge_extraction",
         "knowledge_consolidation",
+        "cs50_offline_workflow",
     }
 )
 POOLS = frozenset({"default", "cpu", "io", "llm"})
