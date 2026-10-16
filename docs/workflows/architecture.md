@@ -22,7 +22,8 @@ Entscheidung: Ein ausdrücklich zusätzlich freigeschalteter C16-Prozess
 `cs50_offline_workflow` führt einen kleinen Graphen **sequenziell innerhalb
 eines bestehenden C16-Jobs** aus. Stage-Prozessverträge referenzieren die oben
 vorhandenen Funktionen. Import/Parse/Handoff sind nur innerhalb dieses geprüften
-Workflows freigegeben, keine freien neuen Einzeljob-Einstiegspunkte.
+Workflows freigegeben. C19 ergänzt einen getrennt freizugebenden, ausschließlich
+lokalen PDF-v2-Einzeladapter; Import und Handoff bleiben interne Stufen.
 Workflow-ID ist stabil; `run_id` ist die C16-Job-ID der aktuellen Ausführung.
 Stages verweisen auf diesen kontrollierenden Job, nicht auf erfundene Einzeljobs.
 
@@ -33,11 +34,14 @@ Vollständige alte Stagebelege/Artefakte bleiben bei Resume in ihren ursprüngli
 Jobverzeichnissen. Neue Arbeit erhält neue Stageverzeichnisse; Parsing arbeitet
 auf einer neuen Kopie des Imports, damit dessen gültiger Receipt unverändert bleibt.
 
-Erster Umfang: höchstens drei explizite lokale HTML-v2-/Code-v1-Materialien.
-PDF ist bewusst gesperrt: `parse_pdf.run_worker` setzt `start_new_session=True`.
-Dessen Prozessgruppe liegt außerhalb der C16-Payloadgruppe; ein Workflow-Cancel
-kann dafür derzeit keine vollständig bestätigte Beendigung garantieren.
-Kein Parser wird geändert und diese Lücke wird nicht durch andere Killlogik verdeckt.
+Ursprünglicher C18-Umfang: höchstens drei lokale HTML-v2-/Code-v1-Materialien.
+C19 schließt die damals belegte PDF-Prozessgruppenlücke: nur innerhalb des
+festen C16-Adapters erbt PDF die kontrollierte Gruppe und erhält zusätzlich
+ein Parent-Death-Signal. Der bestehende Guardian bestätigt die Bereinigung.
+Nach realen Cancel-/Timeout-/Restart-Prozesstests wird PDF-v2 im vorhandenen
+Parsevertrag freigegeben. Die Stage verwendet dieselbe begrenzte PDF-Policy
+wie der Einzeladapter und weiterhin `MaterialProcessor.parse`.
+[Vollständige Prozesshierarchie und Grenzen](../job_control/pdf_lifecycle.md).
 
 Die Erweiterung bleibt im C16-Default deaktiviert. Für Workflowtests/-betrieb
 eine eigene explizit freigegebene C16-Konfiguration verwenden. C17s derzeitige

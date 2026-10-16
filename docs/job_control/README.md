@@ -1,14 +1,17 @@
 # C16 – Lokale Job-Control-API
 
 Stand: 16.10.2026. [Architekturentscheidung/Bestandsaufnahme](architecture.md).
-Zwei echte Offline-Adapter: **material_planning** und **quality_evaluation**.
-Keine Downloads, LLMs, Transkription, Parseränderungen oder produktiven Starts.
+Zwei Defaultadapter: **material_planning** und **quality_evaluation**.
+Optional: **material_parsing** für lokale PDF-v2-Receipts (`pdf_enabled=true`)
+und der C18-Workflow. Keine Downloads, LLMs, Transkription oder produktiven Starts.
 
 - [HTTP-/Datenvertrag und C14-Unterschiede](api.md)
 - [Betrieb, Sicherheit und Wiederanlauf](operations.md)
 - [C15-Metriken und Deployment-Grenzen](integration.md)
 - [Testnachweise](validation.md)
 - [Tatsächlich durchlaufene synthetische Jobs](example-run.v1.json)
+- [C19: PDF-Prozesshierarchie, Adapter und Freigabegrenzen](pdf_lifecycle.md)
+- [C19: PDF-Testnachweis](pdf_validation.md)
 
 Katalog und Ergebnisdateien verwenden die bestehenden Material-, Planungs- und
 Qualitätsmodelle. SQLite speichert ausschließlich die neue Jobverwaltung.

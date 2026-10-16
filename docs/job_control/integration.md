@@ -64,6 +64,13 @@ queued-Einträge. Das ist eine ausdrücklich dokumentierte C15-Erweiterung; der
 C15-Validator bekommt sie nicht als bereits bekannte Familie untergeschoben.
 Keine Stage-Histogramme ohne tatsächlich vorhandene Messungen.
 
+C19: Der optionale PDF-Einzeladapter verwendet den bereits vorhandenen endlichen
+Prozesswert `material_parsing`. `jobs_started_total`, bestätigte Outcomes und
+Laufzeiten werden wie bei den bisherigen Adaptern erfasst. Sowohl PDF-Worker-
+als auch Job-Walltimeout zählen unter `jobs_failed_total{error_class="timeout"}`.
+PDF-Stufen in C18 gehören weiter zum einen `cs50_offline_workflow`-Job; sie werden
+nicht als zusätzliche Einzeljobs gezählt. Kein neuer Labelwert und keine IDs/Pfade.
+
 Pull-only: keine Netzwerkverbindung zu Prometheus/Grafana, kein Monitoring-SDK im
 Dispatchpfad. Ein Metrics-Request-/Monitoring-Ausfall kann Jobs nicht stoppen.
 Auth/privates Netzwerk, TLS/Proxy, Scrape-Discovery und Erweiterung des C15-

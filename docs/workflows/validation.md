@@ -77,6 +77,8 @@ ab; Resume verwendete dieselbe bestehende Job-ID. Der eingecheckte
 und seinen kanonischen SHA-256 geprüft. [Markdown](example-report.v1.md) stammt
 aus demselben Lauf. Er belegt Funktionsverkettung, keine reale Modellqualität.
 
-PDF, LLM-/Transkriptions-/Visualjobs und C17-UI-Unterstützung sind nicht freigegeben.
+Historischer C18-Abschlussstand: PDF war noch nicht freigegeben. C19 ergänzt
+die [PDF-Lebenszyklusprüfung und Workflowfreigabe](../job_control/pdf_validation.md).
+LLM-/Transkriptions-/Visualjobs und C17-UI-Unterstützung bleiben nicht freigegeben.
 Die [bekannten Grenzen und nächsten Schritte](README.md#grenzen-und-nächster-schritt)
 sind Bestandteil des Übergabevertrags.

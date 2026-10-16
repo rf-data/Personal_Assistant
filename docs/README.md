@@ -13,7 +13,7 @@ keine umfangreiche Verschiebung in eine neue Ordnerhierarchie.
 | Mathematik | [C11](math_evaluation/README.md), [Nachweis](math_evaluation/validation.md) | unterstützte Syntax und unabhängige synthetische Kontrollen |
 | Konsolidierung | [C12](knowledge_consolidation_hardening.md), [Nachweis](knowledge_consolidation_test_results.md) | konservativer Offlinevertrag / Evidence und Resume |
 | Visual Assets | [C13](visual_inventory.md), [Nachweis](visual_inventory_test_results.md) | technische Referenz-/Geometrieinventur, kein neues Enrichment |
-| Job-Control | [C16](job_control/README.md), [Integration](job_control/integration.md) | API, Queue, begrenzter Executor und Betriebsgrenzen |
+| Job-Control | [C16](job_control/README.md), [Integration](job_control/integration.md), [C19 PDF](job_control/pdf_lifecycle.md) | API, Queue, begrenzter Executor, optionales PDF-v2 und Betriebsgrenzen |
 | Orchestrierung | [C18](workflows/README.md), [Nachweis](workflows/validation.md) | optionaler lokaler Materialworkflow; weitere Stufen deaktiviert |
 | Monitoring | [C15](monitoring/README.md), [Metrikvertrag](monitoring/pipeline-metrics.md) | Konfiguration/Schema und explizite C16-Integration |
 | Admin-/Chat-UI | [separates UI-Repository](https://github.com/rf-data/personal-assistant-ui/blob/main/README.md), [C17](https://github.com/rf-data/personal-assistant-ui/blob/main/docs/c17_integration.md) | kanonischer UI-Einstieg, Clientvertrag und UI-Deployment |

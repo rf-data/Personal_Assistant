@@ -29,7 +29,8 @@
           "enum": [
             "material_plan",
             "quality_report",
-            "workflow_report"
+            "workflow_report",
+            "material_receipt"
           ],
           "title": "Kind",
           "type": "string"
@@ -94,7 +95,8 @@
               "enum": [
                 "material_plan",
                 "quality_report",
-                "workflow_report"
+                "workflow_report",
+                "material_receipt"
               ],
               "title": "Kind",
               "type": "string"
@@ -312,6 +314,40 @@
       "title": "Job",
       "type": "object"
     },
+    "PdfParams": {
+      "additionalProperties": false,
+      "properties": {
+        "course_id": {
+          "enum": [
+            "cs50x",
+            "cs50_python",
+            "cs50_sql",
+            "cs50_ai",
+            "cs50_web",
+            "cs50_cybersecurity"
+          ],
+          "title": "Course Id",
+          "type": "string"
+        },
+        "material_ref": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Material Ref",
+          "type": "string"
+        },
+        "output_name": {
+          "default": "pdf-receipt",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Output Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "material_ref",
+        "course_id"
+      ],
+      "title": "PdfParams",
+      "type": "object"
+    },
     "Preview": {
       "additionalProperties": false,
       "properties": {
@@ -423,7 +459,8 @@
               "enum": [
                 "manifest",
                 "material_bundle",
-                "workflow_bundle"
+                "workflow_bundle",
+                "pdf_bundle"
               ],
               "title": "Kind",
               "type": "string"
@@ -544,6 +581,11 @@
           "title": "Max Queued",
           "type": "integer"
         },
+        "pdf_enabled": {
+          "default": false,
+          "title": "Pdf Enabled",
+          "type": "boolean"
+        },
         "root": {
           "format": "path",
           "title": "Root",
@@ -656,6 +698,218 @@
       "title": "StartRequest",
       "type": "object"
     }
+  },
+  "optional_pdf_registry": {
+    "disabled_processes": [
+      "course_discovery",
+      "lecture_compilation",
+      "material_download",
+      "audio_transcription",
+      "visual_analysis",
+      "visual_enrichment",
+      "knowledge_extraction",
+      "knowledge_consolidation"
+    ],
+    "processes": [
+      {
+        "actions": [
+          "preview",
+          "create",
+          "start",
+          "cancel"
+        ],
+        "cancellable": true,
+        "cpu_seconds": 20,
+        "execution": "offline_python_subprocess",
+        "expected_artifacts": [
+          "material_plan"
+        ],
+        "file_bytes": 8388608,
+        "file_descriptors": 64,
+        "max_parallel": 1,
+        "memory_bytes": 805306368,
+        "parameter_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "course_id": {
+              "enum": [
+                "cs50x",
+                "cs50_python",
+                "cs50_sql",
+                "cs50_ai",
+                "cs50_web",
+                "cs50_cybersecurity"
+              ],
+              "title": "Course Id",
+              "type": "string"
+            },
+            "output_name": {
+              "default": "material-plan",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Output Name",
+              "type": "string"
+            },
+            "resource_id": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Resource Id"
+            },
+            "section": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Section"
+            },
+            "source_ref": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Source Ref",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_ref",
+            "course_id"
+          ],
+          "title": "PlanningParams",
+          "type": "object"
+        },
+        "process_id": "material_planning",
+        "required_role": "operator",
+        "runner": "src.tools_materials.processing.make_plan",
+        "subprocesses": 32,
+        "timeout_seconds": 30
+      },
+      {
+        "actions": [
+          "preview",
+          "create",
+          "start",
+          "cancel"
+        ],
+        "cancellable": true,
+        "cpu_seconds": 20,
+        "execution": "offline_python_subprocess",
+        "expected_artifacts": [
+          "quality_report"
+        ],
+        "file_bytes": 8388608,
+        "file_descriptors": 64,
+        "max_parallel": 1,
+        "memory_bytes": 805306368,
+        "parameter_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "course_id": {
+              "enum": [
+                "cs50x",
+                "cs50_python",
+                "cs50_sql",
+                "cs50_ai",
+                "cs50_web",
+                "cs50_cybersecurity"
+              ],
+              "title": "Course Id",
+              "type": "string"
+            },
+            "material_ref": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Material Ref",
+              "type": "string"
+            },
+            "output_name": {
+              "default": "quality-report",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Output Name",
+              "type": "string"
+            }
+          },
+          "required": [
+            "material_ref",
+            "course_id"
+          ],
+          "title": "QualityParams",
+          "type": "object"
+        },
+        "process_id": "quality_evaluation",
+        "required_role": "operator",
+        "runner": "scripts.cs50_material_quality.main",
+        "subprocesses": 32,
+        "timeout_seconds": 30
+      },
+      {
+        "actions": [
+          "preview",
+          "create",
+          "start",
+          "cancel"
+        ],
+        "cancellable": true,
+        "cpu_seconds": 20,
+        "execution": "offline_python_subprocess",
+        "expected_artifacts": [
+          "material_receipt"
+        ],
+        "file_bytes": 8388608,
+        "file_descriptors": 64,
+        "max_parallel": 1,
+        "memory_bytes": 805306368,
+        "parameter_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "course_id": {
+              "enum": [
+                "cs50x",
+                "cs50_python",
+                "cs50_sql",
+                "cs50_ai",
+                "cs50_web",
+                "cs50_cybersecurity"
+              ],
+              "title": "Course Id",
+              "type": "string"
+            },
+            "material_ref": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Material Ref",
+              "type": "string"
+            },
+            "output_name": {
+              "default": "pdf-receipt",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Output Name",
+              "type": "string"
+            }
+          },
+          "required": [
+            "material_ref",
+            "course_id"
+          ],
+          "title": "PdfParams",
+          "type": "object"
+        },
+        "process_id": "material_parsing",
+        "required_role": "operator",
+        "runner": "src.tools_materials.processing.MaterialProcessor.parse (local PDF-v2 only)",
+        "subprocesses": 512,
+        "timeout_seconds": 30
+      }
+    ],
+    "schema_version": 1
   },
   "registry": {
     "disabled_processes": [

@@ -200,7 +200,9 @@ class Controller:
 
     def processes(self, actor):
         return {
-            **registry_document(workflows=self.settings.workflows_enabled),
+            **registry_document(
+                workflows=self.settings.workflows_enabled, pdf=self.settings.pdf_enabled
+            ),
             "worker_available": self.store.worker_available(self.settings.worker_ttl),
             "execution_enabled": self.settings.execution_enabled,
             "courses": list(actor.courses),

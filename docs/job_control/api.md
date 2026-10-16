@@ -1,5 +1,10 @@
 # HTTP- und Datenvertrag v1
 
+C19 ergänzt optional `material_parsing` (`pdf_enabled=true`, `PdfParams`,
+`pdf_bundle` → `material_receipt`) auf den bestehenden Routen.
+[PDF-v2-Eingabe-/Ausgabevertrag und Limits](pdf_lifecycle.md).
+Die Defaultregistry bleibt bei zwei Prozessen; C18 ist separat optional.
+
 Alle Routen unter /v1. Antwortobjekte tragen schema_version=1; Listen enthalten
 versionierte Objekte. Preview-/Create-Requests haben Version 1 als Default,
 Start/Cancel verwenden leere JSON-Objekte. Fehler enthalten nur
@@ -14,7 +19,7 @@ aus der Serverkonfiguration. Keine Proxyheader-Rollen oder Browser-Ownerwerte.
 | Methode/Route | Funktion |
 | --- | --- |
 | GET /v1/capabilities | Version, Registry, Backendbereitschaft und freigegebene Kurse/opaque Inputs |
-| GET /v1/processes | zwei erlaubte Prozesse, Parameterschemas, Limits, Rechte und deaktivierte Stufen |
+| GET /v1/processes | Default- und freigegebene optionale Prozesse, Parameterschemas, Limits, Rechte und deaktivierte Einzelprozesse |
 | POST /v1/previews | Parameter, Kataloghashes, Kurs-/Ressourcenbindung prüfen; kein Job |
 | POST /v1/jobs | bestätigte Preview + Idempotency-Key atomar speichern und standardmäßig queued |
 | POST /v1/jobs/{job_id}/start | zuvor mit start=false erstellten Job genau einmal freigeben |

@@ -1,6 +1,6 @@
 # Roadmap — Personal Assistant
 
-Stand: 16.10.2026. Verifiziert gegen Backend-`master` `78b35a5` und UI-`main`
+Auditstand: 16.10.2026, Backend-`master` `78b35a5` und UI-`main`
 `137651e`; [Commit-/PR-Snapshot](audit/remote_snapshot.v1.json).
 Die [lokale Inventur](repository_inventory.md) trennt gemergte Funktionen von
 alten Arbeitskopien. Ein Merge und technische Offline-Tests sind keine Freigabe
@@ -26,9 +26,14 @@ bleiben verbindlich, auch wenn das Arbeitspaket technisch abgeschlossen ist.
 
 ## Priorisierte nächste Integrationsschritte
 
-1. **PDF unter C16 kontrollieren:** bestätigte vollständige Cancel-/Timeout-/
-   Worker-Restart-Lebensdauer des vorhandenen PDF-Subprozesses nachweisen;
-   erst danach C18-Parsing freigeben. Keine Ersatzparser entwickeln.
+1. **C19 reviewen:** Dieser PR auf `master` `c1007ef` ergänzt einen optionalen
+   lokalen PDF-v2-Einzeladapter und die bestehende C18-Parse-Stage. Linux-
+   Prozessgruppen-/Parent-Death-Kontrolle, Worker-/Job-Timeout, Cancel und
+   Restart-Reconciliation sind offline mit synthetischen PDFs geprüft.
+   [Freigabegrenzen und Prozesshierarchie](job_control/pdf_lifecycle.md),
+   [Testnachweis](job_control/pdf_validation.md),
+   [echter synthetischer Workflowreport](workflows/example-pdf-report.v1.json).
+   Keine Aussage über Merge, Deployment oder reale Kursqualität.
 2. **C18 in C17 sichtbar machen:** eigener UI-PR für versionierte Workflow-
    Capabilities/DTOs, Preview, Status, Artefakte, Stale-/Resume-/Cancelanzeigen;
    bestehende zwei Defaultprozesse müssen kompatibel bleiben.

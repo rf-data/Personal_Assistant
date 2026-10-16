@@ -4,6 +4,7 @@ import argparse
 import json
 import resource
 import socket
+import subprocess
 
 from src.job_control.catalog import safe_path, snapshot
 from src.job_control.registry import process_for
@@ -23,6 +24,13 @@ def apply_limits(process):
 
 
 def execute(store, job_id):
+    from src.tools_materials.parse_pdf import job_worker_scope
+
+    with job_worker_scope():
+        return execute_scoped(store, job_id)
+
+
+def execute_scoped(store, job_id):
     job = store.get(job_id)
     process = process_for(job.process_id)
     apply_limits(process)
@@ -40,6 +48,11 @@ def execute(store, job_id):
     results = safe_path(directory, "results")
     results.mkdir(mode=0o700)
     output = results / (job.parameters["output_name"] + ".json")
+    if job.process_id == "material_parsing":
+        from src.job_control.pdf_adapter import run
+
+        run(entry.model_copy(update={"root": inputs}), job, results, output)
+        return 0
     if job.process_id == "cs50_offline_workflow":
         from src.job_control.models import Principal
         from src.tools_materials.storage import save_model
@@ -71,6 +84,8 @@ def execute(store, job_id):
             ),
         )
         save_model(output, report)
+        if any(s.error == "Stage failed (TimeoutExpired)" for s in report.stages):
+            return 4
         return 0 if report.status == "completed" else 1
     if job.process_id == "material_planning":
         from src.tools_materials.processing import MaterialPlan, make_plan
@@ -115,6 +130,8 @@ def main(argv=None):
     arm_parent_death(args.parent)
     try:
         return execute(Store(args.root), args.job_id)
+    except subprocess.TimeoutExpired:
+        return 4
     except (ValueError, OSError, KeyError, json.JSONDecodeError):
         return 2
     except Exception:

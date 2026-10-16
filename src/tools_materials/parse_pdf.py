@@ -7,27 +7,61 @@ import signal
 import subprocess
 import sys
 import tempfile
+from contextlib import contextmanager
+from contextvars import ContextVar
 from pathlib import Path
 
 from src.model_discovery.cs50 import deterministic_id
 from src.model_materials.materials import ImageArtifact, ParserConfig
 from src.tools_materials.parse_html import build_document, check_input
 
+_JOB_SCOPE = ContextVar("material_worker_job_scope", default=False)
+
+
+@contextmanager
+def job_worker_scope():
+    """Trusted C16 entry only: keep workers inside the guardian-owned group.
+
+    No persisted PID, request parameter or inherited environment selects this.
+    The guardian is the subreaper and owns descendant cleanup confirmation.
+    """
+    token = _JOB_SCOPE.set(True)
+    try:
+        yield
+    finally:
+        _JOB_SCOPE.reset(token)
+
 
 def run_worker(command, request, timeout):
+    managed = _JOB_SCOPE.get()
+    bootstrap = None
+    if managed:
+        from src.job_control.guardian import arm_parent_death
+
+        parent = os.getpid()
+
+        # Same bootstrap race check as the guardian, with an uncatchable signal.
+        # C16's adapter is single-threaded at this fork boundary.
+        def bootstrap():
+            arm_parent_death(parent, signal.SIGKILL)
+
     with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
         process = subprocess.Popen(
             command,
             stdin=subprocess.PIPE,
             stdout=output,
             stderr=errors,
-            start_new_session=True,
+            start_new_session=not managed,
+            preexec_fn=bootstrap,
         )
         try:
             process.communicate(json.dumps(request).encode(), timeout=timeout)
         except BaseException:
             try:
-                os.killpg(process.pid, signal.SIGKILL)
+                if managed:
+                    process.kill()  # Direct unreaped child, never the adapter's group.
+                else:
+                    os.killpg(process.pid, signal.SIGKILL)
             except ProcessLookupError:
                 pass
             process.wait()

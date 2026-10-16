@@ -1,5 +1,10 @@
 # PDF-v2: Code-, Mathe- und Zeilennummernklassifizierung
 
+Ergänzung C19: Die Klassifikation bleibt unverändert. Der Worker übernimmt bei
+C16-Ausführung die kontrollierte Jobgruppe und strengere geerbte Ressourcenlimits.
+[Lifecycle-Vertrag](../../job_control/pdf_lifecycle.md),
+[Offline-Nachweis](../../job_control/pdf_validation.md).
+
 Stand: 15.10.2026. Basis: `master`, `87fac39`. Keine neuen Downloads, APIs, LLMs oder Codeausführung.
 
 ## Ursache und Änderung

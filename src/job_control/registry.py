@@ -1,8 +1,13 @@
-"""Two default entries and one opt-in workflow. No command/path parameters."""
+"""Two default entries; opt-in PDF and workflow. No command/path parameters."""
 
 from dataclasses import dataclass
 
-from src.job_control.models import PlanningParams, QualityParams, WorkflowParams
+from src.job_control.models import (
+    PdfParams,
+    PlanningParams,
+    QualityParams,
+    WorkflowParams,
+)
 
 
 @dataclass(frozen=True)
@@ -59,18 +64,31 @@ WORKFLOW_PROCESS = Process(
     "src.workflows.engine.run",
     timeout_seconds=90,
     cpu_seconds=60,
+    # Linux NPROC counts all threads of the UID, not just this job's children.
+    # Fixed trusted topology still permits only one PDF worker per running job.
+    subprocesses=512,
+)
+PDF_PROCESS = Process(
+    "material_parsing",
+    PdfParams,
+    "pdf_bundle",
+    "material_receipt",
+    "src.tools_materials.processing.MaterialProcessor.parse (local PDF-v2 only)",
+    subprocesses=512,
 )
 
 
 def process_for(process_id):
     if process_id == WORKFLOW_PROCESS.process_id:
         return WORKFLOW_PROCESS
+    if process_id == PDF_PROCESS.process_id:
+        return PDF_PROCESS
     if process_id not in REGISTRY:
         raise ValueError("Process is not enabled")
     return REGISTRY[process_id]
 
 
-def registry_document(*, workflows=False):
+def registry_document(*, workflows=False, pdf=False):
     return {
         "schema_version": 1,
         "processes": [
@@ -91,7 +109,13 @@ def registry_document(*, workflows=False):
                 required_role="operator",
                 runner=p.reviewed_runner,
             )
-            for p in (*REGISTRY.values(), *((WORKFLOW_PROCESS,) if workflows else ()))
+            for p in (
+                *REGISTRY.values(),
+                *((WORKFLOW_PROCESS,) if workflows else ()),
+                *((PDF_PROCESS,) if pdf else ()),
+            )
         ],
-        "disabled_processes": list(DISABLED),
+        "disabled_processes": [
+            p for p in DISABLED if not (pdf and p == "material_parsing")
+        ],
     }

@@ -80,6 +80,8 @@ def resolve_preview(settings, request, actor, indexes):
     process = process_for(request.process_id)
     if process.process_id == "cs50_offline_workflow" and not settings.workflows_enabled:
         raise PermissionError("Workflows require explicit operator configuration")
+    if process.process_id == "material_parsing" and not settings.pdf_enabled:
+        raise PermissionError("PDF jobs require explicit operator configuration")
     params = process.model.model_validate(request.parameters).model_dump(mode="json")
     course = params["course_id"]
     if course not in actor.courses:
@@ -110,6 +112,10 @@ def resolve_preview(settings, request, actor, indexes):
         prepared = prepare(entry, plan=indexes.get(ref))
         if prepared.definition.course_id != course:
             raise ValueError("Workflow course contradicts requested scope")
+    elif process.process_id == "material_parsing":
+        from src.job_control.pdf_adapter import prepare
+
+        prepare(entry, course, values)
     else:
         from src.model_materials.materials import NormalizedDocument
 
