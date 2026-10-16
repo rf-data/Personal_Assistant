@@ -1,5 +1,9 @@
 # C16 – Architekturentscheidung
 
+Die folgende Bestandsaufnahme beschreibt den ursprünglichen C16-Ausgangspunkt.
+C19 ergänzt inzwischen einen optionalen PDF-v2-Einzeladapter und kontrollierte
+PDF-Stufen in C18. [Aktuelle Prozesshierarchie und Freigabegrenzen](pdf_lifecycle.md).
+
 Bestandsaufnahme vor Implementierung, 16.10.2026: `master` bei `1a02efc` enthält
 C10–C13 (PRs 61–64). C14 ist als UI-PR 1 gemergt; dessen veröffentlichter
 Job-Control-v1-Vertrag dient als Referenz. C15/PR 65 ist noch offen und wird

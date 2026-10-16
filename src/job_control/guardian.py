@@ -32,9 +32,9 @@ def prctl(option, value):
         raise OSError(ctypes.get_errno(), "prctl failed")
 
 
-def arm_parent_death(parent):
+def arm_parent_death(parent, death_signal=signal.SIGTERM):
     prctl(
-        1, signal.SIGTERM
+        1, death_signal
     )  # PR_SET_PDEATHSIG; default terminates during exec bootstrap.
     if os.getppid() != parent:
         os._exit(125)
@@ -203,6 +203,8 @@ def execute(root, job_id, parent):
         error = (
             "Execution timeout"
             if reason == "timeout"
+            else "PDF worker timeout"
+            if code == 4
             else "Offline adapter returned non-zero or missing output"
             if status == "failed"
             else "Supervisor interrupted"
@@ -218,7 +220,7 @@ def execute(root, job_id, parent):
             duration_seconds=duration,
             error=error,
             error_class="timeout"
-            if reason == "timeout"
+            if reason == "timeout" or code == 4
             else "input"
             if status == "failed" and code in {1, 2}
             else "internal"

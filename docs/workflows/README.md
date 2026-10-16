@@ -10,7 +10,7 @@ auf und verändert keine bestehenden Kurs-, Lecture- oder Knowledge-Objekte.
 ```mermaid
 flowchart LR
   P[Bestehender Materialplan] --> I[Lokaler Import pro Material]
-  I --> N[HTML-v2 oder Code-v1 Normalisierung]
+  I --> N[HTML-v2, Code-v1 oder PDF-v2 Normalisierung]
   N --> Q[C10 Quality Gate]
   Q --> H[Referenzierbarer Lecture-Material-Handoff]
 ```
@@ -28,7 +28,8 @@ Allowlist enthält ausschließlich die fünf Verträge in `definition.ACTIVE`:
 | `quality_evaluation` | `prepare_material_handoff` | bestehender Plan/Normalized/Receipt/Raw → `MaterialReview` |
 | `lecture_material_handoff` | `prepare_material_handoff` | bestandenes Gate + dieselben Quellen → `LectureMaterialHandoff` |
 
-Import/Parsing/Handoff sind keine frei startbaren Einzelprozesse im C16-Registry.
+Import/Handoff bleiben interne Stufen. C19 ergänzt einen separat freizugebenden
+C16-PDF-v2-Einzeladapter; [Vertrag und Prozesskontrolle](../job_control/pdf_lifecycle.md).
 Der zusätzliche Registry-Prozess heißt `cs50_offline_workflow`. Der vorhandene
 C10-Handoff erhält die originale Provenienz und dessen Aggregationsvertrag:
 TOC-, Link- und abgeleitete Codeprojektionen werden nicht erneut als kanonischer
@@ -181,12 +182,13 @@ werden weiterhin niemals Metriklabels.
 
 ## Grenzen und nächster Schritt
 
-- HTML-v2 und Code-v1, maximal drei Materialien, 1 MiB pro Quelle, 2.000 Blöcke;
+- HTML-v2, Code-v1 und PDF-v2, maximal drei Materialien, 1 MiB pro Quelle, 2.000 Blöcke;
   maximal 13 Stufen. Der C16-Workflowjob ist auf 90 s Wandzeit, 60 s CPU,
   768 MiB Adressraum und 8 MiB pro Ausgabedatei begrenzt.
-- PDF bleibt blockiert, solange der bestehende PDF-Subprozess eine eigene
-  Prozesssession öffnet. Zuerst dessen bestätigte Cancel-/Timeout-/Restart-
-  Lebensdauer unter C16 nachweisen; erst danach PDF als Workflowparser freigeben.
+- PDF-v2 ist nach C19-Lebenszyklustests freigegeben: innerhalb C16 erbt sein
+  Worker die kontrollierte Adaptergruppe. Höchstens 20 Seiten/20 Bilder,
+  10 s Worker-Wallzeit und 512 MiB Workeradressraum; engere Byte-/Blocklimits
+  der Definition gelten weiterhin. Andere PDF-Versionen bleiben gesperrt.
 - Keine Transkription, visuellen Providerjobs, Knowledge-Extraktion oder
   automatische Konsolidierung/Formelevaluation. Deren Verträge sind Vorbereitung.
 - Keine allgemeine DAG-Plattform, Parallelworker oder automatische Wiederholung.
@@ -198,8 +200,11 @@ werden weiterhin niemals Metriklabels.
   Runnerverkettung und Provenienz, keine Qualitätsaussage zu realen Kursunterlagen.
 
 Beispiele: [JSON](example-report.v1.json), [Markdown](example-report.v1.md).
+PDF-Demo: `python -m scripts.cs50_workflow_demo --pdf --output /tmp/c19-new-pdf-demo`.
+PDF-Beleg: [JSON](example-pdf-report.v1.json), [Markdown](example-pdf-report.v1.md),
+[C19-Testbericht](../job_control/pdf_validation.md).
 Testnachweis und reproduzierbare Prüfkommandos: [validation.md](validation.md).
 
-Der Beispielreport zeigt den Statusabruf nach erfolgreichem Abschluss: Die neun
+Der HTML-/Code-Beispielreport zeigt den Statusabruf nach Abschluss: Die neun
 Stufen sind bereits erneut verifiziert und deshalb `skipped`; ihre Job-ID,
 Laufzeiten und ursprünglichen Outputpfade bleiben erhalten.

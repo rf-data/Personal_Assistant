@@ -26,6 +26,18 @@ Artifacts use SHA-derived material/document IDs and portable relative paths.
 No destructive repairs, automatic downloads on parse, Knowledge extraction,
 embeddings, uploads or legacy runner changes.
 
+## C19: controlled PDF-v2 jobs
+
+C16 optionally exposes `material_parsing` for explicitly approved local PDF receipt
+bundles. C18's existing parse stage also accepts bounded PDF-v2 after lifecycle
+tests. Both reuse `MaterialProcessor.parse/inspect`; no new parser or receipt model.
+Inside the fixed C16 adapter only, the PDF worker inherits the owned job process
+group and arms a parent-death signal. Its resource limits never raise inherited
+hard limits. Direct parsing and C13 retain their existing standalone worker groups.
+Original Raw/Receipt/Normalized/image files are never modified: adapters use a
+new private copy and workflows retain earlier generations during explicit resume.
+[Input/output contracts, limits, ownership and remaining blocks](../../job_control/pdf_lifecycle.md).
+
 Initial processing tests: 7 passed, 8.09 seconds, including all six graph roundtrip,
 653 identities/task uniqueness, missing raw dependency, actual lost publication
 acknowledgement/resume, changed config, corruption and unsupported no-write path.

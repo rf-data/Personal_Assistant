@@ -621,12 +621,12 @@ def test_new_process_metrics_and_opt_in_registry(scope):
         executor.close()
 
 
-def test_pdf_parser_lifecycle_stays_blocked_in_preview(scope, monkeypatch):
+def test_unreviewed_pdf_version_stays_blocked_in_preview(scope, monkeypatch):
     from src.model_materials.materials import ParserConfig
 
     monkeypatch.setattr(
         "src.workflows.definition.parser_for",
-        lambda binding: (ParserConfig(name="pdf", version="2"), "supported", None),
+        lambda binding: (ParserConfig(name="pdf", version="1"), "unsupported", None),
     )
     prepared = prepare(scope.entry)
     report = preview(

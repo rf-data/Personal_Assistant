@@ -1660,7 +1660,7 @@
         "process_id": "cs50_offline_workflow",
         "required_role": "operator",
         "runner": "src.workflows.engine.run",
-        "subprocesses": 32,
+        "subprocesses": 512,
         "timeout_seconds": 90
       }
     ],

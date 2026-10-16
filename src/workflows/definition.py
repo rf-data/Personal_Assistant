@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 from src.job_control.catalog import read_file, safe_path, verified_files
 from src.job_control.models import fingerprint
+from src.job_control.pdf_adapter import PDF_CONFIG
 from src.model_discovery.cs50 import deterministic_id
 from src.model_materials.materials import MaterialPlan, ParserConfig
 from src.tools_materials.processing import make_plan, parser_for, plan_steps
@@ -144,8 +145,15 @@ def prepare(entry, *, plan=None, strict=True):
     )
     for mid, binding in bindings.items():
         config, _, _ = parser_for(binding)
-        # PDF starts another session; it cannot inherit C16's confirmed group cleanup.
-        if config is not None and config.name in {"html", "code"}:
+        if config is not None and config.name == "pdf" and config.version == "2":
+            # C19: the fixed C16 adapter scope keeps the worker in its owned group.
+            config = PDF_CONFIG.model_copy(
+                update=dict(
+                    max_bytes=definition.max_bytes,
+                    max_blocks=definition.max_blocks,
+                )
+            )
+        elif config is not None and config.name in {"html", "code"}:
             config = ParserConfig(
                 name=config.name,
                 version=config.version,

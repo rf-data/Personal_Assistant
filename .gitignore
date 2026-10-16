@@ -253,6 +253,7 @@ src/prio_list.md
 # Reviewed workflow schemas and synthetic report only; runtime state stays external.
 !/docs/workflows/contract.v1.json
 !/docs/workflows/example-report.v1.json
+!/docs/workflows/example-pdf-report.v1.json
 
 # Reviewed C17.0 audit metadata only; local private planning reports stay ignored.
 !/docs/audit/repository_inventory.v1.json

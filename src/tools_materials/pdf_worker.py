@@ -158,6 +158,14 @@ def classify_text(text, spans, typical):
     return kind, data, uncertainty
 
 
+def bounded_limit(kind, soft, hard):
+    """Worker limits may tighten, never raise an inherited job hard limit."""
+    _, inherited = resource.getrlimit(kind)
+    if inherited != resource.RLIM_INFINITY:
+        hard = min(hard, inherited)
+    resource.setrlimit(kind, (min(soft, hard), hard))
+
+
 def main():
     destination = sys.stdout
     sys.stdout = (
@@ -168,12 +176,13 @@ def main():
     if config["name"] != "pdf" or config["version"] != "2":
         raise ValueError("Only PDF-v2 normalization is supported by this worker")
     memory = config["memory_mb"] * 1024 * 1024
-    resource.setrlimit(resource.RLIMIT_AS, (memory, memory))
-    resource.setrlimit(
+    bounded_limit(resource.RLIMIT_AS, memory, memory)
+    bounded_limit(
         resource.RLIMIT_CPU,
-        (max(1, int(config["timeout"])), max(2, int(config["timeout"]) + 1)),
+        max(1, int(config["timeout"])),
+        max(2, int(config["timeout"]) + 1),
     )
-    resource.setrlimit(resource.RLIMIT_FSIZE, (64 * 1024 * 1024, 64 * 1024 * 1024))
+    bounded_limit(resource.RLIMIT_FSIZE, 64 * 1024 * 1024, 64 * 1024 * 1024)
     import pymupdf
 
     raw = base64.b64decode(request["raw"], validate=True)

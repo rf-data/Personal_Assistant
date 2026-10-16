@@ -77,8 +77,11 @@ Der Supervisor startet ausschließlich src.job_control.guardian. Dieser startet
 ausschließlich src.job_control.adapter_worker mit root/job_id/Parentbezug.
 Keine Shell, shell=True, Skript-/Modulparameter aus HTTP oder Shellkonfiguration.
 
-Jeder Adapter: 30 s Walltime, 20 s CPU, 768 MiB Adressraum,
-8 MiB Dateigröße, 64 Deskriptoren, 32 Prozesse je UID, Core-Dumps aus.
+Die beiden Defaultadapter: 30 s Walltime, 20 s CPU, 768 MiB Adressraum,
+8 MiB Dateigröße, 64 Deskriptoren, 32 Tasks je UID, Core-Dumps aus.
+Die optionalen PDF-/Workflowpfade verwenden 512 Tasks je UID: Linux zählt auch
+alle anderen Threads desselben Benutzers. Die feste Workerstruktur und die
+Jobparallelitätsgrenzen bleiben bestehen; [C19-Policy](pdf_lifecycle.md).
 Grenzen stehen in der Registry, sind nicht von Jobparametern erweiterbar.
 RLIMIT_NPROC ist pro UID und unter root nicht vollständig wirksam; daher
 dedizierten Nicht-root-User und später zusätzliche cgroup-/Servicegrenzen nutzen.
