@@ -159,3 +159,6 @@ Material mapping does not execute Knowledge extraction or upload vectors.
 HTML-Notes-Normalisierung v2: [Evaluation, Verträge und kontrolliertes Reprocessing](evaluation/html_notes_v2.md).
 
 PDF-v2: [Code-/Matheklassifizierung, Evaluation und sicheres Reprocessing](evaluation/pdf_v2.md).
+
+C10: [Offline Material Quality Gate, Lecture-Handoff und CLI](contracts/material_quality.md),
+[Offline-Prüfbericht und Grenzen](evaluation/material_quality.md).
