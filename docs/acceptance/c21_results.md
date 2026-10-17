@@ -12,7 +12,7 @@ Deployment, Download, LLM-Aufruf oder produktiver Datenbankzugriff wurde ausgef�
 
 | Prüfung | Ergebnis | Tatsächlicher Nachweis |
 | --- | --- | --- |
-| Kanonische Streamlit-UI → echter Loopback-HTTP-Server → Queue/Guardian → fünf Stufen | passed | fünf ursprüngliche `completed`-Stufen, signierter Reportvertrag, Artefaktmetadaten |
+| Kanonische Streamlit-UI → echter Loopback-HTTP-Server → Queue/Guardian → fünf Stufen | passed | fünf ursprüngliche `completed`-Stufen, hashgeprüfter Reportvertrag, Artefaktmetadaten |
 | Antwortverlust nach echter HTTP-202-Antwort / neue AppTest-Sitzung / gleicher Intent | passed | Wiederholung mit unverändertem Body/Key; Historie 1 |
 | Erneutes Inspect / bestätigtes Resume | passed | fünf `skipped / verified_reuse`; identische Job-ID und keine weitere Ausführung |
 | Echten Backend-HTTP-Prozess stoppen und auf demselben Port neu starten | passed | Ausfall wird als Fehler sichtbar; persistierte Job-ID und Historie bleiben erhalten |
