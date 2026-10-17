@@ -1,0 +1,750 @@
+{
+  "schema_version": 1,
+  "kind": "unapproved_github_issue_plan",
+  "approval_required": true,
+  "approved": false,
+  "owner": "rf-data",
+  "project_name": "Personal Assistant – Development",
+  "repositories": {
+    "backend": "rf-data/Personal_Assistant",
+    "ui": "rf-data/personal-assistant-ui"
+  },
+  "baseline": {
+    "backend": "476f0a0d786db87eb59efad36fd21a2fadaeb1dd",
+    "ui": "14ccfc20d83fe57612b5298e323d9f9f1d899cbf"
+  },
+  "existing_standalone_issues": {
+    "backend": 0,
+    "ui": 0
+  },
+  "milestone_objects": "not_inventoried_connector_endpoint_unsupported",
+  "issues": [
+    {
+      "key": "C23",
+      "title": "[C23] Parsed Content Persistence",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "milestone",
+      "parent": null,
+      "target_milestone": "C23",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Persistence",
+      "depends_on": [],
+      "acceptance": [
+        "Bestehende Material-/Transcript-/Parsingverträge im ADR abgeglichen; PostgreSQL bleibt Option bis zur begründeten Entscheidung.",
+        "Raw und Parsed Content persistent, versioniert und unabhängig von Knowledge nutzbar; Hash-/Quellen-/Seiten-/Block-/Zeitbezüge und idempotenter Reimport nachgewiesen.",
+        "Lesevertrag, Rechte und Restorefähigkeit sind belegt; unbekannte Zeiten bleiben ausdrücklich unbekannt."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C24",
+      "title": "[C24] Indexing & Retrieval",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "milestone",
+      "parent": null,
+      "target_milestone": "C24",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "depends_on": [
+        "C23"
+      ],
+      "acceptance": [
+        "Volltexttreffer referenzieren gespeicherte Source-/Parsed-Versionen samt Seite/Block/Zeit; Rechtefilter werden serverseitig geprüft.",
+        "Indexversion, Reindexierung, Fehler und Stale-Erkennung sind getestet; Suchindex ist aus freigegebenen Quellen rekonstruierbar.",
+        "Vorhandener Transcript-/Qdrant-Pfad geprüft; semantische Suche bleibt optional, reale Qualität separat evaluiert."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C25",
+      "title": "[C25] Search & Source UI",
+      "repository": "rf-data/personal-assistant-ui",
+      "kind": "milestone",
+      "parent": null,
+      "target_milestone": "C25",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "UI",
+      "depends_on": [
+        "C23",
+        "C24"
+      ],
+      "acceptance": [
+        "Kurs-/Quellenauswahl, Suche/Filter und lesbare geparste Inhalte über autorisierte APIs.",
+        "Originalverweise und Belege mit Seiten/Blöcken/Zeiten; fehlende Positionen werden nicht erfunden.",
+        "Job-/Indexstatus sowie leere, unzugängliche und veraltete Treffer verständlich; Browserabnahme für vereinbarten Umfang belegt."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C26",
+      "title": "[C26] Hetzner Production Release",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "milestone",
+      "parent": null,
+      "target_milestone": "C26",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Operations",
+      "depends_on": [
+        "C23",
+        "C24",
+        "C25"
+      ],
+      "acceptance": [
+        "Alle noch offenen C22-Gates mit gewählten Images, Identitäten, TLS, Ressourcen und Zielvolume geschlossen.",
+        "Konsistenter Backup-/Restore- und Alarmzustellungsnachweis; dokumentierte Recovery und Verantwortlichkeit.",
+        "CS50 über die reale UI auf ausdrücklich freigegebenem Zielhost nutzbar; begrenzter realer Testkorpus und Operator-Go-live-Freigabe protokolliert."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C27",
+      "title": "[C27] Legacy Code Review",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "milestone",
+      "parent": null,
+      "target_milestone": "C27",
+      "status": "Backlog",
+      "priority": "P2",
+      "workstream": "Legacy",
+      "depends_on": [],
+      "acceptance": [
+        "Modul-/Import-/CLI-/Docker-Inventar für beide Repositories; aktive und manuelle Aufrufer getrennt.",
+        "Wikimedia, Parsing, Download, Transkription und RAG auf Wiederverwendung und Duplikation geprüft.",
+        "Konkreter Cleanup-/Kompatibilitätsplan mit Owner/Freigabe; keine pauschale Entfernung oder Migration."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C28",
+      "title": "[C28] Source Registry & Additional Sources",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "milestone",
+      "parent": null,
+      "target_milestone": "C28",
+      "status": "Backlog",
+      "priority": "P2",
+      "workstream": "Sources",
+      "depends_on": [
+        "C23"
+      ],
+      "acceptance": [
+        "Registryanforderungen für eBooks/EPUB/PDF, Liora-Fortbildung, Apothekerkammer-Webinare und weitere Kurse.",
+        "Quellidentität, Zugriffs-/Nutzungsrechte, Versionierung, Ingestionstrategie und Review festgelegt.",
+        "Erste Erweiterung separat anhand berechtigter Quellen abgenommen; keine stillschweigende Bestandserfassung."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C29",
+      "title": "[C29] Entity Recognition & Linking",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "milestone",
+      "parent": null,
+      "target_milestone": "C29",
+      "status": "Backlog",
+      "priority": "P2",
+      "workstream": "Entities",
+      "depends_on": [
+        "C23",
+        "C24"
+      ],
+      "acceptance": [
+        "Fachbegriffe als versionierte quellgebundene Annotationen mit Mehrdeutigkeitsstatus.",
+        "Kanonische Entitäten und dokumentübergreifende Fundstellen nachvollziehbar verknüpft.",
+        "Originaltexte unverändert; Fehler-/Disambiguierungsreview vor produktiver Navigation."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C30",
+      "title": "[C30] Wikimedia Entity Enrichment",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "milestone",
+      "parent": null,
+      "target_milestone": "C30",
+      "status": "Backlog",
+      "priority": "P2",
+      "workstream": "Entities",
+      "depends_on": [
+        "C27",
+        "C29"
+      ],
+      "acceptance": [
+        "Bestehende Wikipedia-/Wikidata-Clients geprüft und Schnittstellen konsolidiert.",
+        "QIDs als mögliche Identifikatoren, Sprachen/Disambiguierung, Cache/Retry/Rate Limits und Provenienz entschieden.",
+        "Externe Informationen in der UI getrennt von lokalen Aussagen; keine ungeprüfte fachliche Wahrheit."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C31",
+      "title": "[C31] YouTube Discovery & Review",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "milestone",
+      "parent": null,
+      "target_milestone": "C31",
+      "status": "Backlog",
+      "priority": "P2",
+      "workstream": "Sources",
+      "depends_on": [
+        "C23",
+        "C27",
+        "C28"
+      ],
+      "acceptance": [
+        "Registrierte Kanäle und begrenzte geplante Jobs für neue Metadaten/zulässig verfügbare Inhalte.",
+        "Zusammenfassungen, Relevanz-/Qualitätsreview und Aufnahmeempfehlung mit Quellenbelegen.",
+        "Manuelle Freigabe vor dauerhafter Übernahme; Knowledge-Eignung separat und optional bewerten."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C32",
+      "title": "[C32] Medium Email & Article Review",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "milestone",
+      "parent": null,
+      "target_milestone": "C32",
+      "status": "Backlog",
+      "priority": "P2",
+      "workstream": "Sources",
+      "depends_on": [
+        "C23",
+        "C27",
+        "C28"
+      ],
+      "acceptance": [
+        "Autorisierte E-Mails und Artikellinks mit Duplikaterkennung und Provenienz.",
+        "Relevanz, Zusammenfassung und Aufnahmeempfehlung prüfen; Paywalls/Zugriffs- und Nutzungsrechte beachten.",
+        "Manuelle Freigabe vor Quellenregistrierung/Inhaltsübernahme; keine Umgehung von Zugriffsbeschränkungen."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C23-01",
+      "title": "[C23-01] Persistenz-ADR und vorhandene Modelle vergleichen",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "debt",
+      "parent": "C23",
+      "target_milestone": "C23",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Persistence",
+      "depends_on": [],
+      "acceptance": [
+        "ArtifactReceipt/NormalizedDocument, TranscriptDocument, Legacy-Parsingmodelle, Dateiartefakte und C16-SQLite auf Zweck und Grenzen vergleichen.",
+        "Source-/Parsed-Versionen, Referenzintegrität, Rechte, Restore und Idempotenz spezifizieren; PostgreSQL gegen bestehende Alternativen begründet entscheiden.",
+        "Keine zweite Jobqueue und kein erzwungener Knowledge-Schritt."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C23-02",
+      "title": "[C23-02] Raw-/Parsed-Speicherung nach freigegebenem ADR umsetzen",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C23",
+      "target_milestone": "C23",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Persistence",
+      "depends_on": [
+        "C23-01"
+      ],
+      "acceptance": [
+        "Bestehende IDs, Hashes, Parser-/Schemaversionen und Locatorwerte verlustfrei persistieren.",
+        "Rohbytes und geparste Inhalte getrennt und unabhängig von Derived Knowledge lesen; Vertragstests mit kleinen Fixtures.",
+        "Fehler/atomare Veröffentlichung und parallele Zugriffe im gewählten Speichermodell prüfen."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C23-03",
+      "title": "[C23-03] Idempotenten Reimport und explizite Bestandsbindung absichern",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C23",
+      "target_milestone": "C23",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Persistence",
+      "depends_on": [
+        "C23-02"
+      ],
+      "acceptance": [
+        "Gleiche Bytes/Version erzeugen keine Dublette; geänderte Quelle oder Parser erzeugt nachvollziehbare Version.",
+        "Abweichende historische Source-Pfade bleiben gesperrt; Strategie aus PR #72/C21-Q.1 wiederverwenden, keine stillen Fallbacks/Symlinks.",
+        "Bestandsübernahme nur nach separater Freigabe; Source-/Receipt-/Provenienz- und Hashkonflikte testen."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/72"
+      ],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C23-04",
+      "title": "[C23-04] Autorisierte Source-/Parsed-Leseverträge bereitstellen",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C23",
+      "target_milestone": "C23",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Persistence",
+      "depends_on": [
+        "C23-02"
+      ],
+      "acceptance": [
+        "Paginiert nach Kurs/Quelle/Version lesen; Originalreferenz und Seiten-/Block-/Zeitbelege liefern.",
+        "Owner-/Course-/Quellrechte serverseitig durchsetzen; keine beliebigen Hostpfade/Dateiserver.",
+        "API-Beispiele und Kompatibilitätsvertrag für das UI-Repository veröffentlichen."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C23-05",
+      "title": "[C23-05] TXT-Import ohne erfundene Zeitstempel reparieren",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "bug",
+      "parent": "C23",
+      "target_milestone": "C23",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Sources",
+      "depends_on": [],
+      "acceptance": [
+        "TranscriptSegment verlangt derzeit float, TXT-Importer erzeugt None: Unknown-Time-Vertrag für Modell und Verbraucher definieren.",
+        "Gezielte TXT-/SRT-/VTT-Regression sowie Chunker-/Evidence-Abweisung nicht zeitgebundener Daten ohne erfundene Zeitwerte.",
+        "Nur den relevanten Rest von PR #9 behandeln; alten Patch und PR nicht automatisch übernehmen/schließen."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/9"
+      ],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C23-06",
+      "title": "[C23-06] Berechtigten Realmaterialkorpus und unabhängige Goldreferenzen bereitstellen",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C23",
+      "target_milestone": "C23",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "depends_on": [
+        "C23-01"
+      ],
+      "acceptance": [
+        "Fehlende Original-/Receipt-/Normalized-Bundles für Week-0-Notes/Slides/Source-PDF mit Rechten und Hashes inventarisieren; keine Downloads ohne Freigabe.",
+        "C10/C13-Qualitätsrubrik für Text/Code/Bilder und separate reale C11-Formel-Gold-/Prediction-Paare festlegen; keine Goldableitung aus Vorhersagen.",
+        "Bekannte Fehlstellen und synthetische/reale Ergebnisse getrennt ausweisen; CS50-Releaseumfang daraus festlegen."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C24-01",
+      "title": "[C24-01] Bestehende Suche prüfen und Indexstrategie entscheiden",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "debt",
+      "parent": "C24",
+      "target_milestone": "C24",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "depends_on": [
+        "C23-01"
+      ],
+      "acceptance": [
+        "Transcript-Qdrant, Filter/Offsets, Chroma-/Legacy-RAG und mögliche Volltextlösungen vergleichen.",
+        "Keine neue Vektordatenbank ohne ADR; PostgreSQL-Suche bleibt vom Persistenz-ADR abhängig.",
+        "Knowledge-Extraktion ist keine Suchvoraussetzung; verbindlichen Text-/Quellenvertrag bestimmen."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C24-02",
+      "title": "[C24-02] Versionierten Volltextindex und Reindexierung implementieren",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24",
+      "target_milestone": "C24",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "depends_on": [
+        "C23-02",
+        "C23-03",
+        "C24-01"
+      ],
+      "acceptance": [
+        "Index enthält Source-/Parsed-Version, Locator und Rechtebezug; Roh-/Parsed-Daten bleiben autoritativ.",
+        "Wiederholung, Teilfehler, veraltete Dokumente und kontrollierte Reindexierung testen; keine ungeprüfte Datenlöschung.",
+        "Indexstatus und Fehler maschinenlesbar bereitstellen."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C24-03",
+      "title": "[C24-03] Quellengebundene Such-API und Trefferbelege liefern",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24",
+      "target_milestone": "C24",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "depends_on": [
+        "C23-04",
+        "C24-02"
+      ],
+      "acceptance": [
+        "Kurs-/Quellenfilter, Paging und begrenzte Anfragen mit serverseitigen Berechtigungen.",
+        "Treffer enthalten eindeutige Version und echte Seiten-/Block-/Zeitbezüge sowie sichere Originalverweise.",
+        "Stale-/Missing-Source und inkompatible Indexversionen ausdrücklich melden; UI-Vertrag veröffentlichen."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C24-04",
+      "title": "[C24-04] Vorhandenen Qdrant-/Transcript-Pilot abnehmen statt neu bauen",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24",
+      "target_milestone": "C24",
+      "status": "Backlog",
+      "priority": "P2",
+      "workstream": "Retrieval",
+      "depends_on": [
+        "C23-03",
+        "C24-01"
+      ],
+      "acceptance": [
+        "Draft PR #72 samt C21-Q.1 und seinen getrennten Phase-A-/Phase-B-Gates reviewen; keine parallele Ingestion implementieren.",
+        "Nur nach expliziter Bereitstellung/Freigabe von SDK, immutable E5-Revision und isolierter Instanz echte Upsert-/Readback-/Retrieval-/Recovery-Nachweise.",
+        "Semantische Suche bleibt optional; bestehender Originalpfadkonflikt und Remote-Uploadfreigabe bleiben echte Blocker."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/72"
+      ],
+      "issue_url": null,
+      "optional": true
+    },
+    {
+      "key": "C24-05",
+      "title": "[C24-05] Reale Retrievalqualität und Quellenrückbindung bewerten",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24",
+      "target_milestone": "C24",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "depends_on": [
+        "C23-06",
+        "C24-03"
+      ],
+      "acceptance": [
+        "Unabhängige reale Fragen/Goldfundstellen und Suchkonfiguration versionieren.",
+        "Volltext und gegebenenfalls semantische Suche getrennt auswerten; Nenner, Fehler und nicht evaluierbare Fälle berichten.",
+        "Qualitätsgrenzen und Releaseumfang manuell prüfen; keine Modellwerte aus synthetischen Fixtures erfinden."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C25-01",
+      "title": "[C25-01] Kurs-/Quellenauswahl und Suchfilter integrieren",
+      "repository": "rf-data/personal-assistant-ui",
+      "kind": "feature",
+      "parent": "C25",
+      "target_milestone": "C25",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "UI",
+      "depends_on": [
+        "C23-04",
+        "C24-03"
+      ],
+      "acceptance": [
+        "Vorhandene UI-Settings/Auth und typisierten Client erweitern, keine Backend-Dateizugriffe.",
+        "Auswahl, Suche, Paging und Filter nutzen autoritative APIs; leere und verweigerte Antworten unterscheidbar.",
+        "Cross-Repository-Vertragsversion und Backend-PR verlinkt."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C25-02",
+      "title": "[C25-02] Parsed Content mit Original- und Fundstellenansicht anzeigen",
+      "repository": "rf-data/personal-assistant-ui",
+      "kind": "feature",
+      "parent": "C25",
+      "target_milestone": "C25",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "UI",
+      "depends_on": [
+        "C25-01"
+      ],
+      "acceptance": [
+        "Strukturierte Texte, Code und Bildreferenzen anzeigen; Seite/Block/Kapitel/Cue nur bei vorhandenem Beleg.",
+        "Treffer führt zur konkreten Quelle/Version; Originalzugang bleibt berechtigungsgeprüft.",
+        "Unbekannte Zeitstempel, fehlende Bildbytes und veraltete Quellen klar darstellen."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C25-03",
+      "title": "[C25-03] Job- und Indexstatus für Suche sichtbar machen",
+      "repository": "rf-data/personal-assistant-ui",
+      "kind": "feature",
+      "parent": "C25",
+      "target_milestone": "C25",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "UI",
+      "depends_on": [
+        "C25-01",
+        "C24-02"
+      ],
+      "acceptance": [
+        "Bestehendes C16/C18-Job-/Owner-/Course-Modell nutzen, Indexzustand aus Backend beziehen.",
+        "Refresh/Fehler/Unavailable/Stale ohne automatische Schreibaktion oder künstlichen Fortschritt.",
+        "Bestehende Admin-/Workflowansichten bleiben kompatibel."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C25-04",
+      "title": "[C25-04] Browserabnahme der Source-/Search-Nutzung dokumentieren",
+      "repository": "rf-data/personal-assistant-ui",
+      "kind": "feature",
+      "parent": "C25",
+      "target_milestone": "C25",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "depends_on": [
+        "C25-02",
+        "C25-03"
+      ],
+      "acceptance": [
+        "Echte Browserfälle für Filter, Deep Links, Paging, Tastaturbedienung und belegte Fundstellen mit festem Korpus.",
+        "Viewer-/Operator-/Course-Grenzen sowie fehlende/stale Inhalte prüfen; AppTest getrennt berichten.",
+        "Kein Browsernachweis durch bloße API-/AppTest-Erfolge ersetzen."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C26-01",
+      "title": "[C26-01] Gepinntes Authlib und UI-Startschutz abnehmen",
+      "repository": "rf-data/personal-assistant-ui",
+      "kind": "debt",
+      "parent": "C26",
+      "target_milestone": "C26",
+      "status": "Backlog",
+      "priority": "P0",
+      "workstream": "Operations",
+      "depends_on": [],
+      "acceptance": [
+        "Authlib fehlt im aktuellen UI-Lock; vorhandenes C22-Gate gezielt schließen.",
+        "Geprüfte transitive Dependency-/Lockentscheidung und Imagebereitstellung, keine ungefragten Upgrades/Downloads.",
+        "Guard-, Secret- und OIDC-Konfigurationstests; kein Demo-Auth im Produktionsprofil."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/personal-assistant-ui/pull/5"
+      ],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C26-02",
+      "title": "[C26-02] C22-Images und Container-Prozessgrenzen isoliert prüfen",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C26",
+      "target_milestone": "C26",
+      "status": "Backlog",
+      "priority": "P0",
+      "workstream": "Operations",
+      "depends_on": [
+        "C26-01"
+      ],
+      "acceptance": [
+        "Vorhandene C22-Builds/Profiles mit freigegebenen Digests bereitstellen; Non-root, Mounts, Health und fehlende Pflichtinputs prüfen.",
+        "API-/Executor-/UI-Restart, C19 native PDF-Cancel, Parent-Death/Subreaper, SIGTERM/SIGKILL/OOM und Cgroup-/CPU/RAM/PID-Limits im Container testen.",
+        "Keine Mehrhostfähigkeit ableiten; Befunde und verbleibende Gates protokollieren."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/73"
+      ],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C26-03",
+      "title": "[C26-03] TLS, OIDC, individuelle Rollen und Browserzugriff abnehmen",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C26",
+      "target_milestone": "C26",
+      "status": "Backlog",
+      "priority": "P0",
+      "workstream": "Operations",
+      "depends_on": [
+        "C26-01",
+        "C26-02"
+      ],
+      "acceptance": [
+        "Privater API-Gateway mit korrektem SAN/CA, Ingress-WebSockets und Secretrotation.",
+        "Echter Browser-Login/Logout/Expiry sowie Viewer/Operator/Owner/Course und individuelle Tokenbindungen.",
+        "Keine öffentliche ungeschützte Admin-API, keine deaktivierte TLS-Prüfung; UI-Änderungen nur im UI-Repository."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C26-04",
+      "title": "[C26-04] Zielstorage und konsistenten Restore auf isoliertem Ziel prüfen",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C26",
+      "target_milestone": "C26",
+      "status": "Backlog",
+      "priority": "P0",
+      "workstream": "Operations",
+      "depends_on": [
+        "C26-02",
+        "C23-02"
+      ],
+      "acceptance": [
+        "Endgültiger Single-Host-Mount: identische UID/Pfade, flock/rename/fsync/SQLite-WAL und Quoten.",
+        "C22-Backup/Restore wiederverwenden; zusätzlich gewählte Raw-/Parsed-Persistenz, Katalog/Config und getrennte Secrets abdecken.",
+        "Leeres isoliertes Restoreziel, Hash-/Provenienzprüfung, interrupted/Quarantäne und Operator-Recovery; keine produktiven Daten überschreiben."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C26-05",
+      "title": "[C26-05] Produktionsmonitoring und echte Alarmzustellung prüfen",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C26",
+      "target_milestone": "C26",
+      "status": "Backlog",
+      "priority": "P0",
+      "workstream": "Operations",
+      "depends_on": [
+        "C26-02"
+      ],
+      "acceptance": [
+        "Vorhandene C15-Dashboards/Regeln und C22-authentisierten Scrape verwenden.",
+        "Queue, Dauer, Fehler/Timeout/Cancel, Worker, Disk/Volume und Service-Health mit niedriger Kardinalität.",
+        "Alertmanager/alternatives Routing ausdrücklich entscheiden und Alarmzustellung bis zum zuständigen Operator testen."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C26-06",
+      "title": "[C26-06] CS50 über die freigegebene UI Ende-zu-Ende abnehmen",
+      "repository": "rf-data/personal-assistant-ui",
+      "kind": "feature",
+      "parent": "C26",
+      "target_milestone": "C26",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "depends_on": [
+        "C25-04",
+        "C24-05",
+        "C26-03",
+        "C26-04",
+        "C26-05"
+      ],
+      "acceptance": [
+        "Begrenzte reale CS50-Quelle erfassen/verarbeiten/persistieren/indexieren/suchen und Originalfundstelle über UI prüfen.",
+        "Fehler, Neustart, Cancel und Wiederaufnahme mit freigegebenen echten Daten prüfen; synthetische Evidenz getrennt.",
+        "Keine Knowledge-Extraktion erforderlich; fachlich akzeptierten Format-/Korpusumfang festhalten."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    },
+    {
+      "key": "C26-07",
+      "title": "[C26-07] Manuelle Hetzner-Go-live-Entscheidung und Betriebsübergabe",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C26",
+      "target_milestone": "C26",
+      "status": "Backlog",
+      "priority": "P0",
+      "workstream": "Operations",
+      "depends_on": [
+        "C26-06"
+      ],
+      "acceptance": [
+        "C22-Gates, Kosten/Hostfreigabe, Rechte, Backup, Retention, Incident-/Rollbackverantwortung und Releaseversion bestätigt.",
+        "Operatorfreigabe mit Datum und Evidenz; C26-Parent erst danach als produktionsfreigegeben schließen.",
+        "Merge oder grüne CI erzeugen keinen Rollout und keine automatische Produktionsfreigabe."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false
+    }
+  ]
+}

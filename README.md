@@ -1,11 +1,13 @@
 # Personal Assistant
 
-Backend und Offline-Werkzeuge für Kursmaterialien, Lecture-/Transkriptverarbeitung,
-Knowledge mit Quellenbelegen und reproduzierbare Evaluation. Das lokale
-Arbeitsverzeichnis und der Python-Projektname heißen weiterhin `gmp_compliance`
+Backend und Offline-Werkzeuge für die Erfassung, Verarbeitung, Speicherung und
+Recherche von Informationsquellen. Raw Sources und Parsed Content bilden den
+Schwerpunkt; Derived Knowledge bleibt optional und ist bis zu materialbezogener
+fachlicher Evaluation zurückgestellt. Das lokale Arbeitsverzeichnis und der Python-Projektname heißen weiterhin `gmp_compliance`
 bzw. `gmp-compliance`; dieses Audit benennt weder Paket noch Datenpfade um.
 
-Stand: 16.10.2026, gemergter Backend-`master` `78b35a5` und
+Planungsabgleich: 17.10.2026, Backend-`master` `476f0a0d` und UI-`main` `14ccfc20`;
+[aktuelle Roadmap](docs/ROADMAP.md), [Issue-/Project-Plan](docs/planning/github_execution.md) und
 [separates UI-Repository](https://github.com/rf-data/personal-assistant-ui).
 Die frühere GMP-/SOP-/Streamlit-Anwendung bleibt als Legacy-Code vorhanden und
 ist nicht der Einstieg in die neue Admin-UI.
@@ -17,10 +19,11 @@ ist nicht der Einstieg in die neue Admin-UI.
 | CS50-Materialien | vorhandene Snapshots → Auswahl/Plan → expliziter Import → HTML-v2/PDF-v2/Code-v1 → normalisierte Blöcke mit Provenienz | [CS50](docs/cs50/README.md), [Materialbetrieb](docs/cs50/operations/material_ingestion.md) |
 | Qualität und Lecture-Handoff | C10 validiert offline und liefert referenzierbare Materialien; keine automatische Knowledge-Extraktion | [Quality-Vertrag](docs/cs50/contracts/material_quality.md) |
 | Lectures und Transkripte | SRT-first, explizite Quellenbindung, Chunk-/Kurspläne, begrenzte Runner und Resume; Liveausführung getrennt freizugeben | [Lecturebetrieb](docs/cs50/operations/cs50_lecture_runner.md) |
-| Knowledge | Evidence-/Source-IDs, kontrollierte Extraktionsgrenzen und konservative Offline-Konsolidierung | [C12](docs/knowledge_consolidation_hardening.md) |
+| Knowledge (optional, zurückgestellt) | Evidence-/Source-IDs, kontrollierte Extraktionsgrenzen und konservative Offline-Konsolidierung | [C12](docs/knowledge_consolidation_hardening.md) |
 | Mathematik und Visuals | synthetische Formelpaar-Evaluation; technische Bild-/SVG-/Vektorinventur; keine semantische Goldfreigabe | [C11](docs/math_evaluation/README.md), [C13](docs/visual_inventory.md) |
 | Job-Control und Workflows | C16: private SQLite-Queue und begrenzter Linux-Executor; C18: optionaler Offline-Materialworkflow mit Resume | [C16](docs/job_control/README.md), [C18](docs/workflows/README.md) |
-| Admin-UI | C14/C17 im separaten Repository gemergt; echter C16-Client für Planung/Qualitätscheck | [UI-Einstieg](https://github.com/rf-data/personal-assistant-ui/blob/main/README.md) |
+| Admin-UI | C14/C17/C20-C/C22 gemergt; echte Planung/Qualitäts-/Workflowjobs und Startschutz; Search/Source UI C25 ist geplant | [UI-Einstieg](https://github.com/rf-data/personal-assistant-ui/blob/main/README.md) |
+| Deployment | C22-Rollen, privates Compose und synthetisch getesteter Backup/Restore gemergt; Produktionsgates offen | [Architektur/Betrieb](docs/deployment/architecture.md), [Abnahmegrenzen](docs/deployment/c22_validation.md) |
 | Monitoring | geprüfte Konfiguration und endlicher Metrikvertrag; C16 liefert authentifizierte Jobmetriken; keine bestätigte Liveinstallation | [C15](docs/monitoring/README.md) |
 
 „Offline getestet“ beschreibt technische Verträge und synthetische Nachweise,
@@ -54,11 +57,11 @@ python -m scripts.cs50_workflow_demo --output /tmp/new-c18-demo
 ```
 
 Keiner dieser Befehle startet die separate Streamlit-App. C18 bleibt in der
-C16-Konfiguration standardmäßig deaktiviert und unterstützt zunächst lokale
-HTML-/Code-Materialien. PDF bleibt im Workflow wegen der noch nicht bestätigten
-Cancel-/Timeout-Lebensdauer seines Subprozesses gesperrt; der einzelne PDF-v2-
-Parser bleibt vorhanden. Die C17-UI kennt diesen zusätzlichen Workflowprozess
-noch nicht und benötigt dafür einen eigenen Integrationsschritt.
+C16-Konfiguration standardmäßig deaktiviert. Seit C19 unterstützt der lokale
+Workflow auch PDF-v2 mit geprüftem Linux-Prozesslebenszyklus. C20-B/C20-C verbinden
+die vorhandene Workflow-API und UI mit bestätigtem Execute/Resume/Cancel. C21 und
+C22 belegen lokale technische Integration, keinen produktiven Browser-/TLS-/OIDC-
+oder Containerbetrieb. C23–C26 planen Persistenz, Suche, Source UI und Release.
 
 ## Repository und Dokumentation
 
