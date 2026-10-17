@@ -1,0 +1,25 @@
+# Public configuration contract v1; authentication is a separate private overlay.
+log_level: INFO
+telemetry_disabled: true
+storage:
+  storage_path: /qdrant/storage
+  snapshots_path: /qdrant/snapshots
+  temp_path: /qdrant/storage/tmp
+  performance:
+    max_search_threads: 2
+    optimizer_cpu_budget: 1
+  optimizers:
+    max_optimization_threads: 1
+  hnsw_index:
+    max_indexing_threads: 1
+service:
+  host: 0.0.0.0
+  http_port: 6333
+  grpc_port: null
+  max_workers: 2
+  max_request_size_mb: 16
+  enable_cors: false
+  enable_tls: false
+  enable_snapshot_url_recovery: false
+cluster:
+  enabled: false

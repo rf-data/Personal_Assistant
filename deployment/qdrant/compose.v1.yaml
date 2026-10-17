@@ -1,0 +1,77 @@
+# Contract v1. Phase B only; requires operator-provisioned private bind mounts.
+name: ${QDRANT_INSTANCE:?Set a reviewed unique instance name}
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.19.1
+    pull_policy: never
+    user: "1000:1000"
+    working_dir: /qdrant
+    entrypoint: ["/bin/bash", "/opt/c21q/entrypoint.sh"]
+    environment:
+      RUN_MODE: production
+      QDRANT_INIT_FILE_PATH: /qdrant/storage/.qdrant-initialized
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+    stop_grace_period: 60s
+    cpus: "2.0"
+    mem_limit: 2g
+    pids_limit: 256
+    ulimits:
+      nofile:
+        soft: 4096
+        hard: 4096
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=67108864,mode=1777
+    volumes:
+      - type: bind
+        source: ${QDRANT_STORAGE_DIR:?Set an existing dedicated storage directory}
+        target: /qdrant/storage
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${QDRANT_SNAPSHOTS_DIR:?Set an existing dedicated snapshots directory}
+        target: /qdrant/snapshots
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${QDRANT_AUTH_FILE:?Set an existing private authentication YAML file}
+        target: /run/secrets/qdrant-auth.yaml
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./qdrant.v1.yaml
+        target: /qdrant/config/production.yaml
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./entrypoint.sh
+        target: /opt/c21q/entrypoint.sh
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./healthcheck.sh
+        target: /opt/c21q/healthcheck.sh
+        read_only: true
+        bind:
+          create_host_path: false
+    healthcheck:
+      test: ["CMD", "/bin/bash", "/opt/c21q/healthcheck.sh"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks: [qdrant_private]
+    # No ports, host networking, Docker socket or automatic Coolify route.
+networks:
+  qdrant_private:
+    internal: true

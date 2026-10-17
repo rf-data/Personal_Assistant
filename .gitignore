@@ -268,3 +268,12 @@ src/prio_list.md
 
 # Reviewed C21 acceptance observations; private run workspaces remain external.
 !/docs/acceptance/c21_report.v1.json
+
+# Reviewed C21-Q metadata only; no originals, credentials or runtime databases.
+!/docs/qdrant/config.example.v1.json
+!/docs/qdrant/real-source-approval-review.v1.json
+!/docs/qdrant/resources.v1.json
+!/docs/qdrant/indexing.v1.json
+!/docs/qdrant/retrieval.v1.json
+!/docs/qdrant/manual-review.v1.json
+!/docs/qdrant/validation.v1.json
