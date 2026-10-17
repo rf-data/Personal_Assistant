@@ -126,3 +126,15 @@ gemergt, ihre tatsächlichen Image-/Container-/TLS-/OIDC-/Zielvolume-/Alarmtests
 bleiben offen. Die UI benötigt noch geprüftes Authlib im eigenen Lockfile.
 [C22-Gates](deployment/c22_validation.md) gehören zu C26, kein neuer Deploypfad.
 C23.0 verändert keine Dienste, Modelle, Datenbanken oder vorhandenen Artefakte.
+
+## C23-01: vorgeschlagene Content-Persistenz
+
+Das [Persistenz-ADR](architecture/parsed_content_persistence_adr.md) empfiehlt für
+die erste Single-Host-Version eine **separate SQLite-Contentdatenbank plus
+unveränderliche Dateiartefakte**. Bestehende Material-/Transcript-Nutzdaten und
+C16s Jobqueue bleiben erhalten. PostgreSQL ist die spätere Ausbauoption bei
+belegtem Bedarf. Das [Datenmodell](architecture/parsed_content_data_model.md)
+definiert Identitäten, Versionen, ACLs, Locator und Leseverträge;
+der [C23-Umsetzungsplan](planning/c23_implementation_plan.md) ordnet Adapter,
+Recovery und Tests C23-02 bis C23-06 zu. Dies ist ein Vorschlag zur Freigabe
+vor Implementierung, keine vorhandene Contentdatenbank oder Bestandsmigration.
