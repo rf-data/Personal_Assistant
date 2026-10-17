@@ -16,6 +16,7 @@ keine umfangreiche Verschiebung in eine neue Ordnerhierarchie.
 | Job-Control | [C16](job_control/README.md), [Integration](job_control/integration.md), [C19 PDF](job_control/pdf_lifecycle.md) | API, Queue, begrenzter Executor, optionales PDF-v2 und Betriebsgrenzen |
 | Orchestrierung | [C18](workflows/README.md), [Nachweis](workflows/validation.md) | optionaler lokaler Materialworkflow; weitere Stufen deaktiviert |
 | Monitoring | [C15](monitoring/README.md), [Metrikvertrag](monitoring/pipeline-metrics.md) | Konfiguration/Schema und explizite C16-Integration |
+| Systemabnahme | [C21-Plan](acceptance/c21_test_plan.md), [Ergebnisse](acceptance/c21_results.md), [Review](acceptance/c21_review.md) | tatsächliche HTTP-/Prozess-/AppTest-Nachweise und offene fachliche/Browsertests |
 | Admin-/Chat-UI | [separates UI-Repository](https://github.com/rf-data/personal-assistant-ui/blob/main/README.md), [C17](https://github.com/rf-data/personal-assistant-ui/blob/main/docs/c17_integration.md) | kanonischer UI-Einstieg, Clientvertrag und UI-Deployment |
 | Workerprofile | [CS50](../workers/cs50/README.md), [Index](../workers/cs50_index/README.md) | deklarierte Profile, Cache-/SDKgrenzen und frühere Installationsnachweise |
 | Repositoryaudit | [Inventar](repository_inventory.md), [Dokumentenaudit](documentation_audit.md), [Cleanupplan](cleanup_plan.md), [Validierung](audit/validation.md) | Ist-Abgleich und konkrete sichere/offene Maßnahmen |

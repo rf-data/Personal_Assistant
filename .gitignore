@@ -265,3 +265,6 @@ src/prio_list.md
 
 # Full local audit observations are private and must never be published.
 /docs/_local_audit_c170/
+
+# Reviewed C21 acceptance observations; private run workspaces remain external.
+!/docs/acceptance/c21_report.v1.json
