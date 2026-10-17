@@ -25,7 +25,6 @@ from src.content_store.errors import (
     InvalidInput,
     NotFound,
     Unavailable,
-    UnverifiedBinding,
 )
 from src.content_store.models import (
     ArtifactReference,
@@ -543,15 +542,46 @@ class ContentStore:
     def register_source_version(
         self, source_id, manifest, *, variant_key, binding, actor
     ):
+        if self.read_only:
+            raise Forbidden("read-only content handle")
         with self._maintenance(), self._connection() as db:
             self._authorize(db, source_id, actor, write=True)
-        raise UnverifiedBinding("verified bundle adapter required in C23-02B")
+        from src.content_store.publication import register
+
+        return register(
+            self,
+            source_id,
+            manifest,
+            variant_key=variant_key,
+            binding=binding,
+            actor=actor,
+        )
 
     def publish_parsed_document(
         self, source_version_id, candidate, *, actor, request_key, job_ref=None
     ):
         checked_actor(actor)
-        raise Unavailable("bundle publication disabled until C23-02B")
+        if self.read_only:
+            raise Forbidden("read-only content handle")
+        from src.content_store.adapters import VerifiedPublicationCandidate
+        from src.content_store.publication import publish
+
+        if type(candidate) is not VerifiedPublicationCandidate:
+            raise Unavailable("verified bundle publication candidate required")
+        if job_ref is not None:
+            raise InvalidInput("job linkage is not supported by content adapters")
+        return publish(
+            self, source_version_id, candidate, actor=actor, request_key=request_key
+        )
+
+    def read_version_artifact(
+        self, parsed_version_id, role, *, actor, request_key=None
+    ):
+        from src.content_store.publication import read_artifact
+
+        return read_artifact(
+            self, parsed_version_id, role, actor=actor, request_key=request_key
+        )
 
     def _read_blob(self, reference, db=None):
         if db is None:
@@ -590,12 +620,31 @@ class ContentStore:
         self._authorize(db, row["source_id"], actor)
         version = ParsedDocumentVersion.model_validate_json(row["data"])
         source_version = db.execute(
-            "SELECT state FROM source_versions WHERE id=?", (version.source_version_id,)
+            "SELECT state,data FROM source_versions WHERE id=?",
+            (version.source_version_id,),
         ).fetchone()
         if source_version is None or source_version[0] != "verified":
             raise IntegrityError("source version unavailable or quarantined")
         self._read_blob(version.payload, db)
         self._read_blob(version.projection, db)
+        if version.quality_status != "synthetic_test_only":
+            original = SourceVersion.model_validate_json(source_version[1])
+            for ref in original.manifest.artifacts:
+                self._read_blob(ref, db)
+            binding = db.execute(
+                "SELECT size_bytes FROM artifacts WHERE sha256=?",
+                (original.binding_sha256,),
+            ).fetchone()
+            if binding is None:
+                raise IntegrityError("source binding artifact unavailable")
+            self._read_blob(
+                ArtifactReference(
+                    sha256=original.binding_sha256,
+                    size_bytes=binding[0],
+                    mime_type="application/json",
+                ),
+                db,
+            )
         return version
 
     def get_parsed_document(self, parsed_version_id, *, actor):

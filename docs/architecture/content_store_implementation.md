@@ -1,7 +1,11 @@
-# C23-02A: ContentStore Core
+# C23-02A/B: ContentStore und geprüfte CS50-Adapter
 
-Stand **17.10.2026**. Implementiert ist der isolierte Offlinekern, **keine
-produktive Contentpipeline**. D04 wurde im C23-02A-Auftrag ausdrücklich für
+Stand **17.10.2026**. C23-02B ergänzt den gemergten A-Kern auf Master
+`6ef394a2f7a4debccce75f7b5e1ef3449f9457aa` (PR #76). Der folgende
+[B-Abschnitt](#c23-02b-geprüfte-bundleadapter) beschreibt den aktuellen
+Bibliotheksvertrag. Die A-Abschnitte/Testläufe darunter dokumentieren den
+vorherigen Stand; ihre damalige Publikationssperre wird ausschließlich für
+geprüfte B-Kandidaten aufgehoben. **Keine produktive Contentpipeline**. D04 wurde im C23-02A-Auftrag ausdrücklich für
 SQLite plus unveränderliche Dateien und Offlineprüfungen freigegeben. C23 bleibt
 insgesamt offen; Daten-/Migrations-/Deploymentfreigaben entstehen dadurch nicht.
 
@@ -25,7 +29,9 @@ konkretisieren die ausdrücklich beauftragte Aufteilung A/B/C.
 | [`errors.py`](../../src/content_store/errors.py) | Acht vereinbarte Fehlerklassen mit festen Codes und redigierten Operationstexten; kein Weiterreichen roher SQLite-/OSmeldungen |
 | [`artifacts.py`](../../src/content_store/artifacts.py) | Interner privater FD-basierter Blob-/Stagingstore, Root-/Inode-/Dateitypprüfungen, Größen-/SHA-Prüfung, Sperren und exklusive Publikation |
 | [`schema.py`](../../src/content_store/schema.py) | Exakte content-v1-DDL, Schema-ID/Application-ID, Constraints und Unveränderlichkeitstrigger; kein C16-Schema |
-| [`store.py`](../../src/content_store/store.py) | Explizite Initialisierung/Wiederöffnung, SQLtransaktionen, Source-/Grant-/Rawoperationen, Run-/Manifestbausteine und autorisierte Reads; echte Bundleverifikation/Publikation gesperrt |
+| [`store.py`](../../src/content_store/store.py) | Explizite Initialisierung/Wiederöffnung, SQLtransaktionen, Source-/Grant-/Rawoperationen, Run-/Manifestbausteine und autorisierte Reads; B-Publikation ausschließlich nach Adaptergate |
+| [`adapters.py`](../../src/content_store/adapters.py) | Explizite Material-/SRT-Bundles, unveränderlicher Snapshot, Gate/Reparse, Prozess-lokaler Candidate |
+| [`publication.py`](../../src/content_store/publication.py) | Kleine Integration in vorhandene Run-/Staging-/SQL-Primitiven; Quellenbindung und atomare Parsed-Publikation |
 | [`_testing.py`](../../src/content_store/_testing.py) | Nicht exportierter synthetischer Testvertrag; konkrete fünfstufige Publication in dauerhaft als Test markierter Datenbank, keine Produktionspromotion |
 
 Vorhandene `Principal`-/`Contract`-Formen und
@@ -148,8 +154,10 @@ Incident-/Quarantänesteuerung und Byte-Restore folgen in C23-02C.
 und über eine Sourceautorisation bytegenau lesbar. Source-Registrierung ist
 Metadatenregistrierung, **keine Bestätigung einer offiziellen Sourcebindung**.
 
-`register_source_version` liefert bis B kontrolliert `UnverifiedBinding`.
-`publish_parsed_document` liefert kontrolliert `Unavailable`, selbst in Teststores.
+Im A-Stand waren `register_source_version` und `publish_parsed_document`
+gesperrt. In B bleibt die Freigabe auf ausgestellte, erneut geprüfte Kandidaten
+beschränkt; normale Dictionaries bleiben abgewiesen. Ein synthetischer Teststore
+kann den B-Einstieg nicht verwenden.
 Ein Dictionary mit `verified=true` oder synthetischem Herkunftsfeld schaltet
 keinen öffentlichen Import frei. So kann A insbesondere #72 nicht umgehen.
 
@@ -222,7 +230,216 @@ with TemporaryDirectory(prefix="c23-02a-example-") as temporary:
     assert store.list_content_blocks(result.version.parsed_version_id, actor=actor).items[0].text == "Original\r\n"
 ```
 
-## Tests und tatsächlich ausgeführte Kommandos
+## C23-02B: geprüfte Bundleadapter
+
+Die vollständige Bestandszuordnung wurde vor der Implementierung im
+[Adaptervertrag](content_adapter_contract.md) festgehalten. Wiederverwendet
+werden `MaterialPlan`/`NormalizedDocument`/`ArtifactReceipt`,
+`prepare_material_handoff()` einschließlich C10, `CS50AdapterPlan`, die
+**reine Konstruktor-/Pfadprüfung** von `CS50Executor` und `validate_document()`
+mit tatsächlichem SRT-Reparse. Die kleinen Executionreceipt-Invarianten aus dem
+Knowledgebinder sind ohne dessen Knowledgeimporte umgesetzt; einen bestehenden
+Pydantic-Typ `ExecutionReceipt` gibt es nicht. Kein Executor-Run oder Download.
+
+### Tatsächliche Bibliothekssignaturen
+
+```python
+from src.content_store.adapters import (
+    MaterialBundle, SRTBundle, ImplementationEvidence,
+    verify_material_bundle, verify_srt_bundle, import_verified_bundle,
+)
+
+# Dateien ausdrücklich auswählen; Pfade innerhalb workspace können relativ sein.
+material = MaterialBundle(
+    workspace=workspace, raw_path=raw, normalized_path=normalized,
+    receipt_path=receipt, plan_path=plan, implementation_path=implementation,
+    prior_quality_path=None,  # optionaler alter Report, niemals Freigabe
+)
+candidate = verify_material_bundle(material)
+# Für SRT stattdessen:
+# SRTBundle(workspace=..., raw_path=..., transcript_path=..., receipt_path=...,
+#           plan_path=..., implementation_path=..., source_id=..., source_origin="synthetic")
+# candidate = verify_srt_bundle(bundle)
+result = import_verified_bundle(store, candidate, actor=principal, request_key="import-1")
+version_id = result.version.parsed_version_id
+assert store.read_parsed_payload(version_id, actor=principal) == normalized.read_bytes()
+receipt_bytes = store.read_version_artifact(version_id, "receipt", actor=principal)
+```
+
+Die bestehenden Core-Signaturen bleiben erhalten:
+`register_source_version(source_id, manifest, *, variant_key, binding, actor)`
+verlangt den ausgestellten Candidate als `binding`; vorher müssen Source und
+Source-gebundene Rawreservierung existieren. `publish_parsed_document(
+source_version_id, candidate, *, actor, request_key, job_ref=None)` prüft denselben
+Kandidaten erneut; `job_ref!=None` bleibt gesperrt. Der Convenienceimport führt
+alle Schritte aus. Keine implizite Storeinitialisierung, kein CLI-/HTTP-Publish.
+
+`read_version_artifact(version_id, role, *, actor, request_key=None)` liest
+hashgeprüfte, intern vertrauenswürdige Originalbytes/Belege. Ohne Requestkey wird
+der erste publizierte Beleg geliefert; mit Key der Beleg dieses abgeschlossenen
+Imports. Das ist kein externes DTO. Vorhandene Source-/Block-/Locator-Reads gelten
+weiter; für B prüfen Parsed-Reads zusätzlich Rawmanifest und Bindingblob.
+
+### Revisionsbeleg und Prüfgrenzen
+
+Die vorhandenen Receipts enthalten **keine Implementierungsrevision**. Deshalb
+ist eine zusätzliche explizite `ImplementationEvidence`-JSONdatei erforderlich:
+`schema_version=1`, `implementation_revision` (40 Hexzeichen), `parser_name`,
+`parser_version`, vollständige `parameters`, `source_id`, `binding_id`,
+`raw_sha256`, `payload_sha256`, `receipt_sha256`, `evidence_reference`.
+Materialparameter entsprechen exakt `ParserConfig.model_dump(mode="json")`,
+Binding-ID der Material-ID. Für SRT: Parser `srt` Version `1`, Binding-ID=Source-ID,
+Parameter `encoding=utf-8-sig`, `media_format=srt`, Sprache aus Binding,
+`preserve_empty_cues=true`. Adapterversion ist `cs50_srt_content_v1`, Payloadschema
+explizit `TranscriptDocument:legacy-unversioned`.
+
+Dieser Beleg ist eine **lokale Attestierung**, keine Signatur oder nachträglicher
+Nachweis des historischen Parsercodes. Kein automatisches Auffüllen mit HEAD.
+Fehlender/widersprüchlicher Beleg sperrt. Ein Beispiel wird im synthetischen
+Fixturehelper `tests/content_adapter_support.py::attest` erstellt; seine Revision
+`aaaa...` ist ausdrücklich synthetisch. Reale Attestierungen erfordern später
+geprüfte Herkunft, D06/D07 und einen eigenen Importauftrag.
+
+### Snapshot, Trust Boundary und Commit
+
+Explizite typed Bundles erlauben keinen Directoryscan. Dateien werden begrenzt
+über FD-Komponenten mit `O_NOFOLLOW` als reguläre Inodes gelesen; Symlinks/FIFO,
+Traversal, kollidierende Pfade und wechselnde Dateistatistik sperren. Maximal
+64 MiB je Datei, 506 Dateien und 256 MiB originale Snapshotbytes. Tiefe/finite
+JSONwerte und doppelte Keys werden geprüft. Keine neuen Dependencies.
+
+Zuerst werden unveränderliche Bytes in einen privaten Snapshot kopiert und das
+bestehende Gate ausgeführt. Ein Candidate ist eine **prozesslokale opaque
+Capability** ohne Datenfelder/`verified`-Flag. Die Registry hält nur unveränderliche
+Byte-Tupel. Dictionaries, nachgebaute Instanzen und beliebige Pfade autorisieren
+keine Core-Publikation. Vor SourceVersion und Parsed-Publikation wird derselbe
+Snapshot in eigenem Store-Staging aufgebaut und erneut geprüft. Erst danach
+stagen die vorhandenen Blobprimitiven genau diese Bytes mit Größe/SHA und fsync.
+Administrativer Python-/Dateisystemzugriff derselben UID ist keine Sandboxgrenze.
+
+Owner/Operator/Course werden bei Reservierung und ACLrevision bei Prepared-/finalem
+Commit geprüft. Read-only Handles stagen nicht. Der letzte SQLcommit veröffentlicht
+Parsed-Version, alle Blöcke/Locatoren, Auditrefs und Runabschluss gemeinsam.
+Rawreservierung und vollständig geprüfte SourceVersion bleiben unabhängig und
+können nach späterem Parsed-Fehler erhalten bleiben. Unterbrochene Runs bleiben
+wie in A blockiert; keine automatische Recovery. content-v1-DDL, `jobs.sqlite3`,
+C16/C18/C20 und `_testing.py` unverändert. Runart `raw` bezeichnet byteerhaltende
+Übernahme, `parsed_version_id` kennzeichnet Parsed-Publikation.
+
+### Projektionen, Archivrollen und Idempotenz
+
+Materiale: HTML-v2, PDF-v2 und vorhandener Code-v1-Vertrag. Alle Originalblöcke
+bleiben mit identischer Block-ID, Text, Daten und vorhandener Location lesbar;
+`math` wird als `formula` mit `original_type=math` projiziert. Koordinatensystem
+bleibt `unknown`, da Location kein solches Feld liefert. Titel/Unsicherheit/
+Metadaten bleiben im byteidentischen Payload/Handoff. Bilder ohne lokale Bytes
+bleiben technische Referenzen mit C10-Warnung; deklarierte Bytes müssen existieren
+und zu Receipt-/Imagehash passen.
+
+Die Projektion enthält **exakt** C10-`aggregation_units`, `excluded_blocks` und
+`alternative_views`; nur die Units sind später primärer Aggregationseingang.
+Blocktext und `code_view` sind zusätzliche lesbare Sichten, keine weiteren
+Indexeinträge. SourceVersion enthält nur primäre Rawdatei, keine Parserbilder.
+
+SRT: vollständiger Plan/Graph und genau zwei passende done-Taskrecords mit
+Download-/Parse-/Inputhash, Sprache, Source/Resource/Section/Lecture und
+Originalpfad werden geprüft. `validate_document` vergleicht vollständige
+Segmentmodelle und Text mit dem Raw-SRT. Reihenfolge, IDs, Multiline/Unicode und
+Überlappungen bleiben erhalten. Projection referenziert Originalseg_id/Pointer;
+die persistierte Block-ID entsteht anschließend aus Parsed-Version und seg_id.
+Projektionen referenzieren den Slot, niemals zirkulär ihre eigene Versions-ID.
+
+Archivrollen: `payload`, `projection`, `binding`, `receipt`, `plan`,
+`implementation`, `quality`; bei Material zusätzlich `handoff`, optional
+`prior_quality`, lokale Bilder `image:<original_image_id>`. Ein Sourcebindingblob
+wird bereits mit der SourceVersion separat archiviert. Nur neu erzeugte
+Quality-`inputs` verwenden logische Snapshotpfade; Originaldateien unverändert.
+
+Gleiche Payload/Projektion im gleichen Slot: gleiche Version und `created=False`.
+Ein neuer Request archiviert seine erneut geprüften Belege im neuen Run, ohne
+bestehende Version/Belege umzuschreiben. Gleicher Request mit anderen Belegen
+liefert `Conflict`; gleicher Slot mit anderem Payload/Projektion ebenfalls.
+Neuer vollständiger Parserconfig-/Implementierungsstand erzeugt einen neuen Slot
+bei gleicher Rawversion. Reale #72-Pfade bleiben `UnverifiedBinding`: keine Suche
+unter `data/Harvard`, kein Link/Rewrite und keine Bestandsadoption. Portable relative
+SRTbindings werden unterstützt; absolute historische Bindings bleiben blockiert.
+
+### B-Abnahme und verbleibende Grenzen
+
+Verfügbare Umgebung erneut geprüft: Python **3.12.12**, Pydantic **2.13.5**,
+System-Pytest **7.2.1**, Ruff **0.16.0**. Keine lokal nutzbare Pytest-9- oder
+PyMuPDF-Installation gefunden, keine Installation/Downloads vorgenommen. Die
+verfügbare Projekt-Pythonumgebung plus System-Pytest wurde wie unten benutzt.
+Warnungen überwiegend Pytest-7-AST-Rewriting unter Python 3.12.
+
+| B-Lauf | Pass / Fail / Skip | Aussage |
+| --- | --- | --- |
+| Neue Adaptertests + alle drei A-ContentStoremodule | **120 / 0 / 0**, 45,25 s | 49 Adapterfälle + 71 A-Fälle, tatsächliche Dateien und SQLite; Wiederöffnung, Unverändertheit, C10/Reparse, Konflikte, ACL/Abbruch, Auditbelege, defekter Rawbezug |
+| Material-/Discovery-/Lecture-/Executor-/Transcript-/C16-Regression | **197 / 8 / 2**, 81,96 s | Acht Fehler unten; zwei optionale echte HTML-/SRT-Bestände nicht vorhanden |
+| Unverändertes Masterarchiv: gesamtes `test_official_transcript_import.py` | **33 / 6 / 0**, 1,03 s | Exakt die sechs bekannten TXT-Fälle aus A, gleiche None/float-Ursache |
+| Unverändertes Masterarchiv: zwei HTML-Unicode-Nodes | **0 / 2 / 0**, 16 deselected, 2,25 s | Exakt dieselbe Abweichung `héllo` → `h√©llo` wie im Branch; HTMLparser unverändert |
+| Nach finaler C10-Inputkey-Präzisierung: fünf betroffene Material-/Auditfälle | **5 / 0 / 0**, 44 deselected, 9,57 s | Originale C10-Inputkeys bleiben erhalten; nur Pfadwerte logisch |
+| Ruff Check / Format Check / diff check | **erfolgreich** | 15 Pythondateien formatiert, 18 lokale Dokumentationsziele geprüft |
+
+Die zusätzliche HTMLabweichung tritt in
+`test_cs50_material_html_semantics.py::test_code_preserves_exact_whitespace_quotes_entities_and_unicode`
+bei beiden Wrapperparametern auf; sie ist auf der unveränderten Basis in dieser
+lokalen Parserumgebung reproduziert. Die sechs TXT-Nodes sind im historischen
+A-Abschnitt vollständig aufgeführt. Keine vollständig grüne bestehende Regression
+behauptet und keine fachfremden TXT-/HTMLparseränderungen vorgenommen. Die
+PyMuPDF-abhängigen PDFparsermodule wurden **nicht ausgeführt**; das sind keine
+zusätzlichen Pytest-Skips. Pytest 9 und PDFparserregression bleiben für eine bereits
+vollständig eingerichtete CI-/Projektumgebung offen.
+
+Tatsächliche Abnahmekommandos (Präfix für alle Pytest-Läufe):
+
+```sh
+PYTHONPATH=/usr/lib/python3/dist-packages PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+  /home/robfra/0_Portfolio_Projekte/ai-job-search/.venv/bin/python -m pytest \
+  -q --disable-warnings \
+  tests/test_content_store_adapters.py tests/test_content_store_models.py \
+  tests/test_content_store_artifacts.py tests/test_content_store_store.py \
+  --basetemp=/tmp/c2302b-acceptance
+```
+
+Regression mit demselben Präfix und `--basetemp=/tmp/c2302b-regression`:
+`tests/test_cs50_material_contracts.py tests/test_cs50_material_html.py
+ tests/test_cs50_material_html_semantics.py tests/test_cs50_material_code.py
+ tests/test_cs50_material_mapping.py tests/test_cs50_discovery.py
+ tests/test_cs50_lecture_adapter.py tests/test_cs50_executor.py
+ tests/test_official_transcript_import.py tests/test_job_control.py`.
+
+Baseline: `git archive 6ef394a2f7a4debccce75f7b5e1ef3449f9457aa` der benötigten
+`src`, Testdateien, `tests/conftest.py` und `pyproject.toml` in eigenen
+`/tmp/c2302b-baseline`-Snapshot. Dort derselbe Pytest-Aufruf für
+`tests/test_official_transcript_import.py`, anschließend
+`tests/test_cs50_material_html_semantics.py -k code_preserves_exact_whitespace`.
+Separate Basetemps `/tmp/c2302b-baseline-tests` und
+`/tmp/c2302b-html-baseline-tests`. Keine Nutzerdateien oder Originaltranskripte.
+
+Ruff `check` und `format --check` jeweils für `src/content_store`,
+`src/model_lecture/data_resources.py`, `tests/content_adapter_support.py`,
+`tests/test_content_store_adapters.py`, `tests/content_store_support.py` und die
+drei A-ContentStoretestmodule; anschließend `git diff --check`.
+Entwicklungsläufe: zunächst 42 Adapterfälle grün, dann 118 und 119 ContentStorefälle
+grün; nach zusätzlichen Audit-/Rawkorruptionstests und finaler Integration **120**.
+Diese Wiederholungen werden nicht addiert. Die neue Adapterdatei wurde außerdem
+in frischem Prozess mit gesperrten Settings-/Knowledge-/LLM-/PDF-/HTMLparserimports
+auf tatsächliche HTML- und SRT-Bundles geprüft.
+
+Taskeigene Snapshot-/Test-/Cacheverzeichnisse werden nach Abnahme entfernt;
+Logdateien bleiben als lokale technische Nachweise außerhalb des Repositories.
+Der Worktree bleibt bis zum Merge des offenen B-PRs erhalten.
+
+C23-02C übernimmt Recovery, konkurrierende Prozesse/Last und Backup/Restore.
+TXT/VTT, HTTP, C16-Importadapter und vollständige Pagination bleiben ausstehend.
+C23 bleibt offen; alle B-Testbytes sind synthetisch. Der PDF-Test prüft einen
+selbst zusammengestellten PDF-v2-Normalisierungsvertrag gegen die kleine
+vorhandene synthetische PDFdatei; er behauptet keinen neuen PDF-Parserlauf oder
+inhaltliche Richtigkeit der Extraktion. Materialgate beurteilt technische
+Konsistenz und markiert semantische Warnungen; keine Modellqualitätskennzahl.
+
+## Historische A-Tests und tatsächlich ausgeführte Kommandos
 
 Umgebung: Python **3.12.12**, Pydantic **2.13.5**, SQLite **3.50.4**, Ruff
 **0.16.0**. Backendvenv/uvcache waren nicht verfügbar. Ausschließlich vorhandene
@@ -312,13 +529,11 @@ wurden für Tests eingelesen. Keine Gesamtsuite und keine Live-API-/Qdranttests.
 
 ## Konkrete Übergabe und verbleibende Grenzen
 
-**C23-02B:** Material-/SRT-Bundleadapter mit vollständiger Discovery-/Receipt-/
-Originalpfad-/Hash-/Parserrevisionsbindung und erneutem Quality Gate über
-eingefrorenem Staging. Bestehende Payloads/IDs unverändert erhalten, C10-Units/
-Exclusions/Codeviews genau einmal übernehmen. Erst danach echte SourceVersion-
-und Publish-Einstiege freischalten; den synthetischen Vertrag nicht zu einem
-generischen Dictimport erweitern. Der eigentliche Metadatencommit aus dem
-Testhelper ist dafür nach überprüftem Gate kontrolliert in den Core überführbar.
+**C23-02B (in diesem PR implementiert):** Material-/SRT-Bundleadapter mit
+vollständiger Discovery-/Receipt-/Originalpfad-/Hash-/Parserrevisionsbindung und
+erneutem Quality Gate über eingefrorenem Staging. Bestehende Payloads/IDs unverändert erhalten, C10-Units/
+Exclusions/Codeviews genau einmal übernehmen. Die SourceVersion-/Publish-Einstiege akzeptieren nur B-Kandidaten;
+der synthetische Vertrag bleibt unverändert isoliert.
 #72 bleibt bis separater geprüfter Bestandsfreigabe blockiert.
 
 **C23-02C:** vollständige Run-/WAL-Recovery, konkurrierende Prozesse und
