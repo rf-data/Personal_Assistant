@@ -1,0 +1,97 @@
+# Opt-in C15 companion; no host exporters, privileged mounts or public ports.
+services:
+  prometheus:
+    profiles: [private-monitoring]
+    image: prom/prometheus@sha256:${PROMETHEUS_DIGEST:?Set approved digest}
+    pull_policy: never
+    user: '10001:10001'
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    stop_grace_period: 30s
+    cpus: 1.0
+    mem_limit: 512m
+    pids_limit: 128
+    tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=32m]
+    networks: [private]
+    logging: {driver: json-file, options: {max-size: 10m, max-file: '3'}}
+    command: [--config.file=/etc/prometheus/prometheus.yaml, --storage.tsdb.path=/prometheus, --storage.tsdb.retention.time=7d, --storage.tsdb.retention.size=1GB]
+    volumes:
+      - type: bind
+        source: ${C22_PROMETHEUS_CONFIG:?Set reviewed deployment scrape configuration}
+        target: /etc/prometheus/prometheus.yaml
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ../monitoring/prometheus/rules
+        target: /etc/prometheus/rules
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C22_METRICS_TOKEN:?Set private course-scoped viewer token file}
+        target: /run/secrets/metrics.token
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C22_CA:?Set issuing CA file}
+        target: /run/tls/ca.crt
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C22_PROMETHEUS_DATA:?Set existing private metrics directory}
+        target: /prometheus
+        bind: {create_host_path: false}
+    healthcheck:
+      test: [CMD, wget, -q, --spider, 'http://127.0.0.1:9090/-/ready']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  grafana:
+    profiles: [private-monitoring]
+    image: grafana/grafana@sha256:${GRAFANA_DIGEST:?Set approved digest}
+    pull_policy: never
+    user: '10001:10001'
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    stop_grace_period: 30s
+    cpus: 1.0
+    mem_limit: 512m
+    pids_limit: 128
+    tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=32m]
+    networks: [private]
+    logging: {driver: json-file, options: {max-size: 10m, max-file: '3'}}
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: 'false'
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+      GF_ANALYTICS_REPORTING_ENABLED: 'false'
+      GF_ANALYTICS_CHECK_FOR_UPDATES: 'false'
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: 'false'
+      GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana.password
+    volumes:
+      - type: bind
+        source: ${C22_GRAFANA_PASSWORD:?Set private unique Grafana password file}
+        target: /run/secrets/grafana.password
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C22_GRAFANA_DATA:?Set existing private Grafana directory}
+        target: /var/lib/grafana
+        bind: {create_host_path: false}
+      - type: bind
+        source: ../monitoring/grafana/provisioning
+        target: /etc/grafana/provisioning
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ../monitoring/grafana/dashboards
+        target: /var/lib/grafana/dashboards
+        read_only: true
+        bind: {create_host_path: false}
+    healthcheck:
+      test: [CMD, curl, --fail, --silent, --max-time, '3', 'http://127.0.0.1:3000/api/health']
+      interval: 30s
+      timeout: 5s
+      retries: 3

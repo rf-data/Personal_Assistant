@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "work_package": "C22",
+  "date": "2026-10-17",
+  "synthetic_only": true,
+  "deployment_performed": false,
+  "baseline": {
+    "backend_master": "01cbf3d6fb143773e08d3f7cc26b6695e8800203",
+    "ui_main": "4e1626261df294a35f9162544d5c8fca7a03cfb2"
+  },
+  "backend": {
+    "unique_tests": 148,
+    "outcomes": {
+      "passed": 148
+    },
+    "runs": [
+      {
+        "evidence": "c22-backend-validation.xml",
+        "cases": 108,
+        "duration_seconds": 231.297
+      },
+      {
+        "evidence": "c22-final-unit.xml",
+        "cases": 60,
+        "duration_seconds": 117.525
+      },
+      {
+        "evidence": "c22-restore-final.xml",
+        "cases": 25,
+        "duration_seconds": 9.944
+      },
+      {
+        "evidence": "c22-final-implementation.xml",
+        "cases": 26,
+        "duration_seconds": 18.127
+      }
+    ]
+  },
+  "ui": {
+    "tests": 123,
+    "successful": true,
+    "skips": 0
+  },
+  "local_integration": {
+    "checks": 9,
+    "passed": 9,
+    "http_calls": 121,
+    "browser_tested": false
+  },
+  "checks": [
+    {
+      "name": "ruff_backend",
+      "status": "passed"
+    },
+    {
+      "name": "ruff_ui",
+      "status": "passed"
+    },
+    {
+      "name": "compose_no_default_services",
+      "status": "passed"
+    },
+    {
+      "name": "compose_four_production_services",
+      "status": "passed"
+    },
+    {
+      "name": "compose_six_with_monitoring",
+      "status": "passed"
+    },
+    {
+      "name": "sqlite_backup_restore",
+      "status": "passed"
+    },
+    {
+      "name": "pdf_workflow_provenance_restore",
+      "status": "passed"
+    },
+    {
+      "name": "managed_api_executor_restart",
+      "status": "passed"
+    },
+    {
+      "name": "permissions_secrets_low_disk_faults",
+      "status": "passed"
+    },
+    {
+      "name": "c19_native_pdf_cancel_and_parent_death_regression",
+      "status": "passed"
+    }
+  ],
+  "blocked": [
+    {
+      "name": "image_build_and_container_acceptance",
+      "reason": "Docker/Compose present; docker image ls empty. No pull/download authorized or attempted."
+    },
+    {
+      "name": "target_volume_semantics",
+      "reason": "Local synthetic flock/rename/fsync/WAL probe passed; final host volume not provisioned."
+    },
+    {
+      "name": "tls_gateway_runtime",
+      "reason": "No pinned local Python/Caddy images or target TLS material; Compose config validated only."
+    },
+    {
+      "name": "oidc_browser_and_dependency",
+      "reason": "Authlib absent from existing UI lock/environment; production launcher fails closed. No IdP configuration."
+    },
+    {
+      "name": "monitoring_runtime_and_alert_delivery",
+      "reason": "No local Prometheus/Grafana images. Authenticated scrape and existing C15 dashboard/rule mounts configured; no Alertmanager enabled."
+    },
+    {
+      "name": "container_cpu_memory_pid_quota_and_shutdown",
+      "reason": "Existing C16/C19 process limits tested locally; actual cgroups/PID namespaces/rootfs/image probes require approved images."
+    }
+  ],
+  "production_readiness": "blocked_until_manual_gates_closed",
+  "no_remote_systems_changed": true,
+  "related_ui_pr": "https://github.com/rf-data/personal-assistant-ui/pull/5"
+}
