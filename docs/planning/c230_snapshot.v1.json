@@ -1,0 +1,752 @@
+{
+  "schema_version": 1,
+  "kind": "c230_read_only_planning_snapshot",
+  "observed_date": "2026-10-17",
+  "timezone": "Europe/Berlin",
+  "repositories": [
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "default_branch": "master",
+      "commit": "476f0a0d786db87eb59efad36fd21a2fadaeb1dd",
+      "tree": "e20f61bb8f021d098c1619195b8af3b13f6180e7",
+      "reported_repository_permissions": {
+        "admin": true,
+        "maintain": true,
+        "push": true,
+        "triage": true,
+        "pull": true
+      },
+      "issue_listing": {
+        "state": "all",
+        "per_page": 100,
+        "returned_records": 71,
+        "standalone_issues": [],
+        "pagination_complete": true
+      },
+      "pull_requests": [
+        {
+          "number": 72,
+          "title": "C21-Q: guarded Qdrant deployment preparation and transcript pilot inventory",
+          "state": "open",
+          "draft": true,
+          "merged_at": null,
+          "head": "3a42b1675dffe823edc179a347fa97dd1a096fd0",
+          "base": "master"
+        },
+        {
+          "number": 73,
+          "title": "C22: private deployment architecture and verified operations recovery",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-17T07:57:14Z",
+          "head": "f2842788efd487227ca95c8960f971ea14877cad",
+          "base": "master"
+        },
+        {
+          "number": 71,
+          "title": "C21: reproducible system acceptance with actual HTTP, native PDF recovery and scoped evidence",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-17T07:19:01Z",
+          "head": "d85bf060c5cc51888bef8395a951c6dc81d4319d",
+          "base": "master"
+        },
+        {
+          "number": 70,
+          "title": "C20-B: C18-Workflows mit bestätigtem Execute/Resume über HTTP bereitstellen",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T22:19:55Z",
+          "head": "65b3f09155263d447c4f4540f5b3bba9f78017c1",
+          "base": "master"
+        },
+        {
+          "number": 69,
+          "title": "C19: PDF-v2-Lebenszyklus unter C16 absichern und C18 freigeben",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T20:31:16Z",
+          "head": "b36f72d9a14740a524191370587a9136a7be534e",
+          "base": "master"
+        },
+        {
+          "number": 68,
+          "title": "C17.0: Repositoryinventar und aktuelle Dokumentation konsolidieren",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T17:23:27Z",
+          "head": "7d0efa161676193065c0a67b166e0c689e0b01df",
+          "base": "master"
+        },
+        {
+          "number": 67,
+          "title": "C18: Offline-CS50-Workflows mit Resume und Dependency-Prüfung",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T16:27:17Z",
+          "head": "d2c07f9b4e9facdb2ecbb6f3d541ef454524997a",
+          "base": "master"
+        },
+        {
+          "number": 66,
+          "title": "C16: Offline Job Control API mit persistentem Executor",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T15:05:07Z",
+          "head": "74578357afe04194cbc73b7cd6aad120c1f11816",
+          "base": "master"
+        },
+        {
+          "number": 65,
+          "title": "C15: Monitoring-Hardening und Vertrag für Pipeline-Metriken",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T14:19:09Z",
+          "head": "e74d3405b71668fdd45258b902811e2152b23d0e",
+          "base": "master"
+        },
+        {
+          "number": 64,
+          "title": "C13: Inventory visual assets with document provenance offline",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T13:27:26Z",
+          "head": "9dd9c8ad6aaaedbc497dfc7f59ea375e98bc7599",
+          "base": "master"
+        },
+        {
+          "number": 63,
+          "title": "C12: Harden offline knowledge consolidation and verified resume",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T13:25:44Z",
+          "head": "42414387319bd2195569b16c78cb5ab398deecb9",
+          "base": "master"
+        },
+        {
+          "number": 62,
+          "title": "C11: Offline mathematical formula reconstruction evaluation",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T13:21:08Z",
+          "head": "467ec82d8ee44b52b74b72d8aaf95d847d01b061",
+          "base": "master"
+        },
+        {
+          "number": 61,
+          "title": "C10: Offline material quality gate and read-only lecture handoff",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T05:12:36Z",
+          "head": "3648847a70d73096ced06c72b04ba844c9e00e60",
+          "base": "master"
+        },
+        {
+          "number": 60,
+          "title": "PDF-v2: preserve code, distinguish math and retain numbered source views",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T19:21:12Z",
+          "head": "5da71032123208659f5dba1d2a424ccb28d7db16",
+          "base": "master"
+        },
+        {
+          "number": 59,
+          "title": "Fix CS50 lecture notes HTML structure and inline code provenance",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T18:29:00Z",
+          "head": "ce28fb6cd0d0585bc0c98d53b778e64e4f6bcf8d",
+          "base": "master"
+        },
+        {
+          "number": 47,
+          "title": "Document safe consolidation procedure and offline regression summary",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:35:49Z",
+          "head": "0cebf5c9d9685162d30da9984bbc540fcbcbfb6a",
+          "base": "master"
+        },
+        {
+          "number": 57,
+          "title": "CS50 materials 10: operating guides, boundary fixes and frozen full regression",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:33:09Z",
+          "head": "2dcf72797319102ccd126a41b9525b9081c22adc",
+          "base": "feat/cs50-materials-09-e2e"
+        },
+        {
+          "number": 56,
+          "title": "CS50 materials 9: Six-course offline materials demo and gated CLI",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:33:08Z",
+          "head": "8a04b0b16c5b0c736df46aa7089e9a84cdfb0554",
+          "base": "feat/cs50-materials-08-mapping"
+        },
+        {
+          "number": 55,
+          "title": "CS50 materials 8: Read-only material block mapping for Knowledge and Qdrant",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:33:08Z",
+          "head": "a96aee141ae57e97c87b8352fe2af15022364f31",
+          "base": "feat/cs50-materials-07-processing"
+        },
+        {
+          "number": 54,
+          "title": "CS50 materials 7: Explicit material plans and hash-bound parser resume",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:33:07Z",
+          "head": "7d6120bbef90a4d6e7c0dcff30a1aee9d33a5453",
+          "base": "feat/cs50-materials-06-code"
+        },
+        {
+          "number": 53,
+          "title": "CS50 materials 6: Lossless source files with line provenance",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:33:06Z",
+          "head": "e50e85261ffbcaeee9c2286ba647d56f20410b69",
+          "base": "feat/cs50-materials-05-pdf"
+        },
+        {
+          "number": 52,
+          "title": "CS50 materials 5: Bounded PDF pages slides and image references",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:33:05Z",
+          "head": "6a2ffe1ae3787b33c51628ea72ef4d069521a230",
+          "base": "feat/cs50-materials-04-html"
+        },
+        {
+          "number": 51,
+          "title": "CS50 materials 4: Structured offline HTML notes and assignments",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:33:04Z",
+          "head": "4960609472cf0d57e568e3b3b8974b8d9522b411",
+          "base": "feat/cs50-materials-03-download"
+        },
+        {
+          "number": 50,
+          "title": "CS50 materials 3: Guarded material download and exclusive raw receipts",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:33:03Z",
+          "head": "ff20431721c41517e48a19b225bd9ffbd24adf89",
+          "base": "feat/cs50-materials-02-contracts"
+        },
+        {
+          "number": 49,
+          "title": "CS50 materials 2: Versioned material bindings and normalized artifacts",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:33:02Z",
+          "head": "1a082c5a1740db83c1bbc06e06d037221d3adb0e",
+          "base": "feat/cs50-materials-01-inventory"
+        },
+        {
+          "number": 48,
+          "title": "CS50 materials 1: Snapshot resource inventory and coverage gaps",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T15:33:01Z",
+          "head": "09704df1a0d25b010f7281d005ed781a886eb2e5",
+          "base": "master"
+        },
+        {
+          "number": 45,
+          "title": "CS50 index 7: Verified Knowledge mapping and final offline regression",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T04:52:30Z",
+          "head": "e6d3667d479601732ef77dc8b17967f9fd6c2487",
+          "base": "test/cs50-index-end-to-end"
+        },
+        {
+          "number": 44,
+          "title": "CS50 index 6: All-source offline Qdrant E2E and source-grounded evaluation",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T04:52:29Z",
+          "head": "3727b94c9ffe8cdb978f432a0c58553a8c4d7505",
+          "base": "feat/cs50-index-cli"
+        },
+        {
+          "number": 43,
+          "title": "CS50 index 5: Gated source/index CLI and isolated offline demo",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T04:52:28Z",
+          "head": "5d87b7f4e9078867423066e6bbac2dba2d058195",
+          "base": "feat/cs50-transcript-retrieval"
+        },
+        {
+          "number": 42,
+          "title": "CS50 index 4: Filtered transcript retrieval with optional original-source proof",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T04:52:27Z",
+          "head": "6f94eaff1717de9452334978da709ded199c6d54",
+          "base": "feat/cs50-transcript-ingestion"
+        },
+        {
+          "number": 41,
+          "title": "CS50 index 3: Immutable ingestion plan, checked upsert and resume",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T04:52:26Z",
+          "head": "acae6d1bb8e15751fe7ec964c994efeed98b03a5",
+          "base": "master"
+        },
+        {
+          "number": 40,
+          "title": "CS50 index 2: Local embeddings and exact transcript offset units",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T04:43:55Z",
+          "head": "69d00cf0e7a8af62d39332ab3a10ebc917fbf49b",
+          "base": "master"
+        },
+        {
+          "number": 39,
+          "title": "CS50 index 1: Source-bound payload, point IDs and collection contract",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-15T04:42:52Z",
+          "head": "c040b9c5ac953ab0bb9c96e3eea9a35d556ec20b",
+          "base": "master"
+        },
+        {
+          "number": 38,
+          "title": "Archive CS50 documentation and record verified integration/cleanup",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T19:26:46Z",
+          "head": "9dbea080ba28ab8dcba8a6005f689d9995b2b5e9",
+          "base": "master"
+        },
+        {
+          "number": 34,
+          "title": "B04: Weighted verified CS50 course quality and coverage reports",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:38:33Z",
+          "head": "4aaaafb960c4e9b592261e8953c614ab52369175",
+          "base": "master"
+        },
+        {
+          "number": 30,
+          "title": "A05: Locked minimal CS50 worker and explicit optional SDK profile",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:09:55Z",
+          "head": "f7e3e2fd0b90ad4837ebe7d04e1b933fbe33c93a",
+          "base": "master"
+        },
+        {
+          "number": 36,
+          "title": "C01-C03: Verified manual review templates and CS50 quality release gates",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:09:21Z",
+          "head": "c7b16fe960a75adb2d5e36602d8fd355511082ee",
+          "base": "feat/cs50-course-reporting"
+        },
+        {
+          "number": 32,
+          "title": "B02: Verified full-lecture Knowledge completion and atomic artifact set",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:08:28Z",
+          "head": "be731211a71cdde56ebfdf32409dae119f54c011",
+          "base": "test/cs50-worker-profiles"
+        },
+        {
+          "number": 28,
+          "title": "A03: Portable versioned CS50 Knowledge input references",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:07:42Z",
+          "head": "feb80a6fbb26021fb5a5f964a419b44742b39cf3",
+          "base": "master"
+        },
+        {
+          "number": 37,
+          "title": "CS50 completion: Full-stack offline regression and provider boundary guards",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:06:45Z",
+          "head": "a6b49d9eed1d6a56c1f9bc81cafb7953ccfafa42",
+          "base": "feat/cs50-quality-evaluation-contract"
+        },
+        {
+          "number": 35,
+          "title": "B05: Controlled six-course Knowledge batch and executable offline demonstration",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:06:16Z",
+          "head": "b1dfa1f1bbfea7a3cf4fd98c711c9e38ea5b1d96",
+          "base": "feat/cs50-course-reporting"
+        },
+        {
+          "number": 33,
+          "title": "B03: Sequential verified CS50 course scheduler and conservative resume",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:04:51Z",
+          "head": "1a3a05b21676ac9f0f8f3fc3dee1a64d08309995",
+          "base": "feat/cs50-lecture-completion"
+        },
+        {
+          "number": 31,
+          "title": "B01: Isolated CS50 lecture runner with full chunk plan and durable limits",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:04:16Z",
+          "head": "ec7da2c27a87ce1b5206ff28338a9022d16d2907",
+          "base": "test/cs50-worker-profiles"
+        },
+        {
+          "number": 29,
+          "title": "A04: Preserve transcript metadata through existing Knowledge constructors",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:03:47Z",
+          "head": "af87521482aa7880fd3758443db582d4da67121f",
+          "base": "feat/cs50-portable-inputs"
+        },
+        {
+          "number": 27,
+          "title": "A02: Persistent shared CS50 request/token budget journal",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T18:03:07Z",
+          "head": "e1caea0bdf23f2edd4b55751c68714a815232224",
+          "base": "master"
+        },
+        {
+          "number": 26,
+          "title": "A01: Verified CS50 Knowledge checkpoints and conservative resume",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T15:58:12Z",
+          "head": "2eea4f86c9c98441daa7043308e7e0a61c209f3c",
+          "base": "master"
+        },
+        {
+          "number": 25,
+          "title": "Unify backward-compatible transcript provenance models",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T12:33:32Z",
+          "head": "d90eacb76f8f9ea1b336e7da6bfb6d26ea8e3096",
+          "base": "master"
+        },
+        {
+          "number": 24,
+          "title": "Lazy-load optional SDKs at explicit knowledge LLM call boundaries",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T12:00:53Z",
+          "head": "1e9231ddd41afb7ed8276ff25680f71c964966a0",
+          "base": "master"
+        },
+        {
+          "number": 23,
+          "title": "Fix CS50 quality tests to use synthetic source timing and chunk bounds",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T11:42:52Z",
+          "head": "85b9cd1cb17e7a4cb3abe876303e4a1af999c323",
+          "base": "master"
+        },
+        {
+          "number": 22,
+          "title": "Make CS50 pilot offline regression fixtures portable",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T10:00:38Z",
+          "head": "36598026893bffcf839b7f5fa6f336b823d3e9d6",
+          "base": "master"
+        },
+        {
+          "number": 21,
+          "title": "Restore portable CS50 offline fixtures and audit post-merge integration",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T09:32:38Z",
+          "head": "77c461a7865a4baa150f58d9b25e8cc82784a232",
+          "base": "master"
+        },
+        {
+          "number": 17,
+          "title": "feat(cs50): explicit verified Transcript-to-Knowledge input binding (PR 5)",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T08:07:50Z",
+          "head": "cdbedb6ae4bd37592621203f72d8b1944093ebd6",
+          "base": "feat/cs50-full-coverage"
+        },
+        {
+          "number": 20,
+          "title": "CS50: opt-in precise statement and formula evidence",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T08:05:47Z",
+          "head": "f7c6a7c0322da974800cb0390cb47574bd76c366",
+          "base": "master"
+        },
+        {
+          "number": 13,
+          "title": "Defer Marvin initialization for synchronous deterministic imports",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T08:03:48Z",
+          "head": "65303d3cad68dc4ff3a820f07140697c8e9f3d90",
+          "base": "fix/knowledge-source-id"
+        },
+        {
+          "number": 10,
+          "title": "Preserve source_id between knowledge extraction and consolidation",
+          "state": "open",
+          "draft": false,
+          "merged_at": null,
+          "head": "9ed643dedf220f37a5ebfbf533582c64d563d96d",
+          "base": "master"
+        },
+        {
+          "number": 7,
+          "title": "Extract CS50 course indexes and weekly resources offline",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T08:01:58Z",
+          "head": "0f62cb53edf5bf22f4b21c7d5e29379df0e4f508",
+          "base": "feat/cs50-discovery-contracts"
+        },
+        {
+          "number": 6,
+          "title": "Add offline CS50 fixture validation and discovery models",
+          "state": "open",
+          "draft": false,
+          "merged_at": null,
+          "head": "7ba2dd844d24377eba36ca98b64ea4c2e059cf62",
+          "base": "master"
+        },
+        {
+          "number": 19,
+          "title": "feat(cs50): pilot chunk selection and evidence quality diagnostics",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T08:01:18Z",
+          "head": "37d50e773ad0f6937758424dbfe77777eaeb58a9",
+          "base": "master"
+        },
+        {
+          "number": 18,
+          "title": "feat(cs50): bounded opt-in LLM Knowledge pilot (PR 6)",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T08:00:24Z",
+          "head": "c74c8b72fc83aa07147c7f6d9113dc708122dc2f",
+          "base": "feat/cs50-knowledge-input-binding"
+        },
+        {
+          "number": 15,
+          "title": "feat: deterministic offline CS50 selection-to-lecture adapter",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T07:59:56Z",
+          "head": "f1dd4231ba7da76372c2b50d15450eae0ea6533e",
+          "base": "feat/cs50-full-coverage"
+        },
+        {
+          "number": 12,
+          "title": "Preserve transcript provenance through knowledge extraction and consolidation",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T07:51:01Z",
+          "head": "6d3d89fa586e7839390c126ba752ff90dd4ecd86",
+          "base": "fix/knowledge-source-id"
+        },
+        {
+          "number": 8,
+          "title": "Add configurable offline CS50 resource selection and processing preview",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T07:48:33Z",
+          "head": "cea19d35d771c831e4a60a60ad8efb65a1586c7f",
+          "base": "feat/cs50-offline-extraction"
+        },
+        {
+          "number": 14,
+          "title": "feat: explicit SRT-first CS50 knowledge selection",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T07:47:23Z",
+          "head": "d6e654432d42279b4a539eb77b0fd9f7b221e66d",
+          "base": "feat/cs50-full-coverage"
+        },
+        {
+          "number": 16,
+          "title": "feat(cs50): controlled SRT executor and official transcript import (PR 4)",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-14T07:46:14Z",
+          "head": "d22b023e723105c4499171dc27e43c094aa3d4ad",
+          "base": "feat/cs50-lecture-adapter"
+        },
+        {
+          "number": 11,
+          "title": "Fix normalize_math_text import in knowledge consolidation",
+          "state": "open",
+          "draft": false,
+          "merged_at": null,
+          "head": "efed68d08ddbd25a7d0404a164cf6d54ce334ab6",
+          "base": "master"
+        },
+        {
+          "number": 9,
+          "title": "Import official TXT, SRT and VTT transcripts offline",
+          "state": "open",
+          "draft": false,
+          "merged_at": null,
+          "head": "3d1317347018fce47f49331fbfea92e4a055a337",
+          "base": "master"
+        },
+        {
+          "number": 5,
+          "title": "Offline add",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-09-14T07:44:10Z",
+          "head": "c5454badf0cdea6876f20aabf87f8f8e817c7dd0",
+          "base": "master"
+        },
+        {
+          "number": 4,
+          "title": "Update branch 'knowledge_db'",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-08-10T10:02:07Z",
+          "head": "b3b59b66942e4470475cc41657f4caf515338c67",
+          "base": "add_knowledge_db"
+        },
+        {
+          "number": 3,
+          "title": "Offline add",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-08-08T16:14:15Z",
+          "head": "ed168c870549cd9e96e6c441ab817d7dfe434158",
+          "base": "master"
+        },
+        {
+          "number": 2,
+          "title": "Offline add",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-07-30T07:03:59Z",
+          "head": "959a1ae7a9114d844c5c72b33c054e0804a34a83",
+          "base": "master"
+        },
+        {
+          "number": 1,
+          "title": "Recover offline add",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-07-30T06:05:15Z",
+          "head": "978472d6528f37c3672ad1aa18aad0e2ca925d99",
+          "base": "master"
+        }
+      ]
+    },
+    {
+      "repository": "rf-data/personal-assistant-ui",
+      "default_branch": "main",
+      "commit": "14ccfc20d83fe57612b5298e323d9f9f1d899cbf",
+      "tree": "7775226597d3f32c8a9f778c58723b5e63aeb029",
+      "reported_repository_permissions": {
+        "admin": true,
+        "maintain": true,
+        "push": true,
+        "triage": true,
+        "pull": true
+      },
+      "issue_listing": {
+        "state": "all",
+        "per_page": 100,
+        "returned_records": 5,
+        "standalone_issues": [],
+        "pagination_complete": true
+      },
+      "pull_requests": [
+        {
+          "number": 5,
+          "title": "C22: locked UI container and production startup guards",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-17T07:57:36Z",
+          "head": "07280633e0a3a529d566484e3f964d8ba9a999be",
+          "base": "main"
+        },
+        {
+          "number": 4,
+          "title": "test: make native workflow cancellation acceptance independent of cleanup timing",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-17T07:18:21Z",
+          "head": "7d34bf3cbf474268db6b0418fcaf938fd75c1d71",
+          "base": "main"
+        },
+        {
+          "number": 3,
+          "title": "C20: Live-Workflowverwaltung mit C20-B, bestätigtem Execute/Resume und PDF-E2E",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-17T06:39:34Z",
+          "head": "d7cb6cb639d5ba4d29224025a762f8225ea04190",
+          "base": "main"
+        },
+        {
+          "number": 2,
+          "title": "C17: Admin-UI mit echtem C16-Jobbackend integrieren",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T16:10:46Z",
+          "head": "9d9ed61a02913d2f884358aff9d3ce556094d386",
+          "base": "main"
+        },
+        {
+          "number": 1,
+          "title": "C14: Konsolidierte Admin-UI mit sicherer simulierter Jobsteuerung",
+          "state": "closed",
+          "draft": false,
+          "merged_at": "2026-10-16T13:28:09Z",
+          "head": "b003a87098c6bb434e0e266128448032697f3646",
+          "base": "main"
+        }
+      ]
+    }
+  ],
+  "project_inventory": {
+    "status": "unknown",
+    "reason": "Connector rejects owner Projects URL and GraphQL endpoint as INVALID_ARGUMENT; no Projects-specific tools; local gh absent.",
+    "repository_has_projects_flag_is_not_projects_access_proof": true
+  },
+  "milestone_inventory": {
+    "status": "unknown",
+    "reason": "Connector rejects repository milestones endpoint as INVALID_ARGUMENT."
+  },
+  "administration_performed": {
+    "issues_created": 0,
+    "issues_closed": 0,
+    "projects_created": 0,
+    "milestones_created": 0
+  },
+  "execution_approval": false
+}

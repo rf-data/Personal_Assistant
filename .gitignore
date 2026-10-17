@@ -271,3 +271,7 @@ src/prio_list.md
 
 # Reviewed synthetic C22 observations only; private snapshots stay external.
 !/docs/deployment/c22_report.v1.json
+
+# Reviewed C23.0 planning only; no private task or source payloads.
+!/docs/planning/issue_plan.v1.json
+!/docs/planning/c230_snapshot.v1.json

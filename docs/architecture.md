@@ -1,11 +1,20 @@
 # Architektur des Personal Assistant
 
-Stand: 16.10.2026. Codebasis: Backend-`master` `78b35a5` (C10–C13, C15, C16,
-C18 gemergt). C14/C17 liegen im separaten UI-`main` `137651e`.
-[PR-/Treebelege](audit/remote_snapshot.v1.json), [Dateiinventar](repository_inventory.md)
-und [Dokumentenaudit](documentation_audit.md) sind Teil dieses Abgleichs.
-Ein vorhandenes Modul oder ein grüner synthetischer Test belegt keinen laufenden
-Produktivdienst und keine mathematische/semantische Qualität echter Kurse.
+Planungsabgleich: 17.10.2026. Geprüfter Backend-`master` `476f0a0d`, UI-`main`
+`14ccfc20`. C19–C22 und die Workflow-UI sind gemergt; C21-Q bleibt Draft #72.
+[Aktueller Status](planning/status.md), [Roadmap](ROADMAP.md),
+[bestehendes Inventar](repository_inventory.md). Alte Auditstände sind historische
+Nachweise, keine aktuellen Releasefreigaben.
+
+## Drei fachliche Ebenen und Entwicklungspriorität
+
+**Raw Sources** halten Originalbytes, URLs und Metadaten. **Parsed Content** hält
+strukturierte Texte, Kapitel/Seiten/Blöcke/Cues, Code und Bildreferenzen mit
+versionierter Rückbindung. **Derived Knowledge** ist eine optionale Ableitung aus
+zuvor evaluierten Materialien. Raw/Parsed bleiben unabhängig davon nutzbar.
+Die folgende Grafik zeigt vorhandene Schnittstellen, nicht eine bereits
+implementierte gemeinsame Source-Datenbank oder Search UI. C23/C24/C25 planen
+erst diese Persistenz-/Such-/UI-Verträge; PostgreSQL bleibt ein ADR-Vorschlag.
 
 ## Fachliche Datenflüsse
 
@@ -13,13 +22,13 @@ Produktivdienst und keine mathematische/semantische Qualität echter Kurse.
 flowchart TD
   S[Freigegebene lokale CS50-Snapshots] --> D[Discovery / Resource-Auswahl]
   D --> M[MaterialPlan / bestehende Material-IDs]
-  M --> R[Expliziter lokaler Import / Raw + ArtifactReceipt]
-  R --> N[HTML-v2 / PDF-v2 / Code-v1 Normalisierung]
+  M --> R[Raw Sources: Import / Original + ArtifactReceipt]
+  R --> N[Parsed Content: HTML-v2 / PDF-v2 / Code-v1]
   N --> Q[C10 Quality Gate]
   Q --> H[Read-only LectureMaterialHandoff]
   N --> V[C13 technische Visual-Inventur]
   D --> T[SRT-first Taskplan / geprüfter Transcript-Import]
-  T --> K[Explizit freigegebene Chunk-Extraktion / Evidence]
+  T -. optional nach fachlicher Evaluation .-> K[Derived Knowledge: Extraktion / Evidence]
   K --> C[C12 konservative Konsolidierung]
   T --> I[Separat freigegebener Transcript-Suchindex]
   G[Unabhängige Goldreferenzen + Vorhersagen] --> E[C11 Formelevaluation]
@@ -30,7 +39,9 @@ flowchart TD
   P -. explizite Scrape-Konfiguration .-> O[C15 Prometheus / Grafana]
 ```
 
-Die Grafik stellt Schnittstellen dar. Sie aktiviert keine Downloads, LLM-Jobs,
+Die Grafik stellt vorhandene Schnittstellen dar; der Knowledge-Zweig bleibt
+optional und seine weitere Entwicklung wird bis zur fachlichen Evaluation
+zurückgestellt. Sie aktiviert keine Downloads, LLM-Jobs,
 Indexuploads oder Monitoringtargets. C18 beendet seinen Workflow am Handoff;
 C13, C11 und Knowledge-Extraktion laufen nicht automatisch als Folgestufen.
 
@@ -44,12 +55,12 @@ C13, C11 und Knowledge-Extraktion laufen nicht automatisch als Folgestufen.
 | Transkription | `model_transcribe/data_transcribe.py`, `tools_transcribe/process_url.py`, `src/run_audio_transcription.py`, `run_video_transcription.py` | allgemeiner yt-dlp-/Whisper-/Settingspfad vorhanden; nicht Teil der freigegebenen C16/C18-Offlineprozesse; SDKs/Modelle und Livebetrieb separat |
 | Knowledge | `model_knowledge/data_knowledge.py`, `tools_knowledge/run_cs50_lecture.py`, `cs50_checkpoint.py`, `cs50_budget.py`, `cs50_precise_evidence.py` | explizite Request-/Token-/Zeitbudgets, Source-/Cue-Evidence und Resume; synthetische technische Tests ersetzen keine fachliche Freigabe |
 | Konsolidierung | `run_knowledge_consolidation.py`, `tools_knowledge/consolidation_run.py`, `consolidation_validation.py` | C12 lesender Standard, exklusive Publikation, konservative Operator-/Negations-/Evidencebehandlung; semantischer Adapter explizit [C12](knowledge_consolidation_hardening.md) |
-| Mathematik | `model_evaluation/math_evaluation.py`, `tools_evaluation/evaluate_math.py`, `math_syntax.py`, `math_equivalence.py`, `sympy_worker.py` | C11: 40 synthetische Fälle, begrenzte Notation, optionale isolierte Polynomprüfung, unbekannt bleibt undetermined; [Grenzen](math_evaluation/README.md) |
+| Mathematik | `model_evaluation/math_evaluation.py`, `tools_evaluation/evaluate_math.py`, `math_syntax.py`, `math_equivalence.py`, `sympy_worker.py` | C11: 42 synthetische Fälle, begrenzte Notation, optionale isolierte Polynomprüfung, unbekannt bleibt undetermined; [Grenzen](math_evaluation/README.md) |
 | Visuals | `tools_materials/visual_inventory.py`, `visual_worker.py`; bestehend `tools_knowledge/rebuild_knowledge.py`, `postprocess_visual.py` | C13 inventarisiert Referenzen/Geometrie ohne OCR/LLMs; der frühere Docling-/Visualpfad ist davon getrennt und nicht allgemein E2E-freigegeben [C13](visual_inventory.md) |
 | Transcript-Retrieval | `tools_rag/cs50_ingestion.py`, `tools_rag/cs50_retrieval.py`, `scripts/cs50_transcript_index.py` | lokale, getrennte Transcriptcollection und quellgebundene Offsets; kein automatisch vorhandener kanonischer Knowledge-Index [Index](cs50/operations/transcript_index_architecture.md) |
 | Job-Control | `src/job_control/{models,registry,controller,store,executor,guardian,http}.py` | C16: zwei Defaultadapter, private SQLite-v1-Queue, Auth/Owner/Course, idempotente Starts, begrenzte Prozessgruppen, bestätigter Cancel/Restart [C16](job_control/README.md) |
-| Orchestrierung | `src/workflows/`, `scripts/cs50_workflow.py` | C18 optional, deterministischer DAG, Skip/Stale/Resume; max. drei lokale HTML-/Code-Materialien in einem C16-Job; keine zweite Queue [C18](workflows/README.md) |
-| Admin-UI | `app_admin.py`, `admin_ui_package/c16_client.py` **im UI-Repository** | C14/C17 gemergt; echte C16-Planungs-/Qualitätsjobs, getrennte Chat-App, technische E2E-Nachweise; C18-Prozess noch nicht im UI-DTO |
+| Orchestrierung | `src/workflows/`, `scripts/cs50_workflow.py` | C18 optional, deterministischer DAG, Skip/Stale/Resume; max. drei lokale HTML-/Code-/PDF-Materialien in einem C16-Job; C19 kontrolliert native PDF-Nachfahren; keine zweite Queue [C18](workflows/README.md) |
+| Admin-UI | `app_admin.py`, `admin_ui_package/c16_client.py` **im UI-Repository** | C14/C17/C20-C/C22 gemergt; echte C16-Jobs und vollständige C18-Workflow-HTTP-DTOs, getrennte Chat-App; technische AppTest-/TCP-Nachweise, Search UI noch geplant |
 | Monitoring | `src/core/pipeline_metrics.py`, `src/job_control/metrics.py`, `scripts/validate_monitoring.py`, `monitoring/` | C15-Schema + C16-Jobexporter; fehlende Targets liefern keine erfundenen Messwerte; Konfiguration getestet, kein Live-Deployment nachgewiesen |
 
 ## Identitäten, Evidence und Persistenz
@@ -91,8 +102,8 @@ bleiben experimentell/offen. [Referenzprüfung und Freigabeliste](cleanup_plan.m
 C16s eingebauter HTTPServer ist ein lokaler Loopbackstart und keine
 Produktionsfreigabe. API und Executor sind getrennte Prozesse auf demselben
 privaten lokalen Dateisystem; SQLite/flock sind kein Mehrhost-/NFS-Modell.
-Die C17-UI kann den realen Backendvertrag verwenden, aktiviert aber keine
-kostenpflichtigen Jobs oder C18-Prozesse automatisch.
+Die C20-C-UI kann den vollständigen C20-B-Workflowvertrag verwenden; Starts und
+Resume verlangen weiterhin Backendfreigaben und ausdrückliche Bestätigung.
 
 `api/Dockerfile` ist ein älterer Python-3.11-/FastAPI-Entwurf: referenzierte
 `api/requirements.txt` und `fastapi_main` fehlen. Er ist **kein** C16-Image.
@@ -108,6 +119,10 @@ Images/Secrets. Der reale C16-Metrikpfad ist `/v1/metrics`, nicht das allgemeine
 werden keine Metriklabels. [Betrieb](monitoring/operations.md),
 [Controllerintegration](job_control/integration.md).
 
-Offen bleiben dedizierte API-/Executorimages, TLS-/Ingress-/Secretbetrieb,
-Cgroup-/Last-/Mehrprozessnachweise und eine freigegebene Deploymentkonfiguration.
-Dieses Audit führt keine produktiven Server-, Datenbank- oder Containeraktionen aus.
+C22 ergänzt inzwischen dedizierte Build-/Rollen-/Composevorlagen, einen privaten
+TLS-Gateway, Wartungslock und synthetisch getesteten Backup/Restore;
+[verbindliche Betriebsarchitektur](deployment/architecture.md). Die Vorlagen sind
+gemergt, ihre tatsächlichen Image-/Container-/TLS-/OIDC-/Zielvolume-/Alarmtests
+bleiben offen. Die UI benötigt noch geprüftes Authlib im eigenen Lockfile.
+[C22-Gates](deployment/c22_validation.md) gehören zu C26, kein neuer Deploypfad.
+C23.0 verändert keine Dienste, Modelle, Datenbanken oder vorhandenen Artefakte.
