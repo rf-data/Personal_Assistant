@@ -345,6 +345,7 @@ class ProcessingRun(Contract):
     state: Literal["preparing", "prepared", "committed", "blocked", "rejected"]
     manifest: tuple[ArtifactReference, ...] = ()
     parsed_version_id: Name | None = None
+    recovery: ArtifactReference | None = None
     error_code: str | None = None
 
 

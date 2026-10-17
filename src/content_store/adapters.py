@@ -566,6 +566,10 @@ def _verify_frozen(frozen, *, staging_parent=None):
             for relative, data in frozen.files:
                 path = root / relative
                 path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+                for parent in path.parents:
+                    if parent == root:
+                        break
+                    parent.chmod(0o700)
                 with path.open("xb") as output:
                     output.write(data)
                 path.chmod(0o400)
@@ -603,7 +607,16 @@ def _verify_frozen(frozen, *, staging_parent=None):
 def _candidate(candidate, *, staging_parent=None):
     if type(candidate) is not VerifiedPublicationCandidate or candidate not in _issued:
         raise UnverifiedBinding("adapter-issued candidate required")
-    return _verify_frozen(_issued[candidate], staging_parent=staging_parent)
+    frozen = _issued[candidate]
+    if staging_parent is None:
+        return _verify_frozen(frozen)
+    from src.content_store.artifacts import _Artifacts
+    from src.content_store.limits import staging_budget
+
+    with staging_budget(
+        _Artifacts(staging_parent.parent), sum(len(data) for _, data in frozen.files)
+    ):
+        return _verify_frozen(frozen, staging_parent=staging_parent)
 
 
 def _issue(bundle, expected, kind):
@@ -640,24 +653,25 @@ def import_verified_bundle(store, candidate, *, actor, request_key):
     actor = checked_actor(actor)
     if store.read_only:
         raise Forbidden("read-only content handle")
-    verified = _candidate(candidate, staging_parent=store.root / "staging")
-    source = store.register_source(verified.registration, actor=actor)
-    ref = verified.manifest.artifacts[0]
-    store.store_raw_artifact(
-        source.source_id,
-        io.BytesIO(verified.raw),
-        expected_sha256=ref.sha256,
-        expected_size=ref.size_bytes,
-        mime_type=ref.mime_type,
-        actor=actor,
-    )
-    version = store.register_source_version(
-        source.source_id,
-        verified.manifest,
-        variant_key=verified.variant_key,
-        binding=candidate,
-        actor=actor,
-    )
-    return store.publish_parsed_document(
-        version.source_version_id, candidate, actor=actor, request_key=request_key
-    )
+    with store._maintenance():
+        verified = _candidate(candidate, staging_parent=store.root / "staging")
+        source = store.register_source(verified.registration, actor=actor)
+        ref = verified.manifest.artifacts[0]
+        store.store_raw_artifact(
+            source.source_id,
+            io.BytesIO(verified.raw),
+            expected_sha256=ref.sha256,
+            expected_size=ref.size_bytes,
+            mime_type=ref.mime_type,
+            actor=actor,
+        )
+        version = store.register_source_version(
+            source.source_id,
+            verified.manifest,
+            variant_key=verified.variant_key,
+            binding=candidate,
+            actor=actor,
+        )
+        return store.publish_parsed_document(
+            version.source_version_id, candidate, actor=actor, request_key=request_key
+        )

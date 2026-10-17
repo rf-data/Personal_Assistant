@@ -1,6 +1,14 @@
-# C23-02A/B: ContentStore und geprüfte CS50-Adapter
+# C23-02A/B/C: ContentStore, Adapter und Offlinebetrieb
 
-Stand **17.10.2026**. C23-02B ergänzt den gemergten A-Kern auf Master
+Stand **17.10.2026**. C23-02C baut auf Master
+`9a1325485f1b2acc7df177b8a137f771190eca97` mit gemergtem A (#76) und B (#77)
+auf. Der [Betriebsvertrag](../operations/content_store_recovery.md) dokumentiert
+aktuelle Recovery-/WAL-/Quarantäne-/Backup-/Restore-Schnittstellen, Lockhierarchie,
+Ressourcenlimits, tatsächliche Abnahme und ausdrücklich gesperrte Fälle. A/B-Tests
+und frühere Betriebssperren unten behalten ihren historischen Kontext.
+C23 bleibt offen, keine produktive Freigabe.
+
+**Historischer B-Stand:** C23-02B ergänzt den gemergten A-Kern auf Master
 `6ef394a2f7a4debccce75f7b5e1ef3449f9457aa` (PR #76). Der folgende
 [B-Abschnitt](#c23-02b-geprüfte-bundleadapter) beschreibt den aktuellen
 Bibliotheksvertrag. Die A-Abschnitte/Testläufe darunter dokumentieren den
@@ -439,6 +447,56 @@ vorhandene synthetische PDFdatei; er behauptet keinen neuen PDF-Parserlauf oder
 inhaltliche Richtigkeit der Extraktion. Materialgate beurteilt technische
 Konsistenz und markiert semantische Warnungen; keine Modellqualitätskennzahl.
 
+## C23-02C: kontrollierter Offlinebetrieb
+
+Module: [`operations.py`](../../src/content_store/operations.py),
+[`operations_models.py`](../../src/content_store/operations_models.py),
+[`backup.py`](../../src/content_store/backup.py),
+[`limits.py`](../../src/content_store/limits.py). Anpassungen in bestehenden
+`store.py`/`publication.py`: derselbe abschließende Commit für normale Imports und
+Recovery, persistierter post-Gate-Intent in bestehendem Run-JSON, frischer
+Runzustand statt Überschreiben mit veraltetem Objekt. `artifacts.py` begrenzt
+Stagingkapazität; `adapters.py` hält Maintenance auch über Gate/Staging und nutzt
+dieselbe Kapazitätsgrenze. Keine DDL-/C16-/C22-/Parseränderung.
+
+APIs: `inspect_recovery(actor=...)`, `recover_run(run_id, actor=..., action="resume")`,
+`recover_run(..., action="reject")`, `ContentStore.recover_database(root, actor=...)`,
+`verify_integrity(actor=...)`, `backup(store, destination, actor=..., snapshot_id=None)`
+und `restore(snapshot, new_empty_root, actor=...)`. Source-/Course-/Ownerrechte und
+ACLrevision bleiben bindend; keine aufgewerteten Callerflags oder Dateipfadbelege.
+
+Neue vorbereitete Imports lassen sich nur mit vollständig hashgebundenem Intent,
+Manifest, Receipt, Graph und existierenden Bytes aus eigenem Staging/Blobstore
+fortsetzen. Recovery startet **keine Parser**: gespeicherte B-Gatebelege und
+Payload-/Block-/Segmentmodelle werden erneut geprüft. Alte unvollständige Runs
+ohne Intent, fehlende Belege, Hot-Journals, unklare WAL-Enden und die unterbrochene
+Hardlinkphase mit zwei Inodelinks bleiben gesperrt. `reject` markiert fachlich
+aufgegeben als vorhandenen Zustand `rejected`; keine Schemaerweiterung zu failed.
+Raw-/Bindingkeys bleiben terminal gebunden, kein erzwungener Retry.
+
+Maintenance ist exklusiv für Betriebseingriffe; C22 Operationsfence kommt später
+stets davor. Normale Writer/Reader verwenden shared Maintenance, Writer zusätzlich
+Runlock und kurzen DB-Exklusivlock. Alle flock-Aufnahmen sind nonblocking. Backup
+verwendet SQLite-Backup-API, prüft bekannte Dateireferenzen und publiziert das
+Manifest zuletzt. Restore verifiziert vorher, kopiert in einen neuen Root hinter
+Fence und richtet WAL ein; kein Aktivieren produktiver Pfade. Quarantäne von
+geteilten Blobs wirkt auf alle nachweislich betroffenen Versionen, andere bleiben
+lesbar. Unklare Metadatenfehler sperren den Gesamtstore. Flags werden nicht durch
+Dateiersatz aufgehoben; In-place-Freigabe bleibt gesperrt.
+
+Betriebsformat: content-v1-SQL unverändert, `ProcessingRun.recovery` optionaler
+JSONref auf strikt versionierten Intent; private `incidents/<uuid>.json` ohne
+Quelltexte/Secrets. Snapshot Schema 1/kind content-snapshot-v1 mit Snapshot-ID,
+DBidentität und -revisionen, exakter sortierter Datei-/SHA-/Größenliste und
+kanonischem Manifestdigest. Runtime-Runlocks werden beim Restore neu erzeugt.
+Genaue Positiv-/Negativmatrix, Testkommandos und bekannte Umgebungsfehler:
+[Betriebsabnahme](../operations/content_store_recovery.md#tatsächliche-abnahme).
+
+Der neue Contentroot bleibt außerhalb des bestehenden C22-Verbundbackups.
+C26-04 muss den gemeinsamen Snapshotbezug, Writerstopp, äußere Operationsfence,
+Validierung beider Teilmanifeste und bewusste Aktivierung ergänzen. C23-03/D06
+bleibt für reale Bestandsbindung (#72), C23-04 für paginierte/redigierte HTTPreads.
+
 ## Historische A-Tests und tatsächlich ausgeführte Kommandos
 
 Umgebung: Python **3.12.12**, Pydantic **2.13.5**, SQLite **3.50.4**, Ruff
@@ -536,7 +594,8 @@ Exclusions/Codeviews genau einmal übernehmen. Die SourceVersion-/Publish-Einsti
 der synthetische Vertrag bleibt unverändert isoliert.
 #72 bleibt bis separater geprüfter Bestandsfreigabe blockiert.
 
-**C23-02C:** vollständige Run-/WAL-Recovery, konkurrierende Prozesse und
+**Historischer C23-02C-Plan (aktueller Teilumfang siehe Betriebsvertrag):**
+Run-/WAL-Recovery, konkurrierende Prozesse und
 Abbruchzeitpunkte unter Last, Manifest-/DB-/Blob-Reconciliation, persistierte
 Quarantäne-/Retentions-/Löschsteuerung, Backup/Restore und Integrationsabnahme.
 Livebackup, automatische WAL-Reparatur, Slotübernahme nach Zeitablauf und
