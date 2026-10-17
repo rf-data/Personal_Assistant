@@ -19,6 +19,7 @@ keine umfangreiche Verschiebung in eine neue Ordnerhierarchie.
 | Systemabnahme | [C21-Plan](acceptance/c21_test_plan.md), [Ergebnisse](acceptance/c21_results.md), [Review](acceptance/c21_review.md) | tatsächliche HTTP-/Prozess-/AppTest-Nachweise und offene fachliche/Browsertests |
 | Admin-/Chat-UI | [separates UI-Repository](https://github.com/rf-data/personal-assistant-ui/blob/main/README.md), [C17](https://github.com/rf-data/personal-assistant-ui/blob/main/docs/c17_integration.md) | kanonischer UI-Einstieg, Clientvertrag und UI-Deployment |
 | Workerprofile | [CS50](../workers/cs50/README.md), [Index](../workers/cs50_index/README.md) | deklarierte Profile, Cache-/SDKgrenzen und frühere Installationsnachweise |
+| Qdrant-Pilot | [C21-Q Architektur](qdrant/c21q_architecture.md), [Validierung](qdrant/c21q_validation.md), [Betrieb/Freigaben](qdrant/c21q_operations.md) | lokale Vorbereitung; fehlende Engine-/Modellnachweise und gesperrte Remotephase |
 | Repositoryaudit | [Inventar](repository_inventory.md), [Dokumentenaudit](documentation_audit.md), [Cleanupplan](cleanup_plan.md), [Validierung](audit/validation.md) | Ist-Abgleich und konkrete sichere/offene Maßnahmen |
 
 ## Beibehaltene Struktur

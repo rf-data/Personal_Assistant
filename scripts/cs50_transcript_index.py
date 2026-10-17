@@ -36,8 +36,6 @@ def runtime_environment(root):
 
 
 def client_for(args, *, writing=False):
-    from qdrant_client import QdrantClient
-
     endpoint = args.qdrant_url or (
         os.environ.get("QDRANT_URL") if args.qdrant_local is None else None
     )
@@ -49,6 +47,7 @@ def client_for(args, *, writing=False):
             or not url.hostname
             or url.username
             or url.password
+            or url.path not in ("", "/")
             or url.query
             or url.fragment
         ):
@@ -58,8 +57,20 @@ def client_for(args, *, writing=False):
         key = os.environ.get("QDRANT_API_KEY")
         if not key:
             raise ValueError("Authenticated remote access requires QDRANT_API_KEY")
+        from qdrant_client import QdrantClient
+
         return QdrantClient(
-            url=endpoint, api_key=key, timeout=10, cloud_inference=False
+            url=endpoint,
+            api_key=key,
+            timeout=10,
+            cloud_inference=False,
+            prefer_grpc=False,
+            # The SDK's separate background version probe bypasses the REST
+            # client's trust_env policy. Server version is an explicit runbook
+            # check; this does not disable TLS certificate verification.
+            check_compatibility=False,
+            trust_env=False,
+            follow_redirects=False,
         )
     if args.qdrant_local is None:
         raise ValueError(
@@ -70,6 +81,8 @@ def client_for(args, *, writing=False):
         raise ValueError("Symlink Qdrant path forbidden")
     if not writing and not path.is_dir():
         raise FileNotFoundError("Read-only index location absent")
+    from qdrant_client import QdrantClient
+
     return QdrantClient(path=str(path))
 
 
@@ -83,7 +96,20 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "command",
-        choices=["download", "plan", "embed", "upload", "status", "search", "demo"],
+        choices=[
+            "inventory",
+            "validate",
+            "download",
+            "plan",
+            "embed",
+            "upload",
+            "resume",
+            "status",
+            "verify",
+            "search",
+            "retrieve",
+            "demo",
+        ],
     )
     parser.add_argument(
         "--adapter-plan",
@@ -97,6 +123,9 @@ def main(argv=None):
     parser.add_argument("--index-plan", type=Path)
     parser.add_argument("--vectors", type=Path)
     parser.add_argument("--embedding-config", type=Path)
+    parser.add_argument("--model-cache", type=Path)
+    parser.add_argument("--model-revision")
+    parser.add_argument("--candidate-source", type=Path, action="append", default=[])
     parser.add_argument("--fake-embeddings", action="store_true")
     parser.add_argument(
         "--source-origin", choices=["official", "synthetic"], default="official"
@@ -121,6 +150,12 @@ def main(argv=None):
     parser.add_argument("--language", default="en")
     parser.add_argument("--score-threshold", type=float)
     args = parser.parse_args(argv)
+    if args.candidate_source and args.command != "inventory":
+        parser.error("Candidate files belong only to read-only inventory")
+    # Operator vocabulary, identical implementation and authorization gates.
+    args.command = {"resume": "upload", "verify": "status", "retrieve": "search"}.get(
+        args.command, args.command
+    )
     active = [
         name
         for name in (
@@ -189,6 +224,33 @@ def run_command(args):
     )
 
     adapter = CS50AdapterPlan.model_validate_json(args.adapter_plan.read_bytes())
+    if args.command == "inventory":
+        from src.tools_rag.cs50_pilot import (
+            candidate_inventory,
+            embedding_environment,
+            pilot_review,
+            source_inventory,
+        )
+
+        inventory = source_inventory(
+            adapter,
+            workspace=args.workspace,
+            course=args.course,
+            section=args.section,
+            all_six=args.all_six,
+        )
+        result = pilot_review(
+            inventory,
+            embedding_environment(cache=args.model_cache, revision=args.model_revision),
+            candidates=candidate_inventory(
+                args.candidate_source, workspace=args.workspace
+            ),
+        )
+        if args.output is not None:
+            output = checked_artifact_path(args.output, adapter, args.workspace)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            atomic_json(output, result)
+        return result
     if args.command == "demo":
         from scripts.cs50_transcript_index_demo import demonstrate
 
@@ -266,6 +328,23 @@ def run_command(args):
         raise ValueError("Explicit index plan required")
     plan = IngestionPlan.model_validate_json(args.index_plan.read_bytes())
     revalidate_plan(plan, adapter, workspace=args.workspace)
+    if args.command == "validate":
+        from src.tools_rag.cs50_ingestion import validate_vectors
+
+        vectors = None
+        if args.vectors is not None:
+            vectors = validate_vectors(
+                VectorArtifact.model_validate_json(args.vectors.read_bytes()), plan
+            )
+        return {
+            "schema_version": 1,
+            "status": "validated",
+            "plan_id": plan.plan_id,
+            "source_count": len(plan.sources),
+            "expected_points": len(plan.units),
+            "vector_artifact_id": vectors.artifact_id if vectors else None,
+            "remote_connected": False,
+        }
     if args.command in ("embed", "upload") and (
         args.execute_embedding or args.execute_upload
     ):
