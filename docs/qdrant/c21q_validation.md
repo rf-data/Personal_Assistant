@@ -112,3 +112,77 @@ muss vor einem dauerhaften echten Pilot kontrolliert gelöst werden. Erst danach
 einen realen Plan und Vektoren erzeugen; Phase B benötigt zusätzlich die konkrete
 [Betreiberfreigabecheckliste](c21q_operations.md). Keine Entwicklungsfreigabe,
 CLI-Flagkombination oder bestandener Unit-Test ersetzt diese Freigabe.
+
+## C21-Q.1 – Untersuchung des Source-Pfadbindings
+
+Nachprüfung vom **17.10.2026**, ausschließlich lesend an der ausgewählten realen
+Python-0-Quelle. Adapterplan, Receipt-Binding, `TranscriptDocument.source` und
+`provenance.source_file` nennen übereinstimmend `data/lectures/Harvard/...`.
+Die drei Originaldateien liegen unter `data/Harvard/...`; kein beteiligter Pfad
+ist ein Symlink. Raw (189973 Bytes), Transcript (555980 Bytes) und Receipt
+(2706 Bytes) stimmen weiterhin mit sämtlichen drei SHA256-Werten des bestehenden
+[Quellfreigabeberichts](real-source-approval-review.v1.json) überein. Die Download-
+und Parse-Records sind `done`; ihr Output-/Inputhash-Verbund ist unverändert.
+
+**Ursachenabgrenzung:** Es liegt eine Abweichung der bestehenden physischen Ablage
+vom gespeicherten kanonischen Layout vor. Der Adapter verwendet `data/lectures`
+bereits im ursprünglichen Adaptercommit `be7ab29`. Der ursprüngliche kontrollierte
+Executor `d22b023` und der aktuelle Executor lösen relative Bindingpfade gegen
+den expliziten Workspace auf. Sie hängen weder einen zweiten `lectures`-Teil an
+noch leiten sie den Zielpfad von `DATA_DIR` ab. Ein neuer synthetischer Import
+reproduziert das gespeicherte Layout auch bei abweichendem `DATA_DIR` korrekt.
+Damit ist kein Fehler dieser aktuellen Pfadkonstruktion oder ihrer laufenden
+Environment-Konfiguration nachgewiesen. Ein historischer Verschiebe-/Kopiervorgang
+oder eine externe Bereitstellung mit ausgelassener Verzeichnisebene ist plausibel;
+Zeitpunkt, Verursacher und konkreter Vorgang sind aus den unversionierten
+Originalartefakten nicht belegbar und werden nicht als Tatsache behauptet.
+
+**Entscheidung:** Kein Runtimefix. Ein Fallback auf `data/Harvard`, ein Symlink
+oder ein Umschreiben von Receipt/Provenienz würde die bestehende Bindungsgrenze
+verändern. Ein neuer Plan mit `artifact_root=data` erhält zwar die Source-ID,
+widerspricht aber dem unveränderten Receipt. Eine Anpassung des Transcripts
+würde zusätzlich dessen SHA256 ändern. Deshalb bleibt der Originalworkspace
+`unverified`; keine Hashprüfung wird gelockert. C21-/C22-Dateien, Originale und
+Receipts wurden nicht geändert, kein Embedding/SDK-/Qdrant-Aufruf ausgeführt.
+
+**Konkreter Migrationsvorschlag, nicht ausgeführt:**
+
+1. Operator wählt ausdrücklich die drei zusammengehörenden Originaldateien der
+   bereits dokumentierten Source-ID aus und protokolliert alle drei bestehenden
+   Hashes. Die bytegleiche Dublette wird nicht automatisch übernommen.
+2. Einen neuen privaten, leeren Workspace außerhalb der Originalablage freigeben.
+   Die unveränderten Dateien exklusiv unter ihren vorhandenen kanonischen
+   `data/lectures/Harvard/...`-Referenzen kopieren, ohne Overwrite oder Symlinks.
+   Originale verbleiben unangetastet; weder neue Receipts noch neue IDs erzeugen.
+3. Alle kopierten SHA256 erneut vergleichen. Anschließend den bestehenden
+   `bind_cs50_knowledge_input` und das Pilotinventar mit demselben Adapterplan und
+   dem expliziten neuen Workspace ausführen. Receiptgleichheit, Inputhash,
+   Transcript-Provenienz und SRT-/Segmentgleichheit müssen weiterhin bestehen.
+   Erwarteter bestehender Quellenbefund: 2228 Cues, 0–6338 s, 157 zeitbasierte
+   Chunks; daraus folgt keine E5-Vektorzahl oder Uploadfreigabe.
+4. Erst nach manueller Prüfung den aufrufenden Pilot auf den neuen Workspace
+   umstellen. Bei jeder Abweichung abbrechen und Originalkonfiguration beibehalten.
+   Ein In-place-Verschieben bestehender Daten ist nicht Teil dieses Vorschlags.
+
+Die neuen Regressionen reproduzieren die verschobene Ablage ausschließlich mit
+synthetischen Fixtures. Sie prüfen korrektes Importlayout trotz `DATA_DIR`,
+Ablehnung des abweichenden Pfads durch Binder und Pilot, Ablehnung eines bloß
+umgeplanten Roots sowie Erhalt der IDs/Provenienz/Hashes bei expliziter Kopie in
+einen neuen Testworkspace und Ablehnung einer beschädigten Kopie.
+Gezielte Testergebnisse stehen im folgenden Abschnitt und im JSON-Bericht;
+keine vollständige Repository-Regression.
+
+### C21-Q.1 – gezielte Testergebnisse
+
+**84 bestanden, 2 übersprungen in 113,20 s** (86 tatsächliche Testfälle):
+`test_cs50_transcript_path_binding.py`, `test_cs50_knowledge_input.py`,
+`test_cs50_executor.py`, `test_cs50_pilot.py`. Alle fünf neuen Pfadregressionen
+bestanden. Die zwei vorhandenen optionalen Original-Fixturetests finden ihren
+jeweiligen erwarteten Workspace nicht; sie wurden nicht umgebogen. Die oben
+beschriebene lesende Hash-/Metadatenprüfung der tatsächlich vorhandenen Quelle
+ist separat und ersetzt diese Skips nicht. Ruff und Formatcheck der einzigen
+geänderten Pythondatei bestanden. Keine vollständige Regression und keine
+SDK-abhängigen Qdrant-Ingestiontests ausgeführt. Historische TXT-Probleme liegen
+außerhalb dieses SRT-Pfadfixes. Verbleibend: nicht belegter historischer Auslöser,
+Originalworkspace weiterhin unverified und gesondert freizugebende Pfadmigration;
+die bisherigen E5-/Qdrant-Blocker bleiben unverändert.
