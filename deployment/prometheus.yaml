@@ -1,0 +1,27 @@
+# C15 names/rules/dashboards; C16 metrics are course-scoped and authenticated.
+global:
+  scrape_interval: 15s
+  scrape_timeout: 5s
+  evaluation_interval: 15s
+rule_files:
+  - /etc/prometheus/rules/*.yaml
+scrape_configs:
+  - job_name: personal_assistant_workers
+    scheme: https
+    metrics_path: /v1/metrics
+    authorization:
+      type: Bearer
+      credentials_file: /run/secrets/metrics.token
+    tls_config:
+      ca_file: /run/tls/ca.crt
+      server_name: C22_API_DNS_REPLACE_BEFORE_USE
+    static_configs:
+      - targets: [C22_API_DNS_REPLACE_BEFORE_USE:8443]
+    sample_limit: 5000
+    target_limit: 1
+    body_size_limit: 2MB
+    honor_labels: false
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: personal_assistant_.+
+        action: keep

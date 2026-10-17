@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "root": "/var/lib/personal-assistant/private",
+  "catalog": {},
+  "identities": [],
+  "execution_enabled": false,
+  "workflows_enabled": false,
+  "pdf_enabled": false,
+  "max_parallel": 1,
+  "max_queued": 8,
+  "max_jobs": 100,
+  "worker_ttl": 10
+}

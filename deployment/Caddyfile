@@ -1,0 +1,15 @@
+{
+    admin off
+    auto_https off
+    persist_config off
+    grace_period 10s
+}
+https://{$API_DNS}:8443 {
+    tls /run/tls/api.crt /run/tls/api.key
+    reverse_proxy 127.0.0.1:8016 {
+        transport http {
+            dial_timeout 2s
+            response_header_timeout 10s
+        }
+    }
+}

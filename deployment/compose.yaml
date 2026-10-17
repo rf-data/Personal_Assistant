@@ -1,0 +1,129 @@
+name: personal-assistant-private
+x-limits: &limits
+  profiles: [private-production]
+  pull_policy: never
+  user: '10001:10001'
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  restart: unless-stopped
+  stop_grace_period: 30s
+  pids_limit: 128
+  cpus: 1.0
+  mem_limit: 512m
+  tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777]
+  logging:
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+x-state: &state
+  - type: bind
+    source: ${C22_PRIVATE:?Set existing private 0700 directory}
+    target: /var/lib/personal-assistant/private
+    bind: {create_host_path: false}
+  - type: bind
+    source: ${C22_CATALOG:?Set existing approved catalog directory}
+    target: /var/lib/personal-assistant/catalog
+    read_only: true
+    bind: {create_host_path: false}
+  - type: bind
+    source: ${C22_CONFIG:?Set existing private controller JSON file}
+    target: /run/config/controller.json
+    read_only: true
+    bind: {create_host_path: false}
+services:
+  api-gateway:
+    <<: *limits
+    image: personal-assistant-gateway@sha256:${GATEWAY_DIGEST:?Set reviewed gateway build digest}
+    environment: {API_DNS: '${C22_API_DNS:?Set certificate DNS name}'}
+    networks:
+      private:
+        aliases: ['${C22_API_DNS:?Set certificate DNS name}']
+    volumes:
+      - type: bind
+        source: ./Caddyfile
+        target: /etc/caddy/Caddyfile
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C22_TLS:?Set existing private TLS directory}
+        target: /run/tls
+        read_only: true
+        bind: {create_host_path: false}
+    healthcheck:
+      test: [CMD, python, /opt/gateway_health.py]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+  api:
+    <<: *limits
+    image: personal-assistant-runtime@sha256:${BACKEND_DIGEST:?Set approved built image digest}
+    network_mode: service:api-gateway
+    depends_on: {api-gateway: {condition: service_started}}
+    volumes: *state
+    command: [api, --config, /run/config/controller.json]
+    healthcheck:
+      test: [CMD, python, -m, scripts.deployment, health, --role, api, --config, /run/config/controller.json]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+  executor:
+    <<: *limits
+    image: personal-assistant-runtime@sha256:${BACKEND_DIGEST:?Set approved built image digest}
+    network_mode: none
+    volumes: *state
+    command: [worker, --config, /run/config/controller.json]
+    pids_limit: 512
+    cpus: 2.0
+    mem_limit: 1536m
+    tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=256m,mode=1777]
+    healthcheck:
+      test: [CMD, python, -m, scripts.deployment, health, --role, worker, --config, /run/config/controller.json]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+  ui:
+    <<: *limits
+    image: personal-assistant-ui@sha256:${UI_DIGEST:?Set reviewed C22 UI image digest}
+    mem_limit: 768m
+    networks: [private, ingress]
+    expose: ['8501']
+    depends_on: {api: {condition: service_healthy}}
+    env_file: ['${C22_UI_ENV:?Set private UI environment file}']
+    environment:
+      APP_ENV: server
+      JOB_BACKEND: http
+      JOB_API_MODE: production
+      ADMIN_AUTH_MODE: oidc
+      JOB_API_URL: 'https://${C22_API_DNS:?Set certificate DNS name}:8443'
+      SSL_CERT_FILE: /run/ca/ca.crt
+      C22_PRODUCTION: '1'
+    volumes:
+      - type: bind
+        source: ${C22_UI_SECRETS:?Set private UI secrets directory}
+        target: /run/secrets/c16
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C22_OIDC:?Set private Streamlit secrets.toml}
+        target: /home/adminui/.streamlit/secrets.toml
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C22_CA:?Set public issuing CA certificate file}
+        target: /run/ca/ca.crt
+        read_only: true
+        bind: {create_host_path: false}
+    healthcheck:
+      test: [CMD, python, -m, admin_ui_package.container_runtime, health]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+networks:
+  private: {internal: true}
+  ingress:
+    external: true
+    name: ${C22_INGRESS_NETWORK:?Set pre-existing private reverse-proxy network}

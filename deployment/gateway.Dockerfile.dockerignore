@@ -1,0 +1,4 @@
+**
+!deployment/
+!deployment/gateway_health.py
+!deployment/gateway.Dockerfile

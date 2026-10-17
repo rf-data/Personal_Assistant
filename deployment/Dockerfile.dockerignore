@@ -1,0 +1,16 @@
+**
+!deployment/
+!deployment/runtime/
+!deployment/runtime/pyproject.toml
+!deployment/runtime/uv.lock
+!deployment/Dockerfile
+!src/
+!src/**
+!scripts/
+!scripts/deployment.py
+!scripts/cs50_material_quality.py
+**/__pycache__
+**/*.pyc
+**/.env*
+**/*.token
+**/_dev*
