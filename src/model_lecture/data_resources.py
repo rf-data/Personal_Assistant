@@ -1,12 +1,10 @@
 ## data_resources.py
 # import
 from enum import Enum
-from datetime import datetime
 from pathlib import Path
-from typing import Literal, Annotated
-from pydantic import BaseModel, Field  # , property
+from typing import Annotated, Literal
 
-from src.core.config import folder_env_vars
+from pydantic import BaseModel, Field  # , property
 
 
 class LectureResourceType(Enum):
@@ -244,6 +242,8 @@ class LectureCourse(BaseModel):
 
     @property
     def root(self) -> Path:
+        from src.core.config import folder_env_vars
+
         return (
             folder_env_vars.data_lectures
             / self.provider  # loviscach"

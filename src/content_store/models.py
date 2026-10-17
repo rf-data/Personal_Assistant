@@ -291,7 +291,7 @@ class ParsedDocumentVersion(Contract):
     payload_schema: Name
     original_document_id: Name | None = None
     state: Literal["published", "quarantined", "tombstoned"] = "published"
-    quality_status: Literal["synthetic_test_only"]
+    quality_status: Literal["synthetic_test_only", "passed", "passed_with_warnings"]
     publication_seq: int = Field(ge=1)
 
     @model_validator(mode="after")
@@ -318,7 +318,7 @@ class ParsedDocumentView(Contract):
     parser_config_id: Name
     payload_sha256: Sha
     projection_sha256: Sha
-    quality_status: Literal["synthetic_test_only"]
+    quality_status: Literal["synthetic_test_only", "passed", "passed_with_warnings"]
 
 
 class PublishedVersion(Contract):
