@@ -138,3 +138,12 @@ definiert Identitäten, Versionen, ACLs, Locator und Leseverträge;
 der [C23-Umsetzungsplan](planning/c23_implementation_plan.md) ordnet Adapter,
 Recovery und Tests C23-02 bis C23-06 zu. Dies ist ein Vorschlag zur Freigabe
 vor Implementierung, keine vorhandene Contentdatenbank oder Bestandsmigration.
+
+## C23-02A: isolierter ContentStore-Kern
+
+Die [Implementierungsdokumentation](architecture/content_store_implementation.md)
+beschreibt die separate content-v1-SQLite-Datenbank, unveränderliche Blobablage,
+Autorisierung und synthetische Persistenztests. Echte Material-/SRT-Verifikation
+und Veröffentlichung bleiben bis C23-02B gesperrt; vollständige Recovery und
+Backup-/Integrationsabnahme folgen in C23-02C. C16s Queue und die vorhandenen
+Material-/Transcriptmodelle werden nicht verändert. C23 ist damit nicht abgeschlossen.
