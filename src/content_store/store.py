@@ -116,6 +116,8 @@ class ContentStore:
 
     def _database_file(self):
         with self._artifacts.directory() as directory:
+            if ".content-recovery-required" in os.listdir(directory):
+                raise Unavailable("explicit database recovery required")
             fd = os.open("content.sqlite3", FILE_FLAGS, dir_fd=directory)
             try:
                 info = _private(fd)
@@ -271,6 +273,10 @@ class ContentStore:
                 "SELECT 1 FROM sources WHERE id=?", (source.resolved_id,)
             ).fetchone():
                 raise Conflict("source ID collision")
+            from src.content_store.limits import MAX_FILES
+
+            if db.execute("SELECT count(*) FROM sources").fetchone()[0] >= MAX_FILES:
+                raise Unavailable("content source capacity exceeded")
             result = Source(
                 source_id=source.resolved_id,
                 registration=source,
@@ -355,6 +361,7 @@ class ContentStore:
     def set_source_grants(self, source_id, grants, *, expected_acl_revision, actor):
         if (
             not isinstance(grants, tuple)
+            or len(grants) > 1000
             or any(not isinstance(g, SourceGrant) for g in grants)
             or len({g.subject for g in grants}) != len(grants)
         ):
@@ -398,6 +405,23 @@ class ContentStore:
                 (slot_id,),
             ).fetchone():
                 raise Busy("import slot reserved; recovery required")
+            from src.content_store.limits import MAX_ACTIVE_RUNS
+
+            if (
+                db.execute(
+                    "SELECT count(*) FROM processing_runs WHERE state IN ('preparing','prepared','blocked')"
+                ).fetchone()[0]
+                >= MAX_ACTIVE_RUNS
+            ):
+                raise Busy("active run limit requires explicit recovery")
+            from src.content_store.limits import MAX_METADATA_ROWS
+
+            rows = sum(
+                db.execute(f'SELECT count(*) FROM "{table}"').fetchone()[0]
+                for table in schema.TABLES
+            )
+            if rows > MAX_METADATA_ROWS:
+                raise Unavailable("content metadata capacity exceeded")
             run = ProcessingRun(
                 run_id=uuid.uuid4().hex,
                 source_id=source_id,
@@ -428,7 +452,11 @@ class ContentStore:
 
     @staticmethod
     def _update_run(db, run, **updates):
-        run = run.model_copy(update=updates)
+        row = db.execute(
+            "SELECT data FROM processing_runs WHERE id=?", (run.run_id,)
+        ).fetchone()
+        current = ProcessingRun.model_validate_json(row[0]) if row else run
+        run = current.model_copy(update=updates)
         db.execute(
             "UPDATE processing_runs SET state=?,data=? WHERE id=?",
             (run.state, _encoded(run), run.run_id),
@@ -480,6 +508,13 @@ class ContentStore:
             if old[0] != reference.size_bytes or old[1] != "available":
                 raise IntegrityError("blob metadata conflict")
         else:
+            from src.content_store.limits import MAX_FILES, MAX_STORE_BYTES
+
+            count, size = db.execute(
+                "SELECT count(*),coalesce(sum(size_bytes),0) FROM artifacts"
+            ).fetchone()
+            if count >= MAX_FILES or size + reference.size_bytes > MAX_STORE_BYTES:
+                raise Unavailable("content artifact catalog capacity exceeded")
             db.execute(
                 "INSERT INTO artifacts VALUES (?,?,'available')",
                 (reference.sha256, reference.size_bytes),
@@ -525,37 +560,48 @@ class ContentStore:
                 return ref
             with self._running(run):
                 self._artifacts.stage(run.run_id, stream, ref)
+                from src.content_store.operations import record_intent
+                from src.content_store.operations_models import RawIntent
+
+                record_intent(
+                    self, run, RawIntent(run_id=run.run_id, reference=ref), actor
+                )
                 self._prepared(run, (ref,), actor)
                 self._artifacts.install(run.run_id, ref)
                 with self._connection(write=True) as db:
-                    current = self._authorize(db, source_id, actor, write=True)
-                    if current.acl_revision != run.acl_revision:
-                        raise Forbidden("source permissions changed during import")
-                    self._record_blob(db, ref)
-                    db.execute(
-                        "INSERT INTO raw_reservations VALUES (?,?,?,?)",
-                        (source_id, ref.sha256, run.run_id, _encoded(ref)),
-                    )
-                    self._update_run(db, run, state="committed", manifest=(ref,))
+                    self._commit_raw(db, run, ref, actor)
+
                 return ref
+
+    def _commit_raw(self, db, run, ref, actor):
+        current = self._authorize(db, run.source_id, actor, write=True)
+        if current.acl_revision != run.acl_revision:
+            raise Forbidden("source permissions changed during import")
+        self._record_blob(db, ref)
+        db.execute(
+            "INSERT INTO raw_reservations VALUES (?,?,?,?)",
+            (run.source_id, ref.sha256, run.run_id, _encoded(ref)),
+        )
+        self._update_run(db, run, state="committed", manifest=(ref,))
 
     def register_source_version(
         self, source_id, manifest, *, variant_key, binding, actor
     ):
         if self.read_only:
             raise Forbidden("read-only content handle")
-        with self._maintenance(), self._connection() as db:
-            self._authorize(db, source_id, actor, write=True)
         from src.content_store.publication import register
 
-        return register(
-            self,
-            source_id,
-            manifest,
-            variant_key=variant_key,
-            binding=binding,
-            actor=actor,
-        )
+        with self._maintenance():
+            with self._connection() as db:
+                self._authorize(db, source_id, actor, write=True)
+            return register(
+                self,
+                source_id,
+                manifest,
+                variant_key=variant_key,
+                binding=binding,
+                actor=actor,
+            )
 
     def publish_parsed_document(
         self, source_version_id, candidate, *, actor, request_key, job_ref=None
@@ -570,9 +616,10 @@ class ContentStore:
             raise Unavailable("verified bundle publication candidate required")
         if job_ref is not None:
             raise InvalidInput("job linkage is not supported by content adapters")
-        return publish(
-            self, source_version_id, candidate, actor=actor, request_key=request_key
-        )
+        with self._maintenance():
+            return publish(
+                self, source_version_id, candidate, actor=actor, request_key=request_key
+            )
 
     def read_version_artifact(
         self, parsed_version_id, role, *, actor, request_key=None
@@ -582,6 +629,27 @@ class ContentStore:
         return read_artifact(
             self, parsed_version_id, role, actor=actor, request_key=request_key
         )
+
+    def inspect_recovery(self, *, actor):
+        from src.content_store.operations import inspect_recovery
+
+        return inspect_recovery(self, actor=actor)
+
+    def recover_run(self, run_id, *, actor, action="resume"):
+        from src.content_store.operations import recover_run
+
+        return recover_run(self, run_id, actor=actor, action=action)
+
+    @classmethod
+    def recover_database(cls, root, *, actor):
+        from src.content_store.operations import recover_database
+
+        return recover_database(root, actor=actor)
+
+    def verify_integrity(self, *, actor):
+        from src.content_store.operations import verify_integrity
+
+        return verify_integrity(self, actor=actor)
 
     def _read_blob(self, reference, db=None):
         if db is None:

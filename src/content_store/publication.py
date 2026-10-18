@@ -23,6 +23,11 @@ from src.content_store.models import (
     sha256,
     snapshot,
 )
+from src.content_store.operations_models import (
+    BindingIntent,
+    NamedArtifact,
+    PublicationIntent,
+)
 from src.content_store.store import _encoded
 from src.model_discovery.cs50 import deterministic_id
 
@@ -128,42 +133,70 @@ def register(store, source_id, manifest, *, variant_key, binding, actor):
         )
         with store._running(run):
             store._artifacts.stage(run.run_id, io.BytesIO(verified.binding), ref)
+            from src.content_store.operations import record_intent
+
+            intent = BindingIntent(
+                run_id=run.run_id,
+                registration=verified.registration,
+                version=expected,
+                reference=ref,
+            )
+            record_intent(store, run, intent, actor)
             store._prepared(run, (ref,), actor)
             store._artifacts.install(run.run_id, ref)
             with store._connection(write=True) as db:
-                _scope(store, db, verified, actor, run.acl_revision)
-                _bound_raw(store, db, verified)
-                store._record_blob(db, ref)
-                version = _source_version(verified, store._sequence(db))
-                db.execute(
-                    "INSERT INTO source_versions VALUES (?,?,?,?,'verified',?,?)",
-                    (
-                        version.source_version_id,
-                        source_id,
-                        variant_key,
-                        manifest.digest,
-                        version.publication_seq,
-                        _encoded(version),
-                    ),
-                )
-                for raw in manifest.artifacts:
-                    db.execute(
-                        "INSERT INTO source_raw_artifacts VALUES (?,?,?,?,?,?)",
-                        (
-                            version.source_version_id,
-                            source_id,
-                            raw.role,
-                            raw.ordinal,
-                            raw.sha256,
-                            _encoded(raw),
-                        ),
-                    )
-                db.execute(
-                    "INSERT INTO artifact_references VALUES (?,?,0,?,NULL,?)",
-                    (run.run_id, "source_binding", ref.sha256, _encoded(ref)),
-                )
-                store._update_run(db, run, state="committed", manifest=(ref,))
-                return version
+                return finish_binding(store, db, run, intent, actor)
+
+
+def finish_binding(store, db, run, intent, actor):
+    _scope(store, db, intent, actor, run.acl_revision)
+    version = intent.version
+    for ref in version.manifest.artifacts:
+        row = db.execute(
+            "SELECT data FROM raw_reservations WHERE source_id=? AND sha256=?",
+            (version.source_id, ref.sha256),
+        ).fetchone()
+        if row is None or ArtifactReference.model_validate_json(
+            row[0]
+        ) != ArtifactReference(**ref.model_dump(exclude={"role", "ordinal"})):
+            raise UnverifiedBinding("raw manifest lacks source-bound reservation")
+        store._read_blob(ref, db)
+    store._record_blob(db, intent.reference)
+    version = version.model_copy(update={"publication_seq": store._sequence(db)})
+    db.execute(
+        "INSERT INTO source_versions VALUES (?,?,?,?,'verified',?,?)",
+        (
+            version.source_version_id,
+            version.source_id,
+            version.variant_key,
+            version.manifest.digest,
+            version.publication_seq,
+            _encoded(version),
+        ),
+    )
+    for ref in version.manifest.artifacts:
+        db.execute(
+            "INSERT INTO source_raw_artifacts VALUES (?,?,?,?,?,?)",
+            (
+                version.source_version_id,
+                version.source_id,
+                ref.role,
+                ref.ordinal,
+                ref.sha256,
+                _encoded(ref),
+            ),
+        )
+    db.execute(
+        "INSERT INTO artifact_references VALUES (?,?,0,?,NULL,?)",
+        (
+            run.run_id,
+            "source_binding",
+            intent.reference.sha256,
+            _encoded(intent.reference),
+        ),
+    )
+    store._update_run(db, run, state="committed", manifest=(intent.reference,))
+    return version
 
 
 def publish(store, source_version_id, candidate, *, actor, request_key):
@@ -251,102 +284,157 @@ def publish(store, source_version_id, candidate, *, actor, request_key):
             refs = tuple(ref for ref, _ in unique.values())
             for ref, data in unique.values():
                 store._artifacts.stage(run.run_id, io.BytesIO(data), ref)
+            from src.content_store.operations import record_intent
+
+            version = ParsedDocumentVersion(
+                parsed_version_id=version_id,
+                parsed_document_id=stream.parsed_document_id,
+                source_version_id=source_version_id,
+                source_id=stream.source_id,
+                slot_id=slot,
+                parser_config_id=config.config_id,
+                payload=payload_ref,
+                projection=projection_ref,
+                payload_schema=config.payload_schema,
+                original_document_id=verified.original_document_id,
+                quality_status=verified.quality_status,
+                publication_seq=1,
+            )
+            intent = PublicationIntent(
+                run_id=run.run_id,
+                registration=verified.registration,
+                source_version=source_version,
+                stream=stream,
+                config=config,
+                version=version,
+                blocks=blocks,
+                artifacts=tuple(
+                    NamedArtifact(role=role, reference=ref) for role, ref, _ in named
+                ),
+            )
+            record_intent(store, run, intent, actor)
             store._prepared(run, refs, actor)
             for ref in refs:
                 store._artifacts.install(run.run_id, ref)
             with store._connection(write=True) as db:
-                _scope(store, db, verified, actor, run.acl_revision)
-                _known_source_version(store, db, verified)
-                for ref in refs:
-                    store._record_blob(db, ref)
-                if old:
-                    version = old_version
-                else:
-                    known_config = db.execute(
-                        "SELECT data FROM parser_configs WHERE id=?",
-                        (config.config_id,),
-                    ).fetchone()
-                    if known_config and known_config[0] != _encoded(config):
-                        raise Conflict("parser configuration identity collision")
-                    db.execute(
-                        "INSERT OR IGNORE INTO parser_configs VALUES (?,?)",
-                        (config.config_id, _encoded(config)),
-                    )
-                    db.execute(
-                        "INSERT OR IGNORE INTO parsed_documents VALUES (?,?,?)",
-                        (
-                            stream.parsed_document_id,
-                            stream.source_id,
-                            stream.representation_key,
-                        ),
-                    )
-                    version = ParsedDocumentVersion(
-                        parsed_version_id=version_id,
-                        parsed_document_id=stream.parsed_document_id,
-                        source_version_id=source_version_id,
-                        source_id=stream.source_id,
-                        slot_id=slot,
-                        parser_config_id=config.config_id,
-                        payload=payload_ref,
-                        projection=projection_ref,
-                        payload_schema=config.payload_schema,
-                        original_document_id=verified.original_document_id,
-                        quality_status=verified.quality_status,
-                        publication_seq=store._sequence(db),
-                    )
-                    db.execute(
-                        "INSERT INTO parsed_versions VALUES (?,?,?,?,?,?,?,?,'published',?,?)",
-                        (
-                            version_id,
-                            stream.source_id,
-                            stream.parsed_document_id,
-                            source_version_id,
-                            slot,
-                            config.config_id,
-                            payload_ref.sha256,
-                            projection_ref.sha256,
-                            version.publication_seq,
-                            _encoded(version),
-                        ),
-                    )
-                    for block in blocks:
-                        db.execute(
-                            "INSERT INTO content_blocks VALUES (?,?,?,?,?)",
-                            (
-                                version_id,
-                                block.block_id,
-                                block.order,
-                                block.text_sha256,
-                                _encoded(block),
-                            ),
-                        )
-                        for ordinal, loc in enumerate(block.locators):
-                            db.execute(
-                                "INSERT INTO content_locators VALUES (?,?,?,?,?,?,?,?)",
-                                (
-                                    version_id,
-                                    block.block_id,
-                                    ordinal,
-                                    loc.raw_artifact_sha256,
-                                    loc.time_status,
-                                    loc.start,
-                                    loc.end,
-                                    _encoded(loc),
-                                ),
-                            )
-                for role, ref, _ in named:
-                    db.execute(
-                        "INSERT INTO artifact_references VALUES (?,?,0,?,?,?)",
-                        (run.run_id, role, ref.sha256, version_id, _encoded(ref)),
-                    )
-                store._update_run(
-                    db,
-                    run,
-                    state="committed",
-                    manifest=refs,
-                    parsed_version_id=version_id,
+                return finish_publication(store, db, run, intent, actor)
+
+
+def finish_publication(store, db, run, intent, actor):
+    _scope(store, db, intent, actor, run.acl_revision)
+    v, stream, config = intent.version, intent.stream, intent.config
+    row = db.execute(
+        "SELECT data,state FROM source_versions WHERE id=?", (v.source_version_id,)
+    ).fetchone()
+    if (
+        row is None
+        or row[1] != "verified"
+        or SourceVersion.model_validate_json(row[0]) != intent.source_version
+    ):
+        raise UnverifiedBinding("prepared source version unavailable or changed")
+    for ref in intent.source_version.manifest.artifacts:
+        store._read_blob(ref, db)
+    for item in intent.artifacts:
+        store._record_blob(db, item.reference)
+    old = db.execute(
+        "SELECT data FROM parsed_versions WHERE slot_id=?", (v.slot_id,)
+    ).fetchone()
+    if old:
+        version = ParsedDocumentVersion.model_validate_json(old[0])
+        if version.parsed_version_id != v.parsed_version_id:
+            raise Conflict("same slot has different payload or projection bytes")
+        store._parsed(db, version.parsed_version_id, actor)
+    else:
+        from src.content_store import schema
+        from src.content_store.limits import MAX_METADATA_ROWS
+
+        used = sum(
+            db.execute(f'SELECT count(*) FROM "{table}"').fetchone()[0]
+            for table in schema.TABLES
+        )
+        additional = (
+            3
+            + len(intent.blocks)
+            + sum(len(b.locators) for b in intent.blocks)
+            + len(intent.artifacts)
+        )
+        if used + additional > MAX_METADATA_ROWS:
+            from src.content_store.errors import Unavailable
+
+            raise Unavailable("content publication metadata capacity exceeded")
+        known = db.execute(
+            "SELECT data FROM parser_configs WHERE id=?", (config.config_id,)
+        ).fetchone()
+        if known and known[0] != _encoded(config):
+            raise Conflict("parser configuration identity collision")
+        db.execute(
+            "INSERT OR IGNORE INTO parser_configs VALUES (?,?)",
+            (config.config_id, _encoded(config)),
+        )
+        db.execute(
+            "INSERT OR IGNORE INTO parsed_documents VALUES (?,?,?)",
+            (stream.parsed_document_id, stream.source_id, stream.representation_key),
+        )
+        version = v.model_copy(update={"publication_seq": store._sequence(db)})
+        db.execute(
+            "INSERT INTO parsed_versions VALUES (?,?,?,?,?,?,?,?,'published',?,?)",
+            (
+                v.parsed_version_id,
+                v.source_id,
+                v.parsed_document_id,
+                v.source_version_id,
+                v.slot_id,
+                v.parser_config_id,
+                v.payload.sha256,
+                v.projection.sha256,
+                version.publication_seq,
+                _encoded(version),
+            ),
+        )
+        for block in intent.blocks:
+            db.execute(
+                "INSERT INTO content_blocks VALUES (?,?,?,?,?)",
+                (
+                    v.parsed_version_id,
+                    block.block_id,
+                    block.order,
+                    block.text_sha256,
+                    _encoded(block),
+                ),
+            )
+            for ordinal, loc in enumerate(block.locators):
+                db.execute(
+                    "INSERT INTO content_locators VALUES (?,?,?,?,?,?,?,?)",
+                    (
+                        v.parsed_version_id,
+                        block.block_id,
+                        ordinal,
+                        loc.raw_artifact_sha256,
+                        loc.time_status,
+                        loc.start,
+                        loc.end,
+                        _encoded(loc),
+                    ),
                 )
-            return PublishedVersion(version=version, created=not bool(old))
+    for item in intent.artifacts:
+        store._record_blob(db, item.reference)
+        db.execute(
+            "INSERT INTO artifact_references VALUES (?,?,0,?,?,?)",
+            (
+                run.run_id,
+                item.role,
+                item.reference.sha256,
+                v.parsed_version_id,
+                _encoded(item.reference),
+            ),
+        )
+    refs = tuple(
+        {item.reference.sha256: item.reference for item in intent.artifacts}.values()
+    )
+    store._update_run(
+        db, run, state="committed", manifest=refs, parsed_version_id=v.parsed_version_id
+    )
+    return PublishedVersion(version=version, created=not bool(old))
 
 
 def read_artifact(store, version_id, role, *, actor, request_key=None):

@@ -141,47 +141,50 @@ class _Artifacts:
 
     @staticmethod
     def _run_id(run_id):
-        if not re.fullmatch(r"[a-f0-9]{32}", run_id):
+        if not isinstance(run_id, str) or not re.fullmatch(r"[a-f0-9]{32}", run_id):
             raise InvalidInput("run identity")
 
     def stage(self, run_id, stream, reference: ArtifactReference):
-        self._run_id(run_id)
-        with self.directory(f"staging/{run_id}", create=True) as directory:
-            fd = os.open(
-                reference.sha256,
-                os.O_CREAT | os.O_EXCL | os.O_WRONLY | os.O_NOFOLLOW,
-                0o600,
-                dir_fd=directory,
-            )
-            try:
-                import hashlib
+        from src.content_store.limits import staging_budget
 
-                digest = hashlib.sha256()
-                total = 0
-                with os.fdopen(fd, "wb", closefd=False) as output:
-                    while True:
-                        block = stream.read(
-                            min(65536, reference.size_bytes - total + 1)
-                        )
-                        if not isinstance(block, bytes):
-                            raise InvalidInput("binary stream required")
-                        if not block:
-                            break
-                        total += len(block)
-                        if total > reference.size_bytes or total > MAX_BYTES:
-                            raise IntegrityError("artifact size mismatch")
-                        output.write(block)
-                        digest.update(block)
-                    if (
-                        total != reference.size_bytes
-                        or digest.hexdigest() != reference.sha256
-                    ):
-                        raise IntegrityError("artifact hash or size mismatch")
-                    output.flush()
-                    _sync(fd)
-                _sync(directory)
-            finally:
-                os.close(fd)
+        with staging_budget(self, reference.size_bytes):
+            self._run_id(run_id)
+            with self.directory(f"staging/{run_id}", create=True) as directory:
+                fd = os.open(
+                    reference.sha256,
+                    os.O_CREAT | os.O_EXCL | os.O_WRONLY | os.O_NOFOLLOW,
+                    0o600,
+                    dir_fd=directory,
+                )
+                try:
+                    import hashlib
+
+                    digest = hashlib.sha256()
+                    total = 0
+                    with os.fdopen(fd, "wb", closefd=False) as output:
+                        while True:
+                            block = stream.read(
+                                min(65536, reference.size_bytes - total + 1)
+                            )
+                            if not isinstance(block, bytes):
+                                raise InvalidInput("binary stream required")
+                            if not block:
+                                break
+                            total += len(block)
+                            if total > reference.size_bytes or total > MAX_BYTES:
+                                raise IntegrityError("artifact size mismatch")
+                            output.write(block)
+                            digest.update(block)
+                        if (
+                            total != reference.size_bytes
+                            or digest.hexdigest() != reference.sha256
+                        ):
+                            raise IntegrityError("artifact hash or size mismatch")
+                        output.flush()
+                        _sync(fd)
+                    _sync(directory)
+                finally:
+                    os.close(fd)
 
     def install(self, run_id, reference: ArtifactReference):
         self._run_id(run_id)
