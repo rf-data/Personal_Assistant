@@ -690,7 +690,19 @@ def test_shared_legacy_collection_gate_without_sdk():
     info.config.params.vectors.size = 32
     with pytest.raises(ValueError):
         check_configuration(info, contract)
+
     info.config.params.vectors.size = 16
     info.config.metadata = {"content_vector_contract": contract.model_dump(mode="json")}
     with pytest.raises(ValueError):
         check_configuration(info, contract)
+
+
+def test_fake_snapshot_capacity_applies_before_resume():
+    with pytest.raises(Unavailable):
+        FakeContentTransport(snapshot={str(i): {"points": {}} for i in range(129)})
+    with pytest.raises(Unavailable):
+        FakeContentTransport(
+            snapshot={"oversized": {"points": {str(i): {} for i in range(8193)}}}
+        )
+    with pytest.raises(IntegrityError):
+        FakeContentTransport(snapshot={"malformed": {}})

@@ -40,7 +40,8 @@ keine angelegten C24-Issues. Der vorhandene Entwurf C24-04 in planning/issues.md
 bleibt maßgeblich; D01 erlaubt keine automatische Issue-/Projectverwaltung.
 Der aktuelle Auftrag konkretisiert daraus A und B, keine konkurrierenden Issues.
 
-Draft #72, Head `3a42b1675dffe823edc179a347fa97dd1a096fd0`, bleibt offen/draft.
+[Draft #72](https://github.com/rf-data/Personal_Assistant/pull/72), Head
+`3a42b1675dffe823edc179a347fa97dd1a096fd0`, bleibt offen/draft.
 Sein Bericht nennt Phase A teilweise blockiert und Phase B blockiert. Die dort
 berichteten 84 passed / 2 skipped sind Source-/Executor-/Pilotvertragsprüfungen,
 keine reale Modell-/Qdrantabnahme. Historisches Binding data/Harvard versus
@@ -49,6 +50,10 @@ LocalEmbedder besitzt bereits local_files_only, immutable Revision, E5präfixe u
 Dimensions-/Tokenprüfung. Qdranthelper unter utils bindet Appsettings/Cloud-Inferenz
 und wird nicht importiert. Bestehende CS50-CLI kann explizite Clients erzeugen,
 ihre Freigaben sind kein ContentRecord-/C24-04-B-Permit.
+Der [direkt gelesene Validierungsbericht dieses Heads](https://github.com/rf-data/Personal_Assistant/blob/3a42b1675dffe823edc179a347fa97dd1a096fd0/docs/qdrant/c21q_validation.md)
+weist 0 hochgeladene/verifizierte Punkte, retrieval executed=false und fehlende
+Modell-/Instanzfreigaben aus. Seine 157 timed Chunks sind keine E5-Vektorzahl;
+die zehn Fragen sind eine Reviewvorlage ohne unabhängige Goldurteile.
 
 C24-04-B: **blocked**. Nicht bereitgestellt sind freigegebene isolierte Instanz,
 Namespace, SDK-/Serverversion, konkrete lokal verfügbare immutable Modellrevision,
@@ -263,6 +268,7 @@ PYTHONPATH=/usr/lib/python3/dist-packages PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 
 | Lauf mit diesem Präfix | Ergebnis | Konkreter Bezug |
 | --- | --- | --- |
+| tests/test_content_vectors.py --basetemp=/tmp/c2404-final33 | **33 passed / 0 failed / 0 skipped**, 165,25 s | abschließender ganzer Lauf einschließlich Typ- und zusätzlichem Snapshot-Kapazitätsgate |
 | tests/test_content_vectors.py --basetemp=/tmp/c2404-final | **32 passed / 0 failed / 0 skipped**, 79,61 s | vollständige neue Suite, echte private Store-/Indexdateien; Fake-Encoding und Fake-Transport |
 | dieselbe Datei -k embedding_errors --basetemp=/tmp/c2404-gate | **1 passed / 31 deselected**, 4,82 s | nach ergänzter Typprüfung auch nach Konstruktion: Austausch gegen realen/unklaren Transport verweigert; Überschneidung, nicht addieren |
 | tests/test_content_vectors.py tests/test_content_fts.py tests/test_content_index_projection.py --basetemp=/tmp/c2404-first | **114 passed / 1 failed / 0 skipped**, 324,82 s | 47 FTS- und 41 Projektionsfälle sämtlich grün; damalige 27 Vektorfälle mit einer später korrigierten Testannahme |
@@ -300,6 +306,11 @@ sich je Text. Er prüft nun den wirklichen Score und stabilen IDtie sowie den
 höchsten Kindscore. Anschließend zwei gezielte Unicode-/Resumefälle bestanden
 (10,83 s), danach die obige vollständige 32er-Suite. Keine Entwicklungsläufe
 oder überlappenden Nachprüfungen werden zu einer erfundenen Gesamtsuite addiert.
+Bei der Ergänzung des Snapshot-Kapazitätsfalls blieb zunächst ein Rest des
+vorherigen Testfunktionskörpers im neuen Test stehen (32 passed / 1 failed,
+132,71 s). Die Testgrenze wurde korrigiert; die abschließende 33er-Suite prüft
+beide Fälle erfolgreich. Der zusätzliche Code begrenzt auch eingelesene Fake-
+Snapshots auf 128 Collections und 8.192 Punkte, bevor Resume möglich ist.
 
 Ruff Check / Format Check erfolgreich für acht geänderte/neue Pythondateien plus
 unverändertes content_fts.py; git diff --check erfolgreich. Beide Laufzeitbeispiele

@@ -20,6 +20,11 @@ class FakeContentTransport:
         self._lock = threading.Lock()
         if not isinstance(self.collections, dict) or len(self.collections) > 128:
             raise Unavailable("fake collection capacity")
+        try:
+            if sum(len(c["points"]) for c in self.collections.values()) > 8192:
+                raise Unavailable("fake point capacity")
+        except (TypeError, KeyError):
+            raise IntegrityError("fake snapshot contract conflict") from None
 
     def snapshot(self):
         return json.loads(canonical(self.collections))
