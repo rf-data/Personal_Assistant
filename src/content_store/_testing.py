@@ -378,3 +378,12 @@ def publish_synthetic(
                     parsed_version_id=version_id,
                 )
             return PublishedVersion(version=version, created=True)
+
+
+def project_synthetic_for_index(store, parsed_version_id, *, actor, config=None):
+    """Explicit permanently synthetic projection; never accepted on content roots."""
+    from src.content_store.index_projection import _project
+
+    return _project(
+        store, parsed_version_id, actor=actor, config=config, synthetic=True
+    )

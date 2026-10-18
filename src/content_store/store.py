@@ -857,3 +857,11 @@ class ContentStore:
             return BlockPage(
                 items=tuple(ContentBlock.model_validate_json(row[0]) for row in rows)
             )
+
+    def project_content_for_index(self, parsed_version_id, *, actor, config=None):
+        """Scoped read-only projection; no index build or lasting read authorization."""
+        from src.content_store.index_projection import project_content_for_index
+
+        return project_content_for_index(
+            self, parsed_version_id, actor=actor, config=config
+        )
