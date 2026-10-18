@@ -9,6 +9,7 @@ keine umfangreiche Verschiebung in eine neue Ordnerhierarchie.
 | Bereich | Aktueller Einstieg | Art der Aussage |
 | --- | --- | --- |
 | Planung / Pflege | [Roadmap](ROADMAP.md), [Status](planning/status.md), [Issue-Entwurf](planning/issues.md), [Project](planning/project.md), [Freigabeplan](planning/github_execution.md), [Pflege](planning/governance.md), [Planprüfung](planning/validation.md) | C23–C32 geplant; keine Issue-/Project-Erstellung ohne gesonderte Freigabe |
+| Indexierung / Retrieval | [C24-ADR](architecture/retrieval_indexing_adr.md), [Indexrecord-/Suchvertrag](architecture/index_record_contract.md), [Umsetzungsplan](planning/c24_implementation_plan.md) | Architektur für Folge-PRs; keine implementierte C24-Suche oder fachliche Freigabe |
 | Entwicklung | [Umgebung, CLI und Offlineprüfungen](development.md) | reproduzierbare lokale Arbeitsweise; keine automatische Installation |
 | CS50 / Materialien / Lectures | [CS50-Index](cs50/README.md) | fachliche Verträge, getrennte Evaluation und Betrieb |
 | Qualität | [C10](cs50/contracts/material_quality.md), [Prüfbericht](cs50/evaluation/material_quality.md) | technische Materialqualität / read-only Handoff |
