@@ -9,10 +9,13 @@ entsprechend 02-B plus 03-A. HTTPsearch, Jobanbindung und UI sind weiterhin offe
 C24-04-A ergänzt jetzt den [ContentRecord-Vektoradapter samt Fake-Abnahme](../architecture/content_vector_implementation.md).
 C24-04-B (reale Modell-/Qdrant-/Hybridabnahme) bleibt mangels konkreter Freigaben
 blockiert; A, Draft #72 oder ein Merge erteilen diese Freigaben nicht.
+C24-05-A ergänzt die [technische Retrievalevaluation und unabhängigen Goldverträge](../cs50/evaluation/content_retrieval_evaluation.md).
+Die fachliche C24-05-B-Abnahme bleibt an freigegebene Realbundles, unabhängiges
+Gold und einen vollständigen Reviewpool gebunden; keine D01-/D07-Freigabe.
 C24-05-C hält eine [Pilotvorbereitung mit konkreten Blockaden](../cs50/evaluation/c24_real_corpus_pilot.md)
-und ausschließlich bestehende Korpusmetadaten fest. A/#87 ist noch offen;
+und ausschließlich bestehende Korpusmetadaten fest. A/#87 ist inzwischen integriert;
 B/#88 liefert bislang nur Architektur, keinen Reviewworkflow. Reale und vollständige
-synthetische Pilotabnahme bleiben bis zur tatsächlichen A-/B-Integration gesperrt.
+synthetische Pilotabnahme bleiben bis zur tatsächlichen B-Implementierung gesperrt.
 Die folgenden detaillierten Paketanforderungen bleiben Prüfplan; tatsächliche
 Abnahme und Grenzen stehen im verlinkten Implementierungsbericht. [ADR](../architecture/retrieval_indexing_adr.md),
 [Indexrecord-/Suchvertrag](../architecture/index_record_contract.md),

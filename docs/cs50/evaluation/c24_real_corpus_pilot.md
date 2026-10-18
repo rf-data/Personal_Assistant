@@ -1,6 +1,7 @@
 # C24-05-C: Pilotvorbereitung und dokumentierte Nicht-Evaluierbarkeit
 
-18.10.2026 · Basis `origin/master` `87ea32f5e9e3f4826f6bbd84ed0d28073fc3fb87`.
+18.10.2026 · Endgültige Basis `origin/master` `d2b5e05e732ef677fe8e8b4ccbb4d76c6d532e60`.
+Beginn auf `87ea32f`; #87 wurde während der Veröffentlichung gemergt.
 Branch `feat/c24-05c-real-corpus-pilot`.
 **Vorbereitung, kein ausgeführter Realpilot und keine fachliche Freigabe.**
 
@@ -11,12 +12,12 @@ Branch `feat/c24-05c-real-corpus-pilot`.
 | C23-06 | Technisches Inventar-/Goldframework integriert; Realabnahme offen | CorpusManifest/GoldDataset direkt wiederverwenden |
 | C24-01/#83, 02/#84, 03/#85 | Integriert | Projektion und interne autorisierte FTS5-Suche vorhanden |
 | C24-04/#86 | Integriert, nur FakeEmbedder/Fake-Transport | Kein freigegebener realer Vector-/Hybridvergleich |
-| C24-05-A/#87 | Offen, nicht gemergt; Head `5a7d050685c381dffd0574aaff62f704c78e7350` | Keine A-Evaluation auf angenommenem Mastervertrag |
+| C24-05-A/#87 | Inzwischen integriert auf Master `d2b5e05` | Vorhandener Evaluator verfügbar; ohne bestätigte Quelle/Pool und B-Workflow kein Pilotlauf |
 | C24-05-B/#88 | Offener Draft, Head `f3fae9ef6d2c919adb12b08242bf84819f2b42f2`; **nur Architekturvorbereitung** | Keine Reviewpersistenz, Task-/Entscheidungs-API oder Review-UI implementiert |
 | D07 / Realbundles / Reviewer | Keine zusätzlichen sourcebezogenen Freigaben, vollständigen Bundles oder unabhängigen bestätigten Referenzen vorgelegt | Kein Sourceonboarding, menschlicher Review oder fachlicher Metriklauf |
 | D06 / historisches SRT | Unveränderte Pfadabweichung | Diese Quelle bleibt `blocked_source_binding` |
 
-[PR #87](https://github.com/rf-data/Personal_Assistant/pull/87) und
+[Gemergter PR #87](https://github.com/rf-data/Personal_Assistant/pull/87) und
 [Draft #88](https://github.com/rf-data/Personal_Assistant/pull/88) müssen getrennt
 bewertet werden: **Der Merge des Architektur-Drafts #88 allein liefert keinen
 Reviewworkflow.** C benötigt dessen tatsächlich implementierte und integrierte
@@ -27,21 +28,26 @@ in diesem Paket. [C24-Plan](../../planning/c24_implementation_plan.md),
 
 ## Versionierter Metadatenumfang
 
-- [Pilotmanifest](c24_05c/corpus_manifest.v1.json): **unveränderter vorhandener
+- [Pilotmanifest r2](c24_05c/r2/corpus_manifest.v1.json): **unveränderter vorhandener
   CorpusManifest-v1-Vertrag**, neue ausdrücklich vorbereitende Datasetversion.
-- [Leerer GoldDataset](c24_05c/gold_references.v1.json): gleicher vorhandener Vertrag,
+- [Leerer GoldDataset r2](c24_05c/r2/gold_references.v1.json): gleicher vorhandener Vertrag,
   null Referenzen. Keine fingierten Reviewaufträge, Reviewer oder Erwartungen.
-- [Bereitschaftsbericht](c24_05c/pilot_readiness.v1.json): gebundene Metadaten,
+- [Bereitschaftsbericht r2](c24_05c/r2/pilot_readiness.v1.json): gebundene Metadaten,
   fehlende Freigaben/Identitäten und Voraussetzungen; **kein**
   `RealCorpusAcceptanceReport` und kein Ersatz für dessen späteren B-Abnahmevertrag.
-- [Dateimanifest](c24_05c/manifest.json): SHA-256 der exakten drei JSONdateien.
+- [Dateimanifest r2](c24_05c/r2/manifest.json): SHA-256 der exakten drei JSONdateien.
+
+Der [erste Bereitschaftsstand](c24_05c/pilot_readiness.v1.json) mit seinem
+[Dateimanifest](c24_05c/manifest.json) bleibt unverändert erhalten: Auf seiner Basis
+`87ea32f` war A noch nicht gemergt. Revision 2 aktualisiert diesen Integrationsbefund
+und bindet den Vorgängerdigest, ohne irgendeinen Pilotlauf/Review zu behaupten.
 
 Ausgang ist ausschließlich das bereits versionierte
 [C23-06-Korpusmanifest](c23_06/corpus_manifest.v1.json). Dessen elf `origin=real`-
 Metadateneinträge wurden unverändert übernommen; vier synthetische Einträge bleiben
 außerhalb dieses geplanten Realkorpus. `permission=inventory_only` und fehlende
 Source-/Versionsbindungen bleiben unverändert. Keine Umstufung zu evaluation.
-Datasetversion `c24-05c-readiness-2026-10-18` bezeichnet einen Planungsstand.
+Datasetversion `c24-05c-readiness-2026-10-18-r2` bezeichnet den aktuellen Planungsstand.
 
 | Format | Deklarierte Rawpfade aus bestehendem Inventar | Freigegebene vollständige Bundles | Original-/Integritätsprüfung dieses Pakets |
 | --- | ---: | ---: | --- |
@@ -169,7 +175,7 @@ from src.content_store.models import fingerprint, sha256
 from src.model_evaluation.material_evaluation import CorpusManifest, GoldDataset
 from src.tools_materials.quality import _json
 
-root = Path("docs/cs50/evaluation/c24_05c")
+root = Path("docs/cs50/evaluation/c24_05c/r2")
 manifest = _json((root / "manifest.json").read_bytes())
 for name, digest in manifest["files"].items():
     assert sha256((root / name).read_bytes()) == digest
@@ -183,7 +189,8 @@ assert not gold.references
 # Kein Aufruf von evaluate_materials/evaluate_retrieval, Import oder Originalpfaden.
 ```
 
-Digest: `633f458d0f14255fcc4172e6f57a59d30055415965218654412f74008efb80e2`.
+Aktueller Digest: `11a0dd008a5f3fb68998d57b642bd2d3f93aaa272a52b6e292aaf4f06e517040`.
+Erster Stand: `633f458d0f14255fcc4172e6f57a59d30055415965218654412f74008efb80e2`.
 Gleiche Metadaten ergeben denselben Digest; neue Freigaben, Gold oder Quellen
 verlangen einen neuen ausdrücklich versionierten Snapshot. Dies ist ein
 Integritätsnachweis des Planungsartefakts, kein Quellen-/Menschenauthentizitätsbeweis.
@@ -195,7 +202,7 @@ leerer bestehender Goldvertrag, Bereitschaftsbericht, Datei-/Reportdigests und d
 konkrete Übergabeplan. Keine neue Runtime oder Ersatz-Reviewpersistenz.
 
 `blocked`: kontrolliertes Realonboarding, menschliche UIreviews, vollständiger
-synthetischer C-End-to-End-Workflow und formaler Abnahmevertrag durch fehlendes A/B;
+synthetischer C-End-to-End-Workflow und formaler Abnahmevertrag durch fehlendes B;
 reale Ausführung zusätzlich durch fehlende Sourcefreigaben/Bundles/Gold und D06/D07.
 
 `not_checked`: Originaldateien, Receipts, Raw-/Parsedhashgleichheit, Parserrevision,
@@ -206,8 +213,8 @@ berichts zählt ausschließlich diesen Metadatenaufbau, keine synthetischen Test
 `out_of_scope`: Ersatzimplementierung von A/B, neue Parser/Modelle/Ranking/UI,
 private Bestandsinventur, Downloads, historische Migration und Deployment.
 
-`passed`: **38 passed / 0 failed / 0 skipped**, 8,34 s, für die unveränderten
-C23-06-Vertragstests. Tatsächlicher Befehl:
+Erste Prüfung auf Basis `87ea32f`: **38 passed / 0 failed / 0 skipped**, 8,34 s,
+für die unveränderten C23-06-Vertragstests. Tatsächlicher Befehl:
 
 ```sh
 PYTHONPATH=/usr/lib/python3/dist-packages PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
@@ -243,9 +250,31 @@ Eine lokale Python-Auditprüfung erlaubte ausschließlich die expliziten fünf
 Metadatendateien: zehn Metadatenreads, **null Originaldateiöffnungen**. Wiederholter
 Digest identisch; 17 lokale Markdownverweise und diff check erfolgreich.
 
-Keine neue Pythondatei, keine Runtime-/Review-/UI-/A-Integration und keine neuen
+Nach Merge von #87: Master `d2b5e05` in den eigenen Branch übernommen, den
+C24-05-A-Plannachtrag vollständig erhalten und Revision 2 zusätzlich angelegt.
+Alle Dateien des ersten Bereitschaftsstands sind gegenüber dem ersten PRcommit
+unverändert. A ist nun verfügbar; B bleibt Architektur ohne Reviewruntime.
+
+`passed`: **104 passed / 0 failed / 0 skipped**, 23,66 s, mit obigem tatsächlichen
+Python-/Pytestpräfix und folgenden Optionen:
+
+```sh
+-q --disable-warnings -p no:cacheprovider \
+ tests/test_cs50_material_evaluation.py tests/test_content_retrieval_evaluation.py \
+ tests/test_content_retrieval_integration.py --basetemp=/tmp/c2405c-current-contracts
+```
+
+38 bestehende C23-06- und 66 integrierte A-Fälle, einschließlich dessen synthetischer
+FTS5-/Vector-DTOintegration. Überlappt den ersten 38er-Lauf, nicht addieren.
+Keine neue C-Pilotintegration. Ruff Check und Format Check auch für die acht
+integrierten A-Pythondateien erfolgreich, zusammen zwölf unveränderte Dateien.
+Erneute Metadatenprüfung: beide Corpus-/Goldschemas, exakte Inventarübernahme,
+Datei-/Reportdigests, neue Datasetversion und Vorgängerdigest geprüft. Audit:
+15 Metadatenreads, **null Originaldateiöffnungen**; 20 lokale Verweise geprüft.
+
+Keine neue Pythondatei, keine C-Runtime-/Review-/UI-Integration und keine neuen
 C-Workflow-/Wiederaufnahme-/Sicherheits-/Abnahmetests implementiert oder als grün
-ausgegeben. Diese bleiben bis zur tatsächlichen A-/B-Integration not_checked.
+ausgegeben. Diese bleiben bis zur tatsächlichen B-Implementierung not_checked.
 Es wird keine vollständige Pilot- oder Gesamtrepositoryabnahme behauptet.
 
 Nur eigene synthetische Pytestdaten und erzeugte Worktree-Caches werden nach
