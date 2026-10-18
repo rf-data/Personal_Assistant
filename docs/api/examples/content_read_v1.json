@@ -1,0 +1,278 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "examples": {
+    "capabilities": {
+      "capabilities": [
+        "content_read_v1"
+      ],
+      "enabled": true,
+      "max_attachment_bytes": 67108864,
+      "max_page_bytes": 262144,
+      "max_text_codepoints": 16384,
+      "protocol": "personal_assistant_content_read_v1",
+      "schema_version": 1
+    },
+    "sources": {
+      "items": [
+        {
+          "course_id": "cs50_python",
+          "original_url": "https://cs50.harvard.edu/python/notes/0/test.html",
+          "schema_version": 1,
+          "source_id": "resource:881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b",
+          "source_origin": "synthetic",
+          "source_type": "material",
+          "versions_route": "/v1/content/sources/resource%3A881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b/versions"
+        }
+      ],
+      "next_cursor": null,
+      "schema_version": 1
+    },
+    "source": {
+      "course_id": "cs50_python",
+      "original_url": "https://cs50.harvard.edu/python/notes/0/test.html",
+      "schema_version": 1,
+      "source_id": "resource:881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b",
+      "source_origin": "synthetic",
+      "source_type": "material",
+      "versions_route": "/v1/content/sources/resource%3A881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b/versions"
+    },
+    "source_versions": {
+      "items": [
+        {
+          "artifacts": [
+            {
+              "download_route": "/v1/content/sources/resource%3A881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b/versions/content_source_version_v1%3A267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e/raw/primary/0",
+              "ordinal": 0,
+              "role": "primary",
+              "sha256": "6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781",
+              "size_bytes": 492,
+              "source_id": "resource:881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b",
+              "source_version_id": "content_source_version_v1:267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e"
+            }
+          ],
+          "parsed_versions_route": "/v1/content/sources/resource%3A881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b/versions/content_source_version_v1%3A267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e/parsed",
+          "schema_version": 1,
+          "source_id": "resource:881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b",
+          "source_version_id": "content_source_version_v1:267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e"
+        }
+      ],
+      "next_cursor": null,
+      "schema_version": 1
+    },
+    "parsed_refs": {
+      "items": [
+        {
+          "parsed_version_id": "content_version_v1:8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f",
+          "route": "/v1/content/parsed/content_version_v1%3A8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f"
+        }
+      ],
+      "next_cursor": null,
+      "schema_version": 1
+    },
+    "parsed": {
+      "block_count": 11,
+      "blocks_route": "/v1/content/parsed/content_version_v1%3A8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f/blocks",
+      "implementation_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "parsed_version_id": "content_version_v1:8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f",
+      "parser_config_id": "content_parser_v1:88fb5a432548cec6f250ea6c11bac32b345e439e2878606415f8478b9ca48c9c",
+      "parser_name": "html",
+      "parser_version": "2",
+      "payload_schema": "NormalizedDocument:1",
+      "payload_sha256": "e55609813e1efff13c8be9e44dbd303f6c06af8d6a74292d5f5aebcd6bdf0c12",
+      "projection_sha256": "fe0495bff825fe0a61f497f43a703ee7abe1017e5f488b39081c18a7779f2991",
+      "quality_status": "passed_with_warnings",
+      "schema_version": 1,
+      "source_id": "resource:881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b",
+      "source_version_id": "content_source_version_v1:267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e",
+      "warnings": [
+        {
+          "category": "semantic_review",
+          "code": "image_reference_only",
+          "occurrences": 1,
+          "severity": "warning"
+        },
+        {
+          "category": "technical",
+          "code": "reference_projection",
+          "occurrences": 4,
+          "severity": "info"
+        }
+      ]
+    },
+    "blocks": {
+      "items": [
+        {
+          "aggregation_role": "reference_projection",
+          "block_id": "material_block:1d102739668a522c97003c692299ebd455301821c361c332442e61626e0822c5",
+          "locators": [
+            {
+              "bbox": null,
+              "chapter_path": [],
+              "coordinate_system": "unknown",
+              "dom": null,
+              "end": null,
+              "line_end": null,
+              "line_start": null,
+              "origin_pointer": "/blocks/0",
+              "original_segment_id": null,
+              "page": null,
+              "raw_artifact_sha256": "6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781",
+              "raw_reference": {
+                "download_route": "/v1/content/sources/resource%3A881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b/versions/content_source_version_v1%3A267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e/raw/primary/0",
+                "ordinal": 0,
+                "role": "primary",
+                "sha256": "6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781",
+                "size_bytes": 492,
+                "source_id": "resource:881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b",
+                "source_version_id": "content_source_version_v1:267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e"
+              },
+              "start": null,
+              "time_status": "not_applicable"
+            }
+          ],
+          "locators_in_structure": false,
+          "order": 0,
+          "original_type": "list",
+          "parsed_version_id": "content_version_v1:8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f",
+          "quality_status": "passed_with_warnings",
+          "schema_version": 1,
+          "structure_route": "/v1/content/parsed/content_version_v1%3A8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f/blocks/material_block%3A1d102739668a522c97003c692299ebd455301821c361c332442e61626e0822c5/structure",
+          "text": "",
+          "text_length": 0,
+          "text_route": "/v1/content/parsed/content_version_v1%3A8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f/blocks/material_block%3A1d102739668a522c97003c692299ebd455301821c361c332442e61626e0822c5/text",
+          "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "type": "list",
+          "warnings": [
+            {
+              "category": "semantic_review",
+              "code": "image_reference_only",
+              "occurrences": 1,
+              "severity": "warning"
+            },
+            {
+              "category": "technical",
+              "code": "reference_projection",
+              "occurrences": 1,
+              "severity": "info"
+            }
+          ]
+        },
+        {
+          "aggregation_role": "reference_projection",
+          "block_id": "material_block:ca230c8a6dbcc9a023504288248cc81fbbb219738cd5c5e6f1d746d115c07974",
+          "locators": [
+            {
+              "bbox": null,
+              "chapter_path": [],
+              "coordinate_system": "unknown",
+              "dom": null,
+              "end": null,
+              "line_end": null,
+              "line_start": null,
+              "origin_pointer": "/blocks/1",
+              "original_segment_id": null,
+              "page": null,
+              "raw_artifact_sha256": "6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781",
+              "raw_reference": {
+                "download_route": "/v1/content/sources/resource%3A881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b/versions/content_source_version_v1%3A267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e/raw/primary/0",
+                "ordinal": 0,
+                "role": "primary",
+                "sha256": "6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781",
+                "size_bytes": 492,
+                "source_id": "resource:881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b",
+                "source_version_id": "content_source_version_v1:267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e"
+              },
+              "start": null,
+              "time_status": "not_applicable"
+            }
+          ],
+          "locators_in_structure": false,
+          "order": 1,
+          "original_type": "paragraph",
+          "parsed_version_id": "content_version_v1:8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f",
+          "quality_status": "passed_with_warnings",
+          "schema_version": 1,
+          "structure_route": "/v1/content/parsed/content_version_v1%3A8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f/blocks/material_block%3Aca230c8a6dbcc9a023504288248cc81fbbb219738cd5c5e6f1d746d115c07974/structure",
+          "text": "Hello",
+          "text_length": 5,
+          "text_route": "/v1/content/parsed/content_version_v1%3A8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f/blocks/material_block%3Aca230c8a6dbcc9a023504288248cc81fbbb219738cd5c5e6f1d746d115c07974/text",
+          "text_sha256": "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
+          "type": "paragraph",
+          "warnings": [
+            {
+              "category": "semantic_review",
+              "code": "image_reference_only",
+              "occurrences": 1,
+              "severity": "warning"
+            },
+            {
+              "category": "technical",
+              "code": "reference_projection",
+              "occurrences": 1,
+              "severity": "info"
+            }
+          ]
+        }
+      ],
+      "next_cursor": "eyJhY2xfcmV2aXNpb24iOjAsImFjdG9yIjoiNDIwZDNiMTFlMDE2NThhOWRkYzY2OThhODRhNTY2NTVmMzk3YjQwNzQ0OWZiYjE5ZTljOTIwYTk0OTk3ZTMxYSIsImxhc3QiOlsxLCJtYXRlcmlhbF9ibG9jazpjYTIzMGM4YTZkYmNjOWEwMjM1MDQyODgyNDhjYzgxZmJiYjIxOTczOGNkNWM1ZTZmMWQ3NDZkMTE1YzA3OTc0Il0sInJlcXVlc3QiOiI0ZDhhMTM1Yjk5MjdhNDc3YjFkNGFjZTQwNWUxMjVmYmZjZjA1ZjYwYmRkZTQ0ZjE1OWI2Zjg0NjQ4MzRkMTJlIiwic2NoZW1hX3ZlcnNpb24iOjEsInNuYXBzaG90IjoiMmFkOWU5ZmJjZGIxOGVkNWM4OTlmZmU3YTk4MWYxNDgxMjdjNDUzZDMxMDVlYzkyZjE5MmU0OGI0M2I5YmNlMSJ921U0UqIj2wi3f8CwgbMjCdhe1kyve0bki7HV2L5IimM",
+      "schema_version": 1
+    },
+    "text_window": {
+      "block_id": "material_block:a4811ff62e36909856cc9b781a6d3f781648c72325532a6329c6682fa3993a17",
+      "end": 29,
+      "parsed_version_id": "content_version_v1:8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f",
+      "schema_version": 1,
+      "start": 0,
+      "text": "def hello():\n    print(\"hi\")\n",
+      "text_length": 29,
+      "text_sha256": "b6cf558025797ee43ad662ab98d65572ac5b889b35de3d6517e7dcb81d60f18b"
+    },
+    "structure": {
+      "block_id": "material_block:a4811ff62e36909856cc9b781a6d3f781648c72325532a6329c6682fa3993a17",
+      "data": {
+        "language": "python"
+      },
+      "locators": [
+        {
+          "bbox": null,
+          "chapter_path": [],
+          "coordinate_system": "unknown",
+          "dom": null,
+          "end": null,
+          "line_end": null,
+          "line_start": null,
+          "origin_pointer": "/blocks/9",
+          "original_segment_id": null,
+          "page": null,
+          "raw_artifact_sha256": "6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781",
+          "raw_reference": {
+            "download_route": "/v1/content/sources/resource%3A881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b/versions/content_source_version_v1%3A267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e/raw/primary/0",
+            "ordinal": 0,
+            "role": "primary",
+            "sha256": "6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781",
+            "size_bytes": 492,
+            "source_id": "resource:881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b",
+            "source_version_id": "content_source_version_v1:267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e"
+          },
+          "start": null,
+          "time_status": "not_applicable"
+        }
+      ],
+      "parsed_version_id": "content_version_v1:8718f97caa15701f140b66238868acac0602c6d16c62d850837d6023ede1995f",
+      "projection_sha256": "e18fd502864323d6f70e7cb8aeabc34bac4c50cddbb916e6ced8bb0d1d414562",
+      "redacted": true,
+      "schema_version": 1
+    },
+    "raw_download": {
+      "route": "/v1/content/sources/resource%3A881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b/versions/content_source_version_v1%3A267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e/raw/primary/0",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "application_headers": {
+        "Content-Disposition": "attachment; filename=\"content-6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781.bin\""
+      },
+      "size_bytes": 492,
+      "sha256": "6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781"
+    }
+  }
+}

@@ -12,15 +12,25 @@ def main(argv=None):
     parser.add_argument("command", choices=["api", "worker", "check"])
     parser.add_argument("--config", required=True)
     parser.add_argument("--port", type=int, default=8016)
+    parser.add_argument(
+        "--content-config",
+        help="Explicit private content-read-v1 configuration (API only)",
+    )
     args = parser.parse_args(argv)
+    if args.content_config and args.command != "api":
+        parser.error("--content-config is API-only")
     settings = load_settings(args.config)
     if not 1024 <= args.port <= 65535:
         parser.error("Nonprivileged local port required")
     if args.command == "api":
+        from src.content_store.reader import load_content_settings
         from src.job_control.controller import Controller
         from src.job_control.http import serve
 
-        serve(Controller(settings), args.port)
+        content = (
+            load_content_settings(args.content_config) if args.content_config else None
+        )
+        serve(Controller(settings), args.port, content_settings=content)
     elif args.command == "worker":
         from src.job_control.executor import Executor
 
