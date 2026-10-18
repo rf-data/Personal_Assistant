@@ -1,5 +1,23 @@
 # C23-02A/B/C und C23-04: ContentStore und autorisierte Reads
 
+## Aktueller Stand nach C23-06-Vorbereitung
+
+18.10.2026, Master `d654f05`: C23-02A/B/C (#76–#78), C23-03 (#79) und
+C23-04 (#80) und C23-05 (#81) sind gemergt. Bibliothek, geprüfte Material-/SRTadapter, Recovery,
+Retry/Inventar und autorisierte Read API sind implementiert. C16-Publikation,
+historische Originalübernahme (D06), unabhängige Realmaterialabnahme (D07) und
+Produktionsfreigaben bleiben getrennt. C23-05 unterstützt lokale TXTimporte
+mit Nullzeiten; das ist keine allgemeine TXT-ContentStore-/Knowledgefreigabe.
+
+C23-06 ergänzt nur die [technische Evaluationsvorbereitung](../cs50/evaluation/c23_real_material_evaluation.md),
+kein Store-/Parser-/HTTPverhalten. Fünf versionierte reale HTML-Rohdateien sind
+inventarisiert; vollständige autorisierte Realbundles und bestätigtes Gold fehlen.
+Die nachfolgenden datierten A/B/C-/03-/04-Nachträge bleiben historische Nachweise.
+Ihre Testläufe werden nicht addiert. Aussagen wie „#79 offen“ oder „HTTP ausstehend“
+gelten ausschließlich für den jeweils bezeichneten damaligen Ausgangsstand.
+
+## Historischer Nachtrag C23-04, Ausgangsmaster 5986da9
+
 **Ergänzung 18.10.2026:** C23-04 baut auf Master `5986da9` einschließlich #78
 auf. C23-03/#79 war offen; keine Übernahme seiner Funktionen. Die neue
 [Content Read API v1](../api/content_read_v1.md) verwendet den vorhandenen
@@ -10,7 +28,7 @@ Antwortdateien) und `http.py` (Routen/Fehler). Keine SQL-DDL-/Importänderung.
 Capability an `/v1/content/capabilities`; alte C16-/C20-DTOs unverändert.
 C16-Publikation wird mit konkretem Katalog-/Revisions-/Workervertrag als
 Folgepaket abgegrenzt. Der folgende A/B/C-Stand bleibt historisch erhalten.
-# C23-02A/B/C und C23-03: ContentStore und Quellenverträge
+## C23-02A/B/C und C23-03: ContentStore und Quellenverträge
 
 **Ergänzung 18.10.2026:** C23-03 basiert auf Master `5986da9` einschließlich #78.
 Die bestehenden IDs, Hashdomänen, Gates, SQL-DDL, Recovery- und Backupverfahren
@@ -460,7 +478,9 @@ Logdateien bleiben als lokale technische Nachweise außerhalb des Repositories.
 Der Worktree bleibt bis zum Merge des offenen B-PRs erhalten.
 
 C23-02C übernimmt Recovery, konkurrierende Prozesse/Last und Backup/Restore.
-TXT/VTT, HTTP, C16-Importadapter und vollständige Pagination bleiben ausstehend.
+Historischer B-Stand: TXT/VTT, HTTP, C16-Importadapter und vollständige Pagination
+waren ausstehend. Heute liefert C23-04 autorisierte paginierte Reads; die übrigen
+genannten Publikations-/Formatgrenzen werden dadurch nicht aufgehoben.
 C23 bleibt offen; alle B-Testbytes sind synthetisch. Der PDF-Test prüft einen
 selbst zusammengestellten PDF-v2-Normalisierungsvertrag gegen die kleine
 vorhandene synthetische PDFdatei; er behauptet keinen neuen PDF-Parserlauf oder
@@ -606,6 +626,10 @@ außerhalb des Repositories aufbewahrt; keine produktiven Quelldateien/Secrets
 wurden für Tests eingelesen. Keine Gesamtsuite und keine Live-API-/Qdranttests.
 
 ## Konkrete Übergabe und verbleibende Grenzen
+
+Dieser Abschnitt erhält den ursprünglichen A/B/C-Übergabeplan. Aktuell sind
+C23-03-Reimport/Inventar und C23-04-Reads gemergt; der maßgebliche Status steht
+am Dokumentanfang. D06/D07 und C26 bleiben offen.
 
 **C23-02B (in diesem PR implementiert):** Material-/SRT-Bundleadapter mit
 vollständiger Discovery-/Receipt-/Originalpfad-/Hash-/Parserrevisionsbindung und
