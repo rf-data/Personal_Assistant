@@ -1,32 +1,19 @@
 # C23: Umsetzung nach Freigabe des Persistenz-ADR
 
-**C23-05-Nachtrag 18.10.2026:** Auf Master `b2b994a` werden TXTimporte mit
-Nullzeiten, Intervallvalidierung und Timed-Guards ergänzt.
-[Vertrag und Verbrauchermatrix](../cs50/contracts/official_transcript_unknown_time.md)
-und [Offline-Abnahme](../cs50/evaluation/official_transcript_unknown_time.md)
-begrenzen den Nachweis. Ein allgemeiner TXT-ContentStore-Adapter bleibt ausstehend:
-Verbraucherabnahme ersetzt keinen Source-/Receipt-/Bindingvertrag. C23-04 war
-noch offen; keine Abhängigkeit davon oder Änderung von Issue-/Projectstatus.
-Vor PR-Erstellung wurde der Branch auf den inzwischen um #80 ergänzten Master
-`1254c2c` abgeglichen; der gemeinsame Transcript-/Content-Read-Vertrag ist geprüft.
+## Aktueller Umsetzungsstand
 
-**Umsetzungsnachtrag C23-04, 18.10.2026:** Auf gemergtem A/B/C (`5986da9`)
-ist die [autorisierte Read API v1](../api/content_read_v1.md) im bestehenden
-HTTPserver implementiert. C23-03/#79 war offen und wird nicht übernommen.
-Die folgenden älteren Planungstabellen sind keine aktuelle Implementierungs-
-behauptung. C16-Publikation wird als Folgepaket abgegrenzt: der bestehende
-Materialkatalog enthält noch keinen vollständigen B-Implementierungsbeleg;
-versionierte Katalog-/Prozess-/Receiptarbeit und gemergte Retryabnahme sind
-vor Freischaltung erforderlich. Kein Transcriptadapter und keine C18-Änderung.
-C23 bleibt offen, D06/D07 und produktive C26-Freigaben bleiben getrennt.
-**Umsetzungsnachtrag 18.10.2026:** A/B/C sind über #76–#78 gemergt. C23-03
-ergänzt auf `5986da9` die noch fehlende Wiederholungsabnahme, expliziten Retry
-nach Operator-Reject und ein rein lesendes Inventar. Ausgangsmatrix, endgültige
-Verträge und Testbefunde stehen im
-[Quelleninventar](../operations/c23_source_inventory.md). Die folgenden Tabellen
-sind der ursprüngliche Plan, keine Behauptung, A/B/C seien weiterhin unimplementiert.
-C23 bleibt offen; D06, D07 sowie C23-04/05/06 und produktive Freigaben bleiben
-separate Schritte. Keine Änderung von Issue-/Project-/Meilensteinstatus.
+18.10.2026, Master `d654f05`: C23-02A/B/C (#76–#78), C23-03 (#79) und C23-04
+(#80) sind gemergt. Die ursprünglichen Plan-/Testtabellen bleiben als datierter
+Plan erhalten; „geplant“ dort ist keine aktuelle Aussage über bereits gemergten Code.
+C23-05/#81 ist inzwischen ebenfalls gemergt; Nullzeiten sind technisch unterstützt,
+allgemeine TXTpublikation bleibt gesperrt. C23-06 liefert die
+[technische Evaluationsvorbereitung](../cs50/evaluation/c23_real_material_evaluation.md),
+aber keine fachliche Realabnahme: nur versionierte Fixtures/HTML sind für
+technische Prüfungen freigegeben, keine zusätzlichen lokalen Bundles und kein
+bestätigtes unabhängiges Gold. D06/D07, C16-Contentpublikation und produktive
+C26-Freigaben bleiben separat. Kein Issue-/Project-/Meilensteinstatuswechsel.
+
+## Historischer Planungsstand vom 17.10.2026
 
 Stand **17.10.2026**, Planungsentwurf. Grundlage sind der aktuelle Backendmaster
 `053209ad89fac828c7f47677056c44a624ac1af7`, der
@@ -243,3 +230,40 @@ nicht die zukünftige Storeimplementierung oder die fachliche Parsingqualität.
 Nachweise und Grenzen sind im PR mit diesen Dokumenten reviewbar. Kein Status aus
 `issue_plan.v1.json` wurde angehoben, keine Issues/Projects/Milestones erstellt
 oder verändert und kein Produktionsrelease freigegeben.
+
+
+## Historische Umsetzungsnachträge C23-03 und C23-04
+
+Die folgenden Absätze dokumentieren den jeweiligen damaligen Branchstand vor
+der Zusammenführung. Der aktuelle Merge-/Freigabestatus steht oben. Die getrennten
+Abnahmeberichte bleiben mit ihren ursprünglichen Basen und Zählungen maßgeblich.
+
+**Umsetzungsnachtrag C23-04, 18.10.2026:** Auf gemergtem A/B/C (`5986da9`)
+ist die [autorisierte Read API v1](../api/content_read_v1.md) im bestehenden
+HTTPserver implementiert. C23-03/#79 war offen und wird nicht übernommen.
+Die folgenden älteren Planungstabellen sind keine aktuelle Implementierungs-
+behauptung. C16-Publikation wird als Folgepaket abgegrenzt: der bestehende
+Materialkatalog enthält noch keinen vollständigen B-Implementierungsbeleg;
+versionierte Katalog-/Prozess-/Receiptarbeit und gemergte Retryabnahme sind
+vor Freischaltung erforderlich. Kein Transcriptadapter und keine C18-Änderung.
+C23 bleibt offen, D06/D07 und produktive C26-Freigaben bleiben getrennt.
+**Umsetzungsnachtrag 18.10.2026:** A/B/C sind über #76–#78 gemergt. C23-03
+ergänzt auf `5986da9` die noch fehlende Wiederholungsabnahme, expliziten Retry
+nach Operator-Reject und ein rein lesendes Inventar. Ausgangsmatrix, endgültige
+Verträge und Testbefunde stehen im
+[Quelleninventar](../operations/c23_source_inventory.md). Die folgenden Tabellen
+sind der ursprüngliche Plan, keine Behauptung, A/B/C seien weiterhin unimplementiert.
+C23 bleibt offen; D06, D07 sowie C23-04/05/06 und produktive Freigaben bleiben
+separate Schritte. Keine Änderung von Issue-/Project-/Meilensteinstatus.
+
+### Historischer C23-05-Nachtrag
+
+**C23-05-Nachtrag 18.10.2026:** Auf Master `b2b994a` werden TXTimporte mit
+Nullzeiten, Intervallvalidierung und Timed-Guards ergänzt.
+[Vertrag und Verbrauchermatrix](../cs50/contracts/official_transcript_unknown_time.md)
+und [Offline-Abnahme](../cs50/evaluation/official_transcript_unknown_time.md)
+begrenzen den Nachweis. Ein allgemeiner TXT-ContentStore-Adapter bleibt ausstehend:
+Verbraucherabnahme ersetzt keinen Source-/Receipt-/Bindingvertrag. C23-04 war
+noch offen; keine Abhängigkeit davon oder Änderung von Issue-/Projectstatus.
+Vor PR-Erstellung wurde der Branch auf den inzwischen um #80 ergänzten Master
+`1254c2c` abgeglichen; der gemeinsame Transcript-/Content-Read-Vertrag ist geprüft.

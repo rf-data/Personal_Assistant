@@ -171,6 +171,9 @@ mit unabhängigem synthetischem Goldset und optionaler isolierter Polynomprüfun
 
 C12: [Konsolidierung und Resume](../knowledge_consolidation_hardening.md).
 C13: [Technisches Visual Inventory](../visual_inventory.md).
+C23-06: [Versionierter Korpus, unabhängiger Reviewvertrag und technische Vorbereitung](evaluation/c23_real_material_evaluation.md).
+Die fachliche Realabnahme bleibt ohne vollständige freigegebene Bundles und
+bestätigtes unabhängiges Gold offen.
 C16/C18: [Job-Control](../job_control/README.md), [optional orchestrierter
 Offline-Materialworkflow](../workflows/README.md).
 Die separate [C17-Admin-UI](https://github.com/rf-data/personal-assistant-ui/blob/main/README.md)

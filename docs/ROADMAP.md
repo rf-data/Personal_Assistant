@@ -74,7 +74,7 @@ allgemeine Knowledge-Extraktion vor der Evaluation.
 | Authlib/OIDC | C22 gemergt, UI-Lock enthält kein Authlib und Guard sperrt Produktionsstart. C26-01 plus tatsächlicher TLS-/Browser-/Rollennachweis C26-03. |
 | Container und Zielstorage | Builds/Digests, PID-/cgroup-/Shutdown-/OOM-Prüfung sowie Zielvolume-Semantik nicht abgenommen; C26-02/C26-04. |
 | Monitoring/Alarmierung | C15/C22-Konfiguration vorhanden, echter Scrape und Alarmzustellung fehlen; C26-05. |
-| Realmaterial/Goldevaluation | C21 prüfte Notes Week 5 technisch; ursprüngliche Week-0-Bundles und unabhängige reale Formel-Gold/Prediction-Paare fehlen im Nachweis. C23-06, Retrievalreview C24-05. |
+| Realmaterial/Goldevaluation | C23-06 liefert eine [technische Vorbereitung mit Inventar und Reviewvertrag](cs50/evaluation/c23_real_material_evaluation.md). Fünf versionierte reale HTML-Rohdateien, keine freigegebenen vollständigen Realbundles und kein bestätigtes Gold; fachliche Abnahme bleibt offen. Retrievalreview separat C24-05. |
 | Echter Qdrant-/E5-Pilot | Vorhandener Indexcode und frühere synthetische Tests; neuer Realpilot/SDK/Modell/Instanz/Remotefreigabe weiterhin blockiert. Optional C24-04, vorhandenen Draft #72 wiederverwenden. |
 | Planung und Projektzugriff | Issueplan noch nicht freigegeben; Projects-/Milestone-Inventar über verfügbaren Connector nicht möglich. Erst Zugriff und vorhandenes gemeinsames Board prüfen. |
 
