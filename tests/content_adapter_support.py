@@ -73,7 +73,9 @@ def attest(bundle, *, revision=REVISION):
     dump(bundle.implementation_path, evidence.model_dump(mode="json"))
 
 
-def material(tmp_path, kind="html", *, local_image=False, max_blocks=20000):
+def material(
+    tmp_path, kind="html", *, local_image=False, max_blocks=20000, code_raw=None
+):
     lecture = ResourceCandidate(
         course_id="cs50_python",
         role="lecture_video",
@@ -122,7 +124,7 @@ def material(tmp_path, kind="html", *, local_image=False, max_blocks=20000):
         raw = (ROOT / "tests/fixtures/material_quality/notes.html").read_bytes()
         doc, blobs = parse_html(binding, raw, config)
     elif kind == "code":
-        raw = '# Ä\r\nprint("hello")\n'.encode()
+        raw = '# Ä\r\nprint("hello")\n'.encode() if code_raw is None else code_raw
         doc, blobs = parse_code(binding, raw, config)
     else:
         # Synthetic normalized PDF-v2 contract fixture. Verification never parses PDF.

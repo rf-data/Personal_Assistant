@@ -16,9 +16,15 @@ def main(argv=None):
         "--content-config",
         help="Explicit private content-read-v1 configuration (API only)",
     )
+    parser.add_argument(
+        "--review-config",
+        help="Explicit private evaluation-review-v1 configuration (API only)",
+    )
     args = parser.parse_args(argv)
     if args.content_config and args.command != "api":
         parser.error("--content-config is API-only")
+    if args.review_config and args.command != "api":
+        parser.error("--review-config is API-only")
     settings = load_settings(args.config)
     if not 1024 <= args.port <= 65535:
         parser.error("Nonprivileged local port required")
@@ -30,7 +36,17 @@ def main(argv=None):
         content = (
             load_content_settings(args.content_config) if args.content_config else None
         )
-        serve(Controller(settings), args.port, content_settings=content)
+        from src.evaluation_store.http import load_review_settings
+
+        review = (
+            load_review_settings(args.review_config) if args.review_config else None
+        )
+        serve(
+            Controller(settings),
+            args.port,
+            content_settings=content,
+            review_settings=review,
+        )
     elif args.command == "worker":
         from src.job_control.executor import Executor
 
