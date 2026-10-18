@@ -19,7 +19,10 @@ Quellen folgen nach überprüfbaren Verträgen und Nutzungsrechten.
 
 Raw und Parsed bleiben dauerhaft ohne Knowledge-Extraktion nutzbar. Bestehende
 Modelle/Persistenz zuerst prüfen; **PostgreSQL ist ein Vorschlag, keine Entscheidung**.
-Qdrant-/Transcript-Retrieval ist vorhanden und vor einer neuen Suchlösung zu prüfen.
+Qdrant-/Transcript-Retrieval ist vorhanden. C24-01 vergleicht ihn im
+[Indexing-/Retrieval-ADR](architecture/retrieval_indexing_adr.md) und definiert
+[Verträge](architecture/index_record_contract.md) sowie den
+[Umsetzungsplan](planning/c24_implementation_plan.md); noch keine neue Suchruntime.
 [Architektur](architecture.md), [Issue-Entwurf](planning/issues.md).
 
 ## 2. Aktueller Entwicklungsschwerpunkt
