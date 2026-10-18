@@ -115,12 +115,15 @@ def import_transcript(
     )
     if not content.strip():
         raise ValueError(f"Empty transcript file: {path}")
+    if "\x00" in content:
+        raise ValueError(
+            "Invalid transcript text: NUL character (check explicit encoding)"
+        )
     if kind == "txt":
-        paragraphs = re.split(r"\n[ \t]*\n", content.strip())
+        paragraphs = re.split(r"\n(?:[ \t]*\n)+", content)
         segments = [
-            TranscriptSegment(seg_id=idx, start=None, end=None, text=text.strip())
-            for idx, text in enumerate(paragraphs)
-            if text.strip()
+            TranscriptSegment(seg_id=idx, start=None, end=None, text=text)
+            for idx, text in enumerate(p for p in paragraphs if p.strip())
         ]
         duration = None
     else:
@@ -134,7 +137,9 @@ def import_transcript(
         language=language,
         duration=duration,
         segments=segments,
-        text="\n\n".join(segment.text for segment in segments),
+        text=content
+        if kind == "txt"
+        else "\n\n".join(segment.text for segment in segments),
         provenance=TranscriptProvenance(
             transcript_source=(
                 TranscriptSource.OFFICIAL_TRANSCRIPT

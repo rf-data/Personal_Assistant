@@ -6,6 +6,7 @@ from pydantic import Field, model_validator
 
 from src.model_discovery.cs50_index import Hash, Name
 from src.tools_knowledge.cs50_checkpoint import Contract
+from src.tools_rag.cs50_embeddings import source_time_window
 
 
 class RetrievalQuestion(Contract):
@@ -65,6 +66,7 @@ def create_evaluation_template(
                 "Evaluation window must reference actual nonempty unique original cues"
             )
         cues = [segments[sid] for sid in ids]
+        start, end = source_time_window(cues)
         questions.append(
             RetrievalQuestion(
                 question_id=f"python0-{index + 1:02d}",
@@ -72,8 +74,8 @@ def create_evaluation_template(
                 expected_lecture_id=input.lecture_id,
                 source_id=input.source_id,
                 proposed_segment_ids=ids,
-                start=min(s.start for s in cues),
-                end=max(s.end for s in cues),
+                start=start,
+                end=end,
                 content_topic=spec["topic"],
             )
         )

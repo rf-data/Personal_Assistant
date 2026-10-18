@@ -103,6 +103,11 @@ def bind_precise_candidates(payload, chunk, segments, audit=None):
             # Preserve actual source order; never accept model-generated times.
             ids = [i for i in chunk.segment_ids if i in ids]
             selected = [segments[i] for i in ids]
+            try:
+                for segment in selected:
+                    segment.require_timestamps()
+            except ValueError as exc:
+                fail(str(exc), item_id, kind)
             item.update(
                 segment_ids=ids,
                 start=min(s.start for s in selected),
@@ -127,6 +132,8 @@ def bind_precise_candidates(payload, chunk, segments, audit=None):
 
 
 def precise_input(chunk, segments):
+    for i in chunk.segment_ids:
+        segments[i].require_timestamps()
     return {
         "input_version": INPUT_VERSION,
         "chunk_id": chunk.chunk_id,

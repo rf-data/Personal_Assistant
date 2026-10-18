@@ -1,5 +1,11 @@
 # Transcript-Ingestion, Artefakte und Resume v1
 
+C23-05: Dieser Indexpfad bleibt zeitbasierten, vollständig gebundenen SRTs
+vorbehalten. [TXT-/Nullzeitvertrag](../contracts/official_transcript_unknown_time.md):
+Lokaler TXTimport ist kein IngestionPlan. Sourceprüfung/Chunking und
+`source_time_window` weisen unbekannte Medienzeiten ausdrücklich ab; keine
+Zeichenoffsets als Sekunden und keine implizite TXT-zu-SRT-Konvertierung.
+
 Ein IngestionPlan bindet explizit eine Lecture, den vollständigen gewählten Kurs
 oder alle 50 Sources. Fehlende Importbelege blockieren vollständige Kursscopes;
 keine erfundenen Chunkzahlen. Portable Inputbindungen, gesamte Original-Chunks,

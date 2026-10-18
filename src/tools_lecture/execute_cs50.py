@@ -89,6 +89,10 @@ def validate_document(path, binding, raw):
         or provenance.media_id != binding.media_id
     ):
         raise ExecutionConflict("Transcript provenance contradicts the checked binding")
+    try:
+        document.require_timestamps()
+    except ValueError as exc:
+        raise ExecutionConflict(str(exc)) from exc
     expected = import_srt(
         raw,
         language=binding.language,
@@ -104,6 +108,7 @@ def validate_document(path, binding, raw):
 
 
 def validate_order(document):
+    document.require_timestamps()
     if not any(segment.text.strip() for segment in document.segments):
         raise ValueError("SRT contains no non-empty cues")
     if any(

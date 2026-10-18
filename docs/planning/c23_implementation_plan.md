@@ -1,5 +1,15 @@
 # C23: Umsetzung nach Freigabe des Persistenz-ADR
 
+**C23-05-Nachtrag 18.10.2026:** Auf Master `b2b994a` werden TXTimporte mit
+Nullzeiten, Intervallvalidierung und Timed-Guards ergänzt.
+[Vertrag und Verbrauchermatrix](../cs50/contracts/official_transcript_unknown_time.md)
+und [Offline-Abnahme](../cs50/evaluation/official_transcript_unknown_time.md)
+begrenzen den Nachweis. Ein allgemeiner TXT-ContentStore-Adapter bleibt ausstehend:
+Verbraucherabnahme ersetzt keinen Source-/Receipt-/Bindingvertrag. C23-04 war
+noch offen; keine Abhängigkeit davon oder Änderung von Issue-/Projectstatus.
+Vor PR-Erstellung wurde der Branch auf den inzwischen um #80 ergänzten Master
+`1254c2c` abgeglichen; der gemeinsame Transcript-/Content-Read-Vertrag ist geprüft.
+
 **Umsetzungsnachtrag C23-04, 18.10.2026:** Auf gemergtem A/B/C (`5986da9`)
 ist die [autorisierte Read API v1](../api/content_read_v1.md) im bestehenden
 HTTPserver implementiert. C23-03/#79 war offen und wird nicht übernommen.
@@ -37,7 +47,8 @@ kein Issue-/Project-/Meilensteinstatus wird hier geändert. Die ältere
 4. **C23-04**: autorisiertes paginiertes GET-API und UI-Vertragsbeispiele;
    kontrollierte C16-Anbindung ohne Veränderung der bestehenden C18-v1-Kette.
 5. **C23-05** kann nach D05 unabhängig umgesetzt werden. TXTadapter erst nach
-   erfolgreicher Verbraucherabnahme freischalten; SRT-v1 bleibt erhalten.
+   Verbraucherabnahme und vollständigem Source-/Receipt-/Bindingvertrag gesondert
+   freischalten; SRT-v1 bleibt erhalten.
 6. **C23-06** nach D07: berechtigter Korpus und unabhängig beurteilte Goldreferenzen.
    Kann parallel zu 2–5 vorbereitet werden; Originalübernahme benötigt zusätzlich
    C23-03 und konkrete Freigabe. Keine automatische Downloadphase.

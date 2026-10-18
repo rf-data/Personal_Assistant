@@ -1,24 +1,49 @@
 ## data_transcribe.py
 # import
 from datetime import datetime
-from pydantic import BaseModel, Field  # dataclass
-from pathlib import Path
 
 # from typing import Protocol
 from enum import Enum
+from math import isfinite
+from pathlib import Path
+
+from pydantic import BaseModel, Field, model_validator  # dataclass
 
 
 # @dataclass
 class TranscriptSegment(BaseModel):
+    """Seconds from the source, or two explicit nulls for an unlocated segment."""
+
     seg_id: int
-    start: float
-    end: float
+    start: float | None = Field(ge=0, allow_inf_nan=False)
+    end: float | None = Field(ge=0, allow_inf_nan=False)
     text: str
     speaker: str | None = None
     confidence: float | None = None
 
+    @model_validator(mode="after")
+    def valid_interval(self):
+        if (self.start is None) != (self.end is None):
+            raise ValueError("Transcript times must both be known or both null")
+        if self.start is not None and self.end < self.start:
+            raise ValueError("Transcript end precedes start")
+        return self
 
-class TranscriptSource(str, Enum):
+    def require_timestamps(self) -> tuple[float, float]:
+        """Guard timed adapters, including models copied without validation."""
+        if self.start is None or self.end is None:
+            raise ValueError(
+                "unknown_transcript_time: known segment timestamps required; "
+                "plain-text transcripts need a text-based chunking strategy."
+            )
+        if not (
+            isfinite(self.start) and isfinite(self.end) and 0 <= self.start <= self.end
+        ):
+            raise ValueError("invalid_transcript_time: invalid segment interval")
+        return self.start, self.end
+
+
+class TranscriptSource(str, Enum):  # noqa: UP042 - preserve legacy Enum string behavior
     MANUAL_SUBTITLE = "manual_subtitle"
     AUTO_SUBTITLE = "auto_subtitle"
     WHISPER = "whisper"
@@ -26,7 +51,7 @@ class TranscriptSource(str, Enum):
     OFFICIAL_SUBTITLE = "official_subtitle"
 
 
-class DownloadStrategy(str, Enum):
+class DownloadStrategy(str, Enum):  # noqa: UP042 - preserve legacy Enum string behavior
     SUBTITLES = "subtitles"
 
     AUDIO_DEFAULT = "audio_default"
@@ -85,6 +110,19 @@ class TranscriptDocument(BaseModel):
     text: str
 
     provenance: TranscriptProvenance | None = None
+
+    @model_validator(mode="after")
+    def unknown_duration(self):
+        if self.duration is not None and any(s.start is None for s in self.segments):
+            raise ValueError(
+                "Transcript duration must be null with unknown segment times"
+            )
+        return self
+
+    def require_timestamps(self) -> None:
+        """No serialization fields or invented timestamps are added by this check."""
+        for segment in self.segments:
+            segment.require_timestamps()
 
 
 """

@@ -1,5 +1,10 @@
 # Gemeinsamer Transcript-Metadatenvertrag der Knowledge-Modelle
 
+C23-05 ergänzt den separaten
+[Segment-/Nullzeitvertrag](official_transcript_unknown_time.md).
+Metadatenkompatibilität erlaubt keine zeitlose Knowledge-Verarbeitung;
+Chunking/Evidence verlangen weiterhin geprüfte numerische Originalzeiten.
+
 Stand: 14. Oktober 2026. Eigenständige Basis origin/master `fa467e6`, nach
 Integration des Lazy-Import-PRs #24. Arbeit in einem frischen separaten Worktree.
 

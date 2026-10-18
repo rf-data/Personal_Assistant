@@ -622,3 +622,18 @@ Livebackup, automatische WAL-Reparatur, Slotübernahme nach Zeitablauf und
 unbelegte Datei-Adoption sind derzeit gesperrt. C16/C18/C20 werden nicht erweitert;
 Jobresultate sind keine Contentautorität. Der neue Contentroot wird noch nicht
 vom C22-Verbundbackup erfasst. Kein produktiver Go-live durch diesen PR.
+
+## C23-05: Kompatibilitätsnachtrag für Transcriptzeiten
+
+Der [offizielle Transcriptvertrag](../cs50/contracts/official_transcript_unknown_time.md)
+erweitert `TranscriptSegment` um explizite Nullpaare und validiert Sekundenintervalle.
+ContentLocator bleibt unverändert: `unknown` mit zwei Nullwerten ist kompatibel;
+`known` verlangt gültige Sekunden. Kein DDL-/ID-/Hash-/Slot-/Payloadversionswechsel.
+
+Der bestehende SRTadapter verwendet weiterhin vollständige Receipt-/Hash-/Raw-SRT-
+Prüfung. Er weist unbekannte Segmentzeiten nun ausdrücklich ab; Recovery prüft
+dies ebenfalls am gespeicherten SRT-Publikationsbeleg, ohne Reparse. Kein allgemeiner
+TXTadapter wird freigeschaltet. Er benötigt einen separaten Source-/Receipt-/Binding-
+und Absatz-/Zeichenankervertrag mit ACL-, Gate-, Recovery- und Reimportabnahme.
+[Ausgeführte Regressionen und Umgebungsgrenzen](../cs50/evaluation/official_transcript_unknown_time.md)
+ersetzen keine reale Korpus- oder Produktionsfreigabe.
