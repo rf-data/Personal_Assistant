@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "schema_version": 1,
+      "index_record_id": "content_index_record_v1:1d549c41ca8a53422f53c5f23888dd581c509c28120192243f71bd77f6402228",
+      "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+      "source_version_id": "content_source_version_v1:0e6795ed14a0833c652ec0f733d19004fd690d75b9f3820331110fe9dd09808e",
+      "parsed_version_id": "content_version_v1:a2f2869981a94213922243d7fa4451fc80934049a8c481619fc158cee2604588",
+      "block_id": "material_block:1fcf4634064a460baf15a1df86125d717bc115e87c09c1ee57285cc3317d0d95",
+      "content_type": "code",
+      "anchor": {
+        "parsed_version_id": "content_version_v1:a2f2869981a94213922243d7fa4451fc80934049a8c481619fc158cee2604588",
+        "block_id": "material_block:1fcf4634064a460baf15a1df86125d717bc115e87c09c1ee57285cc3317d0d95",
+        "text_sha256": "b80792336156c7b0f7fe02eeef24610d2d52a10d1810397744471d1dc5738180",
+        "start": 0,
+        "end": 15,
+        "offset_unit": "unicode_codepoint"
+      },
+      "excerpt": {
+        "schema_version": 1,
+        "parsed_version_id": "content_version_v1:a2f2869981a94213922243d7fa4451fc80934049a8c481619fc158cee2604588",
+        "block_id": "material_block:1fcf4634064a460baf15a1df86125d717bc115e87c09c1ee57285cc3317d0d95",
+        "start": 0,
+        "end": 15,
+        "text_length": 15,
+        "text_sha256": "b80792336156c7b0f7fe02eeef24610d2d52a10d1810397744471d1dc5738180",
+        "text": "print(\"hello\")\n"
+      },
+      "locators": [
+        {
+          "raw_artifact_sha256": "f944f246451f16ddde8d7fc14de4438d6fda0557ac2505e3912cb25eba62536d",
+          "origin_pointer": "/blocks/1",
+          "page": null,
+          "dom": null,
+          "line_start": 2,
+          "line_end": 2,
+          "bbox": null,
+          "coordinate_system": "unknown",
+          "chapter_path": [],
+          "original_segment_id": null,
+          "time_status": "not_applicable",
+          "start": null,
+          "end": null,
+          "raw_reference": {
+            "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+            "source_version_id": "content_source_version_v1:0e6795ed14a0833c652ec0f733d19004fd690d75b9f3820331110fe9dd09808e",
+            "role": "primary",
+            "ordinal": 0,
+            "sha256": "f944f246451f16ddde8d7fc14de4438d6fda0557ac2505e3912cb25eba62536d",
+            "size_bytes": 21,
+            "download_route": "/v1/content/sources/resource%3A9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5/versions/content_source_version_v1%3A0e6795ed14a0833c652ec0f733d19004fd690d75b9f3820331110fe9dd09808e/raw/primary/0"
+          }
+        }
+      ],
+      "locators_in_structure": false,
+      "structure_route": "/v1/content/parsed/content_version_v1%3Aa2f2869981a94213922243d7fa4451fc80934049a8c481619fc158cee2604588/blocks/material_block%3A1fcf4634064a460baf15a1df86125d717bc115e87c09c1ee57285cc3317d0d95/structure",
+      "text_route": "/v1/content/parsed/content_version_v1%3Aa2f2869981a94213922243d7fa4451fc80934049a8c481619fc158cee2604588/blocks/material_block%3A1fcf4634064a460baf15a1df86125d717bc115e87c09c1ee57285cc3317d0d95/text",
+      "method": "lexical",
+      "components": [
+        {
+          "backend": "sqlite_fts5",
+          "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+          "raw_score": -8.8e-07,
+          "score_schema": "sqlite_fts5_bm25_v1",
+          "direction": "lower_is_better"
+        }
+      ],
+      "ranking_score": 0.01639344262295082,
+      "ranking_schema": "source_rrf_v1",
+      "index_generation": "1a760760c6868a04f34183884fbcb2297ca4363d07821f65797abea60b4d92d0",
+      "projection_fingerprint": "4d08c36adb92d4b1e2219f7192ae6d02f48e9eee08e8ec40513547918b965ca3"
+    }
+  ],
+  "next_cursor": null,
+  "index_generation": "1a760760c6868a04f34183884fbcb2297ca4363d07821f65797abea60b4d92d0",
+  "ranking_schema": "source_rrf_v1",
+  "selection_scope": "explicit_active_selection"
+}

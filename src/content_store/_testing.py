@@ -387,3 +387,13 @@ def project_synthetic_for_index(store, parsed_version_id, *, actor, config=None)
     return _project(
         store, parsed_version_id, actor=actor, config=config, synthetic=True
     )
+
+
+def synthetic_content_index(store, index_root, *, cursor_key_file, initialize=False):
+    """Explicit test-only FTS adapter; cannot open/promote normal content stores."""
+    from src.tools_rag.content_index import ContentIndex
+
+    if store._purpose != "synthetic_test":
+        raise Forbidden("permanently synthetic test store required")
+    factory = ContentIndex.initialize if initialize else ContentIndex
+    return factory(store, index_root, cursor_key_file=cursor_key_file, _synthetic=True)

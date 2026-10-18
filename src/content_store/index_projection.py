@@ -94,27 +94,8 @@ def _project(store, version_id, *, actor, config, synthetic):
         raise Forbidden("projection store purpose denied")
     try:
         with store._maintenance(), store._connection() as db:
-            _require(
-                db.execute("SELECT purpose FROM metadata WHERE id=1").fetchone()[0]
-                == expected_purpose
-            )
-            source, sv, version, parser, blocks, projection, artifacts = _load(
-                store, db, version_id, actor, synthetic
-            )
-            intervals, excluded, alternatives = _selection(
-                source, sv, version, parser, blocks, projection, artifacts, synthetic
-            )
-            return _records(
-                source,
-                sv,
-                version,
-                parser,
-                blocks,
-                intervals,
-                excluded,
-                alternatives,
-                config,
-                synthetic,
+            return _project_locked(
+                store, db, version_id, actor, config, synthetic=synthetic
             )
     except IndexProjectionError:
         raise
@@ -130,7 +111,35 @@ def _project(store, version_id, *, actor, config, synthetic):
         raise IndexProjectionError("snapshot_binding") from None
 
 
-def _load(store, db, version_id, actor, synthetic):
+def _project_locked(
+    store, db, version_id, actor, config, *, synthetic=False, budget=None
+):
+    """Internal shared snapshot boundary; caller holds maintenance and DB locks."""
+    _require(
+        db.execute("SELECT purpose FROM metadata WHERE id=1").fetchone()[0]
+        == ("synthetic_test" if synthetic else "content")
+    )
+    source, sv, version, parser, blocks, projection, artifacts = _load(
+        store, db, version_id, actor, synthetic, budget=budget
+    )
+    intervals, excluded, alternatives = _selection(
+        source, sv, version, parser, blocks, projection, artifacts, synthetic
+    )
+    return _records(
+        source,
+        sv,
+        version,
+        parser,
+        blocks,
+        intervals,
+        excluded,
+        alternatives,
+        config,
+        synthetic,
+    )
+
+
+def _load(store, db, version_id, actor, synthetic, *, budget=None):
     row = db.execute(
         "SELECT * FROM parsed_versions WHERE id=? AND state='published'", (version_id,)
     ).fetchone()
@@ -241,6 +250,8 @@ def _load(store, db, version_id, actor, synthetic):
 
     # Every referenced artifact is state/size/SHA checked once, under the same locks.
     cache, consumed = {}, 0
+    if budget is None:
+        budget = [0]
 
     def read(ref):
         nonlocal consumed
@@ -252,6 +263,8 @@ def _load(store, db, version_id, actor, synthetic):
             raise NotFound("version artifact unavailable")
         if ref.sha256 not in cache:
             consumed += ref.size_bytes
+            budget[0] += ref.size_bytes
+            _require(budget[0] <= MAX_SNAPSHOT_BYTES, "projection_limit")
             _require(consumed <= MAX_SNAPSHOT_BYTES, "projection_limit")
             cache[ref.sha256] = store._read_blob(ref, db)
         return cache[ref.sha256]
@@ -299,6 +312,8 @@ def _load(store, db, version_id, actor, synthetic):
                 "SELECT data FROM processing_runs WHERE id=?", (item["run_id"],)
             ).fetchone()[0]
             consumed += len(run_data.encode("utf-8"))
+            budget[0] += len(run_data.encode("utf-8"))
+            _require(budget[0] <= MAX_SNAPSHOT_BYTES, "projection_limit")
             _require(consumed <= MAX_SNAPSHOT_BYTES, "projection_limit")
             runs[item["run_id"]] = ProcessingRun.model_validate_json(run_data)
         _require(
