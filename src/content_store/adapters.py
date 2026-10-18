@@ -643,7 +643,9 @@ def verify_srt_bundle(bundle: SRTBundle) -> VerifiedPublicationCandidate:
     return _issue(bundle, SRTBundle, "srt")
 
 
-def import_verified_bundle(store, candidate, *, actor, request_key):
+def import_verified_bundle(
+    store, candidate, *, actor, request_key, raw_retry=None, binding_retry=None
+):
     """Persist independently valid raw/source records, then atomic parsed publication."""
     import io
 
@@ -664,6 +666,7 @@ def import_verified_bundle(store, candidate, *, actor, request_key):
             expected_size=ref.size_bytes,
             mime_type=ref.mime_type,
             actor=actor,
+            retry=raw_retry,
         )
         version = store.register_source_version(
             source.source_id,
@@ -671,6 +674,7 @@ def import_verified_bundle(store, candidate, *, actor, request_key):
             variant_key=verified.variant_key,
             binding=candidate,
             actor=actor,
+            retry=binding_retry,
         )
         return store.publish_parsed_document(
             version.source_version_id, candidate, actor=actor, request_key=request_key

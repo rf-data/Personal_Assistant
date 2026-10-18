@@ -1,0 +1,115 @@
+{
+  "report": {
+    "schema_version": 1,
+    "kind": "cs50-content-inventory-v1",
+    "entries": [
+      {
+        "entry_id": "synthetic-material",
+        "source_id": "resource:881b52c446c5dcf15ae79e8ab1f36f5d4ecb711c089f7de70787f646aee5b87b",
+        "course_id": "cs50_python",
+        "kind": "material",
+        "expected_implementation_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "supplied_paths": {
+          "raw": "/example/c23-03/material/bundle/2aa2578ce3d7b9e66365a2c1ed68169ce6aa4233cc0a88aac8f149485c6d2066/raw/source",
+          "normalized": "/example/c23-03/material/bundle/2aa2578ce3d7b9e66365a2c1ed68169ce6aa4233cc0a88aac8f149485c6d2066/e2d95ecae4bc6796325bcb20e988be22100e33f9959bbfa5cc764ce38dad3def/normalized.v1.json",
+          "receipt": "/example/c23-03/material/bundle/2aa2578ce3d7b9e66365a2c1ed68169ce6aa4233cc0a88aac8f149485c6d2066/receipt.v1.json",
+          "plan": "/example/c23-03/material/plan.json",
+          "implementation": "/example/c23-03/material/implementation.json"
+        },
+        "expected_original_paths": {
+          "raw": "/example/c23-03/material/bundle/2aa2578ce3d7b9e66365a2c1ed68169ce6aa4233cc0a88aac8f149485c6d2066/raw/source",
+          "payload": "/example/c23-03/material/bundle/2aa2578ce3d7b9e66365a2c1ed68169ce6aa4233cc0a88aac8f149485c6d2066/e2d95ecae4bc6796325bcb20e988be22100e33f9959bbfa5cc764ce38dad3def/normalized.v1.json",
+          "receipt": "/example/c23-03/material/bundle/2aa2578ce3d7b9e66365a2c1ed68169ce6aa4233cc0a88aac8f149485c6d2066/receipt.v1.json"
+        },
+        "hashes": {
+          "implementation": "68dfa1361441cb239ae10bd7dcabf64264b98883938a95837f0a2c152d1577c5",
+          "payload": "e55609813e1efff13c8be9e44dbd303f6c06af8d6a74292d5f5aebcd6bdf0c12",
+          "plan": "3ebcc1f193fb667c9ce56a57a9b025500748e9bddb612752f97c75aca013cd0b",
+          "raw": "6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781",
+          "receipt": "65196137f645a9ab88583ab9844f4d6b0abed55628826b5cfd899f8e4375d6e5"
+        },
+        "parser": {
+          "parser_name": "html",
+          "parser_version": "2",
+          "parameters": {
+            "name": "html",
+            "version": "2",
+            "max_bytes": 16777216,
+            "max_pages": 100,
+            "max_blocks": 20000,
+            "max_images": 100,
+            "timeout": 20.0,
+            "memory_mb": 1024
+          },
+          "implementation_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "payload_schema": "NormalizedDocument:1",
+          "projection_schema": "projection.v1",
+          "adapter_version": "cs50_material_content_v1"
+        },
+        "section_keys": [
+          "0"
+        ],
+        "lecture_ids": [
+          "resource:9bc497fe08d6a5a5547fb493f3c924fb8b67b02d8839360fc1a6e67d0537acca"
+        ],
+        "source_version_id": "content_source_version_v1:267149424e969ab515fec0aeb420879e69dc9e061e3fe3e75fe5fd8050278d1e",
+        "existing_parsed_version_id": null,
+        "validation_status": "verified",
+        "issues": [],
+        "manual_approvals": []
+      },
+      {
+        "entry_id": "synthetic-srt",
+        "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+        "course_id": "cs50_python",
+        "kind": "srt",
+        "expected_implementation_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "supplied_paths": {
+          "raw": "/example/c23-03/srt/bundle/data/lectures/Harvard/cs50_python/cs50-v1/0/4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192/fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5/source.srt",
+          "transcript": "/example/c23-03/srt/bundle/data/lectures/Harvard/cs50_python/cs50-v1/0/4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192/fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5/transcript.json",
+          "receipt": "/example/c23-03/srt/bundle/data/lectures/Harvard/cs50_python/cs50-v1/0/4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192/fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5/execution.v1.json",
+          "plan": "/example/c23-03/srt/plan.json",
+          "implementation": "/example/c23-03/srt/implementation.json"
+        },
+        "expected_original_paths": {
+          "raw": "/example/c23-03/srt/bundle/data/lectures/Harvard/cs50_python/cs50-v1/0/4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192/fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5/source.srt",
+          "payload": "/example/c23-03/srt/bundle/data/lectures/Harvard/cs50_python/cs50-v1/0/4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192/fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5/transcript.json",
+          "receipt": "/example/c23-03/srt/bundle/data/lectures/Harvard/cs50_python/cs50-v1/0/4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192/fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5/execution.v1.json"
+        },
+        "hashes": {
+          "implementation": "c2d6fe3eca547bab80e0130b2a9156d02f13dfd81ef91bb2314c08d6ca5470d4",
+          "payload": "52fbcd199423759cf54440a5617d2a199143b18ea7b139b68f114a81cddaebba",
+          "plan": "6b64c776e9dbb41c5c212cdf3887420dfe9513bd0143e87b97a3fe5b6bd8b4b0",
+          "raw": "6a19c2236d17ee8b24e9bd25932315e5beda3b55936d938a724fcbcef0818bb6",
+          "receipt": "523f97b753559637da268737f5a34e6f35dc647918492a22b3871f19c73c15f6"
+        },
+        "parser": {
+          "parser_name": "srt",
+          "parser_version": "1",
+          "parameters": {
+            "encoding": "utf-8-sig",
+            "media_format": "srt",
+            "language": "en",
+            "preserve_empty_cues": true
+          },
+          "implementation_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "payload_schema": "TranscriptDocument:legacy-unversioned",
+          "projection_schema": "projection.v1",
+          "adapter_version": "cs50_srt_content_v1"
+        },
+        "section_keys": [
+          "0"
+        ],
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "source_version_id": "content_source_version_v1:692961f5dd6f66994f770438089efa848cb4798ecab9db7e2d0962d26dd18836",
+        "existing_parsed_version_id": null,
+        "validation_status": "verified",
+        "issues": [],
+        "manual_approvals": []
+      }
+    ]
+  },
+  "sha256": "72fd0277e03614fc179158ece1a11c0ef5f03a643b0915c67cf6e0ba715639aa"
+}
