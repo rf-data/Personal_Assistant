@@ -333,6 +333,14 @@ class BlockPage(Contract):
     next_cursor: None = None
 
 
+class RetryAttempt(Contract):
+    """Explicit v1 attempt after operator abandonment; never a slot override."""
+
+    schema_version: Literal[1] = 1
+    rejected_run_id: str = Field(pattern=r"^[0-9a-f]{32}$")
+    request_key: Name
+
+
 class ProcessingRun(Contract):
     run_id: Identifier
     source_id: Name
@@ -346,6 +354,7 @@ class ProcessingRun(Contract):
     manifest: tuple[ArtifactReference, ...] = ()
     parsed_version_id: Name | None = None
     recovery: ArtifactReference | None = None
+    retry_of: str | None = Field(default=None, pattern=r"^[0-9a-f]{32}$")
     error_code: str | None = None
 
 

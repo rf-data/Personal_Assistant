@@ -1,4 +1,12 @@
-# C23-02A/B/C: ContentStore, Adapter und Offlinebetrieb
+# C23-02A/B/C und C23-03: ContentStore und Quellenverträge
+
+**Ergänzung 18.10.2026:** C23-03 basiert auf Master `5986da9` einschließlich #78.
+Die bestehenden IDs, Hashdomänen, Gates, SQL-DDL, Recovery- und Backupverfahren
+bleiben maßgeblich. Neu sind ausschließlich explizite versionierte Retry-Intents
+für bewusst verworfene Raw-/Binding-Runs und ein lesendes Inventar expliziter
+Bundlelisten. Vertrag, Ausgangsmatrix, Kompatibilität, D06/D07 und Nachweise:
+[C23-03 Quelleninventar](../operations/c23_source_inventory.md).
+Die folgenden A/B/C-Abschnitte behalten ihren historischen Stand.
 
 Stand **17.10.2026**. C23-02C baut auf Master
 `9a1325485f1b2acc7df177b8a137f771190eca97` mit gemergtem A (#76) und B (#77)

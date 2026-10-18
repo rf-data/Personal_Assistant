@@ -1,5 +1,14 @@
 # C23: Umsetzung nach Freigabe des Persistenz-ADR
 
+**Umsetzungsnachtrag 18.10.2026:** A/B/C sind über #76–#78 gemergt. C23-03
+ergänzt auf `5986da9` die noch fehlende Wiederholungsabnahme, expliziten Retry
+nach Operator-Reject und ein rein lesendes Inventar. Ausgangsmatrix, endgültige
+Verträge und Testbefunde stehen im
+[Quelleninventar](../operations/c23_source_inventory.md). Die folgenden Tabellen
+sind der ursprüngliche Plan, keine Behauptung, A/B/C seien weiterhin unimplementiert.
+C23 bleibt offen; D06, D07 sowie C23-04/05/06 und produktive Freigaben bleiben
+separate Schritte. Keine Änderung von Issue-/Project-/Meilensteinstatus.
+
 Stand **17.10.2026**, Planungsentwurf. Grundlage sind der aktuelle Backendmaster
 `053209ad89fac828c7f47677056c44a624ac1af7`, der
 [verbindliche Issue-Entwurf](issue_plan.v1.json),
