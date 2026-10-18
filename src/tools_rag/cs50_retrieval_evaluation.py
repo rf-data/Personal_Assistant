@@ -5,6 +5,7 @@ from typing import Literal
 from pydantic import Field, model_validator
 
 from src.model_discovery.cs50_index import Hash, Name
+from src.tools_evaluation.retrieval_metrics import recall_and_rr
 from src.tools_knowledge.cs50_checkpoint import Contract
 from src.tools_rag.cs50_embeddings import source_time_window
 
@@ -113,11 +114,9 @@ def ranking_metrics(relevant, rankings, *, k):
         raise ValueError("Complete nonempty relevance sets and positive k required")
     recall, rr = [], []
     for gold, ranked in zip(relevant, rankings, strict=True):
-        top = ranked[:k]
-        recall.append(len(set(gold).intersection(top)) / len(set(gold)))
-        rr.append(
-            next((1 / (i + 1) for i, point in enumerate(top) if point in gold), 0.0)
-        )
+        query_recall, query_rr = recall_and_rr(gold, ranked, k=k)
+        recall.append(query_recall)
+        rr.append(query_rr)
     return {"recall_at_k": sum(recall) / len(recall), "mrr_at_k": sum(rr) / len(rr)}
 
 

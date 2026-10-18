@@ -9,6 +9,8 @@ C24-04-A ergänzt den [ContentRecord-Vektoradapter](content_vector_implementatio
 mit FakeEmbedder/Fake-Transport am selben Guard. HTTPsearch, Jobs und reale
 Qdrant-/E5-/Hybridabnahme bleiben außerhalb dieses Implementierungsstands.
 C23-06 ist technisch vorbereitet, seine fachliche Realabnahme bleibt blockiert.
+C24-05-A implementiert nun die [Offlineevaluation mit unabhängigen Goldverträgen](../cs50/evaluation/content_retrieval_evaluation.md).
+Die nachfolgenden Architekturentscheidungen und Grenzen bleiben unverändert.
 
 ## Entscheidung und Autorität
 
