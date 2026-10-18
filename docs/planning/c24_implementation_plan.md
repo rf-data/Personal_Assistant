@@ -1,9 +1,13 @@
 # C24: Implementierungsplan nach dem Indexing-/Retrieval-ADR
 
 18.10.2026 · Basis Master `95c4c40c1ab738ce1d75ac9ed554a46613419133` nach #82.
-C24-01 lieferte Architekturverträge und diesen Plan. C24-02 ergänzt nun die
+C24-01 lieferte Architekturverträge und diesen Plan. C24-02 ergänzte die
 [erste Projektion ohne Backendindex](../architecture/index_projection_implementation.md),
-entsprechend 02-A. Kein FTS5-Index, HTTPsearch oder UI ist implementiert. [ADR](../architecture/retrieval_indexing_adr.md),
+entsprechend 02-A. Der aktuelle Benutzerauftrag **C24-03** implementiert
+[Source-FTS5, Generationen und interne Suche](../architecture/content_fts_implementation.md),
+entsprechend 02-B plus 03-A. HTTPsearch, Jobanbindung und UI sind weiterhin offen.
+Die folgenden detaillierten Paketanforderungen bleiben Prüfplan; tatsächliche
+Abnahme und Grenzen stehen im verlinkten Implementierungsbericht. [ADR](../architecture/retrieval_indexing_adr.md),
 [Indexrecord-/Suchvertrag](../architecture/index_record_contract.md),
 [C23-Stand](c23_implementation_plan.md), [Governance](governance.md).
 

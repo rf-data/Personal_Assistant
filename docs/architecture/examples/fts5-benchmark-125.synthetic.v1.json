@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "data_kind": "synthetic_technical_fixture",
+  "relevance_quality_evaluated": false,
+  "environment": {
+    "python": "3.12.12",
+    "sqlite": "3.50.4",
+    "pydantic": "2.13.5"
+  },
+  "sources": 1,
+  "records": 125,
+  "source_sqlite_bytes": 319488,
+  "active_generation_bytes": 321546,
+  "total_index_bytes_after_rebuild": 645534,
+  "build_seconds": 1.0065646349994495,
+  "rebuild_seconds": 1.2607831479999732,
+  "queries": [
+    {
+      "query": "124",
+      "elapsed_seconds": [
+        0.4374763849991723,
+        0.3864163580001332,
+        0.36430118000043876
+      ],
+      "status": "ok",
+      "returned": 1,
+      "next_cursor": false
+    },
+    {
+      "query": "Python 124",
+      "elapsed_seconds": [
+        0.33249842900022486,
+        0.33335099299983995,
+        0.3670478779995392
+      ],
+      "status": "ok",
+      "returned": 1,
+      "next_cursor": false
+    },
+    {
+      "query": "café 124",
+      "elapsed_seconds": [
+        0.5710657289992014,
+        0.9534421270000166,
+        0.4159170560005805
+      ],
+      "status": "ok",
+      "returned": 1,
+      "next_cursor": false
+    },
+    {
+      "query": "unfindable",
+      "elapsed_seconds": [
+        0.40598966300058237,
+        0.40227454300020327,
+        0.32874402700053906
+      ],
+      "status": "ok",
+      "returned": 0,
+      "next_cursor": false
+    },
+    {
+      "query": "function",
+      "elapsed_seconds": [
+        0.9534473240000807,
+        1.1149383329993725,
+        1.0302798609991441
+      ],
+      "status": "ok",
+      "returned": 84,
+      "next_cursor": true
+    }
+  ],
+  "unchanged_content_bytes": true,
+  "notes": [
+    "Three warm-process sequential measurements per query; verification and hydration included.",
+    "A deadline can reject a request before match counting; errors are reported, never treated as empty successful results.",
+    "No relevance judgments, precision, recall or MRR.",
+    "No throughput/RSS/load approval; one Source on a local test filesystem."
+  ]
+}

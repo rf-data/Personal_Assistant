@@ -7,6 +7,11 @@ Maßgeblich: [ADR](retrieval_indexing_adr.md), [Recordvertrag](index_record_cont
 [Umsetzungsplan](../planning/c24_implementation_plan.md),
 [ContentStore](content_store_implementation.md), [C23-06](../cs50/evaluation/c23_real_material_evaluation.md).
 
+Nachfolgend ist der historische C24-02-Projektionsumfang dokumentiert.
+Darauf baut inzwischen [C24-03 mit FTS5 und interner Suche](content_fts_implementation.md)
+auf. `_project_locked` verwendet dieselbe Verifikation unter einem bereits
+gehaltenen Content-Snapshot; öffentlicher Projektionsvertrag bleibt unverändert.
+
 ## Implementiert und ausdrücklich nicht implementiert
 
 Implementiert sind `index_models.py` (strenge versionierte Modelle, Fingerprints,

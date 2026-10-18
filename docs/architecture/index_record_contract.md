@@ -1,10 +1,12 @@
 # C24 Indexrecord- und Retrievalvertrag v1
 
-18.10.2026 · Normative Spezifikation. **C24-02 implementiert jetzt Modelle und
-lesende Projektion**; Build/Rebuild, Backendindex und Retrieval bleiben geplante
-Verträge. [Implementierung und Abnahme](index_projection_implementation.md).
+18.10.2026 · Normative Spezifikation. **C24-02 implementiert Modelle und
+lesende Projektion**; C24-03 ergänzt Build/Rebuild, Source-FTS5 und interne Suche.
+[Projektionsabnahme](index_projection_implementation.md),
+[FTS5-Implementierung und Grenzen](content_fts_implementation.md).
 [ADR](retrieval_indexing_adr.md) und [Implementierungsplan](../planning/c24_implementation_plan.md)
-gehören dazu. Im Folgenden „muss“ bezeichnet spätere Abnahmekriterien.
+gehören dazu. Im Folgenden „muss“ bezeichnet die verbindlichen Abnahmekriterien;
+HTTP-/Vektoranteile bleiben geplante Folgearbeit.
 Bestehende [Contentmodelle](../../src/content_store/models.py), `Contract`, `Name`,
 `Sha`, `Principal` und `ContentLocator` wiederverwenden. Neue Modelle in
 `src/content_store/index_models.py`, ein gemeinsamer Projektor in
