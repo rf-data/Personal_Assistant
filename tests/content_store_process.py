@@ -159,8 +159,16 @@ def main():
 
     store.publish_parsed_document = on_publish
     try:
+        retries = {}
+        if len(sys.argv) > 7:
+            from src.content_store.models import RetryAttempt
+
+            retries = {
+                key: RetryAttempt.model_validate(value)
+                for key, value in json.loads(sys.argv[7]).items()
+            }
         result = import_verified_bundle(
-            store, candidate, actor=OWNER, request_key=request
+            store, candidate, actor=OWNER, request_key=request, **retries
         )
         emit(dict(created=result.created, version=result.version.parsed_version_id))
     except ContentStoreError as error:

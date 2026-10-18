@@ -108,6 +108,14 @@ def _run(db, run_id):
 
 
 def _intent(store, run, db=None):
+    if run.retry_of is not None:
+        from src.content_store.store import _retry_parent
+
+        if db is not None:
+            _retry_parent(db, run)
+        else:
+            with store._connection() as connection:
+                _retry_parent(connection, run)
     if run.recovery is None:
         raise UnverifiedBinding("legacy run has no verified recovery intention")
     # Explicit integrity inspection may examine quarantined bytes; it never clears
@@ -635,6 +643,13 @@ def _metadata(store, db):
     runs = []
     for row in db.execute("SELECT * FROM processing_runs"):
         r = ProcessingRun.model_validate_json(row["data"])
+        if r.retry_of is not None:
+            from src.content_store.store import _retry_parent
+
+            try:
+                _retry_parent(db, r)
+            except Conflict:
+                raise IntegrityError("stored retry lineage conflict") from None
         if (
             r.run_id,
             r.source_id,

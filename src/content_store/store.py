@@ -33,6 +33,7 @@ from src.content_store.models import (
     ParsedDocumentVersion,
     ParsedDocumentView,
     ProcessingRun,
+    RetryAttempt,
     Source,
     SourceGrant,
     SourceRegistration,
@@ -48,7 +49,43 @@ from src.model_discovery.cs50 import deterministic_id
 
 
 def _encoded(model):
-    return canonical(model.model_dump(mode="json")).decode("utf-8")
+    value = model.model_dump(mode="json")
+    # Keep ordinary runs byte-compatible with the pre-retry JSON shape.
+    if isinstance(model, ProcessingRun) and model.retry_of is None:
+        value.pop("retry_of")
+    return canonical(value).decode("utf-8")
+
+
+def _retry_parent(db, run, manifest=None):
+    """Validate persisted lineage without changing the terminal predecessor."""
+    row = db.execute(
+        "SELECT data FROM processing_runs WHERE id=?", (run.retry_of,)
+    ).fetchone()
+    if row is None:
+        raise Conflict("retry predecessor required")
+    parent = ProcessingRun.model_validate_json(row[0])
+    manifest = run.manifest if manifest is None else manifest
+    if (
+        parent.state != "rejected"
+        or parent.error_code != "operator_abandoned"
+        or parent.run_id == run.run_id
+        or parent.request_key == run.request_key
+        or (
+            parent.source_id,
+            parent.actor,
+            parent.kind,
+            parent.slot_id,
+            parent.request_fingerprint,
+        )
+        != (run.source_id, run.actor, run.kind, run.slot_id, run.request_fingerprint)
+        or run.kind != "raw"
+        or not run.slot_id.startswith(
+            ("content_raw_slot_v1:", "content_binding_slot_v1:")
+        )
+        or (parent.manifest and manifest and parent.manifest != manifest)
+    ):
+        raise Conflict("retry contradicts abandoned attempt")
+    return parent
 
 
 class ContentStore:
@@ -385,17 +422,60 @@ class ContentStore:
             return source.model_copy(update={"acl_revision": source.acl_revision + 1})
 
     def _reserve(
-        self, source_id, actor, *, kind, slot_id, request_key, request_fingerprint
+        self,
+        source_id,
+        actor,
+        *,
+        kind,
+        slot_id,
+        request_key,
+        request_fingerprint,
+        retry=None,
+        retry_manifest=None,
     ):
         with self._connection(write=True) as db:
             source = self._authorize(db, source_id, actor, write=True)
+            retry_of = None
+            if retry is not None:
+                if type(retry) is not RetryAttempt:
+                    raise InvalidInput("typed v1 retry attempt required")
+                try:
+                    retry = snapshot(retry)
+                except ValidationError:
+                    raise InvalidInput("invalid retry attempt") from None
+                retry_of = retry.rejected_run_id
+                request_key = retry.request_key
+                parent = _retry_parent(
+                    db,
+                    ProcessingRun(
+                        run_id=uuid.uuid4().hex,
+                        source_id=source_id,
+                        actor=actor.subject,
+                        kind=kind,
+                        slot_id=slot_id,
+                        request_key=request_key,
+                        request_fingerprint=request_fingerprint,
+                        acl_revision=source.acl_revision,
+                        state="preparing",
+                        retry_of=retry_of,
+                    ),
+                    manifest=retry_manifest,
+                )
+                if parent.recovery is not None:
+                    self._read_blob(parent.recovery, db)
             old = db.execute(
                 "SELECT data FROM processing_runs WHERE actor=? AND request_key=?",
                 (actor.subject, request_key),
             ).fetchone()
             if old:
                 run = ProcessingRun.model_validate_json(old[0])
-                if run.request_fingerprint != request_fingerprint:
+                if (
+                    run.request_fingerprint != request_fingerprint
+                    or run.source_id != source_id
+                    or run.slot_id != slot_id
+                    or run.kind != kind
+                    or run.retry_of != retry_of
+                ):
                     raise Conflict("request key already bound")
                 if run.state != "committed":
                     raise Unavailable("incomplete run requires explicit recovery")
@@ -432,6 +512,7 @@ class ContentStore:
                 request_fingerprint=request_fingerprint,
                 acl_revision=source.acl_revision,
                 state="preparing",
+                retry_of=retry_of,
             )
             self._artifacts.create_run_lock(run.run_id)
             db.execute(
@@ -521,7 +602,15 @@ class ContentStore:
             )
 
     def store_raw_artifact(
-        self, source_id, stream, *, expected_sha256, expected_size, mime_type, actor
+        self,
+        source_id,
+        stream,
+        *,
+        expected_sha256,
+        expected_size,
+        mime_type,
+        actor,
+        retry: RetryAttempt | None = None,
     ):
         actor = checked_actor(actor)
         try:
@@ -541,6 +630,8 @@ class ContentStore:
                 slot_id=slot,
                 request_key=slot,
                 request_fingerprint=fingerprint(ref.model_dump(mode="json")),
+                retry=retry,
+                retry_manifest=(ref,),
             )
             if run.state == "committed":
                 # Reimports validate supplied bytes too, not only the existing blob.
@@ -578,14 +669,30 @@ class ContentStore:
         if current.acl_revision != run.acl_revision:
             raise Forbidden("source permissions changed during import")
         self._record_blob(db, ref)
-        db.execute(
-            "INSERT INTO raw_reservations VALUES (?,?,?,?)",
-            (run.source_id, ref.sha256, run.run_id, _encoded(ref)),
-        )
+        old = db.execute(
+            "SELECT data FROM raw_reservations WHERE source_id=? AND sha256=?",
+            (run.source_id, ref.sha256),
+        ).fetchone()
+        if old:
+            if ArtifactReference.model_validate_json(old[0]) != ref:
+                raise Conflict("raw reservation metadata conflict")
+            self._read_blob(ref, db)
+        else:
+            db.execute(
+                "INSERT INTO raw_reservations VALUES (?,?,?,?)",
+                (run.source_id, ref.sha256, run.run_id, _encoded(ref)),
+            )
         self._update_run(db, run, state="committed", manifest=(ref,))
 
     def register_source_version(
-        self, source_id, manifest, *, variant_key, binding, actor
+        self,
+        source_id,
+        manifest,
+        *,
+        variant_key,
+        binding,
+        actor,
+        retry: RetryAttempt | None = None,
     ):
         if self.read_only:
             raise Forbidden("read-only content handle")
@@ -601,6 +708,7 @@ class ContentStore:
                 variant_key=variant_key,
                 binding=binding,
                 actor=actor,
+                retry=retry,
             )
 
     def publish_parsed_document(

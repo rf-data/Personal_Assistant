@@ -99,7 +99,7 @@ def _known_source_version(store, db, verified):
     return old
 
 
-def register(store, source_id, manifest, *, variant_key, binding, actor):
+def register(store, source_id, manifest, *, variant_key, binding, actor, retry=None):
     verified = _candidate(binding, staging_parent=store.root / "staging")
     if (
         source_id != verified.registration.resolved_id
@@ -118,7 +118,7 @@ def register(store, source_id, manifest, *, variant_key, binding, actor):
                 "SELECT id FROM source_versions WHERE id=?",
                 (expected.source_version_id,),
             ).fetchone()
-            if old:
+            if old and retry is None:
                 return _known_source_version(store, db, verified)
         slot = deterministic_id("content_binding_slot_v1", expected.source_version_id)
         run = store._reserve(
@@ -130,7 +130,13 @@ def register(store, source_id, manifest, *, variant_key, binding, actor):
             request_fingerprint=fingerprint(
                 dict(version=expected.source_version_id, binding=ref.sha256)
             ),
+            retry=retry,
+            retry_manifest=(ref,),
         )
+        if run.state == "committed":
+            with store._connection() as db:
+                _scope(store, db, verified, actor)
+                return _known_source_version(store, db, verified)
         with store._running(run):
             store._artifacts.stage(run.run_id, io.BytesIO(verified.binding), ref)
             from src.content_store.operations import record_intent
@@ -162,30 +168,43 @@ def finish_binding(store, db, run, intent, actor):
             raise UnverifiedBinding("raw manifest lacks source-bound reservation")
         store._read_blob(ref, db)
     store._record_blob(db, intent.reference)
-    version = version.model_copy(update={"publication_seq": store._sequence(db)})
-    db.execute(
-        "INSERT INTO source_versions VALUES (?,?,?,?,'verified',?,?)",
-        (
-            version.source_version_id,
-            version.source_id,
-            version.variant_key,
-            version.manifest.digest,
-            version.publication_seq,
-            _encoded(version),
-        ),
-    )
-    for ref in version.manifest.artifacts:
+    old = db.execute(
+        "SELECT data,state FROM source_versions WHERE id=?",
+        (version.source_version_id,),
+    ).fetchone()
+    if old:
+        known = SourceVersion.model_validate_json(old[0])
+        if (
+            old[1] != "verified"
+            or known.model_copy(update={"publication_seq": 1}) != version
+        ):
+            raise Conflict("source version binding conflict")
+        version = known
+    else:
+        version = version.model_copy(update={"publication_seq": store._sequence(db)})
         db.execute(
-            "INSERT INTO source_raw_artifacts VALUES (?,?,?,?,?,?)",
+            "INSERT INTO source_versions VALUES (?,?,?,?,'verified',?,?)",
             (
                 version.source_version_id,
                 version.source_id,
-                ref.role,
-                ref.ordinal,
-                ref.sha256,
-                _encoded(ref),
+                version.variant_key,
+                version.manifest.digest,
+                version.publication_seq,
+                _encoded(version),
             ),
         )
+        for ref in version.manifest.artifacts:
+            db.execute(
+                "INSERT INTO source_raw_artifacts VALUES (?,?,?,?,?,?)",
+                (
+                    version.source_version_id,
+                    version.source_id,
+                    ref.role,
+                    ref.ordinal,
+                    ref.sha256,
+                    _encoded(ref),
+                ),
+            )
     db.execute(
         "INSERT INTO artifact_references VALUES (?,?,0,?,NULL,?)",
         (
