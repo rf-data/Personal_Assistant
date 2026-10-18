@@ -278,3 +278,21 @@ implementiert oder getestet**; dafür gilt die obige Folge-PR-Matrix.
 Eigener temporärer Pytestroot wird nach Abschluss entfernt. Der C24-Worktree
 bleibt bis zum Merge seines offenen PR bestehen; Primärcheckouts, andere
 Worktrees/Branches, private Bestände und virtuelle Umgebungen bleiben erhalten.
+
+## C24-05-B1: implementierter Backendvertrag
+
+Der separate B1-Implementierungsbranch auf Master `d2b5e05` ergänzt nun einen
+explizit initialisierten EvaluationStore, serverseitige Dataset-/Source-/Subject-
+Reviewrechte, unveränderliche Auditrevisionen mit CAS/Idempotenz, kontrollierte
+Zuweisung/Drafts/Entscheidungen, separate Poolbestätigung, C23-/A-Goldexport,
+A-Berichtsbindung und manuelle Abnahme im bestehenden C16-Gateway. Konkrete
+[DTOs/Routen und Betriebsgrenzen](../api/human_review_v1.md),
+[tatsächliche synthetische Abnahme](../cs50/evaluation/human_review_backend_validation.md).
+
+Dies ist die Runtimeergänzung zur ungemergten Architekturvorbereitung #88,
+keine Umdeutung ihres damaligen Dokumentationsumfangs. Reviewwrites und sämtliche
+Realreviews bleiben ohne ausdrückliche private Konfiguration gesperrt. Kein neues
+Authsystem und keine globale Administratorrolle. C24-05-B-UI und der tatsächliche
+C24-05-C-Realpilot bleiben Folgearbeit; D06/D07, echte Source-/Reviewerfreigaben,
+unabhängiges Realgold, Betriebs-/Backupabnahme und fachlicher Release sind weiter
+offen. Ein technischer B1-PR schließt C23/C24/C26 nicht automatisch.

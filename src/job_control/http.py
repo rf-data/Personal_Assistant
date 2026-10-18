@@ -25,7 +25,7 @@ def encode(value):
 
 
 class Application:
-    def __init__(self, controller, *, content_settings=None):
+    def __init__(self, controller, *, content_settings=None, review_settings=None):
         self.controller = controller
         from src.content_store.http import ContentHTTP
 
@@ -38,11 +38,32 @@ class Application:
             ):
                 raise ValueError("Content and job configuration must be separate")
         self.content = ContentHTTP(content_settings)
+        from src.evaluation_store.http import ReviewHTTP
+
+        if review_settings is not None:
+            root = controller.settings.root
+            if any(
+                p.is_relative_to(root) or root.is_relative_to(p)
+                for p in (review_settings.root, review_settings.content.root)
+            ):
+                raise ValueError("Review, Content and job roots must be separate")
+        self.review = ReviewHTTP(review_settings)
 
     def request(self, method, target, headers, body=b""):
         try:
             actor = self.controller.authenticate(headers.get("Authorization"))
             parts = urlsplit(target)
+            if parts.path == "/v1/evaluation" or parts.path.startswith(
+                "/v1/evaluation/"
+            ):
+                if (
+                    parts.scheme
+                    or parts.netloc
+                    or len(target) > 2048
+                    or len(body) > 32768
+                ):
+                    raise ValueError("Invalid route")
+                return self.review.request(method, parts, body, actor)
             if parts.path == "/v1/content" or parts.path.startswith("/v1/content/"):
                 if (
                     parts.scheme
@@ -323,10 +344,16 @@ def handler_for(application):
     return Handler
 
 
-def serve(controller, port=8016, *, content_settings=None):
+def serve(controller, port=8016, *, content_settings=None, review_settings=None):
     # Deliberately no configurable wildcard/public binding in this local transport.
     with HTTPServer(
         ("127.0.0.1", port),
-        handler_for(Application(controller, content_settings=content_settings)),
+        handler_for(
+            Application(
+                controller,
+                content_settings=content_settings,
+                review_settings=review_settings,
+            )
+        ),
     ) as server:
         server.serve_forever()
