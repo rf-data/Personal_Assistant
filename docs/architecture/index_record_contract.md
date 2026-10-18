@@ -6,7 +6,9 @@ lesende Projektion**; C24-03 ergänzt Build/Rebuild, Source-FTS5 und interne Suc
 [FTS5-Implementierung und Grenzen](content_fts_implementation.md).
 [ADR](retrieval_indexing_adr.md) und [Implementierungsplan](../planning/c24_implementation_plan.md)
 gehören dazu. Im Folgenden „muss“ bezeichnet die verbindlichen Abnahmekriterien;
-HTTP-/Vektoranteile bleiben geplante Folgearbeit.
+HTTP und reale Vektor-/Hybridaktivierung bleiben geplante Folgearbeit.
+[C24-04-A](content_vector_implementation.md) implementiert die optionale
+ContentRecord-Vektorvariante ausschließlich mit Fake-Encoding/-Transport.
 Bestehende [Contentmodelle](../../src/content_store/models.py), `Contract`, `Name`,
 `Sha`, `Principal` und `ContentLocator` wiederverwenden. Neue Modelle in
 `src/content_store/index_models.py`, ein gemeinsamer Projektor in
@@ -223,7 +225,9 @@ ACLrevision in Receipt ist historischer Prüfbeleg und kein künftiges Readrecht
 
 ## Retrieval und Autorisierung
 
-Zukünftige interne Fassade (noch nicht importierbar):
+Interne Fassade `ContentRetrieval` aus `src.tools_rag.content_vectors`:
+lexical standardmäßig, vector optional als ausdrücklich synthetische A-Ausführung;
+hybrid bleibt gesperrt. Ohne Vektoradapter funktioniert lexical unabhängig.
 
 ```python
 with retrieval.search(

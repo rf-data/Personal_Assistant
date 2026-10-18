@@ -10,6 +10,11 @@ Maßgeblich bleiben [ADR](retrieval_indexing_adr.md),
 
 ## Implementierter Umfang und Wiederverwendung
 
+Nachtrag C24-04-A: [optionale Fake-Vektorvariante](content_vector_implementation.md)
+nutzt dieselben Backendhooks, Generationen, Cursor und Livehydrierung. Die folgenden
+FTS-Verträge und datierten C24-03-Messergebnisse bleiben unverändert; keine reale
+Qdrant- oder Hybridaktivierung durch den Nachtrag.
+
 `src/tools_rag/content_index.py` bietet Builder, explizite Versionsauswahl,
 Generationenverwaltung und die interne, typisierte `search_lexical`-Schnittstelle.
 `content_fts.py` kapselt SQLite, `content_index_files.py` private Dateien und

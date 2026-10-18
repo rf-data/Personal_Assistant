@@ -5,7 +5,9 @@
 C24-01 spezifizierte diese Verträge. C24-02 ergänzte
 [Modelle und autorisierte Indexprojektion](index_projection_implementation.md).
 C24-03 implementiert darauf [Source-FTS5, Generationen und interne Suche](content_fts_implementation.md).
-HTTPsearch, Jobs und Qdrant bleiben außerhalb dieses Implementierungsstands.
+C24-04-A ergänzt den [ContentRecord-Vektoradapter](content_vector_implementation.md)
+mit FakeEmbedder/Fake-Transport am selben Guard. HTTPsearch, Jobs und reale
+Qdrant-/E5-/Hybridabnahme bleiben außerhalb dieses Implementierungsstands.
 C23-06 ist technisch vorbereitet, seine fachliche Realabnahme bleibt blockiert.
 
 ## Entscheidung und Autorität

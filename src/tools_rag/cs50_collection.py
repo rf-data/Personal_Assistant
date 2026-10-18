@@ -3,8 +3,8 @@
 from src.model_discovery.cs50_index import CollectionContract
 
 
-def check_collection(client, contract: CollectionContract):
-    info = client.get_collection(contract.name)
+def check_configuration(info, contract, *, metadata_key="cs50_contract"):
+    """Shared structural gate; callers select an explicit payload metadata domain."""
     vectors = info.config.params.vectors
     if (
         isinstance(vectors, dict)
@@ -13,10 +13,15 @@ def check_collection(client, contract: CollectionContract):
     ):
         raise ValueError("Incompatible Qdrant vector dimension or distance")
     metadata = info.config.metadata or {}
-    if metadata.get("cs50_contract") != contract.model_dump(mode="json"):
+    if metadata.get(metadata_key) != contract.model_dump(mode="json"):
         raise ValueError(
             "Missing/incompatible collection model/version metadata; never adopt"
         )
+    return info
+
+
+def check_collection(client, contract: CollectionContract):
+    info = check_configuration(client.get_collection(contract.name), contract)
     # Qdrant local mode explicitly does not build payload indexes.
     from qdrant_client.local.qdrant_local import QdrantLocal
 

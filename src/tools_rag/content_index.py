@@ -129,6 +129,43 @@ def _versioned(data):
 
 
 class ContentIndex:
+    IDENTITY = "content-fts5-v1"
+    METHOD = "lexical"
+    RANKING = "source_rrf_v1"
+    CURSOR_DOMAIN = b"lexical-cursor-v1\0"
+
+    def _backend_spec(self):
+        return content_fts.backend_spec()
+
+    def _partition_name(self, source_id):
+        return "source-" + fingerprint(source_id) + ".sqlite3"
+
+    def _build_partition(self, records, *, source_id, generation_id, deadline):
+        return content_fts.build_database(records, deadline=deadline)
+
+    def _verify_partition(self, data, records, deadline, *, source_id, generation_id):
+        content_fts.search_database(
+            data, records, '"__verification_no_match__"', None, deadline
+        )
+
+    def _query_value(self, query, match):
+        return match
+
+    def _search_partition(
+        self, data, records, query, content_types, deadline, *, source_id, generation_id
+    ):
+        return content_fts.search_database(
+            data, records, query, content_types, deadline
+        )
+
+    def _rank_scores(self, hits):
+        return [
+            (1 / (60 + rank), rid, score) for rank, (rid, score) in enumerate(hits, 1)
+        ]
+
+    def _score_component(self, source_id, score):
+        return ScoreComponent(source_id=source_id, raw_score=score)
+
     def __init__(self, store, index_root, *, cursor_key_file, _synthetic=False):
         if not isinstance(store, ContentStore):
             raise InvalidInput("typed ContentStore required")
@@ -143,7 +180,7 @@ class ContentIndex:
         self.files = IndexFiles(self.root)
         identity = _versioned(self.files.read("identity.json", maximum=8192))
         if identity != dict(
-            schema_version=1, identity="content-fts5-v1", purpose=self.purpose
+            schema_version=1, identity=self.IDENTITY, purpose=self.purpose
         ):
             raise Unavailable("index identity/schema unavailable")
         keypath = Path(cursor_key_file)
@@ -157,7 +194,7 @@ class ContentIndex:
         self.key = private_bytes(keypath, 64)
         if not 32 <= len(self.key) <= 64:
             raise InvalidInput("cursor key length")
-        content_fts.backend_spec()
+        self._backend_spec()
 
     @classmethod
     def initialize(cls, store, index_root, *, cursor_key_file, _synthetic=False):
@@ -227,7 +264,7 @@ class ContentIndex:
                     "content_index_generation_v1",
                     fingerprint(manifest.basis.model_dump(mode="json")),
                 )
-                or manifest.basis.backend != content_fts.backend_spec()
+                or manifest.basis.backend != self._backend_spec()
                 or manifest.basis.policy_id != manifest.basis.selection.config.policy_id
             ):
                 raise ValueError()
@@ -242,10 +279,7 @@ class ContentIndex:
                 != manifest.basis.selection.parsed_version_ids
             ):
                 raise ValueError()
-            if any(
-                f.name != "source-" + fingerprint(f.source_id) + ".sqlite3"
-                for f in manifest.files
-            ):
+            if any(f.name != self._partition_name(f.source_id) for f in manifest.files):
                 raise ValueError()
             if manifest.record_count != sum(f.record_count for f in manifest.files):
                 raise ValueError()
@@ -373,7 +407,7 @@ class ContentIndex:
                     versions=tuple(_version_binding(r) for r in results),
                     record_set_sha256=record_set_sha256(records),
                     policy_id=selection.config.policy_id,
-                    backend=content_fts.backend_spec(),
+                    backend=self._backend_spec(),
                 )
                 gid = deterministic_id(
                     "content_index_generation_v1",
@@ -394,8 +428,10 @@ class ContentIndex:
                 proofs = []
                 total = 0
                 for sid in sources:
-                    data = content_fts.build_database(
+                    data = self._build_partition(
                         [r for r in records if r.body.source_id == sid],
+                        source_id=sid,
+                        generation_id=gid,
                         deadline=started + BUILD_SECONDS,
                     )
                     total += len(data)
@@ -406,7 +442,7 @@ class ContentIndex:
                         raise Unavailable("build resource limit")
                     self._capacity(len(data))
                     proof = FileProof(
-                        name="source-" + fingerprint(sid) + ".sqlite3",
+                        name=self._partition_name(sid),
                         sha256=sha256(data),
                         size_bytes=len(data),
                         source_id=sid,
@@ -436,12 +472,12 @@ class ContentIndex:
                     data = self.files.read("staging/" + bid + "/" + proof.name)
                     if len(data) != proof.size_bytes or sha256(data) != proof.sha256:
                         raise IntegrityError("staged index bytes")
-                    content_fts.search_database(
+                    self._verify_partition(
                         data,
                         [r for r in records if r.body.source_id == proof.source_id],
-                        '"__verification_no_match__"',
-                        None,
                         started + BUILD_SECONDS,
+                        source_id=proof.source_id,
+                        generation_id=gid,
                     )
                 raw_manifest = canonical(manifest.model_dump(mode="json"))
                 self.files.write("staging/" + bid + "/manifest.json", raw_manifest)
@@ -565,7 +601,8 @@ class ContentIndex:
                     names = tuple(directory_entries(fd, limit=129))
                 if any(
                     not re.fullmatch(
-                        r"(?:source-[0-9a-f]{64}\.sqlite3|manifest\.json)", n
+                        r"(?:source-[0-9a-f]{64}\.(?:sqlite3|vectors\.json)|manifest\.json)",
+                        n,
                     )
                     for n in names
                 ):
@@ -577,7 +614,7 @@ class ContentIndex:
 
     def _cursor_encode(self, value):
         data = canonical(value.model_dump(mode="json"))
-        sig = hmac.digest(self.key, b"lexical-cursor-v1\0" + data, "sha256")
+        sig = hmac.digest(self.key, self.CURSOR_DOMAIN + data, "sha256")
         return base64.urlsafe_b64encode(data + sig).decode().rstrip("=")
 
     def _cursor_decode(self, value):
@@ -591,7 +628,7 @@ class ContentIndex:
             )
             raw, sig = data[:-32], data[-32:]
             if not hmac.compare_digest(
-                sig, hmac.digest(self.key, b"lexical-cursor-v1\0" + raw, "sha256")
+                sig, hmac.digest(self.key, self.CURSOR_DOMAIN + raw, "sha256")
             ):
                 raise ValueError()
             cursor = SearchCursor.model_validate(_versioned(raw))
@@ -672,7 +709,7 @@ class ContentIndex:
                 source_ids=sorted(source_ids) if source_ids else None,
                 content_types=sorted(content_types) if content_types else None,
                 limit=limit,
-                method="lexical",
+                method=self.METHOD,
             )
         )
         decoded = self._cursor_decode(cursor) if cursor is not None else None
@@ -730,7 +767,12 @@ class ContentIndex:
         if cursor and (cursor.generation != generation or cursor.snapshot != snap):
             raise RetrievalFault("snapshot_changed")
         if not active:
-            return SearchResultPage(items=(), next_cursor=None, index_generation=None)
+            return SearchResultPage(
+                items=(),
+                next_cursor=None,
+                index_generation=None,
+                ranking_schema=self.RANKING,
+            )
         selected = {v.source_id for v in manifest.basis.versions}
         visible = []
         for sid in sorted(selected):
@@ -751,6 +793,7 @@ class ContentIndex:
             visible.append(sid)
         if len(visible) > 32:
             raise RetrievalFault("scope_required")
+        query_value = self._query_value(query, match) if visible else None
         budget = [0]
         record_budget = [0]
         ranked = []
@@ -788,13 +831,18 @@ class ContentIndex:
             data = self.files.read(_gen_path(active) + "/" + proof.name)
             if len(data) != proof.size_bytes or sha256(data) != proof.sha256:
                 raise Unavailable("source index unavailable")
-            hits = content_fts.search_database(
-                data, records, match, content_types, deadline
+            hits = self._search_partition(
+                data,
+                records,
+                query_value,
+                content_types,
+                deadline,
+                source_id=sid,
+                generation_id=active.generation_id,
             )
             if len(hits) > MAX_MATCHES or len(ranked) + len(hits) > MAX_MATCHES:
                 raise RetrievalFault("query_too_broad")
-            for rank, (rid, score) in enumerate(hits, 1):
-                ranked.append((1 / (60 + rank), rid, score))
+            ranked.extend(self._rank_scores(hits))
             live.update({r.index_record_id: r for r in records})
         if time.monotonic() > deadline:
             raise Unavailable("query deadline")
@@ -868,10 +916,10 @@ class ContentIndex:
                 text_route=route(
                     "parsed", b.parsed_version_id, "blocks", b.block_id, "text"
                 ),
-                components=(
-                    ScoreComponent(source_id=b.source_id, raw_score=raw_score),
-                ),
+                method=self.METHOD,
+                components=(self._score_component(b.source_id, raw_score),),
                 ranking_score=rank_score,
+                ranking_schema=self.RANKING,
                 index_generation=generation,
                 projection_fingerprint=b.projection_sha256,
             )
@@ -901,5 +949,8 @@ class ContentIndex:
         if time.monotonic() > deadline:
             raise Unavailable("query hydration deadline")
         return SearchResultPage(
-            items=tuple(items), next_cursor=next_cursor, index_generation=generation
+            items=tuple(items),
+            next_cursor=next_cursor,
+            index_generation=generation,
+            ranking_schema=self.RANKING,
         )
