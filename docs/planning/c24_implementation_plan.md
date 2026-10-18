@@ -9,6 +9,10 @@ entsprechend 02-B plus 03-A. HTTPsearch, Jobanbindung und UI sind weiterhin offe
 C24-04-A ergänzt jetzt den [ContentRecord-Vektoradapter samt Fake-Abnahme](../architecture/content_vector_implementation.md).
 C24-04-B (reale Modell-/Qdrant-/Hybridabnahme) bleibt mangels konkreter Freigaben
 blockiert; A, Draft #72 oder ein Merge erteilen diese Freigaben nicht.
+C24-05-B hat eine [Architekturvorbereitung für menschliche Reviews](../architecture/human_review_workflow_adr.md).
+Die abhängige Implementierung bleibt bis zum Merge von C24-05-A/#87 blockiert;
+Reviewwrites benötigen einen ausdrücklich festgelegten serverseitigen Vertrag,
+die getrennte UI-Umsetzung anschließend den integrierten Backendvertrag.
 Die folgenden detaillierten Paketanforderungen bleiben Prüfplan; tatsächliche
 Abnahme und Grenzen stehen im verlinkten Implementierungsbericht. [ADR](../architecture/retrieval_indexing_adr.md),
 [Indexrecord-/Suchvertrag](../architecture/index_record_contract.md),
