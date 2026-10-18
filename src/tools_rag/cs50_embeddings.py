@@ -5,6 +5,14 @@ import math
 import re
 
 
+def source_time_window(cues):
+    """Retrieve original numeric cue bounds; text offsets are never media times."""
+    intervals = [cue.require_timestamps() for cue in cues]
+    if not intervals:
+        raise ValueError("No original cues for timed retrieval window")
+    return min(start for start, _ in intervals), max(end for _, end in intervals)
+
+
 def checked_vectors(vectors, config, expected):
     vectors = [list(map(float, v)) for v in vectors]
     if len(vectors) != expected:
@@ -217,6 +225,7 @@ def map_transcript(
         windows = offset_windows(chunk.text, embedder)
         for i, (start, end) in enumerate(windows):
             cues = [s for a, b, s in spans if a < end and b > start]
+            cue_start, cue_end = source_time_window(cues)
             payloads.append(
                 TranscriptPayload(
                     **common,
@@ -227,8 +236,8 @@ def map_transcript(
                     original_chunk_end=chunk.end,
                     text=chunk.text[start:end],
                     segment_ids=tuple(s.seg_id for s in cues),
-                    start=min(s.start for s in cues),
-                    end=max(s.end for s in cues),
+                    start=cue_start,
+                    end=cue_end,
                     char_start=start,
                     char_end=end,
                     unit_index=i,

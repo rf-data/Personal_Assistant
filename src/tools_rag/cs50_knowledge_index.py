@@ -9,6 +9,7 @@ from pydantic import Field, model_validator
 
 from src.model_discovery.cs50_index import EmbeddingConfig, Hash, Name
 from src.tools_knowledge.cs50_checkpoint import Contract, fingerprint
+from src.tools_rag.cs50_embeddings import source_time_window
 from src.tools_rag.cs50_ingestion import revalidate_plan
 
 KNOWLEDGE_NAMESPACE = UUID("723a8e2b-0cb8-5d3d-b12d-6bb4d7d741a0")
@@ -334,7 +335,7 @@ def map_knowledge_document(
                 raise ValueError("Evidence times outside actual original chunk")
             cues = [original_segments[sid] for sid in evidence["segment_ids"]]
             actual_times = {
-                (min(s.start for s in cues), max(s.end for s in cues)),
+                source_time_window(cues),
                 (chunk.original_chunk_start, chunk.original_chunk_end),
             }
             if (evidence["start"], evidence["end"]) not in actual_times:

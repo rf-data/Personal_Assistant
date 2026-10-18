@@ -1,5 +1,11 @@
 # Transcript-Retrieval
 
+C23-05: [Zeitlose TXT-Dokumente](../contracts/official_transcript_unknown_time.md)
+sind noch kein autorisierter Transcript-Retrievalbestand. Die bestehende
+Originalprüfung (`verify_hit` → `revalidate_plan` → Source-Binding) verlangt
+weiterhin echte SRTzeiten. Cuefenster prüfen `unknown_transcript_time` vor min/max;
+numerische Altbestände behalten ihre ursprünglichen Zeitwerte.
+
 search_cs50_transcripts übernimmt eine explizite IngestionPlan-/Embeddingbindung.
 Queryencoding nutzt denselben Modell-/Revisions-/Normalisierungsvertrag, bei E5
 mit query:-Präfix. Kein Remote-Embedding, keine LLM-Antwort oder implizite Writes.

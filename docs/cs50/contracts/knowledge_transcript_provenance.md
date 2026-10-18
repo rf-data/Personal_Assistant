@@ -1,5 +1,10 @@
 # Transcript-Provenienz in Knowledge-Ergebnissen
 
+C23-05: [Nullzeit- und Verbrauchervertrag](official_transcript_unknown_time.md).
+TXT lässt sich mit Provenienz speichern, ist aber kein Input des Timed-Chunkers
+oder der präzisen Zeitevidenz. `unknown_transcript_time` sperrt diese Grenzen;
+die fachlichen KnowledgeEvidence-Modelle bleiben numerisch.
+
 ## Änderung
 
 TranscriptKnowledgeDocument, ConsolidatedKnowledgeDocument und LectureKnowledgeDocument

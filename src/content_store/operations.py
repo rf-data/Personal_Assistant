@@ -230,6 +230,10 @@ def _publication_proof(store, run, intent):
         ):
             raise UnverifiedBinding("prepared SRT plan binding mismatch")
         document = TranscriptDocument.model_validate(_json(data["payload"]))
+        try:
+            document.require_timestamps()
+        except ValueError as exc:
+            raise UnverifiedBinding(str(exc)) from exc
         receipt = _json(data["receipt"])
         tasks = [
             t

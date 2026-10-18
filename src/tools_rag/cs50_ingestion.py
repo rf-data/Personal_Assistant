@@ -16,6 +16,7 @@ from src.tools_rag.cs50_embeddings import (
     checked_vectors,
     chunking_configuration,
     map_transcript,
+    source_time_window,
 )
 
 
@@ -267,9 +268,8 @@ def revalidate_plan(plan, adapter, *, workspace, source_ids=None):
                 if offset < unit.char_end and offset + len(s.text) > unit.char_start:
                     spans.append(s)
                 offset += len(s.text) + 1
-            if tuple(s.seg_id for s in spans) != unit.segment_ids or (
-                min(s.start for s in spans),
-                max(s.end for s in spans),
+            if tuple(s.seg_id for s in spans) != unit.segment_ids or source_time_window(
+                spans
             ) != (unit.start, unit.end):
                 raise ValueError("Original segment/time reference conflict")
             if (

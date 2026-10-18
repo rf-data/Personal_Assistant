@@ -5,7 +5,10 @@ import json
 # from pathlib import Path
 from functools import lru_cache
 
+from src.agent.prompts.prompt_know_extract import build_knowledge_extraction_prompt
+from src.core.config_knowledge import KnowledgeSettings
 from src.core.memory import app_session
+from src.core.retry import retry_llm_call
 from src.model_knowledge.data_knowledge import (
     ChunkKnowledgeResult,
     # KnowledgeSemanticType,
@@ -13,25 +16,20 @@ from src.model_knowledge.data_knowledge import (
     TranscriptChunk,
     VisualCandidate,
 )
-from src.model_transcribe.data_transcribe import TranscriptSegment, TranscriptDocument
-from src.core.memory_lecture import LectureContext
-from src.core.retry import retry_llm_call
-from src.agent.prompts.prompt_know_extract import build_knowledge_extraction_prompt
-from src.core.config_knowledge import KnowledgeSettings
+
+# from src.utils.dict_helper import load_dict
+from src.model_lecture.data_resources import (
+    KnowledgeSourceMetadata,
+    LectureResource,
+    LectureResourceType,
+    ResourceKind,
+)
+from src.model_transcribe.data_transcribe import TranscriptDocument, TranscriptSegment
 from src.utils.general_helper import (
     hash_text,
     load_from_cache,
     make_cache_key,
     save_to_cache,
-)
-# from src.utils.dict_helper import load_dict
-
-
-from src.model_lecture.data_resources import (
-    LectureResource,
-    LectureResourceType,
-    KnowledgeSourceMetadata,
-    ResourceKind,
 )
 
 
@@ -89,7 +87,7 @@ def make_knowledge_source_metadata(
 def build_transcript_chunks(
     cfg_know: KnowledgeSettings, transcript: TranscriptDocument
 ) -> list[TranscriptChunk]:
-
+    transcript.require_timestamps()
     dur_target = cfg_know.target_duration  # float = 45,
     # dur_max = context.max_duration         # float = 75
     seg_overlap = cfg_know.overlap_segments  # : int = 2

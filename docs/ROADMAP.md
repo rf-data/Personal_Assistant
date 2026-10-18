@@ -69,7 +69,7 @@ allgemeine Knowledge-Extraktion vor der Evaluation.
 
 | Befund | Aktuell noch offen / eindeutiger operativer Eigentümer im Entwurf |
 | --- | --- |
-| TXT ohne bekannte Zeitstempel | Importer erzeugt `None`, Segmentmodell verlangt `float`; PR #9 nur teilweise ersetzt. C23-05 repariert den Rest, ohne Zeiten zu erfinden. |
+| TXT ohne bekannte Zeitstempel | C23-05 ergänzt [Nullzeiten und Timed-Guards](cs50/contracts/official_transcript_unknown_time.md); [lokale Abnahme und Grenzen](cs50/evaluation/official_transcript_unknown_time.md). TXT-ContentStore-/Knowledge-/Retrievalvertrag bleibt ausstehend; keine globale Pipelinefreigabe. |
 | Historische Transcript-Pfadabweichung | C21-Q.1 beschreibt `data/Harvard` versus Receiptpfad `data/lectures/Harvard`; nur Draft #72, keine Migration. C23-03 übernimmt den sicheren Bindungs-/Übernahmeentscheid. |
 | Authlib/OIDC | C22 gemergt, UI-Lock enthält kein Authlib und Guard sperrt Produktionsstart. C26-01 plus tatsächlicher TLS-/Browser-/Rollennachweis C26-03. |
 | Container und Zielstorage | Builds/Digests, PID-/cgroup-/Shutdown-/OOM-Prüfung sowie Zielvolume-Semantik nicht abgenommen; C26-02/C26-04. |

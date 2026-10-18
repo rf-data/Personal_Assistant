@@ -1,5 +1,12 @@
 # Zeitlose Transkripte: Architektur und Kompatibilität
 
+**Implementierungsnachtrag C23-05 (18.10.2026):**
+[Nullzeitvertrag und Verbrauchermatrix](official_transcript_unknown_time.md)
+beschreiben den umgesetzten Modell-/Importerfix und Timed-Guards. Die folgenden
+Aussagen zur schon vorhandenen Nullableunterstützung bezogen sich auf den
+damaligen Arbeitsstand; im gemergten Master fehlte diese Änderung bis C23-05.
+Der nachfolgende zusätzliche Textpfad bleibt ein Entwurf, keine Freischaltung.
+
 Stand: 13.10.2026. Grundlage: lokaler Quellcode und `transcript_import_report.md`.
 Dieser Bericht beschreibt einen Entwurf; er aktiviert keinen Verarbeitungspfad und
 ändert keine Funktionen, Modelle oder vorhandenen JSON-Dateien. Keine LLM-Aufrufe.
