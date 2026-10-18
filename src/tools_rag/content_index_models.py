@@ -36,7 +36,7 @@ class VersionBinding(Contract):
 
 
 class FileProof(Contract):
-    name: str = Field(pattern=r"^source-[0-9a-f]{64}\.sqlite3$")
+    name: str = Field(pattern=r"^source-[0-9a-f]{64}\.(?:sqlite3|vectors\.json)$")
     sha256: Sha
     size_bytes: int = Field(strict=True, ge=0, le=64 * 1024**2)
     source_id: Name
@@ -117,6 +117,14 @@ class RecordAnchor(Contract):
     offset_unit: Literal["unicode_codepoint"] = "unicode_codepoint"
 
 
+class VectorScoreComponent(Contract):
+    backend: Literal["content_vectors_fake"] = "content_vectors_fake"
+    source_id: Name
+    raw_score: float = Field(allow_inf_nan=False)
+    score_schema: Literal["cosine_l2_v1"] = "cosine_l2_v1"
+    direction: Literal["higher_is_better"] = "higher_is_better"
+
+
 class SearchHit(Contract):
     schema_version: Literal[1] = 1
     index_record_id: Name
@@ -131,10 +139,10 @@ class SearchHit(Contract):
     locators_in_structure: bool
     structure_route: str
     text_route: str
-    method: Literal["lexical"] = "lexical"
-    components: tuple[ScoreComponent, ...]
+    method: Literal["lexical", "vector"] = "lexical"
+    components: tuple[ScoreComponent | VectorScoreComponent, ...]
     ranking_score: float = Field(allow_inf_nan=False)
-    ranking_schema: Literal["source_rrf_v1"] = "source_rrf_v1"
+    ranking_schema: Literal["source_rrf_v1", "cosine_l2_v1"] = "source_rrf_v1"
     index_generation: Sha
     projection_fingerprint: Sha
 
@@ -144,7 +152,7 @@ class SearchResultPage(Contract):
     items: tuple[SearchHit, ...]
     next_cursor: str | None
     index_generation: Sha | None
-    ranking_schema: Literal["source_rrf_v1"] = "source_rrf_v1"
+    ranking_schema: Literal["source_rrf_v1", "cosine_l2_v1"] = "source_rrf_v1"
     selection_scope: Literal["explicit_active_selection"] = "explicit_active_selection"
 
 

@@ -6,6 +6,9 @@ C24-01 lieferte Architekturverträge und diesen Plan. C24-02 ergänzte die
 entsprechend 02-A. Der aktuelle Benutzerauftrag **C24-03** implementiert
 [Source-FTS5, Generationen und interne Suche](../architecture/content_fts_implementation.md),
 entsprechend 02-B plus 03-A. HTTPsearch, Jobanbindung und UI sind weiterhin offen.
+C24-04-A ergänzt jetzt den [ContentRecord-Vektoradapter samt Fake-Abnahme](../architecture/content_vector_implementation.md).
+C24-04-B (reale Modell-/Qdrant-/Hybridabnahme) bleibt mangels konkreter Freigaben
+blockiert; A, Draft #72 oder ein Merge erteilen diese Freigaben nicht.
 Die folgenden detaillierten Paketanforderungen bleiben Prüfplan; tatsächliche
 Abnahme und Grenzen stehen im verlinkten Implementierungsbericht. [ADR](../architecture/retrieval_indexing_adr.md),
 [Indexrecord-/Suchvertrag](../architecture/index_record_contract.md),

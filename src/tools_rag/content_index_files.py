@@ -118,7 +118,7 @@ class IndexFiles(_Artifacts):
             _sync(directory)
 
 
-def initialize_root(root, store_root, purpose):
+def initialize_root(root, store_root, purpose, *, identity="content-fts5-v1"):
     root = explicit_root(root)
     if root.is_relative_to(store_root) or store_root.is_relative_to(root):
         raise InvalidInput("index and content roots must be separate")
@@ -136,6 +136,6 @@ def initialize_root(root, store_root, purpose):
         files.write(name, b"")
     files.json(
         "identity.json",
-        dict(schema_version=1, identity="content-fts5-v1", purpose=purpose),
+        dict(schema_version=1, identity=identity, purpose=purpose),
     )
     return files
