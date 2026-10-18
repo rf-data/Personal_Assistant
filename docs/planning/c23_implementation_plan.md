@@ -1,5 +1,14 @@
 # C23: Umsetzung nach Freigabe des Persistenz-ADR
 
+**Umsetzungsnachtrag C23-04, 18.10.2026:** Auf gemergtem A/B/C (`5986da9`)
+ist die [autorisierte Read API v1](../api/content_read_v1.md) im bestehenden
+HTTPserver implementiert. C23-03/#79 war offen und wird nicht übernommen.
+Die folgenden älteren Planungstabellen sind keine aktuelle Implementierungs-
+behauptung. C16-Publikation wird als Folgepaket abgegrenzt: der bestehende
+Materialkatalog enthält noch keinen vollständigen B-Implementierungsbeleg;
+versionierte Katalog-/Prozess-/Receiptarbeit und gemergte Retryabnahme sind
+vor Freischaltung erforderlich. Kein Transcriptadapter und keine C18-Änderung.
+C23 bleibt offen, D06/D07 und produktive C26-Freigaben bleiben getrennt.
 **Umsetzungsnachtrag 18.10.2026:** A/B/C sind über #76–#78 gemergt. C23-03
 ergänzt auf `5986da9` die noch fehlende Wiederholungsabnahme, expliziten Retry
 nach Operator-Reject und ein rein lesendes Inventar. Ausgangsmatrix, endgültige

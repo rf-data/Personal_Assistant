@@ -2,6 +2,7 @@
 
 import json
 import sqlite3
+import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlsplit
 
@@ -24,13 +25,33 @@ def encode(value):
 
 
 class Application:
-    def __init__(self, controller):
+    def __init__(self, controller, *, content_settings=None):
         self.controller = controller
+        from src.content_store.http import ContentHTTP
+
+        if content_settings is not None:
+            root = controller.settings.root
+            if (
+                content_settings.root.is_relative_to(root)
+                or root.is_relative_to(content_settings.root)
+                or content_settings.cursor_key_file.is_relative_to(root)
+            ):
+                raise ValueError("Content and job configuration must be separate")
+        self.content = ContentHTTP(content_settings)
 
     def request(self, method, target, headers, body=b""):
         try:
             actor = self.controller.authenticate(headers.get("Authorization"))
             parts = urlsplit(target)
+            if parts.path == "/v1/content" or parts.path.startswith("/v1/content/"):
+                if (
+                    parts.scheme
+                    or parts.netloc
+                    or len(target) > 2048
+                    or len(body) > 32768
+                ):
+                    raise ValueError("Invalid route")
+                return self.content.request(method, parts, body, actor)
             if (
                 parts.scheme
                 or parts.netloc
@@ -239,20 +260,48 @@ def handler_for(application):
                 body = self.rfile.read(length)
                 if len(body) != length:
                     raise ValueError
-                status, data, mime = application.request(
+                response = application.request(
                     self.command, self.path, self.headers, body
                 )
+                status, data, mime = response
             except (ValueError, TimeoutError, OSError):
                 self.send_error(400)
                 return
-            self.send_response(status)
-            self.send_header("Content-Type", mime)
-            self.send_header("Content-Length", str(len(data)))
-            self.send_header("Cache-Control", "no-store")
-            self.send_header("X-Content-Type-Options", "nosniff")
-            self.send_header("Connection", "close")
-            self.end_headers()
-            self.wfile.write(data)
+            from src.content_store.reader import Download
+
+            try:
+                self.send_response(status)
+                self.send_header("Content-Type", mime)
+                self.send_header(
+                    "Content-Length",
+                    str(data.size if isinstance(data, Download) else len(data)),
+                )
+                self.send_header("Cache-Control", "no-store")
+                self.send_header("X-Content-Type-Options", "nosniff")
+                self.send_header("Connection", "close")
+                for key, value in getattr(response, "headers", {}).items():
+                    self.send_header(key, value)
+                self.end_headers()
+                deadline = time.monotonic() + 15
+                if isinstance(data, Download):
+                    while chunk := data.stream.read(65536):
+                        remaining = deadline - time.monotonic()
+                        if remaining <= 0:
+                            raise TimeoutError
+                        self.connection.settimeout(min(3, remaining))
+                        self.wfile.write(chunk)
+                else:
+                    for offset in range(0, len(data), 65536):
+                        remaining = deadline - time.monotonic()
+                        if remaining <= 0:
+                            raise TimeoutError
+                        self.connection.settimeout(min(3, remaining))
+                        self.wfile.write(data[offset : offset + 65536])
+            except (OSError, TimeoutError):
+                self.close_connection = True
+            finally:
+                if isinstance(data, Download):
+                    data.close()
 
         do_GET = handle_request
         do_POST = handle_request
@@ -274,9 +323,10 @@ def handler_for(application):
     return Handler
 
 
-def serve(controller, port=8016):
+def serve(controller, port=8016, *, content_settings=None):
     # Deliberately no configurable wildcard/public binding in this local transport.
     with HTTPServer(
-        ("127.0.0.1", port), handler_for(Application(controller))
+        ("127.0.0.1", port),
+        handler_for(Application(controller, content_settings=content_settings)),
     ) as server:
         server.serve_forever()

@@ -1,5 +1,18 @@
 # C23: logisches Contentmodell und Schnittstellenvertrag
 
+**Implementierungsnachtrag C23-04, 18.10.2026:** Content-v1-Persistenz ist mit
+A/B/C (#76–#78) implementiert. Die folgenden ursprünglichen Planungstabellen
+behalten ihren Datumskontext. Der verbindliche erste HTTP-Readvertrag steht in
+[Content Read API v1](../api/content_read_v1.md), inklusive tatsächlicher DTOs,
+Beispielantworten, Autorisierung, Limits und Tests. Begründete Konkretisierungen:
+separate paginierte Parsed-Referenzroute statt eingebetteter unbegrenzter Historie;
+im Cursor HMACgebundene globale Snapshotrevisionen statt ablesbarer fremder Zähler;
+redigierte allowlistbasierte Strukturattachments und opake Keysets im bestehenden
+Gateway. Rawantworten über einen gehashten, anonymen versiegelten Handle. Die
+internen A/B/C-Tupelmethoden werden nicht still zu HTTP-Datenmodellen umdefiniert.
+C23-03/#79 war offen; weder Bestandsmigration noch allgemeine Publikation folgt
+aus der Read API. C23 bleibt offen.
+
 Stand 17.10.2026, **Entwurf v1**, abhängig von der Freigabe des
 [ADR](parsed_content_persistence_adr.md). Alle Tabellen, DTOs, Methoden und Routen
 in diesem Dokument sind **geplant**. Es existiert noch kein `src/content_store`.

@@ -1,3 +1,15 @@
+# C23-02A/B/C und C23-04: ContentStore und autorisierte Reads
+
+**Ergänzung 18.10.2026:** C23-04 baut auf Master `5986da9` einschließlich #78
+auf. C23-03/#79 war offen; keine Übernahme seiner Funktionen. Die neue
+[Content Read API v1](../api/content_read_v1.md) verwendet den vorhandenen
+C16-Gateway/Principal und dieselben content-v1-Transaktionen/Locks. Neue Module:
+`read_models.py` (DTO/opt-in Settings), `reader.py` (autorisierte Keysets),
+`read_views.py` (redigierte Projektionen), `read_files.py` (anonyme versiegelte
+Antwortdateien) und `http.py` (Routen/Fehler). Keine SQL-DDL-/Importänderung.
+Capability an `/v1/content/capabilities`; alte C16-/C20-DTOs unverändert.
+C16-Publikation wird mit konkretem Katalog-/Revisions-/Workervertrag als
+Folgepaket abgegrenzt. Der folgende A/B/C-Stand bleibt historisch erhalten.
 # C23-02A/B/C und C23-03: ContentStore und Quellenverträge
 
 **Ergänzung 18.10.2026:** C23-03 basiert auf Master `5986da9` einschließlich #78.
