@@ -2,7 +2,9 @@
 
 18.10.2026 · Entscheidung für die folgenden Implementierungs-PRs · Basis
 `master` `95c4c40c1ab738ce1d75ac9ed554a46613419133` nach Merge von [#82](https://github.com/rf-data/Personal_Assistant/pull/82).
-Dieses ADR spezifiziert neue Verträge; **keine C24-Runtime ist implementiert**.
+C24-01 spezifizierte diese Verträge. C24-02 ergänzt nun ausschließlich
+[Modelle und autorisierte Indexprojektion](index_projection_implementation.md);
+FTS5/Qdrant, aktive Generationen und Retrieval sind weiterhin nicht implementiert.
 C23-06 ist technisch vorbereitet, seine fachliche Realabnahme bleibt blockiert.
 
 ## Entscheidung und Autorität

@@ -1,6 +1,8 @@
 # C24 Indexrecord- und Retrievalvertrag v1
 
-18.10.2026 · Normative Spezifikation, **noch keine implementierten Modelle/APIs**.
+18.10.2026 · Normative Spezifikation. **C24-02 implementiert jetzt Modelle und
+lesende Projektion**; Build/Rebuild, Backendindex und Retrieval bleiben geplante
+Verträge. [Implementierung und Abnahme](index_projection_implementation.md).
 [ADR](retrieval_indexing_adr.md) und [Implementierungsplan](../planning/c24_implementation_plan.md)
 gehören dazu. Im Folgenden „muss“ bezeichnet spätere Abnahmekriterien.
 Bestehende [Contentmodelle](../../src/content_store/models.py), `Contract`, `Name`,
@@ -18,7 +20,9 @@ UTF-8, kein LF/NaN/Unicode-Normalisieren), `H` SHA256, `D` bestehendes
 `model_discovery.cs50.deterministic_id`. Hashwerte sind 64 lowercase Hexzeichen.
 
 `IndexRecord` besteht aus `body: IndexRecordBody`, `index_record_id`,
-`generation_id`, `build_id`, `schema_version=1`. Bodyfelder sind **alle** Pflicht;
+`generation_id`, `build_id`, `schema_version=1`. Bei reiner C24-02-Projektion sind
+beide Kontextfelder ausdrücklich **null**; weder Build noch aktive Generation
+werden erfunden. Ein späterer Builder muss beide gemeinsam binden. Bodyfelder sind **alle** Pflicht;
 nullable ist nur ausdrücklich unten so markiert:
 
 | Feld | Typ / Invariante |
@@ -91,11 +95,11 @@ UTF-8-Bytes, Graphemen oder UTF-16 auf diese Anker.
 
 ## Aggregation und Chunking
 
-Policy v1: `selection=content_primary_v1`, `max_codepoints=2000`,
+Policy v1: `selection=content_primary_v1`, `max_codepoints=2000` (Default, explizit 1–2000 konfigurierbar),
 `overlap_codepoints=0`, `boundary=block`, `normalization=none`,
 `chapter_context=metadata_only`, `empty_text=reference_only`.
 Alternative konfigurierte Policy v1 darf ausschließlich overlap=128 verwenden;
-der gesamte Parameterwert ist identitätsrelevant. Keine satz-/tokenabhängige
+die Fenstergröße muss größer als der Overlap sein; sämtliche Policyparameter sind identitätsrelevant. Keine satz-/tokenabhängige
 Segmentierung im lexikalischen Projektor und keine künstlichen Headings im Text.
 
 1. Parsed-Payload/Projektion und alle gebundenen Bytes gemäß Store prüfen;
@@ -115,7 +119,7 @@ Segmentierung im lexikalischen Projektor und keine künstlichen Headings im Text
    separaten Testadapter verwenden; niemals in content-Purpose promoten.
 3. Unitintervalle je Block sortieren; Überlappung/Duplikat ist Fehler. Benachbarte
    Intervalle werden zur Deckungsprüfung vereinigt; echte Lücken nie überbrücken.
-   Innerhalb jedes gedeckten Bereichs [a,b): Fensterstart a; end=min(start+2000,b),
+   Innerhalb jedes gedeckten Bereichs [a,b): Fensterstart a; end=min(start+max_codepoints,b),
    nächster start=end-overlap, **nur wenn end<b**. Kein Nullfenster und keine
    Schleife hinter dem letzten Fenster. Unveränderte SRT-Cuegrenzen/Blockgrenzen
    bleiben hart; keine Vermischung zweier Kapitel, Seitenblöcke oder Cues.
