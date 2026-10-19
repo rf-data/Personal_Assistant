@@ -20,11 +20,17 @@ def main(argv=None):
         "--review-config",
         help="Explicit private evaluation-review-v1 configuration (API only)",
     )
+    parser.add_argument(
+        "--search-config",
+        help="Explicit private content-search-v1 configuration (API only, requires --content-config)",
+    )
     args = parser.parse_args(argv)
     if args.content_config and args.command != "api":
         parser.error("--content-config is API-only")
     if args.review_config and args.command != "api":
         parser.error("--review-config is API-only")
+    if args.search_config and (args.command != "api" or not args.content_config):
+        parser.error("--search-config requires API mode and --content-config")
     settings = load_settings(args.config)
     if not 1024 <= args.port <= 65535:
         parser.error("Nonprivileged local port required")
@@ -41,11 +47,17 @@ def main(argv=None):
         review = (
             load_review_settings(args.review_config) if args.review_config else None
         )
+        from src.content_store.search_http import load_search_settings
+
+        search = (
+            load_search_settings(args.search_config) if args.search_config else None
+        )
         serve(
             Controller(settings),
             args.port,
             content_settings=content,
             review_settings=review,
+            search_settings=search,
         )
     elif args.command == "worker":
         from src.job_control.executor import Executor

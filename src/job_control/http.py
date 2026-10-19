@@ -25,7 +25,14 @@ def encode(value):
 
 
 class Application:
-    def __init__(self, controller, *, content_settings=None, review_settings=None):
+    def __init__(
+        self,
+        controller,
+        *,
+        content_settings=None,
+        review_settings=None,
+        search_settings=None,
+    ):
         self.controller = controller
         from src.content_store.http import ContentHTTP
 
@@ -48,6 +55,23 @@ class Application:
             ):
                 raise ValueError("Review, Content and job roots must be separate")
         self.review = ReviewHTTP(review_settings)
+        from src.content_store.search_http import SearchHTTP
+
+        if search_settings is not None:
+            if content_settings is None:
+                raise ValueError("Search requires explicit content configuration")
+            index_root = search_settings.index_root
+            roots = [controller.settings.root, content_settings.root]
+            if review_settings is not None:
+                roots.append(review_settings.root)
+            if any(
+                index_root.is_relative_to(p) or p.is_relative_to(index_root)
+                for p in roots
+            ):
+                raise ValueError("Search index must be separate from managed data")
+            if content_settings.cursor_key_file.is_relative_to(index_root):
+                raise ValueError("Search cursor key must be outside index data")
+        self.search = SearchHTTP(self.content, search_settings)
 
     def request(self, method, target, headers, body=b""):
         try:
@@ -72,6 +96,10 @@ class Application:
                     or len(body) > 32768
                 ):
                     raise ValueError("Invalid route")
+                if parts.path == "/v1/content/search" or parts.path.startswith(
+                    "/v1/content/search/"
+                ):
+                    return self.search.request(method, parts, body, actor)
                 return self.content.request(method, parts, body, actor)
             if (
                 parts.scheme
@@ -288,9 +316,15 @@ def handler_for(application):
             except (ValueError, TimeoutError, OSError):
                 self.send_error(400)
                 return
+            from src.content_store.errors import ContentStoreError
             from src.content_store.reader import Download
 
             try:
+                deadline = getattr(response, "deadline", time.monotonic() + 15)
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise TimeoutError
+                self.connection.settimeout(min(3, remaining))
                 self.send_response(status)
                 self.send_header("Content-Type", mime)
                 self.send_header(
@@ -303,7 +337,6 @@ def handler_for(application):
                 for key, value in getattr(response, "headers", {}).items():
                     self.send_header(key, value)
                 self.end_headers()
-                deadline = time.monotonic() + 15
                 if isinstance(data, Download):
                     while chunk := data.stream.read(65536):
                         remaining = deadline - time.monotonic()
@@ -323,6 +356,12 @@ def handler_for(application):
             finally:
                 if isinstance(data, Download):
                     data.close()
+                close = getattr(response, "close", None)
+                if close is not None:
+                    try:
+                        close()
+                    except (ContentStoreError, OSError):
+                        self.close_connection = True
 
         do_GET = handle_request
         do_POST = handle_request
@@ -344,7 +383,14 @@ def handler_for(application):
     return Handler
 
 
-def serve(controller, port=8016, *, content_settings=None, review_settings=None):
+def serve(
+    controller,
+    port=8016,
+    *,
+    content_settings=None,
+    review_settings=None,
+    search_settings=None,
+):
     # Deliberately no configurable wildcard/public binding in this local transport.
     with HTTPServer(
         ("127.0.0.1", port),
@@ -353,6 +399,7 @@ def serve(controller, port=8016, *, content_settings=None, review_settings=None)
                 controller,
                 content_settings=content_settings,
                 review_settings=review_settings,
+                search_settings=search_settings,
             )
         ),
     ) as server:
