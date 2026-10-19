@@ -1,102 +1,80 @@
-# C23.0 – geprüfter Stand und offene Befunde
+# PM-01 – aktueller Implementierungs- und GitHub-Abgleich
 
-**17.10.2026, Europe/Berlin.** Referenz sind die tatsächlich abgefragten
-Default-Branches: Backend `476f0a0d786db87eb59efad36fd21a2fadaeb1dd`,
-Tree `e20f61bb8f021d098c1619195b8af3b13f6180e7`; UI
-`14ccfc20d83fe57612b5298e323d9f9f1d899cbf`, Tree
-`7775226597d3f32c8a9f778c58723b5e63aeb029`.
-[Öffentliche Metadaten](c230_snapshot.v1.json) enthalten Commit-/PR-/Issuebelege.
-Die lokalen Hauptcheckouts sind älter und wurden deshalb nicht als Statusbasis
-verwendet. Beide Planungsbranches beginnen an den oben genannten Default-Heads.
+**19.10.2026, Europe/Berlin.** Backend `master`
+`4c057ae33d41ba98e227879cc8a51283338e4a0b`, Tree
+`59fd44fb68d0da8b8d01eb5db75e4944dc827d49`; UI `main`
+`90816a1578bcf67739ee9acaa483c1635aa0c44b`, Tree
+`e693f1d1975544319458d0772a054630406bc782`.
+Live REST-Abfragen der Default-Heads, vollständigen Issue-/PR-Listen und
+Repositoryrechte über den GitHub-Connector; anschließend versionierte Verträge
+und erste Merge-Parents im eigenen PM-Worktree geprüft. Keine Runtimeabnahme.
 
-## Statusachsen und Nachweistiefe
+## C23–C24: belegter Lieferumfang
 
-| Achse | Erforderlicher Nachweis |
-| --- | --- |
-| Implementiert und gemergt | Funktion im geprüften Default-Tree und zugehöriger Merge/PR; offener PR allein genügt nicht |
-| Technisch getestet | konkret benannte Suite, Datenart, Ergebnis, Datum und Grenzen; ein historischer Lauf ist kein neuer C23.0-Lauf |
-| Fachlich evaluiert | unabhängige echte Referenzen, nachvollziehbare Rubrik und manueller Review; synthetische Gegenbeispiele genügen nicht |
-| Produktiv freigegeben | ausdrücklicher Operatorentscheid für konkrete Version, Daten, Auth, Storage, Monitoring und Recovery |
-| Geplant | vereinbarter Entwurf; kein Implementierungs-, Test- oder Freigabestatus |
-| Blockiert | konkrete fehlende Voraussetzung/Entscheidung und nächster prüfbarer Schritt |
-
-C23.0 führt nur Dokumentations-/Konsistenzprüfungen aus. Die nachfolgenden
-technischen Testzahlen werden aus versionierten Belegen zitiert, nicht neu
-als Anwendungstests ausgeführt oder über verschiedene Suites addiert.
-
-## C19–C22 gegen Default-Branches geprüft
-
-| Paket | Implementiert/gemergt | Technischer Nachweis | Fachliche Evaluation | Produktivfreigabe / offene Arbeit |
-| --- | --- | --- | --- | --- |
-| C19 | Backend [#69](https://github.com/rf-data/Personal_Assistant/pull/69), `src/job_control/{guardian,executor,pdf_adapter}.py`, `src/tools_materials/parse_pdf.py` | [C19](../job_control/pdf_validation.md): finale 25 lokale Linux-/PDF-Fälle und echte synthetische fünfstufige Kette; [C22](../deployment/c22_validation.md) prüfte diese Verträge erneut | keine allgemeine Qualitätsfreigabe echter PDF-Kurse | nicht freigegeben; PID-Namespace/cgroups/Container-SIGTERM/OOM noch prüfen |
-| C20-B | Backend [#70](https://github.com/rf-data/Personal_Assistant/pull/70), `src/workflows/{http,http_models,service}.py` | [HTTP-Vertrag/Abnahme](../workflows/http_validation.md), C21 tatsächlich über TCP | keine Inhalts-/Suchqualität | HTTP-Vertrag ist vorhanden, öffentlicher Betrieb nicht freigegeben |
-| C20-C | UI [#3](https://github.com/rf-data/personal-assistant-ui/pull/3), `admin_ui_package/workflow_contract.py`, `workflow_state.py`, `workflow_view.py` und `c16_client.py` | [UI-Nachweis](https://github.com/rf-data/personal-assistant-ui/blob/14ccfc20d83fe57612b5298e323d9f9f1d899cbf/docs/c20_validation.md), C21/C22 AppTest-/TCP-Integration | keine Nutzer-/Inhaltsabnahme | vorhanden: Inspect, Execute, Resume, Cancel, Run-Historie; Search UI C25 fehlt noch |
-| C21 | Backend [#71](https://github.com/rf-data/Personal_Assistant/pull/71), UI [#4](https://github.com/rf-data/personal-assistant-ui/pull/4) | [Ergebnisse](../acceptance/c21_results.md): 585 erfolgreiche Backendfälle nach gezielten Wiederholungen, drei Original-Fixture-Skips; 115 UI-Tests; echte TCP-/native Prozessbelege | Notes Week 5 technisch geprüft; keine unabhängige reale Formel-/Material-Goldabnahme | Browser/TLS/OIDC und Zielbetrieb offen; kein vollständig grüner Full-Erstlauf behauptet |
-| C22 | Backend [#73](https://github.com/rf-data/Personal_Assistant/pull/73), UI [#5](https://github.com/rf-data/personal-assistant-ui/pull/5), `deployment/`, `scripts/deployment.py`, `src/job_control/operations.py` und UI-Startschutz | [Abnahme](../deployment/c22_validation.md): 148 verschiedene Backendfälle, 123 UI-Fälle, 9 TCP-Prüfpunkte; synthetischer PDF-Provenienz-Restore, Compose-Rendering | keine allgemeine Fach-/Modellqualitätsfreigabe | **blockiert:** Images/Containerlaufzeit, UI-Authlib/OIDC, TLS, finales Volume, Monitoring/Alarmierung |
-
-Die Tabellenpfade benennen vorhandene Module, keine neu eingeführten Verträge.
-C16-Queue bleibt SQLite/flock, C18 besitzt eigene Workflowdateien. C22 verlangt
-Single-Host mit identischen lokalen Mountpfaden/UIDs, keine verteilte Queue.
-
-## Vorhandene Persistenz und Suche zuerst wiederverwenden
-
-- `src/model_materials/materials.py`: versionierte Materialbindings,
-  ArtifactReceipt, NormalizedDocument mit strukturierten Blöcken/Provenienz.
-- `src/model_transcribe/data_transcribe.py`, `tools_lecture/adapt_cs50.py` und
-  `tools_knowledge/bind_cs50_transcript.py`: Transcript/Cues, Quellenprüfung und
-  portable Inputreferenzen. Der Funktionsname Knowledge macht die Bindung nicht
-  zu einer verpflichtenden Extraktion.
-- `src/model_parsing/`/`src/tools_parsing/`: allgemeine/Legacy-Parser mit anderen
-  Verträgen; vor neuer Vereinheitlichung abgleichen, keine pauschale Migration.
-- `src/tools_rag/cs50_{ingestion,retrieval,embeddings}.py`,
-  `src/model_discovery/cs50_index.py`: vorhandener versionierter Transcriptindex
-  und quellgebundenes Retrieval ohne verpflichtende Knowledge-Extraktion.
-  [Frühere technische Indexabnahme](../cs50/operations/transcript_index_completion.md)
-  nutzte synthetische Quellen/Fake-Embeddings und lokales Qdrant. Das ist kein
-  aktueller Real-E5-/Servernachweis.
-- C16 SQLite ist eine Jobhistorie, keine bereits beschlossene allgemeine
-  Source-/Parsed-Datenbank. PostgreSQL und ein eventueller Volltextindex müssen
-  erst im C23-/C24-ADR gegen diese Modelle begründet werden.
-- Wikimedia ist etwa in `src/model_parsing/wiki_client.py`, `wiki_assembler.py`
-  und `src/tools_parsing/{search_wiki,extract_wiki}.py` vorhanden. C27/C30 prüfen
-  Wiederverwendung und externe Informationsqualität, statt neue Clients zu behaupten.
-
-## Noch offene Bugs, Daten- und Deployment-Gates
-
-| Befund | Gegen aktuellen Code/Nachweis geprüft | Einmaliger Planbezug |
+| Paket | Integrierter PR | Tatsächlicher Umfang / verbleibende Grenze |
 | --- | --- | --- |
-| TXT unknown times | `TranscriptSegment.start/end: float`; TXT-Importer erzeugt `None`. C21 dokumentiert 6 fehlgeschlagene TXT-Fälle, 33 übrige Importfälle bestanden. Kein Fix im Default-Tree | C23-05; offener PR #9 nur als Teilvorgänger |
-| Originalpfad vs. Binding | [Draft #72](https://github.com/rf-data/Personal_Assistant/pull/72), Head `3a42b167`, enthält C21-Q.1: Dateien unter `data/Harvard`, Receipt/Provenienz unter `data/lectures/Harvard`; kein Runtimefallback/keine Migration | C23-03; persistente Originalbindung weiterhin unverified |
-| E5/Qdrant Realpilot | PR #72 offen und Draft; dort 84 gezielte Tests/2 optionale Fixture-Skips bei Q.1 dokumentiert. Fehlende Runtime-/Modell-/Serverfreigaben bleiben dort blockiert | optionale C24-04, kein zweiter Pilot |
-| Authlib | aktuelles UI-`pyproject.toml`/`uv.lock` enthalten es nicht; `container_runtime.py` verweigert Produktionsstart. Ein Root-Backend-Lockeintrag ist keine UI-Installation | C26-01 |
-| Browser/TLS/Container | C22-Nachweis benennt diese Abnahmen ausdrücklich blocked; AppTest/TCP ist kein Browser-/TLS-Nachweis | C25-04, C26-02/C26-03, getrennte Scopes |
-| Produktionsmonitoring | C15/C22-Dateien vorhanden, Ziel-Scrape/Hostdisk und echte Alarmzustellung nicht nachgewiesen | C26-05 |
-| Originalmaterialien | C21s drei optionale Tests für ursprüngliche Notes-0-/PDF-Artefakte ohne Eingaben; anderes Notes-5-HTML separat technisch geprüft | C23-06 |
-| Reale Formelqualität | C11 besitzt 42 synthetische Fälle und begrenzte SymPy-Schnittstelle, aber 0 reale Goldfälle im Beispielbericht | C23-06; keine Qualität echter Extraktion erfunden |
+| C23-01 | [#75](https://github.com/rf-data/Personal_Assistant/pull/75) | SQLite/Blobs-ADR und Wiederverwendung; PostgreSQL keine noch ausstehende Pflicht |
+| C23-02A/B/C | [#76](https://github.com/rf-data/Personal_Assistant/pull/76), [#77](https://github.com/rf-data/Personal_Assistant/pull/77), [#78](https://github.com/rf-data/Personal_Assistant/pull/78) | Core, verifizierte Adapter und Recovery/Backup; [Implementierung](../architecture/content_store_implementation.md), [Betriebsvertrag](../operations/content_store_recovery.md). Kein Produktions-Verbundbackup |
+| C23-03 | [#79](https://github.com/rf-data/Personal_Assistant/pull/79) | Explizite Reimportversuche/Sourceinventar; historische SRT-Pfadbindung bleibt D06-gesperrt |
+| C23-04 | [#80](https://github.com/rf-data/Personal_Assistant/pull/80) | [Autorisierte Content-Read-API](../api/content_read_v1.md); keine allgemeine Such-API |
+| C23-05 | [#81](https://github.com/rf-data/Personal_Assistant/pull/81) | Unknown-Time-Modell/Importer/Timed-Guards; vollständiger TXT-ContentStore-Publikationsadapter bleibt Folgearbeit |
+| C23-06 | [#82](https://github.com/rf-data/Personal_Assistant/pull/82) | [Technisches Inventar-/Goldframework](../cs50/evaluation/c23_real_material_evaluation.md); null vollständige freigegebene Realbundles/konfirmiertes Gold, Realabnahme offen |
+| C24-01/02 | [#83](https://github.com/rf-data/Personal_Assistant/pull/83), [#84](https://github.com/rf-data/Personal_Assistant/pull/84) | ADR und [deterministische Projektion](../architecture/index_projection_implementation.md) |
+| C24-03 | [#85](https://github.com/rf-data/Personal_Assistant/pull/85) | [FTS5/Generationen/interne Suche](../architecture/content_fts_implementation.md), entspricht geplantem 02-B/03-A; **kein HTTPsearch und keine C16-Indexjobs** |
+| C24-04 | [#86](https://github.com/rf-data/Personal_Assistant/pull/86) | [Content-Vektoradapter](../architecture/content_vector_implementation.md) mit FakeEmbedder/Transport. Kein tatsächlicher E5-/Qdrant-/Hybridnachweis |
+| C24-05-A | [#87](https://github.com/rf-data/Personal_Assistant/pull/87), Merge 18.10.2026 | [A-Evaluator und unabhängige Goldverträge](../cs50/evaluation/content_retrieval_evaluation.md); keine synthetischen Werte als Realqualität |
+| C24-05-B1 | [#90](https://github.com/rf-data/Personal_Assistant/pull/90), Merge 18.10.2026 | [Reviewpersistenz/API](../api/human_review_v1.md), explizite Rechte, C16-Principal, Revisionen/Goldexport/Reports/Abnahme. Keine globale Dataset-/Reportinventur behaupten |
+| C24-05-B2 | [UI #7](https://github.com/rf-data/personal-assistant-ui/pull/7), Merge 19.10.2026 | [Bestehende Streamlit-Reviewansicht](https://github.com/rf-data/personal-assistant-ui/blob/90816a1578bcf67739ee9acaa483c1635aa0c44b/docs/human_review_ui.md). Vertragsgebundene UI, keine allgemeine Suchseite und keine reale Humanabnahme |
+| C24-05-C2 | [#91](https://github.com/rf-data/Personal_Assistant/pull/91), Merge 19.10.2026 | [Synthetische Review/Gold/FTS5/A-Integration](../cs50/evaluation/c24_authorized_pilot_integration.md), übernommene #89-Metadaten. Reale Ausführung weiter blocked/not_evaluable |
+| C24-06-A | laufender separater Auftrag | Branch `feat/c24-06a-local-review`, kein veröffentlichter PR im abgefragten Bestand. Lokale synthetische Umgebung/Humanabnahme ist in Bearbeitung; PM-01 prüft/ändert deren Dateien, Prozesse und Tests nicht |
 
-Kein neuer Funktions-/LLM-/Embedding-/Datenbank-/Containerlauf in C23.0. Lokale
-unversionierte Quelldaten und Secrets wurden nicht eingelesen. Phase-B-Freigabe
-für Qdrant lässt sich auch aus dem neuen Plattformziel nicht ableiten.
+C23/C24-Parents bleiben **technisch integriert, fachlich offen**; kein allgemeines
+Done. Search-HTTP/DTOs und Indexjobs sind die vorhandenen Restpakete 03-B/02-C,
+keine neue Suche oder Queue. C25–C32 sind geplant; C26 benötigt eigene Betreiber-
+und Zielabnahme. B2-Renderer/Client/Security bei C25 wiederverwenden.
 
-## Bestehende GitHub-Vorgänge und Deduplizierung
+## Offene PRs und erhaltenswerter Umfang
 
-Die vollständig gelesenen `issues?state=all&per_page=100`-Antworten enthielten
-Backend 71 und UI fünf Einträge, jeweils weniger als eine Seite. **Alle sind PRs;
-keine eigenständigen offenen oder geschlossenen Issues gefunden.** „Issues“ im
-REST-Endpunkt umfasst auch PRs; sie wurden ausdrücklich herausgefiltert.
+| PR / Branch / Head | Inhalt / Abhängigkeiten | Abgleich und Empfehlung, keine Aktion |
+| --- | --- | --- |
+| [#72](https://github.com/rf-data/Personal_Assistant/pull/72), `feat/c21q-qdrant-transcript-pilot`, `3a42b1675dffe823edc179a347fa97dd1a096fd0` | Qdrant-/Auth-/Healthvorbereitung, read-only Pilotinventur und C21-Q.1-Pfadbefund. Modell/Instanz/Transport und D06 separat | Optionaler vorhandener Pilot, nicht durch FTS5 oder Fake-Vektoradapter abgeschlossen. Guards/Runbooks und historische Evidenz erhalten; kein Merge/Close |
+| [#88](https://github.com/rf-data/Personal_Assistant/pull/88), `feat/c24-05b-human-review-workflow`, `f3fae9ef6d2c919adb12b08242bf84819f2b42f2` | Review-ADR + Plannachtrag, keine Runtime | A-/B-Implementierungsblockade ist überholt durch #87/#90/UI #7. Architekturbegründungen als historische Designentscheidungen erhalten und gegen B1-Vertrag abgleichen; keinen zweiten Reviewworkflow planen |
+| [#89](https://github.com/rf-data/Personal_Assistant/pull/89), `feat/c24-05c-real-corpus-pilot`, `a3d253a27c4fd7aed37c2a4b9d38aa8a4ed1d81d` | CorpusManifest/GoldDataset, Readiness r1/r2, Pilot-/Übergabeplan; keine Runtime | Metadaten bereits in #91 übernommen, frühere B-Blockade überholt. Unveränderte r1/r2 und nachvollziehbare Übergabe erhalten; r3/#91 ist aktueller technischer Stand. D06/D07 und Realabnahme nicht überholt |
 
-Backend-PRs #6/#9/#10/#11 sind weiter offen. Der
-[bisherige Einzelreview](../cs50/operations/historical_pr_review.md) bezeichnet
-#6/#10/#11 funktional als ersetzt; dies ist keine neue Merge-/Closeentscheidung.
-#9 enthält den relevanten TXT-Rest und wird in C23-05 verlinkt. PR #72 wird in
-C23-03/C24-04 referenziert; Pfadübernahme und optionaler Suchpilot sind getrennte
-Aufgaben, keine doppelte Ingestion. UI hat keine offenen PRs im Abgleich.
+Diese Inhaltsprüfung verwendet die erhaltenen Draft-Heads bzw. deren bereits
+integrierte Artefakte und den [C2-Draftaudit](../cs50/evaluation/c24_authorized_pilot_integration.md).
+Offene historische Backend-PRs #6/#9/#10/#11 bleiben ebenfalls unverändert;
+[früherer Review](../cs50/operations/historical_pr_review.md). #81 ersetzt keine
+ungeprüfte komplette Übernahme des alten #9-Patches.
 
-Der Connector liefert Repositoryrechte admin/maintain/push/triage/pull. Er lehnt
-jedoch Milestone-Listen, Owner-Projects-Seite und GraphQL als nicht unterstützte
-Endpoints ab (`INVALID_ARGUMENT`). Projects/Milestones sind deshalb **unbekannt**,
-nicht „nicht vorhanden“. `has_projects=true` beweist keinen Projects-v2-Zugriff.
-Lokal ist `gh` nicht installiert. Keine Credentialdatei wurde dafür gelesen.
-[Umsetzbarer Plan und spätere Zugriffsprüfung](github_execution.md).
+## GitHub-Issues, Rechte und Project
 
-[C23.0-Dokumentationsprüfung und Grenzen](validation.md).
+Vor Erstellung des eigenen PM-01-PR: REST `issues?state=all&per_page=100` und `pulls?state=all&per_page=100` lieferten
+Backend **89**, UI **7** Einträge, jeweils weniger als eine volle Seite. Sämtliche
+Issue-Endpunkt-Einträge besitzen `pull_request`: **0 eigenständige Issues** offen
+oder geschlossen. Backend 7 offene PRs (#6/#9/#10/#11/#72/#88/#89), darunter drei
+Drafts; UI keine offenen PRs zum Snapshot. Vollständiger Deduplizierungsbestand,
+kein Schluss aus bloßen Titelsuchen.
+
+Der authentifizierte Account ist `rf-data`, Profilname `rf_data`; beide Repos
+melden admin/maintain/push/triage/pull. Das bestätigt **keine** Projectrechte.
+Der Eigentümer benennt [User-Project #1](https://github.com/users/rf-data/projects/1).
+Name/Node-ID/Views/Felder/Items/Workflows/Permissions sind nicht auslesbar;
+[Inventartabelle](project.md). Connector weist Owner-/Repo-Projects, GraphQL,
+Milestone- und Label-Inventar mit `INVALID_ARGUMENT` zurück. `gh` fehlt. Auch
+öffentlicher Webabruf konnte das Project nicht öffnen (Cache miss). Kein Token
+oder Projekt-Envfile gelesen, keine App/Dependency installiert.
+
+PM-01 ist die ausdrückliche Freigabe für nichtdestruktive Planung; die alte D01-
+Planfreigabe fehlt **nicht** mehr. Die zusätzliche Startbedingung „Project und
+Berechtigungen tatsächlich bestätigt“ ist für Issue-/Projectmutationen noch offen.
+Deshalb **keine** Issues/Labels/Milestones/Items/Views/Automatisierungen verändert;
+nur separater Dokumentations-PR. [Nächste konkrete Schritte](github_execution.md).
+Die Projectübersicht ist damit noch nicht operativ konsolidiert.
+
+## Nachweistiefe
+
+Technische Funktionen aus Default-Code/PRs geprüft; historische Pakettests nicht
+neu ausgeführt oder summiert. Fachliche Realabnahme und produktiver Go-live bleiben
+ungeprüft/blockiert. [PM-01-Validierung](pm01_validation.md),
+[unveränderte Aufnahme vom 17.10.2026](status_c230_2026-10-17.md).

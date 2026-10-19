@@ -1,5 +1,12 @@
 # C24: Implementierungsplan nach dem Indexing-/Retrieval-ADR
 
+PM-01, 19.10.2026: Der [aktuelle konsolidierte Issueplan](issues.md) ersetzt
+die unten datierte Aussage „Entwürfe bleiben unverändert“. Die ursprünglichen IDs
+bleiben erhalten; tatsächliche A/B1/B2/C2-Unterpakete und offene 02-C/03-B-/04-B-
+Anteile sind jetzt getrennt nachvollziehbar. Nichtdestruktive Planung ist autorisiert;
+Projectinventar/-rechte bleiben offen. Keine Änderung an Implementierungsverträgen
+oder historischen Abnahmen. [Aktueller Status](status.md).
+
 Stand 19.10.2026: A/#87, B1/#90 und UI-B2/#7 sind integriert. C24-05-C2 ergänzt
 die [synthetische Review-/FTS5-/Evaluationsintegration und den aktuellen Draftaudit](../cs50/evaluation/c24_authorized_pilot_integration.md).
 Reale Sourcefreigaben, Pilotroots und menschliche Reviews fehlen weiterhin;

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "kind": "unapproved_github_issue_plan",
-  "approval_required": true,
-  "approved": false,
+  "kind": "github_issue_plan",
+  "approval_required": false,
+  "approved": true,
   "owner": "rf-data",
   "project_name": "Personal Assistant – Development",
   "repositories": {
@@ -10,8 +10,8 @@
     "ui": "rf-data/personal-assistant-ui"
   },
   "baseline": {
-    "backend": "476f0a0d786db87eb59efad36fd21a2fadaeb1dd",
-    "ui": "14ccfc20d83fe57612b5298e323d9f9f1d899cbf"
+    "backend": "4c057ae33d41ba98e227879cc8a51283338e4a0b",
+    "ui": "90816a1578bcf67739ee9acaa483c1635aa0c44b"
   },
   "existing_standalone_issues": {
     "backend": 0,
@@ -35,9 +35,27 @@
         "Raw und Parsed Content persistent, versioniert und unabhängig von Knowledge nutzbar; Hash-/Quellen-/Seiten-/Block-/Zeitbezüge und idempotenter Reimport nachgewiesen.",
         "Lesevertrag, Rechte und Restorefähigkeit sind belegt; unbekannte Zeiten bleiben ausdrücklich unbekannt."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/75",
+        "https://github.com/rf-data/Personal_Assistant/pull/76",
+        "https://github.com/rf-data/Personal_Assistant/pull/77",
+        "https://github.com/rf-data/Personal_Assistant/pull/78",
+        "https://github.com/rf-data/Personal_Assistant/pull/79",
+        "https://github.com/rf-data/Personal_Assistant/pull/80",
+        "https://github.com/rf-data/Personal_Assistant/pull/81",
+        "https://github.com/rf-data/Personal_Assistant/pull/82"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C23] Parsed Content Persistence",
+      "delivery_state": "integrated_pending_acceptance",
+      "technical_state": "partially_integrated",
+      "acceptance_state": "pending",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Persistence technical core integrated; historical binding and real parsing acceptance remain open.",
+      "github_action": "create_remaining_scope_after_project_preflight"
     },
     {
       "key": "C24",
@@ -57,9 +75,29 @@
         "Indexversion, Reindexierung, Fehler und Stale-Erkennung sind getestet; Suchindex ist aus freigegebenen Quellen rekonstruierbar.",
         "Vorhandener Transcript-/Qdrant-Pfad geprüft; semantische Suche bleibt optional, reale Qualität separat evaluiert."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/83",
+        "https://github.com/rf-data/Personal_Assistant/pull/84",
+        "https://github.com/rf-data/Personal_Assistant/pull/85",
+        "https://github.com/rf-data/Personal_Assistant/pull/86",
+        "https://github.com/rf-data/Personal_Assistant/pull/87",
+        "https://github.com/rf-data/Personal_Assistant/pull/88",
+        "https://github.com/rf-data/Personal_Assistant/pull/89",
+        "https://github.com/rf-data/Personal_Assistant/pull/90",
+        "https://github.com/rf-data/Personal_Assistant/pull/91",
+        "https://github.com/rf-data/personal-assistant-ui/pull/7"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C24] Indexing & Retrieval",
+      "delivery_state": "integrated_pending_acceptance",
+      "technical_state": "partially_integrated",
+      "acceptance_state": "pending",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Projection/FTS5/evaluation/review integrated; search HTTP, job integration, local human acceptance and real evaluation remain open.",
+      "github_action": "create_remaining_scope_after_project_preflight"
     },
     {
       "key": "C25",
@@ -80,9 +118,20 @@
         "Originalverweise und Belege mit Seiten/Blöcken/Zeiten; fehlende Positionen werden nicht erfunden.",
         "Job-/Indexstatus sowie leere, unzugängliche und veraltete Treffer verständlich; Browserabnahme für vereinbarten Umfang belegt."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/personal-assistant-ui/pull/7"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C25] Search & Source UI",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Existing Evaluation & Review is a reusable view, not a completed general Search & Source UI.",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C26",
@@ -106,7 +155,18 @@
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C26] Hetzner Production Release",
+      "delivery_state": "blocked",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "D09/D10/D11 and C26-01 through C26-07 target-operation acceptance"
+      ],
+      "scope_note": "No deployment or productive go-live authorized by PM-01.",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C27",
@@ -126,7 +186,16 @@
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C27] Legacy Code Review",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Independent of PERSONAL-PYREPO; no waiting for the CS50P final project.",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C28",
@@ -144,11 +213,21 @@
       "acceptance": [
         "Registryanforderungen für eBooks/EPUB/PDF, Liora-Fortbildung, Apothekerkammer-Webinare und weitere Kurse.",
         "Quellidentität, Zugriffs-/Nutzungsrechte, Versionierung, Ingestionstrategie und Review festgelegt.",
-        "Erste Erweiterung separat anhand berechtigter Quellen abgenommen; keine stillschweigende Bestandserfassung."
+        "Erste Erweiterung separat anhand berechtigter Quellen abgenommen; keine stillschweigende Bestandserfassung.",
+        "Gemeinsamen begrenzten Scheduled-Discovery-Vertrag für YouTube, arXiv und weitere erlaubte Provider festlegen; C16/C18/C22 prüfen, keine zweite Queue/Schedulerimplementierung."
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C28] Source Registry & Additional Sources",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C29",
@@ -171,7 +250,16 @@
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C29] Entity Recognition & Linking",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C30",
@@ -194,7 +282,16 @@
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C30] Wikimedia Entity Enrichment",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C31",
@@ -214,15 +311,25 @@
       "acceptance": [
         "Registrierte Kanäle und begrenzte geplante Jobs für neue Metadaten/zulässig verfügbare Inhalte.",
         "Zusammenfassungen, Relevanz-/Qualitätsreview und Aufnahmeempfehlung mit Quellenbelegen.",
-        "Manuelle Freigabe vor dauerhafter Übernahme; Knowledge-Eignung separat und optional bewerten."
+        "Manuelle Freigabe vor dauerhafter Übernahme; Knowledge-Eignung separat und optional bewerten.",
+        "Geplante Abrufe nutzen den gemeinsamen C28-Vertrag; keine neuen Jobs durch Planung aktivieren."
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C31] YouTube Discovery & Review",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Use the shared scheduled discovery concept owned by C28; YouTube is a provider, not a second scheduler.",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C32",
-      "title": "[C32] Medium Email & Article Review",
+      "title": "[C32] Medium, Real Python und autorisierte Fachnewsletter prüfen",
       "repository": "rf-data/Personal_Assistant",
       "kind": "milestone",
       "parent": null,
@@ -236,13 +343,25 @@
         "C28"
       ],
       "acceptance": [
-        "Autorisierte E-Mails und Artikellinks mit Duplikaterkennung und Provenienz.",
-        "Relevanz, Zusammenfassung und Aufnahmeempfehlung prüfen; Paywalls/Zugriffs- und Nutzungsrechte beachten.",
-        "Manuelle Freigabe vor Quellenregistrierung/Inhaltsübernahme; keine Umgehung von Zugriffsbeschränkungen."
+        "Explizit autorisierte Medium-E-Mails/Artikellinks, Real Python Newsletter und weitere freigegebene Fachnewsletter verarbeiten; Absender und Newslettertyp erkennen.",
+        "Links extrahieren, normalisieren und deduplizieren; Relevanz begründet bewerten und Ressourcen zur Aufnahme vorschlagen; menschliche Freigabe und Nutzungs-/Paywallrechte beachten.",
+        "Nach dokumentierter Verarbeitung in einen eigenen explizit konfigurierten Zielordner verschieben; positive Relevanz allein löst keinen Move aus.",
+        "Verarbeitungsstatus und Verschiebestatus getrennt persistieren; Idempotenz, originale Mail-ID/UID und Provider-/Mailboxbindung erhalten, soweit technisch möglich.",
+        "IMAP-COPY/MOVE-Semantik, Fehler und kontrollierte Wiederholungen festlegen; kein unkontrolliertes EXPUNGE, keine automatischen Regeln/Zielordneränderungen ohne ausdrückliche Konfiguration.",
+        "Keine echten Mailzugriffe oder Mailboxmutationen in diesem Planungsauftrag."
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C32] Medium Email & Article Review",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Planning only: no emails read, moved or deleted; no mailbox rules changed.",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C23-01",
@@ -251,7 +370,7 @@
       "kind": "debt",
       "parent": "C23",
       "target_milestone": "C23",
-      "status": "Backlog",
+      "status": "Done",
       "priority": "P1",
       "workstream": "Persistence",
       "depends_on": [],
@@ -260,9 +379,20 @@
         "Source-/Parsed-Versionen, Referenzintegrität, Rechte, Restore und Idempotenz spezifizieren; PostgreSQL gegen bestehende Alternativen begründet entscheiden.",
         "Keine zweite Jobqueue und kein erzwungener Knowledge-Schritt."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/75"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C23-01] Persistenz-ADR und vorhandene Modelle vergleichen",
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "SQLite plus immutable blobs decided; no PostgreSQL implementation pending.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
     },
     {
       "key": "C23-02",
@@ -271,7 +401,7 @@
       "kind": "feature",
       "parent": "C23",
       "target_milestone": "C23",
-      "status": "Backlog",
+      "status": "Done",
       "priority": "P1",
       "workstream": "Persistence",
       "depends_on": [
@@ -282,9 +412,22 @@
         "Rohbytes und geparste Inhalte getrennt und unabhängig von Derived Knowledge lesen; Vertragstests mit kleinen Fixtures.",
         "Fehler/atomare Veröffentlichung und parallele Zugriffe im gewählten Speichermodell prüfen."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/76",
+        "https://github.com/rf-data/Personal_Assistant/pull/77",
+        "https://github.com/rf-data/Personal_Assistant/pull/78"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C23-02] Raw-/Parsed-Speicherung nach freigegebenem ADR umsetzen",
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Core, adapters and recovery integrated. Track implemented children once; whole-system target backup remains C26-04.",
+      "github_action": "reference_children_do_not_create_duplicate_implementation"
     },
     {
       "key": "C23-03",
@@ -305,10 +448,22 @@
         "Bestandsübernahme nur nach separater Freigabe; Source-/Receipt-/Provenienz- und Hashkonflikte testen."
       ],
       "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/79",
         "https://github.com/rf-data/Personal_Assistant/pull/72"
       ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C23-03] Idempotenten Reimport und explizite Bestandsbindung absichern",
+      "delivery_state": "blocked",
+      "technical_state": "partially_integrated",
+      "acceptance_state": "pending",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "D06: explicit canonical historical source binding decision"
+      ],
+      "scope_note": "Reimport and explicit source inventory integrated. Historical SRT transfer/binding remains D06-blocked; no path fallback or migration.",
+      "github_action": "create_remaining_scope_after_project_preflight"
     },
     {
       "key": "C23-04",
@@ -317,7 +472,7 @@
       "kind": "feature",
       "parent": "C23",
       "target_milestone": "C23",
-      "status": "Backlog",
+      "status": "Done",
       "priority": "P1",
       "workstream": "Persistence",
       "depends_on": [
@@ -328,9 +483,20 @@
         "Owner-/Course-/Quellrechte serverseitig durchsetzen; keine beliebigen Hostpfade/Dateiserver.",
         "API-Beispiele und Kompatibilitätsvertrag für das UI-Repository veröffentlichen."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/80"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C23-04] Autorisierte Source-/Parsed-Leseverträge bereitstellen",
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Authorized paginated Content Read HTTP API integrated; no general search HTTP API.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
     },
     {
       "key": "C23-05",
@@ -339,20 +505,30 @@
       "kind": "bug",
       "parent": "C23",
       "target_milestone": "C23",
-      "status": "Backlog",
+      "status": "Done",
       "priority": "P1",
       "workstream": "Sources",
       "depends_on": [],
       "acceptance": [
-        "TranscriptSegment verlangt derzeit float, TXT-Importer erzeugt None: Unknown-Time-Vertrag für Modell und Verbraucher definieren.",
+        "Unknown-Time-Vertrag mit start/end=null, vorhandenen Locatoren und Timed-Guards erhalten; keine erfundenen Zeiten.",
         "Gezielte TXT-/SRT-/VTT-Regression sowie Chunker-/Evidence-Abweisung nicht zeitgebundener Daten ohne erfundene Zeitwerte.",
         "Nur den relevanten Rest von PR #9 behandeln; alten Patch und PR nicht automatisch übernehmen/schließen."
       ],
       "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/81",
         "https://github.com/rf-data/Personal_Assistant/pull/9"
       ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C23-05] TXT-Import ohne erfundene Zeitstempel reparieren",
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Unknown-Time model/importer/guards integrated. Full TXT ContentStore publication is not supplied by this merge.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
     },
     {
       "key": "C23-06",
@@ -372,9 +548,23 @@
         "C10/C13-Qualitätsrubrik für Text/Code/Bilder und separate reale C11-Formel-Gold-/Prediction-Paare festlegen; keine Goldableitung aus Vorhersagen.",
         "Bekannte Fehlstellen und synthetische/reale Ergebnisse getrennt ausweisen; CS50-Releaseumfang daraus festlegen."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/82",
+        "https://github.com/rf-data/Personal_Assistant/pull/91"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C23-06] Berechtigten Realmaterialkorpus und unabhängige Goldreferenzen bereitstellen",
+      "delivery_state": "blocked",
+      "technical_state": "partially_integrated",
+      "acceptance_state": "pending",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "D07: source permissions, complete bundles, exact private roots, human reviewers and gold"
+      ],
+      "scope_note": "Technical corpus/gold framework and inventory integrated. No authorized complete real bundle or independently confirmed real gold.",
+      "github_action": "create_remaining_scope_after_project_preflight"
     },
     {
       "key": "C24-01",
@@ -383,7 +573,7 @@
       "kind": "debt",
       "parent": "C24",
       "target_milestone": "C24",
-      "status": "Backlog",
+      "status": "Done",
       "priority": "P1",
       "workstream": "Retrieval",
       "depends_on": [
@@ -394,9 +584,20 @@
         "Keine neue Vektordatenbank ohne ADR; PostgreSQL-Suche bleibt vom Persistenz-ADR abhängig.",
         "Knowledge-Extraktion ist keine Suchvoraussetzung; verbindlichen Text-/Quellenvertrag bestimmen."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/83"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C24-01] Bestehende Suche prüfen und Indexstrategie entscheiden",
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Indexing/retrieval ADR integrated; lexical FTS5 selected, semantics optional.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
     },
     {
       "key": "C24-02",
@@ -418,9 +619,21 @@
         "Wiederholung, Teilfehler, veraltete Dokumente und kontrollierte Reindexierung testen; keine ungeprüfte Datenlöschung.",
         "Indexstatus und Fehler maschinenlesbar bereitstellen."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/84",
+        "https://github.com/rf-data/Personal_Assistant/pull/85"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C24-02] Versionierten Volltextindex und Reindexierung implementieren",
+      "delivery_state": "integrated_pending_acceptance",
+      "technical_state": "partially_integrated",
+      "acceptance_state": "pending",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Projection (02-A), FTS5 generations/rebuild (02-B) integrated. Explicit C16 index-job integration (02-C) remains planned.",
+      "github_action": "reference_integrated_scope_track_remaining_child"
     },
     {
       "key": "C24-03",
@@ -441,9 +654,20 @@
         "Treffer enthalten eindeutige Version und echte Seiten-/Block-/Zeitbezüge sowie sichere Originalverweise.",
         "Stale-/Missing-Source und inkompatible Indexversionen ausdrücklich melden; UI-Vertrag veröffentlichen."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/85"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C24-03] Quellengebundene Such-API und Trefferbelege liefern",
+      "delivery_state": "integrated_pending_acceptance",
+      "technical_state": "partially_integrated",
+      "acceptance_state": "pending",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Internal authorized lexical retrieval/locators (03-A) integrated; search HTTP capability/routes/DTOs (03-B) absent.",
+      "github_action": "reference_integrated_scope_track_remaining_child"
     },
     {
       "key": "C24-04",
@@ -465,10 +689,20 @@
         "Semantische Suche bleibt optional; bestehender Originalpfadkonflikt und Remote-Uploadfreigabe bleiben echte Blocker."
       ],
       "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/86",
         "https://github.com/rf-data/Personal_Assistant/pull/72"
       ],
       "issue_url": null,
-      "optional": true
+      "optional": true,
+      "original_title": "[C24-04] Vorhandenen Qdrant-/Transcript-Pilot abnehmen statt neu bauen",
+      "delivery_state": "optional",
+      "technical_state": "partially_integrated",
+      "acceptance_state": "pending",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "ContentRecord vector adapter/Fake transport integrated. Original real Qdrant/E5 pilot scope remains optional C24-04-B; no real inference or hybrid acceptance.",
+      "github_action": "create_remaining_scope_after_project_preflight"
     },
     {
       "key": "C24-05",
@@ -489,9 +723,27 @@
         "Volltext und gegebenenfalls semantische Suche getrennt auswerten; Nenner, Fehler und nicht evaluierbare Fälle berichten.",
         "Qualitätsgrenzen und Releaseumfang manuell prüfen; keine Modellwerte aus synthetischen Fixtures erfinden."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/87",
+        "https://github.com/rf-data/Personal_Assistant/pull/90",
+        "https://github.com/rf-data/personal-assistant-ui/pull/7",
+        "https://github.com/rf-data/Personal_Assistant/pull/91",
+        "https://github.com/rf-data/Personal_Assistant/pull/88",
+        "https://github.com/rf-data/Personal_Assistant/pull/89"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C24-05] Reale Retrievalqualität und Quellenrückbindung bewerten",
+      "delivery_state": "blocked",
+      "technical_state": "partially_integrated",
+      "acceptance_state": "pending",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "D07: authorized real bundle/roots, independent human gold, complete pool, approver decision"
+      ],
+      "scope_note": "A evaluation, B1 persistence/API, B2 review UI and C2 synthetic integration integrated. Real release acceptance remains open.",
+      "github_action": "create_remaining_scope_after_project_preflight"
     },
     {
       "key": "C25-01",
@@ -505,16 +757,29 @@
       "workstream": "UI",
       "depends_on": [
         "C23-04",
-        "C24-03"
+        "C24-03-B"
       ],
       "acceptance": [
         "Vorhandene UI-Settings/Auth und typisierten Client erweitern, keine Backend-Dateizugriffe.",
         "Auswahl, Suche, Paging und Filter nutzen autoritative APIs; leere und verweigerte Antworten unterscheidbar.",
         "Cross-Repository-Vertragsversion und Backend-PR verlinkt."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/personal-assistant-ui/pull/7"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C25-01] Kurs-/Quellenauswahl und Suchfilter integrieren",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "C24-03-B: actual Search HTTP/DTO contract"
+      ],
+      "scope_note": "Reuse B2 client/security/renderers where suitable; do not build a second review UI.",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C25-02",
@@ -534,9 +799,22 @@
         "Treffer führt zur konkreten Quelle/Version; Originalzugang bleibt berechtigungsgeprüft.",
         "Unbekannte Zeitstempel, fehlende Bildbytes und veraltete Quellen klar darstellen."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/personal-assistant-ui/pull/7"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C25-02] Parsed Content mit Original- und Fundstellenansicht anzeigen",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "C24-03-B: actual Search HTTP/DTO contract"
+      ],
+      "scope_note": "Reuse B2 client/security/renderers where suitable; do not build a second review UI.",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C25-03",
@@ -550,16 +828,29 @@
       "workstream": "UI",
       "depends_on": [
         "C25-01",
-        "C24-02"
+        "C24-02-C"
       ],
       "acceptance": [
         "Bestehendes C16/C18-Job-/Owner-/Course-Modell nutzen, Indexzustand aus Backend beziehen.",
         "Refresh/Fehler/Unavailable/Stale ohne automatische Schreibaktion oder künstlichen Fortschritt.",
         "Bestehende Admin-/Workflowansichten bleiben kompatibel."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/personal-assistant-ui/pull/7"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C25-03] Job- und Indexstatus für Suche sichtbar machen",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "C24-03-B: actual Search HTTP/DTO contract"
+      ],
+      "scope_note": "Reuse B2 client/security/renderers where suitable; do not build a second review UI.",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C25-04",
@@ -580,9 +871,22 @@
         "Viewer-/Operator-/Course-Grenzen sowie fehlende/stale Inhalte prüfen; AppTest getrennt berichten.",
         "Kein Browsernachweis durch bloße API-/AppTest-Erfolge ersetzen."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/personal-assistant-ui/pull/7"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C25-04] Browserabnahme der Source-/Search-Nutzung dokumentieren",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "C24-03-B: actual Search HTTP/DTO contract"
+      ],
+      "scope_note": "Reuse B2 client/security/renderers where suitable; do not build a second review UI.",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C26-01",
@@ -604,7 +908,18 @@
         "https://github.com/rf-data/personal-assistant-ui/pull/5"
       ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C26-01] Gepinntes Authlib und UI-Startschutz abnehmen",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "scope_note": "",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C26-02",
@@ -628,7 +943,18 @@
         "https://github.com/rf-data/Personal_Assistant/pull/73"
       ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C26-02] C22-Images und Container-Prozessgrenzen isoliert prüfen",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "scope_note": "",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C26-03",
@@ -651,7 +977,18 @@
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C26-03] TLS, OIDC, individuelle Rollen und Browserzugriff abnehmen",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "scope_note": "",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C26-04",
@@ -669,12 +1006,27 @@
       ],
       "acceptance": [
         "Endgültiger Single-Host-Mount: identische UID/Pfade, flock/rename/fsync/SQLite-WAL und Quoten.",
-        "C22-Backup/Restore wiederverwenden; zusätzlich gewählte Raw-/Parsed-Persistenz, Katalog/Config und getrennte Secrets abdecken.",
+        "C22- und ContentStore-Backup/Restore wiederverwenden; EvaluationStore-Revisionsclosure, Indexgeneration/Rebuildstrategie, Katalog/Config und getrennte Secrets ausdrücklich einbeziehen.",
         "Leeres isoliertes Restoreziel, Hash-/Provenienzprüfung, interrupted/Quarantäne und Operator-Recovery; keine produktiven Daten überschreiben."
       ],
-      "existing_references": [],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/73",
+        "https://github.com/rf-data/Personal_Assistant/pull/78",
+        "https://github.com/rf-data/Personal_Assistant/pull/90"
+      ],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C26-04] Zielstorage und konsistenten Restore auf isoliertem Ziel prüfen",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "scope_note": "Reuse ContentStore recovery/backup and C22 fence; include EvaluationStore closure, selected index generation and restore strategy explicitly; no production snapshot in PM-01.",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C26-05",
@@ -696,7 +1048,18 @@
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C26-05] Produktionsmonitoring und echte Alarmzustellung prüfen",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "scope_note": "",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C26-06",
@@ -722,7 +1085,18 @@
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C26-06] CS50 über die freigegebene UI Ende-zu-Ende abnehmen",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "scope_note": "",
+      "github_action": "create_after_project_preflight"
     },
     {
       "key": "C26-07",
@@ -744,7 +1118,476 @@
       ],
       "existing_references": [],
       "issue_url": null,
-      "optional": false
+      "optional": false,
+      "original_title": "[C26-07] Manuelle Hetzner-Go-live-Entscheidung und Betriebsübergabe",
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "scope_note": "",
+      "github_action": "create_after_project_preflight"
+    },
+    {
+      "key": "C23-02A",
+      "title": "[C23-02A] ContentStore Core & Persistence Foundation",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C23-02",
+      "target_milestone": "C23",
+      "status": "Done",
+      "priority": "P1",
+      "workstream": "Persistence",
+      "depends_on": [
+        "C23-01"
+      ],
+      "acceptance": [
+        "Den begrenzten integrierten technischen Umfang und dessen versionierte Abnahme als vorhandenen Nachweis erhalten; keine erneute Implementierung."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/76"
+      ],
+      "issue_url": null,
+      "optional": false,
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "No real material or production acceptance follows from this technical merge.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
+    },
+    {
+      "key": "C23-02B",
+      "title": "[C23-02B] Verified Material & Transcript Adapters",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C23-02",
+      "target_milestone": "C23",
+      "status": "Done",
+      "priority": "P1",
+      "workstream": "Persistence",
+      "depends_on": [
+        "C23-02A"
+      ],
+      "acceptance": [
+        "Den begrenzten integrierten technischen Umfang und dessen versionierte Abnahme als vorhandenen Nachweis erhalten; keine erneute Implementierung."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/77"
+      ],
+      "issue_url": null,
+      "optional": false,
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "No real material or production acceptance follows from this technical merge.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
+    },
+    {
+      "key": "C23-02C",
+      "title": "[C23-02C] Recovery, Concurrency & Backup/Restore",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C23-02",
+      "target_milestone": "C23",
+      "status": "Done",
+      "priority": "P1",
+      "workstream": "Persistence",
+      "depends_on": [
+        "C23-02A"
+      ],
+      "acceptance": [
+        "Den begrenzten integrierten technischen Umfang und dessen versionierte Abnahme als vorhandenen Nachweis erhalten; keine erneute Implementierung."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/78"
+      ],
+      "issue_url": null,
+      "optional": false,
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "No real material or production acceptance follows from this technical merge.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
+    },
+    {
+      "key": "C24-05-A",
+      "title": "[C24-05-A] Retrieval Evaluation Framework & Independent Gold",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24-05",
+      "target_milestone": "C24",
+      "status": "Done",
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "depends_on": [
+        "C24-01",
+        "C23-04"
+      ],
+      "acceptance": [
+        "Vorhandene technische Verträge und synthetische Nachweise wiederverwenden; keine echte menschliche Bestätigung oder Realabnahme daraus ableiten."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/87"
+      ],
+      "issue_url": null,
+      "optional": false,
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Bounded technical implementation complete; real pilot acceptance remains on C24-05. Internal FTS5 from #85 is an implemented prerequisite; the outstanding parent-level HTTP/job scope is not required.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
+    },
+    {
+      "key": "C24-05-B1",
+      "title": "[C24-05-B1] Human Review Backend, Persistence & API",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24-05",
+      "target_milestone": "C24",
+      "status": "Done",
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "depends_on": [
+        "C24-05-A",
+        "C23-04"
+      ],
+      "acceptance": [
+        "Vorhandene technische Verträge und synthetische Nachweise wiederverwenden; keine echte menschliche Bestätigung oder Realabnahme daraus ableiten."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/90"
+      ],
+      "issue_url": null,
+      "optional": false,
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Bounded technical implementation complete; real pilot acceptance remains on C24-05.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
+    },
+    {
+      "key": "C24-05-B2",
+      "title": "[C24-05-B2] Human Review UI & Evaluation Dashboard",
+      "repository": "rf-data/personal-assistant-ui",
+      "kind": "feature",
+      "parent": "C24-05",
+      "target_milestone": "C24",
+      "status": "Done",
+      "priority": "P1",
+      "workstream": "UI",
+      "depends_on": [
+        "C24-05-B1"
+      ],
+      "acceptance": [
+        "Vorhandene technische Verträge und synthetische Nachweise wiederverwenden; keine echte menschliche Bestätigung oder Realabnahme daraus ableiten."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/personal-assistant-ui/pull/7"
+      ],
+      "issue_url": null,
+      "optional": false,
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Bounded technical implementation complete; real pilot acceptance remains on C24-05.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
+    },
+    {
+      "key": "C24-05-C2",
+      "title": "[C24-05-C2] Synthetic Review, Gold Export & FTS5 Integration",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24-05",
+      "target_milestone": "C24",
+      "status": "Done",
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "depends_on": [
+        "C24-05-A",
+        "C24-05-B1",
+        "C24-05-B2"
+      ],
+      "acceptance": [
+        "Vorhandene technische Verträge und synthetische Nachweise wiederverwenden; keine echte menschliche Bestätigung oder Realabnahme daraus ableiten."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/91"
+      ],
+      "issue_url": null,
+      "optional": false,
+      "delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "acceptance_state": "technical_scope_only",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Bounded technical implementation complete; real pilot acceptance remains on C24-05.",
+      "github_action": "reference_existing_pr_do_not_reimplement"
+    },
+    {
+      "key": "C24-06-A",
+      "title": "[C24-06-A] Lokale Evaluationsumgebung und menschliche Reviewabnahme",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24",
+      "target_milestone": "C24",
+      "status": "In Progress",
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "depends_on": [
+        "C24-05-B2",
+        "C24-05-C2"
+      ],
+      "acceptance": [
+        "Bestehende Streamlit-App und tatsächliches lokales B1-HTTP-Backend mit isolierten persistenten synthetischen Roots bereitstellen.",
+        "Tatsächliche Browser-/Humanabnahme getrennt von automatisierten synthetischen Nachweisen dokumentieren; keine Realfreigabe."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": false,
+      "delivery_state": "in_progress",
+      "technical_state": "in_progress",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Separate active task/branch feat/c24-06a-local-review; PM-01 does not edit, test, stop or block it. No published PR observed at this snapshot.",
+      "github_action": "attach_active_task_when_pr_available"
+    },
+    {
+      "key": "C24-03-B",
+      "title": "[C24-03-B] Autorisierte Search-HTTP-Capability und DTOs",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24-03",
+      "target_milestone": "C24",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "depends_on": [
+        "C23-04",
+        "C24-01"
+      ],
+      "acceptance": [
+        "Vorhandene interne FTS5-Fassade am bestehenden C16-Gateway ausdrücklich opt-in bereitstellen; keine erfundenen aktuellen Routen.",
+        "Begrenzte Requests, Cursor, Antwort-/Fehlervertrag, Live-ACL/Sourceprüfung und echte HTTPtests; Cross-Repo-Vertrag vor C25 veröffentlichen."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/85"
+      ],
+      "issue_url": null,
+      "optional": false,
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "02-B/03-A already integrated by #85. This is the existing 03-B remainder, not a new search implementation.",
+      "github_action": "create_after_project_preflight"
+    },
+    {
+      "key": "C24-02-C",
+      "title": "[C24-02-C] Explizite Indexjob- und Statusintegration",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24-02",
+      "target_milestone": "C24",
+      "status": "Backlog",
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "depends_on": [
+        "C23-04",
+        "C24-01"
+      ],
+      "acceptance": [
+        "Bestehenden Indexbuilder ausdrücklich in C16/C18-Katalog-, Request-, Owner/Course- und Prozessverträge einbinden.",
+        "Idempotenz, Restart/Cancel, Ressourcenlimits und autorisierten Indexstatus belegen; kein Watcher, Cron oder automatische Indexierung."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/85"
+      ],
+      "issue_url": null,
+      "optional": false,
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Use existing 02-B builder; agree catalog/job contract before implementation.",
+      "github_action": "create_after_project_preflight"
+    },
+    {
+      "key": "C24-04-B",
+      "title": "[C24-04-B] Optionalen echten E5/Qdrant-Pilot freigeben und prüfen",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C24-04",
+      "target_milestone": "C24",
+      "status": "Backlog",
+      "priority": "P2",
+      "workstream": "Retrieval",
+      "depends_on": [
+        "C23-03",
+        "C24-01"
+      ],
+      "acceptance": [
+        "Vorhandenen Draft #72 wiederverwenden; konkrete Instanz/Collection, immutable Modellrevision, SDK und Transportfreigaben benennen.",
+        "Nur nach D06/D07 und Instanzfreigabe tatsächliche Inferenz/Upsert/Readback/Recovery bewerten; Hybrid separat und optional."
+      ],
+      "existing_references": [
+        "https://github.com/rf-data/Personal_Assistant/pull/72",
+        "https://github.com/rf-data/Personal_Assistant/pull/86"
+      ],
+      "issue_url": null,
+      "optional": true,
+      "delivery_state": "optional",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [
+        "D06/D07 and explicit model/instance/transport authorization"
+      ],
+      "scope_note": "Blocked optional work; cannot block the lexical core; no duplicate pilot issue/implementation.",
+      "github_action": "create_after_project_preflight"
+    },
+    {
+      "key": "C28-01",
+      "title": "[C28-01] arXiv Research Discovery & Relevance Review",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": "C28",
+      "target_milestone": "C28",
+      "status": "Backlog",
+      "priority": "P2",
+      "workstream": "Sources",
+      "depends_on": [],
+      "acceptance": [
+        "Konfigurierbare Suchbegriffe/arXiv-Kategorien und geplante begrenzte Abrufe über denselben Scheduled-Discovery-Vertrag wie C31 vorsehen.",
+        "Titel, Abstract, Autoren, Kategorien und Veröffentlichungs-/Änderungsinformationen mit persistentem arXiv-Identifier und Versionsbezug erfassen; deduplizieren.",
+        "Relevanz mit begründeter Aufnahmeempfehlung und menschlicher Prüfung; spätere Source-Registry-Übernahme nur nach Freigabe.",
+        "Keine automatischen PDF-Volltextdownloads, keine Wahrheitsannahme aus Abstracts, keine Source-Promotion; Rate Limits/Nutzungsbedingungen beachten; keine Jobs aktivieren."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": true,
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "unassigned",
+      "blocked_by": [],
+      "scope_note": "Additional provider shared with C31; not a second scheduler or new main system. Requires the C28 shared scheduler/registry design contract; C28 parent completion is not an implementation prerequisite.",
+      "github_action": "create_after_project_preflight"
+    },
+    {
+      "key": "PERSONAL-PYREPO",
+      "title": "[PERSONAL-PYREPO] PyRepo Inspector – CS50P Final Project",
+      "repository": "rf-data/Personal_Assistant",
+      "kind": "feature",
+      "parent": null,
+      "target_milestone": null,
+      "status": "Backlog",
+      "priority": "P2",
+      "workstream": "Legacy",
+      "depends_on": [],
+      "acceptance": [
+        "Umsetzung ausschließlich durch den Projektinhaber persönlich; keine Codex-Implementierung oder automatischen Codex-Aufträge.",
+        "Eigenständiges Python-CLI: Dateien rekursiv erfassen, Imports per AST analysieren, Funktionen/Klassen erkennen, Modulabhängigkeiten darstellen und möglicherweise unreferenzierte Module kennzeichnen.",
+        "JSON-/Markdownberichte, optionale Pre-Commit-/Pre-Push-Nutzung; kein neues Repository oder Programmcode durch diesen Auftrag.",
+        "Eigenständiges optionales CS50P-Projekt außerhalb des kritischen Pfads. Spätere Wiederverwendung in C27 optional; C27 bleibt unabhängig."
+      ],
+      "existing_references": [],
+      "issue_url": null,
+      "optional": true,
+      "delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "acceptance_state": "not_checked",
+      "assignees": [],
+      "owner_mode": "human_only",
+      "blocked_by": [],
+      "scope_note": "Suggested labels owner:human, cs50p, personal-project, optional; inventory label conventions before applying. rf-data account verified, no automatic assignment performed.",
+      "github_action": "create_human_only_issue_after_project_preflight",
+      "suggested_labels": [
+        "owner:human",
+        "cs50p",
+        "personal-project",
+        "optional"
+      ],
+      "automation_policy": "no_codex_implementation_or_automatic_codex_tasks"
     }
-  ]
+  ],
+  "revision": "pm01-2026-10-19",
+  "approval_scope": "PM-01: non-destructive planning only; live Project inventory/permissions remain required before issue and Project mutations",
+  "project_url": "https://github.com/users/rf-data/projects/1",
+  "project_number": 1,
+  "project_node_id": null,
+  "project_name_verified": false,
+  "project_access": "blocked_connector_capability",
+  "operational_execution": "not_executed_project_inventory_and_permissions_unverified",
+  "original_plan": {
+    "revision": "C23.0-2026-10-17",
+    "entries": 32,
+    "keys": [
+      "C23",
+      "C24",
+      "C25",
+      "C26",
+      "C27",
+      "C28",
+      "C29",
+      "C30",
+      "C31",
+      "C32",
+      "C23-01",
+      "C23-02",
+      "C23-03",
+      "C23-04",
+      "C23-05",
+      "C23-06",
+      "C24-01",
+      "C24-02",
+      "C24-03",
+      "C24-04",
+      "C24-05",
+      "C25-01",
+      "C25-02",
+      "C25-03",
+      "C25-04",
+      "C26-01",
+      "C26-02",
+      "C26-03",
+      "C26-04",
+      "C26-05",
+      "C26-06",
+      "C26-07"
+    ]
+  },
+  "status_semantics": "Proposed Project status, not observed live fields/items; Done applies only to the explicitly bounded technical scope",
+  "real_acceptance": "blocked_D06_D07_no_authorized_bundles_roots_or_human_gold",
+  "production_acceptance": "not_granted",
+  "issues_count": 45
 }
