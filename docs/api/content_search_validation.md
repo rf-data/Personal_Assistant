@@ -134,3 +134,27 @@ Der 142er-Regressionslauf umfasst 36 C16-, 14 Content-Read-, 47 FTS5- und
 45 Reviewstorefälle. Die finalen 50er- und 142er-Läufe sind getrennte Umfänge;
 frühere Entwicklungsläufe überlappen und werden nicht addiert. Schema-/Beispiel-
 Roundtrip, exakter Beispielhash und 36 lokale Markdownverweise geprüft.
+
+## PR- und Project-Readback
+
+[Implementierungs-PR #124](https://github.com/rf-data/Personal_Assistant/pull/124)
+ist offen gegen master, eigener Branch `feat/dev01a-authorized-search`,
+mergefähig zum Prüfzeitpunkt. Genau elf beabsichtigte Dateien im PR; keine
+Änderung am führenden Issueplan, an Dependencies oder ursprünglichen Parsern.
+Keine CI-Checkruns gemeldet; die oben genannten Nachweise sind tatsächlich
+lokal ausgeführte Prüfungen, keine behauptete GitHub-CI-Abnahme.
+
+Vollständiger Project-Readback: 63 Items zum Zeitpunkt nach PRanlage, keine
+doppelten Content-URLs. Der eigene PR wurde durch die vorhandene Backendregel
+exakt einmal mit Backlog aufgenommen. Keine manuelle zweite Aufnahme oder
+Project-Feldmutation. Bestehendes Issue #114 weiterhin OPEN / Backlog / P1 /
+Retrieval / Planned, mit dem PR über dessen Beschreibung und diesen Bericht
+verknüpft. Keine Issueclosure-/Done-Aktion und keine neue Realabnahme.
+
+Paket A: implementiert und lokal getestet, PR offen, **noch nicht in master
+integriert**. Paket B / C und gemeinsamer Streamlit-MVP-Lauf ausstehend; B soll
+die führenden opt-in Konfigurationsgrenzen dieses PRs übernehmen. Der Auftrag
+verlangt integrierte Vorgängerverträge, deshalb keine Folgeimplementierung gegen
+einen als Defaultbranch ausgegebenen ungemergten Stand. Reguläre Review-/
+Mergeentscheidung ist der nächste Übergabepunkt. Der eigene Branch und Worktree
+bleiben bis dahin erhalten; keine Löschung fremder oder historischer Gitobjekte.
