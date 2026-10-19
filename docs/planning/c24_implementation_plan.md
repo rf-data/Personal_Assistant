@@ -1,5 +1,11 @@
 # C24: Implementierungsplan nach dem Indexing-/Retrieval-ADR
 
+Stand 19.10.2026: A/#87, B1/#90 und UI-B2/#7 sind integriert. C24-05-C2 ergänzt
+die [synthetische Review-/FTS5-/Evaluationsintegration und den aktuellen Draftaudit](../cs50/evaluation/c24_authorized_pilot_integration.md).
+Reale Sourcefreigaben, Pilotroots und menschliche Reviews fehlen weiterhin;
+die fachliche Realabnahme bleibt blockiert. Die folgenden datierten Planteile
+behalten ihren historischen Bezug.
+
 18.10.2026 · Basis Master `95c4c40c1ab738ce1d75ac9ed554a46613419133` nach #82.
 C24-01 lieferte Architekturverträge und diesen Plan. C24-02 ergänzte die
 [erste Projektion ohne Backendindex](../architecture/index_projection_implementation.md),
