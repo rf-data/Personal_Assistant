@@ -153,3 +153,24 @@ Merge von OPEN/Backlog zu MERGED/Done. Das ist keine PM-04-Statusmutation.
 Alle 27 Issues bleiben OPEN; geschützte Drafts #72/#88/#89, alle 14/35 Beziehungen,
 Views und Workflow-Metadaten unverändert. Ausgangs- und spätere Zählwerte werden
 nicht als gleichzeitige Snapshots ausgegeben.
+
+## Nach Veröffentlichung: 61 Items, Dokumentintegration offen
+
+[Eigener PR #122](https://github.com/rf-data/Personal_Assistant/pull/122), Branch
+`docs/pm04-project-governance`, offen gegen master. Die vorhandene Backendregel
+fügte ausschließlich diesen neuen Dokumentations-PR einmalig mit Backlog hinzu;
+kein manueller `item-add` und keine doppelte Aufnahme. Livebestand nun **61 Items
+= 34 PRs + 27 Issues, 34 Backlog / 27 Done**. Die 44/45 Plan-IDs bleiben unverändert.
+
+Alle bisherigen Items erneut abgeglichen: ausschließlich der zuvor dokumentierte
+fremde Merge #121 verändert seinen Stand. Alle 27 Issues weiterhin offen, 14/35
+Beziehungen, acht Views, Workflow-Metadaten und geschützte Drafts #72/#88/#89
+unverändert. Die exakt drei PRdateien wurden aus dem veröffentlichten Commit
+byteidentisch zurückgelesen; JSON-/ID-/Hash-/Link- und Whitespaceprüfung erfolgreich.
+Anwendungstests/Ruff nicht ausgeführt, da ausschließlich Markdown/JSON geändert.
+
+Beide primären lokalen Checkouts unverändert und ohne tracked/untracked
+Statusänderungen. Kein lokaler Arbeitsbranch/Worktree angelegt. Der eigene
+Remote-Arbeitsbranch bleibt wegen des offenen PRs erhalten; keine Bestandsobjekte
+oder privaten Daten bereinigt. **Die dauerhafte Integration dieser Aktualisierung
+in master ist noch nicht erfolgt und bleibt bis Review/Merge offen.**

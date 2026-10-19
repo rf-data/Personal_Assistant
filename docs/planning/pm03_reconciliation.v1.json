@@ -3526,6 +3526,28 @@
       "protected_PRs_unchanged": true,
       "relations_unchanged": true,
       "workflow_metadata_unchanged": true
+    },
+    "post_publication": {
+      "PR": "https://github.com/rf-data/Personal_Assistant/pull/122",
+      "branch": "docs/pm04-project-governance",
+      "state": "open_review_pending",
+      "items": 61,
+      "PR_items": 34,
+      "issue_items": 27,
+      "status": {
+        "Backlog": 34,
+        "Done": 27
+      },
+      "auto_added_own_documentation_item_id": "PVTI_lAHOC92AuM4BneNAzhB7PS0",
+      "manual_item_adds": 0,
+      "plan_representation_unchanged": "44/45; C24-06-A pending_real_target",
+      "previous_60_items": "only independent merge #121 changed; status-cleanup immediate before/after equality remains proven",
+      "protected_PRs_unchanged": true,
+      "native_relations_unchanged": true,
+      "workflow_metadata_unchanged": true,
+      "primary_checkouts_edited": false,
+      "new_local_branches_or_worktrees": 0,
+      "own_remote_branch_retained_reason": "PR unmerged; normal review/default integration pending"
     }
   }
 }
