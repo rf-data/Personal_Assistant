@@ -1,62 +1,73 @@
-# Ein gemeinsames GitHub Project – Entwurf
+# Ein gemeinsames GitHub Project – PM-01
 
-**Nicht angelegt oder geändert.** Vorgesehener Owner `rf-data`, Name
-**Personal Assistant – Development**, für beide Repositories. Eine vorhandene
-passende Project-ID zuerst suchen und wiederverwenden. Bestand/Zugriff sind
-wegen der [Connectorgrenzen](status.md) unbekannt; keine Project-URL erfinden
-und keine parallelen Boards pro Repository erzeugen.
+19.10.2026. Ausschließlich das vom Projektinhaber benannte
+[**User-Project #1**](https://github.com/users/rf-data/projects/1) weiterverwenden.
+Kein weiteres Project, kein Ersatzplanungsdienst. Vorgesehener Name bleibt
+„Personal Assistant – Development“; **der tatsächliche Titel ist nicht auslesbar**.
+Eine Namensabweichung ist deshalb weder bestätigt noch ausgeschlossen.
 
-## Felder und Bedeutungen
+## Tatsächliches Inventar und Zugriffslücke
 
-| Feld | Typ / Werte | Regel |
+| Merkmal | Nachgewiesener Stand | Nächster Prüfschritt |
 | --- | --- | --- |
-| Status | bestehendes Single Select: Backlog, Ready, In Progress, In Review, Done | exakt diese fünf Arbeitszustände; kein sechster Blocked-Status |
-| Priority | Single Select: P0, P1, P2, P3 | P0 = Release-Gate, P1 = Kernpfad, P2 = später/optional, P3 = unverbindliche Idee |
-| Workstream | Single Select: Persistence, Retrieval, UI, Operations, Sources, Evaluation, Legacy, Entities | primäre Zuständigkeit, kein neuer fachlicher Status |
-| Target milestone | Single Select: C23, C24, C25, C26, C27, C28, C29, C30, C31, C32 | gemeinsames strategisches Ziel; keine doppelten Repo-Milestones nötig |
+| Owner / Nummer / URL | URL des Eigentümers: `rf-data`, User-Project `1`, obiger Link | Über autorisierte Projectansicht/API öffnen |
+| Globale Project-Node-ID | unbekannt, Nummer 1 ist keine GraphQL-ID | `ProjectV2.id` lesen |
+| Titel / Beschreibung | unbekannt; geplanter Titel siehe oben | Tatsächlichen Titel übernehmen, keine Umbenennung erzwingen |
+| Verknüpfte Repositories | unbekannt; geplant Backend + UI | Beide Repos/bestehende Verknüpfungen prüfen |
+| Views / Layouts / Filter | unbekannt | Bestehende Ansichten inventarisieren, sinnvoll weiterverwenden |
+| Felder / IDs / Typen / Optionen | unbekannt | Status, Priority, Workstream, Milestone samt existierenden Werten lesen |
+| Items / Draftitems / Issue-/PR-Links | unbekannt | Vollständig paginieren, auch Drafttitel/IDs deduplizieren |
+| Automatisierungen | unbekannt | Auto-Done/Close/Add/Archive vor Itemänderungen prüfen; unverändert lassen bis gezielter Entscheid |
+| Zugriffsrollen / Schreibrechte | unbekannt | Owner-/Projectrolle und Token/App-Berechtigungen separat nachweisen |
 
-Die eingebauten Felder Repository, Assignees und Labels wiederverwenden. Kein
-Owner oder Lieferdatum wird erfunden. Fehlende Zuweisung ist sichtbar und vor
-Ready zu klären. Parent und Kinder erhalten denselben Target-milestone-Wert,
-auch wenn ein UI-Kind zu einem Backend-Parent gehört.
+Repo-Adminrechte beider Repositories sind beobachtet. Sie reichen als
+Projectberechtigungsnachweis nicht aus. Der Connector bietet keine Projecttools
+und lehnt Owner-/Repo-Projects und GraphQL ab; `gh` ist nicht vorhanden. Der
+öffentliche Webabruf liefert keinen Projectinhalt. Keine Credentials aus lokalen
+Dateien lesen, keine automatische Installation oder Scopeausweitung.
 
-Blockierung: Label `blocked`, konkreter Grund/Abhängigkeit, nächste Entscheidung
-und zuständige Person im Issue. Vor Start verbleibt das Issue Backlog; eine
-begonnene blockierte Arbeit bleibt mit Label im tatsächlichen Arbeitsstatus.
-Die Projektsicht ersetzt weder native Parent-/Sub-Issue-Beziehungen noch URLs.
-[Offizielle Filterdokumentation](https://docs.github.com/en/issues/planning-and-tracking-with-projects/customizing-views-in-your-project/filtering-projects).
+**Keine bestehenden Views/Felder/Items oder Regeln wurden geändert.** Folgendes
+ist eine kontrollierte Sollzuordnung, keine behauptete Istkonfiguration.
 
-## Ansichten
+## Felder nach Bestandsprüfung zuordnen
 
-| Name | Layout / Filter / Gruppierung |
+| Gewünschtes Feld | Bedeutung / vorgeschlagene Werte |
 | --- | --- |
-| Active Work | Board nach Status; Filter `-status:Backlog -status:Done`; Priority/Workstream/Target milestone und Repository anzeigen |
-| Roadmap by Milestone | Tabelle mit allen geplanten Paketen, nach Target milestone gruppiert; Parents und Cross-Repository-Kinder sichtbar; keine unbelegten Zeitachsen |
-| Blocked Issues | Tabelle, Filter `label:blocked -status:Done`; Blockiergrund im Issue, gruppiert nach Target milestone |
+| Status | Bestehende Werte bevorzugen; Soll Backlog, Ready, In Progress, In Review, Done. Keine vorhandenen Optionen löschen/ersetzen, um diese fünf zu erzwingen |
+| Priority | Bestehende Skala mappen; P0 Release-Gate, P1 Kernpfad, P2 optional/später, P3 Idee |
+| Workstream | Persistence, Retrieval, UI, Operations, Sources, Evaluation, Legacy, Entities; vorhandene passende Werte wiederverwenden |
+| Target milestone | C23–C32, bei eigenständigem PyRepo-Projekt leer; vorhandenes Milestonefeld statt Duplikat nutzen |
+| Repository / Assignees / Labels | Eingebaute Felder nutzen; unbestätigte Assignees leer lassen |
 
-Optionen/gespeicherte Ansichten im UI prüfen und explizit speichern. Die Tabelle
-„Roadmap“ ist ohne Terminentscheid keine Timeline. Bei einem vorhandenen Board
-seine Felder und Items erst inventarisieren; abweichende Statusoptionen nicht
-ungefragt löschen, ersetzen oder alle vorhandenen Items umklassifizieren.
+Lieferzustand/Realabnahme bleibt im Issuebody nachvollziehbar und ist kein neuer
+automatischer Done-Workflow. `blocked` und konkreter Entscheid im Issue; bei schon
+begonnener Arbeit tatsächlichen Arbeitsstatus erhalten. Optionale Semantik bleibt
+außerhalb des lexikalischen kritischen Pfads.
 
-## Automatisierung und Rechte
+## Gewünschte Ansichten, erst nach Inventar speichern
 
-GitHub kann standardmäßig geschlossene Issues beziehungsweise gemergte PRs auf
-Done setzen. Für diese Planung solche Workflows vor dem Einfügen prüfen und die
-automatische Abschluss-/Schließlogik deaktivieren; der Parentabschluss bleibt
-manuell. Auch Auto-Archive/Auto-Add werden zunächst nicht aktiviert.
-Ein PR-Merge belegt keine fachliche Evaluation oder Produktionsfreigabe.
-[Offizielle Workflowdokumentation](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations).
+| Ansicht | Vorschlag |
+| --- | --- |
+| Active Work | Bestehendes Board nach Status; Backlog/Done ausblenden; Priority, Workstream, Target und Repository anzeigen |
+| Roadmap by Milestone | Tabelle nach vorhandenem Target-milestone-Feld gruppieren; keine erfundenen Termine/Timeline |
+| Blocked Issues | Tabelle nach `blocked`-Label, abgeschlossene Items ausblenden; konkrete Blockade im Issuebody |
+| My Projects / Personally Owned Work | Persönliches Vorhaben über `owner:human`/`personal-project`-Labels sichtbar machen; Account/Assignee nur nach Bestätigung. Kein C27-Abhängigkeitspfeil |
 
-Der Connector zeigt Repo-Schreibrechte, stellt aber keine Projects-v2-Werkzeuge
-bereit und lehnt GraphQL/Owner-Projects ab. `gh` fehlt lokal; es wurde nicht
-installiert und kein Token aus Dateien verwendet. Projects benötigen einen
-passenden Ownerzugriff und passende API-Berechtigungen; Repo-admin allein genügt
-als Nachweis nicht. GitHub dokumentiert `read:project` für lesende und `project`
-für schreibende Classic-Token-Zugriffe; feinere Token-/Apprechte nach gewähltem
-Verfahren prüfen. [API und Authentifizierung](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects).
+Konkrete Filter an tatsächliche Feld-/Optionsnamen anpassen und in der UI prüfen;
+keine ungetesteten Filter als gespeichert ausgeben. Labelkonventionen zuerst lesen;
+für PyRepo gegebenenfalls `owner:human`, `cs50p`, `personal-project`, `optional`
+kontrolliert ergänzen. Account `rf-data` ist verifiziert, eine Zuweisung wurde nicht
+vorgenommen. Keine Codex-Automation an das persönliche Vorhaben hängen.
 
-Nach ausdrücklicher Freigabe kann ein bereits verfügbares autorisiertes `gh`
-oder die GitHub-Weboberfläche diese Konfiguration anwenden. Keine neue
-Appinstallation oder Credentialausweitung wird aus der Planfreigabe abgeleitet.
-[Konkreter Ablauf](github_execution.md), [Feldbefehle](https://cli.github.com/manual/gh_project_field-create).
+## Workflows, Rechte und nächste Schritte
+
+Kein Auto-Close/-Archive/-Add aktivieren und keine vorhandenen Workflows blind
+deaktivieren. Existierende PR-Merge-zu-Done-Regeln dürfen Meilenstein-Parents oder
+Realabnahme nicht automatisch abschließen; konkrete Regel/Itemwirkung zuerst
+lesen, dann gezielt entscheiden. Keine fremden Items umklassifizieren.
+
+Mit geeignetem bereits autorisiertem GitHub-Web-/APIzugriff bestehende Struktur
+und Projectrechte belegen, den [Ausführungsablauf](github_execution.md) anwenden
+und reale IDs/Optionen/Itemlinks erfassen. Erst dann die genehmigten verbleibenden
+Issues und Updates ausführen. Kein weiteres Board erstellen, auch bei fehlendem
+Zugriff. [Tatsächliche Aktionen und Grenzen](pm01_validation.md).

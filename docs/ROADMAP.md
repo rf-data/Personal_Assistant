@@ -1,88 +1,108 @@
 # Roadmap – Personal Assistant
 
-Stand: **17.10.2026**. Geprüfte Default-Branches: Backend `master` `476f0a0d`
-und UI `main` `14ccfc20`; [aktueller Status und Belege](planning/status.md).
-C23.0 ist dieser Planungsauftrag, **keine Implementierung von C23-Persistenz**.
+Stand **19.10.2026**, PM-01. Geprüfte Default-Heads: Backend `master`
+`4c057ae33d41ba98e227879cc8a51283338e4a0b`, UI `main`
+`90816a1578bcf67739ee9acaa483c1635aa0c44b`.
+[Implementierungsabgleich](planning/status.md), [Issueplan](planning/issues.md),
+[bestehendes Project #1](https://github.com/users/rf-data/projects/1).
 
-## 1. Projektvision und Zielarchitektur
+## 1. Ziel und verbindliche Statusgrenzen
 
-Eine privat nutzbare Plattform zum Erfassen, Verarbeiten, Speichern und Recherchieren
-von Informationsquellen. CS50 bildet die erste produktive Pipeline; zusätzliche
-Quellen folgen nach überprüfbaren Verträgen und Nutzungsrechten.
+Privat nutzbare Quellenplattform: unveränderte Raw Sources → versionierter Parsed
+Content → autorisierte Recherche. Derived Knowledge bleibt optional; seine breitere
+Weiterentwicklung ist **zurückgestellt**, bis Materialevaluation sie rechtfertigt.
+Raw/Parsed und Suche benötigen keine Knowledge-Extraktion. SQLite und unveränderliche
+Blobs sind für ContentStore entschieden; PostgreSQL ist keine offene C23-Pflicht mehr.
 
-- **Raw Sources:** unveränderte Originaldateien, Transkripte, URLs und Metadaten.
-- **Parsed Content:** strukturierte Texte, Blöcke, Kapitel, Seiten, Zeitstempel,
-  Code und Bildreferenzen, jeweils auf Quelle und Version rückführbar.
-- **Derived Knowledge:** optionale Konzepte, Aussagen und Beziehungen. Vorhandene
-  Extraktionsfunktionen bleiben erhalten, ihre Weiterentwicklung ist zurückgestellt,
-  bis eine materialbezogene fachliche Evaluation sie rechtfertigt.
-
-Raw und Parsed bleiben dauerhaft ohne Knowledge-Extraktion nutzbar. Bestehende
-Modelle/Persistenz zuerst prüfen; **PostgreSQL ist ein Vorschlag, keine Entscheidung**.
-Qdrant-/Transcript-Retrieval ist vorhanden. C24-01 vergleicht ihn im
-[Indexing-/Retrieval-ADR](architecture/retrieval_indexing_adr.md) und definiert
-[Verträge](architecture/index_record_contract.md) sowie den
-[Umsetzungsplan](planning/c24_implementation_plan.md); noch keine neue Suchruntime.
-[Architektur](architecture.md), [Issue-Entwurf](planning/issues.md).
-
-## 2. Aktueller Entwicklungsschwerpunkt
-
-Priorität: **C23 → C24 → C25 → C26**, mit früh klärbaren Deployment-Gates parallel.
-Noch ist keines dieser neuen Funktionspakete implementiert oder freigegeben.
-Die Details liegen im nicht genehmigten [GitHub-Ausführungsplan](planning/github_execution.md):
-zehn Parent- und 22 Sub-Issue-Entwürfe, keine angelegten Issues oder Projects.
-
-Statusachsen bleiben unabhängig: **implementiert und gemergt**, **technisch getestet**,
-**fachlich evaluiert**, **für Produktivbetrieb freigegeben**, **geplant**, **blockiert**.
-Ein Merge oder bestandener synthetischer Test ist kein fachliches Urteil und keine
-Produktionsfreigabe. Für C19–C22 liegen gemergte technische Implementierungen vor;
-C22s Go-live-Gates sind weiterhin offen. C21-Q/C21-Q.1 liegen nur im Draft-PR #72.
-
-## 3. Aktive Planungsmeilensteine und Akzeptanzkriterien
-
-| ID / Name | Ziel und zentrale Akzeptanz | Status / Repositories / Abhängigkeiten | Parent Issue |
-| --- | --- | --- | --- |
-| C23 – Parsed Content Persistence | Vorhandene Modelle im ADR vergleichen; Raw/Parsed versioniert mit Hashes/Provenienz speichern; idempotenter Reimport; Seiten-/Block-/Zeitbezüge und unbekannte Zeiten erhalten; Rechte-/Lesevertrag | Geplant; Backend federführend, UI Verbraucher; vorhandene C10/C13/C16–C22-Verträge | Noch nicht angelegt; [Entwurf C23](planning/issues.md#c23) |
-| C24 – Indexing & Retrieval | Volltext mit Quellenbelegen; optional Semantik; versionierte Indexierung/Reindexierung, Rechte und Fehler/Stale behandeln; bestehendes Qdrant prüfen; reale Retrievalevaluation | Geplant; Backend; C23; optionale Semantik darf den Volltextkern nicht blockieren | Noch nicht angelegt; [Entwurf C24](planning/issues.md#c24) |
-| C25 – Search & Source UI | Kurs-/Quellenauswahl, Suche/Filter, Parsed-Anzeige, Originalverknüpfung, Seiten-/Zeitbelege und Job-/Indexstatus; API- und Browserabnahme | Geplant; UI federführend, Backend API; C23/C24 | Noch nicht angelegt; [Entwurf C25](planning/issues.md#c25) |
-| C26 – Hetzner Production Release | CS50 über die reale UI nutzbar; C22-Gates zu Auth/TLS/Containern/Storage/Restore/Monitoring schließen; begrenzten realen Korpus E2E prüfen; manueller Go-live | Geplant, Produktivfreigabe blockiert; beide Repositories; C23/C24/C25 und C22-Abnahme | Noch nicht angelegt; [Entwurf C26](planning/issues.md#c26) |
-
-Diese Tabelle ist Strategie. Überprüfbare Einzelaufgaben und Cross-Repository-
-Abhängigkeiten stehen einmalig im [operativen Entwurf](planning/issues.md).
-Ein konkreter Umsetzungsauftrag und Schritt-B-Freigabe stehen noch aus.
-
-## 4. Geplante weitere Meilensteine und Abhängigkeiten
-
-Nur übergeordnete Backlog-Parents, noch keine Sub-Issue-Zerlegung oder Terminierung.
-
-| ID / Name | Ziel / zentrale Akzeptanz | Status / Repositories / Abhängigkeiten | Parent Issue |
-| --- | --- | --- | --- |
-| C27 – Legacy Code Review | Aktive Imports/Starts, Wikimedia/Parsing/Download/Transkription/RAG inventarisieren; Wiederverwendung und Cleanup mit konkreter Freigabe | Geplant; Backend, UI mitprüfen; vorhandenes Audit, unabhängig früh möglich | [Entwurf C27](planning/issues.md#c27), noch keine Issue-URL |
-| C28 – Source Registry & Additional Sources | eBooks/EPUB/PDF, Liora und Apothekerkammer-Webinare; Identität, Rechte, Ingestion, Versionierung und Review definieren | Geplant; Backend, spätere UI-Anbindung; C23 | [Entwurf C28](planning/issues.md#c28), noch keine Issue-URL |
-| C29 – Entity Recognition & Linking | Fachbegriffe als Annotationen, Mehrdeutigkeit und kanonische Entitäten; dokumentübergreifende Fundstellen, Originaltext unverändert | Geplant; Backend, UI-Navigation später; C23/C24 | [Entwurf C29](planning/issues.md#c29), noch keine Issue-URL |
-| C30 – Wikimedia Entity Enrichment | Bestehende Wikipedia/Wikidata-Clients prüfen; QIDs/Sprachen/Disambiguierung, Cache/Retry/Rate Limits und externe Provenienz; getrennte UI-Darstellung | Geplant; Backend, UI später; C27/C29; externe Angaben sind keine geprüfte Wahrheit | [Entwurf C30](planning/issues.md#c30), noch keine Issue-URL |
-| C31 – YouTube Discovery & Review | Kanäle registrieren, neue Metadaten/zulässige Inhalte geplant prüfen; Zusammenfassung/Qualitätsreview und Aufnahmeempfehlung; manuelle Übernahmefreigabe | Geplant; Backend, UI-Review später; C23/C27/C28; Knowledge-Eignung separat | [Entwurf C31](planning/issues.md#c31), noch keine Issue-URL |
-| C32 – Medium Email & Article Review | Autorisierte E-Mails/Artikellinks, Duplikate, Relevanz und Zusammenfassung; manuelle Quellenregistrierung unter Beachtung von Paywalls/Rechten | Geplant; Backend, UI-Review später; C23/C27/C28 | [Entwurf C32](planning/issues.md#c32), noch keine Issue-URL |
-
-C27 ist kein pauschaler Blocker für C23: die dort unmittelbar benötigten Modelle
-werden bereits im C23-ADR geprüft. Spätere Source-/Entity-Pakete priorisieren keine
-allgemeine Knowledge-Extraktion vor der Evaluation.
-
-## 5. Bekannte übergreifende Blocker
-
-| Befund | Aktuell noch offen / eindeutiger operativer Eigentümer im Entwurf |
+| Status | Bedeutung |
 | --- | --- |
-| TXT ohne bekannte Zeitstempel | C23-05 ergänzt [Nullzeiten und Timed-Guards](cs50/contracts/official_transcript_unknown_time.md); [lokale Abnahme und Grenzen](cs50/evaluation/official_transcript_unknown_time.md). TXT-ContentStore-/Knowledge-/Retrievalvertrag bleibt ausstehend; keine globale Pipelinefreigabe. |
-| Historische Transcript-Pfadabweichung | C21-Q.1 beschreibt `data/Harvard` versus Receiptpfad `data/lectures/Harvard`; nur Draft #72, keine Migration. C23-03 übernimmt den sicheren Bindungs-/Übernahmeentscheid. |
-| Authlib/OIDC | C22 gemergt, UI-Lock enthält kein Authlib und Guard sperrt Produktionsstart. C26-01 plus tatsächlicher TLS-/Browser-/Rollennachweis C26-03. |
-| Container und Zielstorage | Builds/Digests, PID-/cgroup-/Shutdown-/OOM-Prüfung sowie Zielvolume-Semantik nicht abgenommen; C26-02/C26-04. |
-| Monitoring/Alarmierung | C15/C22-Konfiguration vorhanden, echter Scrape und Alarmzustellung fehlen; C26-05. |
-| Realmaterial/Goldevaluation | C23-06 liefert eine [technische Vorbereitung mit Inventar und Reviewvertrag](cs50/evaluation/c23_real_material_evaluation.md). Fünf versionierte reale HTML-Rohdateien, keine freigegebenen vollständigen Realbundles und kein bestätigtes Gold; fachliche Abnahme bleibt offen. Retrievalreview separat C24-05. |
-| Echter Qdrant-/E5-Pilot | Vorhandener Indexcode und frühere synthetische Tests; neuer Realpilot/SDK/Modell/Instanz/Remotefreigabe weiterhin blockiert. Optional C24-04, vorhandenen Draft #72 wiederverwenden. |
-| Planung und Projektzugriff | Issueplan noch nicht freigegeben; Projects-/Milestone-Inventar über verfügbaren Connector nicht möglich. Erst Zugriff und vorhandenes gemeinsames Board prüfen. |
+| technisch implementiert | Im Default-Tree integrierter, klar begrenzter Funktionsumfang mit PR-Beleg |
+| technisch integriert, fachlich offen | Runtime/technische Nachweise vorhanden; reale Inhalts-/Nutzerabnahme fehlt |
+| in Bearbeitung | Separater tatsächlicher Auftrag/Branch, kein behaupteter Abschluss |
+| geplant | Definierter Restumfang ohne nachgewiesene Implementierung |
+| blockiert | Fehlende konkrete Entscheidung/Freigabe/Abhängigkeit verhindert den betreffenden Schritt |
+| optional | Separat verzichtbarer Umfang außerhalb des lexikalischen Kernpfads |
+| zurückgestellt | Bewusst nachrangig, kein aktueller Implementierungsauftrag |
 
-Vollständige Quellen- und Entscheidungsliste: [Status](planning/status.md),
-[Entscheidungen/Pflege](planning/governance.md). Keine automatische Schließung alter PRs.
+Diese Lieferzustände sind **keine ausgelesenen Project-Statuswerte**. Technische
+PR-Merges und synthetische Tests erteilen weder fachliche Realabnahme noch
+Produktivfreigabe. Die historischen Abnahmeberichte bleiben unverändert.
+
+## 2. C23–C26: tatsächlicher Stand und nächster Schritt
+
+| Meilenstein | Integrierter technischer Umfang | Offen / nächster Schritt | Plan |
+| --- | --- | --- | --- |
+| C23 Parsed Content Persistence | ADR #75; Core/Adapter/Recovery #76–#78; Reimport #79; Content Read API #80; Unknown-Time #81; Evaluationsframework #82 | Fachliche Realabnahme **blockiert**: D06/D07, vollständige autorisierte Bundles, exakte Roots und menschliches Gold. Kein vollständiger TXT-ContentStore-Adapter aus #81 ableiten. | [C23](planning/issues.md#c23) |
+| C24 Indexing & Retrieval | ADR #83, Projektion #84, FTS5/Generationen/interne Suche #85, optionaler Vektoradapter mit Fake-Nachweis #86, A #87, B1 #90, UI-B2 #7 und synthetische Integration C2 #91 | HTTPsearch (03-B) und C16-Indexjobs (02-C) **geplant**; C24-06-A **in Bearbeitung**; fachliche Realevaluation **blockiert**. Echter E5/Qdrant-/Hybridpilot optional und separat gesperrt. | [C24](planning/issues.md#c24) |
+| C25 Search & Source UI | Vorhandene Admin-/Workflow- und B2-Reviewansichten wiederverwendbar | Allgemeine Such-/Quellennutzung, Deep Links, Indexstatus und tatsächliche Browserabnahme **geplant**. Such-HTTP-/DTOvertrag zuerst liefern; B2 ist keine fertige allgemeine Search UI. | [C25](planning/issues.md#c25) |
+| C26 Hetzner Production Release | C22-Betriebsarchitektur, ContentStore-Recovery/Backup und Reviewpersistenz vorhanden | Produktivfreigabe **blockiert**: Images/Authlib/OIDC/TLS, Zielvolume, Verbundrestore einschließlich EvaluationStore, Monitoring/Alarmzustellung, reale E2E-Abnahme und manueller Go-live. | [C26](planning/issues.md#c26) |
+
+Backend-PR-Links und konkrete Verträge stehen im [Status](planning/status.md).
+Priorität: technische C24-Restverträge/C24-06-A, dann C25; C26-P0-Entscheidungen
+zu Runtime, Identität und Storage parallel vorbereiten. Reale Datenfreigaben
+bleiben ein eigener Betreiber-/Reviewerentscheid, keine Planungsnebenwirkung.
+
+## 3. C24-Unterpakete ohne doppelte Implementierungsaufträge
+
+| Paket | Stand | Nachweis / offene Grenze |
+| --- | --- | --- |
+| C24-05-A | technisch implementiert | Backend #87: versionierte Evaluation/Goldverträge; synthetisch, kein echtes Gold |
+| C24-05-B1 | technisch implementiert | Backend #90: persistente Revisionen, explizite Schreibrechte, C16-authentifizierte API |
+| C24-05-B2 | technisch implementiert | UI #7: bestehende Streamlit-App, Review/Export/Abnahmeansicht; keine allgemeine Search UI |
+| C24-05-C / Draft #89 | Metadatenvorbereitung durch C2 übernommen | Historische r1/r2 und Übergabeplan erhalten; keine zusätzliche Reviewruntime bauen |
+| C24-05-C2 | technisch implementiert, Realziel offen | Backend #91: synthetische Review → Gold → FTS5 → A-Report-Integration; Realpilot weiterhin blockiert |
+| C24-06-A | in Bearbeitung | Eigenständiger lokaler Umgebungs-/Humanabnahmeauftrag; PM-01 verändert dessen Worktree, Dienste oder Tests nicht |
+| 02-C / 03-B | geplant | Vorhandenen Builder bzw. interne Suche in C16-Jobs/HTTP integrieren; keine zweite Suche/Queue |
+| 04-B / Draft #72 | optional, blockiert | Konkrete Modell-/Instanz-/Transportrechte und gegebenenfalls D06/D07 fehlen |
+
+Draft #88 bleibt Architekturhistorie; B1/B2 liefern inzwischen die Umsetzung.
+#72/#88/#89 sowie alte #6/#9/#10/#11 werden weder gemergt noch geschlossen.
+[Erhaltenswerter Umfang](planning/status.md#offene-prs-und-erhaltenswerter-umfang).
+
+## 4. C27–C32 und persönlich verantwortetes Vorhaben
+
+| Ziel | Status / Abhängigkeiten | Verbindlicher Umfang |
+| --- | --- | --- |
+| C27 Legacy Code Review | geplant, P2; unabhängig vom persönlichen CS50P-Projekt | Aktive Imports/Starts und vorhandene Wikimedia-/Parsing-/RAG-Verträge prüfen; gezielter Cleanup nur mit konkreter Freigabe |
+| C28 Source Registry & Additional Sources | geplant, P2; C23-Verträge wiederverwenden | Rechte/Identität/Versionierung für eBooks, Webinare und weitere Quellen; gemeinsamer begrenzter Scheduled-Discovery-Vertrag, keine zweite Queue |
+| C29 Entity Recognition & Linking | geplant, P2; C23/C24 | Quellgebundene Annotationen, Disambiguierung und dokumentübergreifende Fundstellen; Originale unverändert |
+| C30 Wikimedia Enrichment | geplant, P2; C27/C29 | Vorhandene Clients wiederverwenden; externe Provenienz, Rate Limits/Cache und sichtbare Unsicherheit |
+| C31 YouTube Discovery & Review | geplant, P2; C23/C27/C28 | Kanäle/Metadaten, begrenzte geplante Abrufe, Relevanz und menschliche Aufnahmeentscheidung im gemeinsamen Discovery-Konzept |
+| C32 Medium, Real Python & Fachnewsletter | geplant, P2; C23/C27/C28 | Autorisierte E-Mails erkennen, Links normalisieren/deduplizieren, Relevanz und menschliche Freigabe; kontrollierter Move nach dokumentierter Verarbeitung |
+| PyRepo Inspector – CS50P Final Project | **optional; ausschließlich persönlich durch rf-data**, außerhalb C23–C32-Kernpfad | Python-CLI/AST, Imports, Funktionen/Klassen, Abhängigkeiten, mögliche unreferenzierte Module, JSON/Markdown, optionale Hooks. **Keine Codex-Implementierung oder automatischen Codex-Aufträge**, kein neues Repository. C27 darf später optional wiederverwenden, aber nicht davon abhängen. |
+
+[Persönlicher Issueentwurf](planning/issues.md#personal-pyrepo),
+[arXiv-Provider](planning/issues.md#c28-01), [C32](planning/issues.md#c32).
+arXiv ergänzt C28/C31: konfigurierbare Queries/Kategorien, begrenzte Metadatenabrufe,
+Identifier/Version, Deduplizierung, begründete Empfehlung und Humanreview. Keine
+PDF-Volltextdownloads, automatische Source-Promotion oder Abstracts als fachliche
+Wahrheit. Keine Jobs werden durch PM-01 aktiviert.
+
+C32 trennt Verarbeitung und Move: eigener **konfigurierter** Zielordner, originale
+Mail-ID/UID soweit möglich, Idempotenz, Provider-COPY/MOVE-Semantik, kontrollierte
+Fehler/Wiederholungen. Relevanz allein verschiebt nichts. Keine unkontrollierten
+EXPUNGE-/Löschaktionen oder ungefragten Mailboxregeln. PM-01 liest/verändert keine Mail.
+
+## 5. Gates, Zuständigkeit und Projectpflege
+
+D06 historische Pfadbindung und D07 Sourcefreigaben/Realbundles/Gold bleiben offen.
+C23-03 behebt diese historische Datenentscheidung nicht durch einen Runtimefallback.
+C26 benötigt zusätzlich D09–D11 zu Runtime/Host/Kosten/Identität/Storage/Betriebsowner.
+Konkrete Assignees und Termine sind außer dem persönlich vorgegebenen PyRepo-Owner
+nicht bestätigt; vor Ready festlegen. [Entscheidungsstand](planning/governance.md).
+
+Das vom Eigentümer benannte [Project #1](https://github.com/users/rf-data/projects/1)
+bleibt das einzige Board. Titel, Node-ID, Felder/Views, Items, Workflows und
+Berechtigungen sind mit diesem Connector **nicht inventarisierbar**. Kein Ersatzboard.
+[Inventargrenzen und vorgeschlagene Views](planning/project.md).
+
+Der Auftrag autorisiert die beschriebenen nichtdestruktiven Planungsänderungen.
+GitHub-Issue-/Projectmutationen bleiben dennoch an die tatsächliche Bestands-/
+Rechteprüfung gebunden. Der aktuelle APIabgleich enthält null eigenständige Issues
+(89 Backend-/7 UI-Einträge, sämtlich PRs). 32 ursprüngliche Plan-IDs bleiben
+nachvollziehbar; 13 Unter-/Rest-/Provider-/persönliche Aufgaben ergänzen sie zu
+45 Planzeilen, **nicht 45 neuen offenen Implementierungen**.
+[Operativer Plan](planning/issues.md), [Ausführung](planning/github_execution.md).
 
 ## 6. Abgeschlossene Entwicklungsmeilensteine – kompakte Übersicht
 
@@ -106,18 +126,15 @@ C21-Q/C21-Q.1 sind **nicht** in dieser Abschlussliste: [Draft #72](https://githu
 ist offen. Historische Backend-PRs #6/#9/#10/#11 bleiben ebenfalls offen;
 [fachlicher Abgleich](cs50/operations/historical_pr_review.md), kein automatisches Merge/Close.
 
-## 7. Planung, Status und technische Nachweise
 
-- **ROADMAP.md:** Strategie, Meilensteine und Abhängigkeiten.
-- **GitHub Issues:** operative Aufgaben; aktuell noch keine eigenständigen Issues
-  in beiden geprüften Repositories. [Entwürfe](planning/issues.md), [JSON](planning/issue_plan.v1.json).
-- **Gemeinsames GitHub Project:** Arbeitsstatus, vorgesehen „Personal Assistant – Development“;
-  [Konzept und Zugriffsgrenzen](planning/project.md), noch keine verifizierte Project-URL.
-- **Pull Requests:** Implementierung/Review und technische Nachweise; [aktueller Abgleich](planning/status.md).
-- **Tests/CI:** reproduzierbare technische Qualität im dokumentierten Umfang;
-  [C21](acceptance/c21_results.md), [C22](deployment/c22_validation.md).
+## 7. Nachweise und Änderungsgrund
 
-[Ausführungsplan nach Freigabe](planning/github_execution.md) ·
-[Pflegeprozess und offene Entscheidungen](planning/governance.md) ·
-[Dokumentationsindex](README.md). Ein Meilensteinabschluss verlangt explizite
-Akzeptanzprüfung, kein automatisches Hochstufen durch PR-Merge.
+PM-01 ersetzt die veraltete Pauschalaussage „C23–C26 noch nicht implementiert“
+durch belegte technische Teilumfänge und ausdrücklich offene Abnahmen. Die alte
+C23.0-Aufnahme bleibt [unverändert erhalten](planning/status_c230_2026-10-17.md);
+historische Test-/Releaseberichte und Korpusdateien werden nicht umgeschrieben.
+[PM-01-Prüfung und tatsächliche GitHub-Aktionen](planning/pm01_validation.md).
+
+ROADMAP = Strategie, Issues = operative Arbeit, Project = Arbeitsübersicht,
+PRs = konkreter Lieferumfang, Tests = begrenzter technischer Nachweis. Ein Merge
+setzt weder einen Meilenstein noch dessen fachliche/produktive Freigabe automatisch.
