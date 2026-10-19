@@ -3,7 +3,7 @@
   "kind": "pm03-live-project-reconciliation",
   "snapshot_date": "2026-10-19",
   "timezone": "Europe/Berlin",
-  "overall_status": "operational_consolidation_verified_UI_auto_add_and_document_integration_pending",
+  "overall_status": "operative_mapping_verified_manual_UI_intake_current_pending_human_gates",
   "source": {
     "path": "docs/planning/issue_plan.v1.json",
     "sha256": "629b1c3471bc8654908bb99fbe5e1bc277edfb28272e1801bc8a8f065831580d",
@@ -800,7 +800,10 @@
       "auto_close_deactivation_explicitly_confirmed": false,
       "auto_close_api_observed_enabled": false,
       "execution_gate": "assume active until explicit operator confirmation; no potentially issue-closing status mutations",
-      "permission_scope_unchanged": true
+      "permission_scope_unchanged": true,
+      "auto_add_second_rule_plan_limit_confirmed": true,
+      "UI_intake_mode": "manual_gh_project_item_add",
+      "second_auto_add_rule_assumed": false
     }
   },
   "mapping": [
@@ -2950,11 +2953,7 @@
     },
     {
       "key": "durable_document_integration",
-      "reason": "Regular documentation PR pending review; current MAINT-04 steering prohibits merging PRs. Retain own documentation branch until verified integration."
-    },
-    {
-      "key": "ui_auto_add_configuration",
-      "reason": "UI repository is already linked and its eight current items are present. A second native auto-add rule must be saved in the GitHub UI without replacing Backend. Live public schema offers no create/update workflow mutation; quota is not verifiable from available account-plan metadata. Await operator-saved rule or documented plan-limit refusal."
+      "reason": "PR #118 is merged and its two reports are present in the current master. Only the current minimal manual-intake follow-up awaits regular review/integration; preserve its open task-owned branch."
     },
     {
       "key": "auto_close_operator_confirmation",
@@ -3001,6 +3000,11 @@
       "key": "auto_add_repository_selection",
       "reason": "Operator confirmed filter but not repository selection; per-create duplicate checks and readback used. No workflow configuration modified.",
       "resolution": "Operator explicitly confirms Backend selected, UI not selected; configuration observation only, no workflow write."
+    },
+    {
+      "key": "ui_auto_add_configuration",
+      "reason": "UI repository is already linked and its eight current items are present. A second native auto-add rule must be saved in the GitHub UI without replacing Backend. Live public schema offers no create/update workflow mutation; quota is not verifiable from available account-plan metadata. Await operator-saved rule or documented plan-limit refusal.",
+      "resolution": "Operator confirms plan limit. Accepted manual CLI intake; all seven open UI issues already present once, no open UI PRs; no second native rule required or assumed."
     }
   ],
   "workflow_confirmation_continuation": {
@@ -3061,7 +3065,7 @@
     "delete_workflow_called": false,
     "public_workflow_write_contract_available": false,
     "account_plan_probe": "plan_name=null; second-rule quota remains unverified",
-    "UI_auto_add_change": "not_executed_pending_supported_UI_configuration",
+    "UI_auto_add_change": "not_executed_operator_confirmed_plan_limit_manual_fallback_accepted",
     "existing_issue_duplicate_check": "complete paginated lists of both repositories; 27 expected standalone issues each exactly once; no missing canonical issue",
     "initial_and_current_item_check": "initial 28 item IDs/status and all previous 58 item field mappings preserved; all 45 plan IDs verified or explicitly blocked",
     "correction_to_prior_attribution": "Earlier wording attributed disabled Auto-close to the operator. Latest statement does not confirm that action; only the API enabled=false observation is verified. No agent workflow mutation occurred.",
@@ -3071,6 +3075,119 @@
     ],
     "documentation_PR": 118,
     "default_branch_integration": "pending_review",
-    "temporary_branch_policy": "retain existing own branch until verified merge; no new branch or worktree"
+    "temporary_branch_policy": "retain existing own branch until verified merge; no new branch or worktree",
+    "superseded_configuration_proposal": "manual_ui_intake"
+  },
+  "current_intake_policy": {
+    "source": "explicit operator reply confirming second-rule plan limit and manual gh project item-add",
+    "backend_auto_add": "existing native rule unchanged",
+    "backend_repository": "rf-data/Personal_Assistant",
+    "filter": "is:issue,pr is:open",
+    "UI_repository": "rf-data/personal-assistant-ui",
+    "UI_intake": "operator-triggered idempotent manual gh project item-add",
+    "second_auto_add_rule": "not_available_operator_confirmed_plan_limit",
+    "scheduler_or_replacement_automation": false,
+    "auto_close_change_confirmed": false,
+    "auto_close_execution_policy": "unchanged; conservatively assume active; no potentially closing status changes"
+  },
+  "manual_ui_intake": {
+    "snapshot_date": "2026-10-19",
+    "base_sha": "a4f405bfa7b7f1d04967fd6027587a68604ffadd",
+    "operator_policy": {
+      "source": "explicit operator reply confirming second-rule plan limit and manual gh project item-add",
+      "backend_auto_add": "existing native rule unchanged",
+      "backend_repository": "rf-data/Personal_Assistant",
+      "filter": "is:issue,pr is:open",
+      "UI_repository": "rf-data/personal-assistant-ui",
+      "UI_intake": "operator-triggered idempotent manual gh project item-add",
+      "second_auto_add_rule": "not_available_operator_confirmed_plan_limit",
+      "scheduler_or_replacement_automation": false,
+      "auto_close_change_confirmed": false,
+      "auto_close_execution_policy": "unchanged; conservatively assume active; no potentially closing status changes"
+    },
+    "verification": {
+      "schema_version": 1,
+      "scope": "one-off manual reconciliation for open UI issues and PRs, matching confirmed Auto-add filter",
+      "source": "explicit operator confirmation of plan limit and manual gh project item-add authorization",
+      "selected_open_UI_objects": 7,
+      "open_UI_issues": 7,
+      "open_UI_PRs": 0,
+      "all_UI_PRs_in_inventory": 8,
+      "all_UI_standalone_issues_in_inventory": 7,
+      "actions": [
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/10",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6OKE",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/11",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6OhU",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/12",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6PRE",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/13",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6PpM",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/14",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6P9c",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/15",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6R_Y",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/9",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6IlE",
+          "action": "reused_existing",
+          "archived": false
+        }
+      ],
+      "new_items": 0,
+      "reused_items": 7,
+      "project_items_before": 58,
+      "project_items_after": 58,
+      "existing_item_fields_unchanged": true,
+      "second_read_all_open_UI_objects_present_exactly_once": true,
+      "UI_source_states_text_unchanged": true,
+      "workflows_unchanged": true,
+      "status_mutations": 0,
+      "workflow_mutations": 0,
+      "new_issues_or_PRs_created": 0,
+      "second_auto_add_rule": "not_available_operator_confirmed_plan_limit",
+      "manual_process": "operator-triggered CLI reconciliation only; no scheduler, new workflow or credential",
+      "Auto_close_treated_as_active": true
+    },
+    "current_item_status_counts_before_followup_PR": {
+      "Backlog": 33,
+      "Done": 25
+    },
+    "earlier_documentation_PR": {
+      "number": 118,
+      "url": "https://github.com/rf-data/Personal_Assistant/pull/118",
+      "merged": true,
+      "merge_commit_sha": "a4f405bfa7b7f1d04967fd6027587a68604ffadd",
+      "documents_verified_from_actual_default": true
+    },
+    "historic_closed_UI_PRs": "Inventory includes eight UI PRs. None are open; existing merged UI PR #7 is retained. No blanket backfill of closed PRs under the confirmed open-only intake filter.",
+    "workflow_changes": 0,
+    "status_mutations": 0,
+    "new_product_or_auth_changes": false,
+    "documentation_followup": "two existing reports only; ordinary review required; no merge or cleanup"
   }
 }

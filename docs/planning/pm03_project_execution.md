@@ -14,6 +14,12 @@ Ziel-/Item-IDs, echte Feldwerte, Parent-/Abhängigkeitsmodi und konkrete Blocker
 Die frühere fehlende CLI-/Projectberechtigung wurde durch die ausdrücklich
 freigegebene, vorhandene CLI behoben; dies ersetzt keine Realfreigabe.
 
+Aktueller Fortsetzungsstand: PR #118 ist inzwischen gemergt. Das bestätigte
+Tariflimit verhindert eine zweite native Auto-add-Regel; die UI wird nach
+Betreiberentscheidung manuell und idempotent über `gh project item-add` gepflegt.
+Der aktuelle Nachweis und die verbleibenden menschlichen Gates stehen im letzten
+Abschnitt. Frühere Aufnahmestände und Konfigurationsvorschläge bleiben datiert.
+
 ## Tatsächliches Delta vor Veröffentlichung dieses Dokumentations-PRs
 
 | Objekt | Vorher | Nachher / Änderung |
@@ -234,6 +240,9 @@ null neue Issues oder Items, keine erneute Abarbeitung alter Create-Skripte.**
 
 ### UI-Auto-add: konkrete noch auszuführende Konfiguration
 
+**Historischer Vorschlag, inzwischen durch bestätigtes Tariflimit und den unten
+dokumentierten manuellen Betreibervertrag ersetzt. Keine zweite Regel voraussetzen.**
+
 Der aktuelle öffentliche GraphQL-Vertrag stellt für Projectworkflows nur die
 Mutation `deleteProjectV2Workflow` bereit, keine Create-/Update-Mutation.
 `ProjectV2Workflow` bietet lediglich Metadaten einschließlich `enabled`, keine
@@ -277,3 +286,67 @@ Anwendungs-/Ruff-/Pytestabnahme. Nur die beiden vorhandenen Dokumente in
 [PR #118](https://github.com/rf-data/Personal_Assistant/pull/118) werden aktualisiert;
 keine neue PR-/Branch-/Worktreeanlage. Masterintegration wartet weiterhin auf
 regulären Review/Merge, der eigene offene Branch bleibt erhalten.
+
+## Manuelle UI-Aufnahme nach bestätigtem Tariflimit
+
+19.10.2026. Der Betreiber bestätigt, dass GitHub eine zweite Auto-add-Regel wegen
+des Tariflimits verhindert. Die bestehende Backend-Regel und Auto-close bleiben
+unverändert. Damit ist die frühere offene Tarifentscheidung geklärt; es wird
+**keine zweite Automatisierung** vorausgesetzt oder aufgebaut.
+
+Project #1 dient weiterhin beiden Repositories. Der bestätigte offene Filter
+`is:issue,pr is:open` gilt als Auswahl für den manuellen UI-Abgleich. Sämtliche
+UI-Issues und -PRs wurden einschließlich geschlossener Einträge paginiert gelesen:
+**sieben offene Issues, null offene PRs**, acht historische PRs im Inventar.
+Alle sieben offenen Issues (#9–#15) sind bereits **jeweils genau einmal** im
+Project enthalten. Der vorhandene gemergte UI-PR #7 bleibt erhalten. Eine pauschale
+Nachaufnahme historischer geschlossener PRs gehört nicht zum offenen Filter.
+
+Ausgeführter Abgleich: vor jeder möglichen Anlage vollständigen Projectbestand
+mit den exakten UI-URLs/Node-IDs vergleichen; vorhandene Einträge wiederverwenden.
+Ergebnis **sieben wiederverwendet, null `item-add`-Aufrufe, null Neuanlagen**.
+Es war kein Schreibaufruf erforderlich. Ein zweiter vollständiger Project- und
+UI-Read bestätigt erneut jedes offene Ziel genau einmal und unveränderte
+Quellzustände/-texte. Die Felder sämtlicher vorher vorhandenen 58 Items sind
+identisch. Keine Statusmutation, kein Issueabschluss und keine Workflowänderung.
+
+### Verbindlicher manueller Ablauf für spätere fehlende UI-Ziele
+
+1. Vollständige offene UI-Issue-/PRliste und Project-Itemliste lesen; Pagination
+   einschließlich archivierter Items vollständig prüfen. Bestehende kanonische
+   URL/Node-ID bedeutet Wiederverwendung. Duplikate oder unklarer Zustand stoppen.
+2. Nur bei tatsächlich fehlendem offenem Ziel dessen Zustand und Identität sowie
+   den Projectbestand unmittelbar vorher erneut lesen. `PM03_UI_URL` bezeichnet
+   ausschließlich die dabei verifizierte exakte URL, keine Scanwurzel oder Liste.
+3. Genau einen manuellen Aufruf ausführen:
+
+   ```sh
+   gh project item-add 1 --owner rf-data --url "$PM03_UI_URL" --format json
+   ```
+
+4. Project danach vollständig erneut lesen: exakte Zielidentität genau einmal,
+   serverseitige Item-ID und Backlog aus Item added prüfen; keine Statusänderung
+   als Ersatz durchführen. Bei Timeout/Fehler zuerst lesen, nie blind erneut anlegen.
+5. Bei Wiederholung dieselben vorhandenen Einträge wiederverwenden. Neue Issues
+   oder PRs werden durch dieses Verfahren nicht erzeugt. Keine Hintergrundaufgabe,
+   kein Zeitplan, keine GitHub-Actions-Datei und kein neues Secret anlegen.
+
+Auto-close wird vorsorglich als aktiv behandelt, solange seine Deaktivierung
+nicht ausdrücklich bestätigt ist. Der APIbefund bleibt getrennt davon
+`enabled=false`; der Agent ändert ihn nicht. D06/D07/C23-06/C24-05/C26 bleiben
+offen, keine Realabnahme wird durch eine technische Lieferung ersetzt.
+
+### Dokumentintegration und tatsächliche Prüfung
+
+PR #118 ist nach live gelesenem Zustand gemergt; die beiden maßgeblichen Berichte
+wurden aus dem tatsächlichen aktuellen master gelesen. Der manuelle Nachtrag
+ändert ausschließlich diese bestehenden Dateien. Kein neuer Modell-/Reporttyp,
+keine Runtime-/Konfigurationsänderung und kein zusätzlicher lokaler Worktree.
+Der eigene kleine Folge-PR bleibt bis zum regulären Review/Merge offen; sein
+Branch wird vorher nicht entfernt. Andere Branches/Worktrees/PRs bleiben geschützt.
+
+Geprüft: vollständige Repository-/Projectpagination, sieben eindeutige offene
+UI-Ziele, Wiederholungsabgleich, unveränderte Item-/Sourcefelder und Workflows,
+JSONinvarianten, UTF-8/LF, lokale Links und Whitespace. Keine Anwendungs-, Ruff-,
+Pytest- oder Automatisierungsabnahme behauptet; ausschließlich bestehende
+Planungsdokumentation und ein einmaliger kontrollierter CLI-Abgleich.
