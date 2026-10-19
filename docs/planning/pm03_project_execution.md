@@ -191,3 +191,18 @@ mögliche automatische Projectaufnahme ist keine neue Planrepräsentation; nach
 Veröffentlichung separat lesen und im PR/Abschluss ausweisen. Private Ablauf-
 belege bleiben außerhalb des Repositories; keine Credentials, Volltexte oder
 privaten Hostroots im Maschinenreport.
+
+## Rücklesen nach Veröffentlichung der Dokumentations-PRs
+
+[PM-03 #118](https://github.com/rf-data/Personal_Assistant/pull/118) und
+[MAINT-04 #119](https://github.com/rf-data/Personal_Assistant/pull/119) wurden vom
+bestehenden Workflow automatisch aufgenommen: aktueller Bestand **58 Items**,
+31 PRs / 27 Issues, **23 Done / 35 Backlog**. Beide neuen Dokumentationsitems sind
+Backlog/offene PRs; sie ersetzen keine Plan-ID und sind keine Duplikate der
+kanonischen Aufgaben. Die 56 zuvor geprüften Items und ihre Feldwerte sind
+unverändert. Alle 27 neuen Issues bleiben offen; Auto-close weiterhin `false`.
+
+Beide PRs sind ungemergt. Dokumente sind damit reviewbar, aber noch nicht in
+master integriert. Beide ausschließlich auftragseigenen Remotebranches bleiben
+aus genau diesem Grund erhalten. Kein lokaler Arbeitsbranch/Worktree wurde erzeugt
+oder entfernt. Frühere Bestandsrefs werden davon nicht berührt.

@@ -2958,5 +2958,32 @@
   ],
   "runtime_changes": false,
   "real_material_actions": false,
-  "local_git_mutations": false
+  "local_git_mutations": false,
+  "post_publication": {
+    "items_after_operational_consolidation_before_document_PRs": 56,
+    "items_after_document_PR_auto_add": 58,
+    "PR_items": 31,
+    "issue_items": 27,
+    "status_counts": {
+      "Backlog": 35,
+      "Done": 23
+    },
+    "new_automatically_added_document_PR_items": [
+      {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/118",
+        "id": "PVTI_lAHOC92AuM4BneNAzhB6fxY",
+        "status": "Backlog"
+      },
+      {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/119",
+        "id": "PVTI_lAHOC92AuM4BneNAzhB6gd4",
+        "status": "Backlog"
+      }
+    ],
+    "verification": "full live readback, no pagination remaining; all prior 56 item fields unchanged",
+    "auto_close_enabled": false,
+    "document_PRs_merged": false,
+    "default_branch_document_integration": "pending_review",
+    "own_document_branch_cleanup": "retained_until_verified_merge"
+  }
 }
