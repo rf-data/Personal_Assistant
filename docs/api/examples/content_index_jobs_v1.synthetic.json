@@ -1,0 +1,16 @@
+{
+  "build_id": "a72a8530e72b489e9596ae2cf7ccd4b0",
+  "index_generation": "8b583f005771a99fbaadb7b68badda444e2b04bf04b0592ab4469712d7003515",
+  "job_id": "job_a72a8530e72b489e9596ae2cf7ccd4b0",
+  "outcome": "activated",
+  "parsed_version_ids": [
+    "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215"
+  ],
+  "record_count": 3,
+  "record_set_sha256": "771c4c9f223e773f2abe1594d3d2fbe1169151d55062a462d995e83d93172654",
+  "schema_version": 1,
+  "selection_sha256": "3be3d7f89b1e97200f057daca8df12edbb9280bb062336ddb3b50bed8f2a414a",
+  "source_ids": [
+    "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5"
+  ]
+}

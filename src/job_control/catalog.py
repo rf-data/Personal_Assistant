@@ -82,6 +82,8 @@ def resolve_preview(settings, request, actor, indexes):
         raise PermissionError("Workflows require explicit operator configuration")
     if process.process_id == "material_parsing" and not settings.pdf_enabled:
         raise PermissionError("PDF jobs require explicit operator configuration")
+    if process.process_id == "content_index_build" and not settings.index_jobs_enabled:
+        raise PermissionError("Index jobs require explicit operator configuration")
     params = process.model.model_validate(request.parameters).model_dump(mode="json")
     course = params["course_id"]
     if course not in actor.courses:
@@ -93,9 +95,22 @@ def resolve_preview(settings, request, actor, indexes):
         or entry.kind != process.input_kind
         or course not in entry.course_ids
     ):
+        if process.process_id == "content_index_build":
+            raise PermissionError("Index input unavailable")
         raise ValueError("Approved input reference/scope missing")
     values = verified_files(entry)
-    if process.process_id == "material_planning":
+    if process.process_id == "content_index_build":
+        from src.content_store.errors import ContentStoreError, Forbidden, NotFound
+        from src.job_control.index_jobs import prepare
+        from src.job_control.store import Unavailable
+
+        try:
+            prepare(entry, course, actor, settings.root, params["resume_of"])
+        except (Forbidden, NotFound):
+            raise PermissionError("Index input unavailable") from None
+        except ContentStoreError:
+            raise Unavailable("Index input verification unavailable") from None
+    elif process.process_id == "material_planning":
         plan = indexes.get(ref)
         if plan is None:
             raise ValueError(
