@@ -72,6 +72,15 @@ class Application:
             if content_settings.cursor_key_file.is_relative_to(index_root):
                 raise ValueError("Search cursor key must be outside index data")
         self.search = SearchHTTP(self.content, search_settings)
+        from src.job_control.index_http import IndexHTTP
+
+        if controller.settings.index_jobs_enabled and (
+            content_settings is None or search_settings is None
+        ):
+            raise ValueError(
+                "Index jobs require the integrated content/search configuration"
+            )
+        self.index = IndexHTTP(controller, content_settings, search_settings)
 
     def request(self, method, target, headers, body=b""):
         try:
@@ -100,6 +109,10 @@ class Application:
                     "/v1/content/search/"
                 ):
                     return self.search.request(method, parts, body, actor)
+                if parts.path == "/v1/content/index" or parts.path.startswith(
+                    "/v1/content/index/"
+                ):
+                    return self.index.request(method, parts, body, actor)
                 return self.content.request(method, parts, body, actor)
             if (
                 parts.scheme
@@ -122,6 +135,7 @@ class Application:
             if any(len(v) != 1 for v in query.values()):
                 raise ValueError("Duplicate query parameters")
             query = {k: v[0] for k, v in query.items()}
+            scoped_job = None
             if route[2:3] == ["workflows"]:
                 from src.workflows.http import WorkflowHTTP
 
@@ -206,6 +220,8 @@ class Application:
             elif len(route) in {4, 5} and route[2] == "jobs":
                 job_id = route[3]
                 job = self.controller.get(actor, job_id)
+                if job.process_id == "content_index_build":
+                    scoped_job = job
                 action = route[4] if len(route) == 5 else None
                 if method == "GET" and action is None:
                     result = job
@@ -244,6 +260,23 @@ class Application:
                 )
             else:
                 raise KeyError("Unknown method/route")
+            from src.content_store.errors import ContentStoreError, Forbidden, NotFound
+            from src.job_control.index_jobs import guarded_reply
+
+            try:
+                guarded = guarded_reply(
+                    self.controller,
+                    actor,
+                    result,
+                    202 if method == "POST" and "jobs" in route else 200,
+                    scoped_job=scoped_job,
+                )
+            except (Forbidden, NotFound):
+                raise KeyError("Index job unavailable") from None
+            except ContentStoreError:
+                raise Unavailable("Index status unavailable") from None
+            if guarded is not None:
+                return guarded
             return (
                 (202 if method == "POST" and "jobs" in route else 200),
                 encode(result),

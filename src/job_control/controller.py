@@ -44,8 +44,17 @@ class Controller:
         if actor.role != "operator":
             raise PermissionError("Operator role required")
 
-    @staticmethod
-    def allowed(actor, job):
+    def allowed(self, actor, job):
+        if job.process_id == "content_index_build":
+            from src.content_store.errors import ContentStoreError, Forbidden, NotFound
+            from src.job_control.index_jobs import authorize_job
+
+            try:
+                authorize_job(self.store, job, actor)
+            except (Forbidden, NotFound):
+                raise KeyError("Index job unavailable") from None
+            except (ContentStoreError, ValueError, OSError):
+                raise Unavailable("Index job unavailable") from None
         if job.parameters["course_id"] not in actor.courses:
             raise PermissionError("Job course scope denied")
 
@@ -188,6 +197,16 @@ class Controller:
     ):
         if not 1 <= limit <= 100 or not 0 <= offset <= 1000:
             raise ValueError("History bounds")
+
+        def visible(job):
+            if job.process_id != "content_index_build":
+                return True
+            try:
+                self.allowed(actor, job)
+                return True
+            except (PermissionError, KeyError, Unavailable):
+                return False
+
         jobs = [
             j
             for j in self.store.all()
@@ -195,13 +214,16 @@ class Controller:
             and (not process_id or j.process_id == process_id)
             and (not status or j.status == status)
             and (not course_id or j.parameters["course_id"] == course_id)
+            and visible(j)
         ]
         return jobs[offset : offset + limit]
 
     def processes(self, actor):
         return {
             **registry_document(
-                workflows=self.settings.workflows_enabled, pdf=self.settings.pdf_enabled
+                workflows=self.settings.workflows_enabled,
+                pdf=self.settings.pdf_enabled,
+                index=self.settings.index_jobs_enabled,
             ),
             "worker_available": self.store.worker_available(self.settings.worker_ttl),
             "execution_enabled": self.settings.execution_enabled,
@@ -214,5 +236,6 @@ class Controller:
                 )
                 for ref, entry in self.settings.catalog.items()
                 if set(entry.course_ids) & set(actor.courses)
+                and entry.kind != "index_bundle"
             ],
         }

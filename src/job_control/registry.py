@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 
 from src.job_control.models import (
+    IndexParams,
     PdfParams,
     PlanningParams,
     QualityParams,
@@ -76,9 +77,21 @@ PDF_PROCESS = Process(
     "src.tools_materials.processing.MaterialProcessor.parse (local PDF-v2 only)",
     subprocesses=512,
 )
+INDEX_PROCESS = Process(
+    "content_index_build",
+    IndexParams,
+    "index_bundle",
+    "index_build",
+    "src.job_control.index_jobs.run",
+    timeout_seconds=180,
+    cpu_seconds=120,
+    file_bytes=64 * 1024 * 1024,
+)
 
 
 def process_for(process_id):
+    if process_id == INDEX_PROCESS.process_id:
+        return INDEX_PROCESS
     if process_id == WORKFLOW_PROCESS.process_id:
         return WORKFLOW_PROCESS
     if process_id == PDF_PROCESS.process_id:
@@ -88,7 +101,7 @@ def process_for(process_id):
     return REGISTRY[process_id]
 
 
-def registry_document(*, workflows=False, pdf=False):
+def registry_document(*, workflows=False, pdf=False, index=False):
     return {
         "schema_version": 1,
         "processes": [
@@ -113,6 +126,7 @@ def registry_document(*, workflows=False, pdf=False):
                 *REGISTRY.values(),
                 *((WORKFLOW_PROCESS,) if workflows else ()),
                 *((PDF_PROCESS,) if pdf else ()),
+                *((INDEX_PROCESS,) if index else ()),
             )
         ],
         "disabled_processes": [

@@ -1,0 +1,943 @@
+{
+  "IndexInput": {
+    "additionalProperties": false,
+    "properties": {
+      "can_build": {
+        "title": "Can Build",
+        "type": "boolean"
+      },
+      "course_id": {
+        "enum": [
+          "cs50x",
+          "cs50_python",
+          "cs50_sql",
+          "cs50_ai",
+          "cs50_web",
+          "cs50_cybersecurity"
+        ],
+        "title": "Course Id",
+        "type": "string"
+      },
+      "input_ref": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+        "title": "Input Ref",
+        "type": "string"
+      },
+      "parsed_version_ids": {
+        "items": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "type": "string"
+        },
+        "title": "Parsed Version Ids",
+        "type": "array"
+      },
+      "schema_version": {
+        "const": 1,
+        "default": 1,
+        "title": "Schema Version",
+        "type": "integer"
+      },
+      "selection_sha256": {
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Selection Sha256",
+        "type": "string"
+      },
+      "source_ids": {
+        "items": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "type": "string"
+        },
+        "title": "Source Ids",
+        "type": "array"
+      }
+    },
+    "required": [
+      "input_ref",
+      "course_id",
+      "source_ids",
+      "parsed_version_ids",
+      "selection_sha256",
+      "can_build"
+    ],
+    "title": "IndexInput",
+    "type": "object"
+  },
+  "IndexJobPlan": {
+    "$defs": {
+      "ContentReadSettings": {
+        "additionalProperties": false,
+        "properties": {
+          "cursor_key_file": {
+            "format": "path",
+            "title": "Cursor Key File",
+            "type": "string"
+          },
+          "root": {
+            "format": "path",
+            "title": "Root",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "root",
+          "cursor_key_file"
+        ],
+        "title": "ContentReadSettings",
+        "type": "object"
+      },
+      "IndexProjectionConfig": {
+        "additionalProperties": false,
+        "properties": {
+          "boundary": {
+            "const": "block",
+            "default": "block",
+            "title": "Boundary",
+            "type": "string"
+          },
+          "chapter_context": {
+            "const": "metadata_only",
+            "default": "metadata_only",
+            "title": "Chapter Context",
+            "type": "string"
+          },
+          "empty_text": {
+            "const": "reference_only",
+            "default": "reference_only",
+            "title": "Empty Text",
+            "type": "string"
+          },
+          "max_codepoints": {
+            "default": 2000,
+            "maximum": 2000,
+            "minimum": 1,
+            "title": "Max Codepoints",
+            "type": "integer"
+          },
+          "normalization": {
+            "const": "none",
+            "default": "none",
+            "title": "Normalization",
+            "type": "string"
+          },
+          "overlap_codepoints": {
+            "default": 0,
+            "enum": [
+              0,
+              128
+            ],
+            "title": "Overlap Codepoints",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "selection": {
+            "const": "content_primary_v1",
+            "default": "content_primary_v1",
+            "title": "Selection",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version"
+        ],
+        "title": "IndexProjectionConfig",
+        "type": "object"
+      },
+      "IndexSelection": {
+        "additionalProperties": false,
+        "properties": {
+          "config": {
+            "$ref": "#/$defs/IndexProjectionConfig"
+          },
+          "parsed_version_ids": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "type": "string"
+            },
+            "maxItems": 128,
+            "title": "Parsed Version Ids",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "parsed_version_ids"
+        ],
+        "title": "IndexSelection",
+        "type": "object"
+      },
+      "SearchSettings": {
+        "additionalProperties": false,
+        "properties": {
+          "index_root": {
+            "format": "path",
+            "title": "Index Root",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "schema_version",
+          "index_root"
+        ],
+        "title": "SearchSettings",
+        "type": "object"
+      },
+      "VersionBinding": {
+        "additionalProperties": false,
+        "properties": {
+          "parsed_version_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "pattern": "^[^\\x00-\\x1f]+$",
+            "title": "Parsed Version Id",
+            "type": "string"
+          },
+          "parser_config_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "pattern": "^[^\\x00-\\x1f]+$",
+            "title": "Parser Config Id",
+            "type": "string"
+          },
+          "payload_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Payload Sha256",
+            "type": "string"
+          },
+          "projection_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Projection Sha256",
+            "type": "string"
+          },
+          "source_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "pattern": "^[^\\x00-\\x1f]+$",
+            "title": "Source Id",
+            "type": "string"
+          },
+          "source_version_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "pattern": "^[^\\x00-\\x1f]+$",
+            "title": "Source Version Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_id",
+          "source_version_id",
+          "parsed_version_id",
+          "parser_config_id",
+          "payload_sha256",
+          "projection_sha256"
+        ],
+        "title": "VersionBinding",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "content": {
+        "$ref": "#/$defs/ContentReadSettings"
+      },
+      "course_id": {
+        "enum": [
+          "cs50x",
+          "cs50_python",
+          "cs50_sql",
+          "cs50_ai",
+          "cs50_web",
+          "cs50_cybersecurity"
+        ],
+        "title": "Course Id",
+        "type": "string"
+      },
+      "schema_version": {
+        "const": 1,
+        "title": "Schema Version",
+        "type": "integer"
+      },
+      "search": {
+        "$ref": "#/$defs/SearchSettings"
+      },
+      "selection": {
+        "$ref": "#/$defs/IndexSelection"
+      },
+      "versions": {
+        "items": {
+          "$ref": "#/$defs/VersionBinding"
+        },
+        "maxItems": 32,
+        "minItems": 1,
+        "title": "Versions",
+        "type": "array"
+      }
+    },
+    "required": [
+      "schema_version",
+      "course_id",
+      "content",
+      "search",
+      "selection",
+      "versions"
+    ],
+    "title": "IndexJobPlan",
+    "type": "object"
+  },
+  "IndexJobReceipt": {
+    "additionalProperties": false,
+    "properties": {
+      "build_id": {
+        "pattern": "^[0-9a-f]{32}$",
+        "title": "Build Id",
+        "type": "string"
+      },
+      "index_generation": {
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Index Generation",
+        "type": "string"
+      },
+      "job_id": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+        "title": "Job Id",
+        "type": "string"
+      },
+      "outcome": {
+        "enum": [
+          "activated",
+          "already_active"
+        ],
+        "title": "Outcome",
+        "type": "string"
+      },
+      "parsed_version_ids": {
+        "items": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "type": "string"
+        },
+        "title": "Parsed Version Ids",
+        "type": "array"
+      },
+      "record_count": {
+        "maximum": 200000,
+        "minimum": 0,
+        "title": "Record Count",
+        "type": "integer"
+      },
+      "record_set_sha256": {
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Record Set Sha256",
+        "type": "string"
+      },
+      "schema_version": {
+        "const": 1,
+        "default": 1,
+        "title": "Schema Version",
+        "type": "integer"
+      },
+      "selection_sha256": {
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Selection Sha256",
+        "type": "string"
+      },
+      "source_ids": {
+        "items": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "type": "string"
+        },
+        "title": "Source Ids",
+        "type": "array"
+      }
+    },
+    "required": [
+      "job_id",
+      "build_id",
+      "outcome",
+      "index_generation",
+      "source_ids",
+      "parsed_version_ids",
+      "selection_sha256",
+      "record_set_sha256",
+      "record_count"
+    ],
+    "title": "IndexJobReceipt",
+    "type": "object"
+  },
+  "IndexParams": {
+    "additionalProperties": false,
+    "properties": {
+      "course_id": {
+        "enum": [
+          "cs50x",
+          "cs50_python",
+          "cs50_sql",
+          "cs50_ai",
+          "cs50_web",
+          "cs50_cybersecurity"
+        ],
+        "title": "Course Id",
+        "type": "string"
+      },
+      "output_name": {
+        "default": "index-build",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+        "title": "Output Name",
+        "type": "string"
+      },
+      "resume_of": {
+        "anyOf": [
+          {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Resume Of"
+      },
+      "schema_version": {
+        "const": 1,
+        "default": 1,
+        "title": "Schema Version",
+        "type": "integer"
+      },
+      "source_ref": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+        "title": "Source Ref",
+        "type": "string"
+      }
+    },
+    "required": [
+      "source_ref",
+      "course_id"
+    ],
+    "title": "IndexParams",
+    "type": "object"
+  },
+  "IndexStatus": {
+    "$defs": {
+      "Artifact": {
+        "additionalProperties": false,
+        "properties": {
+          "artifact_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Artifact Id",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "input_refs": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            "title": "Input Refs",
+            "type": "array"
+          },
+          "job_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "material_plan",
+              "quality_report",
+              "workflow_report",
+              "material_receipt",
+              "index_build"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Sha256",
+            "type": "string"
+          },
+          "size_bytes": {
+            "minimum": 0,
+            "title": "Size Bytes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "artifact_id",
+          "job_id",
+          "kind",
+          "size_bytes",
+          "sha256",
+          "created_at",
+          "input_refs"
+        ],
+        "title": "Artifact",
+        "type": "object"
+      },
+      "IndexInput": {
+        "additionalProperties": false,
+        "properties": {
+          "can_build": {
+            "title": "Can Build",
+            "type": "boolean"
+          },
+          "course_id": {
+            "enum": [
+              "cs50x",
+              "cs50_python",
+              "cs50_sql",
+              "cs50_ai",
+              "cs50_web",
+              "cs50_cybersecurity"
+            ],
+            "title": "Course Id",
+            "type": "string"
+          },
+          "input_ref": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Input Ref",
+            "type": "string"
+          },
+          "parsed_version_ids": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "type": "string"
+            },
+            "title": "Parsed Version Ids",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "selection_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Selection Sha256",
+            "type": "string"
+          },
+          "source_ids": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "type": "string"
+            },
+            "title": "Source Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "input_ref",
+          "course_id",
+          "source_ids",
+          "parsed_version_ids",
+          "selection_sha256",
+          "can_build"
+        ],
+        "title": "IndexInput",
+        "type": "object"
+      },
+      "IndexJobReceipt": {
+        "additionalProperties": false,
+        "properties": {
+          "build_id": {
+            "pattern": "^[0-9a-f]{32}$",
+            "title": "Build Id",
+            "type": "string"
+          },
+          "index_generation": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Index Generation",
+            "type": "string"
+          },
+          "job_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "outcome": {
+            "enum": [
+              "activated",
+              "already_active"
+            ],
+            "title": "Outcome",
+            "type": "string"
+          },
+          "parsed_version_ids": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "type": "string"
+            },
+            "title": "Parsed Version Ids",
+            "type": "array"
+          },
+          "record_count": {
+            "maximum": 200000,
+            "minimum": 0,
+            "title": "Record Count",
+            "type": "integer"
+          },
+          "record_set_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Record Set Sha256",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "selection_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Selection Sha256",
+            "type": "string"
+          },
+          "source_ids": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "type": "string"
+            },
+            "title": "Source Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "job_id",
+          "build_id",
+          "outcome",
+          "index_generation",
+          "source_ids",
+          "parsed_version_ids",
+          "selection_sha256",
+          "record_set_sha256",
+          "record_count"
+        ],
+        "title": "IndexJobReceipt",
+        "type": "object"
+      },
+      "Job": {
+        "additionalProperties": false,
+        "properties": {
+          "artifact_refs": {
+            "default": [],
+            "items": {
+              "$ref": "#/$defs/Artifact"
+            },
+            "maxItems": 1,
+            "title": "Artifact Refs",
+            "type": "array"
+          },
+          "cancellable": {
+            "default": false,
+            "title": "Cancellable",
+            "type": "boolean"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "duration_seconds": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Duration Seconds"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Error"
+          },
+          "error_class": {
+            "anyOf": [
+              {
+                "enum": [
+                  "input",
+                  "timeout",
+                  "internal",
+                  "other"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Error Class"
+          },
+          "exit_code": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Exit Code"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Finished At"
+          },
+          "initiated_by": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Initiated By",
+            "type": "string"
+          },
+          "input_refs": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            "maxItems": 1,
+            "minItems": 1,
+            "title": "Input Refs",
+            "type": "array"
+          },
+          "job_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "output_refs": {
+            "default": [],
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            "maxItems": 1,
+            "title": "Output Refs",
+            "type": "array"
+          },
+          "parameters": {
+            "additionalProperties": true,
+            "title": "Parameters",
+            "type": "object"
+          },
+          "phase": {
+            "title": "Phase",
+            "type": "string"
+          },
+          "process_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Process Id",
+            "type": "string"
+          },
+          "progress": {
+            "default": null,
+            "title": "Progress",
+            "type": "null"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Started At"
+          },
+          "status": {
+            "enum": [
+              "created",
+              "queued",
+              "running",
+              "cancel_requested",
+              "completed",
+              "failed",
+              "cancelled",
+              "interrupted"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id",
+          "process_id",
+          "status",
+          "created_at",
+          "parameters",
+          "phase",
+          "initiated_by",
+          "input_refs"
+        ],
+        "title": "Job",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "index_generation": {
+        "anyOf": [
+          {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Index Generation"
+      },
+      "input": {
+        "$ref": "#/$defs/IndexInput"
+      },
+      "jobs": {
+        "items": {
+          "$ref": "#/$defs/Job"
+        },
+        "maxItems": 20,
+        "title": "Jobs",
+        "type": "array"
+      },
+      "latest_activation": {
+        "default": "undetermined",
+        "enum": [
+          "committed",
+          "not_committed",
+          "undetermined"
+        ],
+        "title": "Latest Activation",
+        "type": "string"
+      },
+      "next_offset": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Next Offset"
+      },
+      "receipt": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/IndexJobReceipt"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "retry_policy": {
+        "const": "explicit_new_request_only",
+        "default": "explicit_new_request_only",
+        "title": "Retry Policy",
+        "type": "string"
+      },
+      "schema_version": {
+        "const": 1,
+        "default": 1,
+        "title": "Schema Version",
+        "type": "integer"
+      },
+      "state": {
+        "enum": [
+          "not_indexed",
+          "active",
+          "stale",
+          "blocked",
+          "failed",
+          "building"
+        ],
+        "title": "State",
+        "type": "string"
+      }
+    },
+    "required": [
+      "input",
+      "state",
+      "jobs"
+    ],
+    "title": "IndexStatus",
+    "type": "object"
+  }
+}

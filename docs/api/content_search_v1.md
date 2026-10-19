@@ -5,7 +5,10 @@
 [FTS5-Implementierung](../architecture/content_fts_implementation.md),
 [Retrievalvertrag](../architecture/index_record_contract.md),
 [Content-Lesevertrag](content_read_v1.md). Kein zweites Retrievalsystem.
-Der Implementierungs-PR muss vor darauf aufbauender UI-Integration gemergt werden.
+Historische Integrationsvoraussetzung: Der A-Implementierungs-PR muss vor darauf
+aufbauender UI-Integration gemergt werden. #124 ist inzwischen in Master
+`79d800c` integriert. Kontrollierte Indexjobs bleiben ein eigenes
+[DEV-01B-Paket](content_index_jobs_v1.md).
 
 ## Opt-in und tatsächliche Routen
 
