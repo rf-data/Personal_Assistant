@@ -1,0 +1,193 @@
+# PM-03 – GitHub Project #1 operativ konsolidiert
+
+19.10.2026, Europe/Berlin. [Bestehendes privates Project](https://github.com/users/rf-data/projects/1),
+`PVT_kwHOC92AuM4BneNA`, Owner `rf-data`, Updateberechtigung live bestätigt.
+Backendbasis `b6fc464ef5217e3c1641e504d9f9c37989e0c4b1`, UI
+`af95415071e85a461579c0a1650fdd0efe6c25b9`.
+**Project-Konsolidierung ausgeführt und zurückgelesen; offene fachliche Abnahmen
+bleiben offen. Dokumentintegration wartet auf regulären PRreview.**
+
+Führende [45er-Planung](issue_plan.v1.json), [PM-02-Mapping](pm02_mapping.md) und
+[PM-02-Reconciliation](pm02_reconciliation.v1.json) bleiben unverändert.
+[Maschinenlesbarer Liveabgleich](pm03_reconciliation.v1.json) enthält alle 45 IDs,
+Ziel-/Item-IDs, echte Feldwerte, Parent-/Abhängigkeitsmodi und konkrete Blocker.
+Die frühere fehlende CLI-/Projectberechtigung wurde durch die ausdrücklich
+freigegebene, vorhandene CLI behoben; dies ersetzt keine Realfreigabe.
+
+## Tatsächliches Delta vor Veröffentlichung dieses Dokumentations-PRs
+
+| Objekt | Vorher | Nachher / Änderung |
+| --- | ---: | --- |
+| Project-Items | 28 | **56**: 29 PRs, 27 Issues, keine Draft-Items/Archive |
+| Bestehende Items erhalten | 28 | 28, Statuswerte unverändert |
+| Neue eigenständige Issues | 0 | **27**: 20 Backend, sieben UI |
+| Neuer PR-Eintrag | 0 | UI [#7](https://github.com/rf-data/personal-assistant-ui/pull/7), technisch gemergt |
+| Status | 22 Done / 6 Backlog | **23 Done / 33 Backlog** |
+| Felder | 18 | **20**, Workstream und Acceptance ergänzt |
+| Views | 5 | **8**, drei neu und eine vorhandene angepasst |
+| Native Repository-Milestones | 0 | **12**, alle offen, ohne erfundene Termine |
+| Native Milestonezuordnungen | 0 | **42**: 26 neue Issues, 16 gemergte technische PRs |
+| Native Sub-Issue-/Blocked-by-Kanten | 0 | **14 / 35** |
+| Repräsentierte Plan-IDs | nicht Project-verifiziert | **44 / 45**, ein expliziter Blocker |
+
+14 vorhandene kanonische PR-Items und zwei unterstützende PR-Items (#79/#82)
+erhielten Metadaten; UI #7 kam einmal hinzu. 44 Items tragen jeweils Priority,
+Workstream und Acceptance. Priority nutzt das vorhandene Feld: **6 P0 / 29 P1 /
+9 P2 / 12 unbelegte**; keine zweite Priority und kein unnötiges P3.
+Keine assignees oder menschlichen Freigaben erfunden.
+
+Zehn Parent-Issues gruppieren weiterhin offene fachliche Umfänge. Native
+Milestones sind Repositorygruppierung für die Roadmap, keine zweite
+kanonische Aufgabe oder Abnahme. Backend: C23/C24/C26–C32; UI: C24/C25/C26.
+PERSONAL-PYREPO hat keinen Milestone und trägt `human_only` und `optional`.
+C27 besitzt keine harte Abhängigkeit von diesem persönlichen Vorhaben.
+
+## Kanonische Ziele und Abhängigkeiten
+
+`C23-02`/`C23-02A` teilen Backend #76, `C23-03`/`C24-04-B` Backend #72.
+Damit 44 IDs auf 42 echte Project-Ziele, plus ein unveröffentlichtes aktives Ziel
+= 43 geplante kanonische Repräsentationen. Kein Alias erzeugt ein Parallelissue.
+Bei #72 gilt die höhere Priorität P1 und Workstream `Persistence / Retrieval`;
+wegen unterschiedlicher C23-/C24-Ziele kein willkürlicher nativer Milestone.
+Der Draft selbst, seine Texte/Heads/Bases und sein Project-Status bleiben unverändert.
+
+C24-06-A: vollständige aktuelle PRliste enthält weiterhin keinen veröffentlichten
+Backend-PR des geschützten Auftrags. Kein paralleles Issue oder Draft-Item erzeugt,
+keine Donebehauptung. Zuordnung nach späterer tatsächlicher PRveröffentlichung
+nachholen; aktive Backend-/UIworktrees unverändert erhalten.
+
+Bei Issuezielen wurden mögliche Parent-/Abhängigkeitskanten nativ hergestellt und
+zurückgelesen. PRziele werden nicht in Issues umgebaut: ihre Abhängigkeiten und
+Parentbezüge bleiben explizite Plan-/URLbindungen. Neue Issuekörper enthalten
+alle tatsächlichen Parent-/Dependencylinks; zwei PRparents können nur so
+repräsentiert werden. Ein Alias erhält keine native Selbstabhängigkeit.
+Keine `Closes`-Anweisungen, Issueclosures oder PRmerges.
+
+Neue Issues, jeweils genau einmal im Project:
+
+| Plan-ID | Repository-Issue |
+| --- | --- |
+| C23-06 | [rf-data/Personal_Assistant#107](https://github.com/rf-data/Personal_Assistant/issues/107) |
+| C23 | [rf-data/Personal_Assistant#98](https://github.com/rf-data/Personal_Assistant/issues/98) |
+| C24-02-C | [rf-data/Personal_Assistant#115](https://github.com/rf-data/Personal_Assistant/issues/115) |
+| C24-03-B | [rf-data/Personal_Assistant#114](https://github.com/rf-data/Personal_Assistant/issues/114) |
+| C24-05 | [rf-data/Personal_Assistant#108](https://github.com/rf-data/Personal_Assistant/issues/108) |
+| C24 | [rf-data/Personal_Assistant#99](https://github.com/rf-data/Personal_Assistant/issues/99) |
+| C25-01 | [rf-data/personal-assistant-ui#10](https://github.com/rf-data/personal-assistant-ui/issues/10) |
+| C25-02 | [rf-data/personal-assistant-ui#11](https://github.com/rf-data/personal-assistant-ui/issues/11) |
+| C25-03 | [rf-data/personal-assistant-ui#12](https://github.com/rf-data/personal-assistant-ui/issues/12) |
+| C25-04 | [rf-data/personal-assistant-ui#13](https://github.com/rf-data/personal-assistant-ui/issues/13) |
+| C25 | [rf-data/personal-assistant-ui#9](https://github.com/rf-data/personal-assistant-ui/issues/9) |
+| C26-01 | [rf-data/personal-assistant-ui#14](https://github.com/rf-data/personal-assistant-ui/issues/14) |
+| C26-02 | [rf-data/Personal_Assistant#109](https://github.com/rf-data/Personal_Assistant/issues/109) |
+| C26-03 | [rf-data/Personal_Assistant#110](https://github.com/rf-data/Personal_Assistant/issues/110) |
+| C26-04 | [rf-data/Personal_Assistant#111](https://github.com/rf-data/Personal_Assistant/issues/111) |
+| C26-05 | [rf-data/Personal_Assistant#112](https://github.com/rf-data/Personal_Assistant/issues/112) |
+| C26-06 | [rf-data/personal-assistant-ui#15](https://github.com/rf-data/personal-assistant-ui/issues/15) |
+| C26-07 | [rf-data/Personal_Assistant#113](https://github.com/rf-data/Personal_Assistant/issues/113) |
+| C26 | [rf-data/Personal_Assistant#100](https://github.com/rf-data/Personal_Assistant/issues/100) |
+| C27 | [rf-data/Personal_Assistant#101](https://github.com/rf-data/Personal_Assistant/issues/101) |
+| C28-01 | [rf-data/Personal_Assistant#116](https://github.com/rf-data/Personal_Assistant/issues/116) |
+| C28 | [rf-data/Personal_Assistant#102](https://github.com/rf-data/Personal_Assistant/issues/102) |
+| C29 | [rf-data/Personal_Assistant#103](https://github.com/rf-data/Personal_Assistant/issues/103) |
+| C30 | [rf-data/Personal_Assistant#104](https://github.com/rf-data/Personal_Assistant/issues/104) |
+| C31 | [rf-data/Personal_Assistant#105](https://github.com/rf-data/Personal_Assistant/issues/105) |
+| C32 | [rf-data/Personal_Assistant#106](https://github.com/rf-data/Personal_Assistant/issues/106) |
+| PERSONAL-PYREPO | [rf-data/Personal_Assistant#117](https://github.com/rf-data/Personal_Assistant/issues/117) |
+
+## Ansichten und tatsächliche Filterprüfung
+
+- [Roadmap #4](https://github.com/users/rf-data/projects/1/views/4): vorhandene
+  Roadmap erhalten; native Milestones existieren. Erweiterung sichtbarer Spalten
+  endete mit API-Exit 1; erneuter Read beweist unveränderte Ansicht. Keine
+  erfolgreiche Änderung oder konkrete serverseitige Fehlerursache behauptet.
+- [Priority board #2](https://github.com/users/rf-data/projects/1/views/2): bestehende
+  Prioritygruppierung und Statusspalten erhalten, Filter `status:Backlog,Ready`,
+  **33 Items** tatsächlich über die API gefunden.
+- [Active Work #6](https://github.com/users/rf-data/projects/1/views/6): In progress /
+  In review, **0 Items**. Das ist der tatsächliche Projectbestand; C24-06-A wird
+  nicht ersatzweise eingetragen oder verborgen als abgeschlossen ausgegeben.
+- [Blocked / Requires Decision #7](https://github.com/users/rf-data/projects/1/views/7):
+  Requires decision / Real acceptance pending / Production acceptance pending,
+  **17 Items**.
+- [Technical Delivery / Real Acceptance Pending #8](https://github.com/users/rf-data/projects/1/views/8):
+  Technical delivery only / Real acceptance pending / Production acceptance pending,
+  **23 Items**; Status und Acceptance sind nebeneinander sichtbar.
+
+Die vier Filter wurden nicht nur gespeichert: tatsächliche `items(query:...)`-
+Ergebnisse stimmen jeweils exakt mit unabhängig aus allen Feldwerten bestimmten
+Itemmengen überein. Neue Tabellen zeigen Title, Repository, Status, Priority,
+Workstream, Acceptance, Milestone, Parent issue und Assignees. Serverreihenfolge
+der Spalten wurde als Menge geprüft. Bestehende Views #1/#3/#4/#5 unverändert;
+kein Browser-/Darstellungsreview behauptet.
+
+Offener UI-Schritt für Roadmap #4: als berechtigter Betreiber Viewkonfiguration
+öffnen; soweit das Layout unterstützt Milestone, Priority, Workstream und
+Acceptance als sichtbare Felder hinzufügen, vorhandenes Layout/Filter erhalten,
+speichern und gegen die echten Milestonegruppen prüfen. Keine Start-/Zieltermine
+erfinden. Für Prioritäts-/Abnahmedetails stehen die drei getesteten Tabellen bereit.
+
+## Automatisierungen und Sicherheit
+
+Vor erster Anlage hat der Betreiber die bislang nicht auslesbaren Einstellungen
+bestätigt: Item added → Backlog, Auto-close issue bei Done, Auto-addfilter
+`is:issue,pr is:open`. Auto-close wurde **durch den Betreiber deaktiviert**;
+`enabled=false` vor jeder Issueanlage und im Endzustand live geprüft. Der Agent
+hat keine Workflowkonfiguration verändert oder reaktiviert. Die Auto-add-
+Repositoryauswahl ist weiterhin **not_verified**; aus beobachteten Anlagen wird
+keine vollständige Repositorykonfiguration abgeleitet.
+
+Vor jedem Create alle passenden Repository-Issues/PRs und Project-Items erneut
+abgeglichen; nach Anlage Project erneut gelesen. Sechs automatisch aufgenommene
+Issue-Items wiederverwendet, 21 nach verifiziertem Fehlen manuell aufgenommen.
+APIverzögerungen und einzelne fehlgeschlagene Writes führten zu begrenzten
+Readbacks und Wiederaufnahme anhand vorhandener Identitäten, nicht zu blinden
+Createwiederholungen. Endbestand beweist: 27 eindeutige neue Issues, ein Item
+je kanonischem Ziel, keine Duplikate.
+
+Die zusätzlichen Statusoptionen Priority/Workstream/Target milestone werden von
+keinem Item verwendet, aber weiterhin erhalten: andere Workflowzielkonfigurationen
+sind über den verfügbaren Vertrag nicht vollständig lesbar. Konkreter Betreiber-
+Schritt: alle Workflowtrigger/-ziele und gespeicherten Viewfilter in der Oberfläche
+prüfen, dann erst die drei Optionen einzeln zur Entfernung freigeben. Keine
+Optionen aufgrund ihrer Namen automatisch löschen. Auto-close bleibt bis zur
+bewussten Betreiberentscheidung deaktiviert; Done ist keine Realabnahme.
+
+Acceptance-Endbestand: **16 Technical delivery only, vier Real acceptance pending,
+drei Production acceptance pending, zehn Requires decision, elf Planned,
+zwölf unbelegt**. Alle 27 neuen Issues bleiben offen/Backlog. D06/D07/C23-06/
+C24-05/C26 sind nicht durch technische PRabschlüsse freigegeben. Keine Realmaterial-,
+Produktiv-, Datenbank-, Mail-, Embedding- oder Qdrantaktion durchgeführt.
+
+## Tatsächliche Validierung und offener Lifecycle
+
+Vollständige paginierte Issue-/PR-/Milestonelisten beider Repositories sowie
+Project-Items einschließlich archivierter Zustände, Feldwerte, Optionen, Views
+und Workflows gelesen. Alle letzten Verbindungen ohne weitere Seite; Item-/
+Feld-/Relationgrenzen geprüft. 45 IDs, Aliaspaare, 27 Original-Issueidentitäten,
+14 Parent- und 35 Blocked-by-Kanten, 42 Milestonezuordnungen, offene Zustände,
+private Projectidentität und Scope-/Abnahmetrennung geprüft. Keine neue Laufzeit,
+keine Anwendungs-/Ruff-/Pytestabnahme erforderlich oder behauptet.
+
+[Sourceplan](issue_plan.v1.json) SHA256
+`629b1c3471bc8654908bb99fbe5e1bc277edfb28272e1801bc8a8f065831580d` unverändert.
+JSONinvarianten, lokale Markdownziele, UTF-8/LF und Whitespace geprüft.
+PRs #72/#88/#89: Titel, Körper, Zustand, Draftflag, Head-/Base-SHAs und nativer
+Milestone unverändert; lediglich die ausdrücklich vorgesehenen Projectmetadaten
+für #72 ergänzt. Übrige Altitems und ihre Statuswerte unverändert erhalten.
+16 bereits gemergte technische PRs erhielten bewusst ausschließlich einen
+nativen Milestone. Keine alten PRs gemergt/geschlossen oder Commits umgeschrieben.
+
+Nur zwei neue Dokumente unter `docs/planning/`, eigener Remote-Dokumentationsbranch
+`docs/pm03-project-operationalization`, kein neuer lokaler Branch/Worktree.
+Der nachfolgende MAINT-04-Auftrag verlangt, keine PRs zu mergen: Dokumente daher
+über regulären PR vorlegen; Integration in master und abschließender eigener
+Branchabbau bleiben bis Review/Merge offen. Nie einen offenen PR als integrierte
+Dokumentation ausgeben. Alle alten PM-/MAINT-/Agentenbranches, Registrierungen,
+Primärcheckouts, Stashes und private Inhalte bleiben erhalten.
+
+Der Zählstand 56 gilt unmittelbar vor Anlage eigener Dokumentations-PRs. Deren
+mögliche automatische Projectaufnahme ist keine neue Planrepräsentation; nach
+Veröffentlichung separat lesen und im PR/Abschluss ausweisen. Private Ablauf-
+belege bleiben außerhalb des Repositories; keine Credentials, Volltexte oder
+privaten Hostroots im Maschinenreport.
