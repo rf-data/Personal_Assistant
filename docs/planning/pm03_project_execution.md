@@ -20,6 +20,11 @@ Betreiberentscheidung manuell und idempotent über `gh project item-add` gepfleg
 Der aktuelle Nachweis und die verbleibenden menschlichen Gates stehen im letzten
 Abschnitt. Frühere Aufnahmestände und Konfigurationsvorschläge bleiben datiert.
 
+Aktueller Governance-Nachtrag: [PM-04](pm04_project_governance.md) bestätigt den
+Liveabgleich, die bereinigten fünf Statusoptionen und den weiterhin fehlenden
+C24-06-A-Zielbeleg. Frühere Snapshots bleiben historische Nachweise. Der dortige
+Roadmap-Spaltenvorschlag ist korrigiert: `visible_fields` gilt nicht für Roadmaps.
+
 ## Tatsächliches Delta vor Veröffentlichung dieses Dokumentations-PRs
 
 | Objekt | Vorher | Nachher / Änderung |
@@ -127,11 +132,13 @@ Workstream, Acceptance, Milestone, Parent issue und Assignees. Serverreihenfolge
 der Spalten wurde als Menge geprüft. Bestehende Views #1/#3/#4/#5 unverändert;
 kein Browser-/Darstellungsreview behauptet.
 
-Offener UI-Schritt für Roadmap #4: als berechtigter Betreiber Viewkonfiguration
-öffnen; soweit das Layout unterstützt Milestone, Priority, Workstream und
-Acceptance als sichtbare Felder hinzufügen, vorhandenes Layout/Filter erhalten,
-speichern und gegen die echten Milestonegruppen prüfen. Keine Start-/Zieltermine
-erfinden. Für Prioritäts-/Abnahmedetails stehen die drei getesteten Tabellen bereit.
+PM-04-Korrektur zum früheren Roadmap-Schritt: Roadmap #4 unterstützt keine
+`visible_fields`-Konfiguration. Deshalb keine Milestone-/Workstreamspalten in
+diesem Layout erzwingen. Bestehende Tabellen #6–#8 zeigen diese Felder bereits.
+Für die Roadmap gegebenenfalls in der Oberfläche nach Milestone/Workstream
+gruppieren; Datefelder/Marker nur mit tatsächlich freigegebenen Terminen verwenden.
+Aktuell fehlen Datumseinträge und Milestone-Due-Dates; keine Daten erfinden.
+
 
 ## Automatisierungen und Sicherheit
 
@@ -358,3 +365,20 @@ kein manueller UI-Zugang.
 Alle vorherigen 58 Itemfelder, alle 27 offenen Issuezustände und sämtliche
 Workflow-Metadaten sind unverändert. Kein Merge oder Branchabbau ausgeführt;
 der offene Folge-PR hält seinen eigenen Branch bis zur verifizierten Integration.
+
+## PM-04: Status- und Governanceabschluss
+
+[Der kompakte PM-04-Bericht](pm04_project_governance.md) ist der aktuelle
+Governancebefund. Nach explizitem UI-Abhängigkeitsausschluss durch den Betreiber
+wurden ausschließlich die drei unbenutzten Statusoptionen Priority, Workstream
+und Target milestone entfernt. IDs/Farben/Beschreibungen/Reihenfolge der übrigen
+fünf Optionen sowie alle Itemwerte, Views und Workflows blieben identisch.
+Keine Issueclosure oder potenziell schließende Statusmutation.
+
+60 Items vor dem eigenen Dokumentations-PR, 44/45 Plan-IDs, 14 Parent- und
+35 Blockierungsbeziehungen erneut verifiziert. C24-06-A bleibt
+`pending_real_target`, mit Parent C24 und den belegten Abhängigkeiten UI #7 /
+Backend #91. Keine neuen Issues, keine doppelte UI-Aufnahme und keine
+fachliche Real-/Produktionsfreigabe. Die manuelle UI-Pflege bleibt maßgeblich.
+PM-03 #118/#120 sind inzwischen integriert; nur die aktuelle PM-04-Dokumentation
+wartet auf ihren regulären PR-/Reviewprozess.

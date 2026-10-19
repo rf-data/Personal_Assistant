@@ -3,7 +3,7 @@
   "kind": "pm03-live-project-reconciliation",
   "snapshot_date": "2026-10-19",
   "timezone": "Europe/Berlin",
-  "overall_status": "operative_mapping_verified_manual_UI_intake_current_pending_human_gates",
+  "overall_status": "PM04_safe_governance_checks_complete_documentation_integration_pending",
   "source": {
     "path": "docs/planning/issue_plan.v1.json",
     "sha256": "629b1c3471bc8654908bb99fbe5e1bc277edfb28272e1801bc8a8f065831580d",
@@ -100,18 +100,6 @@
           {
             "id": "df73e18b",
             "name": "In review"
-          },
-          {
-            "id": "7d027519",
-            "name": "Priority"
-          },
-          {
-            "id": "5cb586ed",
-            "name": "Workstream"
-          },
-          {
-            "id": "6c235023",
-            "name": "Target milestone"
           },
           {
             "id": "98236657",
@@ -804,7 +792,8 @@
       "auto_add_second_rule_plan_limit_confirmed": true,
       "UI_intake_mode": "manual_gh_project_item_add",
       "second_auto_add_rule_assumed": false
-    }
+    },
+    "configuration_observation_scope": "PM-04 current configuration; original operational counts retain their explicitly historical scope"
   },
   "mapping": [
     {
@@ -2436,7 +2425,7 @@
       "canonical_target": null,
       "project_item_id": null,
       "current_fields": null,
-      "verification": "blocked_no_published_target",
+      "verification": "pending_real_target",
       "dependencies": [],
       "parent_representation": null
     },
@@ -2933,15 +2922,7 @@
   "blockers": [
     {
       "key": "C24-06-A",
-      "reason": "Protected active task; no published backend PR found in complete live PR list. No parallel Issue/Draft created."
-    },
-    {
-      "key": "unexpected_status_options",
-      "reason": "Priority/Workstream/Target milestone options unused by all items; other workflow target configurations not exposed. Retained pending operator audit."
-    },
-    {
-      "key": "roadmap_visible_columns",
-      "reason": "Roadmap #4 configuration update exited nonzero; readback proves no change. Add Milestone/Priority/Workstream/Acceptance columns manually if supported; do not invent dates."
+      "reason": "pending_real_target: no published PR or suitable issue in either repository. Parent C24 and dependencies C24-05-B2 (UI PR #7), C24-05-C2 (Backend PR #91) documented; no duplicate task created."
     },
     {
       "key": "real_and_production_acceptance",
@@ -2953,7 +2934,7 @@
     },
     {
       "key": "durable_document_integration",
-      "reason": "PR #118 is merged and its two reports are present in the current master. Only the current minimal manual-intake follow-up awaits regular review/integration; preserve its open task-owned branch."
+      "reason": "PM-03 PRs #118 and #120 are merged and current default documents read. Only the PM-04 update awaits its ordinary PR/review integration; keep the current task-owned branch until verified merge."
     },
     {
       "key": "auto_close_operator_confirmation",
@@ -3005,6 +2986,16 @@
       "key": "ui_auto_add_configuration",
       "reason": "UI repository is already linked and its eight current items are present. A second native auto-add rule must be saved in the GitHub UI without replacing Backend. Live public schema offers no create/update workflow mutation; quota is not verifiable from available account-plan metadata. Await operator-saved rule or documented plan-limit refusal.",
       "resolution": "Operator confirms plan limit. Accepted manual CLI intake; all seven open UI issues already present once, no open UI PRs; no second native rule required or assumed."
+    },
+    {
+      "key": "unexpected_status_options",
+      "reason": "Priority/Workstream/Target milestone options unused by all items; other workflow target configurations not exposed. Retained pending operator audit.",
+      "resolution": "PM-04: operator UI audit excludes all seven workflow dependencies; three zero-use options removed with retained option IDs/colors/descriptions/order and all item values preserved."
+    },
+    {
+      "key": "roadmap_visible_columns",
+      "reason": "Roadmap #4 configuration update exited nonzero; readback proves no change. Add Milestone/Priority/Workstream/Acceptance columns manually if supported; do not invent dates.",
+      "resolution": "PM-04: visible_fields is not applicable to roadmap layout. Prior column-add advice corrected; existing views reused, no unsupported mutation retried."
     }
   ],
   "workflow_confirmation_continuation": {
@@ -3210,6 +3201,353 @@
         "Backlog": 34,
         "Done": 25
       }
+    }
+  },
+  "pm04_governance": {
+    "schema_version": 1,
+    "snapshot_date": "2026-10-19",
+    "input_default_sha": "d5f622be5b5435b20099823be5c4c300cfcaad50",
+    "source_plan_sha256": "629b1c3471bc8654908bb99fbe5e1bc277edfb28272e1801bc8a8f065831580d",
+    "state": "safe_rest_points_completed_operator_actions_documented",
+    "pending_real_target": {
+      "state": "pending_real_target",
+      "parent": "C24",
+      "depends_on": [
+        {
+          "plan_id": "C24-05-B2",
+          "target": "https://github.com/rf-data/personal-assistant-ui/pull/7"
+        },
+        {
+          "plan_id": "C24-05-C2",
+          "target": "https://github.com/rf-data/Personal_Assistant/pull/91"
+        }
+      ],
+      "reason": "No published PR or suitable issue in complete inventories of either repository; active work not duplicated."
+    },
+    "status_cleanup": {
+      "field_id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+      "removed_options": [
+        {
+          "id": "7d027519",
+          "name": "Priority",
+          "color": "GRAY",
+          "description": ""
+        },
+        {
+          "id": "5cb586ed",
+          "name": "Workstream",
+          "color": "GRAY",
+          "description": ""
+        },
+        {
+          "id": "6c235023",
+          "name": "Target milestone",
+          "color": "GRAY",
+          "description": ""
+        }
+      ],
+      "retained_options": [
+        {
+          "id": "f75ad846",
+          "name": "Backlog",
+          "color": "GREEN",
+          "description": "This item hasn't been started"
+        },
+        {
+          "id": "47fc9ee4",
+          "name": "In progress",
+          "color": "YELLOW",
+          "description": "This is actively being worked on"
+        },
+        {
+          "id": "61e4505c",
+          "name": "Ready",
+          "color": "BLUE",
+          "description": "This is ready to be picked up"
+        },
+        {
+          "id": "df73e18b",
+          "name": "In review",
+          "color": "PURPLE",
+          "description": "This item is in review"
+        },
+        {
+          "id": "98236657",
+          "name": "Done",
+          "color": "ORANGE",
+          "description": "This has been completed"
+        }
+      ],
+      "operator_UI_workflow_dependency_check": {
+        "source": "explicit operator question reply in PM-04",
+        "statement": "Nach UI-Prüfung: keine Verwendung",
+        "scope": "none of seven workflows uses Priority/Workstream/Target milestone as trigger, condition or target",
+        "Auto_close_deactivation_confirmed": false
+      },
+      "all_item_identities_fields_and_states_unchanged": true,
+      "item_count_checked": 60,
+      "other_fields_unchanged": true,
+      "views_unchanged": true,
+      "workflows_unchanged": true,
+      "issue_closures": 0,
+      "item_status_value_mutations": 0,
+      "configuration_mutations": 1,
+      "Auto_close_treated_as_active": true
+    },
+    "fields_and_views": {
+      "fields": 20,
+      "views": 8,
+      "existing_views_reused": 8,
+      "new_views": 0,
+      "Priority_options": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "Workstream_uses_separate_field": true,
+      "Roadmap": {
+        "number": 4,
+        "layout": "ROADMAP_LAYOUT",
+        "visible_fields_reported": [
+          "Title",
+          "Assignees",
+          "Status"
+        ],
+        "group_by": [],
+        "visible_field_mutation": "not_applicable_to_roadmap_layout",
+        "graphQL_update_group_or_sort_supported": false,
+        "dates_or_iterations": 0,
+        "native_milestone_due_dates": 0,
+        "new_view_required": false
+      },
+      "actual_filter_checks": [
+        {
+          "number": 2,
+          "name": "Priority board",
+          "actual_filter_matches": 34,
+          "set_verified": true
+        },
+        {
+          "number": 6,
+          "name": "Active Work",
+          "actual_filter_matches": 0,
+          "set_verified": true
+        },
+        {
+          "number": 7,
+          "name": "Blocked / Requires Decision",
+          "actual_filter_matches": 17,
+          "set_verified": true
+        },
+        {
+          "number": 8,
+          "name": "Technical Delivery / Real Acceptance Pending",
+          "actual_filter_matches": 23,
+          "set_verified": true
+        }
+      ],
+      "milestone_due_dates_or_project_dates_added": 0
+    },
+    "workflow_governance": {
+      "api_observed": [
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7k",
+          "name": "Auto-add sub-issues to project",
+          "enabled": true
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo70",
+          "name": "Auto-add to project",
+          "enabled": true
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7c",
+          "name": "Auto-close issue",
+          "enabled": false
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7s",
+          "name": "Item added to project",
+          "enabled": true
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7U",
+          "name": "Item closed",
+          "enabled": true
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7o",
+          "name": "Pull request linked to issue",
+          "enabled": true
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7Y",
+          "name": "Pull request merged",
+          "enabled": true
+        }
+      ],
+      "operator_confirmed_settings": {
+        "item_added": "Backlog",
+        "auto_close_trigger": "Done",
+        "auto_add_filter": "is:issue,pr is:open",
+        "native_auto_add_repository": "rf-data/Personal_Assistant",
+        "second_native_rule": "blocked_by_confirmed_plan_limit",
+        "UI_intake": "manual idempotent gh project item-add"
+      },
+      "bad_status_dependency_audit": {
+        "source": "explicit operator question reply in PM-04",
+        "statement": "Nach UI-Prüfung: keine Verwendung",
+        "scope": "none of seven workflows uses Priority/Workstream/Target milestone as trigger, condition or target",
+        "Auto_close_deactivation_confirmed": false
+      },
+      "Auto_close_deactivation_explicitly_confirmed": false,
+      "Auto_close_safety_policy": "assume active; no potentially issue-closing status mutations",
+      "workflow_configuration_mutations": 0,
+      "new_automation": false
+    },
+    "protected_acceptances": [
+      {
+        "plan_id": "C23-06",
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/107",
+        "status": "Backlog",
+        "acceptance": "Real acceptance pending"
+      },
+      {
+        "plan_id": "C24-05",
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/108",
+        "status": "Backlog",
+        "acceptance": "Real acceptance pending"
+      },
+      {
+        "plan_id": "C26",
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+        "status": "Backlog",
+        "acceptance": "Production acceptance pending"
+      },
+      {
+        "plan_id": "C26-06",
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/15",
+        "status": "Backlog",
+        "acceptance": "Production acceptance pending"
+      },
+      {
+        "plan_id": "C26-07",
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/113",
+        "status": "Backlog",
+        "acceptance": "Production acceptance pending"
+      }
+    ],
+    "D06_D07": "remain subject to existing source-specific decisions; no release or migration authorization",
+    "native_relations_verified": {
+      "parents": 14,
+      "blocked_by": 35,
+      "changed": 0
+    },
+    "new_issues": 0,
+    "new_UI_items_required": 0,
+    "duplicate_items_or_issues": false,
+    "protected_PRs_not_modified": [
+      72,
+      88,
+      89
+    ],
+    "operator_actions": [
+      {
+        "action": "Roadmap #4: View > Group by > Milestone or Workstream if desired; use existing Date fields and markers only with actually approved real dates. Current groups/date values/due dates are empty. No invented schedule.",
+        "blocking_PM04_safe_work": false
+      },
+      {
+        "action": "C24-06-A: after actual PR/issue publication, inspect scope and attach existing canonical target; retain pending_real_target until then.",
+        "blocking_PM04_safe_work": false
+      },
+      {
+        "action": "Retain conservative Auto-close gate until explicit deactivation confirmation; ordinary maintenance never sets open acceptance tasks to Done.",
+        "blocking_PM04_safe_work": false
+      }
+    ],
+    "documentation": {
+      "updated_existing_files": [
+        "docs/planning/pm03_project_execution.md",
+        "docs/planning/pm03_reconciliation.v1.json"
+      ],
+      "small_new_report": "docs/planning/pm04_project_governance.md",
+      "default_branch_integration": "pending_regular_PR_review",
+      "own_branch_policy": "keep while unmerged; no historical cleanup",
+      "publication_base_sha": "e478520d259ad1342f5641828586c4cd2876114f",
+      "source_files_unchanged_on_publication_base": true
+    },
+    "references": [
+      "https://docs.github.com/en/rest/projects/views",
+      "https://docs.github.com/en/issues/planning-and-tracking-with-projects/customizing-views-in-your-project/customizing-the-roadmap-layout"
+    ],
+    "counts_at_initial_live_inventory": {
+      "items": 60,
+      "PR_items": 33,
+      "issue_items": 27,
+      "draft_items": 0,
+      "archived_items": 0,
+      "status": {
+        "Backlog": 34,
+        "Done": 26
+      },
+      "priority": {
+        "unset": 16,
+        "P1": 29,
+        "P2": 9,
+        "P0": 6
+      },
+      "fields": 20,
+      "views": 8,
+      "plan_ids": 45,
+      "represented_plan_ids": 44,
+      "unique_canonical_items": 42,
+      "native_parent_relations": 14,
+      "native_blocked_by_relations": 35,
+      "milestones": 12,
+      "milestone_assignments": 42,
+      "date_or_iteration_values": 0,
+      "milestone_due_dates": 0,
+      "open_UI_issues_already_present": 7,
+      "open_UI_PRs": 0
+    },
+    "before_publication_readback": {
+      "items": 60,
+      "status": {
+        "Backlog": 33,
+        "Done": 27
+      },
+      "open_issues": 27,
+      "external_change": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/121",
+        "from": "OPEN / Backlog",
+        "to": "MERGED / Done",
+        "performed_by_PM04": false
+      },
+      "protected_PRs_unchanged": true,
+      "relations_unchanged": true,
+      "workflow_metadata_unchanged": true
+    },
+    "post_publication": {
+      "PR": "https://github.com/rf-data/Personal_Assistant/pull/122",
+      "branch": "docs/pm04-project-governance",
+      "state": "open_review_pending",
+      "items": 61,
+      "PR_items": 34,
+      "issue_items": 27,
+      "status": {
+        "Backlog": 34,
+        "Done": 27
+      },
+      "auto_added_own_documentation_item_id": "PVTI_lAHOC92AuM4BneNAzhB7PS0",
+      "manual_item_adds": 0,
+      "plan_representation_unchanged": "44/45; C24-06-A pending_real_target",
+      "previous_60_items": "only independent merge #121 changed; status-cleanup immediate before/after equality remains proven",
+      "protected_PRs_unchanged": true,
+      "native_relations_unchanged": true,
+      "workflow_metadata_unchanged": true,
+      "primary_checkouts_edited": false,
+      "new_local_branches_or_worktrees": 0,
+      "own_remote_branch_retained_reason": "PR unmerged; normal review/default integration pending"
     }
   }
 }
