@@ -3,7 +3,7 @@
   "kind": "pm03-live-project-reconciliation",
   "snapshot_date": "2026-10-19",
   "timezone": "Europe/Berlin",
-  "overall_status": "operationally_consolidated_with_explicit_blockers_documentation_pending_review",
+  "overall_status": "operational_consolidation_verified_UI_auto_add_and_document_integration_pending",
   "source": {
     "path": "docs/planning/issue_plan.v1.json",
     "sha256": "629b1c3471bc8654908bb99fbe5e1bc277edfb28272e1801bc8a8f065831580d",
@@ -787,13 +787,19 @@
       }
     ],
     "operator_workflow_confirmation": {
-      "source": "explicit operator reply in this PM-03 task",
+      "source": "explicit latest operator statement: PM-03 abschließende Betreiberangaben",
+      "auto_add_selected_repositories": [
+        "rf-data/Personal_Assistant"
+      ],
+      "auto_add_not_selected_repositories": [
+        "rf-data/personal-assistant-ui"
+      ],
+      "auto_add_filter": "is:issue,pr is:open",
       "item_added_target_status": "Backlog",
       "auto_close_trigger_status": "Done",
-      "auto_add_filter": "is:issue,pr is:open",
-      "auto_add_repository_selection": "not_verified",
-      "auto_close_enabled": false,
-      "enabled_observation": "project.current.json",
+      "auto_close_deactivation_explicitly_confirmed": false,
+      "auto_close_api_observed_enabled": false,
+      "execution_gate": "assume active until explicit operator confirmation; no potentially issue-closing status mutations",
       "permission_scope_unchanged": true
     }
   },
@@ -2927,10 +2933,6 @@
       "reason": "Protected active task; no published backend PR found in complete live PR list. No parallel Issue/Draft created."
     },
     {
-      "key": "auto_add_repository_selection",
-      "reason": "Operator confirmed filter but not repository selection; per-create duplicate checks and readback used. No workflow configuration modified."
-    },
-    {
       "key": "unexpected_status_options",
       "reason": "Priority/Workstream/Target milestone options unused by all items; other workflow target configurations not exposed. Retained pending operator audit."
     },
@@ -2949,6 +2951,14 @@
     {
       "key": "durable_document_integration",
       "reason": "Regular documentation PR pending review; current MAINT-04 steering prohibits merging PRs. Retain own documentation branch until verified integration."
+    },
+    {
+      "key": "ui_auto_add_configuration",
+      "reason": "UI repository is already linked and its eight current items are present. A second native auto-add rule must be saved in the GitHub UI without replacing Backend. Live public schema offers no create/update workflow mutation; quota is not verifiable from available account-plan metadata. Await operator-saved rule or documented plan-limit refusal."
+    },
+    {
+      "key": "auto_close_operator_confirmation",
+      "reason": "API reports enabled=false, but latest operator statement does not confirm deactivation. Treat as active for mutation safety; do not perform potentially issue-closing status changes."
     }
   ],
   "protected_PRs_unchanged": [
@@ -2985,5 +2995,82 @@
     "document_PRs_merged": false,
     "default_branch_document_integration": "pending_review",
     "own_document_branch_cleanup": "retained_until_verified_merge"
+  },
+  "resolved_blockers": [
+    {
+      "key": "auto_add_repository_selection",
+      "reason": "Operator confirmed filter but not repository selection; per-create duplicate checks and readback used. No workflow configuration modified.",
+      "resolution": "Operator explicitly confirms Backend selected, UI not selected; configuration observation only, no workflow write."
+    }
+  ],
+  "workflow_confirmation_continuation": {
+    "snapshot_date": "2026-10-19",
+    "counts": {
+      "live_items": 58,
+      "backend_items": 50,
+      "ui_items": 8,
+      "PR_items": 31,
+      "issue_items": 27,
+      "initial_28_items_preserved": 28,
+      "mapped_plan_ids": 44,
+      "unpublished_protected_plan_ids": 1,
+      "new_issues_created_this_continuation": 0,
+      "new_items_added_this_continuation": 0,
+      "workflow_changes_this_continuation": 0,
+      "status_changes_this_continuation": 0,
+      "all_27_issues_open": true,
+      "statuses": {
+        "Backlog": 35,
+        "Done": 23
+      }
+    },
+    "operator_confirmation": {
+      "source": "explicit latest operator statement: PM-03 abschließende Betreiberangaben",
+      "auto_add_selected_repositories": [
+        "rf-data/Personal_Assistant"
+      ],
+      "auto_add_not_selected_repositories": [
+        "rf-data/personal-assistant-ui"
+      ],
+      "auto_add_filter": "is:issue,pr is:open",
+      "item_added_target_status": "Backlog",
+      "auto_close_trigger_status": "Done",
+      "auto_close_deactivation_explicitly_confirmed": false,
+      "auto_close_api_observed_enabled": false,
+      "execution_gate": "assume active until explicit operator confirmation; no potentially issue-closing status mutations",
+      "permission_scope_unchanged": true
+    },
+    "both_repositories_linked_API_verified": true,
+    "linked_repositories": [
+      "rf-data/Personal_Assistant",
+      "rf-data/personal-assistant-ui"
+    ],
+    "workflow_fields_available": [
+      "createdAt",
+      "enabled",
+      "fullDatabaseId",
+      "id",
+      "name",
+      "number",
+      "project",
+      "updatedAt"
+    ],
+    "workflow_mutations_available": [
+      "deleteProjectV2Workflow"
+    ],
+    "delete_workflow_called": false,
+    "public_workflow_write_contract_available": false,
+    "account_plan_probe": "plan_name=null; second-rule quota remains unverified",
+    "UI_auto_add_change": "not_executed_pending_supported_UI_configuration",
+    "existing_issue_duplicate_check": "complete paginated lists of both repositories; 27 expected standalone issues each exactly once; no missing canonical issue",
+    "initial_and_current_item_check": "initial 28 item IDs/status and all previous 58 item field mappings preserved; all 45 plan IDs verified or explicitly blocked",
+    "correction_to_prior_attribution": "Earlier wording attributed disabled Auto-close to the operator. Latest statement does not confirm that action; only the API enabled=false observation is verified. No agent workflow mutation occurred.",
+    "official_references": [
+      "https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/adding-items-automatically",
+      "https://docs.github.com/en/graphql/reference/projects"
+    ],
+    "documentation_PR": 118,
+    "default_branch_integration": "pending_review",
+    "temporary_branch_policy": "retain existing own branch until verified merge; no new branch or worktree"
   }
 }

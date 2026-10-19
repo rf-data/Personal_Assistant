@@ -131,11 +131,13 @@ erfinden. Für Prioritäts-/Abnahmedetails stehen die drei getesteten Tabellen b
 
 Vor erster Anlage hat der Betreiber die bislang nicht auslesbaren Einstellungen
 bestätigt: Item added → Backlog, Auto-close issue bei Done, Auto-addfilter
-`is:issue,pr is:open`. Auto-close wurde **durch den Betreiber deaktiviert**;
-`enabled=false` vor jeder Issueanlage und im Endzustand live geprüft. Der Agent
-hat keine Workflowkonfiguration verändert oder reaktiviert. Die Auto-add-
-Repositoryauswahl ist weiterhin **not_verified**; aus beobachteten Anlagen wird
-keine vollständige Repositorykonfiguration abgeleitet.
+`is:issue,pr is:open`. `enabled=false` wurde vor jeder damaligen Issueanlage und
+im Endzustand live gelesen. Die frühere Zuschreibung einer Deaktivierung an den
+Betreiber ist **nicht bestätigt** und wird mit der neuesten Betreiberangabe
+korrigiert. Der Agent hat keine Workflowkonfiguration verändert oder reaktiviert.
+Die damals offene Repositoryauswahl ist inzwischen ausdrücklich bestätigt:
+Backend ausgewählt, UI nicht ausgewählt. Eine UI-Erweiterung ist noch nicht
+ausgeführt; der untenstehende Fortsetzungsvermerk trennt Bestätigung und Änderung.
 
 Vor jedem Create alle passenden Repository-Issues/PRs und Project-Items erneut
 abgeglichen; nach Anlage Project erneut gelesen. Sechs automatisch aufgenommene
@@ -150,8 +152,10 @@ keinem Item verwendet, aber weiterhin erhalten: andere Workflowzielkonfiguration
 sind über den verfügbaren Vertrag nicht vollständig lesbar. Konkreter Betreiber-
 Schritt: alle Workflowtrigger/-ziele und gespeicherten Viewfilter in der Oberfläche
 prüfen, dann erst die drei Optionen einzeln zur Entfernung freigeben. Keine
-Optionen aufgrund ihrer Namen automatisch löschen. Auto-close bleibt bis zur
-bewussten Betreiberentscheidung deaktiviert; Done ist keine Realabnahme.
+Optionen aufgrund ihrer Namen automatisch löschen. Auto-close wird bis zur ausdrücklichen Betreiberbestätigung vorsorglich als
+aktiv behandelt; keine schließungsgefährlichen Statusaktionen. Der API-Befund
+`enabled=false` ist eine Beobachtung, keine bestätigte Betreiberaktion.
+Done ist keine Realabnahme.
 
 Acceptance-Endbestand: **16 Technical delivery only, vier Real acceptance pending,
 drei Production acceptance pending, zehn Requires decision, elf Planned,
@@ -206,3 +210,70 @@ Beide PRs sind ungemergt. Dokumente sind damit reviewbar, aber noch nicht in
 master integriert. Beide ausschließlich auftragseigenen Remotebranches bleiben
 aus genau diesem Grund erhalten. Kein lokaler Arbeitsbranch/Worktree wurde erzeugt
 oder entfernt. Frühere Bestandsrefs werden davon nicht berührt.
+
+## Fortsetzung nach abschließender Betreiberangabe
+
+Die aktuelle Betreiberbestätigung schließt die Konfigurationslücke: Backend
+`rf-data/Personal_Assistant` ist bei Auto-add ausgewählt, UI
+`rf-data/personal-assistant-ui` nicht; Filter `is:issue,pr is:open`, Item added
+→ Backlog und Auto-close bei Done. **Eine Deaktivierung von Auto-close wurde
+nicht ausdrücklich bestätigt.** Die API liefert erneut `enabled=false`; diese
+Beobachtung bleibt von der menschlichen Bestätigung getrennt. Bis zu deren
+Vorliegen gelten potenziell Issue-schließende Statusaktionen als gesperrt.
+Keine Auto-close-Änderung, keine neue Statusmutation und kein Issueabschluss.
+
+Neuer vollständiger Liveabgleich: **58 Items**, davon **50 Backend / acht UI**,
+31 PRs / 27 Issues, weiterhin 23 Done / 35 Backlog. Beide Repositories sind
+bereits nativ mit dem Project verknüpft. Alle ursprünglichen 28 Items behalten
+Identität/Status; auch die Feldzuordnungen aller späteren 58 Items sind identisch.
+44 der 45 Plan-IDs bleiben an ihre verifizierten Ziele gebunden. C24-06-A besitzt
+weiterhin keinen veröffentlichten Backend-PR; kein Ersatzissue erzeugt.
+Die vollständigen paginierten Issue-/PRlisten beider Repositories enthalten alle
+27 vorgesehenen offenen Issues jeweils genau einmal. **Null fehlende Issues,
+null neue Issues oder Items, keine erneute Abarbeitung alter Create-Skripte.**
+
+### UI-Auto-add: konkrete noch auszuführende Konfiguration
+
+Der aktuelle öffentliche GraphQL-Vertrag stellt für Projectworkflows nur die
+Mutation `deleteProjectV2Workflow` bereit, keine Create-/Update-Mutation.
+`ProjectV2Workflow` bietet lediglich Metadaten einschließlich `enabled`, keine
+Repository-/Filterkonfiguration. Es wurde keine Löschmutation oder inoffizielle
+Session-/Webroute verwendet. Repositoryverknüpfung allein aktiviert kein Auto-add.
+
+GitHub dokumentiert eine separate Auto-add-Regel pro zusätzlichem Repository;
+Duplikate sind tarifabhängig begrenzt. Aktivierung übernimmt bestehende passende
+Items nicht rückwirkend. [GitHub: Auto-add konfigurieren und duplizieren](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/adding-items-automatically).
+Der Kontoplan ist über die verfügbare APIantwort nicht bestätigt (`plan_name=null`);
+eine freie zweite Regel wird daher nicht behauptet.
+
+Verbleibender Betreiberablauf in Project #1 → Workflows:
+
+1. Die bestehende Backend-Auto-add-Regel erhalten. Bei verfügbarem Tarifkontingent
+   über deren Menü **Duplicate workflow** eine UI-Regel anlegen.
+2. Für die Kopie ausschließlich `rf-data/personal-assistant-ui` und
+   `is:issue,pr is:open` wählen, **Save and turn on workflow** ausführen.
+   Item added → Backlog und Auto-close unverändert lassen.
+3. Gespeicherten Regelname und Repository-/Filterbindung bestätigen; falls GitHub
+   das Duplikat wegen des Tariflimits ablehnt, genau diese Blockade dokumentieren.
+   Kein Tarifwechsel, keine Backend-Ersetzung und kein Testissue automatisch anlegen.
+4. Danach Workflows und Project erneut vollständig lesen, neue Auto-add-Einträge
+   gegen vorhandene URLs/Node-IDs prüfen. Bestehende acht UI-Items bleiben erhalten;
+   keine Doppelanlage. Für jeden später tatsächlich fehlenden Auftrag bleibt die
+   Prüfung vor Create und der anschließende Liveabgleich verpflichtend.
+
+Der notwendige Oberflächenschritt ist angefragt, **nicht ausgeführt oder bestätigt**.
+Es entstand keine Ersatzautomatisierung, kein Actionsworkflow und kein neues Secret.
+Ein vollständiger Auto-add-Erfolg für beide Repositories wird nicht behauptet.
+[Öffentlicher Projects-Vertrag](https://docs.github.com/en/graphql/reference/projects)
+und die live geprüfte Schemastruktur begrenzen die verfügbaren APIaktionen.
+
+### Prüfung dieses Fortsetzungsumfangs
+
+Project-/Item-/Feld-/Workflow-Pagination und vollständige Repository-Issue-/PRlisten
+geprüft; keine offene Seite. Alle Quell-IDs, Aliasbindungen, Itemidentitäten,
+Status-/Metadatenwerte und eindeutigen Issueziele validiert. JSONstruktur,
+UTF-8/LF, lokale Verweise und Whitespace geprüft. Keine Runtimeänderung oder
+Anwendungs-/Ruff-/Pytestabnahme. Nur die beiden vorhandenen Dokumente in
+[PR #118](https://github.com/rf-data/Personal_Assistant/pull/118) werden aktualisiert;
+keine neue PR-/Branch-/Worktreeanlage. Masterintegration wartet weiterhin auf
+regulären Review/Merge, der eigene offene Branch bleibt erhalten.
