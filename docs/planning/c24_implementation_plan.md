@@ -1,5 +1,13 @@
 # C24: Implementierungsplan nach dem Indexing-/Retrieval-ADR
 
+DEV-01 A / C24-03-B ergänzt auf Basis `e478520` den opt-in
+[HTTP-Suchvertrag](../api/content_search_v1.md) am bestehenden C16-Gateway.
+Vorhandene FTS5-Fassade/DTOs, Live-ACLs und Cursor bleiben unverändert; der
+Retrieval-Guard umfasst nun auch die begrenzte HTTP-Auslieferung. Indexjobs und
+allgemeine Search UI bleiben Folgepakete. Die folgenden historischen
+HTTP-Offenstände behalten ihren damaligen Basisbezug. Aktuelle
+[Validierung](../api/content_search_validation.md); Integration erst nach PRreview.
+
 PM-01, 19.10.2026: Der [aktuelle konsolidierte Issueplan](issues.md) ersetzt
 die unten datierte Aussage „Entwürfe bleiben unverändert“. Die ursprünglichen IDs
 bleiben erhalten; tatsächliche A/B1/B2/C2-Unterpakete und offene 02-C/03-B-/04-B-
