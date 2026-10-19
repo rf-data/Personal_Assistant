@@ -3188,6 +3188,28 @@
     "workflow_changes": 0,
     "status_mutations": 0,
     "new_product_or_auth_changes": false,
-    "documentation_followup": "two existing reports only; ordinary review required; no merge or cleanup"
+    "documentation_followup": "two existing reports only; ordinary review required; no merge or cleanup",
+    "post_followup_PR_readback": {
+      "project_items_after_documentation_PR": 59,
+      "manual_UI_items_added": 0,
+      "manual_UI_items_reused": 7,
+      "open_UI_PRs": 0,
+      "automatic_backend_documentation_PR_items": 1,
+      "automatic_documentation_item": [
+        {
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/120",
+          "id": "PVTI_lAHOC92AuM4BneNAzhB60l0",
+          "status": "Backlog"
+        }
+      ],
+      "all_previous_item_fields_unchanged": true,
+      "all_27_issues_open": true,
+      "workflows_unchanged": true,
+      "status_mutations": 0,
+      "counts": {
+        "Backlog": 34,
+        "Done": 25
+      }
+    }
   }
 }

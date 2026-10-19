@@ -350,3 +350,11 @@ UI-Ziele, Wiederholungsabgleich, unveränderte Item-/Sourcefelder und Workflows,
 JSONinvarianten, UTF-8/LF, lokale Links und Whitespace. Keine Anwendungs-, Ruff-,
 Pytest- oder Automatisierungsabnahme behauptet; ausschließlich bestehende
 Planungsdokumentation und ein einmaliger kontrollierter CLI-Abgleich.
+
+Nach Veröffentlichung von [Folge-PR #120](https://github.com/rf-data/Personal_Assistant/pull/120):
+**59 Project-Items**. Die bestehende Backend-Auto-add-Regel nahm
+den Dokumentations-PR einmal als Backlog auf. Diese automatische Aufnahme ist
+kein manueller UI-Zugang.
+Alle vorherigen 58 Itemfelder, alle 27 offenen Issuezustände und sämtliche
+Workflow-Metadaten sind unverändert. Kein Merge oder Branchabbau ausgeführt;
+der offene Folge-PR hält seinen eigenen Branch bis zur verifizierten Integration.
