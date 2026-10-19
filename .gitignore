@@ -275,3 +275,6 @@ src/prio_list.md
 # Reviewed C23.0 planning only; no private task or source payloads.
 !/docs/planning/issue_plan.v1.json
 !/docs/planning/c230_snapshot.v1.json
+
+# Reviewed PM-02 planning reconciliation only; no runtime or private Project payloads.
+!/docs/planning/pm02_reconciliation.v1.json

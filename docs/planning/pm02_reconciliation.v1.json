@@ -1,0 +1,3682 @@
+{
+  "schema_version": 1,
+  "kind": "pm02-project-reconciliation",
+  "snapshot_date": "2026-10-19",
+  "timezone": "Europe/Berlin",
+  "overall_status": "partially_complete_operationally_blocked",
+  "input_binding": {
+    "path": "docs/planning/issue_plan.v1.json",
+    "revision": "pm01-2026-10-19",
+    "sha256": "629b1c3471bc8654908bb99fbe5e1bc277edfb28272e1801bc8a8f065831580d",
+    "backend_base_sha": "ea4f71461b5af9f4dfad96ba9a895c3b78a5b8f0",
+    "backend_base_tree": "ae70d919950dcc4159b0378dcebf0cda8b137cfa",
+    "ui_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b"
+  },
+  "project": {
+    "url": "https://github.com/users/rf-data/projects/1",
+    "owner_from_supplied_url": "rf-data",
+    "number_from_supplied_url": 1,
+    "url_source": "explicit_user_instruction",
+    "live_identity_verification": "not_verified",
+    "node_id": null,
+    "actual_title": null,
+    "items": null,
+    "existing_item_count": null,
+    "items_verification": "not_verified",
+    "fields": null,
+    "fields_verification": "not_verified",
+    "views": null,
+    "views_verification": "not_verified",
+    "workflows": null,
+    "workflows_verification": "not_verified",
+    "read_permission": null,
+    "write_permission": null,
+    "permission_verification": "not_verified"
+  },
+  "repositories": {
+    "rf-data/Personal_Assistant": {
+      "default_branch": "master",
+      "default_sha": "ea4f71461b5af9f4dfad96ba9a895c3b78a5b8f0",
+      "identity_verification": "verified_live_repo_api",
+      "permissions": {
+        "admin": true,
+        "maintain": true,
+        "push": true,
+        "triage": true,
+        "pull": true
+      },
+      "permissions_verification": "verified_repo_only_not_project",
+      "issue_endpoint": {
+        "records": 91,
+        "per_page": 100,
+        "pages": 1,
+        "standalone_issue_count": 0,
+        "standalone_issue_urls": [],
+        "verification": "verified_full_single_page_with_PRs_filtered"
+      },
+      "pr_endpoint": {
+        "records": 91,
+        "per_page": 100,
+        "pages": 1,
+        "open_pr_count": 7,
+        "verification": "verified_full_single_page"
+      },
+      "labels": {
+        "count": null,
+        "verification": "not_verified"
+      },
+      "milestones": {
+        "count": null,
+        "verification": "not_verified"
+      }
+    },
+    "rf-data/personal-assistant-ui": {
+      "default_branch": "main",
+      "default_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b",
+      "identity_verification": "verified_live_repo_api",
+      "permissions": {
+        "admin": true,
+        "maintain": true,
+        "push": true,
+        "triage": true,
+        "pull": true
+      },
+      "permissions_verification": "verified_repo_only_not_project",
+      "issue_endpoint": {
+        "records": 7,
+        "per_page": 100,
+        "pages": 1,
+        "standalone_issue_count": 0,
+        "standalone_issue_urls": [],
+        "verification": "verified_full_single_page_with_PRs_filtered"
+      },
+      "pr_endpoint": {
+        "records": 7,
+        "per_page": 100,
+        "pages": 1,
+        "open_pr_count": 0,
+        "verification": "verified_full_single_page"
+      },
+      "labels": {
+        "count": null,
+        "verification": "not_verified"
+      },
+      "milestones": {
+        "count": null,
+        "verification": "not_verified"
+      }
+    }
+  },
+  "access_checks": [
+    {
+      "url": "https://github.com/users/rf-data/projects/1",
+      "result": "connector_rejected_endpoint",
+      "error_code": "INVALID_ARGUMENT"
+    },
+    {
+      "url": "https://api.github.com/graphql",
+      "result": "connector_rejected_endpoint",
+      "error_code": "INVALID_ARGUMENT"
+    },
+    {
+      "url": "https://api.github.com/users/rf-data/projects",
+      "result": "connector_rejected_endpoint",
+      "error_code": "INVALID_ARGUMENT"
+    },
+    {
+      "url": "https://api.github.com/users/rf-data/projectsV2/1",
+      "result": "connector_rejected_endpoint",
+      "error_code": "INVALID_ARGUMENT"
+    },
+    {
+      "url": "https://api.github.com/repos/rf-data/Personal_Assistant/labels?per_page=100",
+      "result": "connector_rejected_endpoint",
+      "error_code": "INVALID_ARGUMENT"
+    },
+    {
+      "url": "https://api.github.com/repos/rf-data/Personal_Assistant/milestones?state=all&per_page=100",
+      "result": "connector_rejected_endpoint",
+      "error_code": "INVALID_ARGUMENT"
+    },
+    {
+      "url": "https://api.github.com/repos/rf-data/personal-assistant-ui/labels?per_page=100",
+      "result": "connector_rejected_endpoint",
+      "error_code": "INVALID_ARGUMENT"
+    },
+    {
+      "url": "https://api.github.com/repos/rf-data/personal-assistant-ui/milestones?state=all&per_page=100",
+      "result": "connector_rejected_endpoint",
+      "error_code": "INVALID_ARGUMENT"
+    }
+  ],
+  "supported_alternatives": {
+    "github_plugin": {
+      "installed": true,
+      "search_performed": true,
+      "project_tools_exposed": false,
+      "alternative_plugin_suggested": false,
+      "verification": "installed_plugin_capability_search"
+    },
+    "gh": {
+      "available": false,
+      "installed_by_task": false
+    },
+    "public_web": {
+      "project_read_result": "cache_miss_no_content",
+      "label_milestone_read_result": "cache_miss_no_content",
+      "verification": "not_verified"
+    },
+    "new_REST_projectsV2_read": {
+      "result": "connector_endpoint_rejected",
+      "verification": "not_verified"
+    },
+    "credentials_read": false,
+    "tokens_requested": false,
+    "scopes_expanded": false
+  },
+  "phase_A_mutation_gate": {
+    "passed": false,
+    "missing": [
+      "verified_project_identity",
+      "complete_items_including_drafts_archives_and_visibility_limits",
+      "required_project_permissions",
+      "existing_fields_views_and_automation_inventory"
+    ],
+    "meaning": "Connector rejects endpoint families before a Project permission decision; not evidence of absent Project or denied user rights."
+  },
+  "counts": {
+    "plan_rows": 45,
+    "milestone_parents": 10,
+    "unique_proposed_representations": 43,
+    "proposed_existing_pr_rows": 17,
+    "unique_existing_pr_targets": 15,
+    "conditional_issue_candidates": 27,
+    "active_task_rows": 1,
+    "blocked_project_bindings": 45
+  },
+  "performed_external_planning_actions": {
+    "reused_issues": 0,
+    "created_issues": 0,
+    "updated_issues": 0,
+    "added_project_items": 0,
+    "updated_project_items": 0,
+    "created_or_changed_fields": 0,
+    "created_or_changed_views": 0,
+    "changed_automations": 0,
+    "changed_labels": 0,
+    "changed_milestones": 0
+  },
+  "operational_checks": {
+    "exact_project_item_binding_per_plan_id": "not_verified",
+    "no_duplicate_existing_project_items": "not_verified",
+    "existing_project_status_consistency": "not_verified",
+    "project_confirmed_values_unchanged": "not_verified",
+    "no_project_or_issue_mutations_by_this_task": true,
+    "plan_dependency_graph": "verified_acyclic",
+    "real_acceptance_performed": false,
+    "production_release_granted": false
+  },
+  "mapping": [
+    {
+      "plan_id": "C23",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C23] Parsed Content Persistence",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "integrated_pending_acceptance",
+      "technical_state": "partially_integrated",
+      "parent_plan_id": null,
+      "depends_on": [],
+      "priority": "P1",
+      "workstream": "Persistence",
+      "target_milestone": "C23",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C23",
+        "kind": "milestone_parent_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 75,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+          "head_sha": "50699d331a769db3acd9e5e8507ad51b2de1760c",
+          "branch": "feat/c23-01-parsed-content-adr",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "a2dc080ac5896c9c8032f42bf51ecb5fdb9a71c6",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 76,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "head_sha": "df41af0b5f36fda6e30f9ac5fbd8c777e1f85cb2",
+          "branch": "feat/c23-02a-content-store",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "6ef394a2f7a4debccce75f7b5e1ef3449f9457aa",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 77,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/77",
+          "head_sha": "ba2dcd4a0a74a16c63f74083d25a8fb69d244895",
+          "branch": "feat/c23-02b-content-adapters",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "9a1325485f1b2acc7df177b8a137f771190eca97",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 78,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/78",
+          "head_sha": "f33df74ff09eb7d50223776080c6dd3048955a7c",
+          "branch": "feat/c23-02c-recovery-operations",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "5986da958d767f66e24850df25085ccbebe9ee3e",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 79,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/79",
+          "head_sha": "42bbd8ae65110138bee82542ce02d99ec7d84be3",
+          "branch": "feat/c23-03-reimport-binding",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "b2b994a3bc09b061992ba5f4ba7c6b6a36fd9aa0",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 80,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+          "head_sha": "b054a041bcef82d8ab5c7e3bbdb63e40ac689619",
+          "branch": "feat/c23-04-content-read-api",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "1254c2c79d99525f150cf3d84050d0e5d504d6ce",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 81,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/81",
+          "head_sha": "2e60d1529793bfb329a3648502cb26b589474c19",
+          "branch": "feat/c23-05-txt-unknown-time",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "d654f0580f6c5d6aa5698f33dc5c93dec5ba66d5",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 82,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/82",
+          "head_sha": "351646f0ffa545da7e3424e50ab78eb330e69542",
+          "branch": "feat/c23-06-real-material-evaluation",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "95c4c40c1ab738ce1d75ac9ed554a46613419133",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Persistence technical core integrated; historical binding and real parsing acceptance remain open.",
+      "acceptance": [
+        "Bestehende Material-/Transcript-/Parsingverträge im ADR abgeglichen; PostgreSQL bleibt Option bis zur begründeten Entscheidung.",
+        "Raw und Parsed Content persistent, versioniert und unabhängig von Knowledge nutzbar; Hash-/Quellen-/Seiten-/Block-/Zeitbezüge und idempotenter Reimport nachgewiesen.",
+        "Lesevertrag, Rechte und Restorefähigkeit sind belegt; unbekannte Zeiten bleiben ausdrücklich unbekannt."
+      ]
+    },
+    {
+      "plan_id": "C24",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24] Indexing & Retrieval",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "integrated_pending_acceptance",
+      "technical_state": "partially_integrated",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23"
+      ],
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C24",
+        "kind": "milestone_parent_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 83,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+          "head_sha": "b001388e2f05472cea2e1054c2713c6c434c9de9",
+          "branch": "docs/c24-01-indexing-retrieval",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "2d7a813ed8c668b3d73dd62119d3ca24330d76cb",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 84,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/84",
+          "head_sha": "7d1b655cf6228b87edac922e59e4b5fc2c5b80cb",
+          "branch": "feat/c24-02-deterministic-index-projection",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "fcb5da98ca94998e2a024c1a898ff20bdd9f79ab",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 85,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+          "head_sha": "0f3d9dd1066eb771629159888fb5ee97c0a75ebf",
+          "branch": "feat/c24-03-sqlite-fts5",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "30bc6d35a75456c9c71b4c3b4fe127e6b4ccedca",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 86,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/86",
+          "head_sha": "12740b76a30d969b6c09d2be4ad1480a7dd8bdfd",
+          "branch": "feat/c24-04-content-vector-adapter",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "87ea32f5e9e3f4826f6bbd84ed0d28073fc3fb87",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 87,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/87",
+          "head_sha": "5a7d050685c381dffd0574aaff62f704c78e7350",
+          "branch": "feat/c24-05a-retrieval-evaluation",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "d2b5e05e732ef677fe8e8b4ccbb4d76c6d532e60",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 88,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/88",
+          "head_sha": "f3fae9ef6d2c919adb12b08242bf84819f2b42f2",
+          "branch": "feat/c24-05b-human-review-workflow",
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "merge_commit_sha": null,
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 89,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/89",
+          "head_sha": "a3d253a27c4fd7aed37c2a4b9d38aa8a4ed1d81d",
+          "branch": "feat/c24-05c-real-corpus-pilot",
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "merge_commit_sha": null,
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 90,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/90",
+          "head_sha": "20b8916900b201d8051e203327a7023e06c64914",
+          "branch": "feat/c24-05b1-review-backend",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "df0f9a74de1d5936f20ee7f9f77cef350cde16c4",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 91,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/91",
+          "head_sha": "c8894abea7be1554a6f234f551ce92bc6e00bdc9",
+          "branch": "feat/c24-05c2-real-pilot",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "4c057ae33d41ba98e227879cc8a51283338e4a0b",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/personal-assistant-ui",
+          "number": 7,
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+          "head_sha": "c1833292859323f5360c2817d7e2ec57bd97bcd4",
+          "branch": "feat/c24-05b2-review-ui",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Projection/FTS5/evaluation/review integrated; search HTTP, job integration, local human acceptance and real evaluation remain open.",
+      "acceptance": [
+        "Volltexttreffer referenzieren gespeicherte Source-/Parsed-Versionen samt Seite/Block/Zeit; Rechtefilter werden serverseitig geprüft.",
+        "Indexversion, Reindexierung, Fehler und Stale-Erkennung sind getestet; Suchindex ist aus freigegebenen Quellen rekonstruierbar.",
+        "Vorhandener Transcript-/Qdrant-Pfad geprüft; semantische Suche bleibt optional, reale Qualität separat evaluiert."
+      ]
+    },
+    {
+      "plan_id": "C25",
+      "repository": "rf-data/personal-assistant-ui",
+      "source_title": "[C25] Search & Source UI",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23",
+        "C24"
+      ],
+      "priority": "P1",
+      "workstream": "UI",
+      "target_milestone": "C25",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/personal-assistant-ui:C25",
+        "kind": "milestone_parent_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/personal-assistant-ui",
+          "number": 7,
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+          "head_sha": "c1833292859323f5360c2817d7e2ec57bd97bcd4",
+          "branch": "feat/c24-05b2-review-ui",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Existing Evaluation & Review is a reusable view, not a completed general Search & Source UI.",
+      "acceptance": [
+        "Kurs-/Quellenauswahl, Suche/Filter und lesbare geparste Inhalte über autorisierte APIs.",
+        "Originalverweise und Belege mit Seiten/Blöcken/Zeiten; fehlende Positionen werden nicht erfunden.",
+        "Job-/Indexstatus sowie leere, unzugängliche und veraltete Treffer verständlich; Browserabnahme für vereinbarten Umfang belegt."
+      ]
+    },
+    {
+      "plan_id": "C26",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C26] Hetzner Production Release",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "blocked",
+      "technical_state": "not_implemented",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23",
+        "C24",
+        "C25"
+      ],
+      "priority": "P1",
+      "workstream": "Operations",
+      "target_milestone": "C26",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "D09/D10/D11 and C26-01 through C26-07 target-operation acceptance"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C26",
+        "kind": "milestone_parent_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "No deployment or productive go-live authorized by PM-01.",
+      "acceptance": [
+        "Alle noch offenen C22-Gates mit gewählten Images, Identitäten, TLS, Ressourcen und Zielvolume geschlossen.",
+        "Konsistenter Backup-/Restore- und Alarmzustellungsnachweis; dokumentierte Recovery und Verantwortlichkeit.",
+        "CS50 über die reale UI auf ausdrücklich freigegebenem Zielhost nutzbar; begrenzter realer Testkorpus und Operator-Go-live-Freigabe protokolliert."
+      ]
+    },
+    {
+      "plan_id": "C27",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C27] Legacy Code Review",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": null,
+      "depends_on": [],
+      "priority": "P2",
+      "workstream": "Legacy",
+      "target_milestone": "C27",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C27",
+        "kind": "milestone_parent_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "Independent of PERSONAL-PYREPO; no waiting for the CS50P final project.",
+      "acceptance": [
+        "Modul-/Import-/CLI-/Docker-Inventar für beide Repositories; aktive und manuelle Aufrufer getrennt.",
+        "Wikimedia, Parsing, Download, Transkription und RAG auf Wiederverwendung und Duplikation geprüft.",
+        "Konkreter Cleanup-/Kompatibilitätsplan mit Owner/Freigabe; keine pauschale Entfernung oder Migration."
+      ]
+    },
+    {
+      "plan_id": "C28",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C28] Source Registry & Additional Sources",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23"
+      ],
+      "priority": "P2",
+      "workstream": "Sources",
+      "target_milestone": "C28",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C28",
+        "kind": "milestone_parent_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "",
+      "acceptance": [
+        "Registryanforderungen für eBooks/EPUB/PDF, Liora-Fortbildung, Apothekerkammer-Webinare und weitere Kurse.",
+        "Quellidentität, Zugriffs-/Nutzungsrechte, Versionierung, Ingestionstrategie und Review festgelegt.",
+        "Erste Erweiterung separat anhand berechtigter Quellen abgenommen; keine stillschweigende Bestandserfassung.",
+        "Gemeinsamen begrenzten Scheduled-Discovery-Vertrag für YouTube, arXiv und weitere erlaubte Provider festlegen; C16/C18/C22 prüfen, keine zweite Queue/Schedulerimplementierung."
+      ]
+    },
+    {
+      "plan_id": "C29",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C29] Entity Recognition & Linking",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23",
+        "C24"
+      ],
+      "priority": "P2",
+      "workstream": "Entities",
+      "target_milestone": "C29",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C29",
+        "kind": "milestone_parent_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "",
+      "acceptance": [
+        "Fachbegriffe als versionierte quellgebundene Annotationen mit Mehrdeutigkeitsstatus.",
+        "Kanonische Entitäten und dokumentübergreifende Fundstellen nachvollziehbar verknüpft.",
+        "Originaltexte unverändert; Fehler-/Disambiguierungsreview vor produktiver Navigation."
+      ]
+    },
+    {
+      "plan_id": "C30",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C30] Wikimedia Entity Enrichment",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C27",
+        "C29"
+      ],
+      "priority": "P2",
+      "workstream": "Entities",
+      "target_milestone": "C30",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C30",
+        "kind": "milestone_parent_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "",
+      "acceptance": [
+        "Bestehende Wikipedia-/Wikidata-Clients geprüft und Schnittstellen konsolidiert.",
+        "QIDs als mögliche Identifikatoren, Sprachen/Disambiguierung, Cache/Retry/Rate Limits und Provenienz entschieden.",
+        "Externe Informationen in der UI getrennt von lokalen Aussagen; keine ungeprüfte fachliche Wahrheit."
+      ]
+    },
+    {
+      "plan_id": "C31",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C31] YouTube Discovery & Review",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23",
+        "C27",
+        "C28"
+      ],
+      "priority": "P2",
+      "workstream": "Sources",
+      "target_milestone": "C31",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C31",
+        "kind": "milestone_parent_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "Use the shared scheduled discovery concept owned by C28; YouTube is a provider, not a second scheduler.",
+      "acceptance": [
+        "Registrierte Kanäle und begrenzte geplante Jobs für neue Metadaten/zulässig verfügbare Inhalte.",
+        "Zusammenfassungen, Relevanz-/Qualitätsreview und Aufnahmeempfehlung mit Quellenbelegen.",
+        "Manuelle Freigabe vor dauerhafter Übernahme; Knowledge-Eignung separat und optional bewerten.",
+        "Geplante Abrufe nutzen den gemeinsamen C28-Vertrag; keine neuen Jobs durch Planung aktivieren."
+      ]
+    },
+    {
+      "plan_id": "C32",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C32] Medium, Real Python und autorisierte Fachnewsletter prüfen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23",
+        "C27",
+        "C28"
+      ],
+      "priority": "P2",
+      "workstream": "Sources",
+      "target_milestone": "C32",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C32",
+        "kind": "milestone_parent_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "Includes Medium, Real Python and authorized newsletters; own configured target folder, separate processing/move state, UID/idempotency and provider COPY/MOVE/EXPUNGE boundaries.",
+      "acceptance": [
+        "Explizit autorisierte Medium-E-Mails/Artikellinks, Real Python Newsletter und weitere freigegebene Fachnewsletter verarbeiten; Absender und Newslettertyp erkennen.",
+        "Links extrahieren, normalisieren und deduplizieren; Relevanz begründet bewerten und Ressourcen zur Aufnahme vorschlagen; menschliche Freigabe und Nutzungs-/Paywallrechte beachten.",
+        "Nach dokumentierter Verarbeitung in einen eigenen explizit konfigurierten Zielordner verschieben; positive Relevanz allein löst keinen Move aus.",
+        "Verarbeitungsstatus und Verschiebestatus getrennt persistieren; Idempotenz, originale Mail-ID/UID und Provider-/Mailboxbindung erhalten, soweit technisch möglich.",
+        "IMAP-COPY/MOVE-Semantik, Fehler und kontrollierte Wiederholungen festlegen; kein unkontrolliertes EXPUNGE, keine automatischen Regeln/Zielordneränderungen ohne ausdrückliche Konfiguration.",
+        "Keine echten Mailzugriffe oder Mailboxmutationen in diesem Planungsauftrag."
+      ]
+    },
+    {
+      "plan_id": "C23-01",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C23-01] Persistenz-ADR und vorhandene Modelle vergleichen",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C23",
+      "depends_on": [],
+      "priority": "P1",
+      "workstream": "Persistence",
+      "target_milestone": "C23",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:75",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 75,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+          "head_sha": "50699d331a769db3acd9e5e8507ad51b2de1760c",
+          "branch": "feat/c23-01-parsed-content-adr",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "a2dc080ac5896c9c8032f42bf51ecb5fdb9a71c6",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 75,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+          "head_sha": "50699d331a769db3acd9e5e8507ad51b2de1760c",
+          "branch": "feat/c23-01-parsed-content-adr",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "a2dc080ac5896c9c8032f42bf51ecb5fdb9a71c6",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "SQLite plus immutable blobs decided; no PostgreSQL implementation pending.",
+      "acceptance": [
+        "ArtifactReceipt/NormalizedDocument, TranscriptDocument, Legacy-Parsingmodelle, Dateiartefakte und C16-SQLite auf Zweck und Grenzen vergleichen.",
+        "Source-/Parsed-Versionen, Referenzintegrität, Rechte, Restore und Idempotenz spezifizieren; PostgreSQL gegen bestehende Alternativen begründet entscheiden.",
+        "Keine zweite Jobqueue und kein erzwungener Knowledge-Schritt."
+      ]
+    },
+    {
+      "plan_id": "C23-02",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C23-02] Raw-/Parsed-Speicherung nach freigegebenem ADR umsetzen",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C23",
+      "depends_on": [
+        "C23-01"
+      ],
+      "priority": "P1",
+      "workstream": "Persistence",
+      "target_milestone": "C23",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:76",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 76,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "head_sha": "df41af0b5f36fda6e30f9ac5fbd8c777e1f85cb2",
+          "branch": "feat/c23-02a-content-store",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "6ef394a2f7a4debccce75f7b5e1ef3449f9457aa",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 76,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "head_sha": "df41af0b5f36fda6e30f9ac5fbd8c777e1f85cb2",
+          "branch": "feat/c23-02a-content-store",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "6ef394a2f7a4debccce75f7b5e1ef3449f9457aa",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 77,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/77",
+          "head_sha": "ba2dcd4a0a74a16c63f74083d25a8fb69d244895",
+          "branch": "feat/c23-02b-content-adapters",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "9a1325485f1b2acc7df177b8a137f771190eca97",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 78,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/78",
+          "head_sha": "f33df74ff09eb7d50223776080c6dd3048955a7c",
+          "branch": "feat/c23-02c-recovery-operations",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "5986da958d767f66e24850df25085ccbebe9ee3e",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Alias of the technical core item #76, with #77/#78 support and their own child mappings. Do not add a second parent implementation item.",
+      "acceptance": [
+        "Bestehende IDs, Hashes, Parser-/Schemaversionen und Locatorwerte verlustfrei persistieren.",
+        "Rohbytes und geparste Inhalte getrennt und unabhängig von Derived Knowledge lesen; Vertragstests mit kleinen Fixtures.",
+        "Fehler/atomare Veröffentlichung und parallele Zugriffe im gewählten Speichermodell prüfen."
+      ]
+    },
+    {
+      "plan_id": "C23-03",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C23-03] Idempotenten Reimport und explizite Bestandsbindung absichern",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "blocked",
+      "technical_state": "partially_integrated",
+      "parent_plan_id": "C23",
+      "depends_on": [
+        "C23-02"
+      ],
+      "priority": "P1",
+      "workstream": "Persistence",
+      "target_milestone": "C23",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "D06: explicit canonical historical source binding decision"
+      ],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:72",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 72,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+          "head_sha": "3a42b1675dffe823edc179a347fa97dd1a096fd0",
+          "branch": "feat/c21q-qdrant-transcript-pilot",
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "merge_commit_sha": null,
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 79,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/79",
+          "head_sha": "42bbd8ae65110138bee82542ce02d99ec7d84be3",
+          "branch": "feat/c23-03-reimport-binding",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "b2b994a3bc09b061992ba5f4ba7c6b6a36fd9aa0",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 72,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+          "head_sha": "3a42b1675dffe823edc179a347fa97dd1a096fd0",
+          "branch": "feat/c21q-qdrant-transcript-pilot",
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "merge_commit_sha": null,
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Remaining historical source-binding gate already tracked by Draft #72; #79 implements reimport/inventory. No new path-fix implementation or migration.",
+      "acceptance": [
+        "Gleiche Bytes/Version erzeugen keine Dublette; geänderte Quelle oder Parser erzeugt nachvollziehbare Version.",
+        "Abweichende historische Source-Pfade bleiben gesperrt; Strategie aus PR #72/C21-Q.1 wiederverwenden, keine stillen Fallbacks/Symlinks.",
+        "Bestandsübernahme nur nach separater Freigabe; Source-/Receipt-/Provenienz- und Hashkonflikte testen."
+      ]
+    },
+    {
+      "plan_id": "C23-04",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C23-04] Autorisierte Source-/Parsed-Leseverträge bereitstellen",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C23",
+      "depends_on": [
+        "C23-02"
+      ],
+      "priority": "P1",
+      "workstream": "Persistence",
+      "target_milestone": "C23",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:80",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 80,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+          "head_sha": "b054a041bcef82d8ab5c7e3bbdb63e40ac689619",
+          "branch": "feat/c23-04-content-read-api",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "1254c2c79d99525f150cf3d84050d0e5d504d6ce",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 80,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+          "head_sha": "b054a041bcef82d8ab5c7e3bbdb63e40ac689619",
+          "branch": "feat/c23-04-content-read-api",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "1254c2c79d99525f150cf3d84050d0e5d504d6ce",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Authorized paginated Content Read HTTP API integrated; no general search HTTP API.",
+      "acceptance": [
+        "Paginiert nach Kurs/Quelle/Version lesen; Originalreferenz und Seiten-/Block-/Zeitbelege liefern.",
+        "Owner-/Course-/Quellrechte serverseitig durchsetzen; keine beliebigen Hostpfade/Dateiserver.",
+        "API-Beispiele und Kompatibilitätsvertrag für das UI-Repository veröffentlichen."
+      ]
+    },
+    {
+      "plan_id": "C23-05",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C23-05] TXT-Import ohne erfundene Zeitstempel reparieren",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C23",
+      "depends_on": [],
+      "priority": "P1",
+      "workstream": "Sources",
+      "target_milestone": "C23",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:81",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 81,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/81",
+          "head_sha": "2e60d1529793bfb329a3648502cb26b589474c19",
+          "branch": "feat/c23-05-txt-unknown-time",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "d654f0580f6c5d6aa5698f33dc5c93dec5ba66d5",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/81",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 81,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/81",
+          "head_sha": "2e60d1529793bfb329a3648502cb26b589474c19",
+          "branch": "feat/c23-05-txt-unknown-time",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "d654f0580f6c5d6aa5698f33dc5c93dec5ba66d5",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 9,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/9",
+          "head_sha": "3d1317347018fce47f49331fbfea92e4a055a337",
+          "branch": "feat/official-transcript-import",
+          "state": "open",
+          "draft": false,
+          "merged": false,
+          "merge_commit_sha": null,
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Unknown-Time model/importer/guards integrated. Full TXT ContentStore publication is not supplied by this merge.",
+      "acceptance": [
+        "Unknown-Time-Vertrag mit start/end=null, vorhandenen Locatoren und Timed-Guards erhalten; keine erfundenen Zeiten.",
+        "Gezielte TXT-/SRT-/VTT-Regression sowie Chunker-/Evidence-Abweisung nicht zeitgebundener Daten ohne erfundene Zeitwerte.",
+        "Nur den relevanten Rest von PR #9 behandeln; alten Patch und PR nicht automatisch übernehmen/schließen."
+      ]
+    },
+    {
+      "plan_id": "C23-06",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C23-06] Berechtigten Realmaterialkorpus und unabhängige Goldreferenzen bereitstellen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "blocked",
+      "technical_state": "partially_integrated",
+      "parent_plan_id": "C23",
+      "depends_on": [
+        "C23-01"
+      ],
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "target_milestone": "C23",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "D07: source permissions, complete bundles, exact private roots, human reviewers and gold"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C23-06",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 82,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/82",
+          "head_sha": "351646f0ffa545da7e3424e50ab78eb330e69542",
+          "branch": "feat/c23-06-real-material-evaluation",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "95c4c40c1ab738ce1d75ac9ed554a46613419133",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 91,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/91",
+          "head_sha": "c8894abea7be1554a6f234f551ce92bc6e00bdc9",
+          "branch": "feat/c24-05c2-real-pilot",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "4c057ae33d41ba98e227879cc8a51283338e4a0b",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Only remaining real parsing/corpus acceptance; #82 framework is integrated. D07, bundles, roots and independent gold missing; D06 only where historical SRT applies.",
+      "acceptance": [
+        "Fehlende Original-/Receipt-/Normalized-Bundles für Week-0-Notes/Slides/Source-PDF mit Rechten und Hashes inventarisieren; keine Downloads ohne Freigabe.",
+        "C10/C13-Qualitätsrubrik für Text/Code/Bilder und separate reale C11-Formel-Gold-/Prediction-Paare festlegen; keine Goldableitung aus Vorhersagen.",
+        "Bekannte Fehlstellen und synthetische/reale Ergebnisse getrennt ausweisen; CS50-Releaseumfang daraus festlegen."
+      ]
+    },
+    {
+      "plan_id": "C24-01",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-01] Bestehende Suche prüfen und Indexstrategie entscheiden",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C23-01"
+      ],
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:83",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 83,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+          "head_sha": "b001388e2f05472cea2e1054c2713c6c434c9de9",
+          "branch": "docs/c24-01-indexing-retrieval",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "2d7a813ed8c668b3d73dd62119d3ca24330d76cb",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 83,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+          "head_sha": "b001388e2f05472cea2e1054c2713c6c434c9de9",
+          "branch": "docs/c24-01-indexing-retrieval",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "2d7a813ed8c668b3d73dd62119d3ca24330d76cb",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Indexing/retrieval ADR integrated; lexical FTS5 selected, semantics optional.",
+      "acceptance": [
+        "Transcript-Qdrant, Filter/Offsets, Chroma-/Legacy-RAG und mögliche Volltextlösungen vergleichen.",
+        "Keine neue Vektordatenbank ohne ADR; PostgreSQL-Suche bleibt vom Persistenz-ADR abhängig.",
+        "Knowledge-Extraktion ist keine Suchvoraussetzung; verbindlichen Text-/Quellenvertrag bestimmen."
+      ]
+    },
+    {
+      "plan_id": "C24-02",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-02] Versionierten Volltextindex und Reindexierung implementieren",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "integrated_pending_acceptance",
+      "technical_state": "partially_integrated",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C23-02",
+        "C23-03",
+        "C24-01"
+      ],
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:84",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 84,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/84",
+          "head_sha": "7d1b655cf6228b87edac922e59e4b5fc2c5b80cb",
+          "branch": "feat/c24-02-deterministic-index-projection",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "fcb5da98ca94998e2a024c1a898ff20bdd9f79ab",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/84",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 84,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/84",
+          "head_sha": "7d1b655cf6228b87edac922e59e4b5fc2c5b80cb",
+          "branch": "feat/c24-02-deterministic-index-projection",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "fcb5da98ca94998e2a024c1a898ff20bdd9f79ab",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 85,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+          "head_sha": "0f3d9dd1066eb771629159888fb5ee97c0a75ebf",
+          "branch": "feat/c24-03-sqlite-fts5",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "30bc6d35a75456c9c71b4c3b4fe127e6b4ccedca",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "PR #84 item represents only delivered projection; #85 supports FTS5. The outstanding C16 index-job scope remains C24-02-C. A technical Done here does not complete the whole plan row.",
+      "acceptance": [
+        "Index enthält Source-/Parsed-Version, Locator und Rechtebezug; Roh-/Parsed-Daten bleiben autoritativ.",
+        "Wiederholung, Teilfehler, veraltete Dokumente und kontrollierte Reindexierung testen; keine ungeprüfte Datenlöschung.",
+        "Indexstatus und Fehler maschinenlesbar bereitstellen."
+      ]
+    },
+    {
+      "plan_id": "C24-03",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-03] Quellengebundene Such-API und Trefferbelege liefern",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "integrated_pending_acceptance",
+      "technical_state": "partially_integrated",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C23-04",
+        "C24-02"
+      ],
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:85",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 85,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+          "head_sha": "0f3d9dd1066eb771629159888fb5ee97c0a75ebf",
+          "branch": "feat/c24-03-sqlite-fts5",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "30bc6d35a75456c9c71b4c3b4fe127e6b4ccedca",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 85,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+          "head_sha": "0f3d9dd1066eb771629159888fb5ee97c0a75ebf",
+          "branch": "feat/c24-03-sqlite-fts5",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "30bc6d35a75456c9c71b4c3b4fe127e6b4ccedca",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "PR #85 item represents only internal lexical search/FTS5. Missing Search HTTP is C24-03-B. No claim that a public search API is implemented.",
+      "acceptance": [
+        "Kurs-/Quellenfilter, Paging und begrenzte Anfragen mit serverseitigen Berechtigungen.",
+        "Treffer enthalten eindeutige Version und echte Seiten-/Block-/Zeitbezüge sowie sichere Originalverweise.",
+        "Stale-/Missing-Source und inkompatible Indexversionen ausdrücklich melden; UI-Vertrag veröffentlichen."
+      ]
+    },
+    {
+      "plan_id": "C24-04",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-04] Vorhandenen Qdrant-/Transcript-Pilot abnehmen statt neu bauen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "optional",
+      "technical_state": "partially_integrated",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C23-03",
+        "C24-01"
+      ],
+      "priority": "P2",
+      "workstream": "Retrieval",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": true,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:86",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 86,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/86",
+          "head_sha": "12740b76a30d969b6c09d2be4ad1480a7dd8bdfd",
+          "branch": "feat/c24-04-content-vector-adapter",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "87ea32f5e9e3f4826f6bbd84ed0d28073fc3fb87",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/86",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 86,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/86",
+          "head_sha": "12740b76a30d969b6c09d2be4ad1480a7dd8bdfd",
+          "branch": "feat/c24-04-content-vector-adapter",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "87ea32f5e9e3f4826f6bbd84ed0d28073fc3fb87",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 72,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+          "head_sha": "3a42b1675dffe823edc179a347fa97dd1a096fd0",
+          "branch": "feat/c21q-qdrant-transcript-pilot",
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "merge_commit_sha": null,
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "PR #86 represents the delivered gated vector adapter/Fake transport only. Actual optional E5/Qdrant pilot is C24-04-B / Draft #72.",
+      "acceptance": [
+        "Draft PR #72 samt C21-Q.1 und seinen getrennten Phase-A-/Phase-B-Gates reviewen; keine parallele Ingestion implementieren.",
+        "Nur nach expliziter Bereitstellung/Freigabe von SDK, immutable E5-Revision und isolierter Instanz echte Upsert-/Readback-/Retrieval-/Recovery-Nachweise.",
+        "Semantische Suche bleibt optional; bestehender Originalpfadkonflikt und Remote-Uploadfreigabe bleiben echte Blocker."
+      ]
+    },
+    {
+      "plan_id": "C24-05",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-05] Reale Retrievalqualität und Quellenrückbindung bewerten",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "blocked",
+      "technical_state": "partially_integrated",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C23-06",
+        "C24-03"
+      ],
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "D07: authorized real bundle/roots, independent human gold, complete pool, approver decision"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C24-05",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 87,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/87",
+          "head_sha": "5a7d050685c381dffd0574aaff62f704c78e7350",
+          "branch": "feat/c24-05a-retrieval-evaluation",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "d2b5e05e732ef677fe8e8b4ccbb4d76c6d532e60",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 90,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/90",
+          "head_sha": "20b8916900b201d8051e203327a7023e06c64914",
+          "branch": "feat/c24-05b1-review-backend",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "df0f9a74de1d5936f20ee7f9f77cef350cde16c4",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/personal-assistant-ui",
+          "number": 7,
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+          "head_sha": "c1833292859323f5360c2817d7e2ec57bd97bcd4",
+          "branch": "feat/c24-05b2-review-ui",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 91,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/91",
+          "head_sha": "c8894abea7be1554a6f234f551ce92bc6e00bdc9",
+          "branch": "feat/c24-05c2-real-pilot",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "4c057ae33d41ba98e227879cc8a51283338e4a0b",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 88,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/88",
+          "head_sha": "f3fae9ef6d2c919adb12b08242bf84819f2b42f2",
+          "branch": "feat/c24-05b-human-review-workflow",
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "merge_commit_sha": null,
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 89,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/89",
+          "head_sha": "a3d253a27c4fd7aed37c2a4b9d38aa8a4ed1d81d",
+          "branch": "feat/c24-05c-real-corpus-pilot",
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "merge_commit_sha": null,
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Only remaining real retrieval acceptance; A/#87, B1/#90, UI-B2/#7 and C2/#91 are delivered. No fabricated real gold or quality rate.",
+      "acceptance": [
+        "Unabhängige reale Fragen/Goldfundstellen und Suchkonfiguration versionieren.",
+        "Volltext und gegebenenfalls semantische Suche getrennt auswerten; Nenner, Fehler und nicht evaluierbare Fälle berichten.",
+        "Qualitätsgrenzen und Releaseumfang manuell prüfen; keine Modellwerte aus synthetischen Fixtures erfinden."
+      ]
+    },
+    {
+      "plan_id": "C25-01",
+      "repository": "rf-data/personal-assistant-ui",
+      "source_title": "[C25-01] Kurs-/Quellenauswahl und Suchfilter integrieren",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C25",
+      "depends_on": [
+        "C23-04",
+        "C24-03-B"
+      ],
+      "priority": "P1",
+      "workstream": "UI",
+      "target_milestone": "C25",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "C24-03-B: actual Search HTTP/DTO contract"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/personal-assistant-ui:C25-01",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/personal-assistant-ui",
+          "number": 7,
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+          "head_sha": "c1833292859323f5360c2817d7e2ec57bd97bcd4",
+          "branch": "feat/c24-05b2-review-ui",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Reuse B2 client/security/renderers where suitable; do not build a second review UI.",
+      "acceptance": [
+        "Vorhandene UI-Settings/Auth und typisierten Client erweitern, keine Backend-Dateizugriffe.",
+        "Auswahl, Suche, Paging und Filter nutzen autoritative APIs; leere und verweigerte Antworten unterscheidbar.",
+        "Cross-Repository-Vertragsversion und Backend-PR verlinkt."
+      ]
+    },
+    {
+      "plan_id": "C25-02",
+      "repository": "rf-data/personal-assistant-ui",
+      "source_title": "[C25-02] Parsed Content mit Original- und Fundstellenansicht anzeigen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C25",
+      "depends_on": [
+        "C25-01"
+      ],
+      "priority": "P1",
+      "workstream": "UI",
+      "target_milestone": "C25",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "C24-03-B: actual Search HTTP/DTO contract"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/personal-assistant-ui:C25-02",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/personal-assistant-ui",
+          "number": 7,
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+          "head_sha": "c1833292859323f5360c2817d7e2ec57bd97bcd4",
+          "branch": "feat/c24-05b2-review-ui",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Reuse B2 client/security/renderers where suitable; do not build a second review UI.",
+      "acceptance": [
+        "Strukturierte Texte, Code und Bildreferenzen anzeigen; Seite/Block/Kapitel/Cue nur bei vorhandenem Beleg.",
+        "Treffer führt zur konkreten Quelle/Version; Originalzugang bleibt berechtigungsgeprüft.",
+        "Unbekannte Zeitstempel, fehlende Bildbytes und veraltete Quellen klar darstellen."
+      ]
+    },
+    {
+      "plan_id": "C25-03",
+      "repository": "rf-data/personal-assistant-ui",
+      "source_title": "[C25-03] Job- und Indexstatus für Suche sichtbar machen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C25",
+      "depends_on": [
+        "C25-01",
+        "C24-02-C"
+      ],
+      "priority": "P1",
+      "workstream": "UI",
+      "target_milestone": "C25",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "C24-03-B: actual Search HTTP/DTO contract"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/personal-assistant-ui:C25-03",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/personal-assistant-ui",
+          "number": 7,
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+          "head_sha": "c1833292859323f5360c2817d7e2ec57bd97bcd4",
+          "branch": "feat/c24-05b2-review-ui",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Reuse B2 client/security/renderers where suitable; do not build a second review UI.",
+      "acceptance": [
+        "Bestehendes C16/C18-Job-/Owner-/Course-Modell nutzen, Indexzustand aus Backend beziehen.",
+        "Refresh/Fehler/Unavailable/Stale ohne automatische Schreibaktion oder künstlichen Fortschritt.",
+        "Bestehende Admin-/Workflowansichten bleiben kompatibel."
+      ]
+    },
+    {
+      "plan_id": "C25-04",
+      "repository": "rf-data/personal-assistant-ui",
+      "source_title": "[C25-04] Browserabnahme der Source-/Search-Nutzung dokumentieren",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C25",
+      "depends_on": [
+        "C25-02",
+        "C25-03"
+      ],
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "target_milestone": "C25",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "C24-03-B: actual Search HTTP/DTO contract"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/personal-assistant-ui:C25-04",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/personal-assistant-ui",
+          "number": 7,
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+          "head_sha": "c1833292859323f5360c2817d7e2ec57bd97bcd4",
+          "branch": "feat/c24-05b2-review-ui",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Reuse B2 client/security/renderers where suitable; do not build a second review UI.",
+      "acceptance": [
+        "Echte Browserfälle für Filter, Deep Links, Paging, Tastaturbedienung und belegte Fundstellen mit festem Korpus.",
+        "Viewer-/Operator-/Course-Grenzen sowie fehlende/stale Inhalte prüfen; AppTest getrennt berichten.",
+        "Kein Browsernachweis durch bloße API-/AppTest-Erfolge ersetzen."
+      ]
+    },
+    {
+      "plan_id": "C26-01",
+      "repository": "rf-data/personal-assistant-ui",
+      "source_title": "[C26-01] Gepinntes Authlib und UI-Startschutz abnehmen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C26",
+      "depends_on": [],
+      "priority": "P0",
+      "workstream": "Operations",
+      "target_milestone": "C26",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/personal-assistant-ui:C26-01",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/personal-assistant-ui",
+          "number": 5,
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/5",
+          "head_sha": "07280633e0a3a529d566484e3f964d8ba9a999be",
+          "branch": "feat/c22-container-readiness",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "14ccfc20d83fe57612b5298e323d9f9f1d899cbf",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "",
+      "acceptance": [
+        "Authlib fehlt im aktuellen UI-Lock; vorhandenes C22-Gate gezielt schließen.",
+        "Geprüfte transitive Dependency-/Lockentscheidung und Imagebereitstellung, keine ungefragten Upgrades/Downloads.",
+        "Guard-, Secret- und OIDC-Konfigurationstests; kein Demo-Auth im Produktionsprofil."
+      ]
+    },
+    {
+      "plan_id": "C26-02",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C26-02] C22-Images und Container-Prozessgrenzen isoliert prüfen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C26-01"
+      ],
+      "priority": "P0",
+      "workstream": "Operations",
+      "target_milestone": "C26",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C26-02",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 73,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/73",
+          "head_sha": "f2842788efd487227ca95c8960f971ea14877cad",
+          "branch": "feat/c22-operations-readiness",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "476f0a0d786db87eb59efad36fd21a2fadaeb1dd",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "",
+      "acceptance": [
+        "Vorhandene C22-Builds/Profiles mit freigegebenen Digests bereitstellen; Non-root, Mounts, Health und fehlende Pflichtinputs prüfen.",
+        "API-/Executor-/UI-Restart, C19 native PDF-Cancel, Parent-Death/Subreaper, SIGTERM/SIGKILL/OOM und Cgroup-/CPU/RAM/PID-Limits im Container testen.",
+        "Keine Mehrhostfähigkeit ableiten; Befunde und verbleibende Gates protokollieren."
+      ]
+    },
+    {
+      "plan_id": "C26-03",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C26-03] TLS, OIDC, individuelle Rollen und Browserzugriff abnehmen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C26-01",
+        "C26-02"
+      ],
+      "priority": "P0",
+      "workstream": "Operations",
+      "target_milestone": "C26",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C26-03",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "",
+      "acceptance": [
+        "Privater API-Gateway mit korrektem SAN/CA, Ingress-WebSockets und Secretrotation.",
+        "Echter Browser-Login/Logout/Expiry sowie Viewer/Operator/Owner/Course und individuelle Tokenbindungen.",
+        "Keine öffentliche ungeschützte Admin-API, keine deaktivierte TLS-Prüfung; UI-Änderungen nur im UI-Repository."
+      ]
+    },
+    {
+      "plan_id": "C26-04",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C26-04] Zielstorage und konsistenten Restore auf isoliertem Ziel prüfen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C26-02",
+        "C23-02"
+      ],
+      "priority": "P0",
+      "workstream": "Operations",
+      "target_milestone": "C26",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C26-04",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 73,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/73",
+          "head_sha": "f2842788efd487227ca95c8960f971ea14877cad",
+          "branch": "feat/c22-operations-readiness",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "476f0a0d786db87eb59efad36fd21a2fadaeb1dd",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 78,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/78",
+          "head_sha": "f33df74ff09eb7d50223776080c6dd3048955a7c",
+          "branch": "feat/c23-02c-recovery-operations",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "5986da958d767f66e24850df25085ccbebe9ee3e",
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 90,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/90",
+          "head_sha": "20b8916900b201d8051e203327a7023e06c64914",
+          "branch": "feat/c24-05b1-review-backend",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "df0f9a74de1d5936f20ee7f9f77cef350cde16c4",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Reuse ContentStore recovery/backup and C22 fence; include EvaluationStore closure, selected index generation and restore strategy explicitly; no production snapshot in PM-01.",
+      "acceptance": [
+        "Endgültiger Single-Host-Mount: identische UID/Pfade, flock/rename/fsync/SQLite-WAL und Quoten.",
+        "C22- und ContentStore-Backup/Restore wiederverwenden; EvaluationStore-Revisionsclosure, Indexgeneration/Rebuildstrategie, Katalog/Config und getrennte Secrets ausdrücklich einbeziehen.",
+        "Leeres isoliertes Restoreziel, Hash-/Provenienzprüfung, interrupted/Quarantäne und Operator-Recovery; keine produktiven Daten überschreiben."
+      ]
+    },
+    {
+      "plan_id": "C26-05",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C26-05] Produktionsmonitoring und echte Alarmzustellung prüfen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C26-02"
+      ],
+      "priority": "P0",
+      "workstream": "Operations",
+      "target_milestone": "C26",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C26-05",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "",
+      "acceptance": [
+        "Vorhandene C15-Dashboards/Regeln und C22-authentisierten Scrape verwenden.",
+        "Queue, Dauer, Fehler/Timeout/Cancel, Worker, Disk/Volume und Service-Health mit niedriger Kardinalität.",
+        "Alertmanager/alternatives Routing ausdrücklich entscheiden und Alarmzustellung bis zum zuständigen Operator testen."
+      ]
+    },
+    {
+      "plan_id": "C26-06",
+      "repository": "rf-data/personal-assistant-ui",
+      "source_title": "[C26-06] CS50 über die freigegebene UI Ende-zu-Ende abnehmen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C25-04",
+        "C24-05",
+        "C26-03",
+        "C26-04",
+        "C26-05"
+      ],
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "target_milestone": "C26",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/personal-assistant-ui:C26-06",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "",
+      "acceptance": [
+        "Begrenzte reale CS50-Quelle erfassen/verarbeiten/persistieren/indexieren/suchen und Originalfundstelle über UI prüfen.",
+        "Fehler, Neustart, Cancel und Wiederaufnahme mit freigegebenen echten Daten prüfen; synthetische Evidenz getrennt.",
+        "Keine Knowledge-Extraktion erforderlich; fachlich akzeptierten Format-/Korpusumfang festhalten."
+      ]
+    },
+    {
+      "plan_id": "C26-07",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C26-07] Manuelle Hetzner-Go-live-Entscheidung und Betriebsübergabe",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C26-06"
+      ],
+      "priority": "P0",
+      "workstream": "Operations",
+      "target_milestone": "C26",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [
+        "Explicit target host/runtime/data/operator decision appropriate to this scope; see D09–D11"
+      ],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C26-07",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "",
+      "acceptance": [
+        "C22-Gates, Kosten/Hostfreigabe, Rechte, Backup, Retention, Incident-/Rollbackverantwortung und Releaseversion bestätigt.",
+        "Operatorfreigabe mit Datum und Evidenz; C26-Parent erst danach als produktionsfreigegeben schließen.",
+        "Merge oder grüne CI erzeugen keinen Rollout und keine automatische Produktionsfreigabe."
+      ]
+    },
+    {
+      "plan_id": "C23-02A",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C23-02A] ContentStore Core & Persistence Foundation",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C23-02",
+      "depends_on": [
+        "C23-01"
+      ],
+      "priority": "P1",
+      "workstream": "Persistence",
+      "target_milestone": "C23",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:76",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 76,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "head_sha": "df41af0b5f36fda6e30f9ac5fbd8c777e1f85cb2",
+          "branch": "feat/c23-02a-content-store",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "6ef394a2f7a4debccce75f7b5e1ef3449f9457aa",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 76,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "head_sha": "df41af0b5f36fda6e30f9ac5fbd8c777e1f85cb2",
+          "branch": "feat/c23-02a-content-store",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "6ef394a2f7a4debccce75f7b5e1ef3449f9457aa",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "No real material or production acceptance follows from this technical merge.",
+      "acceptance": [
+        "Den begrenzten integrierten technischen Umfang und dessen versionierte Abnahme als vorhandenen Nachweis erhalten; keine erneute Implementierung."
+      ]
+    },
+    {
+      "plan_id": "C23-02B",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C23-02B] Verified Material & Transcript Adapters",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C23-02",
+      "depends_on": [
+        "C23-02A"
+      ],
+      "priority": "P1",
+      "workstream": "Persistence",
+      "target_milestone": "C23",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:77",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 77,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/77",
+          "head_sha": "ba2dcd4a0a74a16c63f74083d25a8fb69d244895",
+          "branch": "feat/c23-02b-content-adapters",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "9a1325485f1b2acc7df177b8a137f771190eca97",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/77",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 77,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/77",
+          "head_sha": "ba2dcd4a0a74a16c63f74083d25a8fb69d244895",
+          "branch": "feat/c23-02b-content-adapters",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "9a1325485f1b2acc7df177b8a137f771190eca97",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "No real material or production acceptance follows from this technical merge.",
+      "acceptance": [
+        "Den begrenzten integrierten technischen Umfang und dessen versionierte Abnahme als vorhandenen Nachweis erhalten; keine erneute Implementierung."
+      ]
+    },
+    {
+      "plan_id": "C23-02C",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C23-02C] Recovery, Concurrency & Backup/Restore",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C23-02",
+      "depends_on": [
+        "C23-02A"
+      ],
+      "priority": "P1",
+      "workstream": "Persistence",
+      "target_milestone": "C23",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:78",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 78,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/78",
+          "head_sha": "f33df74ff09eb7d50223776080c6dd3048955a7c",
+          "branch": "feat/c23-02c-recovery-operations",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "5986da958d767f66e24850df25085ccbebe9ee3e",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/78",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 78,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/78",
+          "head_sha": "f33df74ff09eb7d50223776080c6dd3048955a7c",
+          "branch": "feat/c23-02c-recovery-operations",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "5986da958d767f66e24850df25085ccbebe9ee3e",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "No real material or production acceptance follows from this technical merge.",
+      "acceptance": [
+        "Den begrenzten integrierten technischen Umfang und dessen versionierte Abnahme als vorhandenen Nachweis erhalten; keine erneute Implementierung."
+      ]
+    },
+    {
+      "plan_id": "C24-05-A",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-05-A] Retrieval Evaluation Framework & Independent Gold",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C24-05",
+      "depends_on": [
+        "C24-01",
+        "C23-04"
+      ],
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:87",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 87,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/87",
+          "head_sha": "5a7d050685c381dffd0574aaff62f704c78e7350",
+          "branch": "feat/c24-05a-retrieval-evaluation",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "d2b5e05e732ef677fe8e8b4ccbb4d76c6d532e60",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/87",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 87,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/87",
+          "head_sha": "5a7d050685c381dffd0574aaff62f704c78e7350",
+          "branch": "feat/c24-05a-retrieval-evaluation",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "d2b5e05e732ef677fe8e8b4ccbb4d76c6d532e60",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Bounded technical implementation complete; real pilot acceptance remains on C24-05. Internal FTS5 from #85 is an implemented prerequisite; the outstanding parent-level HTTP/job scope is not required.",
+      "acceptance": [
+        "Vorhandene technische Verträge und synthetische Nachweise wiederverwenden; keine echte menschliche Bestätigung oder Realabnahme daraus ableiten."
+      ]
+    },
+    {
+      "plan_id": "C24-05-B1",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-05-B1] Human Review Backend, Persistence & API",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C24-05",
+      "depends_on": [
+        "C24-05-A",
+        "C23-04"
+      ],
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:90",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 90,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/90",
+          "head_sha": "20b8916900b201d8051e203327a7023e06c64914",
+          "branch": "feat/c24-05b1-review-backend",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "df0f9a74de1d5936f20ee7f9f77cef350cde16c4",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/90",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 90,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/90",
+          "head_sha": "20b8916900b201d8051e203327a7023e06c64914",
+          "branch": "feat/c24-05b1-review-backend",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "df0f9a74de1d5936f20ee7f9f77cef350cde16c4",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Bounded technical implementation complete; real pilot acceptance remains on C24-05.",
+      "acceptance": [
+        "Vorhandene technische Verträge und synthetische Nachweise wiederverwenden; keine echte menschliche Bestätigung oder Realabnahme daraus ableiten."
+      ]
+    },
+    {
+      "plan_id": "C24-05-B2",
+      "repository": "rf-data/personal-assistant-ui",
+      "source_title": "[C24-05-B2] Human Review UI & Evaluation Dashboard",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C24-05",
+      "depends_on": [
+        "C24-05-B1"
+      ],
+      "priority": "P1",
+      "workstream": "UI",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/personal-assistant-ui:7",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/personal-assistant-ui",
+          "number": 7,
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+          "head_sha": "c1833292859323f5360c2817d7e2ec57bd97bcd4",
+          "branch": "feat/c24-05b2-review-ui",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/personal-assistant-ui",
+          "number": 7,
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+          "head_sha": "c1833292859323f5360c2817d7e2ec57bd97bcd4",
+          "branch": "feat/c24-05b2-review-ui",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "90816a1578bcf67739ee9acaa483c1635aa0c44b",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Bounded technical implementation complete; real pilot acceptance remains on C24-05.",
+      "acceptance": [
+        "Vorhandene technische Verträge und synthetische Nachweise wiederverwenden; keine echte menschliche Bestätigung oder Realabnahme daraus ableiten."
+      ]
+    },
+    {
+      "plan_id": "C24-05-C2",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-05-C2] Synthetic Review, Gold Export & FTS5 Integration",
+      "source_plan_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "technical_state": "integrated",
+      "parent_plan_id": "C24-05",
+      "depends_on": [
+        "C24-05-A",
+        "C24-05-B1",
+        "C24-05-B2"
+      ],
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:91",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 91,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/91",
+          "head_sha": "c8894abea7be1554a6f234f551ce92bc6e00bdc9",
+          "branch": "feat/c24-05c2-real-pilot",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "4c057ae33d41ba98e227879cc8a51283338e4a0b",
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/91",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Done",
+      "status_scope": "bounded_technical_pr_only",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 91,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/91",
+          "head_sha": "c8894abea7be1554a6f234f551ce92bc6e00bdc9",
+          "branch": "feat/c24-05c2-real-pilot",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "4c057ae33d41ba98e227879cc8a51283338e4a0b",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Bounded technical implementation complete; real pilot acceptance remains on C24-05.",
+      "acceptance": [
+        "Vorhandene technische Verträge und synthetische Nachweise wiederverwenden; keine echte menschliche Bestätigung oder Realabnahme daraus ableiten."
+      ]
+    },
+    {
+      "plan_id": "C24-06-A",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-06-A] Lokale Evaluationsumgebung und menschliche Reviewabnahme",
+      "source_plan_status": "In Progress",
+      "source_delivery_state": "in_progress",
+      "technical_state": "in_progress",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C24-05-B2",
+        "C24-05-C2"
+      ],
+      "priority": "P1",
+      "workstream": "Evaluation",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "active-task:feat/c24-06a-local-review",
+        "kind": "active_task_pending_published_pr",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "In Progress",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "await_actual_task_pr_no_parallel_issue",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "Active isolated local-environment/human-acceptance task; do not create a parallel implementation issue or touch worktrees. Attach its real PR only after publication.",
+      "acceptance": [
+        "Bestehende Streamlit-App und tatsächliches lokales B1-HTTP-Backend mit isolierten persistenten synthetischen Roots bereitstellen.",
+        "Tatsächliche Browser-/Humanabnahme getrennt von automatisierten synthetischen Nachweisen dokumentieren; keine Realfreigabe."
+      ]
+    },
+    {
+      "plan_id": "C24-03-B",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-03-B] Autorisierte Search-HTTP-Capability und DTOs",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C24-03",
+      "depends_on": [
+        "C23-04",
+        "C24-01"
+      ],
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C24-03-B",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 85,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+          "head_sha": "0f3d9dd1066eb771629159888fb5ee97c0a75ebf",
+          "branch": "feat/c24-03-sqlite-fts5",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "30bc6d35a75456c9c71b4c3b4fe127e6b4ccedca",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "02-B/03-A already integrated by #85. This is the existing 03-B remainder, not a new search implementation.",
+      "acceptance": [
+        "Vorhandene interne FTS5-Fassade am bestehenden C16-Gateway ausdrücklich opt-in bereitstellen; keine erfundenen aktuellen Routen.",
+        "Begrenzte Requests, Cursor, Antwort-/Fehlervertrag, Live-ACL/Sourceprüfung und echte HTTPtests; Cross-Repo-Vertrag vor C25 veröffentlichen."
+      ]
+    },
+    {
+      "plan_id": "C24-02-C",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-02-C] Explizite Indexjob- und Statusintegration",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C24-02",
+      "depends_on": [
+        "C23-04",
+        "C24-01"
+      ],
+      "priority": "P1",
+      "workstream": "Retrieval",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": false,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C24-02-C",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 85,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+          "head_sha": "0f3d9dd1066eb771629159888fb5ee97c0a75ebf",
+          "branch": "feat/c24-03-sqlite-fts5",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "30bc6d35a75456c9c71b4c3b4fe127e6b4ccedca",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Use existing 02-B builder; agree catalog/job contract before implementation.",
+      "acceptance": [
+        "Bestehenden Indexbuilder ausdrücklich in C16/C18-Katalog-, Request-, Owner/Course- und Prozessverträge einbinden.",
+        "Idempotenz, Restart/Cancel, Ressourcenlimits und autorisierten Indexstatus belegen; kein Watcher, Cron oder automatische Indexierung."
+      ]
+    },
+    {
+      "plan_id": "C24-04-B",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C24-04-B] Optionalen echten E5/Qdrant-Pilot freigeben und prüfen",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "optional",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C24-04",
+      "depends_on": [
+        "C23-03",
+        "C24-01"
+      ],
+      "priority": "P2",
+      "workstream": "Retrieval",
+      "target_milestone": "C24",
+      "owner_mode": "unassigned",
+      "optional": true,
+      "known_blockers": [
+        "D06/D07 and explicit model/instance/transport authorization"
+      ],
+      "canonical_target": {
+        "representation_key": "pr:rf-data/Personal_Assistant:72",
+        "kind": "existing_pr",
+        "existing_issue_url": null,
+        "existing_pr": {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 72,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+          "head_sha": "3a42b1675dffe823edc179a347fa97dd1a096fd0",
+          "branch": "feat/c21q-qdrant-transcript-pilot",
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "merge_commit_sha": null,
+          "verification": "verified_live_repo_api"
+        },
+        "target_url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_existing_pr_item_if_present_else_add_same_pr_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 72,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+          "head_sha": "3a42b1675dffe823edc179a347fa97dd1a096fd0",
+          "branch": "feat/c21q-qdrant-transcript-pilot",
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "merge_commit_sha": null,
+          "verification": "verified_live_repo_api"
+        },
+        {
+          "repository": "rf-data/Personal_Assistant",
+          "number": 86,
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/86",
+          "head_sha": "12740b76a30d969b6c09d2be4ad1480a7dd8bdfd",
+          "branch": "feat/c24-04-content-vector-adapter",
+          "state": "closed",
+          "draft": false,
+          "merged": true,
+          "merge_commit_sha": "87ea32f5e9e3f4826f6bbd84ed0d28073fc3fb87",
+          "verification": "verified_live_repo_api"
+        }
+      ],
+      "scope_note": "Same existing Draft #72 item as the remaining C23-03 gate; do not duplicate pilot/inference/instance work.",
+      "acceptance": [
+        "Vorhandenen Draft #72 wiederverwenden; konkrete Instanz/Collection, immutable Modellrevision, SDK und Transportfreigaben benennen.",
+        "Nur nach D06/D07 und Instanzfreigabe tatsächliche Inferenz/Upsert/Readback/Recovery bewerten; Hybrid separat und optional."
+      ]
+    },
+    {
+      "plan_id": "C28-01",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[C28-01] arXiv Research Discovery & Relevance Review",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": "C28",
+      "depends_on": [],
+      "priority": "P2",
+      "workstream": "Sources",
+      "target_milestone": "C28",
+      "owner_mode": "unassigned",
+      "optional": true,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:C28-01",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "Additional arXiv discovery provider using common C28/C31 scheduled-discovery contract; identifiers/versions/metadata, human relevance review, no PDF download or automatic promotion.",
+      "acceptance": [
+        "Konfigurierbare Suchbegriffe/arXiv-Kategorien und geplante begrenzte Abrufe über denselben Scheduled-Discovery-Vertrag wie C31 vorsehen.",
+        "Titel, Abstract, Autoren, Kategorien und Veröffentlichungs-/Änderungsinformationen mit persistentem arXiv-Identifier und Versionsbezug erfassen; deduplizieren.",
+        "Relevanz mit begründeter Aufnahmeempfehlung und menschlicher Prüfung; spätere Source-Registry-Übernahme nur nach Freigabe.",
+        "Keine automatischen PDF-Volltextdownloads, keine Wahrheitsannahme aus Abstracts, keine Source-Promotion; Rate Limits/Nutzungsbedingungen beachten; keine Jobs aktivieren."
+      ]
+    },
+    {
+      "plan_id": "PERSONAL-PYREPO",
+      "repository": "rf-data/Personal_Assistant",
+      "source_title": "[PERSONAL-PYREPO] PyRepo Inspector – CS50P Final Project",
+      "source_plan_status": "Backlog",
+      "source_delivery_state": "planned",
+      "technical_state": "not_implemented",
+      "parent_plan_id": null,
+      "depends_on": [],
+      "priority": "P2",
+      "workstream": "Legacy",
+      "target_milestone": null,
+      "owner_mode": "human_only",
+      "optional": true,
+      "known_blockers": [],
+      "canonical_target": {
+        "representation_key": "plan-issue:rf-data/Personal_Assistant:PERSONAL-PYREPO",
+        "kind": "remaining_scope_issue",
+        "existing_issue_url": null,
+        "existing_pr": null,
+        "target_url": null,
+        "binding_status": "proposed_not_project_verified"
+      },
+      "project_item": {
+        "id": null,
+        "current_status": null,
+        "verification": "not_verified"
+      },
+      "proposed_project_status": "Backlog",
+      "status_scope": "remaining_work_or_parent_scope",
+      "apply_existing_value_policy": "preserve_confirmed_existing_fields_until_exact_item_scope_and_change_reason_verified",
+      "next_action": "reuse_matching_issue_or_project_item_else_create_scoped_issue_after_gate",
+      "performed_actions": [],
+      "execution_status": "blocked_by_phase_A",
+      "related_verified_prs": [],
+      "scope_note": "Human-only optional CS50P project. No Codex implementation/automatic Codex jobs, no new repository; C27 has no hard dependency.",
+      "acceptance": [
+        "Umsetzung ausschließlich durch den Projektinhaber persönlich; keine Codex-Implementierung oder automatischen Codex-Aufträge.",
+        "Eigenständiges Python-CLI: Dateien rekursiv erfassen, Imports per AST analysieren, Funktionen/Klassen erkennen, Modulabhängigkeiten darstellen und möglicherweise unreferenzierte Module kennzeichnen.",
+        "JSON-/Markdownberichte, optionale Pre-Commit-/Pre-Push-Nutzung; kein neues Repository oder Programmcode durch diesen Auftrag.",
+        "Eigenständiges optionales CS50P-Projekt außerhalb des kritischen Pfads. Spätere Wiederverwendung in C27 optional; C27 bleibt unabhängig."
+      ]
+    }
+  ],
+  "canonical_representations": [
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C23",
+      "kind": "milestone_parent_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C23"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C24",
+      "kind": "milestone_parent_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/personal-assistant-ui:C25",
+      "kind": "milestone_parent_issue",
+      "repository": "rf-data/personal-assistant-ui",
+      "covering_plan_ids": [
+        "C25"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C26",
+      "kind": "milestone_parent_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C26"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C27",
+      "kind": "milestone_parent_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C27"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C28",
+      "kind": "milestone_parent_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C28"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C29",
+      "kind": "milestone_parent_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C29"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C30",
+      "kind": "milestone_parent_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C30"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C31",
+      "kind": "milestone_parent_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C31"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C32",
+      "kind": "milestone_parent_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C32"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:75",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C23-01"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:76",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C23-02",
+        "C23-02A"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:72",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C23-03",
+        "C24-04-B"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:80",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C23-04"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:81",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C23-05"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/81",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C23-06",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C23-06"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:83",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-01"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:84",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-02"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/84",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:85",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-03"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:86",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-04"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/86",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C24-05",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-05"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/personal-assistant-ui:C25-01",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/personal-assistant-ui",
+      "covering_plan_ids": [
+        "C25-01"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/personal-assistant-ui:C25-02",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/personal-assistant-ui",
+      "covering_plan_ids": [
+        "C25-02"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/personal-assistant-ui:C25-03",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/personal-assistant-ui",
+      "covering_plan_ids": [
+        "C25-03"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/personal-assistant-ui:C25-04",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/personal-assistant-ui",
+      "covering_plan_ids": [
+        "C25-04"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/personal-assistant-ui:C26-01",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/personal-assistant-ui",
+      "covering_plan_ids": [
+        "C26-01"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C26-02",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C26-02"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C26-03",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C26-03"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C26-04",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C26-04"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C26-05",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C26-05"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/personal-assistant-ui:C26-06",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/personal-assistant-ui",
+      "covering_plan_ids": [
+        "C26-06"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C26-07",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C26-07"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:77",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C23-02B"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/77",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:78",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C23-02C"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/78",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:87",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-05-A"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/87",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:90",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-05-B1"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/90",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/personal-assistant-ui:7",
+      "kind": "existing_pr",
+      "repository": "rf-data/personal-assistant-ui",
+      "covering_plan_ids": [
+        "C24-05-B2"
+      ],
+      "target_url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "pr:rf-data/Personal_Assistant:91",
+      "kind": "existing_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-05-C2"
+      ],
+      "target_url": "https://github.com/rf-data/Personal_Assistant/pull/91",
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "active-task:feat/c24-06a-local-review",
+      "kind": "active_task_pending_published_pr",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-06-A"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C24-03-B",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-03-B"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C24-02-C",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C24-02-C"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:C28-01",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "C28-01"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    },
+    {
+      "representation_key": "plan-issue:rf-data/Personal_Assistant:PERSONAL-PYREPO",
+      "kind": "remaining_scope_issue",
+      "repository": "rf-data/Personal_Assistant",
+      "covering_plan_ids": [
+        "PERSONAL-PYREPO"
+      ],
+      "target_url": null,
+      "project_item_id": null,
+      "verification": "not_verified"
+    }
+  ],
+  "authenticated_repository_account": {
+    "login": "rf-data",
+    "verification": "verified_current_profile_not_project_permission"
+  }
+}

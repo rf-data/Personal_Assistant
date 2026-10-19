@@ -1,5 +1,11 @@
 # PM-01 – autorisierte Ausführung und konkrete Zugriffsgrenze
 
+PM-02, 19.10.2026: Aktueller PM-02-Fortsetzungsstand: [45er-Mapping](pm02_mapping.md),
+[manuelle GitHub-UI-Ausführung](pm02_project_execution.md),
+[tatsächliche Prüfungen und Blockade](pm02_validation.md). PM-01/#92 und MAINT-01/#93
+sind inzwischen gemergt; keine neue allgemeine Planfreigabe nötig. Die nachstehende
+PM-01-Anleitung bleibt historisch erhalten.
+
 19.10.2026. PM-01 autorisiert die beschriebenen **nichtdestruktiven Planungsänderungen**.
 Eine erneute allgemeine Planfreigabe ist nicht nötig. Der Auftrag verlangt vor
 Issue-/Projectmutationen aber die tatsächliche Prüfung des bestehenden Projects

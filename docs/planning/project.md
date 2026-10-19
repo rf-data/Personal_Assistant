@@ -1,5 +1,11 @@
 # Ein gemeinsames GitHub Project – PM-01
 
+PM-02, 19.10.2026: PM-02 prüft die Zugriffsgrenze erneut und bindet alle 45 Plan-IDs an vorgeschlagene
+Zielrepräsentationen. [Aktueller Abgleich](pm02_mapping.md),
+[Phase-A-/Ausführungsstand](pm02_validation.md),
+[konkreter UIablauf](pm02_project_execution.md). Projectinventar bleibt `not_verified`;
+keine Project- oder Issuemutation.
+
 19.10.2026. Ausschließlich das vom Projektinhaber benannte
 [**User-Project #1**](https://github.com/users/rf-data/projects/1) weiterverwenden.
 Kein weiteres Project, kein Ersatzplanungsdienst. Vorgesehener Name bleibt
