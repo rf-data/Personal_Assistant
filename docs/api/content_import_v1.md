@@ -182,3 +182,27 @@ UI synthetic AppTest against this implementation independently passed all six
 new cases (92.88 s), including real C16 worker/ContentStore publication, separate
 index activation, FTS5 search, process restart, Sourcegrant revocation and identity
 change. The separate UI PR documents the exact test environment and limitations.
+
+## PR / Project / lifecycle status
+
+DEV-02A [#126](https://github.com/rf-data/Personal_Assistant/pull/126) is merged at
+`7a4f2be`. All seven intended file blobs (including durable documentation) were
+compared with actual `origin/master` and match exactly. Its remote branch was already
+absent. No open PR referenced its head/base; all process CWDs were readable, with
+zero users of the task-own A worktree. Only 77 identified task-generated pyc/Ruff
+cache files remained, no uncommitted/untracked work. Normal `git worktree remove`
+and `git branch -d` removed exclusively `Personal_Assistant-dev02a` and
+`feat/dev02a-source-management`. Default master stayed `7a4f2be` and integrated docs
+remain present. No historical/MAINT branch, primary checkout or other task changed.
+
+DEV-02B [#127](https://github.com/rf-data/Personal_Assistant/pull/127) is open.
+Dependent UI [#17](https://github.com/rf-data/personal-assistant-ui/pull/17) is Draft.
+Their branches/worktrees remain because regular integration is pending; durable
+records are part of those PRs, not claimed integrated into default branches yet.
+
+Live Project #1 was checked before and after each insertion. #126 already existed;
+#127 and UI #17 were absent and each added once. Final live inventory contains each
+PR exactly once. #126 was already Done through the existing project lifecycle;
+#127/#17 are Backlog. No field/status/workflow or Issue closure was performed.
+Existing C23 #98, C28 #102, C24 index #115 and UI C25 #9–#13 remain referenced,
+without creating duplicates or closing broader/real acceptance work.
