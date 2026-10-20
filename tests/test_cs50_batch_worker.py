@@ -20,6 +20,7 @@ from src.job_control.models import TERMINAL, Identity, Settings, fingerprint
 from src.job_control.operations import backup, fence, restore
 from src.model_materials.materials import ArtifactReceipt, NormalizedDocument
 from src.tools_materials import batch as api
+from src.tools_materials.capacity import CapacityLimits
 from src.tools_materials.processing import make_plan
 from src.workflows.models import State
 from src.workflows.state import load
@@ -295,7 +296,8 @@ def wait(predicate, timeout=25):
     pytest.fail("Synthetic worker condition timed out")
 
 
-def test_managed_worker_cancel_restart_resume_and_stopped_backup(scope):
+@pytest.mark.parametrize("stop_reason", ["signal", "capacity"])
+def test_managed_worker_cancel_restart_resume_and_stopped_backup(scope, stop_reason):
     download_report = obtain(scope)
     catalog = api.seal(
         scope["batch"], scope["archive"], scope["tmp"] / "catalog", scope["approvals"]
@@ -323,6 +325,8 @@ def test_managed_worker_cancel_restart_resume_and_stopped_backup(scope):
     token.write_text(DEMO_TOKEN)
     token.chmod(0o600)
     catalog_file = scope["tmp"] / "catalog/catalog.json"
+    limits_file = scope["tmp"] / "limits.json"
+    api.output(limits_file, CapacityLimits().model_dump(mode="json"))
     controller = Controller(settings)
     actor = controller.authenticate("Bearer " + DEMO_TOKEN)
     refs = list(catalog["catalog"])
@@ -337,10 +341,11 @@ def test_managed_worker_cancel_restart_resume_and_stopped_backup(scope):
             [
                 sys.executable,
                 "-m",
-                "scripts.deployment",
-                "worker",
+                "scripts.cs50_worker",
                 "--config",
                 str(config),
+                "--limits",
+                str(limits_file),
             ],
             cwd=REPO,
             stdout=subprocess.DEVNULL,
@@ -369,9 +374,18 @@ def test_managed_worker_cancel_restart_resume_and_stopped_backup(scope):
         }
         assert preserved
         job = controller.store.all()[0]
-        controller.cancel(actor, job.job_id)
-        worker.terminate()
+        if stop_reason == "capacity":
+            # Sparse own test file: tests the size guard without allocating 2 GiB.
+            pressure = settings.root / "synthetic-capacity-pressure"
+            with pressure.open("xb") as stream:
+                stream.truncate(CapacityLimits().job_bytes + 1)
+        else:
+            controller.cancel(actor, job.job_id)
+            worker.terminate()
         worker.wait(timeout=15)
+        if stop_reason == "capacity":
+            assert worker.returncode == 2
+            pressure.unlink()
         worker.stderr.close()
         worker = start()
         wait(lambda: controller.store.worker_available(settings.worker_ttl))
@@ -398,9 +412,23 @@ def test_managed_worker_cancel_restart_resume_and_stopped_backup(scope):
                 and all(j.status in TERMINAL for j in controller.store.all())
             )
         )
-        reports = api.control(config, token, catalog_file, "report")
+        # A reserve larger than this test filesystem blocks new work, not diagnosis.
+        high_reserve = CapacityLimits(reserve_bytes=1024**4)
+        reports = api.control(
+            config, token, catalog_file, "report", limits=high_reserve
+        )
         assert len(reports["workflows"]) == 3
         assert all(w["report"]["status"] == "completed" for w in reports["workflows"])
+        with pytest.raises(ValueError, match="reserve"):
+            api.control(
+                config,
+                token,
+                catalog_file,
+                "execute",
+                refs,
+                confirm=True,
+                limits=high_reserve,
+            )
         again = api.control(config, token, catalog_file, "resume", refs, confirm=True)
         assert len(controller.store.all()) == 4
         assert all(
@@ -643,8 +671,10 @@ def test_compose_profiles_and_runtime_inclusion():
     downloader = doc["services"]["downloader"]
     assert {v["target"] for v in downloader["volumes"]} == {
         "/run/c26",
+        "/run/config/c26-limits.json",
         "/var/lib/personal-assistant/archive",
     }
     dockerfile = (REPO / "deployment/Dockerfile").read_text()
     assert "--frozen --no-dev --no-install-project" in dockerfile
     assert "scripts/cs50_batch.py" in dockerfile
+    assert "scripts/cs50_worker.py" in dockerfile

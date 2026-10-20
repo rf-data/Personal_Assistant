@@ -8,6 +8,7 @@ from pathlib import Path
 
 from src.job_control.models import fingerprint
 from src.tools_materials import batch as api
+from src.tools_materials.capacity import CapacityLimits, estimate, load_limits
 
 
 def main(argv=None):
@@ -37,9 +38,14 @@ def main(argv=None):
     a.add_argument("--source-ref", action="append", default=[])
     a.add_argument("--confirm", action="store_true")
     a.add_argument("--output", type=Path)
+    for parser in sub.choices.values():
+        parser.add_argument(
+            "--limits", type=Path, default=os.environ.get("C26_LIMITS_FILE")
+        )
     args = p.parse_args(argv)
     os.umask(0o077)
     try:
+        limits = load_limits(args.limits) if args.limits else CapacityLimits()
         if args.command == "plan":
             batch = api.plan(
                 args.manifest, args.course, args.resource, synthetic=args.synthetic
@@ -47,8 +53,10 @@ def main(argv=None):
             result = dict(
                 batch=batch.model_dump(mode="json"),
                 sha256=fingerprint(batch.model_dump(mode="json")),
+                capacity_plan=estimate(batch, limits),
+                capacity_limits=limits.model_dump(mode="json"),
             )
-            api.output(args.output, result)
+            api.output(args.output, result, limits=limits)
         elif args.command in {"download", "seal"}:
             batch = api.load_batch(args.batch)
             approvals = (
@@ -61,7 +69,9 @@ def main(argv=None):
                     raise PermissionError(
                         "Explicit catalog publication confirmation required"
                     )
-                result = api.seal(batch, args.archive, args.output, approvals)
+                result = api.seal(
+                    batch, args.archive, args.output, approvals, limits=limits
+                )
             else:
                 result = api.obtain(
                     batch,
@@ -69,9 +79,17 @@ def main(argv=None):
                     approvals,
                     execute=args.confirm,
                     retry_failed=args.retry_failed,
+                    limits=limits,
                 )
                 if args.output:
-                    api.output(args.output, result)
+                    api.output(
+                        args.output,
+                        result,
+                        limits=limits,
+                        budget=limits.archive_bytes
+                        if args.output.parent == args.archive
+                        else limits.report_bytes,
+                    )
         else:
             result = api.control(
                 args.config,
@@ -80,9 +98,10 @@ def main(argv=None):
                 args.action,
                 args.source_ref,
                 confirm=args.confirm,
+                limits=limits,
             )
             if args.output:
-                api.output(args.output, result)
+                api.output(args.output, result, limits=limits)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         rows = result.get("materials", [])
         failed = any(r["status"] in {"blocked", "failed", "unsupported"} for r in rows)

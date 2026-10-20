@@ -4,8 +4,10 @@
 **`deployment_prepared`, nicht `staging_tested`, nicht `production_approved`.**
 Lokales Integrationspaket mit synthetischem Prozessnachweis; keine Installation
 oder Verbindung zum Hetzner-Host, keine echten Downloads, kein öffentlicher Dienst.
-Serveridentität, Deploy-Account, Hostroots, Kapazität und Nutzungsfreigaben sind
-nicht bestätigt. MAINT bleibt On Hold. Kein Bezug zu einer Loviscach-Importfreigabe.
+Hostdaten wurden inzwischen vom Betreiber gemeldet. Der konkrete
+[2-vCPU-/4-GiB-Pilotplan](hetzner_small_pilot.md) berücksichtigt sie; unabhängige
+Hostverifikation, Deploy-Account, Hostroots und Nutzungsfreigaben bleiben offen.
+MAINT bleibt On Hold. Kein Bezug zu einer Loviscach-Importfreigabe.
 
 ## Tatsächliche Architektur und ergänzte Übergabe
 
@@ -26,9 +28,10 @@ flowchart LR
   R --> J[Persistente Job- und Stageartefakte / Reports]
 ```
 
-Neu sind ausschließlich `src/tools_materials/batch.py`, der CLI-Einstieg
-`scripts.cs50_batch`, die drei zusätzlichen CLI-Kopien im bestehenden Runtimeimage
-und das separate Compose-Profil. Queue, Scheduler, Parser, Datenbankschemas,
+Neu sind die begrenzte Batchübergabe `src/tools_materials/batch.py` mit
+`scripts.cs50_batch`, C26-Kapazitätskontrollen in `capacity.py` und der dünne
+`scripts.cs50_worker`-Einstieg über den bestehenden Executor. CLI-Dateien sind im
+bestehenden Runtimeimage enthalten. Queue, Scheduler, Parser, Datenbankschemas,
 Quality Gate und fachliche Modelle werden nicht ersetzt oder migriert.
 Der Download bleibt ein begrenzter synchroner CLI-Schritt mit bestehenden
 `ArtifactReceipt`-Zuständen; nur C16 besitzt persistierte Processingjobs.
@@ -57,6 +60,7 @@ zusätzlichen erwarteten SHA; Abweichungen verhindern die Übergabe.
 - Höchstens **32 ausdrücklich gewählte Materialien** pro Batch/Katalogfragment;
   größere Kurse bewusst über getrennte Auswahlmengen bearbeiten. Keine stille
   Kürzung, keine automatische Katalogablösung und kein zweiter Scheduler.
+  Das kleine Hostprofil begrenzt die Auswahl zusätzlich auf **drei** Materialien.
 - Nur HTML-v2, PDF-v2 und bestehender Codeparser; Bilder als eigenständige
   Materialtypen, Medien, Archive und Transkriptrollen werden hier nicht aktiviert.
 - Höchstens **1 MiB Raw pro Material**; C18 maximal 1000 Blöcke standardmäßig,
@@ -93,20 +97,25 @@ zusätzlichen erwarteten SHA; Abweichungen verhindern die Übergabe.
 [Umgebungsvariablen](../../../deployment/cs50-worker.env.example),
 [Controller-Template](../../../deployment/cs50-worker.controller.json.example) und
 [leere Sourcefreigaben](../../../deployment/cs50-source-approvals.json.example).
+Alle drei Rollen benötigen zusätzlich eine private Limitsdatei über `C26_LIMITS`:
+[generische Vorlage](../../../deployment/cs50-worker.limits.json.example),
+für den gemeldeten Host ausschließlich das [kleine Profil](hetzner_small_pilot.md).
 Controller-Ausführung ist standardmäßig deaktiviert, Identitäten und Katalog leer.
 Ohne explizites Compose-Profil startet kein Dienst. Sämtliche Mounts müssen bereits
 existieren (`create_host_path=false`), Imagepulls sind verboten (`pull_policy=never`).
 
 | Rolle | Netz / Zugriff | Betrieb |
 | --- | --- | --- |
-| `executor`, Profil `processing` | `network_mode: none`; Jobroot RW, Katalog/Controller RO; keine Tokens | C22-Worker, bestehender Heartbeat-Healthcheck, `unless-stopped`, 30 s Stopgrace |
+| `executor`, Profil `processing` | `network_mode: none`; Jobroot RW, Katalog/Controller/Limits RO; keine Tokens | Bestehender C22/C16-Executor mit C26-Kapazitätskontrolle, Heartbeat-Healthcheck, 30 s Stopgrace |
 | `offline-cli`, Profil `tools` | Kein Netzwerk; Jobroot/Katalog/Exporte RW, Archiv/Spezifikationen/Controller/Operator-Token RO | Explizite kurzlebige SSH-/Compose-Aufrufe; kein Server oder Scheduler |
 | `downloader`, Profil `download` | Nur vorab angelegtes freigegebenes Egress-Netz; Archiv RW, Spezifikationen RO; keine Queue, Controller, Tokens oder Stores | Expliziter Einmallauf, 1 CPU/512 MiB/64 PIDs, Exitcode statt Dauerprozesshealth |
 
 Alle Rollen: UID/GID 10001, Root-FS read-only, alle Capabilities entfernt,
 `no-new-privileges`, begrenztes noexec-/nosuid-/nodev-`/tmp`, keine Hostports,
-kein Docker-Socket, keine Host-PID-/privilegierten Container. Worker/Operator:
-2 CPU/1536 MiB/512 PIDs, Dockerlogs 3 × 10 MiB. Das sind Limits, keine Messung
+kein Docker-Socket, keine Host-PID-/privilegierten Container.
+Generische Defaults: Worker/CLI 2 CPU/1536 MiB/512 PIDs, Dockerlogs 3 × 10 MiB,
+Worker `unless-stopped`. **Das kleine Hostprofil ersetzt diese Werte und verwendet
+manuellen Neustart.** Das sind Limits, keine Messung
 der Hostkapazität oder Isolation im tatsächlichen Container.
 
 Docker dokumentiert `network_mode: none`,
@@ -171,8 +180,8 @@ kein NFS/SMB oder repliziertes Volume. Rootbesitz durch die tatsächlich verwend
 Container-UID/GID, Verzeichnisse 0700 und Dateien 0600. Bestehende Bestände nicht
 rekursiv chownen, verschieben oder ersetzen. Zunächst Hostidentität/Mounts,
 Dateisystem/Ownership und Nichtbelegung nachweisen, erst dann ausdrücklich
-genehmigte neue Pfade anlegen. Planungsstart: 2 vCPU, 4 GiB RAM und mindestens
-10 GiB frei **zuzüglich** dimensionierter Raw-/Job-/Katalog-/Backupkapazität und
+genehmigte neue Pfade anlegen. Der konkrete kleine Plan verwendet 2 vCPU/4 GiB RAM
+und mindestens 5 GiB verbleibende Reserve **zuzüglich** Raw-/Job-/Katalog-/Backupkapazität und
 bestehender Coolifylast. Host- und Kostenfreigabe fehlen. C22s 512-MiB-Reserve
 bleibt unverändert; kein Lasttest, Quota- oder Retentionsautomatismus.
 
@@ -194,7 +203,7 @@ c26 --profile tools run --rm --no-deps offline-cli -m scripts.cs50_batch plan \
 ```
 
 Ohne `--resource` wird der ausgewählte Snapshotkurs vollständig ausgewählt;
-mehr als 32 Materialien werden abgewiesen. `--course` und `--resource` können
+mehr als 32 Materialien (kleines Profil: drei) werden abgewiesen. `--course` und `--resource` können
 wiederholt werden. Source-/Material-ID, genaue URL, Kurs, Rolle und Provenienz
 stehen im erzeugten Batch. Betreiber prüft diesen und übernimmt bewusst eine
 neue private Kopie nach `specs/batch-r1.json`; kein automatischer Transfer.
@@ -337,7 +346,7 @@ Start nötig; die bestehende [C26-TLS-/UI-Abnahme #110](https://github.com/rf-da
 bleibt unabhängig offen. [Produktionsrelease #100](https://github.com/rf-data/Personal_Assistant/issues/100),
 [Monitoring #112](https://github.com/rf-data/Personal_Assistant/issues/112) und
 [Go-live #113](https://github.com/rf-data/Personal_Assistant/issues/113) werden nicht
-durch diese Vorbereitung geschlossen. Fehlende Hostangaben erlauben keinen
+durch diese Vorbereitung geschlossen. Unbestätigte Hostvoraussetzungen erlauben keinen
 konkreten Zielhost-Erfolgsbefund; es wurden keine SSH- oder Coolify-Anfragen gesendet.
 
 Technische Nachweise und tatsächliche Laufzahlen: [validation.md](validation.md).

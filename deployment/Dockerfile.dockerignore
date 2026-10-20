@@ -12,6 +12,7 @@
 !scripts/cs50_materials.py
 !scripts/cs50_workflow.py
 !scripts/cs50_batch.py
+!scripts/cs50_worker.py
 **/__pycache__
 **/*.pyc
 **/.env*

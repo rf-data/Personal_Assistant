@@ -1,6 +1,5 @@
 """Explicit CS50 archive-to-C18 handoff. C16 remains the only execution queue."""
 
-import shutil
 import time
 from pathlib import Path
 from typing import Literal
@@ -13,6 +12,12 @@ from src.job_control.controller import Controller, authenticate
 from src.job_control.models import CatalogEntry, Contract, Sha, fingerprint
 from src.job_control.operations import fence, preflight, private
 from src.model_materials.materials import ArtifactReceipt, MaterialResource
+from src.tools_materials.capacity import (
+    CapacityLimits,
+    CapacityTransport,
+    check_capacity,
+    estimate,
+)
 from src.tools_materials.download import MaterialDownloader
 from src.tools_materials.processing import make_plan, parser_for
 from src.tools_materials.quality import _json
@@ -87,12 +92,17 @@ def sha(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
-def output(path, value):
+def output(path, value, *, limits=None, budget=None):
     from src.content_store.models import canonical
 
     path = artifact_root(Path(path))
     private(path.parent, directory=True)
-    publish_bytes(path, canonical(value) + b"\n")
+    raw = canonical(value) + b"\n"
+    if limits is not None:
+        check_capacity(
+            path.parent, budget or limits.report_bytes, limits.reserve_bytes, len(raw)
+        )
+    publish_bytes(path, raw)
 
 
 def plan(manifest, courses, resources=(), *, synthetic=False):
@@ -182,16 +192,20 @@ def obtain(
     retry_failed=False,
     transport=None,
     sleep=time.sleep,
+    limits=None,
 ):
     """Serial existing downloader; no automatic retries or second job store."""
     archive = artifact_root(Path(archive))
+    limits = limits or CapacityLimits()
+    limits.batch_size(batch)
     if execute:
         private(archive, directory=True)
-        if (
-            shutil.disk_usage(archive).free
-            < 512 * 1024**2 + len(batch.materials) * batch.max_bytes
-        ):
-            raise ValueError("Download capacity reserve")
+        check_capacity(
+            archive,
+            limits.archive_bytes,
+            limits.reserve_bytes,
+            estimate(batch, limits)["archive_increment_allowance_bytes"],
+        )
     downloader = MaterialDownloader(
         archive, max_bytes=batch.max_bytes, retries=0, transport=transport
     )
@@ -222,7 +236,15 @@ def obtain(
                 if transfers and not reusable:
                     sleep(approvals.min_interval_seconds)
                 transfers += not reusable
-                receipt = downloader.obtain(b, execute=True, license_reviewed=True)
+                guarded = MaterialDownloader(
+                    archive,
+                    max_bytes=batch.max_bytes,
+                    retries=0,
+                    transport=CapacityTransport(
+                        transport or httpx.HTTPTransport(retries=0), archive, limits
+                    ),
+                )
+                receipt = guarded.obtain(b, execute=True, license_reviewed=True)
                 if (
                     grant.expected_sha256
                     and receipt.raw_sha256 != grant.expected_sha256
@@ -248,9 +270,11 @@ def obtain(
     )
 
 
-def seal(batch, archive, destination, approvals):
+def seal(batch, archive, destination, approvals, *, limits=None):
     """New immutable C16 input bundles, including the original HTTP receipts."""
     archive = private(artifact_root(Path(archive)), directory=True)
+    limits = limits or CapacityLimits()
+    limits.batch_size(batch)
     destination = artifact_root(Path(destination))
     private(destination.parent, directory=True)
     if (
@@ -263,17 +287,12 @@ def seal(batch, archive, destination, approvals):
         batch.manifest.parent
     ):
         raise ValueError("Separate snapshot and output roots required")
-    if (
-        shutil.disk_usage(destination.parent).free
-        < 512 * 1024**2
-        + sum(
-            len(read_file(safe_path(batch.manifest.parent, name)))
-            for name in batch.files
-        )
-        * len(batch.materials)
-        + len(batch.materials) * batch.max_bytes
-    ):
-        raise ValueError("Catalog capacity reserve")
+    check_capacity(
+        destination.parent,
+        limits.catalog_bytes,
+        limits.reserve_bytes,
+        estimate(batch, limits)["catalog_increment_allowance_bytes"],
+    )
     destination.mkdir(mode=0o700)
     downloader = MaterialDownloader(archive, max_bytes=batch.max_bytes)
     catalog, rows = {}, []
@@ -358,16 +377,24 @@ def seal(batch, archive, destination, approvals):
     return result
 
 
-def control(config, token_file, catalog_file, action, refs=(), *, confirm=False):
+def control(
+    config, token_file, catalog_file, action, refs=(), *, confirm=False, limits=None
+):
     """One explicit bounded submission/report, never runs its own executor."""
     settings = preflight(Path(config))
     with fence(settings.root):
         return _control(
-            settings, token_file, catalog_file, action, refs, confirm=confirm
+            settings,
+            token_file,
+            catalog_file,
+            action,
+            refs,
+            confirm=confirm,
+            limits=limits or CapacityLimits(),
         )
 
 
-def _control(settings, token_file, catalog_file, action, refs, *, confirm):
+def _control(settings, token_file, catalog_file, action, refs, *, confirm, limits):
     if action not in {"preview", "execute", "resume", "cancel", "report"}:
         raise ValueError("Unknown C18 action")
     writing = action in {"execute", "resume", "cancel"}
@@ -382,6 +409,10 @@ def _control(settings, token_file, catalog_file, action, refs, *, confirm):
     ):
         raise ValueError("Catalog publication digest mismatch")
     selected = tuple(refs) or tuple(document["catalog"])
+    if action in {"execute", "resume"}:
+        if len(selected) > limits.max_materials:
+            raise ValueError("Pilot material count exceeded")
+        check_capacity(settings.root, limits.job_bytes, limits.reserve_bytes)
     if len(set(selected)) != len(selected) or len(selected) > 32:
         raise ValueError("Bounded unique source refs required")
     for ref in selected:

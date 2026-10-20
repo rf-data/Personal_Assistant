@@ -2,6 +2,8 @@
 
 20.10.2026 · Status **`deployment_prepared`**.
 Die [Bereitstellung und Betreiberfreigaben](worker.md) sind vorbereitet.
+Die inzwischen gemeldeten Hostdaten werden im [kleinen Pilotplan](hetzner_small_pilot.md)
+berücksichtigt; sie wurden nicht durch eigene SSH-/Hostprüfungen bestätigt.
 Kein `staging_tested` oder `production_approved`, kein Hetznerzugriff, keine echten
 CS50-Downloads, keine Images gebaut/gepullt, keine bestehenden Stores verändert.
 
@@ -127,7 +129,8 @@ keine dieser Pfadangaben wurde provisioniert. Ohne Daemonkontakt erfolgreich:
 
 Zusätzlich automatisierte YAML-/Dockerfileprüfungen für UID, read-only,
 Capabilities, fehlende Hostports/Docker-Sockets, explizite Profile und
-`create_host_path=false`; Downloader hat nur Spezifikations- und Archivmounts.
+`create_host_path=false`; Downloader hat nur Spezifikations-, Archiv- und den
+zusätzlichen read-only Kapazitätsdateimount, keine Jobdatenbank oder Secrets.
 Die neue CLI wird tatsächlich in den bestehenden Buildkontext aufgenommen;
 Lockdateien bleiben unverändert. Ruff Check und Format Check erfolgreich für
 die drei neuen Pythondateien; lokale Dokumentationsverweise, JSON-/Belegmodelle
@@ -138,14 +141,87 @@ zulässigen read-only Zugriff wurde anschließend der **leere lokale Imagebestan
 bestätigt. Es gibt keinen Imagebuild-, Container-, cgroup-, OOM-, read-only-FS-,
 Container-PID-/Egress-/Coolify- oder echten Healthcheck-Nachweis im Zielcontainer.
 Nichts gepullt/installiert und kein Serverzustand verändert. Diese Abnahmen,
-Image-/Quellenfreigaben, Hostdaten und konsistenter Verbundrestore bleiben offen.
+Image-/Quellenfreigaben, Hostverifikation und konsistenter Verbundrestore bleiben offen.
+
+## Nachtrag: operatorgemeldeter 2-vCPU-/4-GiB-Host
+
+Das vorhandene Composepaket ist parametrisiert, keine neue Anwendung. Die kleine
+Envvorlage rendert den Worker mit **1 CPU / 1024 MiB / 128 PIDs**, tmpfs 128 MiB,
+`restart: no` und Swaplimit gleich RAMlimit; CLI und Downloader jeweils 256 MiB.
+Alle Limits werden nur als Konfiguration nachgewiesen, nicht als auf dem Host
+gemessene Durchsetzung. Deployaccount, SSHalias/Hostkeyvertrauensbeleg, Image-
+und Rootfreigaben bleiben offen. Bestehende Coolifydienste unverändert.
+
+Die explizite private Limitsdatei ist in allen drei Rollen RO gemountet.
+Kleines Profil: **5 GiB Freiraumreserve, drei Materialien, Archiv 64 MiB,
+Katalog 128 MiB, Jobroot 512 MiB und Exporte 16 MiB**. Die C26-Kontrollen prüfen
+vor Schreiben/Einreichung, im HTTPstream sowie regelmäßig im bestehenden Executor.
+Es handelt sich um Stoppschwellen, keine atomare Reservation oder Filesystemquota.
+Keine Änderung an C22s bestehender 512-MiB-Untergrenze, C16-Queue oder C19-Limits.
+Der kleine Hostplan benennt Ausgabenwachstum, Backup-/Imagezuschläge, unbekannte
+Gesamtkursgrößen und die konkrete noch auszufüllende Installationsfreigabe.
+
+Tatsächlicher gemeinsamer Lauf mit obigem Python-/Pytestpräfix:
+
+```sh
+tests/test_cs50_capacity.py tests/test_cs50_batch_worker.py \
+tests/test_cs50_material_download.py tests/test_deployment_operations.py \
+--basetemp=/dev/shm/c26a-small-release
+```
+
+**78 passed / 0 failed / 0 skipped, 44,38 s**: 13 Kapazitätsfälle, 23 C26-Fälle
+einschließlich zweier tatsächlicher Workerprozessabläufe und 42 bestehende
+Download-/C22-Fälle. Kein externer HTTP-/Host-/Containerzugriff. Der reale Workerprozess
+führt synthetische HTML-/Code-/PDFbytes aus; die Quelle bleibt MockTransport.
+
+Neu nachgewiesen: striktes Policy-/Privatrechteformat, fehlende konfigurierte
+Limitsdatei sperrt statt Defaultfallback, kleine Materialanzahl und wiederholbarer
+Kapazitätsplan, 5-GiB-Grenzfälle mit simuliertem freien Speicher, Ablehnung vor
+neuen Writes, Streamabbruch ohne Rawpublikation, symlinkfreie Größenprüfung,
+Reportbudget sowie Einzelworkerpflicht. Compose wird tatsächlich ohne Daemon
+gerendert und auf die kleinen Ressourcen-/Swap-/Neustart-/Mountwerte geprüft.
+Die volle 5-GiB-Policy kann im nur 3,3-GiB-Testtmpfs nicht laufen; die Prozessfälle
+verwenden ausdrücklich die generische 512-MiB-Reserve, keine abgeschwächte
+Hostvorlage und keine behauptete Hostkapazitätsabnahme.
+
+Der zweite echte E2E-Fall erzeugt ausschließlich eine eigene sparse Testdatei
+mit deklarierter Größe über dem Jobbudget. Sie belegt keine zwei GiB physisch.
+Der C26-Worker stoppt während einer laufenden PDFstufe mit Exit 2 über vorhandenes
+Childcleanup; danach expliziter Neustart/Resume, unveränderte committete Outputs,
+Idempotenz und gestoppter C22-Backup/Restore erfolgreich. Das ist ein tatsächlicher
+Budgetabbruch, **kein injizierter Kernel-ENOSPC-, Container-OOM- oder Hostcrashtest**.
+
+Ein vorheriger Entwicklungslauf hatte **35 passed / 1 failed**, 44,61 s:
+Compose gibt in dieser CLIversion Bytewerte als JSONstrings zurück. Die Prüfung
+wurde auf numerische Werte konvertiert; keine Ressourcenwerte geändert. Ruff
+meldete zuvor eine Testfixture-Importkollision, die vor der Abnahme korrigiert ist.
+Diese Läufe werden nicht addiert. Der ältere versionierte E2E-Beleg bleibt bytegleich
+und behauptet keinen neuen Container- oder Hosttest.
+
+Nach der abschließenden Zuordnung von Downloadberichten zum Archivbudget (statt
+zum separaten Exportbudget) und dem ausdrücklichen Diagnosefall bei hoher Reserve:
+
+```sh
+tests/test_cs50_capacity.py tests/test_cs50_batch_worker.py \
+--basetemp=/dev/shm/c26a-small-final
+```
+
+**37 passed / 0 failed / 0 skipped, 52,17 s** auf dem endgültigen Pythoncode:
+14 Kapazitätsfälle und 23 C26-Fälle. Bestehende Originalbytes oberhalb des
+Exportbudgets verhindern keinen schreibfreien Downloadpreviewbericht im Archiv.
+Ein Report bleibt bei unterschrittener C26-Reserve lesbar, während eine neue
+Einreichung abgewiesen wird; C22s Mindestreserve wird dabei weiterhin geprüft.
+Dieser Lauf überlappt mit dem 78er-Lauf und wird nicht addiert.
+Ruff Check und Format Check erfolgreich für alle **sechs** betroffenen Pythondateien;
+beide Kapazitätsvorlagen gegen ihr tatsächliches Modell validiert, ursprünglicher
+versionierter E2E-Beleg byteidentisch. Kein gesamter Repositorytestlauf.
 
 ## Integration und Lifecycle
 
 Eigener Branch `feat/c26a-cs50-worker`, eigener Worktree; primäre Checkouts und
 andere offene Aufträge bleiben unberührt. Code, Konfiguration und diese dauerhaften
 Nachweise liegen in [PR #135](https://github.com/rf-data/Personal_Assistant/pull/135)
-gegen master. Der PR ist offen, die zwölf Dateien enthalten ausschließlich Code,
+gegen master. Der PR ist offen, die Dateien enthalten ausschließlich Code,
 Deploymentvorlagen, Dokumentation, synthetische Tests und den geprüften Beleg.
 Commit-Hooks inklusive JSONprüfung erfolgreich. Getrackter Gitstatus sauber;
 der bekannte eigene Ruffcache bleibt ignoriert. Beide primären Checkouts sauber.
