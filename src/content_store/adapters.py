@@ -190,12 +190,18 @@ def _capture(bundle, kind):
             take(paths[key], path)
     if kind == "material":
         doc = NormalizedDocument.model_validate(_json_bytes(files[paths["payload"]]))
+        image_paths = set()
         for image in doc.images:
             if image.artifact_path is not None:
                 relative = _relative(
                     root / Path(paths["payload"]).parent / image.artifact_path, root
                 )
-                take(relative, root / relative)
+                # Multiple occurrences may share the parser's hash-addressed blob.
+                # Deduplicate image bytes only; role/file collisions and every
+                # occurrence's declared hash remain checked by the existing gate.
+                if relative not in image_paths:
+                    take(relative, root / relative)
+                    image_paths.add(relative)
     return _Frozen(
         kind=kind,
         files=tuple(sorted(files.items())),
