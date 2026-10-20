@@ -138,3 +138,33 @@ Review-PRs: [Backend #137](https://github.com/rf-data/Personal_Assistant/pull/13
 und [UI #18](https://github.com/rf-data/personal-assistant-ui/pull/18). Beide offen
 und ungemergt; keine Produktivfreigabe. Getesteter Code: Backend `1d8776c`,
 UI `af69212`; spätere Änderungen ergänzen ausschließlich Dokumentationsverweise.
+
+## Reproduktion der Backendprüfungen
+
+Im Backendcheckout mit vorhandener Testumgebung (synthetische lokale Prozesse und
+Loopbacksockets erlauben; keine echten Settings oder Kursdaten einbinden):
+
+```sh
+set -eu
+: "${C16_PYTHON:?Vorhandene Backend-Testumgebung}"
+export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1
+"$C16_PYTHON" -m pytest -q -p no:cacheprovider tests/test_https_preflight.py
+"$C16_PYTHON" -m pytest -q -p no:cacheprovider \
+  tests/test_deployment_transport.py tests/test_deployment_operations.py \
+  tests/test_content_http.py tests/test_content_search_http.py tests/test_workflow_http.py
+```
+
+Der ursprüngliche gemeinsame Lauf enthielt dieselben Dateien plus die damals
+20 Preflightfälle; heute sind es 24 neue Fälle. Der weiterhin bekannte Fehler heißt
+`tests/test_workflow_http.py::test_versioned_schema_snapshots_and_original_c16_models`.
+Der isoliert bestandene frühere Lockfehler war
+`test_stale_resume_runs_only_required_stages_and_preserves_old_bytes[normalized]`.
+Kein Snapshot wurde passend zu dieser Aufgabe umgeschrieben. Vergleichsbasis ist
+ein unverändertes `git archive 449437b` mit derselben Pythonumgebung und exakt
+obigem Schemasnapshottest.
+
+UI-/Browser-/Containertestbefehle stehen im zugehörigen
+[UI-Testnachtrag](https://github.com/rf-data/personal-assistant-ui/blob/feat/c26b-https/docs/c26_https.md).
+Die Containerprobe verwendet das lokal gebaute Reviewimage; der maschinenlesbare
+Containerbeleg bindet dessen tatsächliche Image-ID. Diese ID ist kein freigegebener
+Registrymanifest-Digest und wird nicht als Produktionswert in die Vorlagen gesetzt.

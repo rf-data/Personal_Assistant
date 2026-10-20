@@ -46,7 +46,11 @@
       "passed": 173,
       "failed": 2,
       "total": 175,
-      "seconds": 437.36
+      "seconds": 437.36,
+      "failed_tests": [
+        "tests/test_workflow_http.py::test_stale_resume_runs_only_required_stages_and_preserves_old_bytes[normalized]",
+        "tests/test_workflow_http.py::test_versioned_schema_snapshots_and_original_c16_models"
+      ]
     },
     "backend_targeted_recheck": {
       "passed": 1,
