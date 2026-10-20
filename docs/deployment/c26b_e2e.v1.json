@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "status": "https_staging_tested",
+  "production_release": "production_release_blocked",
+  "scope": "isolated_local_synthetic_only",
+  "browser_tls": "test_CA_exception_only; strict_TLS_verified_separately",
+  "traefik_image": "traefik:v3.6@sha256:31267173a15b4944e797a76ffd9c419707c8d8b32fe5b610f80cd0cfa05f372d",
+  "components": {
+    "proxy": "isolated Traefik container",
+    "ui": "canonical Streamlit app in native local process",
+    "backend": "actual C16 Application and Executor in native local process",
+    "oidc": "ephemeral loopback RS256 code/JWKS test provider"
+  },
+  "not_tested": [
+    "production",
+    "selected_identity_provider",
+    "actual_vpn",
+    "coolify_4.4.2_render",
+    "browser_CA_trust_store",
+    "alert_delivery",
+    "host_resource_budget",
+    "host_backup_restore_rollback"
+  ],
+  "tests": [
+    {
+      "test": "real_synthetic_backend_tls_started",
+      "status": "passed"
+    },
+    {
+      "test": "real_direct_backend_missing_and_invalid_auth_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "traefik_real_tls_verified_and_http_redirect",
+      "status": "passed"
+    },
+    {
+      "test": "untrusted_certificate_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "host_origin_and_forged_forwarded_headers",
+      "status": "passed"
+    },
+    {
+      "test": "traefik_private_allowlist_and_forwarded_ip_bypass_denied",
+      "status": "passed"
+    },
+    {
+      "test": "browser_unauthenticated_ui_denied",
+      "status": "passed"
+    },
+    {
+      "test": "browser_oidc_bad-state_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "browser_oidc_bad-nonce_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "browser_real_oidc_login_websocket_secure_cookie",
+      "status": "passed"
+    },
+    {
+      "test": "browser_existing_c16_processing_job_completed",
+      "status": "passed"
+    },
+    {
+      "test": "browser_real_fts_search_and_source_detail",
+      "status": "passed"
+    },
+    {
+      "test": "browser_backend_restart_session_search_recovery",
+      "status": "passed"
+    },
+    {
+      "test": "browser_logout_cookie_removed",
+      "status": "passed"
+    },
+    {
+      "test": "browser_expired_session_denied",
+      "status": "passed"
+    },
+    {
+      "test": "no_credentials_in_process_logs",
+      "status": "passed"
+    }
+  ]
+}
