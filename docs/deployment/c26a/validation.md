@@ -144,7 +144,12 @@ Image-/Quellenfreigaben, Hostdaten und konsistenter Verbundrestore bleiben offen
 
 Eigener Branch `feat/c26a-cs50-worker`, eigener Worktree; primäre Checkouts und
 andere offene Aufträge bleiben unberührt. Code, Konfiguration und diese dauerhaften
-Nachweise werden per PR gegen master übergeben. Kein automatischer Merge/Close,
+Nachweise liegen in [PR #135](https://github.com/rf-data/Personal_Assistant/pull/135)
+gegen master. Der PR ist offen, die zwölf Dateien enthalten ausschließlich Code,
+Deploymentvorlagen, Dokumentation, synthetische Tests und den geprüften Beleg.
+Commit-Hooks inklusive JSONprüfung erfolgreich. Getrackter Gitstatus sauber;
+der bekannte eigene Ruffcache bleibt ignoriert. Beide primären Checkouts sauber.
+Kein automatischer Merge/Close,
 keine Done-Einstufung offener C26-Abnahmen und keine MAINT-Bereinigung.
 Bis zur bestätigten Integration müssen Branch/Worktree erhalten bleiben;
 `deployment_prepared` ersetzt weder den Git-Integrationsabschluss noch Staging-

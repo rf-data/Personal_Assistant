@@ -143,7 +143,11 @@ docker build --pull=false -f deployment/Dockerfile \
 `--pull=false` garantiert bei fehlender Basis kein Offlinebuild. Basisimages und
 gefrorene Pakete müssen aus ausdrücklich zugelassenen Quellen bereitgestellt
 werden; dieses Kommando wurde hier nicht ausgeführt. Gebauten, getesteten
-Runtime-Digest anschließend als `BACKEND_DIGEST` festlegen. Container-/Imageabnahme
+Runtime-Digest anschließend als `BACKEND_DIGEST` festlegen. Die exakte Referenz
+`personal-assistant-runtime@sha256:…` muss lokal auflösbar sein; ein Buildtag allein
+genügt nicht. Den zusätzlichen genehmigten Registry-/Importweg und die tatsächliche
+Digestreferenz prüfen, keine Image-ID als ungeprüften Ersatz einsetzen.
+Container-/Imageabnahme
 bleibt [#109](https://github.com/rf-data/Personal_Assistant/issues/109).
 
 ## Vorgeschlagenes lokales Hostlayout
