@@ -161,3 +161,11 @@ ist inzwischen extern auf master `61ad351` gemergt. UI #17 bleibt offen. Die hie
 protokollierte synthetische Baseline verwendet unverändert den zu Beginn integrierten
 `7a4f2be`-Stand und keine ungemergten Source-Import- oder DEV-03-Folgepakete.
 Realverarbeitung bleibt unabhängig davon durch die Betreiberentscheidung gesperrt.
+
+Vor Veröffentlichung wurde master `2c51da6` lokal integriert: enthält inzwischen
+DEV-02B #127 und DEV-03A #128, beide extern gemergt. Das neue C-Replayszenario
+wurde danach erneut unverändert ausgeführt:
+`tests/test_dev03_retrieval.py --basetemp=/tmp/dev03c-current-replay` mit obigem
+Backendpräfix, **1 passed / 0 failed / 0 skipped**, 47,45 s. Kein Import aus dem
+noch ungemergten DEV-03B, keine neue Corpus-/Gold-/Reportmodellklasse. Frühere
+75er-/UIläufe behalten ihren expliziten historischen Basisbezug, nicht addieren.
