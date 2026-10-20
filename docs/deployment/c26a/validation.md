@@ -4,6 +4,10 @@
 Die [Bereitstellung und Betreiberfreigaben](worker.md) sind vorbereitet.
 Die inzwischen gemeldeten Hostdaten werden im [kleinen Pilotplan](hetzner_small_pilot.md)
 berücksichtigt; sie wurden nicht durch eigene SSH-/Hostprüfungen bestätigt.
+Aktuelle Betreiberwahl ist der [vorhandene Backendcontainer und zweistufige
+Bestandskopie über penguin](existing_backend_and_drive.md). Das separate
+Composeprofil ist nur noch eine vorbereitete Alternative, keine zweite Instanz
+als Standard. Es wird kein zusätzliches Image gebaut oder installiert.
 Kein `staging_tested` oder `production_approved`, kein Hetznerzugriff, keine echten
 CS50-Downloads, keine Images gebaut/gepullt, keine bestehenden Stores verändert.
 
@@ -218,15 +222,84 @@ versionierter E2E-Beleg byteidentisch. Kein gesamter Repositorytestlauf.
 
 ## Integration und Lifecycle
 
-Eigener Branch `feat/c26a-cs50-worker`, eigener Worktree; primäre Checkouts und
-andere offene Aufträge bleiben unberührt. Code, Konfiguration und diese dauerhaften
-Nachweise liegen in [PR #135](https://github.com/rf-data/Personal_Assistant/pull/135)
-gegen master. Der PR ist offen, die Dateien enthalten ausschließlich Code,
-Deploymentvorlagen, Dokumentation, synthetische Tests und den geprüften Beleg.
-Commit-Hooks inklusive JSONprüfung erfolgreich. Getrackter Gitstatus sauber;
-der bekannte eigene Ruffcache bleibt ignoriert. Beide primären Checkouts sauber.
-Kein automatischer Merge/Close,
-keine Done-Einstufung offener C26-Abnahmen und keine MAINT-Bereinigung.
-Bis zur bestätigten Integration müssen Branch/Worktree erhalten bleiben;
-`deployment_prepared` ersetzt weder den Git-Integrationsabschluss noch Staging-
-oder Produktionsfreigabe.
+### Aktualisierung auf Master und lokale Bestandsvorbereitung
+
+Während der Veröffentlichung wurden #132–#134 gemergt. Master
+`7ed22f3d40fa5a1ea388152b81bf883865e2f4f1` wurde regulär in den eigenen Branch
+übernommen; fremde Worktrees wurden nicht verändert. Danach mit demselben
+Python-/Pytestpräfix:
+
+```sh
+tests/test_cs50_capacity.py tests/test_cs50_batch_worker.py \
+tests/test_cs50_material_download.py tests/test_deployment_operations.py \
+--basetemp=/dev/shm/c26a-integrated-release
+```
+
+**79 passed / 0 failed / 0 skipped, 41,81 s**: 37 C26- und 42 vorhandene
+Download-/C22-Fälle auf dem integrierten Stand. Dieser Lauf ersetzt nicht die
+historischen Laufzahlen und wird mit ihnen nicht addiert.
+
+Die anschließende Betreiberentscheidung präzisiert `coolify` als lokalen SSHalias
+und Google Drive als **lokalen** ChromeOS-/9p-Pfad auf `penguin`. Dessen explizite
+Metadatenprüfung: Verzeichnis vorhanden, kein eigener Symlink, les-/durchsuchbar,
+Mount `/mnt/chromeos`, Typ `9p`; Schreibbarkeit im Agentkontext nicht gegeben,
+ohne Schreibprobe. Gemeldete virtuelle Kapazität ist keine Cloudquota.
+Keine Hetznerverbindung, Quellinventur, Kopie, Cloudverifikation oder Löschung.
+
+Neu: `scripts/c26_copy_inventory.py`, stdlib-only, ohne SSH-/Kopier-/Cloudaktionen.
+Es liefert ein begrenztes kanonisches relatives Dateiinventar mit SHA256 und
+Verzeichnisliste. Einzeln geprüfte synthetische Fälle: Unicode/CRLF und Leerordner,
+Byte-Duplikate, zusätzliche/veränderte Zieldateien, Symlinks/FIFO, Ressourcenlimits,
+beobachtete Änderung beim Lesen, fehlende Roots, pfadfreie Fehlantwort und keine
+Quelldateischreibvorgänge. Separater Prozess über stdin funktioniert ohne
+Repositoryimports; das ist **kein ausgeführter SSHtest**.
+
+```sh
+tests/test_c26_copy_inventory.py --basetemp=/tmp/c26a-copy-final-tests
+```
+
+**5 passed / 0 failed / 0 skipped, 0,20 s** auf dem endgültigen Inventarskript.
+Vor dem zusätzlichen stdin-Fall: vier erfolgreiche Fälle, 0,13 s, überlappend.
+Keine neuen Abhängigkeiten, keine Server-/Datenmigration. Befehlsvorlagen werden
+nur mit `bash -n` und Python-AST geprüft, nicht zur Ausführung gebracht.
+
+**Abgebrochener lokaler Ausführungsfehler:** Beim ersten Schreiben der neuen
+Befehlsdokumentation kollidierte ein Heredoc-Begrenzer mit eingebettetem Beispielcode.
+Dadurch lief unbeabsichtigt ein lokaler rsync-**Dry-Run** mit falschem Rootbereich
+an. Er wurde per Interrupt beendet (Exit 130), ohne Kopie, Upload oder SSHzugriff.
+Ein fehlgeschlagener `mkdir`-Aufruf hatte ein leeres Ziel und legte nichts an.
+Es erfolgte eine unerwünschte lokale Metadatendurchsicht; sie ist kein Inventar-
+oder Abnahmenachweis und wurde nicht weiterverwendet. Anschließend keine laufenden
+rsync-Prozesse festgestellt; Gitstatus enthielt nur die drei erwarteten neuen
+Auftragsdateien. Dokumentation danach ausschließlich direkt gepatcht; die endgültigen
+Shellbeispiele werden zur Syntaxprüfung nur als Daten an `bash -n` übergeben.
+
+Empfehlung: bestehendes Backend für genau einen bestätigten HTML-Notes-Pilot
+verwenden, sofern Skriptstand, tatsächliche Mounts/Identität/Limits und Sourcefreigabe
+belegt sind. `sleep infinity` und zwei importierbare SRTmodule sind dafür kein
+vollständiger Funktionsnachweis. SRT-/Material-/Audio-/Videowege und persistierte
+Downloadactions gegenüber C16-Processingjobs werden im aktuellen Runbook getrennt.
+Ein `docker exec`-Worker startet nach Containerrestart nicht automatisch neu;
+echter Containerrestart und Ressourcendurchsetzung bleiben ungeprüft.
+
+Während dieses Nachtrags wurde [PR #135](https://github.com/rf-data/Personal_Assistant/pull/135)
+extern gemergt. Neuer Basisstand `5064904259ce8a02b0600a5e646f9e06563a0cac`
+besitzt exakt denselben Git-Tree `97041e968a2accc8e058c24391b335401af72c15`
+wie der oben tatsächlich geprüfte integrierte C26-Stand `d95d110`. Keine erneute
+identische 79er-Suite als zusätzlicher Erfolg ausgegeben.
+
+Der verbliebene Nachtrag verwendet den neuen eigenen Branch
+`feat/c26a-existing-backend-copy-handoff` ab diesem Master und den vorhandenen
+auftragseigenen C26-Worktree. Ursprüngliche Branchrefs, primäre Checkouts und
+andere Aufträge wurden nicht bereinigt. Die Übernahme erfolgt als separater
+Folge-PR; der bereits gemergte PR wird nicht umgeschrieben.
+
+Ruff Check und Format Check für alle acht betroffenen Pythondateien erfolgreich.
+22 Shellblöcke nur mit `bash -n`, eingebetteten Pythoncode nur mit AST geprüft;
+28 lokale Markdownlinks gültig, ursprünglicher versionierter E2E-Beleg bytegleich,
+`git diff --check` erfolgreich. Keine Dependencies installiert. Der bekannte eigene
+Ruffcache bleibt ignoriert. Beide primären Checkouts werden ausschließlich lesend
+auf Gitstatus geprüft. Kein automatischer Merge/Close, keine Done-Einstufung offener
+C26-Abnahmen, keine MAINT-Bereinigung. Der Folgebranch/Worktree bleibt bis zu dessen
+bestätigter Integration erhalten. `deployment_prepared` ersetzt weder Gitintegration
+noch Staging-, Cloudkopier- oder Produktionsfreigabe.
