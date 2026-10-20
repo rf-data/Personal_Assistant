@@ -206,3 +206,8 @@ PR exactly once. #126 was already Done through the existing project lifecycle;
 #127/#17 are Backlog. No field/status/workflow or Issue closure was performed.
 Existing C23 #98, C28 #102, C24 index #115 and UI C25 #9–#13 remain referenced,
 without creating duplicates or closing broader/real acceptance work.
+
+The now-stale task-own A tracking ref (`origin/feat/dev02a-source-management`,
+verified `a9dc949`) was also removed explicitly with ordinary `git branch -dr`;
+no global prune. UI Project membership initially lagged its successful add response;
+a subsequent fresh live read confirmed all three PRs exactly once (68 total items).
