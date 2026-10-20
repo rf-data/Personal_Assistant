@@ -31,7 +31,8 @@
             "quality_report",
             "workflow_report",
             "material_receipt",
-            "index_build"
+            "index_build",
+            "content_import"
           ],
           "title": "Kind",
           "type": "string"
@@ -98,7 +99,8 @@
                 "quality_report",
                 "workflow_report",
                 "material_receipt",
-                "index_build"
+                "index_build",
+                "content_import"
               ],
               "title": "Kind",
               "type": "string"
@@ -463,7 +465,8 @@
                 "material_bundle",
                 "workflow_bundle",
                 "pdf_bundle",
-                "index_bundle"
+                "index_bundle",
+                "content_import_bundle"
               ],
               "title": "Kind",
               "type": "string"
@@ -562,6 +565,11 @@
           },
           "title": "Identities",
           "type": "array"
+        },
+        "import_jobs_enabled": {
+          "default": false,
+          "title": "Import Jobs Enabled",
+          "type": "boolean"
         },
         "index_jobs_enabled": {
           "default": false,
@@ -1268,7 +1276,8 @@
                   "quality_report",
                   "workflow_report",
                   "material_receipt",
-                  "index_build"
+                  "index_build",
+                  "content_import"
                 ],
                 "title": "Kind",
                 "type": "string"
@@ -2093,7 +2102,8 @@
                   "quality_report",
                   "workflow_report",
                   "material_receipt",
-                  "index_build"
+                  "index_build",
+                  "content_import"
                 ],
                 "title": "Kind",
                 "type": "string"
@@ -2826,7 +2836,8 @@
                   "quality_report",
                   "workflow_report",
                   "material_receipt",
-                  "index_build"
+                  "index_build",
+                  "content_import"
                 ],
                 "title": "Kind",
                 "type": "string"

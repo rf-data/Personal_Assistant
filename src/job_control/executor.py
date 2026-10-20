@@ -138,6 +138,10 @@ class Executor:
                     job.process_id == "content_index_build"
                     and not self.settings.index_jobs_enabled
                 )
+                or (
+                    job.process_id == "content_import"
+                    and not self.settings.import_jobs_enabled
+                )
                 or identity.role != "operator"
                 or job.parameters["course_id"] not in identity.courses
                 or entry != self.store.entry(job.job_id)

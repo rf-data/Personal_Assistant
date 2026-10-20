@@ -48,6 +48,11 @@ def execute_scoped(store, job_id):
     results = safe_path(directory, "results")
     results.mkdir(mode=0o700)
     output = results / (job.parameters["output_name"] + ".json")
+    if job.process_id == "content_import":
+        from src.job_control.import_jobs import run
+
+        run(store, job, entry.model_copy(update={"root": inputs}), output)
+        return 0
     if job.process_id == "content_index_build":
         from src.job_control.index_jobs import run
 

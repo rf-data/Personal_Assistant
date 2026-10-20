@@ -41,7 +41,12 @@ class Identity(Principal):
 
 class CatalogEntry(Contract):
     kind: Literal[
-        "manifest", "material_bundle", "workflow_bundle", "pdf_bundle", "index_bundle"
+        "manifest",
+        "material_bundle",
+        "workflow_bundle",
+        "pdf_bundle",
+        "index_bundle",
+        "content_import_bundle",
     ]
     root: Path
     files: dict[str, Sha] = Field(min_length=1, max_length=128)
@@ -66,6 +71,8 @@ class CatalogEntry(Contract):
             if self.kind == "workflow_bundle"
             else {"receipt", "raw"}
             if self.kind == "pdf_bundle"
+            else {"import"}
+            if self.kind == "content_import_bundle"
             else {"index"}
             if self.kind == "index_bundle"
             else {"plan", "normalized", "receipt", "raw"}
@@ -88,6 +95,7 @@ class Settings(Contract):
     workflows_enabled: bool = Field(default=False, strict=True)
     pdf_enabled: bool = Field(default=False, strict=True)
     index_jobs_enabled: bool = Field(default=False, strict=True)
+    import_jobs_enabled: bool = Field(default=False, strict=True)
     max_jobs: int = Field(default=100, ge=1, le=1000)
     max_queued: int = Field(default=8, ge=1, le=32)
     max_parallel: int = Field(default=1, ge=1, le=2)
@@ -159,6 +167,15 @@ class IndexParams(Contract):
     output_name: Identifier = "index-build"
 
 
+class ContentImportParams(Contract):
+    schema_version: Literal[1] = 1
+    source_ref: Identifier
+    course_id: Course
+    state_sha256: Sha
+    request_key: Identifier = Field(min_length=16)
+    output_name: Identifier = "content-import"
+
+
 class PreviewRequest(Contract):
     schema_version: Literal[1] = 1
     process_id: Identifier
@@ -198,6 +215,7 @@ class Artifact(Contract):
         "workflow_report",
         "material_receipt",
         "index_build",
+        "content_import",
     ]
     size_bytes: int = Field(ge=0)
     sha256: Sha
