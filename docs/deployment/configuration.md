@@ -96,3 +96,9 @@ Die kopierte `deployment/prometheus.yaml` muss an beiden markierten Stellen den
 echten API-DNS-Namen enthalten. Dashboard-/Rule-Mounts referenzieren die bestehenden
 C15-Dateien. Es gibt keinen Alertmanager oder Host-Exporter in diesem Profil;
 Alarmrouting und Datenträgerbeobachtung müssen separat abgenommen werden.
+
+## C26-B – bestehende Coolify-UI
+
+Der [HTTPS-Nachtrag](https.md) führt die neuen parametrisierbaren UI-/OIDC-/Proxy-
+Verträge und den UI-only-Rollout aus. Dafür nicht das vollständige C22-Profil
+aktivieren; bestehendes Backend und Executor bleiben unverändert.
