@@ -9,7 +9,9 @@ from pydantic import Field, JsonValue, model_validator
 
 from src.content_store.errors import Forbidden, InvalidInput
 from src.job_control.models import Contract, Identifier, Principal, Sha
-from src.model_discovery.cs50 import CourseId, deterministic_id
+from src.model_course import ContentCourseId as CourseId
+from src.model_discovery.cs50 import CourseId as DiscoveryCourseId
+from src.model_discovery.cs50 import deterministic_id
 
 MAX_BYTES = 64 * 1024 * 1024
 MAX_BLOCKS = 50_000
@@ -74,6 +76,8 @@ class SourceRegistration(Contract):
     @model_validator(mode="after")
     def identity(self) -> Self:
         if self.identity_namespace == "cs50":
+            if self.course_id not in DiscoveryCourseId.__args__:
+                raise ValueError("CS50 namespace requires a CS50 discovery course")
             # Discovery owns these IDs. Validate the alias, never rederive it here.
             if not self.source_id or self.source_id != self.external_identity:
                 raise ValueError("CS50 registration requires its unchanged source ID")

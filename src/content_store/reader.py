@@ -46,7 +46,7 @@ from src.content_store.read_views import (
 )
 from src.content_store.store import ContentStore
 from src.job_control.models import Contract, Sha
-from src.model_discovery.cs50 import CourseId
+from src.model_course import ContentCourseId as CourseId
 from src.tools_materials.quality import _json
 
 

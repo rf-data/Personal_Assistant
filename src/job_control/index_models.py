@@ -8,7 +8,7 @@ from src.content_store.models import Name, fingerprint
 from src.content_store.read_models import ContentReadSettings
 from src.content_store.search_models import SearchSettings
 from src.job_control.models import Contract, Identifier, Job, Sha
-from src.model_discovery.cs50 import CourseId
+from src.model_course import ContentCourseId as CourseId
 from src.tools_rag.content_index_models import IndexSelection, VersionBinding
 
 

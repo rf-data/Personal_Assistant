@@ -29,7 +29,7 @@ from src.content_store.models import (
 )
 from src.content_store.publication import _known_source_version, _source_version
 from src.job_control.models import Contract, Identifier, Sha
-from src.model_discovery.cs50 import CourseId
+from src.model_course import ContentCourseId as CourseId
 from src.model_materials.materials import ArtifactReceipt
 from src.tools_lecture.adapt_cs50 import CS50AdapterPlan
 

@@ -18,7 +18,7 @@ from src.content_store.models import (
     fingerprint,
 )
 from src.job_control.models import Contract, Principal, Sha
-from src.model_discovery.cs50 import CourseId
+from src.model_course import ContentCourseId as CourseId
 from src.tools_rag.content_index_models import SearchResultPage
 
 Origin = Literal["synthetic", "real", "unknown"]
