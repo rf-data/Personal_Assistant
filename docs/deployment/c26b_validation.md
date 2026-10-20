@@ -133,3 +133,8 @@ werden vom Testtreiber beendet/entfernt. Lokale Reviewimages bleiben erhalten.
 
 Maschinenlesbarer [Abschlussstatus](c26b_report.v1.json) und
 [Containerbeleg](c26b_container.v1.json) ergänzen diesen Bericht.
+
+Review-PRs: [Backend #137](https://github.com/rf-data/Personal_Assistant/pull/137)
+und [UI #18](https://github.com/rf-data/personal-assistant-ui/pull/18). Beide offen
+und ungemergt; keine Produktivfreigabe. Getesteter Code: Backend `1d8776c`,
+UI `af69212`; spätere Änderungen ergänzen ausschließlich Dokumentationsverweise.

@@ -86,7 +86,9 @@
     "admin_ui_package/security.py",
     "core/environment.py",
     "docker/c26-build-inputs.json",
+    "docs/c22_container.md",
     "docs/c26_https.md",
+    "docs/deployment.md",
     "pyproject.toml",
     "scripts/acceptance/c26_container.py",
     "scripts/acceptance/c26_https.py",
@@ -149,11 +151,20 @@
     "docs/deployment/c26b_e2e.v1.json",
     "docs/deployment/c26b_report.v1.json",
     "docs/deployment/c26b_validation.md",
+    "docs/deployment/configuration.md",
     "docs/deployment/https.md",
     "docs/deployment/operations.md",
     "docs/deployment/security.md",
     "scripts/acceptance/c26_https_server.py",
     "scripts/https_preflight.py",
     "tests/test_https_preflight.py"
-  ]
+  ],
+  "pull_requests": {
+    "backend": "https://github.com/rf-data/Personal_Assistant/pull/137",
+    "ui": "https://github.com/rf-data/personal-assistant-ui/pull/18"
+  },
+  "tested_code_revisions": {
+    "backend": "1d8776c",
+    "ui": "af69212"
+  }
 }
