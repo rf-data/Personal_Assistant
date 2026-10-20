@@ -75,3 +75,9 @@ frische Restoreprobe; TLS/Ingress/Firewall; isolierte Container-SIGTERM/SIGKILL/
 und PDF-Cancel-Tests; Auth-/Viewer-/Operator-/Metriktests; Alarmzustellung;
 Operator-Rollback und Retention bestätigen. Erst danach Dienste und zuletzt
 Ingress bewusst aktivieren. Es gibt keinen automatischen Rollout in C22.
+
+## C26-B HTTPS-Ergänzung
+
+Für den vorhandenen Coolify-Traefik und ausschließlich die bestehende UI gilt
+[HTTPS, OIDC, Rollout und Rollback](https.md). Keine Aktivierung des gesamten
+C22-Composeprofils für diesen Auftrag. Produktivfreigabe bleibt gesperrt.

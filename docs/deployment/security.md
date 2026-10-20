@@ -62,3 +62,9 @@ Referenzen: [Compose-Dienste](https://docs.docker.com/reference/compose-file/ser
 [Caddy-Optionen](https://caddyserver.com/docs/caddyfile/options),
 [Streamlit-OIDC](https://docs.streamlit.io/develop/concepts/connections/authentication).
 Diese Dokumentation beschreibt den Vertrag; sie ersetzt keine Laufzeitabnahme.
+
+## C26-B HTTPS-Ergänzung
+
+Für den vorhandenen Coolify-Traefik und ausschließlich die bestehende UI gilt
+[HTTPS, OIDC, Rollout und Rollback](https.md). Keine Aktivierung des gesamten
+C22-Composeprofils für diesen Auftrag. Produktivfreigabe bleibt gesperrt.

@@ -55,3 +55,5 @@ Implementierung/Verträge und die expliziten Grenzen der Paketdokumentation.
 Raw Sources und Parsed Content haben Vorrang. Vorhandene Knowledge-Verträge
 bleiben erhalten; weitere Extraktion wird erst nach materialbezogener fachlicher
 Evaluation priorisiert. [Verbindlicher Pflegeprozess](planning/governance.md).
+
+- [C26-B: Coolify HTTPS, OIDC und Betreiberrollout](deployment/https.md)

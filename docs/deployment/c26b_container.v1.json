@@ -1,0 +1,27 @@
+{
+  "scope": "local_synthetic_container_only",
+  "image_id": "sha256:d2d14bb132099f19e7bc8234e3957c7e44e96e9b4bf9d9c1300d49253c7ce6c6",
+  "production_release": "production_release_blocked",
+  "tests": [
+    {
+      "test": "container_missing_production_secrets_refused",
+      "status": "passed"
+    },
+    {
+      "test": "nonroot_readonly_no_network_container_start_and_health",
+      "status": "passed"
+    },
+    {
+      "test": "isolated_api_unavailable_not_ready",
+      "status": "passed"
+    },
+    {
+      "test": "container_uid_mount_network_and_no_public_ports",
+      "status": "passed"
+    },
+    {
+      "test": "container_logs_no_synthetic_credentials",
+      "status": "passed"
+    }
+  ]
+}

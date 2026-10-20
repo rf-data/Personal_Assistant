@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-20",
+  "preparation_status": "https_deployment_prepared",
+  "staging_status": "https_staging_tested",
+  "production_status": "production_release_blocked",
+  "scope": "isolated_local_synthetic_only",
+  "production_approved": false,
+  "basis": {
+    "backend": "449437b",
+    "ui": "a7da646"
+  },
+  "local_environment": {
+    "docker": "29.2.1",
+    "compose": "5.0.2",
+    "host_python": "3.12.12",
+    "image_python": "3.12.15",
+    "streamlit": "1.65.0",
+    "authlib": "1.9.1"
+  },
+  "runtime_lock_sha256": "496435f7595d0a67aad940ed783fe3b0ef9bd315e31d20cd613188503288f40b",
+  "existing_ui_dependency_versions_changed": [],
+  "checks": {
+    "compose_security": {
+      "passed": 24
+    },
+    "ui_controller": {
+      "passed": 31
+    },
+    "ui_production_guards": {
+      "passed": 9
+    },
+    "ui_https_oidc_security": {
+      "passed": 8
+    },
+    "browser_e2e": {
+      "passed": 16,
+      "successful_complete_runs": 2,
+      "evidence": "c26b_e2e.v1.json"
+    },
+    "container_start": {
+      "passed": 5,
+      "evidence": "c26b_container.v1.json"
+    },
+    "backend_regression_original_run": {
+      "passed": 173,
+      "failed": 2,
+      "total": 175,
+      "seconds": 437.36,
+      "failed_tests": [
+        "tests/test_workflow_http.py::test_stale_resume_runs_only_required_stages_and_preserves_old_bytes[normalized]",
+        "tests/test_workflow_http.py::test_versioned_schema_snapshots_and_original_c16_models"
+      ]
+    },
+    "backend_targeted_recheck": {
+      "passed": 1,
+      "failed": 1,
+      "seconds": 15.29
+    },
+    "backend_schema_snapshot_on_unchanged_master": {
+      "failed": 1,
+      "preexisting": true,
+      "seconds": 2.93
+    },
+    "ui_original_run": {
+      "test_methods": 171,
+      "error_entries": 5,
+      "affected_methods": 3,
+      "cause": "existing E2E refuses dirty backend checkout",
+      "seconds": 420.478
+    },
+    "ui_workflow_recheck": {
+      "passed_methods": 2,
+      "unstable_native_fault_subcase": 1,
+      "seconds": 124.718
+    },
+    "ui_native_isolated_recheck": {
+      "passed_methods": 1,
+      "passed_fault_subcases": 3,
+      "seconds": 123.968
+    },
+    "lint_format_whitespace": "passed"
+  },
+  "ui_changed_files": [
+    "README.md",
+    "admin_ui_package/app_admin.py",
+    "admin_ui_package/container_runtime.py",
+    "admin_ui_package/https_runtime.py",
+    "admin_ui_package/live_app.py",
+    "admin_ui_package/security.py",
+    "core/environment.py",
+    "docker/c26-build-inputs.json",
+    "docs/c22_container.md",
+    "docs/c26_https.md",
+    "docs/deployment.md",
+    "pyproject.toml",
+    "scripts/acceptance/c26_container.py",
+    "scripts/acceptance/c26_https.py",
+    "scripts/acceptance/synthetic_oidc.py",
+    "tests/test_container_runtime.py",
+    "tests/test_controller.py",
+    "tests/test_https_security.py",
+    "uv.lock"
+  ],
+  "not_tested": [
+    "production",
+    "selected_identity_provider",
+    "actual_vpn",
+    "coolify_4.4.2_render",
+    "browser_CA_trust_store",
+    "alert_delivery",
+    "host_resource_budget",
+    "host_backup_restore_rollback"
+  ],
+  "operator_decisions": [
+    "private or public profile and VPN CIDRs",
+    "own domain and DNS",
+    "OIDC provider issuer subject claims",
+    "individual roles courses source grants and secret provisioning",
+    "actual existing backend API/worker revision and private HTTPS endpoint",
+    "existing networks proxy addresses and UI resource/build type",
+    "certificates/ACME",
+    "host memory disk budget",
+    "proxy log redaction",
+    "alert destination and delivery",
+    "host backup and rollback evidence",
+    "explicit host access and production rollout approval"
+  ],
+  "execution_boundaries": {
+    "ssh": false,
+    "production_dns_or_acme": false,
+    "production_deployment": false,
+    "production_data_changed": false,
+    "real_cs50_downloads": false,
+    "automatic_merge": false,
+    "maint": "On Hold"
+  },
+  "retained_git_artifacts": {
+    "backend_branch": "feat/c26b-https",
+    "backend_worktree": "Personal_Assistant-c26b",
+    "ui_branch": "feat/c26b-https",
+    "ui_worktree": "personal-assistant-ui-c26b",
+    "reason": "unmerged review PRs; explicit no automatic merge; documents not yet integrated into master/main"
+  },
+  "local_ui_image_id": "sha256:d2d14bb132099f19e7bc8234e3957c7e44e96e9b4bf9d9c1300d49253c7ce6c6",
+  "backend_changed_files": [
+    "deployment/c26-https.env.example",
+    "deployment/c26-oidc.secrets.toml.example",
+    "deployment/coolify.private-https.yaml",
+    "deployment/coolify.public-https.yaml",
+    "deployment/coolify.ui.compose.yaml",
+    "docs/README.md",
+    "docs/deployment/architecture.md",
+    "docs/deployment/c26b_container.v1.json",
+    "docs/deployment/c26b_e2e.v1.json",
+    "docs/deployment/c26b_report.v1.json",
+    "docs/deployment/c26b_validation.md",
+    "docs/deployment/configuration.md",
+    "docs/deployment/https.md",
+    "docs/deployment/operations.md",
+    "docs/deployment/security.md",
+    "scripts/acceptance/c26_https_server.py",
+    "scripts/https_preflight.py",
+    "tests/test_https_preflight.py"
+  ],
+  "pull_requests": {
+    "backend": "https://github.com/rf-data/Personal_Assistant/pull/137",
+    "ui": "https://github.com/rf-data/personal-assistant-ui/pull/18"
+  },
+  "tested_code_revisions": {
+    "backend": "1d8776c",
+    "ui": "af69212"
+  }
+}
