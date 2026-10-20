@@ -40,7 +40,8 @@ from src.content_store.read_models import TextWindow
 from src.content_store.read_views import locators, route
 from src.content_store.reader import private_bytes
 from src.content_store.store import ContentStore
-from src.model_discovery.cs50 import CourseId, deterministic_id
+from src.model_course import ContentCourseId as CourseId
+from src.model_discovery.cs50 import deterministic_id
 from src.tools_materials.quality import _json
 from src.tools_rag import content_fts
 from src.tools_rag.content_index_files import IndexFiles, initialize_root

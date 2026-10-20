@@ -12,7 +12,8 @@ from src.content_store.models import (
     sha256,
 )
 from src.job_control.models import Contract, Sha
-from src.model_discovery.cs50 import CourseId, deterministic_id
+from src.model_course import ContentCourseId as CourseId
+from src.model_discovery.cs50 import deterministic_id
 
 MAX_RECORDS = 200_000
 MAX_RESULT_BYTES = 64 * 1024**2

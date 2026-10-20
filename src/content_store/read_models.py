@@ -7,7 +7,7 @@ from pydantic import Field, JsonValue, model_validator
 
 from src.content_store.models import ContentLocator, Name
 from src.job_control.models import Contract, Sha
-from src.model_discovery.cs50 import CourseId
+from src.model_course import ContentCourseId as CourseId
 
 MAX_PAGE = 256 * 1024
 MAX_ATTACHMENT = 64 * 1024 * 1024

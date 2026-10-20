@@ -9,7 +9,7 @@ from pydantic import Field, JsonValue, model_validator
 from src.content_store.inventory import InventorySelection
 from src.content_store.models import ContentLocator, canonical, sha256
 from src.job_control.models import Contract, Identifier, Sha
-from src.model_discovery.cs50 import CourseId
+from src.model_course import ContentCourseId as CourseId
 
 Origin = Literal["real", "synthetic", "unknown"]
 Format = Literal["html", "pdf", "code", "srt", "txt"]

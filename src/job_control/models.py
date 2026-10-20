@@ -7,7 +7,8 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-from src.model_discovery.cs50 import CourseId as Course
+from src.model_course import ContentCourseId as Course
+from src.model_discovery.cs50 import CourseId as DiscoveryCourse
 
 Identifier = Annotated[str, Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")]
 ScopeId = Annotated[str, Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$")]
@@ -133,7 +134,7 @@ class Settings(Contract):
 
 class PlanningParams(Contract):
     source_ref: Identifier
-    course_id: Course
+    course_id: DiscoveryCourse
     section: ScopeId | None = None
     resource_id: ScopeId | None = None
     output_name: Identifier = "material-plan"
@@ -141,13 +142,13 @@ class PlanningParams(Contract):
 
 class QualityParams(Contract):
     material_ref: Identifier
-    course_id: Course
+    course_id: DiscoveryCourse
     output_name: Identifier = "quality-report"
 
 
 class WorkflowParams(Contract):
     source_ref: Identifier
-    course_id: Course
+    course_id: DiscoveryCourse
     workflow_id: Identifier
     previous_run_id: Identifier | None = None
     output_name: Identifier = "workflow-report"
@@ -155,7 +156,7 @@ class WorkflowParams(Contract):
 
 class PdfParams(Contract):
     material_ref: Identifier
-    course_id: Course
+    course_id: DiscoveryCourse
     output_name: Identifier = "pdf-receipt"
 
 
@@ -170,7 +171,7 @@ class IndexParams(Contract):
 class ContentImportParams(Contract):
     schema_version: Literal[1] = 1
     source_ref: Identifier
-    course_id: Course
+    course_id: DiscoveryCourse
     state_sha256: Sha
     request_key: Identifier = Field(min_length=16)
     output_name: Identifier = "content-import"

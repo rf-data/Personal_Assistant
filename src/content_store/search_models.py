@@ -8,7 +8,7 @@ from pydantic import Field, model_validator
 from src.content_store.artifacts import explicit_root
 from src.content_store.models import Name
 from src.job_control.models import Contract
-from src.model_discovery.cs50 import CourseId
+from src.model_course import ContentCourseId as CourseId
 
 ContentType = Literal[
     "heading",

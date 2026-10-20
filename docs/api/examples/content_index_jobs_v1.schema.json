@@ -13,7 +13,8 @@
           "cs50_sql",
           "cs50_ai",
           "cs50_web",
-          "cs50_cybersecurity"
+          "cs50_cybersecurity",
+          "loviscach_mathe_1"
         ],
         "title": "Course Id",
         "type": "string"
@@ -273,7 +274,8 @@
           "cs50_sql",
           "cs50_ai",
           "cs50_web",
-          "cs50_cybersecurity"
+          "cs50_cybersecurity",
+          "loviscach_mathe_1"
         ],
         "title": "Course Id",
         "type": "string"
@@ -403,7 +405,8 @@
           "cs50_sql",
           "cs50_ai",
           "cs50_web",
-          "cs50_cybersecurity"
+          "cs50_cybersecurity",
+          "loviscach_mathe_1"
         ],
         "title": "Course Id",
         "type": "string"
@@ -527,7 +530,8 @@
               "cs50_sql",
               "cs50_ai",
               "cs50_web",
-              "cs50_cybersecurity"
+              "cs50_cybersecurity",
+              "loviscach_mathe_1"
             ],
             "title": "Course Id",
             "type": "string"
