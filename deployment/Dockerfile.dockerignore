@@ -9,6 +9,9 @@
 !scripts/
 !scripts/deployment.py
 !scripts/cs50_material_quality.py
+!scripts/cs50_materials.py
+!scripts/cs50_workflow.py
+!scripts/cs50_batch.py
 **/__pycache__
 **/*.pyc
 **/.env*

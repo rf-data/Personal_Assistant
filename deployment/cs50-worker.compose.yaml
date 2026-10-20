@@ -1,0 +1,101 @@
+# C26 preparation only. No UI, gateway, API or published ports.
+name: personal-assistant-cs50-worker
+x-limits: &limits
+  image: personal-assistant-runtime@sha256:${BACKEND_DIGEST:?Set reviewed built C26 runtime digest}
+  pull_policy: never
+  user: '10001:10001'
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  pids_limit: 512
+  cpus: 2.0
+  mem_limit: 1536m
+  stop_grace_period: 30s
+  tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=256m,mode=1777]
+  logging:
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+x-catalog: &catalog
+  type: bind
+  source: ${C26_CATALOG:?Set existing approved 0700 catalog root}
+  target: /var/lib/personal-assistant/catalog
+  read_only: true
+  bind: {create_host_path: false}
+x-jobs: &jobs
+  type: bind
+  source: ${C26_JOBS:?Set existing private 0700 C16 root}
+  target: /var/lib/personal-assistant/private
+  bind: {create_host_path: false}
+x-config: &config
+  type: bind
+  source: ${C26_CONFIG:?Set existing private controller JSON}
+  target: /run/config/controller.json
+  read_only: true
+  bind: {create_host_path: false}
+x-archive: &archive
+  type: bind
+  source: ${C26_ARCHIVE:?Set existing private original archive}
+  target: /var/lib/personal-assistant/archive
+  read_only: true
+  bind: {create_host_path: false}
+x-specs: &specs
+  type: bind
+  source: ${C26_SPECS:?Set existing private snapshot and approval directory}
+  target: /run/c26
+  read_only: true
+  bind: {create_host_path: false}
+services:
+  executor:
+    <<: *limits
+    profiles: [processing]
+    restart: unless-stopped
+    network_mode: none
+    volumes: [*jobs, *catalog, *config]
+    command: [worker, --config, /run/config/controller.json]
+    healthcheck:
+      test: [CMD, python, -m, scripts.deployment, health, --role, worker, --config, /run/config/controller.json]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+  offline-cli:
+    <<: *limits
+    profiles: [tools]
+    restart: 'no'
+    network_mode: none
+    entrypoint: [python]
+    command: [-m, scripts.cs50_batch, --help]
+    volumes:
+      - *jobs
+      - *config
+      - *archive
+      - *specs
+      - <<: *catalog
+        read_only: false
+      - type: bind
+        source: ${C26_EXPORTS:?Set existing private report directory}
+        target: /var/lib/personal-assistant/exports
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C26_TOKEN:?Set existing private operator token file}
+        target: /run/secrets/operator.token
+        read_only: true
+        bind: {create_host_path: false}
+  downloader:
+    <<: *limits
+    profiles: [download]
+    restart: 'no'
+    entrypoint: [python]
+    command: [-m, scripts.cs50_batch, --help]
+    cpus: 1.0
+    mem_limit: 512m
+    pids_limit: 64
+    networks: [approved-download-egress]
+    volumes:
+      - *specs
+      - <<: *archive
+        read_only: false
+networks:
+  approved-download-egress:
+    external: true
+    name: ${C26_EGRESS_NETWORK:?Set existing operator-approved restricted egress network}
