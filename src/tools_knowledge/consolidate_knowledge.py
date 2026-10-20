@@ -443,6 +443,8 @@ def consolidate_knowledge(
         lecture_id=document.lecture_id,
         media_id=document.media_id,
         source_id=document.source_id,
+        media_id=document.media_id,
+        **document.transcript_metadata(),
         transcript_url=(document.transcript_url),
         topics=topics,
         statements=statements,

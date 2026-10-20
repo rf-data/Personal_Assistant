@@ -618,6 +618,8 @@ def consolidate_semantic_knowledge(
     if not document.statements:
         return LectureKnowledgeDocument(
             source_id=document.source_id,
+            media_id=document.media_id,
+            **document.transcript_metadata(),
             transcript_url=(document.transcript_url),
             media_id=document.media_id,
             **document.transcript_metadata(),
@@ -743,6 +745,8 @@ def consolidate_semantic_knowledge(
 
     return LectureKnowledgeDocument(
         source_id=document.source_id,
+        media_id=document.media_id,
+        **document.transcript_metadata(),
         transcript_url=(document.transcript_url),
         media_id=document.media_id,
         **document.transcript_metadata(),

@@ -174,10 +174,12 @@ def _extract_knowledge_contract(
     target_chunk: str,
     previous_context: str | None,
     next_context: str | None,
-    # start: float,
-    # end: float
 ) -> ChunkKnowledgeResult:
-    ""
+    return _get_extract_knowledge()(
+        target_chunk=target_chunk,
+        previous_context=previous_context,
+        next_context=next_context,
+    )
 
 
 @lru_cache(maxsize=1)
