@@ -81,6 +81,11 @@ class Application:
                 "Index jobs require the integrated content/search configuration"
             )
         self.index = IndexHTTP(controller, content_settings, search_settings)
+        from src.job_control.import_http import ImportHTTP
+
+        if controller.settings.import_jobs_enabled and content_settings is None:
+            raise ValueError("Imports require explicit content configuration")
+        self.imports = ImportHTTP(controller, content_settings)
 
     def request(self, method, target, headers, body=b""):
         try:
@@ -109,6 +114,10 @@ class Application:
                     "/v1/content/search/"
                 ):
                     return self.search.request(method, parts, body, actor)
+                if parts.path == "/v1/content/import" or parts.path.startswith(
+                    "/v1/content/import/"
+                ):
+                    return self.imports.request(method, parts, body, actor)
                 if parts.path == "/v1/content/index" or parts.path.startswith(
                     "/v1/content/index/"
                 ):
@@ -220,7 +229,7 @@ class Application:
             elif len(route) in {4, 5} and route[2] == "jobs":
                 job_id = route[3]
                 job = self.controller.get(actor, job_id)
-                if job.process_id == "content_index_build":
+                if job.process_id in {"content_index_build", "content_import"}:
                     scoped_job = job
                 action = route[4] if len(route) == 5 else None
                 if method == "GET" and action is None:
