@@ -45,9 +45,13 @@ class Controller:
             raise PermissionError("Operator role required")
 
     def allowed(self, actor, job):
-        if job.process_id == "content_index_build":
+        if job.process_id in {"content_index_build", "content_import"}:
             from src.content_store.errors import ContentStoreError, Forbidden, NotFound
-            from src.job_control.index_jobs import authorize_job
+
+            if job.process_id == "content_import":
+                from src.job_control.import_jobs import authorize_job
+            else:
+                from src.job_control.index_jobs import authorize_job
 
             try:
                 authorize_job(self.store, job, actor)
@@ -72,6 +76,11 @@ class Controller:
         request = StartRequest.model_validate(value)
         if not isinstance(key, str) or not re.fullmatch(r"[A-Za-z0-9_-]{16,64}", key):
             raise ValueError("Idempotency-Key required")
+        if (
+            request.preview.process_id == "content_import"
+            and request.preview.parameters.get("request_key") != key
+        ):
+            raise ValueError("Import request key differs from confirmed plan")
         intent = fingerprint(request.model_dump(mode="json"))
 
         def existing(db):
@@ -199,7 +208,7 @@ class Controller:
             raise ValueError("History bounds")
 
         def visible(job):
-            if job.process_id != "content_index_build":
+            if job.process_id not in {"content_index_build", "content_import"}:
                 return True
             try:
                 self.allowed(actor, job)
@@ -224,6 +233,7 @@ class Controller:
                 workflows=self.settings.workflows_enabled,
                 pdf=self.settings.pdf_enabled,
                 index=self.settings.index_jobs_enabled,
+                imports=self.settings.import_jobs_enabled,
             ),
             "worker_available": self.store.worker_available(self.settings.worker_ttl),
             "execution_enabled": self.settings.execution_enabled,
@@ -236,6 +246,6 @@ class Controller:
                 )
                 for ref, entry in self.settings.catalog.items()
                 if set(entry.course_ids) & set(actor.courses)
-                and entry.kind != "index_bundle"
+                and entry.kind not in {"index_bundle", "content_import_bundle"}
             ],
         }

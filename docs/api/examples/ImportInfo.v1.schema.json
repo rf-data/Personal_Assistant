@@ -1,0 +1,151 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "adapter": {
+      "enum": [
+        "material",
+        "srt"
+      ],
+      "title": "Adapter",
+      "type": "string"
+    },
+    "can_import": {
+      "title": "Can Import",
+      "type": "boolean"
+    },
+    "course_id": {
+      "title": "Course Id",
+      "type": "string"
+    },
+    "existing_parsed_version_id": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Existing Parsed Version Id"
+    },
+    "implementation_revision": {
+      "title": "Implementation Revision",
+      "type": "string"
+    },
+    "input_ref": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Input Ref",
+      "type": "string"
+    },
+    "max_bundle_bytes": {
+      "const": 33554432,
+      "default": 33554432,
+      "title": "Max Bundle Bytes",
+      "type": "integer"
+    },
+    "max_file_bytes": {
+      "const": 8388608,
+      "default": 8388608,
+      "title": "Max File Bytes",
+      "type": "integer"
+    },
+    "operator_decision": {
+      "anyOf": [
+        {
+          "const": "content_recovery_required",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Operator Decision"
+    },
+    "parsed_version_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[^\\x00-\\x1f]+$",
+      "title": "Parsed Version Id",
+      "type": "string"
+    },
+    "parser_config_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[^\\x00-\\x1f]+$",
+      "title": "Parser Config Id",
+      "type": "string"
+    },
+    "parser_name": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[^\\x00-\\x1f]+$",
+      "title": "Parser Name",
+      "type": "string"
+    },
+    "parser_version": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[^\\x00-\\x1f]+$",
+      "title": "Parser Version",
+      "type": "string"
+    },
+    "payload_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Payload Sha256",
+      "type": "string"
+    },
+    "raw_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Raw Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[^\\x00-\\x1f]+$",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_version_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[^\\x00-\\x1f]+$",
+      "title": "Source Version Id",
+      "type": "string"
+    },
+    "state_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "State Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "input_ref",
+    "source_id",
+    "course_id",
+    "adapter",
+    "parser_config_id",
+    "parser_name",
+    "parser_version",
+    "implementation_revision",
+    "source_version_id",
+    "parsed_version_id",
+    "raw_sha256",
+    "payload_sha256",
+    "state_sha256",
+    "existing_parsed_version_id",
+    "can_import",
+    "operator_decision"
+  ],
+  "title": "ImportInfo",
+  "type": "object"
+}

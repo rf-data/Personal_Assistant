@@ -1,0 +1,248 @@
+{
+  "$defs": {
+    "ContentReadSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "cursor_key_file": {
+          "format": "path",
+          "title": "Cursor Key File",
+          "type": "string"
+        },
+        "root": {
+          "format": "path",
+          "title": "Root",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "root",
+        "cursor_key_file"
+      ],
+      "title": "ContentReadSettings",
+      "type": "object"
+    },
+    "InventorySelection": {
+      "additionalProperties": false,
+      "properties": {
+        "bundle": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MaterialBundle"
+            },
+            {
+              "$ref": "#/$defs/SRTBundle"
+            }
+          ],
+          "title": "Bundle"
+        },
+        "course_id": {
+          "enum": [
+            "cs50x",
+            "cs50_python",
+            "cs50_sql",
+            "cs50_ai",
+            "cs50_web",
+            "cs50_cybersecurity"
+          ],
+          "title": "Course Id",
+          "type": "string"
+        },
+        "entry_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Entry Id",
+          "type": "string"
+        },
+        "expected_implementation_revision": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Expected Implementation Revision",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "material",
+            "srt"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "source_id": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entry_id",
+        "kind",
+        "source_id",
+        "course_id",
+        "expected_implementation_revision",
+        "bundle"
+      ],
+      "title": "InventorySelection",
+      "type": "object"
+    },
+    "MaterialBundle": {
+      "additionalProperties": false,
+      "properties": {
+        "implementation_path": {
+          "format": "path",
+          "title": "Implementation Path",
+          "type": "string"
+        },
+        "normalized_path": {
+          "format": "path",
+          "title": "Normalized Path",
+          "type": "string"
+        },
+        "plan_path": {
+          "format": "path",
+          "title": "Plan Path",
+          "type": "string"
+        },
+        "prior_quality_path": {
+          "anyOf": [
+            {
+              "format": "path",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prior Quality Path"
+        },
+        "raw_path": {
+          "format": "path",
+          "title": "Raw Path",
+          "type": "string"
+        },
+        "receipt_path": {
+          "format": "path",
+          "title": "Receipt Path",
+          "type": "string"
+        },
+        "workspace": {
+          "format": "path",
+          "title": "Workspace",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace",
+        "raw_path",
+        "normalized_path",
+        "receipt_path",
+        "plan_path",
+        "implementation_path"
+      ],
+      "title": "MaterialBundle",
+      "type": "object"
+    },
+    "SRTBundle": {
+      "additionalProperties": false,
+      "properties": {
+        "implementation_path": {
+          "format": "path",
+          "title": "Implementation Path",
+          "type": "string"
+        },
+        "plan_path": {
+          "format": "path",
+          "title": "Plan Path",
+          "type": "string"
+        },
+        "raw_path": {
+          "format": "path",
+          "title": "Raw Path",
+          "type": "string"
+        },
+        "receipt_path": {
+          "format": "path",
+          "title": "Receipt Path",
+          "type": "string"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_origin": {
+          "enum": [
+            "official",
+            "synthetic"
+          ],
+          "title": "Source Origin",
+          "type": "string"
+        },
+        "transcript_path": {
+          "format": "path",
+          "title": "Transcript Path",
+          "type": "string"
+        },
+        "workspace": {
+          "format": "path",
+          "title": "Workspace",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace",
+        "raw_path",
+        "transcript_path",
+        "receipt_path",
+        "plan_path",
+        "implementation_path",
+        "source_id",
+        "source_origin"
+      ],
+      "title": "SRTBundle",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "allowed_subjects": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+        "type": "string"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "Allowed Subjects",
+      "type": "array"
+    },
+    "content": {
+      "$ref": "#/$defs/ContentReadSettings"
+    },
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "selection": {
+      "$ref": "#/$defs/InventorySelection"
+    }
+  },
+  "required": [
+    "schema_version",
+    "content",
+    "selection",
+    "allowed_subjects"
+  ],
+  "title": "ContentImportPlan",
+  "type": "object"
+}

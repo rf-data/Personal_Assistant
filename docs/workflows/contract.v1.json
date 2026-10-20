@@ -1859,7 +1859,8 @@
                   "quality_report",
                   "workflow_report",
                   "material_receipt",
-                  "index_build"
+                  "index_build",
+                  "content_import"
                 ],
                 "title": "Kind",
                 "type": "string"
@@ -2684,7 +2685,8 @@
                   "quality_report",
                   "workflow_report",
                   "material_receipt",
-                  "index_build"
+                  "index_build",
+                  "content_import"
                 ],
                 "title": "Kind",
                 "type": "string"
@@ -3417,7 +3419,8 @@
                   "quality_report",
                   "workflow_report",
                   "material_receipt",
-                  "index_build"
+                  "index_build",
+                  "content_import"
                 ],
                 "title": "Kind",
                 "type": "string"
