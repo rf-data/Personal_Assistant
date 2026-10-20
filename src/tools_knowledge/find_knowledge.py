@@ -87,7 +87,7 @@ def make_knowledge_source_metadata(
 def build_transcript_chunks(
     cfg_know: KnowledgeSettings, transcript: TranscriptDocument
 ) -> list[TranscriptChunk]:
-
+    transcript.require_timestamps()
     dur_target = cfg_know.target_duration  # float = 45,
     # dur_max = context.max_duration         # float = 75
     seg_overlap = cfg_know.overlap_segments  # : int = 2
@@ -170,24 +170,7 @@ def enrich_chunks(chunks: list[TranscriptChunk]) -> list[TranscriptChunk]:
 KNOWLEDGE_EXTRACTION_PROMPT = build_knowledge_extraction_prompt()
 
 
-@lru_cache(maxsize=1)
-def _get_extract_knowledge():
-    """Construct the unchanged Marvin function only when extraction is requested."""
-    import marvin
-
-    def extract_knowledge(
-        target_chunk: str,
-        previous_context: str | None,
-        next_context: str | None,
-        # start: float,
-        # end: float
-    ) -> ChunkKnowledgeResult:
-        ""
-
-    return marvin.fn(instructions=KNOWLEDGE_EXTRACTION_PROMPT)(extract_knowledge)
-
-
-def extract_knowledge(
+def _extract_knowledge_contract(
     target_chunk: str,
     previous_context: str | None,
     next_context: str | None,
@@ -197,6 +180,23 @@ def extract_knowledge(
         previous_context=previous_context,
         next_context=next_context,
     )
+
+
+@lru_cache(maxsize=1)
+def _get_knowledge_extractor():
+    import marvin
+
+    _extract_knowledge_contract.__name__ = "extract_knowledge"
+    _extract_knowledge_contract.__qualname__ = "extract_knowledge"
+    return marvin.fn(instructions=KNOWLEDGE_EXTRACTION_PROMPT)(
+        _extract_knowledge_contract
+    )
+
+
+def extract_knowledge(
+    target_chunk: str, previous_context: str | None, next_context: str | None
+) -> ChunkKnowledgeResult:
+    return _get_knowledge_extractor()(target_chunk, previous_context, next_context)
 
 
 @retry_llm_call

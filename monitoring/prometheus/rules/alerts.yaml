@@ -1,57 +1,68 @@
-# alerts.yaml
 groups:
-  - name: infrastructure
-    rules:
-    - alert: HostHighCPU
-      expr: 100 -(avg by(instance)
-            (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
-      for: 5m
-      labels:
-        severity: warning
-      annotations:
-        summary: CPU > 90%
-
-    - alert: HostHighMemory
-      expr: (
-        (1 -
-        node_memory_MemAvailable_bytes
-        /
-        node_memory_MemTotal_bytes)
-        * 100
-        ) > 90
-      for: 5m
-      labels:
-        severity: warning
-      annotations:
-        summary: RAM > 90%
-
-    - alert: HostLowDisk
-      expr: (
-        node_filesystem_avail_bytes
-        /
-        node_filesystem_size_bytes
-        * 100
-        ) < 10
-      for: 5m
-      labels:
-        severity: critical
-      annotations:
-        summary: Disk < 10%
-
-    - alert: ContainerDown
-      expr: up == 0
-      for: 2m
-      labels:
-        severity: critical
-      annotations:
-        summary: Target unavailable
-
-  # PDF Parsing fehlgeschlagen
-
-  # Embedding Queue > 1000
-
-  # Retrieval Fehlerquote > 10%
-
-  # Wikipedia Crawl gestoppt
-
-  # Agent Laufzeit > 30 Minuten
+- name: infrastructure
+  rules:
+  - alert: PrometheusTargetDown
+    expr: up == 0
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: Configured scrape target is unavailable
+  - alert: HostHighCPU
+    expr: 100 - (avg by (job, instance) (rate(node_cpu_seconds_total{mode="idle"}[5m]))
+      * 100) > 90
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host CPU usage exceeds 90 percent
+  - alert: HostHighMemory
+    expr: (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) > 0.9
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host memory usage exceeds 90 percent
+  - alert: HostLowDisk
+    expr: (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay|squashfs|proc|sysfs"}
+      / node_filesystem_size_bytes < 0.1) and (node_filesystem_size_bytes > 0)
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: Filesystem available capacity below 10 percent
+- name: pipeline
+  rules:
+  - alert: PipelineWorkerUnavailable
+    expr: personal_assistant_workers_available < 1
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: Configured worker pool has no ready workers
+  - alert: PipelineMetricsMissing
+    expr: up{job="personal_assistant_workers"} == 1 unless on (job, instance) personal_assistant_workers_available
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Exporter responds but required worker availability metric is absent
+  - alert: PipelineHighFailureRate
+    expr: (sum by (process) (rate(personal_assistant_jobs_failed_total[15m])) / sum
+      by (process) (rate(personal_assistant_jobs_completed_total{outcome=~"success|failure"}[15m]))
+      > 0.2 and sum by (process) (increase(personal_assistant_jobs_completed_total{outcome=~"success|failure"}[15m]))
+      >= 5
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: More than 20 percent failures among at least five finished attempts
+  - alert: PipelineLongRunningJob
+    expr: (time() - personal_assistant_job_oldest_running_start_timestamp_seconds
+      > 1800) and on (job, instance, process, worker_pool) (personal_assistant_jobs_running
+      > 0)
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Confirmed running attempt exceeds 30 minutes

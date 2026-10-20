@@ -1,0 +1,420 @@
+{
+  "uid": "pa-pipeline-v1",
+  "title": "Pipeline Overview",
+  "schemaVersion": 41,
+  "version": 1,
+  "editable": false,
+  "timezone": "browser",
+  "refresh": "30s",
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "tags": [
+    "personal-assistant",
+    "provisioned"
+  ],
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "Data availability and scope",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 4
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**No real pipeline exporter is implemented or configured in this repository.** Panels show **No data** until an authenticated controller exposes Metrics v1 and explicit target discovery is enabled. Empty panels are not zero jobs, success, or healthy workers. No simulated measurements and no queue-length metric: no persistent queue service was verified. Job IDs, Lecture IDs, filenames and URLs belong only in authorized logs/reports."
+      }
+    },
+    {
+      "id": 2,
+      "title": "Configured exporter scrape health",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pa-prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 12,
+        "h": 8
+      },
+      "description": "No data means absent observations or disabled discovery; never an inferred zero.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "up{job=\"personal_assistant_workers\"}",
+          "legendFormat": "{{instance}} {{process}} {{worker_pool}} {{outcome}} {{stage}} {{error_class}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Ready workers by pool",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pa-prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 4,
+        "w": 12,
+        "h": 8
+      },
+      "description": "No data means absent observations or disabled discovery; never an inferred zero.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "personal_assistant_workers_available",
+          "legendFormat": "{{instance}} {{process}} {{worker_pool}} {{outcome}} {{stage}} {{error_class}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Running attempts",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pa-prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 12,
+        "h": 8
+      },
+      "description": "No data means absent observations or disabled discovery; never an inferred zero.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "personal_assistant_jobs_running",
+          "legendFormat": "{{instance}} {{process}} {{worker_pool}} {{outcome}} {{stage}} {{error_class}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Started attempts (last hour)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pa-prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 12,
+        "w": 12,
+        "h": 8
+      },
+      "description": "No data means absent observations or disabled discovery; never an inferred zero.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (process) (increase(personal_assistant_jobs_started_total[1h]))",
+          "legendFormat": "{{instance}} {{process}} {{worker_pool}} {{outcome}} {{stage}} {{error_class}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Finished attempts by outcome (last hour)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pa-prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 20,
+        "w": 12,
+        "h": 8
+      },
+      "description": "No data means absent observations or disabled discovery; never an inferred zero.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (process, outcome) (increase(personal_assistant_jobs_completed_total[1h]))",
+          "legendFormat": "{{instance}} {{process}} {{worker_pool}} {{outcome}} {{stage}} {{error_class}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Failed attempts by class (last hour)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pa-prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 20,
+        "w": 12,
+        "h": 8
+      },
+      "description": "No data means absent observations or disabled discovery; never an inferred zero.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (process, error_class) (increase(personal_assistant_jobs_failed_total[1h]))",
+          "legendFormat": "{{instance}} {{process}} {{worker_pool}} {{outcome}} {{stage}} {{error_class}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Failure ratio (success + failure denominator)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pa-prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 28,
+        "w": 12,
+        "h": 8
+      },
+      "description": "No data means absent observations or disabled discovery; never an inferred zero.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (process) (rate(personal_assistant_jobs_failed_total[15m])) / sum by (process) (rate(personal_assistant_jobs_completed_total{outcome=~\"success|failure\"}[15m]))",
+          "legendFormat": "{{instance}} {{process}} {{worker_pool}} {{outcome}} {{stage}} {{error_class}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 9,
+      "title": "Job duration p95",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pa-prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 28,
+        "w": 12,
+        "h": 8
+      },
+      "description": "No data means absent observations or disabled discovery; never an inferred zero.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "personal_assistant:job_duration:p95_5m",
+          "legendFormat": "{{instance}} {{process}} {{worker_pool}} {{outcome}} {{stage}} {{error_class}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 10,
+      "title": "Stage duration p95",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pa-prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 36,
+        "w": 12,
+        "h": 8
+      },
+      "description": "No data means absent observations or disabled discovery; never an inferred zero.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "histogram_quantile(0.95, sum by (process, stage, le) (rate(personal_assistant_pipeline_stage_duration_seconds_bucket[5m])))",
+          "legendFormat": "{{instance}} {{process}} {{worker_pool}} {{outcome}} {{stage}} {{error_class}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "title": "Oldest confirmed running attempt",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pa-prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 36,
+        "w": 12,
+        "h": 8
+      },
+      "description": "No data means absent observations or disabled discovery; never an inferred zero.",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(time() - personal_assistant_job_oldest_running_start_timestamp_seconds) and on (job, instance, process, worker_pool) (personal_assistant_jobs_running > 0)",
+          "legendFormat": "{{instance}} {{process}} {{worker_pool}} {{outcome}} {{stage}} {{error_class}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "templating": {
+    "list": []
+  }
+}

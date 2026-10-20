@@ -1,0 +1,19 @@
+# Descriptive contracts; no auto-start or implicit service activation.
+[local-development]
+backend = "python -m scripts.job_control check --config <private-json>"
+ui = "streamlit run app_admin.py"
+default_backend = "disabled"
+production_services = false
+
+[local-integration]
+driver = "scripts/acceptance/c21_ui_tcp.py"
+required_arguments = ["--ui-repo", "--backend-repo", "--backend-python", "--output"]
+data = "new external synthetic workspace only"
+network = "owned loopback only"
+
+[private-production]
+compose = "deployment/compose.yaml"
+enabled_by_default = false
+required_ui = "C22 UI container PR"
+optional_monitoring = "deployment/monitoring.compose.yaml"
+go_live = "blocked until docs/deployment/c22_validation.md gates are closed"

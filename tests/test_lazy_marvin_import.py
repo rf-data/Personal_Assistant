@@ -39,13 +39,14 @@ sys.path.insert(0, str(root)); os.chdir(tmp)
 os.environ.update(ROOT=str(tmp), CHROMA_DIR=str(tmp/'chroma'), DATA_DIR=str(tmp/'data'),
                   WIKI_EN_API='https://example.invalid', HEADER_AGENT='offline',
                   HF_API_KEY='offline-placeholder', OPENAI_API_KEY='offline-placeholder')
-# Abort any Marvin import before it can initialize SQLite. No library substitution
+# Block optional SDKs even if installed. No library substitution
 # occurs during the normal import/deterministic phase.
-class NoMarvin:
+sdks = {'openai', 'marvin', 'pydantic_ai'}
+class NoOptionalSDK:
     def find_spec(self, fullname, path=None, target=None):
-        if fullname == 'marvin' or fullname.startswith('marvin.'):
-            raise AssertionError('Deterministic import attempted Marvin initialization')
-blocker = NoMarvin(); sys.meta_path.insert(0, blocker)
+        if fullname.split('.')[0] in sdks:
+            raise ModuleNotFoundError('Optional SDK deliberately unavailable', name=fullname)
+blocker = NoOptionalSDK(); sys.meta_path.insert(0, blocker)
 def forbidden(*a, **kw): raise AssertionError('External call forbidden')
 socket.socket.connect = forbidden; socket.socket.connect_ex = forbidden
 socket.getaddrinfo = forbidden; socket.create_connection = forbidden
@@ -53,7 +54,9 @@ importlib.import_module(target)
 find = importlib.import_module('src.tools_knowledge.find_knowledge')
 conso = importlib.import_module('src.tools_knowledge.consolidate_knowledge')
 helper = importlib.import_module('src.utils.llm_helper')
-assert 'marvin' not in sys.modules
+importlib.import_module('src.tools_knowledge.cs50_precise_evidence')
+importlib.import_module('src.tools_knowledge.cs50_extraction_provider')
+assert not sdks.intersection(sys.modules)
 assert not list(tmp.rglob('*.db'))
 if (root/'src/tools_transcribe/import_transcript.py').exists():
     importlib.import_module('src.tools_transcribe.import_transcript')
@@ -81,9 +84,30 @@ assert final.source_id == 'verified' and final.language == 'en'
 assert final.formulas[0].evidence[0].segment_ids == [4]
 assert final.formulas[0].evidence[0].end == 50
 assert 'marvin' not in sys.modules
+# SDK-dependent functions must cross the import boundary only when called.
+for call, expected in [
+    (helper.get_openai_client, 'openai'),
+    (lambda: helper.configure_marvin(SimpleNamespace()), 'marvin'),
+    (lambda: find.extract_knowledge('Text', None, None), 'marvin'),
+]:
+    try:
+        call()
+    except ModuleNotFoundError as error:
+        assert error.name == expected
+    else:
+        raise AssertionError('Missing SDK was silently ignored')
+assert not sdks.intersection(sys.modules)
 # Offline LLM-boundary verification: explicit test doubles after import phase.
 # No actual Marvin import, database, Agent construction or API call.
 sys.meta_path.remove(blocker)
+openai = ModuleType('openai')
+client_calls = []
+class OpenAI:
+    def __init__(self): client_calls.append('construct')
+openai.OpenAI = OpenAI
+sys.modules['openai'] = openai
+assert isinstance(helper.get_openai_client(), OpenAI)
+assert client_calls == ['construct']
 marvin = ModuleType('marvin'); marvin.defaults = SimpleNamespace(model=None)
 calls = []
 def fn(*, instructions):
@@ -93,8 +117,8 @@ def fn(*, instructions):
         assert list(inspect.signature(schema).parameters) == ['target_chunk','previous_context','next_context']
         assert inspect.signature(schema).return_annotation is ChunkKnowledgeResult
         calls.append('decorate')
-        def invoke(**kwargs):
-            calls.append(kwargs)
+        def invoke(*args, **kwargs):
+            calls.append(dict(inspect.signature(schema).bind(*args, **kwargs).arguments))
             return result
         return invoke
     return decorate
@@ -110,6 +134,7 @@ for _ in range(2):
     assert find.extract_knowledge('Text', None, None) is result
 assert calls.count('decorate') == 1
 assert calls[-1] == {'target_chunk':'Text','previous_context':None,'next_context':None}
+assert not list(tmp.rglob('*.db'))
 print('synchronous import, deterministic processing and offline LLM boundary: passed')
 """
     env = {

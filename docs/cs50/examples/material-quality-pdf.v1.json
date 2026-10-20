@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "validator_version": "cs50_material_quality_v1",
+  "status": "passed_with_warnings",
+  "inputs": {
+    "normalized": "/tmp/c10-quality-examples/pdf/f6d786336c3bee07e40c67abdcf5db52176cf10d52d21543568d7d17240d267b/b1cb37f253d866e7ee68c9faebcb0e00eebe77af1ec93411013f350b89429a77/normalized.v1.json",
+    "receipt": "/tmp/c10-quality-examples/pdf/f6d786336c3bee07e40c67abdcf5db52176cf10d52d21543568d7d17240d267b/receipt.v1.json",
+    "raw": "/tmp/c10-quality-examples/pdf/f6d786336c3bee07e40c67abdcf5db52176cf10d52d21543568d7d17240d267b/raw/source",
+    "plan": "/tmp/c10-quality-examples/pdf-plan.json",
+    "workspace": "/tmp/c10-quality-examples/pdf"
+  },
+  "observed_sha256": {
+    "normalized": "62ded609f34a97472e824b6f9b639af352e77375830afc44f6500c786487e3dc",
+    "receipt": "df2642cc7f19b3f1b6aa5a7d9dc072d9f54c00f3456d62a9fdede10b1ca660df",
+    "plan": "aca9a7198671ee239ecb79661240d5ac31b79f05dce4c76d4c160cae65a88b05",
+    "raw": "05ed3b57bce4ce0917450a432923a739d331c106f5eae017650c43552b9a70ca"
+  },
+  "document_id": "material_doc:b1cb37f253d866e7ee68c9faebcb0e00eebe77af1ec93411013f350b89429a77",
+  "material_id": "material:f6d786336c3bee07e40c67abdcf5db52176cf10d52d21543568d7d17240d267b",
+  "resource_id": "resource:9a480ef99c83c43814ad001cd854d783d70b3933256b9f5bad9c4c21fe877401",
+  "course_id": "cs50_python",
+  "section_keys": [
+    "0"
+  ],
+  "lecture_ids": [
+    "resource:9bc497fe08d6a5a5547fb493f3c924fb8b67b02d8839360fc1a6e67d0537acca"
+  ],
+  "findings": [
+    {
+      "code": "parser_uncertainty",
+      "severity": "warning",
+      "category": "semantic_review",
+      "message": "font-size heading heuristic",
+      "input": "normalized",
+      "field": null,
+      "block_id": "material_block:9b4889f00877d32cf5628eec951791ebd56ccdd17191c7fbfd020e5b1d96bcfe",
+      "block_order": 0,
+      "location": {
+        "dom": null,
+        "page": 1,
+        "line_start": null,
+        "line_end": null,
+        "bbox": [
+          40.0,
+          22.799999237060547,
+          227.63198852539062,
+          44.784000396728516
+        ]
+      },
+      "image_id": null
+    },
+    {
+      "code": "parser_uncertainty",
+      "severity": "warning",
+      "category": "semantic_review",
+      "message": "Python-shaped source; heuristic classification, not execution or semantic verification",
+      "input": "normalized",
+      "field": null,
+      "block_id": "material_block:b690dc1ab418e8c1d701e63c75d648f2652e794a14c30d3409e024125fd22127",
+      "block_order": 1,
+      "location": {
+        "dom": null,
+        "page": 1,
+        "line_start": null,
+        "line_end": null,
+        "bbox": [
+          40.0,
+          88.81600189208984,
+          176.79995727539062,
+          133.7799530029297
+        ]
+      },
+      "image_id": null
+    },
+    {
+      "code": "parser_uncertainty",
+      "severity": "warning",
+      "category": "semantic_review",
+      "message": "Line-number gutter inferred from consecutive aligned numbers; original text retained",
+      "input": "normalized",
+      "field": null,
+      "block_id": "material_block:b690dc1ab418e8c1d701e63c75d648f2652e794a14c30d3409e024125fd22127",
+      "block_order": 1,
+      "location": {
+        "dom": null,
+        "page": 1,
+        "line_start": null,
+        "line_end": null,
+        "bbox": [
+          40.0,
+          88.81600189208984,
+          176.79995727539062,
+          133.7799530029297
+        ]
+      },
+      "image_id": null
+    },
+    {
+      "code": "derived_code_view",
+      "severity": "info",
+      "category": "technical",
+      "message": "Reversible code view retained as an alternative, excluded from additional aggregation",
+      "input": "normalized",
+      "field": null,
+      "block_id": "material_block:b690dc1ab418e8c1d701e63c75d648f2652e794a14c30d3409e024125fd22127",
+      "block_order": 1,
+      "location": {
+        "dom": null,
+        "page": 1,
+        "line_start": null,
+        "line_end": null,
+        "bbox": [
+          40.0,
+          88.81600189208984,
+          176.79995727539062,
+          133.7799530029297
+        ]
+      },
+      "image_id": null
+    }
+  ]
+}

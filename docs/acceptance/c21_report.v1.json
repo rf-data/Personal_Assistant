@@ -1,0 +1,2319 @@
+{
+  "acceptance_source_sha256": {
+    "scripts/acceptance/c21_real_material.py": "2986b4a4cf1fea2ffbde4a92baea2d3b0a9b814edaa7d9abd88d65c32e65cf69",
+    "scripts/acceptance/c21_server.py": "435f93cafe8913df86ceb87b82730f2cbef466368f2eec6ae186e86822f34a11",
+    "scripts/acceptance/c21_ui_tcp.py": "8fc8754e2e23b28684904bc9415a6442eccd9ab23f1f5ac2a5ca0e6496796a34",
+    "scripts/acceptance/c21_unittest.py": "c9cbd53a6a7278eaa575b1f84ecb0a911fb694e84a386eeab13175b728a8ba6c",
+    "scripts/c21_acceptance.py": "7373d7757b5cf63490452aae0abc8850e2c008dd08940849a3bf88d9f22a45db",
+    "tests/test_c21_acceptance.py": "ccd2e9ea311b7349a2a505841c24d12501f208c1a01753a3ba4c611adb3fb0f1"
+  },
+  "attempts": {
+    "c21_tests_rerun": {
+      "counts": {
+        "passed": 7
+      },
+      "evidence": {
+        "bytes": 1111,
+        "sha256": "0dd29245d4a6c31c392612d58b42d6cae294c52cc9609ce96a0df38b883adba8"
+      }
+    },
+    "initial_broad_backend": {
+      "cause": "Cold SymPy import exhausted unchanged isolated CPU limit",
+      "counts": {
+        "failed": 10,
+        "passed": 574,
+        "skipped": 3
+      },
+      "evidence": {
+        "bytes": 85693,
+        "sha256": "ac0292ca75e823812ef4a38587a7020866522846f08c82243f153df4f24afc75"
+      },
+      "failed": [
+        "tests.test_math_formula_evaluation.test_isolated_symbolic_decisions[(a+b)^2-a^2+2ab+b^2-equivalent]",
+        "tests.test_math_formula_evaluation.test_isolated_symbolic_decisions[2x+4=0-x=-2-equivalent]",
+        "tests.test_math_formula_evaluation.test_isolated_symbolic_decisions[x^2-5x+6=0-(x-2)(x-3)=0-equivalent]",
+        "tests.test_math_formula_evaluation.test_isolated_symbolic_decisions[\\\\frac{x+x}{2}-x-equivalent]",
+        "tests.test_math_formula_evaluation.test_isolated_symbolic_decisions[\\\\sqrt{16}-4-equivalent]",
+        "tests.test_math_formula_evaluation.test_isolated_symbolic_decisions[x^2-x^3-not_equivalent]",
+        "tests.test_math_formula_evaluation.test_isolated_symbolic_decisions[x+1-x-1-not_equivalent]",
+        "tests.test_math_formula_evaluation.test_isolated_symbolic_decisions[x+1=2-x-1=2-not_equivalent]",
+        "tests.test_math_formula_evaluation.test_isolated_symbolic_decisions[x_1-x_2-not_equivalent]",
+        "tests.test_math_formula_evaluation.test_full_gold_set_has_independently_expected_outcomes"
+      ],
+      "seconds": 510.53
+    },
+    "initial_ui": {
+      "cause": "Post-cancel GET may already observe cancelled; actual acknowledgement is the correct intermediate evidence",
+      "failed_subtests": [
+        "test_workflow_e2e.RealWorkflowTests.test_native_pdf_cancel_timeout_and_executor_restart_are_visible_and_resumable (fault='cancel')"
+      ],
+      "tests_run": 115
+    },
+    "math_rerun": {
+      "counts": {
+        "passed": 123
+      },
+      "evidence": {
+        "bytes": 17404,
+        "sha256": "0bf1fa93b10181a3f23f7e7a3169bd39e47eacbbd0a29a636239c17375dc4eee"
+      },
+      "seconds": 86.57
+    },
+    "preflight": {
+      "cold_import_cpu_seconds": 12.816,
+      "limits_unchanged": true,
+      "warm_import": {
+        "available": true,
+        "import_cpu_seconds": 0.899,
+        "version": "1.14.0"
+      }
+    },
+    "tcp_corrected": {
+      "evidence": {
+        "bytes": 20099,
+        "sha256": "e2338448ded79e388b9a9fcedf6d442c193f5d89aabbcaeb55c4faba538dd452"
+      },
+      "external_setup_actions": [
+        "workflow_damage",
+        "verify_preserved"
+      ],
+      "http_calls": [
+        {
+          "method": "GET",
+          "route": "/v1/workflows/capabilities",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/capabilities",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/capabilities",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "route": "/v1/workflows/inspect",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/capabilities",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "route": "/v1/workflows/execute",
+          "status": 202
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/capabilities",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/capabilities",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/capabilities",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "route": "/v1/workflows/execute",
+          "status": 202
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8a86681ce5934715bf232efc65a603f1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8a86681ce5934715bf232efc65a603f1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8a86681ce5934715bf232efc65a603f1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8a86681ce5934715bf232efc65a603f1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8a86681ce5934715bf232efc65a603f1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8a86681ce5934715bf232efc65a603f1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8a86681ce5934715bf232efc65a603f1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8a86681ce5934715bf232efc65a603f1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8a86681ce5934715bf232efc65a603f1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance/runs/job_8a86681ce5934715bf232efc65a603f1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8a86681ce5934715bf232efc65a603f1/artifacts",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "route": "/v1/workflows/inspect",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/capabilities",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "route": "/v1/workflows/resume",
+          "status": 202
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/capabilities",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "route": "/v1/workflows/inspect",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/capabilities",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/capabilities",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "route": "/v1/workflows/inspect",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/capabilities",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "route": "/v1/workflows/resume",
+          "status": 202
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/jobs/job_8de4ff726328474fb701b8a22b14ee6f",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "route": "/v1/workflows/inspect",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "route": "/v1/workflows/inspect",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/workflows/c21_acceptance",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "route": "/v1/metrics",
+          "status": 200
+        }
+      ]
+    },
+    "ui_corrected": {
+      "evidence": {
+        "bytes": 85331,
+        "sha256": "2aeb85bebb44d668d0571e72e760e277ad0cae86ecbded9a7508d8199dd9bf3d"
+      },
+      "records": [
+        {
+          "status": "passed",
+          "test": "test_c16_e2e.RealC16Tests.test_real_adapters_through_canonical_streamlit_app"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_anonymous_cannot_read_jobs_artifacts_or_previews"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_cancellation_is_request_then_confirmation"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_concurrent_duplicate_requests_create_one_job"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_corrupt_store_is_not_overwritten"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_creation_and_start_idempotency_survive_restart"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_exported_registry_and_schemas_are_json_serializable"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_failed_job_has_error_and_no_artifacts"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_history_filters_are_persisted"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_idempotency_key_reuse_with_other_parameters_is_rejected"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_lecture_input_cannot_lose_scope"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_log_bounds_and_search"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_parameter_limits_and_timezone_filters"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_parameters_scope_and_unknown_fields (update={'course_id': 'not-course'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_parameters_scope_and_unknown_fields (update={'source_ref': '../passwd'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_parameters_scope_and_unknown_fields (update={'command': 'rm -rf'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_parameters_scope_and_unknown_fields (update={'role': 'operator'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_parameters_scope_and_unknown_fields (update={'lecture_id': '/host/path'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_parameters_scope_and_unknown_fields (update={'lecture_id': 'wrong'})"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_parameters_scope_and_unknown_fields"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_prerequisites_missing_wrong_type_and_wrong_course (parameters={'course_id': 'cs50_python', 'discovery_ref': 'missing'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_prerequisites_missing_wrong_type_and_wrong_course (parameters={'course_id': 'cs50_python', 'discovery_ref': 'art_demo_sources'})"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_prerequisites_missing_wrong_type_and_wrong_course"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_preview_does_not_create_jobs_and_preserves_required_inputs"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_registry_only_reviewed_unique_contracts (process='course_discovery')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_registry_only_reviewed_unique_contracts (process='material_planning')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_registry_only_reviewed_unique_contracts (process='material_download')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_registry_only_reviewed_unique_contracts (process='material_parsing')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_registry_only_reviewed_unique_contracts (process='quality_evaluation')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_registry_only_reviewed_unique_contracts (process='knowledge_extraction')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.ControllerTests.test_registry_only_reviewed_unique_contracts (process='knowledge_consolidation')"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_registry_only_reviewed_unique_contracts"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_safe_inventory_reuses_stages_and_is_bounded"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_secret_redaction"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_status_transitions_progress_and_artifacts"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_store_symlinks_and_traversal_are_rejected"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_successful_predecessor_artifact_can_feed_planning"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_tampered_preview_is_rejected"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_unknown_process_in_persisted_state_is_unavailable"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_unknown_progress_is_not_invented"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.ControllerTests.test_viewer_and_non_owner_cannot_write"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.SecuritySettingsTests.test_admin_does_not_import_executors_or_chat"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.SecuritySettingsTests.test_default_denies_identity_and_controller"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.SecuritySettingsTests.test_demo_storage_cannot_use_data_log_git_or_outside_root (target=PosixPath('<temporary-test-path>'))"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.SecuritySettingsTests.test_demo_storage_cannot_use_data_log_git_or_outside_root (target=PosixPath('<temporary-test-path>'))"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.SecuritySettingsTests.test_demo_storage_cannot_use_data_log_git_or_outside_root (target=PosixPath('<temporary-test-path>'))"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.SecuritySettingsTests.test_demo_storage_cannot_use_data_log_git_or_outside_root (target=PosixPath('<temporary-test-path>'))"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.SecuritySettingsTests.test_demo_storage_cannot_use_data_log_git_or_outside_root (target=PosixPath('<temporary-test-path>'))"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.SecuritySettingsTests.test_demo_storage_cannot_use_data_log_git_or_outside_root"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.SecuritySettingsTests.test_explicit_local_demo_only (kwargs={'app_env': 'server', 'admin_auth_mode': 'demo', 'job_backend': 'fake'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.SecuritySettingsTests.test_explicit_local_demo_only (kwargs={'app_env': 'auto', 'admin_auth_mode': 'demo'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_controller.SecuritySettingsTests.test_explicit_local_demo_only (kwargs={'app_env': 'local', 'job_backend': 'fake'})"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.SecuritySettingsTests.test_explicit_local_demo_only"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.SecuritySettingsTests.test_live_controller_configuration_is_rejected"
+        },
+        {
+          "status": "passed",
+          "test": "test_controller.SecuritySettingsTests.test_oidc_verified_identity_and_allowlists"
+        },
+        {
+          "status": "passed",
+          "test": "test_deployment.DeploymentTests.test_build_context_excludes_secrets_and_demo_data"
+        },
+        {
+          "status": "passed",
+          "test": "test_deployment.DeploymentTests.test_canonical_command_and_required_modules"
+        },
+        {
+          "status": "passed",
+          "test": "test_deployment.DeploymentTests.test_chat_is_separate_from_admin_entrypoint"
+        },
+        {
+          "status": "passed",
+          "test": "test_deployment.DeploymentTests.test_compose_default_cannot_execute_jobs_or_access_docker"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_actual_wire_fixture_and_both_process_schemas"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_auth_binding_and_cancel_owner_rights"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_backend_schema_status_interrupted_and_no_artificial_progress"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_changed_preview_cannot_rotate_an_unconfirmed_start_key"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_double_concurrent_start_uses_one_key"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_http_errors_are_safe_and_all_actions_authenticate (status=401)"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_http_errors_are_safe_and_all_actions_authenticate (status=403)"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_http_errors_are_safe_and_all_actions_authenticate (status=404)"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_http_errors_are_safe_and_all_actions_authenticate (status=409)"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_http_errors_are_safe_and_all_actions_authenticate (status=422)"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_http_errors_are_safe_and_all_actions_authenticate (status=503)"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_http_errors_are_safe_and_all_actions_authenticate (status=500)"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_http_errors_are_safe_and_all_actions_authenticate (status=302)"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_http_errors_are_safe_and_all_actions_authenticate"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_idempotency_after_accepted_timeout_and_browser_refresh"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_invalid_responses_unsupported_versions_and_reference_mismatch"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_no_arbitrary_job_paths_and_read_bounds"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_parameters_fail_closed_and_preserve_operator_meaning (bad={'source_ref': 'demo_snapshots', 'course_id': 'cs50_python', 'section': '0', 'resource_id': None, 'output_name': 'material-plan', 'command': 'echo x'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_parameters_fail_closed_and_preserve_operator_meaning (bad={'source_ref': 'demo_snapshots', 'course_id': 'cs50_python', 'section': '0', 'resource_id': None, 'output_name': '../escape'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_parameters_fail_closed_and_preserve_operator_meaning (bad={'source_ref': 'demo_snapshots', 'course_id': 'not_allowed', 'section': '0', 'resource_id': None, 'output_name': 'material-plan'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_parameters_fail_closed_and_preserve_operator_meaning (bad={'source_ref': 'unknown', 'course_id': 'cs50_python', 'section': '0', 'resource_id': None, 'output_name': 'material-plan'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_live_client.LiveClientTests.test_parameters_fail_closed_and_preserve_operator_meaning (bad={'source_ref': 'demo_snapshots', 'course_id': 'cs50_python', 'section': '../../', 'resource_id': None, 'output_name': 'material-plan'})"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_parameters_fail_closed_and_preserve_operator_meaning"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_preview_create_status_history_logs_artifacts_cancel"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_token_files_are_private_regular_bounded_and_not_in_settings"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.LiveClientTests.test_url_and_auth_modes_fail_closed"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.PollTests.test_backoff_stale_failure_and_recovery"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.PollTests.test_cache_memory_is_bounded"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.PollTests.test_revoked_identity_discards_cached_response"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_client.PollTests.test_tabs_reruns_identity_isolation_and_global_floor"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_ui.LiveUITests.test_browser_refresh_and_backend_outage_do_not_create_jobs"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_ui.LiveUITests.test_interrupted_is_visible_without_success_or_retry"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_ui.LiveUITests.test_missing_approved_input_and_viewer_cannot_start"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_ui.LiveUITests.test_quality_process_and_cancel_requires_confirmation_and_backend_end"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_ui.LiveUITests.test_start_auto_detail_rerun_url_identity_and_completed_artifacts"
+        },
+        {
+          "status": "passed",
+          "test": "test_live_ui.LiveUITests.test_unavailable_backend_has_no_executable_form"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_cancellation_request_is_not_displayed_as_completed"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_default_access_closed"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_failure_and_log_filter"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_history_filters_and_safe_inventory"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_missing_prerequisite_disables_preview"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_new_preview_creates_new_intent_and_selects_new_run"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_ui.StreamlitTests.test_session_restart_and_compatibility_entries_preserve_history (entry='app_admin.py')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_ui.StreamlitTests.test_session_restart_and_compatibility_entries_preserve_history (entry='app_admin_new.py')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_ui.StreamlitTests.test_session_restart_and_compatibility_entries_preserve_history (entry='app_ui.py')"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_session_restart_and_compatibility_entries_preserve_history"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_start_preview_confirmation_and_rerun_idempotency"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_unavailable_backend_is_visible_and_no_start_exists"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_unknown_progress_is_shown_without_artificial_percentage"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_unsafe_controller_storage_is_reported_without_ui_exception"
+        },
+        {
+          "status": "passed",
+          "test": "test_ui.StreamlitTests.test_viewer_controls_remain_read_only"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_contract.WorkflowContractTests.test_all_ten_stage_states_have_separate_presentations"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_contract.WorkflowContractTests.test_c19_registry_and_both_optins_are_distinct"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_contract.WorkflowContractTests.test_client_rejects_a_preview_with_changed_workflow_identity"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_contract.WorkflowContractTests.test_generic_workflow_create_cannot_bypass_the_confirmed_service"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_invalid_reports_rejected_instead_of_being_rendered_as_success (mode='schema')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_invalid_reports_rejected_instead_of_being_rendered_as_success (mode='hash')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_invalid_reports_rejected_instead_of_being_rendered_as_success (mode='duplicate')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_invalid_reports_rejected_instead_of_being_rendered_as_success (mode='dependency')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_invalid_reports_rejected_instead_of_being_rendered_as_success (mode='path')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_invalid_reports_rejected_instead_of_being_rendered_as_success (mode='output_hash')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_invalid_reports_rejected_instead_of_being_rendered_as_success (mode='cycle')"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_contract.WorkflowContractTests.test_invalid_reports_rejected_instead_of_being_rendered_as_success"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_job_identity_and_artifact_associations_are_checked (mode='workflow_id')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_job_identity_and_artifact_associations_are_checked (mode='input_ref')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_job_identity_and_artifact_associations_are_checked (mode='artifact')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_job_identity_and_artifact_associations_are_checked (mode='exit')"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_contract.WorkflowContractTests.test_job_identity_and_artifact_associations_are_checked"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_contract.WorkflowContractTests.test_published_c18_report_models_edges_and_hash"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_contract.WorkflowContractTests.test_unknown_states_and_decisions_remain_unknown_and_unmodified"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_workflow_parameter_and_input_scope_validation (bad={'source_ref': 'synthetic_workflow', 'course_id': 'cs50_python', 'workflow_id': 'snapshot_workflow', 'previous_run_id': None, 'output_name': 'workflow-report', 'path': '/etc/passwd'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_workflow_parameter_and_input_scope_validation (bad={'source_ref': 'synthetic_workflow', 'course_id': 'cs50_python', 'workflow_id': '../../x', 'previous_run_id': None, 'output_name': 'workflow-report'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_workflow_parameter_and_input_scope_validation (bad={'source_ref': 'demo_snapshots', 'course_id': 'cs50_python', 'workflow_id': 'snapshot_workflow', 'previous_run_id': None, 'output_name': 'workflow-report'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_contract.WorkflowContractTests.test_workflow_parameter_and_input_scope_validation (bad={'source_ref': 'synthetic_workflow', 'course_id': 'cs50x', 'workflow_id': 'snapshot_workflow', 'previous_run_id': None, 'output_name': 'workflow-report'})"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_contract.WorkflowContractTests.test_workflow_parameter_and_input_scope_validation"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_e2e.RealWorkflowTests.test_actual_owner_course_and_viewer_authorization_through_ui"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_e2e.RealWorkflowTests.test_full_ui_workflow_http_execute_resume_stale_cancel_and_refresh"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_e2e.RealWorkflowTests.test_native_pdf_cancel_timeout_and_executor_restart_are_visible_and_resumable (fault='cancel')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_e2e.RealWorkflowTests.test_native_pdf_cancel_timeout_and_executor_restart_are_visible_and_resumable (fault='worker-timeout')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_e2e.RealWorkflowTests.test_native_pdf_cancel_timeout_and_executor_restart_are_visible_and_resumable (fault='restart')"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_e2e.RealWorkflowTests.test_native_pdf_cancel_timeout_and_executor_restart_are_visible_and_resumable"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_all_seven_models_match_the_actual_published_messages"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_disabled_capability_and_viewer_never_post"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_inspect_status_run_use_actual_fixed_routes_and_selector"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_invalid_run_and_history_bounds_never_use_transport"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_mismatched_current_previous_job_and_artifact_rejected (mode='current')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_mismatched_current_previous_job_and_artifact_rejected (mode='previous')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_mismatched_current_previous_job_and_artifact_rejected (mode='artifact')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_mismatched_current_previous_job_and_artifact_rejected (mode='history')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_mismatched_current_previous_job_and_artifact_rejected (mode='source')"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_mismatched_current_previous_job_and_artifact_rejected"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_persisted_previous_report_keeps_its_own_run_and_status"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_protocol_and_version_are_required_and_unknown_values_rejected (change={'schema_version': 2})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_protocol_and_version_are_required_and_unknown_values_rejected (change={'protocol': 'future_v2'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_protocol_and_version_are_required_and_unknown_values_rejected (change={'enabled': 'true'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_protocol_and_version_are_required_and_unknown_values_rejected (change={'execute_route': 'https://invalid/command'})"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_protocol_and_version_are_required_and_unknown_values_rejected"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_report_hash_and_file_hash_remain_distinct"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_request_confirmation_parent_and_extra_parameters_are_strict (change={'confirmed': 1})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_request_confirmation_parent_and_extra_parameters_are_strict (change={'confirmed': False})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_request_confirmation_parent_and_extra_parameters_are_strict (change={'command': 'sh'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_request_confirmation_parent_and_extra_parameters_are_strict (change={'source_ref': '<temporary-test-path>'})"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_http.WorkflowHTTPTests.test_request_confirmation_parent_and_extra_parameters_are_strict (change={'schema_version': 9})"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_request_confirmation_parent_and_extra_parameters_are_strict"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_unknown_stages_are_preserved_not_reclassified_as_success"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowHTTPTests.test_wrong_owner_or_selector_response_is_rejected"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowIntentTests.test_conflict_discards_preview_intent_and_query"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowIntentTests.test_demo_output_is_never_overwritten_and_no_work_starts"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowIntentTests.test_explicit_resume_names_current_run_and_uses_a_new_key"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowIntentTests.test_identity_change_and_malformed_refresh_intent_are_discarded"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowIntentTests.test_lost_response_browser_refresh_preserves_exact_body_and_key"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowIntentTests.test_readonly_preparation_never_submits_and_confirmation_is_required"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_http.WorkflowIntentTests.test_unresolved_intent_cannot_rotate_to_changed_preview"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_config_parameter_preview_and_reruns_never_start_workflow"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_disabled_capability_is_explained_not_made_executable"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_identity_change_removes_workflow_intents_and_previews"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_inspected_operator_can_confirm_start_but_reruns_do_not_post"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_invalid_workflow_id_does_not_reach_backend"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_ui.WorkflowUITests.test_missing_disabled_or_newer_workflow_contract_keeps_writes_locked (flag='workflow_route_missing')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_ui.WorkflowUITests.test_missing_disabled_or_newer_workflow_contract_keeps_writes_locked (flag='workflow_enabled')"
+        },
+        {
+          "status": "passed",
+          "subtest": true,
+          "test": "test_workflow_ui.WorkflowUITests.test_missing_disabled_or_newer_workflow_contract_keeps_writes_locked (flag='protocol_version')"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_missing_disabled_or_newer_workflow_contract_keeps_writes_locked"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_only_active_workflow_view_polls_its_status"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_outage_disables_preview_and_preserves_stale_warning"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_pdf_single_job_preserves_c17_confirmation_and_lost_reply_idempotency"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_snapshot_blocked_stale_failed_and_unknown_are_distinct"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_snapshot_graph_and_all_stage_metadata_are_explicitly_static"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_unknown_live_stage_is_visible_and_cannot_be_confirmed_for_execution"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_viewer_can_read_preview_but_cannot_start_or_cancel"
+        },
+        {
+          "status": "passed",
+          "test": "test_workflow_ui.WorkflowUITests.test_workflow_history_opens_actual_job_and_cancel_is_confirmed"
+        }
+      ],
+      "seconds": 125.227,
+      "skipped": 0,
+      "tests_run": 115
+    }
+  },
+  "backend_base": {
+    "commit": "1c0b30771c02d377445fc58059d19ec605c776ed",
+    "tree": "9a38207a9b4688dbfa99bcd15f97d7afef5a4074"
+  },
+  "backend_effective_counts": {
+    "passed": 585,
+    "skipped": 3
+  },
+  "backend_effective_groups": {
+    "tests.test_c21_acceptance": {
+      "passed": 7
+    },
+    "tests.test_cs50_lecture_adapter": {
+      "passed": 30
+    },
+    "tests.test_cs50_material_html_semantics": {
+      "passed": 17,
+      "skipped": 1
+    },
+    "tests.test_cs50_material_pdf": {
+      "passed": 7
+    },
+    "tests.test_cs50_material_pdf_v2": {
+      "passed": 39,
+      "skipped": 2
+    },
+    "tests.test_cs50_material_processing": {
+      "passed": 8
+    },
+    "tests.test_cs50_material_quality": {
+      "passed": 94
+    },
+    "tests.test_cs50_visual_inventory": {
+      "passed": 69
+    },
+    "tests.test_cs50_workflows": {
+      "passed": 24
+    },
+    "tests.test_job_control": {
+      "passed": 36
+    },
+    "tests.test_job_executor": {
+      "passed": 17
+    },
+    "tests.test_math_formula_evaluation": {
+      "passed": 123
+    },
+    "tests.test_monitoring_config": {
+      "passed": 25
+    },
+    "tests.test_pdf_job_control": {
+      "passed": 14
+    },
+    "tests.test_pdf_workflows": {
+      "passed": 11
+    },
+    "tests.test_pipeline_metrics": {
+      "passed": 27
+    },
+    "tests.test_workflow_http": {
+      "passed": 37
+    }
+  },
+  "checks": [
+    {
+      "evidence": {
+        "history_total": 1,
+        "job_id": "job_8a86681ce5934715bf232efc65a603f1",
+        "report_sha256": "de54bced9e0c74f5c2266a60ad44a1bcfe7da7af0c524b2d2fb14858343f72f6",
+        "stages": 5
+      },
+      "requirement": "tcp_ui_execute_refresh_replay",
+      "status": "passed"
+    },
+    {
+      "evidence": {
+        "artifacts": 1
+      },
+      "requirement": "tcp_artifact_metadata",
+      "status": "passed"
+    },
+    {
+      "evidence": {},
+      "requirement": "tcp_backend_unreachable",
+      "status": "passed"
+    },
+    {
+      "evidence": {
+        "history_total": 1,
+        "same_job": true
+      },
+      "requirement": "tcp_backend_process_restart",
+      "status": "passed"
+    },
+    {
+      "evidence": {
+        "decision": "verified_reuse",
+        "same_job": true,
+        "skipped": 5
+      },
+      "requirement": "tcp_ui_verified_resume",
+      "status": "passed"
+    },
+    {
+      "evidence": {
+        "previous_job": "job_8a86681ce5934715bf232efc65a603f1",
+        "prior_bytes_preserved": true,
+        "resumed_job": "job_8de4ff726328474fb701b8a22b14ee6f"
+      },
+      "requirement": "tcp_ui_stale_partial_resume",
+      "status": "passed"
+    },
+    {
+      "evidence": {
+        "denied_identities": 3,
+        "invalid_source_status": 422
+      },
+      "requirement": "tcp_invalid_source_owner_course",
+      "status": "passed"
+    },
+    {
+      "evidence": {
+        "changed_hash_status": 422,
+        "missing_file_status": 503,
+        "no_additional_job": true,
+        "source_restored": true
+      },
+      "requirement": "tcp_changed_hash_missing_input",
+      "status": "passed"
+    },
+    {
+      "evidence": {
+        "identity_labels": false,
+        "sha256": "e75a6e66b8c3f072234f23f54b2254527997afdde082b7a916d2eec71e7aba8d",
+        "text": "# HELP personal_assistant_workers_available Live ready workers; omit if unknown.\n# TYPE personal_assistant_workers_available gauge\npersonal_assistant_workers_available{worker_pool=\"default\"} 1\n# HELP personal_assistant_jobs_started_total Actual dispatch attempts started.\n# TYPE personal_assistant_jobs_started_total counter\npersonal_assistant_jobs_started_total{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_jobs_started_total{process=\"material_planning\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_started_total{process=\"quality_evaluation\",worker_pool=\"default\"} 0\n# HELP personal_assistant_jobs_completed_total Confirmed terminal attempts, including failure and cancellation.\n# TYPE personal_assistant_jobs_completed_total counter\npersonal_assistant_jobs_completed_total{outcome=\"cancelled\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_completed_total{outcome=\"cancelled\",process=\"material_planning\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_completed_total{outcome=\"cancelled\",process=\"quality_evaluation\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_completed_total{outcome=\"failure\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_completed_total{outcome=\"failure\",process=\"material_planning\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_completed_total{outcome=\"failure\",process=\"quality_evaluation\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_completed_total{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_jobs_completed_total{outcome=\"success\",process=\"material_planning\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_completed_total{outcome=\"success\",process=\"quality_evaluation\",worker_pool=\"default\"} 0\n# HELP personal_assistant_jobs_failed_total Confirmed failed attempts by bounded error class.\n# TYPE personal_assistant_jobs_failed_total counter\npersonal_assistant_jobs_failed_total{error_class=\"input\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"input\",process=\"material_planning\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"input\",process=\"quality_evaluation\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"internal\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"internal\",process=\"material_planning\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"internal\",process=\"quality_evaluation\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"other\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"other\",process=\"material_planning\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"other\",process=\"quality_evaluation\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"timeout\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"timeout\",process=\"material_planning\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_failed_total{error_class=\"timeout\",process=\"quality_evaluation\",worker_pool=\"default\"} 0\n# HELP personal_assistant_jobs_running Current running attempts; excludes queued and unknown states.\n# TYPE personal_assistant_jobs_running gauge\npersonal_assistant_jobs_running{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_running{process=\"material_planning\",worker_pool=\"default\"} 0\npersonal_assistant_jobs_running{process=\"quality_evaluation\",worker_pool=\"default\"} 0\n# HELP personal_assistant_job_duration_seconds Elapsed time of confirmed terminal attempts.\n# TYPE personal_assistant_job_duration_seconds histogram\npersonal_assistant_job_duration_seconds_bucket{le=\"1\",outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 0\npersonal_assistant_job_duration_seconds_bucket{le=\"5\",outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_job_duration_seconds_bucket{le=\"15\",outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_job_duration_seconds_bucket{le=\"60\",outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_job_duration_seconds_bucket{le=\"300\",outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_job_duration_seconds_bucket{le=\"900\",outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_job_duration_seconds_bucket{le=\"1800\",outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_job_duration_seconds_bucket{le=\"3600\",outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_job_duration_seconds_bucket{le=\"+Inf\",outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_job_duration_seconds_count{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2\npersonal_assistant_job_duration_seconds_sum{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 7.954171631000008\n# TYPE personal_assistant_queue_jobs gauge\npersonal_assistant_queue_jobs{process=\"material_planning\",worker_pool=\"default\"} 0\npersonal_assistant_queue_jobs{process=\"quality_evaluation\",worker_pool=\"default\"} 0\npersonal_assistant_queue_jobs{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 0\n"
+      },
+      "requirement": "tcp_c15_metrics",
+      "status": "passed"
+    },
+    {
+      "aggregation": "maximum observed per series across separate synthetic stores, not a cumulative total",
+      "identity_labels": false,
+      "observations": {
+        "cancelled": 1.0,
+        "duration_count": 2.0,
+        "failure": 1.0,
+        "running": 1.0,
+        "started": 2.0,
+        "success": 2.0,
+        "timeout": 1.0
+      },
+      "requirement": "c15_actual_ui_lifecycle_metrics",
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "passed": 585,
+        "skipped": 3
+      },
+      "method": "Initial broad run with targeted formula and C21-test reruns; not a second full green run",
+      "requirement": "backend_regressions_latest_per_case",
+      "status": "passed"
+    },
+    {
+      "requirement": "ui_full_regressions_with_cancel_ack_fix",
+      "skipped": 0,
+      "status": "passed",
+      "tests_run": 115
+    },
+    {
+      "requirement": "real_local_notes5_technical",
+      "semantic_review": "not tested",
+      "status": "passed"
+    },
+    {
+      "requirement": "manual_browser",
+      "status": "not tested"
+    },
+    {
+      "requirement": "semantic_material_review",
+      "status": "not tested"
+    },
+    {
+      "reason": "Original slides/source PDF and existing notes0 artifact workspaces not supplied",
+      "requirement": "real_week0_pdf",
+      "status": "blocked"
+    },
+    {
+      "reason": "Independent real gold not supplied",
+      "requirement": "real_mathematical_gold",
+      "status": "blocked"
+    }
+  ],
+  "cleanup": {
+    "disposable_scratch": "TemporaryDirectory contexts closed",
+    "primary_checkouts": "unchanged",
+    "published_worktrees": "retained until PRs merged",
+    "python_bytecode_cache": "normal installed-package caches retained; no dependency installation"
+  },
+  "decision": "technical_workflow_accepted_with_documented_limits",
+  "known_legacy_diagnostic": {
+    "cause": "Existing TXT TranscriptSegment requires float times while importer supplies unknown/None; no invented timestamps",
+    "counts": {
+      "failed": 6,
+      "passed": 33
+    },
+    "evidence": {
+      "bytes": 15210,
+      "sha256": "e28396d3f83b8c94f82296cf76dbc2492792b2d63ac9e2a73aaad4e064aed6e7"
+    },
+    "failed": [
+      "tests.test_official_transcript_import.test_txt_unknown_timestamps_paragraphs_and_unicode",
+      "tests.test_official_transcript_import.test_explicit_encoding[cp1252]",
+      "tests.test_official_transcript_import.test_explicit_encoding[utf-16]",
+      "tests.test_official_transcript_import.test_exclusive_save_and_no_overwrite",
+      "tests.test_official_transcript_import.test_knowledge_chunking_contract_without_llm_imports",
+      "tests.test_official_transcript_import.test_import_does_not_load_whisper_or_application_settings"
+    ],
+    "in_scope_of_workflow_gate": false,
+    "status": "failed"
+  },
+  "lifecycle_metric_observations": [
+    {
+      "phase": "before_close",
+      "positive_workflow_series": [],
+      "raw_snapshot_sha256": "d56ae88c5e4245dacc544e7580d4b6a8b3c165aef7f6714e23d735a3a86ab24d",
+      "status": "passed"
+    },
+    {
+      "phase": "before_close",
+      "positive_workflow_series": [
+        "personal_assistant_jobs_started_total{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_jobs_completed_total{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_duration_seconds_count{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_duration_seconds_sum{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 3.0743489890001"
+      ],
+      "raw_snapshot_sha256": "0db9dc6629cda2f6820bfb0cb7727e2537af6fe22fb388636e17953c89f12e7b",
+      "status": "passed"
+    },
+    {
+      "phase": "before_close",
+      "positive_workflow_series": [
+        "personal_assistant_jobs_started_total{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2",
+        "personal_assistant_jobs_completed_total{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2",
+        "personal_assistant_job_duration_seconds_count{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2",
+        "personal_assistant_job_duration_seconds_sum{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 5.180934454999942"
+      ],
+      "raw_snapshot_sha256": "7579914231144c6b0ed734a9c970cf09a5860f210354f56b5846ca560f9b276b",
+      "status": "passed"
+    },
+    {
+      "phase": "native_pdf_probe",
+      "positive_workflow_series": [
+        "personal_assistant_jobs_started_total{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_jobs_running{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_oldest_running_start_timestamp_seconds{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1792221149.350123"
+      ],
+      "raw_snapshot_sha256": "2bdd0ed530de8052414789731e50953834d9f4a88aa7209e956280fd9ff1c207",
+      "status": "passed"
+    },
+    {
+      "phase": "before_close",
+      "positive_workflow_series": [
+        "personal_assistant_jobs_started_total{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2",
+        "personal_assistant_jobs_completed_total{outcome=\"cancelled\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_jobs_completed_total{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_duration_seconds_count{outcome=\"cancelled\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_duration_seconds_sum{outcome=\"cancelled\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 3.5211343300002227",
+        "personal_assistant_job_duration_seconds_count{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_duration_seconds_sum{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2.8728836300001603"
+      ],
+      "raw_snapshot_sha256": "d066ee8299c5c03d0ae1d3a80a48788f33c9086a6686d926dfd687d138086f64",
+      "status": "passed"
+    },
+    {
+      "phase": "native_pdf_probe",
+      "positive_workflow_series": [
+        "personal_assistant_jobs_started_total{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_jobs_running{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_oldest_running_start_timestamp_seconds{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1792221165.228096"
+      ],
+      "raw_snapshot_sha256": "d7cb5c10267d3cb33685c2ea911dfc301fc0e5e95290b8fdd3e3c28e22b51de3",
+      "status": "passed"
+    },
+    {
+      "phase": "before_close",
+      "positive_workflow_series": [
+        "personal_assistant_jobs_started_total{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2",
+        "personal_assistant_jobs_completed_total{outcome=\"failure\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_jobs_completed_total{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_jobs_failed_total{error_class=\"timeout\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_duration_seconds_count{outcome=\"failure\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_duration_seconds_sum{outcome=\"failure\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 3.7343452400000388",
+        "personal_assistant_job_duration_seconds_count{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_duration_seconds_sum{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2.5195964020003885"
+      ],
+      "raw_snapshot_sha256": "dce038ae22634cfabd3db8f99f7216d81a7d54a877361a8ad399dacb5313ab17",
+      "status": "passed"
+    },
+    {
+      "phase": "native_pdf_probe",
+      "positive_workflow_series": [
+        "personal_assistant_jobs_started_total{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_jobs_running{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_oldest_running_start_timestamp_seconds{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1792221182.075819"
+      ],
+      "raw_snapshot_sha256": "0c209764c5c51c8b0afcbd576035d205178963cf295d915f01f981c5894ee219",
+      "status": "passed"
+    },
+    {
+      "phase": "before_close",
+      "positive_workflow_series": [
+        "personal_assistant_jobs_started_total{process=\"cs50_offline_workflow\",worker_pool=\"default\"} 2",
+        "personal_assistant_jobs_completed_total{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_duration_seconds_count{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 1",
+        "personal_assistant_job_duration_seconds_sum{outcome=\"success\",process=\"cs50_offline_workflow\",worker_pool=\"default\"} 4.213316438999755"
+      ],
+      "raw_snapshot_sha256": "aa9425f1f8122760286eedc483281e3912ed60b78f0b3cbc1e603cd5953edefb",
+      "status": "passed"
+    }
+  ],
+  "real_material": {
+    "binding": {
+      "format": "html",
+      "language": null,
+      "lecture_ids": [
+        "resource:06f1c7a3c1e8937e625c36361c21171a1f24440b5a4ff5076c076ebdc4a4b845"
+      ],
+      "license_status": "not_assessed",
+      "original_url": "https://cs50.harvard.edu/python/notes/5/",
+      "resource": {
+        "course_id": "cs50_python",
+        "format": null,
+        "language": null,
+        "original_url": "https://cs50.harvard.edu/python/notes/5/",
+        "parent_resource_id": null,
+        "provenance": [
+          {
+            "context_path": [
+              "Lecture",
+              "Notes"
+            ],
+            "fixture_file": "cs50_python/week_5.html",
+            "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+            "original_url": "https://cs50.harvard.edu/python/weeks/5/"
+          }
+        ],
+        "role": "notes",
+        "section_keys": [
+          "5"
+        ],
+        "status": "referenced",
+        "title": "Notes",
+        "variants": []
+      },
+      "role": "notes",
+      "schema_version": 1,
+      "source_origin": "official",
+      "variant_id": null
+    },
+    "binding_verification": "plan_verified",
+    "block_types": {
+      "code": 16,
+      "heading": 7,
+      "link": 16,
+      "list": 7,
+      "paragraph": 65
+    },
+    "document_id": "material_doc:97e1cabec2bce1030af1c1d73f896b0181a721029d9cd8f0e08e102fb892d4ba",
+    "findings": [
+      {
+        "block_id": "material_block:4674f1efa53c5a5f3d05eec5702e09e95ae404fcfc65810c2aa337eb995b59ef",
+        "block_order": 1,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/h1[1]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:7d710d7924770dc98dcd2b68e874f23bd61e9b70cbb6eea3986eb78d2d0a09e9",
+        "block_order": 2,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:786855b124e0f7cf0bf87bfacfff1b159d269c4a0da5503dcc9a93abd73f979d",
+        "block_order": 3,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:e507b2a6fb89d3b5e046f5f25795cfe86a24777a33e26f17238d6e595c890a43",
+        "block_order": 4,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[1]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:ad64ab8f7a92172e33e33e1686dc674a11fca8f9889c0c77839ee6c5ae581837",
+        "block_order": 5,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[2]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:61293e47bf5be866577acac14bd568cf9673a3fead76ceb41b90c59af3524744",
+        "block_order": 6,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[2]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:717521461d65ca0c6885249f42c3c1b556c580edac2c99b7d023277f8e91e854",
+        "block_order": 7,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[3]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:6df81705b830d236cc51e21436a7cff6890b3e0554f131203a3e8994227546b9",
+        "block_order": 8,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[3]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:0627bb48be91cf333a3b45d84b4e30e645a26944e90eb5a5a025b3be4ab19471",
+        "block_order": 9,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[4]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:072f7b9752c83a90af5a85fdba808264e58f9aa1c0a162e05ed26395b1863ef9",
+        "block_order": 10,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[4]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:ca735528b159e0a4d64d1fb62f33ec25218555129670c0106c91c931b2ba6e02",
+        "block_order": 11,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[5]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:9692cb225ea1e135619f6e5ea9a6fb71f3c1550ae1da84290520fd39b857f9c2",
+        "block_order": 12,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[5]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:352bd9f89b6c07deebb9953626fa162347d75de068cdc9b391adce447e12f221",
+        "block_order": 13,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[6]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:10683e98bb6c10435e5c131fff751a775e7b2bc0dcf7e55815b4d33a3ebf4946",
+        "block_order": 14,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/ul[1]/li[6]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:c7e77138e1b8ab406495104fc0cbb53b6e3c5edcd01dc23c86165469d2bc769c",
+        "block_order": 16,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[1]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:83cc06c48a76fcb672655e07edb5dd72a60486f3336cf60ac6041b8815013586",
+        "block_order": 30,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[2]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:b4039b2cab744dbbcb3b3720011bd8ac46c3392e8b197a7db4ceba0dcd2311c3",
+        "block_order": 44,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/p[1]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:6e85b568e476e9620c2e55d9aa51680f0ef59ca89c8cd38fb3524895cbaa4fb5",
+        "block_order": 46,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[3]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:23807a9660977c30d08d84b9404ecaa25b35911b3a0ea5eb7445b88456135d0e",
+        "block_order": 74,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/p[2]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:d261e4ff73a24294b46fc3ca1f37118fb8d99612fd4b05f1957f6d240cb56bb9",
+        "block_order": 76,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[4]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:aea5384497377a8e195b3cc7a6562fa589222c691d1d13c0906dd8fdfd6bb5a9",
+        "block_order": 92,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[5]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:1f2f08488effe969a88019d9f90a039e9a6a5f9909a0f55545ec9e8f190dcfaf",
+        "block_order": 103,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/p[3]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      },
+      {
+        "block_id": "material_block:5fb1397de89493f7a5b07d9a39edbf1b03506ba89e4d3c80717b7deb7eea33c5",
+        "block_order": 105,
+        "category": "technical",
+        "code": "reference_projection",
+        "field": null,
+        "image_id": null,
+        "input": "normalized",
+        "location": {
+          "bbox": null,
+          "dom": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[6]/a[1]",
+          "line_end": null,
+          "line_start": null,
+          "page": null
+        },
+        "message": "Reference projection retained and excluded from text aggregation",
+        "severity": "info"
+      }
+    ],
+    "formula_gold_evaluation": "blocked: independent real gold not supplied",
+    "handoff_available": true,
+    "normalized_sha256": "bab91c5a9901986dd17f0dfb8eac27c12d77a8ae41e8b6023c4efa81f42bd0a6",
+    "original_preserved": true,
+    "parser": {
+      "max_blocks": 20000,
+      "max_bytes": 16777216,
+      "max_images": 100,
+      "max_pages": 100,
+      "memory_mb": 1024,
+      "name": "html",
+      "timeout": 20.0,
+      "version": "2"
+    },
+    "quality_status": "passed",
+    "raw_scan": "complete",
+    "schema_version": 1,
+    "semantic_review": "not tested",
+    "source_origin": "real_local_snapshot",
+    "source_sha256": "0855465b0458067ce5b6889d5e3929a49de108aa8d01d877c25e80bea0cd8367",
+    "source_url": "https://cs50.harvard.edu/python/notes/5/",
+    "visual_assets": [
+      {
+        "artifact_status": "not_declared",
+        "asset_id": "visual_asset:02396ab754ca467c49a95c9f84afc8333594140cc964897b8faca62ff88e22ed",
+        "extraction_status": "reference_only",
+        "type": "external_image_reference",
+        "warnings": [
+          {
+            "code": "not_in_normalized_images",
+            "message": "Raw-source visual observation supplements the unchanged normalized document",
+            "severity": "warning"
+          }
+        ]
+      },
+      {
+        "artifact_status": "not_declared",
+        "asset_id": "visual_asset:7c8350aa656d00981ee5043b59978f0dab8a15dd3f43629383a35ae9a8cd578f",
+        "extraction_status": "reference_only",
+        "type": "external_image_reference",
+        "warnings": [
+          {
+            "code": "not_in_normalized_images",
+            "message": "Raw-source visual observation supplements the unchanged normalized document",
+            "severity": "warning"
+          }
+        ]
+      }
+    ],
+    "visual_counts": {
+      "assets": 2,
+      "available_artifacts": 0,
+      "errors": 0,
+      "normalized_image_aliases": 0,
+      "reference_only": 2,
+      "review_candidates": 2,
+      "unique_artifacts": 0,
+      "warnings": 2
+    },
+    "visual_warnings": []
+  },
+  "recorded_date": "2026-10-17",
+  "schema_version": 1,
+  "single_full_green_run_claimed": false,
+  "timezone": "Europe/Berlin",
+  "ui_base": {
+    "commit": "ff08d9e109f556ff95075949d5d096640a9d00eb",
+    "corrected_script_sha256": "839c02c089dc6fac56e5cf90eb633011f0f28f235b1bf603516a8fb8d4094eb8",
+    "correction": "Separate UI PR: verify actual cancel acknowledgement before observing terminal cleanup",
+    "correction_commit": "7d34bf3cbf474268db6b0418fcaf938fd75c1d71",
+    "correction_pr": "https://github.com/rf-data/personal-assistant-ui/pull/4",
+    "correction_tree": "23c722123d98d0a0b6e6063c4e6b34d5dee88fc9",
+    "tree": "7d2bb291c2984d63041f71a44107a69cb7079ccc"
+  }
+}

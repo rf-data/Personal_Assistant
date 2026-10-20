@@ -1,0 +1,3109 @@
+{
+  "models": {
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "created_at": {
+          "title": "Created At",
+          "type": "string"
+        },
+        "input_refs": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Input Refs",
+          "type": "array"
+        },
+        "job_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Job Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "material_plan",
+            "quality_report",
+            "workflow_report",
+            "material_receipt",
+            "index_build",
+            "content_import"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "job_id",
+        "kind",
+        "size_bytes",
+        "sha256",
+        "created_at",
+        "input_refs"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "Job": {
+      "$defs": {
+        "Artifact": {
+          "additionalProperties": false,
+          "properties": {
+            "artifact_id": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Artifact Id",
+              "type": "string"
+            },
+            "created_at": {
+              "title": "Created At",
+              "type": "string"
+            },
+            "input_refs": {
+              "items": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "type": "string"
+              },
+              "title": "Input Refs",
+              "type": "array"
+            },
+            "job_id": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Job Id",
+              "type": "string"
+            },
+            "kind": {
+              "enum": [
+                "material_plan",
+                "quality_report",
+                "workflow_report",
+                "material_receipt",
+                "index_build",
+                "content_import"
+              ],
+              "title": "Kind",
+              "type": "string"
+            },
+            "schema_version": {
+              "const": 1,
+              "default": 1,
+              "title": "Schema Version",
+              "type": "integer"
+            },
+            "sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "title": "Sha256",
+              "type": "string"
+            },
+            "size_bytes": {
+              "minimum": 0,
+              "title": "Size Bytes",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "artifact_id",
+            "job_id",
+            "kind",
+            "size_bytes",
+            "sha256",
+            "created_at",
+            "input_refs"
+          ],
+          "title": "Artifact",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "artifact_refs": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Artifact"
+          },
+          "maxItems": 1,
+          "title": "Artifact Refs",
+          "type": "array"
+        },
+        "cancellable": {
+          "default": false,
+          "title": "Cancellable",
+          "type": "boolean"
+        },
+        "created_at": {
+          "title": "Created At",
+          "type": "string"
+        },
+        "duration_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duration Seconds"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "error_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "input",
+                "timeout",
+                "internal",
+                "other"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error Class"
+        },
+        "exit_code": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exit Code"
+        },
+        "finished_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Finished At"
+        },
+        "initiated_by": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Initiated By",
+          "type": "string"
+        },
+        "input_refs": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "title": "Input Refs",
+          "type": "array"
+        },
+        "job_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Job Id",
+          "type": "string"
+        },
+        "output_refs": {
+          "default": [],
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 1,
+          "title": "Output Refs",
+          "type": "array"
+        },
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        },
+        "phase": {
+          "title": "Phase",
+          "type": "string"
+        },
+        "process_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Process Id",
+          "type": "string"
+        },
+        "progress": {
+          "default": null,
+          "title": "Progress",
+          "type": "null"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "started_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Started At"
+        },
+        "status": {
+          "enum": [
+            "created",
+            "queued",
+            "running",
+            "cancel_requested",
+            "completed",
+            "failed",
+            "cancelled",
+            "interrupted"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "job_id",
+        "process_id",
+        "status",
+        "created_at",
+        "parameters",
+        "phase",
+        "initiated_by",
+        "input_refs"
+      ],
+      "title": "Job",
+      "type": "object"
+    },
+    "PdfParams": {
+      "additionalProperties": false,
+      "properties": {
+        "course_id": {
+          "enum": [
+            "cs50x",
+            "cs50_python",
+            "cs50_sql",
+            "cs50_ai",
+            "cs50_web",
+            "cs50_cybersecurity"
+          ],
+          "title": "Course Id",
+          "type": "string"
+        },
+        "material_ref": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Material Ref",
+          "type": "string"
+        },
+        "output_name": {
+          "default": "pdf-receipt",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Output Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "material_ref",
+        "course_id"
+      ],
+      "title": "PdfParams",
+      "type": "object"
+    },
+    "Preview": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_artifacts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Expected Artifacts",
+          "type": "array"
+        },
+        "input_refs": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Input Refs",
+          "type": "array"
+        },
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        },
+        "preview_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Preview Id",
+          "type": "string"
+        },
+        "process_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Process Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "preview_id",
+        "process_id",
+        "parameters",
+        "input_refs",
+        "expected_artifacts"
+      ],
+      "title": "Preview",
+      "type": "object"
+    },
+    "PreviewRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        },
+        "process_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Process Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "process_id",
+        "parameters"
+      ],
+      "title": "PreviewRequest",
+      "type": "object"
+    },
+    "Settings": {
+      "$defs": {
+        "CatalogEntry": {
+          "additionalProperties": false,
+          "properties": {
+            "course_ids": {
+              "items": {
+                "enum": [
+                  "cs50x",
+                  "cs50_python",
+                  "cs50_sql",
+                  "cs50_ai",
+                  "cs50_web",
+                  "cs50_cybersecurity",
+                  "loviscach_mathe_1"
+                ],
+                "type": "string"
+              },
+              "title": "Course Ids",
+              "type": "array"
+            },
+            "files": {
+              "additionalProperties": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "maxProperties": 128,
+              "minProperties": 1,
+              "title": "Files",
+              "type": "object"
+            },
+            "kind": {
+              "enum": [
+                "manifest",
+                "material_bundle",
+                "workflow_bundle",
+                "pdf_bundle",
+                "index_bundle",
+                "content_import_bundle"
+              ],
+              "title": "Kind",
+              "type": "string"
+            },
+            "roles": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "title": "Roles",
+              "type": "object"
+            },
+            "root": {
+              "format": "path",
+              "title": "Root",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "root",
+            "files",
+            "roles",
+            "course_ids"
+          ],
+          "title": "CatalogEntry",
+          "type": "object"
+        },
+        "Identity": {
+          "additionalProperties": false,
+          "properties": {
+            "courses": {
+              "items": {
+                "enum": [
+                  "cs50x",
+                  "cs50_python",
+                  "cs50_sql",
+                  "cs50_ai",
+                  "cs50_web",
+                  "cs50_cybersecurity",
+                  "loviscach_mathe_1"
+                ],
+                "type": "string"
+              },
+              "title": "Courses",
+              "type": "array"
+            },
+            "role": {
+              "enum": [
+                "viewer",
+                "operator"
+              ],
+              "title": "Role",
+              "type": "string"
+            },
+            "subject": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Subject",
+              "type": "string"
+            },
+            "token_sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "title": "Token Sha256",
+              "type": "string"
+            }
+          },
+          "required": [
+            "subject",
+            "role",
+            "courses",
+            "token_sha256"
+          ],
+          "title": "Identity",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "catalog": {
+          "maxProperties": 32,
+          "patternProperties": {
+            "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$": {
+              "$ref": "#/$defs/CatalogEntry"
+            }
+          },
+          "title": "Catalog",
+          "type": "object"
+        },
+        "execution_enabled": {
+          "default": false,
+          "title": "Execution Enabled",
+          "type": "boolean"
+        },
+        "identities": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Identity"
+          },
+          "title": "Identities",
+          "type": "array"
+        },
+        "import_jobs_enabled": {
+          "default": false,
+          "title": "Import Jobs Enabled",
+          "type": "boolean"
+        },
+        "index_jobs_enabled": {
+          "default": false,
+          "title": "Index Jobs Enabled",
+          "type": "boolean"
+        },
+        "max_jobs": {
+          "default": 100,
+          "maximum": 1000,
+          "minimum": 1,
+          "title": "Max Jobs",
+          "type": "integer"
+        },
+        "max_parallel": {
+          "default": 1,
+          "maximum": 2,
+          "minimum": 1,
+          "title": "Max Parallel",
+          "type": "integer"
+        },
+        "max_queued": {
+          "default": 8,
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Max Queued",
+          "type": "integer"
+        },
+        "pdf_enabled": {
+          "default": false,
+          "title": "Pdf Enabled",
+          "type": "boolean"
+        },
+        "root": {
+          "format": "path",
+          "title": "Root",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "worker_ttl": {
+          "default": 5,
+          "maximum": 30,
+          "minimum": 1,
+          "title": "Worker Ttl",
+          "type": "number"
+        },
+        "workflows_enabled": {
+          "default": false,
+          "title": "Workflows Enabled",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "root"
+      ],
+      "title": "Settings",
+      "type": "object"
+    },
+    "StartRequest": {
+      "$defs": {
+        "Preview": {
+          "additionalProperties": false,
+          "properties": {
+            "expected_artifacts": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Expected Artifacts",
+              "type": "array"
+            },
+            "input_refs": {
+              "items": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "type": "string"
+              },
+              "title": "Input Refs",
+              "type": "array"
+            },
+            "parameters": {
+              "additionalProperties": true,
+              "title": "Parameters",
+              "type": "object"
+            },
+            "preview_id": {
+              "pattern": "^[a-f0-9]{64}$",
+              "title": "Preview Id",
+              "type": "string"
+            },
+            "process_id": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Process Id",
+              "type": "string"
+            },
+            "schema_version": {
+              "const": 1,
+              "default": 1,
+              "title": "Schema Version",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "preview_id",
+            "process_id",
+            "parameters",
+            "input_refs",
+            "expected_artifacts"
+          ],
+          "title": "Preview",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "confirmed": {
+          "const": true,
+          "title": "Confirmed",
+          "type": "boolean"
+        },
+        "preview": {
+          "$ref": "#/$defs/Preview"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "start": {
+          "default": true,
+          "title": "Start",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "preview",
+        "confirmed"
+      ],
+      "title": "StartRequest",
+      "type": "object"
+    }
+  },
+  "optional_pdf_registry": {
+    "disabled_processes": [
+      "course_discovery",
+      "lecture_compilation",
+      "material_download",
+      "audio_transcription",
+      "visual_analysis",
+      "visual_enrichment",
+      "knowledge_extraction",
+      "knowledge_consolidation"
+    ],
+    "processes": [
+      {
+        "actions": [
+          "preview",
+          "create",
+          "start",
+          "cancel"
+        ],
+        "cancellable": true,
+        "cpu_seconds": 20,
+        "execution": "offline_python_subprocess",
+        "expected_artifacts": [
+          "material_plan"
+        ],
+        "file_bytes": 8388608,
+        "file_descriptors": 64,
+        "max_parallel": 1,
+        "memory_bytes": 805306368,
+        "parameter_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "course_id": {
+              "enum": [
+                "cs50x",
+                "cs50_python",
+                "cs50_sql",
+                "cs50_ai",
+                "cs50_web",
+                "cs50_cybersecurity"
+              ],
+              "title": "Course Id",
+              "type": "string"
+            },
+            "output_name": {
+              "default": "material-plan",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Output Name",
+              "type": "string"
+            },
+            "resource_id": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Resource Id"
+            },
+            "section": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Section"
+            },
+            "source_ref": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Source Ref",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_ref",
+            "course_id"
+          ],
+          "title": "PlanningParams",
+          "type": "object"
+        },
+        "process_id": "material_planning",
+        "required_role": "operator",
+        "runner": "src.tools_materials.processing.make_plan",
+        "subprocesses": 32,
+        "timeout_seconds": 30
+      },
+      {
+        "actions": [
+          "preview",
+          "create",
+          "start",
+          "cancel"
+        ],
+        "cancellable": true,
+        "cpu_seconds": 20,
+        "execution": "offline_python_subprocess",
+        "expected_artifacts": [
+          "quality_report"
+        ],
+        "file_bytes": 8388608,
+        "file_descriptors": 64,
+        "max_parallel": 1,
+        "memory_bytes": 805306368,
+        "parameter_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "course_id": {
+              "enum": [
+                "cs50x",
+                "cs50_python",
+                "cs50_sql",
+                "cs50_ai",
+                "cs50_web",
+                "cs50_cybersecurity"
+              ],
+              "title": "Course Id",
+              "type": "string"
+            },
+            "material_ref": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Material Ref",
+              "type": "string"
+            },
+            "output_name": {
+              "default": "quality-report",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Output Name",
+              "type": "string"
+            }
+          },
+          "required": [
+            "material_ref",
+            "course_id"
+          ],
+          "title": "QualityParams",
+          "type": "object"
+        },
+        "process_id": "quality_evaluation",
+        "required_role": "operator",
+        "runner": "scripts.cs50_material_quality.main",
+        "subprocesses": 32,
+        "timeout_seconds": 30
+      },
+      {
+        "actions": [
+          "preview",
+          "create",
+          "start",
+          "cancel"
+        ],
+        "cancellable": true,
+        "cpu_seconds": 20,
+        "execution": "offline_python_subprocess",
+        "expected_artifacts": [
+          "material_receipt"
+        ],
+        "file_bytes": 8388608,
+        "file_descriptors": 64,
+        "max_parallel": 1,
+        "memory_bytes": 805306368,
+        "parameter_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "course_id": {
+              "enum": [
+                "cs50x",
+                "cs50_python",
+                "cs50_sql",
+                "cs50_ai",
+                "cs50_web",
+                "cs50_cybersecurity"
+              ],
+              "title": "Course Id",
+              "type": "string"
+            },
+            "material_ref": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Material Ref",
+              "type": "string"
+            },
+            "output_name": {
+              "default": "pdf-receipt",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Output Name",
+              "type": "string"
+            }
+          },
+          "required": [
+            "material_ref",
+            "course_id"
+          ],
+          "title": "PdfParams",
+          "type": "object"
+        },
+        "process_id": "material_parsing",
+        "required_role": "operator",
+        "runner": "src.tools_materials.processing.MaterialProcessor.parse (local PDF-v2 only)",
+        "subprocesses": 512,
+        "timeout_seconds": 30
+      }
+    ],
+    "schema_version": 1
+  },
+  "registry": {
+    "disabled_processes": [
+      "course_discovery",
+      "lecture_compilation",
+      "material_download",
+      "material_parsing",
+      "audio_transcription",
+      "visual_analysis",
+      "visual_enrichment",
+      "knowledge_extraction",
+      "knowledge_consolidation"
+    ],
+    "processes": [
+      {
+        "actions": [
+          "preview",
+          "create",
+          "start",
+          "cancel"
+        ],
+        "cancellable": true,
+        "cpu_seconds": 20,
+        "execution": "offline_python_subprocess",
+        "expected_artifacts": [
+          "material_plan"
+        ],
+        "file_bytes": 8388608,
+        "file_descriptors": 64,
+        "max_parallel": 1,
+        "memory_bytes": 805306368,
+        "parameter_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "course_id": {
+              "enum": [
+                "cs50x",
+                "cs50_python",
+                "cs50_sql",
+                "cs50_ai",
+                "cs50_web",
+                "cs50_cybersecurity"
+              ],
+              "title": "Course Id",
+              "type": "string"
+            },
+            "output_name": {
+              "default": "material-plan",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Output Name",
+              "type": "string"
+            },
+            "resource_id": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Resource Id"
+            },
+            "section": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Section"
+            },
+            "source_ref": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Source Ref",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_ref",
+            "course_id"
+          ],
+          "title": "PlanningParams",
+          "type": "object"
+        },
+        "process_id": "material_planning",
+        "required_role": "operator",
+        "runner": "src.tools_materials.processing.make_plan",
+        "subprocesses": 32,
+        "timeout_seconds": 30
+      },
+      {
+        "actions": [
+          "preview",
+          "create",
+          "start",
+          "cancel"
+        ],
+        "cancellable": true,
+        "cpu_seconds": 20,
+        "execution": "offline_python_subprocess",
+        "expected_artifacts": [
+          "quality_report"
+        ],
+        "file_bytes": 8388608,
+        "file_descriptors": 64,
+        "max_parallel": 1,
+        "memory_bytes": 805306368,
+        "parameter_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "course_id": {
+              "enum": [
+                "cs50x",
+                "cs50_python",
+                "cs50_sql",
+                "cs50_ai",
+                "cs50_web",
+                "cs50_cybersecurity"
+              ],
+              "title": "Course Id",
+              "type": "string"
+            },
+            "material_ref": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Material Ref",
+              "type": "string"
+            },
+            "output_name": {
+              "default": "quality-report",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "title": "Output Name",
+              "type": "string"
+            }
+          },
+          "required": [
+            "material_ref",
+            "course_id"
+          ],
+          "title": "QualityParams",
+          "type": "object"
+        },
+        "process_id": "quality_evaluation",
+        "required_role": "operator",
+        "runner": "scripts.cs50_material_quality.main",
+        "subprocesses": 32,
+        "timeout_seconds": 30
+      }
+    ],
+    "schema_version": 1
+  },
+  "schema_version": 1,
+  "workflow_http": {
+    "models": {
+      "WorkflowCapabilities": {
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "execute_route": {
+            "const": "/v1/workflows/execute",
+            "default": "/v1/workflows/execute",
+            "title": "Execute Route",
+            "type": "string"
+          },
+          "execution_enabled": {
+            "title": "Execution Enabled",
+            "type": "boolean"
+          },
+          "history_max_limit": {
+            "const": 100,
+            "default": 100,
+            "title": "History Max Limit",
+            "type": "integer"
+          },
+          "inspect_route": {
+            "const": "/v1/workflows/inspect",
+            "default": "/v1/workflows/inspect",
+            "title": "Inspect Route",
+            "type": "string"
+          },
+          "max_response_bytes": {
+            "const": 524288,
+            "default": 524288,
+            "title": "Max Response Bytes",
+            "type": "integer"
+          },
+          "protocol": {
+            "const": "personal_assistant_workflows_v1",
+            "default": "personal_assistant_workflows_v1",
+            "title": "Protocol",
+            "type": "string"
+          },
+          "resume_route": {
+            "const": "/v1/workflows/resume",
+            "default": "/v1/workflows/resume",
+            "title": "Resume Route",
+            "type": "string"
+          },
+          "run_route": {
+            "const": "/v1/workflows/{workflow_id}/runs/{run_id}",
+            "default": "/v1/workflows/{workflow_id}/runs/{run_id}",
+            "title": "Run Route",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "status_route": {
+            "const": "/v1/workflows/{workflow_id}",
+            "default": "/v1/workflows/{workflow_id}",
+            "title": "Status Route",
+            "type": "string"
+          },
+          "worker_available": {
+            "title": "Worker Available",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "enabled",
+          "execution_enabled",
+          "worker_available"
+        ],
+        "title": "WorkflowCapabilities",
+        "type": "object"
+      },
+      "WorkflowExecuteRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "confirmed": {
+            "const": true,
+            "title": "Confirmed",
+            "type": "boolean"
+          },
+          "current_run_id": {
+            "anyOf": [
+              {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Run Id"
+          },
+          "preview_id": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Preview Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "source_ref": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Source Ref",
+            "type": "string"
+          },
+          "workflow_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Workflow Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_ref",
+          "workflow_id",
+          "preview_id",
+          "current_run_id",
+          "confirmed"
+        ],
+        "title": "WorkflowExecuteRequest",
+        "type": "object"
+      },
+      "WorkflowInspectRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "source_ref": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Source Ref",
+            "type": "string"
+          },
+          "workflow_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Workflow Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_ref",
+          "workflow_id"
+        ],
+        "title": "WorkflowInspectRequest",
+        "type": "object"
+      },
+      "WorkflowInspection": {
+        "$defs": {
+          "Artifact": {
+            "additionalProperties": false,
+            "properties": {
+              "artifact_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Artifact Id",
+                "type": "string"
+              },
+              "created_at": {
+                "title": "Created At",
+                "type": "string"
+              },
+              "input_refs": {
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "title": "Input Refs",
+                "type": "array"
+              },
+              "job_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Job Id",
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "material_plan",
+                  "quality_report",
+                  "workflow_report",
+                  "material_receipt",
+                  "index_build",
+                  "content_import"
+                ],
+                "title": "Kind",
+                "type": "string"
+              },
+              "schema_version": {
+                "const": 1,
+                "default": 1,
+                "title": "Schema Version",
+                "type": "integer"
+              },
+              "sha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Sha256",
+                "type": "string"
+              },
+              "size_bytes": {
+                "minimum": 0,
+                "title": "Size Bytes",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "artifact_id",
+              "job_id",
+              "kind",
+              "size_bytes",
+              "sha256",
+              "created_at",
+              "input_refs"
+            ],
+            "title": "Artifact",
+            "type": "object"
+          },
+          "Job": {
+            "additionalProperties": false,
+            "properties": {
+              "artifact_refs": {
+                "default": [],
+                "items": {
+                  "$ref": "#/$defs/Artifact"
+                },
+                "maxItems": 1,
+                "title": "Artifact Refs",
+                "type": "array"
+              },
+              "cancellable": {
+                "default": false,
+                "title": "Cancellable",
+                "type": "boolean"
+              },
+              "created_at": {
+                "title": "Created At",
+                "type": "string"
+              },
+              "duration_seconds": {
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Duration Seconds"
+              },
+              "error": {
+                "anyOf": [
+                  {
+                    "maxLength": 200,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Error"
+              },
+              "error_class": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "input",
+                      "timeout",
+                      "internal",
+                      "other"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Error Class"
+              },
+              "exit_code": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Exit Code"
+              },
+              "finished_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Finished At"
+              },
+              "initiated_by": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Initiated By",
+                "type": "string"
+              },
+              "input_refs": {
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "maxItems": 1,
+                "minItems": 1,
+                "title": "Input Refs",
+                "type": "array"
+              },
+              "job_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Job Id",
+                "type": "string"
+              },
+              "output_refs": {
+                "default": [],
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "maxItems": 1,
+                "title": "Output Refs",
+                "type": "array"
+              },
+              "parameters": {
+                "additionalProperties": true,
+                "title": "Parameters",
+                "type": "object"
+              },
+              "phase": {
+                "title": "Phase",
+                "type": "string"
+              },
+              "process_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Process Id",
+                "type": "string"
+              },
+              "progress": {
+                "default": null,
+                "title": "Progress",
+                "type": "null"
+              },
+              "schema_version": {
+                "const": 1,
+                "default": 1,
+                "title": "Schema Version",
+                "type": "integer"
+              },
+              "started_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Started At"
+              },
+              "status": {
+                "enum": [
+                  "created",
+                  "queued",
+                  "running",
+                  "cancel_requested",
+                  "completed",
+                  "failed",
+                  "cancelled",
+                  "interrupted"
+                ],
+                "title": "Status",
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "process_id",
+              "status",
+              "created_at",
+              "parameters",
+              "phase",
+              "initiated_by",
+              "input_refs"
+            ],
+            "title": "Job",
+            "type": "object"
+          },
+          "Output": {
+            "additionalProperties": false,
+            "properties": {
+              "identity": {
+                "maxLength": 200,
+                "minLength": 1,
+                "title": "Identity",
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "plan",
+                  "raw",
+                  "receipt",
+                  "normalized",
+                  "image",
+                  "quality",
+                  "handoff"
+                ],
+                "title": "Kind",
+                "type": "string"
+              },
+              "path": {
+                "maxLength": 400,
+                "minLength": 1,
+                "title": "Path",
+                "type": "string"
+              },
+              "sha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Sha256",
+                "type": "string"
+              },
+              "size_bytes": {
+                "maximum": 8388608,
+                "minimum": 0,
+                "title": "Size Bytes",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "kind",
+              "identity",
+              "path",
+              "sha256",
+              "size_bytes"
+            ],
+            "title": "Output",
+            "type": "object"
+          },
+          "Stage": {
+            "additionalProperties": false,
+            "properties": {
+              "configuration_hash": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Configuration Hash",
+                "type": "string"
+              },
+              "contract_version": {
+                "const": 1,
+                "default": 1,
+                "title": "Contract Version",
+                "type": "integer"
+              },
+              "decision": {
+                "default": "not_examined",
+                "title": "Decision",
+                "type": "string"
+              },
+              "dependencies": {
+                "default": [],
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                  "type": "string"
+                },
+                "title": "Dependencies",
+                "type": "array"
+              },
+              "duration_seconds": {
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Duration Seconds"
+              },
+              "error": {
+                "anyOf": [
+                  {
+                    "maxLength": 200,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Error"
+              },
+              "expected_inputs": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Expected Inputs",
+                "type": "array"
+              },
+              "expected_outputs": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Expected Outputs",
+                "type": "array"
+              },
+              "finished_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Finished At"
+              },
+              "input_hashes": {
+                "additionalProperties": {
+                  "pattern": "^[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "title": "Input Hashes",
+                "type": "object"
+              },
+              "job_id": {
+                "anyOf": [
+                  {
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Job Id"
+              },
+              "material_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Material Id"
+              },
+              "missing_inputs": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Missing Inputs",
+                "type": "array"
+              },
+              "output_refs": {
+                "default": [],
+                "items": {
+                  "$ref": "#/$defs/Output"
+                },
+                "title": "Output Refs",
+                "type": "array"
+              },
+              "process_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Process Id",
+                "type": "string"
+              },
+              "stage_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                "title": "Stage Id",
+                "type": "string"
+              },
+              "stale_reasons": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Stale Reasons",
+                "type": "array"
+              },
+              "started_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Started At"
+              },
+              "status": {
+                "default": "pending",
+                "enum": [
+                  "pending",
+                  "ready",
+                  "running",
+                  "completed",
+                  "skipped",
+                  "blocked",
+                  "stale",
+                  "failed",
+                  "cancelled",
+                  "interrupted"
+                ],
+                "title": "Status",
+                "type": "string"
+              }
+            },
+            "required": [
+              "stage_id",
+              "process_id",
+              "expected_inputs",
+              "expected_outputs",
+              "configuration_hash"
+            ],
+            "title": "Stage",
+            "type": "object"
+          },
+          "Workflow": {
+            "additionalProperties": false,
+            "properties": {
+              "configuration_hash": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Configuration Hash",
+                "type": "string"
+              },
+              "course_id": {
+                "enum": [
+                  "cs50x",
+                  "cs50_python",
+                  "cs50_sql",
+                  "cs50_ai",
+                  "cs50_web",
+                  "cs50_cybersecurity"
+                ],
+                "title": "Course Id",
+                "type": "string"
+              },
+              "created_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Created At"
+              },
+              "dependencies": {
+                "additionalProperties": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "title": "Dependencies",
+                "type": "object"
+              },
+              "errors": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Errors",
+                "type": "array"
+              },
+              "expected_changes": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Expected Changes",
+                "type": "array"
+              },
+              "finished_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Finished At"
+              },
+              "initiated_by": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Initiated By",
+                "type": "string"
+              },
+              "input_refs": {
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "title": "Input Refs",
+                "type": "array"
+              },
+              "lecture_ids": {
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                  "type": "string"
+                },
+                "title": "Lecture Ids",
+                "type": "array"
+              },
+              "output_refs": {
+                "default": [],
+                "items": {
+                  "$ref": "#/$defs/Output"
+                },
+                "title": "Output Refs",
+                "type": "array"
+              },
+              "report_sha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Report Sha256",
+                "type": "string"
+              },
+              "run_id": {
+                "anyOf": [
+                  {
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Run Id"
+              },
+              "schema_version": {
+                "const": 1,
+                "default": 1,
+                "title": "Schema Version",
+                "type": "integer"
+              },
+              "stages": {
+                "items": {
+                  "$ref": "#/$defs/Stage"
+                },
+                "maxItems": 13,
+                "title": "Stages",
+                "type": "array"
+              },
+              "started_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Started At"
+              },
+              "status": {
+                "enum": [
+                  "pending",
+                  "ready",
+                  "running",
+                  "completed",
+                  "skipped",
+                  "blocked",
+                  "stale",
+                  "failed",
+                  "cancelled",
+                  "interrupted"
+                ],
+                "title": "Status",
+                "type": "string"
+              },
+              "workflow_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Workflow Id",
+                "type": "string"
+              },
+              "workflow_type": {
+                "const": "cs50_offline_materials_v1",
+                "default": "cs50_offline_materials_v1",
+                "title": "Workflow Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "workflow_id",
+              "course_id",
+              "lecture_ids",
+              "created_at",
+              "status",
+              "stages",
+              "dependencies",
+              "input_refs",
+              "configuration_hash",
+              "initiated_by",
+              "report_sha256"
+            ],
+            "title": "Workflow",
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "properties": {
+          "current_job": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Job"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "history": {
+            "items": {
+              "$ref": "#/$defs/Job"
+            },
+            "maxItems": 100,
+            "title": "History",
+            "type": "array"
+          },
+          "history_limit": {
+            "maximum": 100,
+            "minimum": 1,
+            "title": "History Limit",
+            "type": "integer"
+          },
+          "history_offset": {
+            "maximum": 1000,
+            "minimum": 0,
+            "title": "History Offset",
+            "type": "integer"
+          },
+          "history_total": {
+            "minimum": 0,
+            "title": "History Total",
+            "type": "integer"
+          },
+          "persisted_report": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Workflow"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "preview_id": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Preview Id",
+            "type": "string"
+          },
+          "previous_run_id": {
+            "anyOf": [
+              {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Run Id"
+          },
+          "protocol": {
+            "const": "personal_assistant_workflows_v1",
+            "default": "personal_assistant_workflows_v1",
+            "title": "Protocol",
+            "type": "string"
+          },
+          "report_artifact": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Artifact"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "workflow": {
+            "$ref": "#/$defs/Workflow"
+          }
+        },
+        "required": [
+          "preview_id",
+          "workflow",
+          "persisted_report",
+          "current_job",
+          "previous_run_id",
+          "report_artifact",
+          "history",
+          "history_total",
+          "history_offset",
+          "history_limit"
+        ],
+        "title": "WorkflowInspection",
+        "type": "object"
+      },
+      "WorkflowResumeRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "confirmed": {
+            "const": true,
+            "title": "Confirmed",
+            "type": "boolean"
+          },
+          "current_run_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Current Run Id",
+            "type": "string"
+          },
+          "preview_id": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Preview Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "source_ref": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Source Ref",
+            "type": "string"
+          },
+          "workflow_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Workflow Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_ref",
+          "workflow_id",
+          "preview_id",
+          "current_run_id",
+          "confirmed"
+        ],
+        "title": "WorkflowResumeRequest",
+        "type": "object"
+      },
+      "WorkflowRunReport": {
+        "$defs": {
+          "Artifact": {
+            "additionalProperties": false,
+            "properties": {
+              "artifact_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Artifact Id",
+                "type": "string"
+              },
+              "created_at": {
+                "title": "Created At",
+                "type": "string"
+              },
+              "input_refs": {
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "title": "Input Refs",
+                "type": "array"
+              },
+              "job_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Job Id",
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "material_plan",
+                  "quality_report",
+                  "workflow_report",
+                  "material_receipt",
+                  "index_build",
+                  "content_import"
+                ],
+                "title": "Kind",
+                "type": "string"
+              },
+              "schema_version": {
+                "const": 1,
+                "default": 1,
+                "title": "Schema Version",
+                "type": "integer"
+              },
+              "sha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Sha256",
+                "type": "string"
+              },
+              "size_bytes": {
+                "minimum": 0,
+                "title": "Size Bytes",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "artifact_id",
+              "job_id",
+              "kind",
+              "size_bytes",
+              "sha256",
+              "created_at",
+              "input_refs"
+            ],
+            "title": "Artifact",
+            "type": "object"
+          },
+          "Job": {
+            "additionalProperties": false,
+            "properties": {
+              "artifact_refs": {
+                "default": [],
+                "items": {
+                  "$ref": "#/$defs/Artifact"
+                },
+                "maxItems": 1,
+                "title": "Artifact Refs",
+                "type": "array"
+              },
+              "cancellable": {
+                "default": false,
+                "title": "Cancellable",
+                "type": "boolean"
+              },
+              "created_at": {
+                "title": "Created At",
+                "type": "string"
+              },
+              "duration_seconds": {
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Duration Seconds"
+              },
+              "error": {
+                "anyOf": [
+                  {
+                    "maxLength": 200,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Error"
+              },
+              "error_class": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "input",
+                      "timeout",
+                      "internal",
+                      "other"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Error Class"
+              },
+              "exit_code": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Exit Code"
+              },
+              "finished_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Finished At"
+              },
+              "initiated_by": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Initiated By",
+                "type": "string"
+              },
+              "input_refs": {
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "maxItems": 1,
+                "minItems": 1,
+                "title": "Input Refs",
+                "type": "array"
+              },
+              "job_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Job Id",
+                "type": "string"
+              },
+              "output_refs": {
+                "default": [],
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "maxItems": 1,
+                "title": "Output Refs",
+                "type": "array"
+              },
+              "parameters": {
+                "additionalProperties": true,
+                "title": "Parameters",
+                "type": "object"
+              },
+              "phase": {
+                "title": "Phase",
+                "type": "string"
+              },
+              "process_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Process Id",
+                "type": "string"
+              },
+              "progress": {
+                "default": null,
+                "title": "Progress",
+                "type": "null"
+              },
+              "schema_version": {
+                "const": 1,
+                "default": 1,
+                "title": "Schema Version",
+                "type": "integer"
+              },
+              "started_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Started At"
+              },
+              "status": {
+                "enum": [
+                  "created",
+                  "queued",
+                  "running",
+                  "cancel_requested",
+                  "completed",
+                  "failed",
+                  "cancelled",
+                  "interrupted"
+                ],
+                "title": "Status",
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "process_id",
+              "status",
+              "created_at",
+              "parameters",
+              "phase",
+              "initiated_by",
+              "input_refs"
+            ],
+            "title": "Job",
+            "type": "object"
+          },
+          "Output": {
+            "additionalProperties": false,
+            "properties": {
+              "identity": {
+                "maxLength": 200,
+                "minLength": 1,
+                "title": "Identity",
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "plan",
+                  "raw",
+                  "receipt",
+                  "normalized",
+                  "image",
+                  "quality",
+                  "handoff"
+                ],
+                "title": "Kind",
+                "type": "string"
+              },
+              "path": {
+                "maxLength": 400,
+                "minLength": 1,
+                "title": "Path",
+                "type": "string"
+              },
+              "sha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Sha256",
+                "type": "string"
+              },
+              "size_bytes": {
+                "maximum": 8388608,
+                "minimum": 0,
+                "title": "Size Bytes",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "kind",
+              "identity",
+              "path",
+              "sha256",
+              "size_bytes"
+            ],
+            "title": "Output",
+            "type": "object"
+          },
+          "Stage": {
+            "additionalProperties": false,
+            "properties": {
+              "configuration_hash": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Configuration Hash",
+                "type": "string"
+              },
+              "contract_version": {
+                "const": 1,
+                "default": 1,
+                "title": "Contract Version",
+                "type": "integer"
+              },
+              "decision": {
+                "default": "not_examined",
+                "title": "Decision",
+                "type": "string"
+              },
+              "dependencies": {
+                "default": [],
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                  "type": "string"
+                },
+                "title": "Dependencies",
+                "type": "array"
+              },
+              "duration_seconds": {
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Duration Seconds"
+              },
+              "error": {
+                "anyOf": [
+                  {
+                    "maxLength": 200,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Error"
+              },
+              "expected_inputs": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Expected Inputs",
+                "type": "array"
+              },
+              "expected_outputs": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Expected Outputs",
+                "type": "array"
+              },
+              "finished_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Finished At"
+              },
+              "input_hashes": {
+                "additionalProperties": {
+                  "pattern": "^[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "title": "Input Hashes",
+                "type": "object"
+              },
+              "job_id": {
+                "anyOf": [
+                  {
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Job Id"
+              },
+              "material_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Material Id"
+              },
+              "missing_inputs": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Missing Inputs",
+                "type": "array"
+              },
+              "output_refs": {
+                "default": [],
+                "items": {
+                  "$ref": "#/$defs/Output"
+                },
+                "title": "Output Refs",
+                "type": "array"
+              },
+              "process_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Process Id",
+                "type": "string"
+              },
+              "stage_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                "title": "Stage Id",
+                "type": "string"
+              },
+              "stale_reasons": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Stale Reasons",
+                "type": "array"
+              },
+              "started_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Started At"
+              },
+              "status": {
+                "default": "pending",
+                "enum": [
+                  "pending",
+                  "ready",
+                  "running",
+                  "completed",
+                  "skipped",
+                  "blocked",
+                  "stale",
+                  "failed",
+                  "cancelled",
+                  "interrupted"
+                ],
+                "title": "Status",
+                "type": "string"
+              }
+            },
+            "required": [
+              "stage_id",
+              "process_id",
+              "expected_inputs",
+              "expected_outputs",
+              "configuration_hash"
+            ],
+            "title": "Stage",
+            "type": "object"
+          },
+          "Workflow": {
+            "additionalProperties": false,
+            "properties": {
+              "configuration_hash": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Configuration Hash",
+                "type": "string"
+              },
+              "course_id": {
+                "enum": [
+                  "cs50x",
+                  "cs50_python",
+                  "cs50_sql",
+                  "cs50_ai",
+                  "cs50_web",
+                  "cs50_cybersecurity"
+                ],
+                "title": "Course Id",
+                "type": "string"
+              },
+              "created_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Created At"
+              },
+              "dependencies": {
+                "additionalProperties": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "title": "Dependencies",
+                "type": "object"
+              },
+              "errors": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Errors",
+                "type": "array"
+              },
+              "expected_changes": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Expected Changes",
+                "type": "array"
+              },
+              "finished_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Finished At"
+              },
+              "initiated_by": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Initiated By",
+                "type": "string"
+              },
+              "input_refs": {
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "title": "Input Refs",
+                "type": "array"
+              },
+              "lecture_ids": {
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_:.-]{0,159}$",
+                  "type": "string"
+                },
+                "title": "Lecture Ids",
+                "type": "array"
+              },
+              "output_refs": {
+                "default": [],
+                "items": {
+                  "$ref": "#/$defs/Output"
+                },
+                "title": "Output Refs",
+                "type": "array"
+              },
+              "report_sha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Report Sha256",
+                "type": "string"
+              },
+              "run_id": {
+                "anyOf": [
+                  {
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Run Id"
+              },
+              "schema_version": {
+                "const": 1,
+                "default": 1,
+                "title": "Schema Version",
+                "type": "integer"
+              },
+              "stages": {
+                "items": {
+                  "$ref": "#/$defs/Stage"
+                },
+                "maxItems": 13,
+                "title": "Stages",
+                "type": "array"
+              },
+              "started_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Started At"
+              },
+              "status": {
+                "enum": [
+                  "pending",
+                  "ready",
+                  "running",
+                  "completed",
+                  "skipped",
+                  "blocked",
+                  "stale",
+                  "failed",
+                  "cancelled",
+                  "interrupted"
+                ],
+                "title": "Status",
+                "type": "string"
+              },
+              "workflow_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Workflow Id",
+                "type": "string"
+              },
+              "workflow_type": {
+                "const": "cs50_offline_materials_v1",
+                "default": "cs50_offline_materials_v1",
+                "title": "Workflow Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "workflow_id",
+              "course_id",
+              "lecture_ids",
+              "created_at",
+              "status",
+              "stages",
+              "dependencies",
+              "input_refs",
+              "configuration_hash",
+              "initiated_by",
+              "report_sha256"
+            ],
+            "title": "Workflow",
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "properties": {
+          "job": {
+            "$ref": "#/$defs/Job"
+          },
+          "protocol": {
+            "const": "personal_assistant_workflows_v1",
+            "default": "personal_assistant_workflows_v1",
+            "title": "Protocol",
+            "type": "string"
+          },
+          "report": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Workflow"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "report_artifact": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Artifact"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "run_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "workflow_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Workflow Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "workflow_id",
+          "run_id",
+          "job",
+          "report",
+          "report_artifact"
+        ],
+        "title": "WorkflowRunReport",
+        "type": "object"
+      },
+      "WorkflowSubmission": {
+        "$defs": {
+          "Artifact": {
+            "additionalProperties": false,
+            "properties": {
+              "artifact_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Artifact Id",
+                "type": "string"
+              },
+              "created_at": {
+                "title": "Created At",
+                "type": "string"
+              },
+              "input_refs": {
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "title": "Input Refs",
+                "type": "array"
+              },
+              "job_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Job Id",
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "material_plan",
+                  "quality_report",
+                  "workflow_report",
+                  "material_receipt",
+                  "index_build",
+                  "content_import"
+                ],
+                "title": "Kind",
+                "type": "string"
+              },
+              "schema_version": {
+                "const": 1,
+                "default": 1,
+                "title": "Schema Version",
+                "type": "integer"
+              },
+              "sha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "title": "Sha256",
+                "type": "string"
+              },
+              "size_bytes": {
+                "minimum": 0,
+                "title": "Size Bytes",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "artifact_id",
+              "job_id",
+              "kind",
+              "size_bytes",
+              "sha256",
+              "created_at",
+              "input_refs"
+            ],
+            "title": "Artifact",
+            "type": "object"
+          },
+          "Job": {
+            "additionalProperties": false,
+            "properties": {
+              "artifact_refs": {
+                "default": [],
+                "items": {
+                  "$ref": "#/$defs/Artifact"
+                },
+                "maxItems": 1,
+                "title": "Artifact Refs",
+                "type": "array"
+              },
+              "cancellable": {
+                "default": false,
+                "title": "Cancellable",
+                "type": "boolean"
+              },
+              "created_at": {
+                "title": "Created At",
+                "type": "string"
+              },
+              "duration_seconds": {
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Duration Seconds"
+              },
+              "error": {
+                "anyOf": [
+                  {
+                    "maxLength": 200,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Error"
+              },
+              "error_class": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "input",
+                      "timeout",
+                      "internal",
+                      "other"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Error Class"
+              },
+              "exit_code": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Exit Code"
+              },
+              "finished_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Finished At"
+              },
+              "initiated_by": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Initiated By",
+                "type": "string"
+              },
+              "input_refs": {
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "maxItems": 1,
+                "minItems": 1,
+                "title": "Input Refs",
+                "type": "array"
+              },
+              "job_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Job Id",
+                "type": "string"
+              },
+              "output_refs": {
+                "default": [],
+                "items": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                  "type": "string"
+                },
+                "maxItems": 1,
+                "title": "Output Refs",
+                "type": "array"
+              },
+              "parameters": {
+                "additionalProperties": true,
+                "title": "Parameters",
+                "type": "object"
+              },
+              "phase": {
+                "title": "Phase",
+                "type": "string"
+              },
+              "process_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "title": "Process Id",
+                "type": "string"
+              },
+              "progress": {
+                "default": null,
+                "title": "Progress",
+                "type": "null"
+              },
+              "schema_version": {
+                "const": 1,
+                "default": 1,
+                "title": "Schema Version",
+                "type": "integer"
+              },
+              "started_at": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Started At"
+              },
+              "status": {
+                "enum": [
+                  "created",
+                  "queued",
+                  "running",
+                  "cancel_requested",
+                  "completed",
+                  "failed",
+                  "cancelled",
+                  "interrupted"
+                ],
+                "title": "Status",
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "process_id",
+              "status",
+              "created_at",
+              "parameters",
+              "phase",
+              "initiated_by",
+              "input_refs"
+            ],
+            "title": "Job",
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "properties": {
+          "job": {
+            "$ref": "#/$defs/Job"
+          },
+          "protocol": {
+            "const": "personal_assistant_workflows_v1",
+            "default": "personal_assistant_workflows_v1",
+            "title": "Protocol",
+            "type": "string"
+          },
+          "run_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "workflow_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "title": "Workflow Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "workflow_id",
+          "run_id",
+          "job"
+        ],
+        "title": "WorkflowSubmission",
+        "type": "object"
+      }
+    },
+    "protocol": "personal_assistant_workflows_v1",
+    "routes": {
+      "GET /v1/workflows/capabilities": "WorkflowCapabilities",
+      "GET /v1/workflows/{workflow_id}/runs/{run_id}?source_ref={source_ref}": "WorkflowRunReport",
+      "GET /v1/workflows/{workflow_id}?source_ref={source_ref}&offset=0&limit=10": "WorkflowInspection",
+      "POST /v1/workflows/execute": "WorkflowExecuteRequest -> WorkflowSubmission",
+      "POST /v1/workflows/inspect": "WorkflowInspectRequest -> WorkflowInspection",
+      "POST /v1/workflows/resume": "WorkflowResumeRequest -> WorkflowSubmission"
+    },
+    "schema_version": 1
+  }
+}

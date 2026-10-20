@@ -1,0 +1,47 @@
+{
+  "forwarders": [
+    {
+      "archive": "docs/cs50/archive/2026-10/cs50_pipeline_completion_plan.md",
+      "path": "docs/cs50_pipeline_completion_plan.md",
+      "proof": "exact SHA-256 equality before replacing root content with forwarder"
+    },
+    {
+      "archive": "docs/cs50/archive/2026-10/cs50_pipeline_completion_audit.md",
+      "path": "docs/cs50_pipeline_completion_audit.md",
+      "proof": "only difference before forwarder: one archived historical document path was already corrected"
+    }
+  ],
+  "policy": "No code/data/worktree deletion; only historical banners, file link targets and preserved-path forwarders",
+  "preserved_overviews": [
+    {
+      "archive": "docs/archive/2026-10/repository-overview/README.md",
+      "archived_sha256": "ae50e1b35926d929d8f9f3de84d3fc7c517613744c2d17a73224f6c962487e9d",
+      "changes": "historical banner and relative Markdown file targets only; final newline/trailing whitespace normalization",
+      "source": "README.md",
+      "source_sha256": "d9d866364c809735d49fefbd0be363a0c437428b085feb9aae1e87a62e329311"
+    },
+    {
+      "archive": "docs/archive/2026-10/repository-overview/architecture.md",
+      "archived_sha256": "0f098a3d0e1a9783447d7162ff3d7c31cfcc990b64a2ffac83bb29820bcfa77b",
+      "changes": "historical banner and relative Markdown file targets only; final newline/trailing whitespace normalization",
+      "source": "docs/architecture.md",
+      "source_sha256": "24a317e90195e6978793e6f3ed2d00f70a19bfb77e80ed1b6f7e8d93d6187a30"
+    },
+    {
+      "archive": "docs/archive/2026-10/repository-overview/development.md",
+      "archived_sha256": "a4156bcfaf0384599f60de8d9fd01088a668991109dec85b223b63c743eab7f6",
+      "changes": "historical banner, relative Markdown file targets and portable machine-path example only; final newline/trailing whitespace normalization",
+      "source": "docs/development.md",
+      "source_sha256": "fe1d012437e432a5b262802ff3d9fab1783638b93607038296f79868833e2250"
+    },
+    {
+      "archive": "docs/archive/2026-10/repository-overview/ROADMAP.md",
+      "archived_sha256": "6edab2f58be7040ddde8eb7c4569d5033f3e604a6348ae49fc7e54ade465734d",
+      "changes": "historical banner and relative Markdown file targets only; final newline/trailing whitespace normalization",
+      "source": "docs/ROADMAP.md",
+      "source_sha256": "590448d7bef64f1511f41dbb1f9c8ccb1a3797ccad254ea662ca415f541749ca"
+    }
+  ],
+  "schema_version": 1,
+  "source_commit": "78b35a53b7fc7148a1cbaeb93c4152d35a0725f1"
+}

@@ -1,0 +1,711 @@
+{
+  "$defs": {
+    "ContentLocator": {
+      "additionalProperties": false,
+      "properties": {
+        "raw_artifact_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Raw Artifact Sha256",
+          "type": "string"
+        },
+        "origin_pointer": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "^/",
+          "title": "Origin Pointer",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "dom": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dom"
+        },
+        "line_start": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line Start"
+        },
+        "line_end": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line End"
+        },
+        "bbox": {
+          "anyOf": [
+            {
+              "maxItems": 4,
+              "minItems": 4,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bbox"
+        },
+        "coordinate_system": {
+          "default": "unknown",
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Coordinate System",
+          "type": "string"
+        },
+        "chapter_path": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "pattern": "^[^\\x00-\\x1f]+$",
+            "type": "string"
+          },
+          "title": "Chapter Path",
+          "type": "array"
+        },
+        "original_segment_id": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Original Segment Id"
+        },
+        "time_status": {
+          "enum": [
+            "known",
+            "unknown",
+            "not_applicable"
+          ],
+          "title": "Time Status",
+          "type": "string"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        }
+      },
+      "required": [
+        "raw_artifact_sha256",
+        "origin_pointer",
+        "time_status"
+      ],
+      "title": "ContentLocator",
+      "type": "object"
+    },
+    "IndexProjectionBody": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "projection_version": {
+          "const": "content_index_projection_v1",
+          "title": "Projection Version",
+          "type": "string"
+        },
+        "status": {
+          "const": "projected",
+          "title": "Status",
+          "type": "string"
+        },
+        "usage": {
+          "enum": [
+            "verified_content",
+            "synthetic_test_only"
+          ],
+          "title": "Usage",
+          "type": "string"
+        },
+        "source_origin": {
+          "enum": [
+            "official",
+            "synthetic"
+          ],
+          "title": "Source Origin",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_version_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Source Version Id",
+          "type": "string"
+        },
+        "parsed_version_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Parsed Version Id",
+          "type": "string"
+        },
+        "parser_config_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Parser Config Id",
+          "type": "string"
+        },
+        "payload_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Payload Sha256",
+          "type": "string"
+        },
+        "projection_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Projection Sha256",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/$defs/IndexProjectionConfig"
+        },
+        "config_fingerprint": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Config Fingerprint",
+          "type": "string"
+        },
+        "record_count": {
+          "maximum": 200000,
+          "minimum": 0,
+          "title": "Record Count",
+          "type": "integer"
+        },
+        "exclusion_count": {
+          "minimum": 0,
+          "title": "Exclusion Count",
+          "type": "integer"
+        },
+        "error_count": {
+          "const": 0,
+          "title": "Error Count",
+          "type": "integer"
+        },
+        "record_set_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Record Set Sha256",
+          "type": "string"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/IndexRecord"
+          },
+          "maxItems": 200000,
+          "title": "Records",
+          "type": "array"
+        },
+        "exclusions": {
+          "items": {
+            "$ref": "#/$defs/ProjectionExclusion"
+          },
+          "title": "Exclusions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "projection_version",
+        "status",
+        "usage",
+        "source_origin",
+        "source_id",
+        "source_version_id",
+        "parsed_version_id",
+        "parser_config_id",
+        "payload_sha256",
+        "projection_sha256",
+        "config",
+        "config_fingerprint",
+        "record_count",
+        "exclusion_count",
+        "error_count",
+        "record_set_sha256",
+        "records",
+        "exclusions"
+      ],
+      "title": "IndexProjectionBody",
+      "type": "object"
+    },
+    "IndexProjectionConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "selection": {
+          "const": "content_primary_v1",
+          "default": "content_primary_v1",
+          "title": "Selection",
+          "type": "string"
+        },
+        "max_codepoints": {
+          "default": 2000,
+          "maximum": 2000,
+          "minimum": 1,
+          "title": "Max Codepoints",
+          "type": "integer"
+        },
+        "overlap_codepoints": {
+          "default": 0,
+          "enum": [
+            0,
+            128
+          ],
+          "title": "Overlap Codepoints",
+          "type": "integer"
+        },
+        "boundary": {
+          "const": "block",
+          "default": "block",
+          "title": "Boundary",
+          "type": "string"
+        },
+        "normalization": {
+          "const": "none",
+          "default": "none",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "chapter_context": {
+          "const": "metadata_only",
+          "default": "metadata_only",
+          "title": "Chapter Context",
+          "type": "string"
+        },
+        "empty_text": {
+          "const": "reference_only",
+          "default": "reference_only",
+          "title": "Empty Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version"
+      ],
+      "title": "IndexProjectionConfig",
+      "type": "object"
+    },
+    "IndexRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "body": {
+          "$ref": "#/$defs/IndexRecordBody"
+        },
+        "index_record_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Index Record Id",
+          "type": "string"
+        },
+        "generation_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generation Id"
+        },
+        "build_id": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{32}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Build Id"
+        }
+      },
+      "required": [
+        "schema_version",
+        "body",
+        "index_record_id"
+      ],
+      "title": "IndexRecord",
+      "type": "object"
+    },
+    "IndexRecordBody": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "index_schema": {
+          "const": "content_index_record_v1",
+          "title": "Index Schema",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_version_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Source Version Id",
+          "type": "string"
+        },
+        "parsed_version_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Parsed Version Id",
+          "type": "string"
+        },
+        "course_id": {
+          "enum": [
+            "cs50x",
+            "cs50_python",
+            "cs50_sql",
+            "cs50_ai",
+            "cs50_web",
+            "cs50_cybersecurity"
+          ],
+          "title": "Course Id",
+          "type": "string"
+        },
+        "block_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Block Id",
+          "type": "string"
+        },
+        "block_order": {
+          "minimum": 0,
+          "title": "Block Order",
+          "type": "integer"
+        },
+        "content_type": {
+          "enum": [
+            "heading",
+            "paragraph",
+            "code",
+            "table",
+            "formula",
+            "list"
+          ],
+          "title": "Content Type",
+          "type": "string"
+        },
+        "original_type": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Original Type",
+          "type": "string"
+        },
+        "aggregation_role": {
+          "const": "primary",
+          "title": "Aggregation Role",
+          "type": "string"
+        },
+        "origin_pointer": {
+          "pattern": "^/(?:blocks|segments)/[0-9]+$",
+          "title": "Origin Pointer",
+          "type": "string"
+        },
+        "text_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Text Sha256",
+          "type": "string"
+        },
+        "text_length": {
+          "minimum": 1,
+          "title": "Text Length",
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        },
+        "offset_unit": {
+          "const": "unicode_codepoint",
+          "title": "Offset Unit",
+          "type": "string"
+        },
+        "search_text": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Search Text",
+          "type": "string"
+        },
+        "search_text_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Search Text Sha256",
+          "type": "string"
+        },
+        "locators": {
+          "items": {
+            "$ref": "#/$defs/ContentLocator"
+          },
+          "maxItems": 501,
+          "minItems": 1,
+          "title": "Locators",
+          "type": "array"
+        },
+        "parser_config_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Parser Config Id",
+          "type": "string"
+        },
+        "parser_fingerprint": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Parser Fingerprint",
+          "type": "string"
+        },
+        "payload_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Payload Sha256",
+          "type": "string"
+        },
+        "projection_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Projection Sha256",
+          "type": "string"
+        },
+        "projection_policy_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Projection Policy Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "index_schema",
+        "source_id",
+        "source_version_id",
+        "parsed_version_id",
+        "course_id",
+        "block_id",
+        "block_order",
+        "content_type",
+        "original_type",
+        "aggregation_role",
+        "origin_pointer",
+        "text_sha256",
+        "text_length",
+        "start",
+        "end",
+        "offset_unit",
+        "search_text",
+        "search_text_sha256",
+        "locators",
+        "parser_config_id",
+        "parser_fingerprint",
+        "payload_sha256",
+        "projection_sha256",
+        "projection_policy_id"
+      ],
+      "title": "IndexRecordBody",
+      "type": "object"
+    },
+    "ProjectionExclusion": {
+      "additionalProperties": false,
+      "properties": {
+        "block_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Block Id",
+          "type": "string"
+        },
+        "block_order": {
+          "minimum": 0,
+          "title": "Block Order",
+          "type": "integer"
+        },
+        "reason": {
+          "enum": [
+            "table_of_contents",
+            "reference_projection",
+            "geometric_table_projection",
+            "list_structure",
+            "non_text_reference",
+            "alternative_view",
+            "empty_text",
+            "whitespace_window"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        }
+      },
+      "required": [
+        "block_id",
+        "block_order",
+        "reason"
+      ],
+      "title": "ProjectionExclusion",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "body": {
+      "$ref": "#/$defs/IndexProjectionBody"
+    },
+    "digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Digest",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "body",
+    "digest"
+  ],
+  "title": "IndexProjectionResult",
+  "type": "object"
+}

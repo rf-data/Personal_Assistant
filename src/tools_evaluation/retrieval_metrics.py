@@ -1,62 +1,28 @@
-## retrieval_metrics.py
-# import
+"""Backend-independent arithmetic; callers establish independent relevance first."""
+
+from math import log2
 
 
-def precision_k():
-    """
-    = relevant_doc / all_docs
-    """
-
-    return
-
-
-def recall_k():
-    """
-    = relevant_doc / all_relevant_docs
-    """
-
-    return
+def recall_and_rr(relevant, ranked, *, k):
+    """Existing transcript arithmetic with its nonempty-gold precondition."""
+    if type(k) is not int or k < 1 or not relevant:
+        raise ValueError("Nonempty relevance set and positive integer k required")
+    gold, top = set(relevant), ranked[:k]
+    return (
+        len(gold.intersection(top)) / len(gold),
+        next((1 / r for r, item in enumerate(top, 1) if item in gold), 0.0),
+    )
 
 
-def hit_rate_k():
-    """
-    if at least one relevant_doc --> 1
-    else --> 0
-    """
-
-    return
-
-
-def mrr():
-    """mean reciprocal rank
-
-    ???? mrr = 1/N * sum(1/rank_1st_relevant_doc)
-    """
-    return
-
-
-def map():
-    """mean average precision
-
-    MAP = 1/N * sum(1 / query_ap)
-    """
-
-    return
-
-
-def ndcg():
-    """normalized discounted cumulative gain
-
-    NDCG@K = DCG@K / IDCG@K
-    """
-
-    return
-
-
-def coverage():
-    """coverage
-
-    coverage = unique_relevant_info_retrieved / total_relevant_info
-    """
-
-    return
+def graded_ranking(grades, pool_grades, *, k):
+    """Already deduplicated gains; zero-gain positions are never compressed."""
+    if type(k) is not int or not 1 <= k <= 100:
+        raise ValueError("k outside evaluation limits")
+    if any(type(g) is not int or not 0 <= g <= 3 for g in (*grades, *pool_grades)):
+        raise ValueError("grades must be integers in [0,3]")
+    dcg = sum((2**g - 1) / log2(r + 1) for r, g in enumerate(grades[:k], 1))
+    idcg = sum(
+        (2**g - 1) / log2(r + 1)
+        for r, g in enumerate(sorted(pool_grades, reverse=True)[:k], 1)
+    )
+    return dcg, idcg

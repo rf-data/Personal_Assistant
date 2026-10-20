@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "data_kind": "synthetic_technical_fixture",
+  "relevance_quality_evaluated": false,
+  "environment": {
+    "python": "3.12.12",
+    "sqlite": "3.50.4",
+    "pydantic": "2.13.5"
+  },
+  "sources": 1,
+  "records": 1001,
+  "source_sqlite_bytes": 2306048,
+  "active_generation_bytes": 2308109,
+  "total_index_bytes_after_rebuild": 4618662,
+  "build_seconds": 8.246602911999616,
+  "rebuild_seconds": 8.663666094999826,
+  "queries": [
+    {
+      "query": "1000",
+      "elapsed_seconds": [
+        3.155307881999761,
+        2.678070960999321,
+        4.911822908999966
+      ],
+      "status": "unavailable",
+      "returned": null,
+      "next_cursor": false
+    },
+    {
+      "query": "Python 1000",
+      "elapsed_seconds": [
+        3.4361087589995805,
+        3.504443046999768,
+        3.7618303380004363
+      ],
+      "status": "unavailable",
+      "returned": null,
+      "next_cursor": false
+    },
+    {
+      "query": "café 1000",
+      "elapsed_seconds": [
+        3.0708259829998497,
+        4.220821555999464,
+        4.456821818999742
+      ],
+      "status": "unavailable",
+      "returned": null,
+      "next_cursor": false
+    },
+    {
+      "query": "unfindable",
+      "elapsed_seconds": [
+        3.374089081999955,
+        3.4389811920000284,
+        3.3164233719999174
+      ],
+      "status": "unavailable",
+      "returned": null,
+      "next_cursor": false
+    },
+    {
+      "query": "function",
+      "elapsed_seconds": [
+        3.2727243720000843,
+        3.679105924000396,
+        4.9081717910003135
+      ],
+      "status": "unavailable",
+      "returned": null,
+      "next_cursor": false
+    }
+  ],
+  "unchanged_content_bytes": true,
+  "notes": [
+    "Three warm-process sequential measurements per query; verification and hydration included.",
+    "A deadline can reject a request before match counting; errors are reported, never treated as empty successful results.",
+    "No relevance judgments, precision, recall or MRR.",
+    "No throughput/RSS/load approval; one Source on a local test filesystem."
+  ]
+}

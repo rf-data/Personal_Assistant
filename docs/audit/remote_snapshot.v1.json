@@ -1,0 +1,159 @@
+{
+  "backend": {
+    "branch": "master",
+    "commit": "78b35a53b7fc7148a1cbaeb93c4152d35a0725f1",
+    "pull_requests": [
+      {
+        "base": "master",
+        "head": "d2c07f9b4e9facdb2ecbb6f3d541ef454524997a",
+        "merged_at": "2026-10-16T16:27:17Z",
+        "number": 67,
+        "state": "closed",
+        "title": "C18: Offline-CS50-Workflows mit Resume und Dependency-Pr\u00fcfung",
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/67"
+      },
+      {
+        "base": "master",
+        "head": "74578357afe04194cbc73b7cd6aad120c1f11816",
+        "merged_at": "2026-10-16T15:05:07Z",
+        "number": 66,
+        "state": "closed",
+        "title": "C16: Offline Job Control API mit persistentem Executor",
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/66"
+      },
+      {
+        "base": "master",
+        "head": "e74d3405b71668fdd45258b902811e2152b23d0e",
+        "merged_at": "2026-10-16T14:19:09Z",
+        "number": 65,
+        "state": "closed",
+        "title": "C15: Monitoring-Hardening und Vertrag f\u00fcr Pipeline-Metriken",
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/65"
+      },
+      {
+        "base": "master",
+        "head": "9dd9c8ad6aaaedbc497dfc7f59ea375e98bc7599",
+        "merged_at": "2026-10-16T13:27:26Z",
+        "number": 64,
+        "state": "closed",
+        "title": "C13: Inventory visual assets with document provenance offline",
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/64"
+      },
+      {
+        "base": "master",
+        "head": "42414387319bd2195569b16c78cb5ab398deecb9",
+        "merged_at": "2026-10-16T13:25:44Z",
+        "number": 63,
+        "state": "closed",
+        "title": "C12: Harden offline knowledge consolidation and verified resume",
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/63"
+      },
+      {
+        "base": "master",
+        "head": "467ec82d8ee44b52b74b72d8aaf95d847d01b061",
+        "merged_at": "2026-10-16T13:21:08Z",
+        "number": 62,
+        "state": "closed",
+        "title": "C11: Offline mathematical formula reconstruction evaluation",
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/62"
+      },
+      {
+        "base": "master",
+        "head": "3648847a70d73096ced06c72b04ba844c9e00e60",
+        "merged_at": "2026-10-16T05:12:36Z",
+        "number": 61,
+        "state": "closed",
+        "title": "C10: Offline material quality gate and read-only lecture handoff",
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/61"
+      },
+      {
+        "base": "master",
+        "head": "5da71032123208659f5dba1d2a424ccb28d7db16",
+        "merged_at": "2026-10-15T19:21:12Z",
+        "number": 60,
+        "state": "closed",
+        "title": "PDF-v2: preserve code, distinguish math and retain numbered source views",
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/60"
+      },
+      {
+        "base": "master",
+        "head": "ce28fb6cd0d0585bc0c98d53b778e64e4f6bcf8d",
+        "merged_at": "2026-10-15T18:29:00Z",
+        "number": 59,
+        "state": "closed",
+        "title": "Fix CS50 lecture notes HTML structure and inline code provenance",
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/59"
+      }
+    ],
+    "repository": "rf-data/Personal_Assistant",
+    "tree": "d67a1115855ac0a78b555a6a6067aa8788a7e321"
+  },
+  "observed_on": "2026-10-16",
+  "open_work": [
+    {
+      "base": "master",
+      "head": "efed68d08ddbd25a7d0404a164cf6d54ce334ab6",
+      "number": 11,
+      "repository": "rf-data/Personal_Assistant",
+      "state": "open",
+      "title": "Fix normalize_math_text import in knowledge consolidation",
+      "url": "https://github.com/rf-data/Personal_Assistant/pull/11"
+    },
+    {
+      "base": "master",
+      "head": "9ed643dedf220f37a5ebfbf533582c64d563d96d",
+      "number": 10,
+      "repository": "rf-data/Personal_Assistant",
+      "state": "open",
+      "title": "Preserve source_id between knowledge extraction and consolidation",
+      "url": "https://github.com/rf-data/Personal_Assistant/pull/10"
+    },
+    {
+      "base": "master",
+      "head": "3d1317347018fce47f49331fbfea92e4a055a337",
+      "number": 9,
+      "repository": "rf-data/Personal_Assistant",
+      "state": "open",
+      "title": "Import official TXT, SRT and VTT transcripts offline",
+      "url": "https://github.com/rf-data/Personal_Assistant/pull/9"
+    },
+    {
+      "base": "master",
+      "head": "7ba2dd844d24377eba36ca98b64ea4c2e059cf62",
+      "number": 6,
+      "repository": "rf-data/Personal_Assistant",
+      "state": "open",
+      "title": "Add offline CS50 fixture validation and discovery models",
+      "url": "https://github.com/rf-data/Personal_Assistant/pull/6"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Read-only GitHub metadata; no downloads from course/model sources, deployments, PR merges/closures or remote content mutation",
+  "ui": {
+    "branch": "main",
+    "commit": "137651eb6d2a30c4f3177ca4d2252ac34f28035b",
+    "local_equivalent_commit": "9d9ed61a02913d2f884358aff9d3ce556094d386",
+    "pull_requests": [
+      {
+        "base": "main",
+        "head": "9d9ed61a02913d2f884358aff9d3ce556094d386",
+        "merged_at": "2026-10-16T16:10:46Z",
+        "number": 2,
+        "state": "closed",
+        "title": "C17: Admin-UI mit echtem C16-Jobbackend integrieren",
+        "url": "https://github.com/rf-data/personal-assistant-ui/pull/2"
+      },
+      {
+        "base": "main",
+        "head": "b003a87098c6bb434e0e266128448032697f3646",
+        "merged_at": "2026-10-16T13:28:09Z",
+        "number": 1,
+        "state": "closed",
+        "title": "C14: Konsolidierte Admin-UI mit sicherer simulierter Jobsteuerung",
+        "url": "https://github.com/rf-data/personal-assistant-ui/pull/1"
+      }
+    ],
+    "repository": "rf-data/personal-assistant-ui",
+    "tree": "495ab64ab6f860840afc7a2c104816f5ef5e5255"
+  }
+}

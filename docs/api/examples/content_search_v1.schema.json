@@ -1,0 +1,836 @@
+{
+  "schema_version": 1,
+  "models": {
+    "SearchRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "query": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Query",
+          "type": "string"
+        },
+        "course_id": {
+          "anyOf": [
+            {
+              "enum": [
+                "cs50x",
+                "cs50_python",
+                "cs50_sql",
+                "cs50_ai",
+                "cs50_web",
+                "cs50_cybersecurity",
+                "loviscach_mathe_1"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Course Id"
+        },
+        "source_ids": {
+          "anyOf": [
+            {
+              "items": {
+                "maxLength": 200,
+                "minLength": 1,
+                "pattern": "^[^\\x00-\\x1f]+$",
+                "type": "string"
+              },
+              "maxItems": 32,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Ids"
+        },
+        "content_types": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "heading",
+                  "paragraph",
+                  "code",
+                  "table",
+                  "formula",
+                  "list",
+                  "link",
+                  "image_reference",
+                  "unknown_block"
+                ],
+                "type": "string"
+              },
+              "maxItems": 9,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Content Types"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "cursor": {
+          "anyOf": [
+            {
+              "maxLength": 1600,
+              "minLength": 20,
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cursor"
+        }
+      },
+      "required": [
+        "schema_version",
+        "query"
+      ],
+      "title": "SearchRequest",
+      "type": "object"
+    },
+    "SearchCapabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "protocol": {
+          "const": "personal_assistant_content_search_v1",
+          "default": "personal_assistant_content_search_v1",
+          "title": "Protocol",
+          "type": "string"
+        },
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "capabilities": {
+          "items": {
+            "const": "content_search_lexical_v1",
+            "type": "string"
+          },
+          "title": "Capabilities",
+          "type": "array"
+        },
+        "method": {
+          "const": "lexical",
+          "default": "lexical",
+          "title": "Method",
+          "type": "string"
+        },
+        "max_query_codepoints": {
+          "const": 512,
+          "default": 512,
+          "title": "Max Query Codepoints",
+          "type": "integer"
+        },
+        "max_query_bytes": {
+          "const": 2048,
+          "default": 2048,
+          "title": "Max Query Bytes",
+          "type": "integer"
+        },
+        "max_terms": {
+          "const": 8,
+          "default": 8,
+          "title": "Max Terms",
+          "type": "integer"
+        },
+        "max_term_codepoints": {
+          "const": 64,
+          "default": 64,
+          "title": "Max Term Codepoints",
+          "type": "integer"
+        },
+        "max_sources": {
+          "const": 32,
+          "default": 32,
+          "title": "Max Sources",
+          "type": "integer"
+        },
+        "max_limit": {
+          "const": 100,
+          "default": 100,
+          "title": "Max Limit",
+          "type": "integer"
+        },
+        "max_page_bytes": {
+          "const": 262144,
+          "default": 262144,
+          "title": "Max Page Bytes",
+          "type": "integer"
+        },
+        "cursor_ttl_seconds": {
+          "const": 300,
+          "default": 300,
+          "title": "Cursor Ttl Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "enabled",
+        "capabilities"
+      ],
+      "title": "SearchCapabilities",
+      "type": "object"
+    },
+    "SearchResultPage": {
+      "$defs": {
+        "LocatorDTO": {
+          "additionalProperties": false,
+          "description": "Only existing typed locator fields; raw references remain source-bound.",
+          "properties": {
+            "raw_artifact_sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "title": "Raw Artifact Sha256",
+              "type": "string"
+            },
+            "origin_pointer": {
+              "maxLength": 2000,
+              "minLength": 1,
+              "pattern": "^/",
+              "title": "Origin Pointer",
+              "type": "string"
+            },
+            "page": {
+              "anyOf": [
+                {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Page"
+            },
+            "dom": {
+              "anyOf": [
+                {
+                  "maxLength": 2000,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Dom"
+            },
+            "line_start": {
+              "anyOf": [
+                {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Line Start"
+            },
+            "line_end": {
+              "anyOf": [
+                {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Line End"
+            },
+            "bbox": {
+              "anyOf": [
+                {
+                  "maxItems": 4,
+                  "minItems": 4,
+                  "prefixItems": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ],
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Bbox"
+            },
+            "coordinate_system": {
+              "default": "unknown",
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Coordinate System",
+              "type": "string"
+            },
+            "chapter_path": {
+              "default": [],
+              "items": {
+                "maxLength": 200,
+                "minLength": 1,
+                "pattern": "^[^\\x00-\\x1f]+$",
+                "type": "string"
+              },
+              "title": "Chapter Path",
+              "type": "array"
+            },
+            "original_segment_id": {
+              "anyOf": [
+                {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Original Segment Id"
+            },
+            "time_status": {
+              "enum": [
+                "known",
+                "unknown",
+                "not_applicable"
+              ],
+              "title": "Time Status",
+              "type": "string"
+            },
+            "start": {
+              "anyOf": [
+                {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Start"
+            },
+            "end": {
+              "anyOf": [
+                {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "End"
+            },
+            "raw_reference": {
+              "$ref": "#/$defs/RawDTO"
+            }
+          },
+          "required": [
+            "raw_artifact_sha256",
+            "origin_pointer",
+            "time_status",
+            "raw_reference"
+          ],
+          "title": "LocatorDTO",
+          "type": "object"
+        },
+        "RawDTO": {
+          "additionalProperties": false,
+          "properties": {
+            "source_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Source Id",
+              "type": "string"
+            },
+            "source_version_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Source Version Id",
+              "type": "string"
+            },
+            "role": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Role",
+              "type": "string"
+            },
+            "ordinal": {
+              "title": "Ordinal",
+              "type": "integer"
+            },
+            "sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "title": "Sha256",
+              "type": "string"
+            },
+            "size_bytes": {
+              "title": "Size Bytes",
+              "type": "integer"
+            },
+            "download_route": {
+              "title": "Download Route",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_id",
+            "source_version_id",
+            "role",
+            "ordinal",
+            "sha256",
+            "size_bytes",
+            "download_route"
+          ],
+          "title": "RawDTO",
+          "type": "object"
+        },
+        "RecordAnchor": {
+          "additionalProperties": false,
+          "properties": {
+            "parsed_version_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Parsed Version Id",
+              "type": "string"
+            },
+            "block_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Block Id",
+              "type": "string"
+            },
+            "text_sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "title": "Text Sha256",
+              "type": "string"
+            },
+            "start": {
+              "minimum": 0,
+              "title": "Start",
+              "type": "integer"
+            },
+            "end": {
+              "minimum": 1,
+              "title": "End",
+              "type": "integer"
+            },
+            "offset_unit": {
+              "const": "unicode_codepoint",
+              "default": "unicode_codepoint",
+              "title": "Offset Unit",
+              "type": "string"
+            }
+          },
+          "required": [
+            "parsed_version_id",
+            "block_id",
+            "text_sha256",
+            "start",
+            "end"
+          ],
+          "title": "RecordAnchor",
+          "type": "object"
+        },
+        "ScoreComponent": {
+          "additionalProperties": false,
+          "properties": {
+            "backend": {
+              "const": "sqlite_fts5",
+              "default": "sqlite_fts5",
+              "title": "Backend",
+              "type": "string"
+            },
+            "source_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Source Id",
+              "type": "string"
+            },
+            "raw_score": {
+              "title": "Raw Score",
+              "type": "number"
+            },
+            "score_schema": {
+              "const": "sqlite_fts5_bm25_v1",
+              "default": "sqlite_fts5_bm25_v1",
+              "title": "Score Schema",
+              "type": "string"
+            },
+            "direction": {
+              "const": "lower_is_better",
+              "default": "lower_is_better",
+              "title": "Direction",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_id",
+            "raw_score"
+          ],
+          "title": "ScoreComponent",
+          "type": "object"
+        },
+        "SearchHit": {
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": 1,
+              "default": 1,
+              "title": "Schema Version",
+              "type": "integer"
+            },
+            "index_record_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Index Record Id",
+              "type": "string"
+            },
+            "source_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Source Id",
+              "type": "string"
+            },
+            "source_version_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Source Version Id",
+              "type": "string"
+            },
+            "parsed_version_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Parsed Version Id",
+              "type": "string"
+            },
+            "block_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Block Id",
+              "type": "string"
+            },
+            "content_type": {
+              "title": "Content Type",
+              "type": "string"
+            },
+            "anchor": {
+              "$ref": "#/$defs/RecordAnchor"
+            },
+            "excerpt": {
+              "$ref": "#/$defs/TextWindow"
+            },
+            "locators": {
+              "anyOf": [
+                {
+                  "items": {
+                    "$ref": "#/$defs/LocatorDTO"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Locators"
+            },
+            "locators_in_structure": {
+              "title": "Locators In Structure",
+              "type": "boolean"
+            },
+            "structure_route": {
+              "title": "Structure Route",
+              "type": "string"
+            },
+            "text_route": {
+              "title": "Text Route",
+              "type": "string"
+            },
+            "method": {
+              "default": "lexical",
+              "enum": [
+                "lexical",
+                "vector"
+              ],
+              "title": "Method",
+              "type": "string"
+            },
+            "components": {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ScoreComponent"
+                  },
+                  {
+                    "$ref": "#/$defs/VectorScoreComponent"
+                  }
+                ]
+              },
+              "title": "Components",
+              "type": "array"
+            },
+            "ranking_score": {
+              "title": "Ranking Score",
+              "type": "number"
+            },
+            "ranking_schema": {
+              "default": "source_rrf_v1",
+              "enum": [
+                "source_rrf_v1",
+                "cosine_l2_v1"
+              ],
+              "title": "Ranking Schema",
+              "type": "string"
+            },
+            "index_generation": {
+              "pattern": "^[a-f0-9]{64}$",
+              "title": "Index Generation",
+              "type": "string"
+            },
+            "projection_fingerprint": {
+              "pattern": "^[a-f0-9]{64}$",
+              "title": "Projection Fingerprint",
+              "type": "string"
+            }
+          },
+          "required": [
+            "index_record_id",
+            "source_id",
+            "source_version_id",
+            "parsed_version_id",
+            "block_id",
+            "content_type",
+            "anchor",
+            "excerpt",
+            "locators",
+            "locators_in_structure",
+            "structure_route",
+            "text_route",
+            "components",
+            "ranking_score",
+            "index_generation",
+            "projection_fingerprint"
+          ],
+          "title": "SearchHit",
+          "type": "object"
+        },
+        "TextWindow": {
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": 1,
+              "default": 1,
+              "title": "Schema Version",
+              "type": "integer"
+            },
+            "parsed_version_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Parsed Version Id",
+              "type": "string"
+            },
+            "block_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Block Id",
+              "type": "string"
+            },
+            "start": {
+              "title": "Start",
+              "type": "integer"
+            },
+            "end": {
+              "title": "End",
+              "type": "integer"
+            },
+            "text_length": {
+              "title": "Text Length",
+              "type": "integer"
+            },
+            "text_sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "title": "Text Sha256",
+              "type": "string"
+            },
+            "text": {
+              "title": "Text",
+              "type": "string"
+            }
+          },
+          "required": [
+            "parsed_version_id",
+            "block_id",
+            "start",
+            "end",
+            "text_length",
+            "text_sha256",
+            "text"
+          ],
+          "title": "TextWindow",
+          "type": "object"
+        },
+        "VectorScoreComponent": {
+          "additionalProperties": false,
+          "properties": {
+            "backend": {
+              "const": "content_vectors_fake",
+              "default": "content_vectors_fake",
+              "title": "Backend",
+              "type": "string"
+            },
+            "source_id": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f]+$",
+              "title": "Source Id",
+              "type": "string"
+            },
+            "raw_score": {
+              "title": "Raw Score",
+              "type": "number"
+            },
+            "score_schema": {
+              "const": "cosine_l2_v1",
+              "default": "cosine_l2_v1",
+              "title": "Score Schema",
+              "type": "string"
+            },
+            "direction": {
+              "const": "higher_is_better",
+              "default": "higher_is_better",
+              "title": "Direction",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_id",
+            "raw_score"
+          ],
+          "title": "VectorScoreComponent",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/SearchHit"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        },
+        "index_generation": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Index Generation"
+        },
+        "ranking_schema": {
+          "default": "source_rrf_v1",
+          "enum": [
+            "source_rrf_v1",
+            "cosine_l2_v1"
+          ],
+          "title": "Ranking Schema",
+          "type": "string"
+        },
+        "selection_scope": {
+          "const": "explicit_active_selection",
+          "default": "explicit_active_selection",
+          "title": "Selection Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor",
+        "index_generation"
+      ],
+      "title": "SearchResultPage",
+      "type": "object"
+    }
+  }
+}

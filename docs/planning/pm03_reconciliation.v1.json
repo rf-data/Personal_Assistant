@@ -1,0 +1,3553 @@
+{
+  "schema_version": 1,
+  "kind": "pm03-live-project-reconciliation",
+  "snapshot_date": "2026-10-19",
+  "timezone": "Europe/Berlin",
+  "overall_status": "PM04_safe_governance_checks_complete_documentation_integration_pending",
+  "source": {
+    "path": "docs/planning/issue_plan.v1.json",
+    "sha256": "629b1c3471bc8654908bb99fbe5e1bc277edfb28272e1801bc8a8f065831580d",
+    "base_sha": "b6fc464ef5217e3c1641e504d9f9c37989e0c4b1",
+    "plan_unchanged": true
+  },
+  "project": {
+    "id": "PVT_kwHOC92AuM4BneNA",
+    "url": "https://github.com/users/rf-data/projects/1",
+    "title": "Personal Assistant – Development",
+    "private": true,
+    "closed": false,
+    "viewer_can_update": true,
+    "counts": {
+      "items_before": 28,
+      "items_after": 56,
+      "initial_items_preserved": 28,
+      "initial_canonical_PR_items_reused": 14,
+      "supporting_PR_items_annotated": 2,
+      "new_issues": 27,
+      "new_backend_issues": 20,
+      "new_ui_issues": 7,
+      "new_PR_items": 1,
+      "PR_items_after": 29,
+      "issue_items_after": 27,
+      "archived_items_after": 0,
+      "draft_items_after": 0,
+      "statuses_after": {
+        "Backlog": 33,
+        "Done": 23
+      },
+      "priority_after": {
+        "unset": 12,
+        "P1": 29,
+        "P2": 9,
+        "P0": 6
+      },
+      "acceptance_after": {
+        "unset": 12,
+        "Requires decision": 10,
+        "Technical delivery only": 16,
+        "Real acceptance pending": 4,
+        "Planned": 11,
+        "Production acceptance pending": 3
+      },
+      "items_with_Priority_Workstream_Acceptance": 44,
+      "fields_before": 18,
+      "fields_after": 20,
+      "views_before": 5,
+      "views_after": 8,
+      "views_created": 3,
+      "existing_views_updated": 1,
+      "native_repository_milestones_created": 12,
+      "native_milestone_assignments": 42,
+      "native_parent_edges": 14,
+      "native_blocked_by_edges": 35,
+      "plan_ids": 45,
+      "mapped_plan_ids": 44,
+      "blocked_plan_ids": 1,
+      "canonical_items_for_mapped_plan_ids": 42,
+      "planned_canonical_representations_including_unpublished_task": 43,
+      "workflow_mutations_by_agent": 0,
+      "issue_closures": 0,
+      "PR_merges_or_closures": 0
+    },
+    "fields": [
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqu0",
+        "name": "Title",
+        "dataType": "TITLE"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqu4",
+        "name": "Assignees",
+        "dataType": "ASSIGNEES"
+      },
+      {
+        "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+        "name": "Status",
+        "dataType": "SINGLE_SELECT",
+        "options": [
+          {
+            "id": "f75ad846",
+            "name": "Backlog"
+          },
+          {
+            "id": "47fc9ee4",
+            "name": "In progress"
+          },
+          {
+            "id": "61e4505c",
+            "name": "Ready"
+          },
+          {
+            "id": "df73e18b",
+            "name": "In review"
+          },
+          {
+            "id": "98236657",
+            "name": "Done"
+          }
+        ]
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqvA",
+        "name": "Labels",
+        "dataType": "LABELS"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqvE",
+        "name": "Linked pull requests",
+        "dataType": "LINKED_PULL_REQUESTS"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqvI",
+        "name": "Milestone",
+        "dataType": "MILESTONE"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqvM",
+        "name": "Repository",
+        "dataType": "REPOSITORY"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqvU",
+        "name": "Reviewers",
+        "dataType": "REVIEWERS"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqvY",
+        "name": "Parent issue",
+        "dataType": "PARENT_ISSUE"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqvc",
+        "name": "Sub-issues progress",
+        "dataType": "SUB_ISSUES_PROGRESS"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqvk",
+        "name": "Created",
+        "dataType": "CREATED"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqvs",
+        "name": "Updated",
+        "dataType": "UPDATED"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCqv4",
+        "name": "Closed",
+        "dataType": "CLOSED"
+      },
+      {
+        "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXA",
+        "name": "Priority",
+        "dataType": "SINGLE_SELECT",
+        "options": [
+          {
+            "id": "79628723",
+            "name": "P0"
+          },
+          {
+            "id": "0a877460",
+            "name": "P1"
+          },
+          {
+            "id": "da944a9c",
+            "name": "P2"
+          }
+        ]
+      },
+      {
+        "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXE",
+        "name": "Size",
+        "dataType": "SINGLE_SELECT",
+        "options": [
+          {
+            "id": "6c6483d2",
+            "name": "XS"
+          },
+          {
+            "id": "f784b110",
+            "name": "S"
+          },
+          {
+            "id": "7515a9f1",
+            "name": "M"
+          },
+          {
+            "id": "817d0097",
+            "name": "L"
+          },
+          {
+            "id": "db339eb2",
+            "name": "XL"
+          }
+        ]
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCrXI",
+        "name": "Estimate",
+        "dataType": "NUMBER"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCrXM",
+        "name": "Start date",
+        "dataType": "DATE"
+      },
+      {
+        "id": "PVTF_lAHOC92AuM4BneNAzhmCrXQ",
+        "name": "Target date",
+        "dataType": "DATE"
+      },
+      {
+        "id": "PVTSSF_lAHOC92AuM4BneNAzhmVSr4",
+        "name": "Workstream",
+        "dataType": "SINGLE_SELECT",
+        "options": [
+          {
+            "id": "1770e1ba",
+            "name": "Persistence"
+          },
+          {
+            "id": "8ebe1a73",
+            "name": "Retrieval"
+          },
+          {
+            "id": "478014ee",
+            "name": "UI"
+          },
+          {
+            "id": "be18dc10",
+            "name": "Operations"
+          },
+          {
+            "id": "10c6f8f0",
+            "name": "Legacy"
+          },
+          {
+            "id": "cc4d6e30",
+            "name": "Sources"
+          },
+          {
+            "id": "bd12b743",
+            "name": "Entities"
+          },
+          {
+            "id": "53d9a54c",
+            "name": "Evaluation"
+          },
+          {
+            "id": "68dc2203",
+            "name": "Persistence / Retrieval"
+          }
+        ]
+      },
+      {
+        "id": "PVTSSF_lAHOC92AuM4BneNAzhmVStM",
+        "name": "Acceptance",
+        "dataType": "SINGLE_SELECT",
+        "options": [
+          {
+            "id": "04f9d076",
+            "name": "Technical delivery only"
+          },
+          {
+            "id": "4fddfbc7",
+            "name": "Real acceptance pending"
+          },
+          {
+            "id": "6400b873",
+            "name": "Production acceptance pending"
+          },
+          {
+            "id": "3a3d3588",
+            "name": "Requires decision"
+          },
+          {
+            "id": "37c2f5b9",
+            "name": "Planned"
+          }
+        ]
+      }
+    ],
+    "views": [
+      {
+        "id": "PVTV_lAHOC92AuM4BneNAzgMG0pk",
+        "name": "Backlog",
+        "number": 1,
+        "layout": "BOARD_LAYOUT",
+        "filter": "-status:\"In progress\",\"In review\",Done,Ready",
+        "fields": {
+          "pageInfo": {
+            "hasNextPage": false
+          },
+          "nodes": [
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu0",
+              "name": "Title"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu4",
+              "name": "Assignees"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+              "name": "Status"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvE",
+              "name": "Linked pull requests"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvc",
+              "name": "Sub-issues progress"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXA",
+              "name": "Priority"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXE",
+              "name": "Size"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCrXI",
+              "name": "Estimate"
+            }
+          ]
+        },
+        "groupByFields": {
+          "nodes": []
+        },
+        "verticalGroupByFields": {
+          "nodes": [
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+              "name": "Status"
+            }
+          ]
+        }
+      },
+      {
+        "id": "PVTV_lAHOC92AuM4BneNAzgMG0tU",
+        "name": "Priority board",
+        "number": 2,
+        "layout": "BOARD_LAYOUT",
+        "filter": "status:Backlog,Ready",
+        "fields": {
+          "pageInfo": {
+            "hasNextPage": false
+          },
+          "nodes": [
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu0",
+              "name": "Title"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu4",
+              "name": "Assignees"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+              "name": "Status"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvE",
+              "name": "Linked pull requests"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvc",
+              "name": "Sub-issues progress"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXE",
+              "name": "Size"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCrXI",
+              "name": "Estimate"
+            }
+          ]
+        },
+        "groupByFields": {
+          "nodes": [
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXA",
+              "name": "Priority"
+            }
+          ]
+        },
+        "verticalGroupByFields": {
+          "nodes": [
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+              "name": "Status"
+            }
+          ]
+        }
+      },
+      {
+        "id": "PVTV_lAHOC92AuM4BneNAzgMG0tY",
+        "name": "Team items",
+        "number": 3,
+        "layout": "TABLE_LAYOUT",
+        "filter": null,
+        "fields": {
+          "pageInfo": {
+            "hasNextPage": false
+          },
+          "nodes": [
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu0",
+              "name": "Title"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+              "name": "Status"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvE",
+              "name": "Linked pull requests"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvc",
+              "name": "Sub-issues progress"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXA",
+              "name": "Priority"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXE",
+              "name": "Size"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCrXI",
+              "name": "Estimate"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCrXM",
+              "name": "Start date"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCrXQ",
+              "name": "Target date"
+            }
+          ]
+        },
+        "groupByFields": {
+          "nodes": [
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+              "name": "Status"
+            }
+          ]
+        },
+        "verticalGroupByFields": {
+          "nodes": []
+        }
+      },
+      {
+        "id": "PVTV_lAHOC92AuM4BneNAzgMG0tc",
+        "name": "Roadmap",
+        "number": 4,
+        "layout": "ROADMAP_LAYOUT",
+        "filter": null,
+        "fields": {
+          "pageInfo": {
+            "hasNextPage": false
+          },
+          "nodes": [
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu0",
+              "name": "Title"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu4",
+              "name": "Assignees"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+              "name": "Status"
+            }
+          ]
+        },
+        "groupByFields": {
+          "nodes": []
+        },
+        "verticalGroupByFields": {
+          "nodes": []
+        }
+      },
+      {
+        "id": "PVTV_lAHOC92AuM4BneNAzgMG0tg",
+        "name": "My items",
+        "number": 5,
+        "layout": "TABLE_LAYOUT",
+        "filter": "assignee:@me",
+        "fields": {
+          "pageInfo": {
+            "hasNextPage": false
+          },
+          "nodes": [
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu0",
+              "name": "Title"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvE",
+              "name": "Linked pull requests"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvc",
+              "name": "Sub-issues progress"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXA",
+              "name": "Priority"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXE",
+              "name": "Size"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCrXI",
+              "name": "Estimate"
+            }
+          ]
+        },
+        "groupByFields": {
+          "nodes": []
+        },
+        "verticalGroupByFields": {
+          "nodes": []
+        }
+      },
+      {
+        "id": "PVTV_lAHOC92AuM4BneNAzgMI4GA",
+        "name": "Active Work",
+        "number": 6,
+        "layout": "TABLE_LAYOUT",
+        "filter": "status:\"In progress\",\"In review\"",
+        "fields": {
+          "pageInfo": {
+            "hasNextPage": false
+          },
+          "nodes": [
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu0",
+              "name": "Title"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu4",
+              "name": "Assignees"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+              "name": "Status"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvI",
+              "name": "Milestone"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvM",
+              "name": "Repository"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvY",
+              "name": "Parent issue"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXA",
+              "name": "Priority"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmVSr4",
+              "name": "Workstream"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmVStM",
+              "name": "Acceptance"
+            }
+          ]
+        },
+        "groupByFields": {
+          "nodes": []
+        },
+        "verticalGroupByFields": {
+          "nodes": []
+        }
+      },
+      {
+        "id": "PVTV_lAHOC92AuM4BneNAzgMI4Mg",
+        "name": "Blocked / Requires Decision",
+        "number": 7,
+        "layout": "TABLE_LAYOUT",
+        "filter": "acceptance:\"Requires decision\",\"Real acceptance pending\",\"Production acceptance pending\"",
+        "fields": {
+          "pageInfo": {
+            "hasNextPage": false
+          },
+          "nodes": [
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu0",
+              "name": "Title"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu4",
+              "name": "Assignees"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+              "name": "Status"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvI",
+              "name": "Milestone"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvM",
+              "name": "Repository"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvY",
+              "name": "Parent issue"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXA",
+              "name": "Priority"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmVSr4",
+              "name": "Workstream"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmVStM",
+              "name": "Acceptance"
+            }
+          ]
+        },
+        "groupByFields": {
+          "nodes": []
+        },
+        "verticalGroupByFields": {
+          "nodes": []
+        }
+      },
+      {
+        "id": "PVTV_lAHOC92AuM4BneNAzgMI4M4",
+        "name": "Technical Delivery / Real Acceptance Pending",
+        "number": 8,
+        "layout": "TABLE_LAYOUT",
+        "filter": "acceptance:\"Technical delivery only\",\"Real acceptance pending\",\"Production acceptance pending\"",
+        "fields": {
+          "pageInfo": {
+            "hasNextPage": false
+          },
+          "nodes": [
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu0",
+              "name": "Title"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqu4",
+              "name": "Assignees"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+              "name": "Status"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvI",
+              "name": "Milestone"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvM",
+              "name": "Repository"
+            },
+            {
+              "id": "PVTF_lAHOC92AuM4BneNAzhmCqvY",
+              "name": "Parent issue"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmCrXA",
+              "name": "Priority"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmVSr4",
+              "name": "Workstream"
+            },
+            {
+              "id": "PVTSSF_lAHOC92AuM4BneNAzhmVStM",
+              "name": "Acceptance"
+            }
+          ]
+        },
+        "groupByFields": {
+          "nodes": []
+        },
+        "verticalGroupByFields": {
+          "nodes": []
+        }
+      }
+    ],
+    "filter_verification": [
+      {
+        "view_number": 2,
+        "filter": "status:Backlog,Ready",
+        "verified_count": 33,
+        "verification": "actual_API_filtered_items_match_independent_expected_set"
+      },
+      {
+        "view_number": 6,
+        "filter": "status:\"In progress\",\"In review\"",
+        "verified_count": 0,
+        "verification": "actual_API_filtered_items_match_independent_expected_set"
+      },
+      {
+        "view_number": 7,
+        "filter": "acceptance:\"Requires decision\",\"Real acceptance pending\",\"Production acceptance pending\"",
+        "verified_count": 17,
+        "verification": "actual_API_filtered_items_match_independent_expected_set"
+      },
+      {
+        "view_number": 8,
+        "filter": "acceptance:\"Technical delivery only\",\"Real acceptance pending\",\"Production acceptance pending\"",
+        "verified_count": 23,
+        "verification": "actual_API_filtered_items_match_independent_expected_set"
+      }
+    ],
+    "workflows": [
+      {
+        "id": "PWF_lAHOC92AuM4BneNAzgdlo7k",
+        "name": "Auto-add sub-issues to project",
+        "enabled": true
+      },
+      {
+        "id": "PWF_lAHOC92AuM4BneNAzgdlo70",
+        "name": "Auto-add to project",
+        "enabled": true
+      },
+      {
+        "id": "PWF_lAHOC92AuM4BneNAzgdlo7c",
+        "name": "Auto-close issue",
+        "enabled": false
+      },
+      {
+        "id": "PWF_lAHOC92AuM4BneNAzgdlo7s",
+        "name": "Item added to project",
+        "enabled": true
+      },
+      {
+        "id": "PWF_lAHOC92AuM4BneNAzgdlo7U",
+        "name": "Item closed",
+        "enabled": true
+      },
+      {
+        "id": "PWF_lAHOC92AuM4BneNAzgdlo7o",
+        "name": "Pull request linked to issue",
+        "enabled": true
+      },
+      {
+        "id": "PWF_lAHOC92AuM4BneNAzgdlo7Y",
+        "name": "Pull request merged",
+        "enabled": true
+      }
+    ],
+    "operator_workflow_confirmation": {
+      "source": "explicit latest operator statement: PM-03 abschließende Betreiberangaben",
+      "auto_add_selected_repositories": [
+        "rf-data/Personal_Assistant"
+      ],
+      "auto_add_not_selected_repositories": [
+        "rf-data/personal-assistant-ui"
+      ],
+      "auto_add_filter": "is:issue,pr is:open",
+      "item_added_target_status": "Backlog",
+      "auto_close_trigger_status": "Done",
+      "auto_close_deactivation_explicitly_confirmed": false,
+      "auto_close_api_observed_enabled": false,
+      "execution_gate": "assume active until explicit operator confirmation; no potentially issue-closing status mutations",
+      "permission_scope_unchanged": true,
+      "auto_add_second_rule_plan_limit_confirmed": true,
+      "UI_intake_mode": "manual_gh_project_item_add",
+      "second_auto_add_rule_assumed": false
+    },
+    "configuration_observation_scope": "PM-04 current configuration; original operational counts retain their explicitly historical scope"
+  },
+  "mapping": [
+    {
+      "plan_id": "C23",
+      "source_priority": "P1",
+      "source_workstream": "Persistence",
+      "source_status": "Backlog",
+      "source_delivery_state": "integrated_pending_acceptance",
+      "target_milestone": "C23",
+      "parent_plan_id": null,
+      "depends_on": [],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6FvA",
+      "current_fields": {
+        "Milestone": "C23",
+        "Title": "[C23] Parsed Content Persistence",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Persistence",
+        "Acceptance": "Real acceptance pending"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C24",
+      "source_priority": "P1",
+      "source_workstream": "Retrieval",
+      "source_status": "Backlog",
+      "source_delivery_state": "integrated_pending_acceptance",
+      "target_milestone": "C24",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/99",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6IH8",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "[C24] Indexing & Retrieval",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Retrieval",
+        "Acceptance": "Real acceptance pending"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C25",
+      "source_priority": "P1",
+      "source_workstream": "UI",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C25",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23",
+        "C24"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/9",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6IlE",
+      "current_fields": {
+        "Milestone": "C25",
+        "Title": "[C25] Search & Source UI",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "UI",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C24",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/99",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C26",
+      "source_priority": "P1",
+      "source_workstream": "Operations",
+      "source_status": "Backlog",
+      "source_delivery_state": "blocked",
+      "target_milestone": "C26",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23",
+        "C24",
+        "C25"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6KIM",
+      "current_fields": {
+        "Milestone": "C26",
+        "Title": "[C26] Hetzner Production Release",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Operations",
+        "Acceptance": "Production acceptance pending"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C24",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/99",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C25",
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/9",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C27",
+      "source_priority": "P2",
+      "source_workstream": "Legacy",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C27",
+      "parent_plan_id": null,
+      "depends_on": [],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/101",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6KaI",
+      "current_fields": {
+        "Milestone": "C27",
+        "Title": "[C27] Legacy Code Review",
+        "Status": "Backlog",
+        "Priority": "P2",
+        "Workstream": "Legacy",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C28",
+      "source_priority": "P2",
+      "source_workstream": "Sources",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C28",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/102",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Ksk",
+      "current_fields": {
+        "Milestone": "C28",
+        "Title": "[C28] Source Registry & Additional Sources",
+        "Status": "Backlog",
+        "Priority": "P2",
+        "Workstream": "Sources",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C29",
+      "source_priority": "P2",
+      "source_workstream": "Entities",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C29",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23",
+        "C24"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/103",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6LtY",
+      "current_fields": {
+        "Milestone": "C29",
+        "Title": "[C29] Entity Recognition & Linking",
+        "Status": "Backlog",
+        "Priority": "P2",
+        "Workstream": "Entities",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C24",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/99",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C30",
+      "source_priority": "P2",
+      "source_workstream": "Entities",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C30",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C27",
+        "C29"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/104",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6MD8",
+      "current_fields": {
+        "Milestone": "C30",
+        "Title": "[C30] Wikimedia Entity Enrichment",
+        "Status": "Backlog",
+        "Priority": "P2",
+        "Workstream": "Entities",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C27",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/101",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C29",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/103",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C31",
+      "source_priority": "P2",
+      "source_workstream": "Sources",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C31",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23",
+        "C27",
+        "C28"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/105",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6MX4",
+      "current_fields": {
+        "Milestone": "C31",
+        "Title": "[C31] YouTube Discovery & Review",
+        "Status": "Backlog",
+        "Priority": "P2",
+        "Workstream": "Sources",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C27",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/101",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C28",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/102",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C32",
+      "source_priority": "P2",
+      "source_workstream": "Sources",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C32",
+      "parent_plan_id": null,
+      "depends_on": [
+        "C23",
+        "C27",
+        "C28"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/106",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Mqc",
+      "current_fields": {
+        "Milestone": "C32",
+        "Title": "[C32] Medium, Real Python und autorisierte Fachnewsletter prüfen",
+        "Status": "Backlog",
+        "Priority": "P2",
+        "Workstream": "Sources",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C27",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/101",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C28",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/102",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C23-01",
+      "source_priority": "P1",
+      "source_workstream": "Persistence",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C23",
+      "parent_plan_id": "C23",
+      "depends_on": [],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBfUpQ",
+      "current_fields": {
+        "Milestone": "C23",
+        "Title": "C23-01: Parsed Content Persistence – Architektur und ADR",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Persistence",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C23-02",
+      "source_priority": "P1",
+      "source_workstream": "Persistence",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C23",
+      "parent_plan_id": "C23",
+      "depends_on": [
+        "C23-01"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBfz4M",
+      "current_fields": {
+        "Milestone": "C23",
+        "Title": "C23-02A: ContentStore Core & Persistence Foundation",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Persistence",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-01",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C23-03",
+      "source_priority": "P1",
+      "source_workstream": "Persistence",
+      "source_status": "Backlog",
+      "source_delivery_state": "blocked",
+      "target_milestone": "C23",
+      "parent_plan_id": "C23",
+      "depends_on": [
+        "C23-02"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBcq_k",
+      "current_fields": {
+        "Title": "C21-Q: guarded Qdrant deployment preparation and transcript pilot inventory",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Persistence / Retrieval",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-02",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C23-04",
+      "source_priority": "P1",
+      "source_workstream": "Persistence",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C23",
+      "parent_plan_id": "C23",
+      "depends_on": [
+        "C23-02"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBlTqk",
+      "current_fields": {
+        "Milestone": "C23",
+        "Title": "C23-04: Authorized Content Read API",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Persistence",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-02",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C23-05",
+      "source_priority": "P1",
+      "source_workstream": "Sources",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C23",
+      "parent_plan_id": "C23",
+      "depends_on": [],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/81",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBlcjE",
+      "current_fields": {
+        "Milestone": "C23",
+        "Title": "C23-05: Official TXT transcripts and explicit unknown-time contract",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Sources",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C23-06",
+      "source_priority": "P1",
+      "source_workstream": "Evaluation",
+      "source_status": "Backlog",
+      "source_delivery_state": "blocked",
+      "target_milestone": "C23",
+      "parent_plan_id": "C23",
+      "depends_on": [
+        "C23-01"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/107",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Nhk",
+      "current_fields": {
+        "Milestone": "C23",
+        "Title": "[C23-06] Berechtigten Realmaterialkorpus und unabhängige Goldreferenzen bereitstellen",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Evaluation",
+        "Acceptance": "Real acceptance pending"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-01",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+          "mode": "issue_body_link_target_is_PR"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C24-01",
+      "source_priority": "P1",
+      "source_workstream": "Retrieval",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C23-01"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBokJo",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "C24-01: Define ContentStore indexing and retrieval architecture",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Retrieval",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-01",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/99",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C24-02",
+      "source_priority": "P1",
+      "source_workstream": "Retrieval",
+      "source_status": "Backlog",
+      "source_delivery_state": "integrated_pending_acceptance",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C23-02",
+        "C23-03",
+        "C24-01"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/84",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBo6ZU",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "C24-02: Project authorized ContentStore versions into deterministic index records",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Retrieval",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-02",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "mode": "existing_PR_source_plan_relation"
+        },
+        {
+          "plan_id": "C23-03",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+          "mode": "existing_PR_source_plan_relation"
+        },
+        {
+          "plan_id": "C24-01",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/99",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C24-03",
+      "source_priority": "P1",
+      "source_workstream": "Retrieval",
+      "source_status": "Backlog",
+      "source_delivery_state": "integrated_pending_acceptance",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C23-04",
+        "C24-02"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBpM4I",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "C24-03: SQLite FTS5 index and authorized lexical retrieval",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Retrieval",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-04",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+          "mode": "existing_PR_source_plan_relation"
+        },
+        {
+          "plan_id": "C24-02",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/84",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/99",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C24-04",
+      "source_priority": "P2",
+      "source_workstream": "Retrieval",
+      "source_status": "Backlog",
+      "source_delivery_state": "optional",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C23-03",
+        "C24-01"
+      ],
+      "optional": true,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/86",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBppII",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "C24-04: ContentStore vector adapter and gated semantic retrieval",
+        "Status": "Done",
+        "Priority": "P2",
+        "Workstream": "Retrieval",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-03",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+          "mode": "existing_PR_source_plan_relation"
+        },
+        {
+          "plan_id": "C24-01",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/99",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C24-05",
+      "source_priority": "P1",
+      "source_workstream": "Evaluation",
+      "source_status": "Backlog",
+      "source_delivery_state": "blocked",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C23-06",
+        "C24-03"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/108",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Nzw",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "[C24-05] Reale Retrievalqualität und Quellenrückbindung bewerten",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Evaluation",
+        "Acceptance": "Real acceptance pending"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-06",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/107",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C24-03",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+          "mode": "issue_body_link_target_is_PR"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/99",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C25-01",
+      "source_priority": "P1",
+      "source_workstream": "UI",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C25",
+      "parent_plan_id": "C25",
+      "depends_on": [
+        "C23-04",
+        "C24-03-B"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/10",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6OKE",
+      "current_fields": {
+        "Milestone": "C25",
+        "Title": "[C25-01] Kurs-/Quellenauswahl und Suchfilter integrieren",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "UI",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-04",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+          "mode": "issue_body_link_target_is_PR"
+        },
+        {
+          "plan_id": "C24-03-B",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/114",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/9",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C25-02",
+      "source_priority": "P1",
+      "source_workstream": "UI",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C25",
+      "parent_plan_id": "C25",
+      "depends_on": [
+        "C25-01"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/11",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6OhU",
+      "current_fields": {
+        "Milestone": "C25",
+        "Title": "[C25-02] Parsed Content mit Original- und Fundstellenansicht anzeigen",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "UI",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C25-01",
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/10",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/9",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C25-03",
+      "source_priority": "P1",
+      "source_workstream": "UI",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C25",
+      "parent_plan_id": "C25",
+      "depends_on": [
+        "C25-01",
+        "C24-02-C"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/12",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6PRE",
+      "current_fields": {
+        "Milestone": "C25",
+        "Title": "[C25-03] Job- und Indexstatus für Suche sichtbar machen",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "UI",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C25-01",
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/10",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C24-02-C",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/115",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/9",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C25-04",
+      "source_priority": "P1",
+      "source_workstream": "Evaluation",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C25",
+      "parent_plan_id": "C25",
+      "depends_on": [
+        "C25-02",
+        "C25-03"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/13",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6PpM",
+      "current_fields": {
+        "Milestone": "C25",
+        "Title": "[C25-04] Browserabnahme der Source-/Search-Nutzung dokumentieren",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Evaluation",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C25-02",
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/11",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C25-03",
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/12",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/9",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C26-01",
+      "source_priority": "P0",
+      "source_workstream": "Operations",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C26",
+      "parent_plan_id": "C26",
+      "depends_on": [],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/14",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6P9c",
+      "current_fields": {
+        "Milestone": "C26",
+        "Title": "[C26-01] Gepinntes Authlib und UI-Startschutz abnehmen",
+        "Status": "Backlog",
+        "Priority": "P0",
+        "Workstream": "Operations",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C26-02",
+      "source_priority": "P0",
+      "source_workstream": "Operations",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C26",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C26-01"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/109",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6QSE",
+      "current_fields": {
+        "Milestone": "C26",
+        "Title": "[C26-02] C22-Images und Container-Prozessgrenzen isoliert prüfen",
+        "Status": "Backlog",
+        "Priority": "P0",
+        "Workstream": "Operations",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C26-01",
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/14",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C26-03",
+      "source_priority": "P0",
+      "source_workstream": "Operations",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C26",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C26-01",
+        "C26-02"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/110",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Q9c",
+      "current_fields": {
+        "Milestone": "C26",
+        "Title": "[C26-03] TLS, OIDC, individuelle Rollen und Browserzugriff abnehmen",
+        "Status": "Backlog",
+        "Priority": "P0",
+        "Workstream": "Operations",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C26-01",
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/14",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C26-02",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/109",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C26-04",
+      "source_priority": "P0",
+      "source_workstream": "Operations",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C26",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C26-02",
+        "C23-02"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/111",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6RWM",
+      "current_fields": {
+        "Milestone": "C26",
+        "Title": "[C26-04] Zielstorage und konsistenten Restore auf isoliertem Ziel prüfen",
+        "Status": "Backlog",
+        "Priority": "P0",
+        "Workstream": "Operations",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C26-02",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/109",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C23-02",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "mode": "issue_body_link_target_is_PR"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C26-05",
+      "source_priority": "P0",
+      "source_workstream": "Operations",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C26",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C26-02"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/112",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Rq4",
+      "current_fields": {
+        "Milestone": "C26",
+        "Title": "[C26-05] Produktionsmonitoring und echte Alarmzustellung prüfen",
+        "Status": "Backlog",
+        "Priority": "P0",
+        "Workstream": "Operations",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C26-02",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/109",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C26-06",
+      "source_priority": "P1",
+      "source_workstream": "Evaluation",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C26",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C25-04",
+        "C24-05",
+        "C26-03",
+        "C26-04",
+        "C26-05"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/15",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6R_Y",
+      "current_fields": {
+        "Milestone": "C26",
+        "Title": "[C26-06] CS50 über die freigegebene UI Ende-zu-Ende abnehmen",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Evaluation",
+        "Acceptance": "Production acceptance pending"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C25-04",
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/13",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C24-05",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/108",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C26-03",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/110",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C26-04",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/111",
+          "mode": "native_verified"
+        },
+        {
+          "plan_id": "C26-05",
+          "url": "https://github.com/rf-data/Personal_Assistant/issues/112",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C26-07",
+      "source_priority": "P0",
+      "source_workstream": "Operations",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C26",
+      "parent_plan_id": "C26",
+      "depends_on": [
+        "C26-06"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/113",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6SbU",
+      "current_fields": {
+        "Milestone": "C26",
+        "Title": "[C26-07] Manuelle Hetzner-Go-live-Entscheidung und Betriebsübergabe",
+        "Status": "Backlog",
+        "Priority": "P0",
+        "Workstream": "Operations",
+        "Acceptance": "Production acceptance pending"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C26-06",
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/15",
+          "mode": "native_verified"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "C23-02A",
+      "source_priority": "P1",
+      "source_workstream": "Persistence",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C23",
+      "parent_plan_id": "C23-02",
+      "depends_on": [
+        "C23-01"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBfz4M",
+      "current_fields": {
+        "Milestone": "C23",
+        "Title": "C23-02A: ContentStore Core & Persistence Foundation",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Persistence",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-01",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C23-02B",
+      "source_priority": "P1",
+      "source_workstream": "Persistence",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C23",
+      "parent_plan_id": "C23-02",
+      "depends_on": [
+        "C23-02A"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/77",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBgBh4",
+      "current_fields": {
+        "Milestone": "C23",
+        "Title": "C23-02B: Verified CS50 Material & SRT ContentStore Adapters",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Persistence",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-02A",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C23-02C",
+      "source_priority": "P1",
+      "source_workstream": "Persistence",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C23",
+      "parent_plan_id": "C23-02",
+      "depends_on": [
+        "C23-02A"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/78",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBgZnY",
+      "current_fields": {
+        "Milestone": "C23",
+        "Title": "C23-02C: Explicit ContentStore Recovery, Integrity & Backup/Restore",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Persistence",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-02A",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/76",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C24-05-A",
+      "source_priority": "P1",
+      "source_workstream": "Evaluation",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24-05",
+      "depends_on": [
+        "C24-01",
+        "C23-04"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/87",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBp4po",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "C24-05-A: Retrieval evaluation framework and independent gold contracts",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Evaluation",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C24-01",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+          "mode": "existing_PR_source_plan_relation"
+        },
+        {
+          "plan_id": "C23-04",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/108",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C24-05-B1",
+      "source_priority": "P1",
+      "source_workstream": "Evaluation",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24-05",
+      "depends_on": [
+        "C24-05-A",
+        "C23-04"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/90",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBqsMA",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "C24-05-B1: Human review persistence, authorization and API",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Evaluation",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C24-05-A",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/87",
+          "mode": "existing_PR_source_plan_relation"
+        },
+        {
+          "plan_id": "C23-04",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/108",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C24-05-B2",
+      "source_priority": "P1",
+      "source_workstream": "UI",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24-05",
+      "depends_on": [
+        "C24-05-B1"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6CUU",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "C24-05-B2: Human review UI and evaluation dashboard",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "UI",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C24-05-B1",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/90",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/108",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C24-05-C2",
+      "source_priority": "P1",
+      "source_workstream": "Evaluation",
+      "source_status": "Done",
+      "source_delivery_state": "technically_implemented",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24-05",
+      "depends_on": [
+        "C24-05-A",
+        "C24-05-B1",
+        "C24-05-B2"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/91",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBxQE8",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "C24-05-C2: Authorized real-corpus evaluation pilot",
+        "Status": "Done",
+        "Priority": "P1",
+        "Workstream": "Evaluation",
+        "Acceptance": "Technical delivery only"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C24-05-A",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/87",
+          "mode": "existing_PR_source_plan_relation"
+        },
+        {
+          "plan_id": "C24-05-B1",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/90",
+          "mode": "existing_PR_source_plan_relation"
+        },
+        {
+          "plan_id": "C24-05-B2",
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/7",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/108",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C24-06-A",
+      "source_priority": "P1",
+      "source_workstream": "Evaluation",
+      "source_status": "In Progress",
+      "source_delivery_state": "in_progress",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24",
+      "depends_on": [
+        "C24-05-B2",
+        "C24-05-C2"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": null,
+      "project_item_id": null,
+      "current_fields": null,
+      "verification": "pending_real_target",
+      "dependencies": [],
+      "parent_representation": null
+    },
+    {
+      "plan_id": "C24-03-B",
+      "source_priority": "P1",
+      "source_workstream": "Retrieval",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24-03",
+      "depends_on": [
+        "C23-04",
+        "C24-01"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/114",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6S0M",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "[C24-03-B] Autorisierte Search-HTTP-Capability und DTOs",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Retrieval",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-04",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+          "mode": "issue_body_link_target_is_PR"
+        },
+        {
+          "plan_id": "C24-01",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+          "mode": "issue_body_link_target_is_PR"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/85",
+        "mode": "issue_body_link_parent_is_PR"
+      }
+    },
+    {
+      "plan_id": "C24-02-C",
+      "source_priority": "P1",
+      "source_workstream": "Retrieval",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24-02",
+      "depends_on": [
+        "C23-04",
+        "C24-01"
+      ],
+      "optional": false,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/115",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6THI",
+      "current_fields": {
+        "Milestone": "C24",
+        "Title": "[C24-02-C] Explizite Indexjob- und Statusintegration",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Retrieval",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-04",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/80",
+          "mode": "issue_body_link_target_is_PR"
+        },
+        {
+          "plan_id": "C24-01",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+          "mode": "issue_body_link_target_is_PR"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/84",
+        "mode": "issue_body_link_parent_is_PR"
+      }
+    },
+    {
+      "plan_id": "C24-04-B",
+      "source_priority": "P2",
+      "source_workstream": "Retrieval",
+      "source_status": "Backlog",
+      "source_delivery_state": "optional",
+      "target_milestone": "C24",
+      "parent_plan_id": "C24-04",
+      "depends_on": [
+        "C23-03",
+        "C24-01"
+      ],
+      "optional": true,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+        "kind": "PullRequest"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhBcq_k",
+      "current_fields": {
+        "Title": "C21-Q: guarded Qdrant deployment preparation and transcript pilot inventory",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Workstream": "Persistence / Retrieval",
+        "Acceptance": "Requires decision"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [
+        {
+          "plan_id": "C23-03",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/72",
+          "mode": "same_canonical_alias_no_self_edge"
+        },
+        {
+          "plan_id": "C24-01",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/83",
+          "mode": "existing_PR_source_plan_relation"
+        }
+      ],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/86",
+        "mode": "existing_PR_source_plan_relation"
+      }
+    },
+    {
+      "plan_id": "C28-01",
+      "source_priority": "P2",
+      "source_workstream": "Sources",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": "C28",
+      "parent_plan_id": "C28",
+      "depends_on": [],
+      "optional": true,
+      "owner_mode": "unassigned",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/116",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6TXI",
+      "current_fields": {
+        "Milestone": "C28",
+        "Title": "[C28-01] arXiv Research Discovery & Relevance Review",
+        "Status": "Backlog",
+        "Priority": "P2",
+        "Workstream": "Sources",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [],
+      "parent_representation": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/102",
+        "mode": "native_verified"
+      }
+    },
+    {
+      "plan_id": "PERSONAL-PYREPO",
+      "source_priority": "P2",
+      "source_workstream": "Legacy",
+      "source_status": "Backlog",
+      "source_delivery_state": "planned",
+      "target_milestone": null,
+      "parent_plan_id": null,
+      "depends_on": [],
+      "optional": true,
+      "owner_mode": "human_only",
+      "canonical_target": {
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/117",
+        "kind": "Issue"
+      },
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6TpE",
+      "current_fields": {
+        "Title": "[PERSONAL-PYREPO] PyRepo Inspector – CS50P Final Project",
+        "Status": "Backlog",
+        "Priority": "P2",
+        "Workstream": "Legacy",
+        "Acceptance": "Planned"
+      },
+      "verification": "verified_live_readback",
+      "dependencies": [],
+      "parent_representation": null
+    }
+  ],
+  "new_issues": [
+    {
+      "plan_id": "C23-06",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/107",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWbFYA",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Nhk"
+    },
+    {
+      "plan_id": "C23",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/98",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWTc3w",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6FvA"
+    },
+    {
+      "plan_id": "C24-02-C",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/115",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWgaFg",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6THI"
+    },
+    {
+      "plan_id": "C24-03-B",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/114",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWgD_Q",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6S0M"
+    },
+    {
+      "plan_id": "C24-05",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/108",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWbXeg",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Nzw"
+    },
+    {
+      "plan_id": "C24",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/99",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWWIvA",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6IH8"
+    },
+    {
+      "plan_id": "C25-01",
+      "url": "https://github.com/rf-data/personal-assistant-ui/issues/10",
+      "repository": "rf-data/personal-assistant-ui",
+      "node_id": "I_kwDOVDqgF88AAAABYWbpjg",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6OKE"
+    },
+    {
+      "plan_id": "C25-02",
+      "url": "https://github.com/rf-data/personal-assistant-ui/issues/11",
+      "repository": "rf-data/personal-assistant-ui",
+      "node_id": "I_kwDOVDqgF88AAAABYWcArQ",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6OhU"
+    },
+    {
+      "plan_id": "C25-03",
+      "url": "https://github.com/rf-data/personal-assistant-ui/issues/12",
+      "repository": "rf-data/personal-assistant-ui",
+      "node_id": "I_kwDOVDqgF88AAAABYWctew",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6PRE"
+    },
+    {
+      "plan_id": "C25-04",
+      "url": "https://github.com/rf-data/personal-assistant-ui/issues/13",
+      "repository": "rf-data/personal-assistant-ui",
+      "node_id": "I_kwDOVDqgF88AAAABYWdGnA",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6PpM"
+    },
+    {
+      "plan_id": "C25",
+      "url": "https://github.com/rf-data/personal-assistant-ui/issues/9",
+      "repository": "rf-data/personal-assistant-ui",
+      "node_id": "I_kwDOVDqgF88AAAABYWWfOQ",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6IlE"
+    },
+    {
+      "plan_id": "C26-01",
+      "url": "https://github.com/rf-data/personal-assistant-ui/issues/14",
+      "repository": "rf-data/personal-assistant-ui",
+      "node_id": "I_kwDOVDqgF88AAAABYWdbXg",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6P9c"
+    },
+    {
+      "plan_id": "C26-02",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/109",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWdyhw",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6QSE"
+    },
+    {
+      "plan_id": "C26-03",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/110",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWeQpg",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Q9c"
+    },
+    {
+      "plan_id": "C26-04",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/111",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWenWA",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6RWM"
+    },
+    {
+      "plan_id": "C26-05",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/112",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWe70w",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Rq4"
+    },
+    {
+      "plan_id": "C26-06",
+      "url": "https://github.com/rf-data/personal-assistant-ui/issues/15",
+      "repository": "rf-data/personal-assistant-ui",
+      "node_id": "I_kwDOVDqgF88AAAABYWfPRQ",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6R_Y"
+    },
+    {
+      "plan_id": "C26-07",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/113",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWfwEA",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6SbU"
+    },
+    {
+      "plan_id": "C26",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWYC_A",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6KIM"
+    },
+    {
+      "plan_id": "C27",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/101",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWYUcQ",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6KaI"
+    },
+    {
+      "plan_id": "C28-01",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/116",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWgp6g",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6TXI"
+    },
+    {
+      "plan_id": "C28",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/102",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWYkrQ",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Ksk"
+    },
+    {
+      "plan_id": "C29",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/103",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWZgYw",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6LtY"
+    },
+    {
+      "plan_id": "C30",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/104",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWZzHg",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6MD8"
+    },
+    {
+      "plan_id": "C31",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/105",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWaDow",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6MX4"
+    },
+    {
+      "plan_id": "C32",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/106",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWaT0g",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6Mqc"
+    },
+    {
+      "plan_id": "PERSONAL-PYREPO",
+      "url": "https://github.com/rf-data/Personal_Assistant/issues/117",
+      "repository": "rf-data/Personal_Assistant",
+      "node_id": "I_kwDOSakf_s8AAAABYWg-Lg",
+      "project_item_id": "PVTI_lAHOC92AuM4BneNAzhB6TpE"
+    }
+  ],
+  "native_milestones": [
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "title": "C23",
+      "number": 1,
+      "url": "https://github.com/rf-data/Personal_Assistant/milestone/1",
+      "node_id": "MI_kwDOSakf_s4BHbSJ"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "title": "C24",
+      "number": 2,
+      "url": "https://github.com/rf-data/Personal_Assistant/milestone/2",
+      "node_id": "MI_kwDOSakf_s4BHbSN"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "title": "C26",
+      "number": 3,
+      "url": "https://github.com/rf-data/Personal_Assistant/milestone/3",
+      "node_id": "MI_kwDOSakf_s4BHbSO"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "title": "C27",
+      "number": 4,
+      "url": "https://github.com/rf-data/Personal_Assistant/milestone/4",
+      "node_id": "MI_kwDOSakf_s4BHbSR"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "title": "C28",
+      "number": 5,
+      "url": "https://github.com/rf-data/Personal_Assistant/milestone/5",
+      "node_id": "MI_kwDOSakf_s4BHbSS"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "title": "C29",
+      "number": 6,
+      "url": "https://github.com/rf-data/Personal_Assistant/milestone/6",
+      "node_id": "MI_kwDOSakf_s4BHbST"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "title": "C30",
+      "number": 7,
+      "url": "https://github.com/rf-data/Personal_Assistant/milestone/7",
+      "node_id": "MI_kwDOSakf_s4BHbSW"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "title": "C31",
+      "number": 8,
+      "url": "https://github.com/rf-data/Personal_Assistant/milestone/8",
+      "node_id": "MI_kwDOSakf_s4BHbSZ"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "title": "C32",
+      "number": 9,
+      "url": "https://github.com/rf-data/Personal_Assistant/milestone/9",
+      "node_id": "MI_kwDOSakf_s4BHbSa"
+    },
+    {
+      "repository": "rf-data/personal-assistant-ui",
+      "title": "C24",
+      "number": 1,
+      "url": "https://github.com/rf-data/personal-assistant-ui/milestone/1",
+      "node_id": "MI_kwDOVDqgF84BHbSb"
+    },
+    {
+      "repository": "rf-data/personal-assistant-ui",
+      "title": "C25",
+      "number": 2,
+      "url": "https://github.com/rf-data/personal-assistant-ui/milestone/2",
+      "node_id": "MI_kwDOVDqgF84BHbSf"
+    },
+    {
+      "repository": "rf-data/personal-assistant-ui",
+      "title": "C26",
+      "number": 3,
+      "url": "https://github.com/rf-data/personal-assistant-ui/milestone/3",
+      "node_id": "MI_kwDOVDqgF84BHbSj"
+    }
+  ],
+  "verified_action_receipt_counts": {
+    "create_field": 2,
+    "set_project_field": 131,
+    "create_view": 3,
+    "add_pr_item": 1,
+    "create_issue": 27,
+    "add_issue_item": 21,
+    "reuse_existing_issue_item": 2,
+    "reuse_auto_added_issue_item": 6,
+    "create_milestone": 12,
+    "assign_native_milestone": 42,
+    "milestone_assignment_excluded": 1,
+    "create_label": 2,
+    "label_human_only_issue": 1,
+    "update_issue_links": 27,
+    "add_blocked_by": 35,
+    "add_sub_issue": 14,
+    "update_existing_view": 1
+  },
+  "receipt_limits": "Receipts include resumed verification; final snapshots and exact deltas are authoritative. Transient API/readback failures were reread before recovery; no blind duplicate creates.",
+  "blockers": [
+    {
+      "key": "C24-06-A",
+      "reason": "pending_real_target: no published PR or suitable issue in either repository. Parent C24 and dependencies C24-05-B2 (UI PR #7), C24-05-C2 (Backend PR #91) documented; no duplicate task created."
+    },
+    {
+      "key": "real_and_production_acceptance",
+      "reason": "Technical PR delivery does not close D06/D07/C23-06/C24-05/C26 acceptance gates."
+    },
+    {
+      "key": "PR72_shared_alias",
+      "reason": "Priority P1 retained over P2, combined Workstream Persistence / Retrieval; no native milestone assigned because C23 and C24 alias targets differ."
+    },
+    {
+      "key": "durable_document_integration",
+      "reason": "PM-03 PRs #118 and #120 are merged and current default documents read. Only the PM-04 update awaits its ordinary PR/review integration; keep the current task-owned branch until verified merge."
+    },
+    {
+      "key": "auto_close_operator_confirmation",
+      "reason": "API reports enabled=false, but latest operator statement does not confirm deactivation. Treat as active for mutation safety; do not perform potentially issue-closing status changes."
+    }
+  ],
+  "protected_PRs_unchanged": [
+    72,
+    88,
+    89
+  ],
+  "runtime_changes": false,
+  "real_material_actions": false,
+  "local_git_mutations": false,
+  "post_publication": {
+    "items_after_operational_consolidation_before_document_PRs": 56,
+    "items_after_document_PR_auto_add": 58,
+    "PR_items": 31,
+    "issue_items": 27,
+    "status_counts": {
+      "Backlog": 35,
+      "Done": 23
+    },
+    "new_automatically_added_document_PR_items": [
+      {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/118",
+        "id": "PVTI_lAHOC92AuM4BneNAzhB6fxY",
+        "status": "Backlog"
+      },
+      {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/119",
+        "id": "PVTI_lAHOC92AuM4BneNAzhB6gd4",
+        "status": "Backlog"
+      }
+    ],
+    "verification": "full live readback, no pagination remaining; all prior 56 item fields unchanged",
+    "auto_close_enabled": false,
+    "document_PRs_merged": false,
+    "default_branch_document_integration": "pending_review",
+    "own_document_branch_cleanup": "retained_until_verified_merge"
+  },
+  "resolved_blockers": [
+    {
+      "key": "auto_add_repository_selection",
+      "reason": "Operator confirmed filter but not repository selection; per-create duplicate checks and readback used. No workflow configuration modified.",
+      "resolution": "Operator explicitly confirms Backend selected, UI not selected; configuration observation only, no workflow write."
+    },
+    {
+      "key": "ui_auto_add_configuration",
+      "reason": "UI repository is already linked and its eight current items are present. A second native auto-add rule must be saved in the GitHub UI without replacing Backend. Live public schema offers no create/update workflow mutation; quota is not verifiable from available account-plan metadata. Await operator-saved rule or documented plan-limit refusal.",
+      "resolution": "Operator confirms plan limit. Accepted manual CLI intake; all seven open UI issues already present once, no open UI PRs; no second native rule required or assumed."
+    },
+    {
+      "key": "unexpected_status_options",
+      "reason": "Priority/Workstream/Target milestone options unused by all items; other workflow target configurations not exposed. Retained pending operator audit.",
+      "resolution": "PM-04: operator UI audit excludes all seven workflow dependencies; three zero-use options removed with retained option IDs/colors/descriptions/order and all item values preserved."
+    },
+    {
+      "key": "roadmap_visible_columns",
+      "reason": "Roadmap #4 configuration update exited nonzero; readback proves no change. Add Milestone/Priority/Workstream/Acceptance columns manually if supported; do not invent dates.",
+      "resolution": "PM-04: visible_fields is not applicable to roadmap layout. Prior column-add advice corrected; existing views reused, no unsupported mutation retried."
+    }
+  ],
+  "workflow_confirmation_continuation": {
+    "snapshot_date": "2026-10-19",
+    "counts": {
+      "live_items": 58,
+      "backend_items": 50,
+      "ui_items": 8,
+      "PR_items": 31,
+      "issue_items": 27,
+      "initial_28_items_preserved": 28,
+      "mapped_plan_ids": 44,
+      "unpublished_protected_plan_ids": 1,
+      "new_issues_created_this_continuation": 0,
+      "new_items_added_this_continuation": 0,
+      "workflow_changes_this_continuation": 0,
+      "status_changes_this_continuation": 0,
+      "all_27_issues_open": true,
+      "statuses": {
+        "Backlog": 35,
+        "Done": 23
+      }
+    },
+    "operator_confirmation": {
+      "source": "explicit latest operator statement: PM-03 abschließende Betreiberangaben",
+      "auto_add_selected_repositories": [
+        "rf-data/Personal_Assistant"
+      ],
+      "auto_add_not_selected_repositories": [
+        "rf-data/personal-assistant-ui"
+      ],
+      "auto_add_filter": "is:issue,pr is:open",
+      "item_added_target_status": "Backlog",
+      "auto_close_trigger_status": "Done",
+      "auto_close_deactivation_explicitly_confirmed": false,
+      "auto_close_api_observed_enabled": false,
+      "execution_gate": "assume active until explicit operator confirmation; no potentially issue-closing status mutations",
+      "permission_scope_unchanged": true
+    },
+    "both_repositories_linked_API_verified": true,
+    "linked_repositories": [
+      "rf-data/Personal_Assistant",
+      "rf-data/personal-assistant-ui"
+    ],
+    "workflow_fields_available": [
+      "createdAt",
+      "enabled",
+      "fullDatabaseId",
+      "id",
+      "name",
+      "number",
+      "project",
+      "updatedAt"
+    ],
+    "workflow_mutations_available": [
+      "deleteProjectV2Workflow"
+    ],
+    "delete_workflow_called": false,
+    "public_workflow_write_contract_available": false,
+    "account_plan_probe": "plan_name=null; second-rule quota remains unverified",
+    "UI_auto_add_change": "not_executed_operator_confirmed_plan_limit_manual_fallback_accepted",
+    "existing_issue_duplicate_check": "complete paginated lists of both repositories; 27 expected standalone issues each exactly once; no missing canonical issue",
+    "initial_and_current_item_check": "initial 28 item IDs/status and all previous 58 item field mappings preserved; all 45 plan IDs verified or explicitly blocked",
+    "correction_to_prior_attribution": "Earlier wording attributed disabled Auto-close to the operator. Latest statement does not confirm that action; only the API enabled=false observation is verified. No agent workflow mutation occurred.",
+    "official_references": [
+      "https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/adding-items-automatically",
+      "https://docs.github.com/en/graphql/reference/projects"
+    ],
+    "documentation_PR": 118,
+    "default_branch_integration": "pending_review",
+    "temporary_branch_policy": "retain existing own branch until verified merge; no new branch or worktree",
+    "superseded_configuration_proposal": "manual_ui_intake"
+  },
+  "current_intake_policy": {
+    "source": "explicit operator reply confirming second-rule plan limit and manual gh project item-add",
+    "backend_auto_add": "existing native rule unchanged",
+    "backend_repository": "rf-data/Personal_Assistant",
+    "filter": "is:issue,pr is:open",
+    "UI_repository": "rf-data/personal-assistant-ui",
+    "UI_intake": "operator-triggered idempotent manual gh project item-add",
+    "second_auto_add_rule": "not_available_operator_confirmed_plan_limit",
+    "scheduler_or_replacement_automation": false,
+    "auto_close_change_confirmed": false,
+    "auto_close_execution_policy": "unchanged; conservatively assume active; no potentially closing status changes"
+  },
+  "manual_ui_intake": {
+    "snapshot_date": "2026-10-19",
+    "base_sha": "a4f405bfa7b7f1d04967fd6027587a68604ffadd",
+    "operator_policy": {
+      "source": "explicit operator reply confirming second-rule plan limit and manual gh project item-add",
+      "backend_auto_add": "existing native rule unchanged",
+      "backend_repository": "rf-data/Personal_Assistant",
+      "filter": "is:issue,pr is:open",
+      "UI_repository": "rf-data/personal-assistant-ui",
+      "UI_intake": "operator-triggered idempotent manual gh project item-add",
+      "second_auto_add_rule": "not_available_operator_confirmed_plan_limit",
+      "scheduler_or_replacement_automation": false,
+      "auto_close_change_confirmed": false,
+      "auto_close_execution_policy": "unchanged; conservatively assume active; no potentially closing status changes"
+    },
+    "verification": {
+      "schema_version": 1,
+      "scope": "one-off manual reconciliation for open UI issues and PRs, matching confirmed Auto-add filter",
+      "source": "explicit operator confirmation of plan limit and manual gh project item-add authorization",
+      "selected_open_UI_objects": 7,
+      "open_UI_issues": 7,
+      "open_UI_PRs": 0,
+      "all_UI_PRs_in_inventory": 8,
+      "all_UI_standalone_issues_in_inventory": 7,
+      "actions": [
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/10",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6OKE",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/11",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6OhU",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/12",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6PRE",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/13",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6PpM",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/14",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6P9c",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/15",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6R_Y",
+          "action": "reused_existing",
+          "archived": false
+        },
+        {
+          "url": "https://github.com/rf-data/personal-assistant-ui/issues/9",
+          "item_id": "PVTI_lAHOC92AuM4BneNAzhB6IlE",
+          "action": "reused_existing",
+          "archived": false
+        }
+      ],
+      "new_items": 0,
+      "reused_items": 7,
+      "project_items_before": 58,
+      "project_items_after": 58,
+      "existing_item_fields_unchanged": true,
+      "second_read_all_open_UI_objects_present_exactly_once": true,
+      "UI_source_states_text_unchanged": true,
+      "workflows_unchanged": true,
+      "status_mutations": 0,
+      "workflow_mutations": 0,
+      "new_issues_or_PRs_created": 0,
+      "second_auto_add_rule": "not_available_operator_confirmed_plan_limit",
+      "manual_process": "operator-triggered CLI reconciliation only; no scheduler, new workflow or credential",
+      "Auto_close_treated_as_active": true
+    },
+    "current_item_status_counts_before_followup_PR": {
+      "Backlog": 33,
+      "Done": 25
+    },
+    "earlier_documentation_PR": {
+      "number": 118,
+      "url": "https://github.com/rf-data/Personal_Assistant/pull/118",
+      "merged": true,
+      "merge_commit_sha": "a4f405bfa7b7f1d04967fd6027587a68604ffadd",
+      "documents_verified_from_actual_default": true
+    },
+    "historic_closed_UI_PRs": "Inventory includes eight UI PRs. None are open; existing merged UI PR #7 is retained. No blanket backfill of closed PRs under the confirmed open-only intake filter.",
+    "workflow_changes": 0,
+    "status_mutations": 0,
+    "new_product_or_auth_changes": false,
+    "documentation_followup": "two existing reports only; ordinary review required; no merge or cleanup",
+    "post_followup_PR_readback": {
+      "project_items_after_documentation_PR": 59,
+      "manual_UI_items_added": 0,
+      "manual_UI_items_reused": 7,
+      "open_UI_PRs": 0,
+      "automatic_backend_documentation_PR_items": 1,
+      "automatic_documentation_item": [
+        {
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/120",
+          "id": "PVTI_lAHOC92AuM4BneNAzhB60l0",
+          "status": "Backlog"
+        }
+      ],
+      "all_previous_item_fields_unchanged": true,
+      "all_27_issues_open": true,
+      "workflows_unchanged": true,
+      "status_mutations": 0,
+      "counts": {
+        "Backlog": 34,
+        "Done": 25
+      }
+    }
+  },
+  "pm04_governance": {
+    "schema_version": 1,
+    "snapshot_date": "2026-10-19",
+    "input_default_sha": "d5f622be5b5435b20099823be5c4c300cfcaad50",
+    "source_plan_sha256": "629b1c3471bc8654908bb99fbe5e1bc277edfb28272e1801bc8a8f065831580d",
+    "state": "safe_rest_points_completed_operator_actions_documented",
+    "pending_real_target": {
+      "state": "pending_real_target",
+      "parent": "C24",
+      "depends_on": [
+        {
+          "plan_id": "C24-05-B2",
+          "target": "https://github.com/rf-data/personal-assistant-ui/pull/7"
+        },
+        {
+          "plan_id": "C24-05-C2",
+          "target": "https://github.com/rf-data/Personal_Assistant/pull/91"
+        }
+      ],
+      "reason": "No published PR or suitable issue in complete inventories of either repository; active work not duplicated."
+    },
+    "status_cleanup": {
+      "field_id": "PVTSSF_lAHOC92AuM4BneNAzhmCqu8",
+      "removed_options": [
+        {
+          "id": "7d027519",
+          "name": "Priority",
+          "color": "GRAY",
+          "description": ""
+        },
+        {
+          "id": "5cb586ed",
+          "name": "Workstream",
+          "color": "GRAY",
+          "description": ""
+        },
+        {
+          "id": "6c235023",
+          "name": "Target milestone",
+          "color": "GRAY",
+          "description": ""
+        }
+      ],
+      "retained_options": [
+        {
+          "id": "f75ad846",
+          "name": "Backlog",
+          "color": "GREEN",
+          "description": "This item hasn't been started"
+        },
+        {
+          "id": "47fc9ee4",
+          "name": "In progress",
+          "color": "YELLOW",
+          "description": "This is actively being worked on"
+        },
+        {
+          "id": "61e4505c",
+          "name": "Ready",
+          "color": "BLUE",
+          "description": "This is ready to be picked up"
+        },
+        {
+          "id": "df73e18b",
+          "name": "In review",
+          "color": "PURPLE",
+          "description": "This item is in review"
+        },
+        {
+          "id": "98236657",
+          "name": "Done",
+          "color": "ORANGE",
+          "description": "This has been completed"
+        }
+      ],
+      "operator_UI_workflow_dependency_check": {
+        "source": "explicit operator question reply in PM-04",
+        "statement": "Nach UI-Prüfung: keine Verwendung",
+        "scope": "none of seven workflows uses Priority/Workstream/Target milestone as trigger, condition or target",
+        "Auto_close_deactivation_confirmed": false
+      },
+      "all_item_identities_fields_and_states_unchanged": true,
+      "item_count_checked": 60,
+      "other_fields_unchanged": true,
+      "views_unchanged": true,
+      "workflows_unchanged": true,
+      "issue_closures": 0,
+      "item_status_value_mutations": 0,
+      "configuration_mutations": 1,
+      "Auto_close_treated_as_active": true
+    },
+    "fields_and_views": {
+      "fields": 20,
+      "views": 8,
+      "existing_views_reused": 8,
+      "new_views": 0,
+      "Priority_options": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "Workstream_uses_separate_field": true,
+      "Roadmap": {
+        "number": 4,
+        "layout": "ROADMAP_LAYOUT",
+        "visible_fields_reported": [
+          "Title",
+          "Assignees",
+          "Status"
+        ],
+        "group_by": [],
+        "visible_field_mutation": "not_applicable_to_roadmap_layout",
+        "graphQL_update_group_or_sort_supported": false,
+        "dates_or_iterations": 0,
+        "native_milestone_due_dates": 0,
+        "new_view_required": false
+      },
+      "actual_filter_checks": [
+        {
+          "number": 2,
+          "name": "Priority board",
+          "actual_filter_matches": 34,
+          "set_verified": true
+        },
+        {
+          "number": 6,
+          "name": "Active Work",
+          "actual_filter_matches": 0,
+          "set_verified": true
+        },
+        {
+          "number": 7,
+          "name": "Blocked / Requires Decision",
+          "actual_filter_matches": 17,
+          "set_verified": true
+        },
+        {
+          "number": 8,
+          "name": "Technical Delivery / Real Acceptance Pending",
+          "actual_filter_matches": 23,
+          "set_verified": true
+        }
+      ],
+      "milestone_due_dates_or_project_dates_added": 0
+    },
+    "workflow_governance": {
+      "api_observed": [
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7k",
+          "name": "Auto-add sub-issues to project",
+          "enabled": true
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo70",
+          "name": "Auto-add to project",
+          "enabled": true
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7c",
+          "name": "Auto-close issue",
+          "enabled": false
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7s",
+          "name": "Item added to project",
+          "enabled": true
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7U",
+          "name": "Item closed",
+          "enabled": true
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7o",
+          "name": "Pull request linked to issue",
+          "enabled": true
+        },
+        {
+          "id": "PWF_lAHOC92AuM4BneNAzgdlo7Y",
+          "name": "Pull request merged",
+          "enabled": true
+        }
+      ],
+      "operator_confirmed_settings": {
+        "item_added": "Backlog",
+        "auto_close_trigger": "Done",
+        "auto_add_filter": "is:issue,pr is:open",
+        "native_auto_add_repository": "rf-data/Personal_Assistant",
+        "second_native_rule": "blocked_by_confirmed_plan_limit",
+        "UI_intake": "manual idempotent gh project item-add"
+      },
+      "bad_status_dependency_audit": {
+        "source": "explicit operator question reply in PM-04",
+        "statement": "Nach UI-Prüfung: keine Verwendung",
+        "scope": "none of seven workflows uses Priority/Workstream/Target milestone as trigger, condition or target",
+        "Auto_close_deactivation_confirmed": false
+      },
+      "Auto_close_deactivation_explicitly_confirmed": false,
+      "Auto_close_safety_policy": "assume active; no potentially issue-closing status mutations",
+      "workflow_configuration_mutations": 0,
+      "new_automation": false
+    },
+    "protected_acceptances": [
+      {
+        "plan_id": "C23-06",
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/107",
+        "status": "Backlog",
+        "acceptance": "Real acceptance pending"
+      },
+      {
+        "plan_id": "C24-05",
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/108",
+        "status": "Backlog",
+        "acceptance": "Real acceptance pending"
+      },
+      {
+        "plan_id": "C26",
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/100",
+        "status": "Backlog",
+        "acceptance": "Production acceptance pending"
+      },
+      {
+        "plan_id": "C26-06",
+        "url": "https://github.com/rf-data/personal-assistant-ui/issues/15",
+        "status": "Backlog",
+        "acceptance": "Production acceptance pending"
+      },
+      {
+        "plan_id": "C26-07",
+        "url": "https://github.com/rf-data/Personal_Assistant/issues/113",
+        "status": "Backlog",
+        "acceptance": "Production acceptance pending"
+      }
+    ],
+    "D06_D07": "remain subject to existing source-specific decisions; no release or migration authorization",
+    "native_relations_verified": {
+      "parents": 14,
+      "blocked_by": 35,
+      "changed": 0
+    },
+    "new_issues": 0,
+    "new_UI_items_required": 0,
+    "duplicate_items_or_issues": false,
+    "protected_PRs_not_modified": [
+      72,
+      88,
+      89
+    ],
+    "operator_actions": [
+      {
+        "action": "Roadmap #4: View > Group by > Milestone or Workstream if desired; use existing Date fields and markers only with actually approved real dates. Current groups/date values/due dates are empty. No invented schedule.",
+        "blocking_PM04_safe_work": false
+      },
+      {
+        "action": "C24-06-A: after actual PR/issue publication, inspect scope and attach existing canonical target; retain pending_real_target until then.",
+        "blocking_PM04_safe_work": false
+      },
+      {
+        "action": "Retain conservative Auto-close gate until explicit deactivation confirmation; ordinary maintenance never sets open acceptance tasks to Done.",
+        "blocking_PM04_safe_work": false
+      }
+    ],
+    "documentation": {
+      "updated_existing_files": [
+        "docs/planning/pm03_project_execution.md",
+        "docs/planning/pm03_reconciliation.v1.json"
+      ],
+      "small_new_report": "docs/planning/pm04_project_governance.md",
+      "default_branch_integration": "pending_regular_PR_review",
+      "own_branch_policy": "keep while unmerged; no historical cleanup",
+      "publication_base_sha": "e478520d259ad1342f5641828586c4cd2876114f",
+      "source_files_unchanged_on_publication_base": true
+    },
+    "references": [
+      "https://docs.github.com/en/rest/projects/views",
+      "https://docs.github.com/en/issues/planning-and-tracking-with-projects/customizing-views-in-your-project/customizing-the-roadmap-layout"
+    ],
+    "counts_at_initial_live_inventory": {
+      "items": 60,
+      "PR_items": 33,
+      "issue_items": 27,
+      "draft_items": 0,
+      "archived_items": 0,
+      "status": {
+        "Backlog": 34,
+        "Done": 26
+      },
+      "priority": {
+        "unset": 16,
+        "P1": 29,
+        "P2": 9,
+        "P0": 6
+      },
+      "fields": 20,
+      "views": 8,
+      "plan_ids": 45,
+      "represented_plan_ids": 44,
+      "unique_canonical_items": 42,
+      "native_parent_relations": 14,
+      "native_blocked_by_relations": 35,
+      "milestones": 12,
+      "milestone_assignments": 42,
+      "date_or_iteration_values": 0,
+      "milestone_due_dates": 0,
+      "open_UI_issues_already_present": 7,
+      "open_UI_PRs": 0
+    },
+    "before_publication_readback": {
+      "items": 60,
+      "status": {
+        "Backlog": 33,
+        "Done": 27
+      },
+      "open_issues": 27,
+      "external_change": {
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/121",
+        "from": "OPEN / Backlog",
+        "to": "MERGED / Done",
+        "performed_by_PM04": false
+      },
+      "protected_PRs_unchanged": true,
+      "relations_unchanged": true,
+      "workflow_metadata_unchanged": true
+    },
+    "post_publication": {
+      "PR": "https://github.com/rf-data/Personal_Assistant/pull/122",
+      "branch": "docs/pm04-project-governance",
+      "state": "open_review_pending",
+      "items": 61,
+      "PR_items": 34,
+      "issue_items": 27,
+      "status": {
+        "Backlog": 34,
+        "Done": 27
+      },
+      "auto_added_own_documentation_item_id": "PVTI_lAHOC92AuM4BneNAzhB7PS0",
+      "manual_item_adds": 0,
+      "plan_representation_unchanged": "44/45; C24-06-A pending_real_target",
+      "previous_60_items": "only independent merge #121 changed; status-cleanup immediate before/after equality remains proven",
+      "protected_PRs_unchanged": true,
+      "native_relations_unchanged": true,
+      "workflow_metadata_unchanged": true,
+      "primary_checkouts_edited": false,
+      "new_local_branches_or_worktrees": 0,
+      "own_remote_branch_retained_reason": "PR unmerged; normal review/default integration pending"
+    }
+  }
+}

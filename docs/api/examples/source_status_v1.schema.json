@@ -1,0 +1,163 @@
+{
+  "$defs": {
+    "VersionState": {
+      "additionalProperties": false,
+      "properties": {
+        "read_route": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Read Route"
+        },
+        "state": {
+          "enum": [
+            "verified",
+            "published",
+            "quarantined",
+            "tombstoned",
+            "preparing",
+            "prepared",
+            "committed",
+            "blocked",
+            "rejected"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "version_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Version Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version_id",
+        "state",
+        "read_route"
+      ],
+      "title": "VersionState",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "index_inputs_route": {
+      "const": "/v1/content/index/inputs",
+      "default": "/v1/content/index/inputs",
+      "title": "Index Inputs Route",
+      "type": "string"
+    },
+    "integrity": {
+      "const": "not_checked",
+      "default": "not_checked",
+      "title": "Integrity",
+      "type": "string"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/VersionState"
+      },
+      "maxItems": 50,
+      "title": "Items",
+      "type": "array"
+    },
+    "kind": {
+      "enum": [
+        "raw",
+        "parsed",
+        "runs"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "next_cursor": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Next Cursor"
+    },
+    "parsed_states": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Parsed States",
+      "type": "object"
+    },
+    "pending_runs": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Pending Runs"
+    },
+    "raw_states": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Raw States",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[^\\x00-\\x1f]+$",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_route": {
+      "title": "Source Route",
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "registered",
+        "raw_only",
+        "ready",
+        "processing",
+        "attention_required"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "versions_route": {
+      "title": "Versions Route",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_id",
+    "state",
+    "raw_states",
+    "parsed_states",
+    "pending_runs",
+    "kind",
+    "items",
+    "next_cursor",
+    "source_route",
+    "versions_route"
+  ],
+  "title": "SourceStatus",
+  "type": "object"
+}

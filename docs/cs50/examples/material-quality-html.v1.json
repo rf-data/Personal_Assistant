@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "validator_version": "cs50_material_quality_v1",
+  "status": "passed_with_warnings",
+  "inputs": {
+    "normalized": "/tmp/c10-quality-examples/html/3483691a2a84ba411d9bd990d31d1f1b4e26ae349c03e2a6be3334c1e8acb8f6/3a3066b89f5b891b7320a2a25a6b2c5cf00a1671f8ff0bc064e458faae33f82e/normalized.v1.json",
+    "receipt": "/tmp/c10-quality-examples/html/3483691a2a84ba411d9bd990d31d1f1b4e26ae349c03e2a6be3334c1e8acb8f6/receipt.v1.json",
+    "raw": "/tmp/c10-quality-examples/html/3483691a2a84ba411d9bd990d31d1f1b4e26ae349c03e2a6be3334c1e8acb8f6/raw/source",
+    "plan": "/tmp/c10-quality-examples/html-plan.json",
+    "workspace": "/tmp/c10-quality-examples/html"
+  },
+  "observed_sha256": {
+    "normalized": "90c8396d16ad482a4b1a586b2bffa39d9056c0a0be6be8bb79c0801c306898c2",
+    "receipt": "442d8e153408a3b4a770d0644756005a26dacb6c46772d6a5106b530ebcbf517",
+    "plan": "3ea8c6fc85d21014820ff1301f86fffbc009f1866f0aec659474bed5937d4cf6",
+    "raw": "6b903fb0f0985ba920ecfad744116118584d33e460214ec3d9d7879957c89781"
+  },
+  "document_id": "material_doc:3a3066b89f5b891b7320a2a25a6b2c5cf00a1671f8ff0bc064e458faae33f82e",
+  "material_id": "material:3483691a2a84ba411d9bd990d31d1f1b4e26ae349c03e2a6be3334c1e8acb8f6",
+  "resource_id": "resource:06bedee90683efd9b90b84649180ab511e46a8ca4b8c9075b0300c0b91ff1751",
+  "course_id": "cs50_python",
+  "section_keys": [
+    "0"
+  ],
+  "lecture_ids": [
+    "resource:9bc497fe08d6a5a5547fb493f3c924fb8b67b02d8839360fc1a6e67d0537acca"
+  ],
+  "findings": [
+    {
+      "code": "reference_projection",
+      "severity": "info",
+      "category": "technical",
+      "message": "Reference projection retained and excluded from text aggregation",
+      "input": "normalized",
+      "field": null,
+      "block_id": "material_block:e2d284063076ab7df04c250c699a0c84d49a9503451d59ea0026adb3aaf04ade",
+      "block_order": 0,
+      "location": {
+        "dom": "/html[1]/body[1]/main[1]/ul[1]",
+        "page": null,
+        "line_start": null,
+        "line_end": null,
+        "bbox": null
+      },
+      "image_id": null
+    },
+    {
+      "code": "reference_projection",
+      "severity": "info",
+      "category": "technical",
+      "message": "Reference projection retained and excluded from text aggregation",
+      "input": "normalized",
+      "field": null,
+      "block_id": "material_block:61246433cd3f80e7d453df5ce6428a790a8d68084c7b2c0228ad5923c8d2202e",
+      "block_order": 1,
+      "location": {
+        "dom": "/html[1]/body[1]/main[1]/ul[1]/li[1]",
+        "page": null,
+        "line_start": null,
+        "line_end": null,
+        "bbox": null
+      },
+      "image_id": null
+    },
+    {
+      "code": "reference_projection",
+      "severity": "info",
+      "category": "technical",
+      "message": "Reference projection retained and excluded from text aggregation",
+      "input": "normalized",
+      "field": null,
+      "block_id": "material_block:dec20f839a2e29d416f7e4ed4d1fab0f8d35ce117a1846c2e9ac67c5fea4a316",
+      "block_order": 2,
+      "location": {
+        "dom": "/html[1]/body[1]/main[1]/ul[1]/li[1]/a[1]",
+        "page": null,
+        "line_start": null,
+        "line_end": null,
+        "bbox": null
+      },
+      "image_id": null
+    },
+    {
+      "code": "reference_projection",
+      "severity": "info",
+      "category": "technical",
+      "message": "Reference projection retained and excluded from text aggregation",
+      "input": "normalized",
+      "field": null,
+      "block_id": "material_block:f5cec3e90e5cf1d43d6bf0803f2a3655e1e7b76ff6a0c3e4d315409992371147",
+      "block_order": 6,
+      "location": {
+        "dom": "/html[1]/body[1]/main[1]/ol[1]/li[1]/p[1]/a[1]",
+        "page": null,
+        "line_start": null,
+        "line_end": null,
+        "bbox": null
+      },
+      "image_id": null
+    },
+    {
+      "code": "image_reference_only",
+      "severity": "warning",
+      "category": "semantic_review",
+      "message": "No local image bytes; interpretation remains unverified",
+      "input": "image",
+      "field": null,
+      "block_id": null,
+      "block_order": null,
+      "location": {
+        "dom": "/html[1]/body[1]/main[1]/img[1]",
+        "page": null,
+        "line_start": null,
+        "line_end": null,
+        "bbox": null
+      },
+      "image_id": "image_ref:27c15f6095435d2f9526207563438fdba553bb92a679352db6ebbc3b27fef22e"
+    }
+  ]
+}

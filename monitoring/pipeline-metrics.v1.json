@@ -1,0 +1,141 @@
+{
+  "histogram_buckets_seconds": [
+    1,
+    5,
+    15,
+    60,
+    300,
+    900,
+    1800,
+    3600,
+    "+Inf"
+  ],
+  "labels": {
+    "error_class": [
+      "input",
+      "internal",
+      "other",
+      "provider",
+      "storage",
+      "timeout",
+      "validation"
+    ],
+    "outcome": [
+      "cancelled",
+      "failure",
+      "success"
+    ],
+    "process": [
+      "audio_transcription",
+      "course_discovery",
+      "cs50_offline_workflow",
+      "knowledge_consolidation",
+      "knowledge_extraction",
+      "material_download",
+      "material_parsing",
+      "material_planning",
+      "quality_evaluation",
+      "visual_analysis",
+      "visual_enrichment"
+    ],
+    "stage": [
+      "audio_transcription",
+      "course_discovery",
+      "cs50_offline_workflow",
+      "knowledge_consolidation",
+      "knowledge_extraction",
+      "material_download",
+      "material_parsing",
+      "material_planning",
+      "quality_evaluation",
+      "visual_analysis",
+      "visual_enrichment"
+    ],
+    "worker_pool": [
+      "cpu",
+      "default",
+      "io",
+      "llm"
+    ]
+  },
+  "max_samples_per_scrape": 2000,
+  "metrics": [
+    {
+      "help": "Live ready workers; omit if unknown.",
+      "labels": [
+        "worker_pool"
+      ],
+      "name": "personal_assistant_workers_available",
+      "type": "gauge"
+    },
+    {
+      "help": "Actual dispatch attempts started.",
+      "labels": [
+        "process",
+        "worker_pool"
+      ],
+      "name": "personal_assistant_jobs_started_total",
+      "type": "counter"
+    },
+    {
+      "help": "Confirmed terminal attempts, including failure and cancellation.",
+      "labels": [
+        "process",
+        "worker_pool",
+        "outcome"
+      ],
+      "name": "personal_assistant_jobs_completed_total",
+      "type": "counter"
+    },
+    {
+      "help": "Confirmed failed attempts by bounded error class.",
+      "labels": [
+        "process",
+        "worker_pool",
+        "error_class"
+      ],
+      "name": "personal_assistant_jobs_failed_total",
+      "type": "counter"
+    },
+    {
+      "help": "Current running attempts; excludes queued and unknown states.",
+      "labels": [
+        "process",
+        "worker_pool"
+      ],
+      "name": "personal_assistant_jobs_running",
+      "type": "gauge"
+    },
+    {
+      "help": "Unix start time of oldest confirmed running attempt; omit when none.",
+      "labels": [
+        "process",
+        "worker_pool"
+      ],
+      "name": "personal_assistant_job_oldest_running_start_timestamp_seconds",
+      "type": "gauge"
+    },
+    {
+      "help": "Elapsed time of confirmed terminal attempts.",
+      "labels": [
+        "process",
+        "worker_pool",
+        "outcome"
+      ],
+      "name": "personal_assistant_job_duration_seconds",
+      "type": "histogram"
+    },
+    {
+      "help": "Completed stage wall time; not job duration.",
+      "labels": [
+        "process",
+        "worker_pool",
+        "stage"
+      ],
+      "name": "personal_assistant_pipeline_stage_duration_seconds",
+      "type": "histogram"
+    }
+  ],
+  "queue": "Not supplied: no persistent queue service verified.",
+  "schema_version": 1
+}

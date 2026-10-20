@@ -94,6 +94,7 @@ dev = [
     "ruff>=0.15.14",
     "pytest>=9.0.3",
     "detect-secrets>=1.5.0",
+    "pre-commit>=4.7.0",
 ]
 
 unclear = [
@@ -152,6 +153,7 @@ exclude_dirs = [
 ]
 
 [tool.pytest.ini_options]
+markers = ["optional_sdk: requires explicitly enabled installed SDK profile; no API calls"]
 testpaths = ["tests"]
 addopts = "-v --tb=short"
 pythonpath = ["."]

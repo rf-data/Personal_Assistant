@@ -2,35 +2,20 @@
 # import
 from __future__ import annotations
 
-from typing import Literal
-
-# from pydantic import BaseModel, Field
-
-from src.core.memory import app_session
-from src.core.logger import create_logger
-from src.core.config import folder_env_vars
 from src.model_knowledge.data_knowledge import (
     ConsolidatedEvidence,
-    ConsolidatedMathExpression,
-    ConsolidatedStatement,
-    ConsolidationStats,
     # KnowledgeSemanticType,
     # MathExpressionType,
     ConsolidatedKnowledgeDocument,  # LectureKnowledgeDocument,
-    MathExpression,
+    ConsolidatedMathExpression,
+    ConsolidatedStatement,
+    ConsolidationStats,
     KnowledgeStatement,
+    MathExpression,
     TranscriptKnowledgeDocument,
     # VisualCandidate,
 )
-
-from src.utils.path_helper import shorten_path
-from src.utils.dict_helper import save_dict, load_dict
-from src.utils.text_helper import (
-    normalize_math_text,
-    normalize_text_for_matching,
-    text_similarity,
-)
-
+from src.utils.latex_helper import normalize_math_text
 
 # ============================================================
 # EVIDENCE HELPERS
@@ -123,6 +108,9 @@ def merged_verification_status(
 
     status_set = {status for status in statuses if status is not None}
 
+    if {"verified", "rejected"} <= status_set:
+        return "pending"
+
     if "verified" in status_set:
         return "verified"
 
@@ -147,42 +135,18 @@ def find_statement_group(
     threshold: float,
 ) -> dict | None:
 
-    normalized = normalize_text_for_matching(statement.text)
+    from src.tools_knowledge.consolidation_validation import exact_text
 
+    # Threshold retained for caller compatibility. Similarity cannot establish
+    # factual equivalence, even when transcript evidence overlaps.
     for group in groups:
         representative = group["representative"]
-
-        if not any(
-            evidence_overlaps(
-                evidence,
-                old_evidence,
-            )
-            for old_evidence in group["evidence"]
+        if (exact_text(statement.text), statement.semantic_type, statement.topic) == (
+            exact_text(representative.text),
+            representative.semantic_type,
+            representative.topic,
         ):
-            continue
-
-        representative_normalized = normalize_text_for_matching(representative.text)
-
-        # Exact same statement:
-        # merge even if semantic type differs.
-        if normalized == representative_normalized:
             return group
-
-        # Near-duplicates remain conservative.
-        if representative.semantic_type != statement.semantic_type:
-            continue
-
-        group_similarity = max(
-            text_similarity(
-                normalized,
-                normalize_text_for_matching(variant),
-            )
-            for variant in group["variants"]
-        )
-
-        if group_similarity >= threshold:
-            return group
-
     return None
 
 
@@ -208,35 +172,23 @@ def find_expression_group(
     threshold: float,
 ) -> dict | None:
 
-    current_variants = expression_variants(expression)
+    from src.tools_knowledge.consolidation_validation import exact_math
 
-    if not current_variants:
-        return None
+    # Legacy candidate normalization remains available, but its lossy case/
+    # Unicode transformations must never authorize merging mathematical objects.
+    expression_variants(expression)
 
-    for group in groups:
-        if not any(
-            evidence_overlaps(
-                evidence,
-                old_evidence,
-            )
-            for old_evidence in group["evidence"]
-        ):
-            continue
-
-        existing_variants = group["normalized_variants"]
-
-        best_similarity = max(
-            text_similarity(
-                current,
-                existing,
-            )
-            for current in current_variants
-            for existing in existing_variants
+    def key(item):
+        return (
+            exact_math(item.plain_text),
+            exact_math(item.latex) if item.latex is not None else None,
+            item.expression_type,
+            item.name,
         )
 
-        if best_similarity >= threshold:
+    for group in groups:
+        if key(expression) == key(group["representative"]):
             return group
-
     return None
 
 
@@ -252,13 +204,14 @@ def consolidate_knowledge(
     expression_similarity: float = 0.96,
 ) -> ConsolidatedKnowledgeDocument:
 
-    if document.source_id is None or not document.source_id.strip():
+    if not document.source_id or not document.source_id.strip():
         raise ValueError(
-            "Knowledge consolidation requires a non-empty source_id. "
-            "Legacy extraction JSON can be loaded without it, but consolidation "
-            "requires an explicitly verified transcript source identity; "
-            "no identity is inferred from the extraction filename or URL."
+            "Consolidation requires a non-empty source_id from verified context"
         )
+
+    from src.tools_knowledge.consolidation_validation import require_valid
+
+    require_valid(document)
 
     statement_groups: list[dict] = []
     expression_groups: list[dict] = []
@@ -484,6 +437,11 @@ def consolidate_knowledge(
     )
 
     return ConsolidatedKnowledgeDocument(
+        language=document.language,
+        transcript_provenance=document.transcript_provenance,
+        course_id=document.course_id,
+        lecture_id=document.lecture_id,
+        media_id=document.media_id,
         source_id=document.source_id,
         media_id=document.media_id,
         **document.transcript_metadata(),
@@ -497,53 +455,6 @@ def consolidate_knowledge(
 
 
 if __name__ == "__main__":
-    from src.core.memory_lecture import LectureContext
-    from src.utils.llm_helper import configure_marvin
+    from src.run_knowledge_consolidation import main
 
-    app_session.logger = create_logger(name="test", file_name="test")
-
-    dict_name = input("Enter name of context_file (no suffix): ")
-    dict_path = folder_env_vars.config_dir / f"context_{dict_name}.json"
-    context = load_dict(
-        path=dict_path,
-        cls=LectureContext,
-        # TranscriptDocument
-    )
-
-    configure_marvin(context)
-    # =LectureContext(
-
-    folder = folder_env_vars.data_lectures / "loviscach/mathe_vorkurs/knowledge"
-
-    know_extracts = [ext for ext in folder.rglob("*.json")]
-
-    print(
-        f"Found {len(know_extracts)} knowledge_extracts in '{shorten_path(folder)}'. "
-    )
-
-    for f_path in know_extracts[:2]:
-        extract = load_dict(f_path, cls=TranscriptKnowledgeDocument)
-        deterministic = consolidate_knowledge(extract)
-
-        semantic = consolidate_semantic_knowledge(
-            document=deterministic,
-            model_name="openai:gpt-5.4-mini",
-            # context.llm_model,
-        )
-
-        save_name = f"/home/robfra/0_Portfolio_Projekte/gmp_compliance/data/loviscach/know/{
-            f_path.stem.replace('_extract', '_consol')
-        }"
-        save_dict(
-            data=semantic.model_dump(mode="json"),
-            path=save_name,
-        )
-        # print(f"Result '{f_path.stem}':\n", know)
-
-        # try:
-
-    # {f_path.stem}_cons"
-    # save_dict(know_extracts, save_name)
-
-    # except:
-    #     pass
+    raise SystemExit(main())

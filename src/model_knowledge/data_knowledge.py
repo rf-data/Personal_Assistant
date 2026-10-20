@@ -1,9 +1,10 @@
 ## data_knowledge.py
 # imports
-from pathlib import Path
 from enum import Enum, StrEnum
-from pydantic import BaseModel, Field, ConfigDict, model_validator
+from pathlib import Path
 from typing import Literal, Self
+
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from src.model_transcribe.data_transcribe import TranscriptProvenance
 
@@ -553,14 +554,17 @@ class ChunkKnowledgeResult(BaseModel):
 
 
 class TranscriptKnowledgeMetadata(BaseModel):
-    """Optional source metadata shared by extraction and consolidation outputs."""
+    """Shared optional metadata; explicit identities retain their model contracts."""
 
-    language: str | None = Field(default=None, min_length=1, pattern=r"\S")
+    language: str | None = None
     transcript_provenance: TranscriptProvenance | None = None
-    course_id: str | None = Field(default=None, min_length=1, pattern=r"\S")
-    lecture_id: str | None = Field(default=None, min_length=1, pattern=r"\S")
+    course_id: str | None = None
+    lecture_id: str | None = None
+    transcript_url: str | None = None
+    media_id: str | None = None
 
     def transcript_metadata(self) -> dict:
+        """Additional metadata; source_id, transcript_url and media_id stay explicit."""
         return {
             name: getattr(self, name)
             for name in (
@@ -573,25 +577,24 @@ class TranscriptKnowledgeMetadata(BaseModel):
 
     @model_validator(mode="after")
     def consistent_transcript_metadata(self) -> Self:
-        provenance = self.transcript_provenance
-        if provenance is not None:
-            for field, value in (
-                ("language", provenance.language),
-                ("transcript_url", provenance.source_url),
-                ("media_id", provenance.media_id),
+        if self.transcript_provenance is not None:
+            for field, source_value in (
+                ("language", self.transcript_provenance.language),
+                ("transcript_url", self.transcript_provenance.source_url),
+                ("media_id", self.transcript_provenance.media_id),
             ):
-                declared = getattr(self, field, None)
-                if declared is not None and value is not None and declared != value:
+                declared = getattr(self, field)
+                if (
+                    declared is not None
+                    and source_value is not None
+                    and declared != source_value
+                ):
                     raise ValueError(f"{field} contradicts transcript_provenance")
         return self
 
 
 class TranscriptKnowledgeDocument(TranscriptKnowledgeMetadata):
-    # Legacy extraction JSON may lack identity; consumers must require it explicitly.
     source_id: str | None = Field(default=None, min_length=1, pattern=r"\S")
-
-    transcript_url: str | None
-    media_id: str | None
 
     chunks: list[ChunkKnowledgeResult]
     visual_candidates: list[VisualCandidate]
@@ -698,9 +701,7 @@ class ConsolidationStats(BaseModel):
 
 
 class ConsolidatedKnowledgeDocument(TranscriptKnowledgeMetadata):
-    media_id: str | None = None
     source_id: str
-    transcript_url: str | None = None
 
     topics: list[str] = Field(default_factory=list)
 
@@ -716,8 +717,6 @@ class ConsolidatedKnowledgeDocument(TranscriptKnowledgeMetadata):
 
 class LectureKnowledgeDocument(TranscriptKnowledgeMetadata):
     source_id: str
-    transcript_url: str | None = None
-    media_id: str | None = None
 
     topics: list[str] = Field(default_factory=list)
 

@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "source_origin": "official",
+  "course_id": "cs50_python",
+  "lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+  "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+  "transcript_sha256": "d2326bfd6b24f288ca9fa6a3921643ddbc61439d418e1950de75b0099444f5c4",
+  "raw_sha256": "719c9905c3908594dd459224b78d5ac9f5cfbc6e06b4dadd67d9f1ea98ecac2c",
+  "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lang/en/lecture0.srt",
+  "provenance_sha256": "578b10fa637bbf56ea9775b2c1bede7f7d3cc5065a8792c1786abafc1d618584",
+  "questions": [
+    {
+      "question_id": "python0-01",
+      "question": "What is a function in Python?",
+      "expected_lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "proposed_segment_ids": [
+        115,
+        116,
+        117,
+        118,
+        119,
+        120
+      ],
+      "start": 341.45,
+      "end": 359.18,
+      "content_topic": "functions",
+      "relevance_reviewed": false
+    },
+    {
+      "question_id": "python0-02",
+      "question": "How does an argument influence a function?",
+      "expected_lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "proposed_segment_ids": [
+        131,
+        132,
+        133,
+        134,
+        135
+      ],
+      "start": 389.6,
+      "end": 403.85,
+      "content_topic": "arguments",
+      "relevance_reviewed": false
+    },
+    {
+      "question_id": "python0-03",
+      "question": "What can a Python variable store?",
+      "expected_lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "proposed_segment_ids": [
+        330,
+        331,
+        332,
+        333,
+        334,
+        335,
+        336,
+        337,
+        338
+      ],
+      "start": 938.12,
+      "end": 966.74,
+      "content_topic": "variables",
+      "relevance_reviewed": false
+    },
+    {
+      "question_id": "python0-04",
+      "question": "How does assignment capture a function return value?",
+      "expected_lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "proposed_segment_ids": [
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366
+      ],
+      "start": 1016.06,
+      "end": 1058.46,
+      "content_topic": "return values and assignment",
+      "relevance_reviewed": false
+    },
+    {
+      "question_id": "python0-05",
+      "question": "How are comments written and interpreted in Python?",
+      "expected_lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "proposed_segment_ids": [
+        423,
+        424,
+        425,
+        426,
+        427,
+        428,
+        429
+      ],
+      "start": 1214.84,
+      "end": 1233.38,
+      "content_topic": "comments",
+      "relevance_reviewed": false
+    },
+    {
+      "question_id": "python0-06",
+      "question": "What does the plus operator do when joining strings?",
+      "expected_lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "proposed_segment_ids": [
+        614,
+        615,
+        616,
+        617,
+        618,
+        619,
+        620
+      ],
+      "start": 1734.67,
+      "end": 1758.87,
+      "content_topic": "string concatenation",
+      "relevance_reviewed": false
+    },
+    {
+      "question_id": "python0-07",
+      "question": "How does strip remove whitespace from an input string?",
+      "expected_lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "proposed_segment_ids": [
+        997,
+        998,
+        999,
+        1000,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "start": 2825.13,
+      "end": 2862.52,
+      "content_topic": "strip method",
+      "relevance_reviewed": false
+    },
+    {
+      "question_id": "python0-08",
+      "question": "How can split separate a first and last name?",
+      "expected_lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "proposed_segment_ids": [
+        1239,
+        1240,
+        1241,
+        1242,
+        1243,
+        1244,
+        1245
+      ],
+      "start": 3469.23,
+      "end": 3489.93,
+      "content_topic": "split method",
+      "relevance_reviewed": false
+    },
+    {
+      "question_id": "python0-09",
+      "question": "How do integers and floating-point numbers differ?",
+      "expected_lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "proposed_segment_ids": [
+        1594,
+        1595,
+        1596,
+        1597,
+        1598,
+        1599,
+        1600,
+        1601,
+        1602
+      ],
+      "start": 4478.92,
+      "end": 4502.0,
+      "content_topic": "numeric types",
+      "relevance_reviewed": false
+    },
+    {
+      "question_id": "python0-10",
+      "question": "How is a custom function defined using def?",
+      "expected_lecture_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "source_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "proposed_segment_ids": [
+        1882,
+        1883,
+        1884,
+        1885,
+        1886,
+        1887,
+        1888,
+        1889,
+        1890,
+        1891,
+        1892,
+        1893,
+        1894
+      ],
+      "start": 5313.35,
+      "end": 5363.03,
+      "content_topic": "function definitions",
+      "relevance_reviewed": false
+    }
+  ]
+}
