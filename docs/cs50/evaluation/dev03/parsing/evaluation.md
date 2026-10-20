@@ -199,3 +199,38 @@ Nach der Ausgangsprüfung wurde DEV-02B #127 inzwischen extern gemergt
 (`61ad351`); UI #17 ist weiterhin offen. Dies ändert keine Realfreigabe.
 Die obigen Läufe behalten ihren genauen Basisbezug `7a4f2be`; keine ungemergte
 DEV-03-A/B/C-Implementierung ist als Voraussetzung dieser Evaluatoren verwendet.
+
+Abschließende Kompatibilitätsprüfung nach lokalem Upstream-Merge auf master
+`2c51da6` (DEV-02B #127 und DEV-03A #128 extern integriert):
+
+```sh
+# Gleiches tatsächliches Backend-Pytestpräfix wie oben:
+tests/test_content_import_jobs.py \
+tests/test_dev03_parsing.py::test_same_image_bytes_preserve_distinct_occurrences_and_hash_guards \
+tests/test_cs50_material_evaluation.py::test_cli_reproducible_hashes_and_no_overwrite \
+--basetemp=/tmp/dev03b-current-import
+```
+
+**18 passed / 2 failed / 0 skipped**, 119,13 s. Zwei bestehende C16-Importfälle
+(`test_real_gates_worker_and_original_byte_roundtrip[code]` und
+`test_actual_sigkill_and_explicit_recovery_boundary[after_publication]`) trafen
+`Unconfirmed cleanup; dispatch quarantined`. Persistierter C16-Befund nennt
+`OperationalError`; die technische Ursache wurde nicht abschließend bestimmt.
+Keine Behauptung, dass ein fehlender Jobabschluss einen ContentStore-Commit
+zurückgenommen hätte. Keine Quarantäne wurde gelöscht oder automatisch aufgehoben.
+Der neue Bildpublikations- und vorhandene Report-/No-Overwrite-Fall bestanden.
+
+Exakt beide fehlgeschlagenen Nodes auf unverändertem aktuellen Runtimecode im
+separaten C-Worktree (`2c51da6` plus nur neue Acceptance-Dateien) geprüft:
+**2 passed / 0 failed / 0 skipped**, 13,92 s, `/tmp/dev03-current-baseline`.
+Danach dieselben Nodes im B-Worktree mit Fix und unveränderten Limits erneut:
+**2 passed / 0 failed / 0 skipped**, 13,43 s, `/tmp/dev03b-import-recheck`.
+Dies ist kein reproduzierter Baselinefehler und kein ausgeführter grüner
+20er-Gesamtlauf. Der intermittierende C16-/SQLite-/Supervisorbefund bleibt eine
+Betriebsgrenze zur gesonderten Beobachtung, kein nachgewiesener Parser-/Hashfehler.
+Kein weiterer Runtimefix wurde erzwungen. Alle überlappenden Läufe separat halten.
+
+Gesamtstatus des erlaubten Umfangs:
+`technical_preparation_complete – real_acceptance_blocked`.
+Quellenfreigaben und echte Reviewerentscheidungen fehlen weiterhin; aus diesen
+synthetischen Ergebnissen wird weder fachliche Realabnahme noch Produktivfreigabe.
