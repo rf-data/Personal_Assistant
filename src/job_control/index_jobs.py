@@ -369,23 +369,39 @@ def guarded_reply(controller, actor, result, status_code, *, scoped_job=None):
     jobs = {
         j.job_id: j
         for j in candidates
-        if isinstance(j, Job) and j.process_id == PROCESS
+        if isinstance(j, Job) and j.process_id in {PROCESS, "content_import"}
     }
     if not jobs:
         return None
     # All C16 reads happen before acquiring Content locks.
-    specs = [
-        plan(controller.store.entry(jid), controller.settings.root) for jid in jobs
-    ]
+    from src.job_control import import_jobs
+
+    specs = []
+    for jid, job in jobs.items():
+        if job.process_id == "content_import":
+            spec = import_jobs.plan(
+                controller.store.entry(jid), controller.settings.root
+            )
+        else:
+            spec = plan(controller.store.entry(jid), controller.settings.root)
+        specs.append((spec, job))
     stack = ExitStack()
     try:
         groups = {}
-        for spec in specs:
-            groups.setdefault(spec.content.root, set()).update(spec.source_ids)
+        import_specs = []
+        for spec, job in specs:
+            sources = groups.setdefault(spec.content.root, set())
+            if job.process_id == "content_import":
+                import_specs.append((spec, job))
+            else:
+                sources.update(spec.source_ids)
         for root, sources in sorted(groups.items()):
             content = ContentStore(root)
             stack.enter_context(content._maintenance())
             db = stack.enter_context(content._connection())
+            for spec, job in import_specs:
+                if spec.content.root == root:
+                    import_jobs.authorize(spec, actor, db, job_owner=job.initiated_by)
             for sid in sorted(sources):
                 content._authorize(db, sid, actor)
         deadline = time.monotonic() + 2

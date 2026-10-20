@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 
 from src.job_control.models import (
+    ContentImportParams,
     IndexParams,
     PdfParams,
     PlanningParams,
@@ -89,7 +90,21 @@ INDEX_PROCESS = Process(
 )
 
 
+IMPORT_PROCESS = Process(
+    "content_import",
+    ContentImportParams,
+    "content_import_bundle",
+    "content_import",
+    "src.job_control.import_jobs.run",
+    timeout_seconds=180,
+    cpu_seconds=120,
+    file_bytes=64 * 1024 * 1024,
+)
+
+
 def process_for(process_id):
+    if process_id == IMPORT_PROCESS.process_id:
+        return IMPORT_PROCESS
     if process_id == INDEX_PROCESS.process_id:
         return INDEX_PROCESS
     if process_id == WORKFLOW_PROCESS.process_id:
@@ -101,7 +116,7 @@ def process_for(process_id):
     return REGISTRY[process_id]
 
 
-def registry_document(*, workflows=False, pdf=False, index=False):
+def registry_document(*, workflows=False, pdf=False, index=False, imports=False):
     return {
         "schema_version": 1,
         "processes": [
@@ -127,6 +142,7 @@ def registry_document(*, workflows=False, pdf=False, index=False):
                 *((WORKFLOW_PROCESS,) if workflows else ()),
                 *((PDF_PROCESS,) if pdf else ()),
                 *((INDEX_PROCESS,) if index else ()),
+                *((IMPORT_PROCESS,) if imports else ()),
             )
         ],
         "disabled_processes": [

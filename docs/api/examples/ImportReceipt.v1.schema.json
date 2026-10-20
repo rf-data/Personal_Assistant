@@ -1,0 +1,73 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "created": {
+      "title": "Created",
+      "type": "boolean"
+    },
+    "index_inputs_route": {
+      "const": "/v1/content/index/inputs",
+      "default": "/v1/content/index/inputs",
+      "title": "Index Inputs Route",
+      "type": "string"
+    },
+    "job_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Job Id",
+      "type": "string"
+    },
+    "parsed_route": {
+      "title": "Parsed Route",
+      "type": "string"
+    },
+    "parsed_version_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[^\\x00-\\x1f]+$",
+      "title": "Parsed Version Id",
+      "type": "string"
+    },
+    "payload_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Payload Sha256",
+      "type": "string"
+    },
+    "raw_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Raw Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[^\\x00-\\x1f]+$",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_version_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[^\\x00-\\x1f]+$",
+      "title": "Source Version Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "job_id",
+    "source_id",
+    "source_version_id",
+    "parsed_version_id",
+    "raw_sha256",
+    "payload_sha256",
+    "created",
+    "parsed_route"
+  ],
+  "title": "ImportReceipt",
+  "type": "object"
+}
