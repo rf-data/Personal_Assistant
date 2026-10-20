@@ -47,7 +47,18 @@ def check(
     require(
         not any(
             ui.get(k)
-            for k in ("ports", "privileged", "pid", "network_mode", "devices", "build")
+            for k in (
+                "ports",
+                "privileged",
+                "pid",
+                "network_mode",
+                "devices",
+                "build",
+                "command",
+                "entrypoint",
+                "cap_add",
+                "volumes_from",
+            )
         ),
         "no_host_exposure_or_privileged_options",
     )
@@ -146,6 +157,15 @@ def check(
         labels.get("traefik.docker.network") == networks["ingress"]["name"],
         "explicit_ingress_network_required",
     )
+    # Traefik label keys are case-insensitive; Coolify emits entryPoints.
+    labels = {key.lower(): value for key, value in labels.items()}
+    require(
+        not any(key.startswith(("traefik.tcp.", "traefik.udp.")) for key in labels),
+        "no_other_protocol_routes",
+    )
+    require(
+        str(labels.get("traefik.enable")).lower() == "true", "traefik_enable_required"
+    )
     prefix = "traefik.http.routers."
     routers = {k[len(prefix) :].split(".")[0] for k in labels if k.startswith(prefix)}
     require(
@@ -155,7 +175,8 @@ def check(
     host_rule = "Host(`" + p.hostname + "`)"
     for router in routers:
         require(
-            labels.get(prefix + router + ".rule") == host_rule,
+            labels.get(prefix + router + ".rule")
+            in {host_rule, host_rule + " && PathPrefix(`/`)"},
             "exact_host_rule_required",
         )
     tls = prefix + tls_router

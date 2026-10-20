@@ -55,6 +55,7 @@ def render(tmp_path, profile):
     # Compose structure. This is not a live Coolify or routing proof.
     data["services"]["ui"]["labels"].update(
         {
+            "traefik.enable": "true",
             "traefik.http.routers.ui-https.rule": "Host(`ui.synthetic.invalid`)",
             "traefik.http.routers.ui-http.rule": "Host(`ui.synthetic.invalid`)",
             "traefik.http.routers.ui-https.tls": "true",
@@ -94,6 +95,9 @@ def test_profiles_use_real_compose_and_explicit_gate(tmp_path, profile):
     "mutation",
     [
         "ports",
+        "entrypoint",
+        "extra_cap",
+        "tcp_route",
         "worker",
         "image",
         "read_only",
@@ -118,6 +122,12 @@ def test_unsafe_renderings_refused(tmp_path, mutation):
     labels = ui["labels"]
     if mutation == "ports":
         ui["ports"] = [{"published": "8501", "target": 8501}]
+    elif mutation == "entrypoint":
+        ui["entrypoint"] = ["python", "-m", "streamlit"]
+    elif mutation == "extra_cap":
+        ui["cap_add"] = ["SYS_ADMIN"]
+    elif mutation == "tcp_route":
+        labels["traefik.tcp.routers.hidden.rule"] = "HostSNI(`*`)"
     elif mutation == "worker":
         data["services"]["worker"] = copy.deepcopy(ui)
     elif mutation == "image":
@@ -175,3 +185,13 @@ def test_missing_operator_inputs_prevent_compose_start(tmp_path):
         timeout=15,
     )
     assert completed.returncode != 0
+
+
+def test_coolify_root_path_and_camelcase_entrypoints(tmp_path):
+    data = render(tmp_path, "public-https")
+    labels = data["services"]["ui"]["labels"]
+    for name in ("ui-http", "ui-https"):
+        key = "traefik.http.routers." + name
+        labels[key + ".rule"] += " && PathPrefix(`/`)"
+        labels[key + ".entryPoints"] = labels.pop(key + ".entrypoints")
+    audit(data, "public-https")
