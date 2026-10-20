@@ -250,7 +250,7 @@ class ContentReader:
     def page(self, kind, ids, query, actor):
         actor = checked_actor(actor)
         allowed = {"limit", "cursor"} | (
-            {"course_id", "source_type"} if kind == "sources" else set()
+            {"course_id", "source_type", "q"} if kind == "sources" else set()
         )
         if set(query) - allowed:
             raise ReadFault(400, "invalid_parameter")
@@ -262,6 +262,10 @@ class ContentReader:
             if not 1 <= limit <= 100:
                 raise ValueError
             if "course_id" in query and query["course_id"] not in CourseId.__args__:
+                raise ValueError
+            if "q" in query and (
+                not 1 <= len(query["q"]) <= 200 or any(ord(c) < 32 for c in query["q"])
+            ):
                 raise ValueError
             if "source_type" in query and query["source_type"] not in {
                 "material",
@@ -329,6 +333,9 @@ class ContentReader:
                 if "source_type" in query:
                     sql += " AND json_extract(s.data,'$.registration.source_type')=?"
                     args.append(query["source_type"])
+                if "q" in query:
+                    sql += " AND instr(s.id,?)>0"
+                    args.append(query["q"])
                 if last:
                     sql += " AND s.id>?"
                     args.append(last[0])

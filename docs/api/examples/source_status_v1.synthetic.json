@@ -1,0 +1,25 @@
+{
+  "index_inputs_route": "/v1/content/index/inputs",
+  "integrity": "not_checked",
+  "items": [
+    {
+      "read_route": "/v1/content/parsed/content_version_v1%3Aafac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215",
+      "state": "published",
+      "version_id": "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215"
+    }
+  ],
+  "kind": "parsed",
+  "next_cursor": null,
+  "parsed_states": {
+    "published": 1
+  },
+  "pending_runs": 0,
+  "raw_states": {
+    "verified": 1
+  },
+  "schema_version": 1,
+  "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+  "source_route": "/v1/content/sources/resource%3A9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+  "state": "ready",
+  "versions_route": "/v1/content/sources/resource%3A9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5/versions"
+}
