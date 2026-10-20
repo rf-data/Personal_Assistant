@@ -234,3 +234,28 @@ Gesamtstatus des erlaubten Umfangs:
 `technical_preparation_complete – real_acceptance_blocked`.
 Quellenfreigaben und echte Reviewerentscheidungen fehlen weiterhin; aus diesen
 synthetischen Ergebnissen wird weder fachliche Realabnahme noch Produktivfreigabe.
+
+## Abschluss- und Integrationsvermerk
+
+Die vorhandene synthetische Fixture-Evidence verwendet weiterhin
+`implementation_revision = "a" * 40` als expliziten **Testmarker**, keine reale
+Parserhistorie. Tatsächlich ausgeführte Codebasen und Bibliotheksversionen stehen
+oben; kein HEAD wurde als historische Materialrevision ausgegeben.
+
+[DEV-03A #128](https://github.com/rf-data/Personal_Assistant/pull/128) ist extern
+auf master `2c51da6` gemergt. Alle acht A-Dateien einschließlich dauerhafter
+Dokumentation wurden exakt gegen den integrierten Stand verglichen. Keine offene
+PR-Head-/Basebindung, keine Worktreenutzer und keine unlesbaren Prozess-CWDs;
+nur 39 eindeutig taskgenerierte pyc/Ruff-Caches. Eigener A-Worktree, lokaler Branch
+und stale eigener Trackingref normal ohne Force/Prune entfernt; Remote-Branch
+war bereits abwesend. Master und Originalcheckouts bleiben unverändert.
+Der neue unveränderte detached UI-Testcheckout wurde ebenfalls nach sauberem
+Status/Nichtnutzung entfernt; sein HEAD war identisch zu integriertem UI-main.
+Keine historischen/MAINT-/DEV-02-Artefakte wurden angefasst.
+
+B [#130](https://github.com/rf-data/Personal_Assistant/pull/130) und
+C [#129](https://github.com/rf-data/Personal_Assistant/pull/129) bleiben offen,
+deren Worktrees/Branches bleiben wegen Review und ausstehender master-Integration
+erhalten. Project #1 enthält alle drei PRs jeweils genau einmal, A bereits Done,
+B/C Backlog. Kein Projectfeld/Workflow/Issue wurde geändert; vorhandene Realabnahmen
+#107/#108 sind offen. Kein automatischer Merge, keine Real- oder Betriebsfreigabe.
