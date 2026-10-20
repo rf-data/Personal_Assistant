@@ -259,3 +259,108 @@ deren Worktrees/Branches bleiben wegen Review und ausstehender master-Integratio
 erhalten. Project #1 enthält alle drei PRs jeweils genau einmal, A bereits Done,
 B/C Backlog. Kein Projectfeld/Workflow/Issue wurde geändert; vorhandene Realabnahmen
 #107/#108 sind offen. Kein automatischer Merge, keine Real- oder Betriebsfreigabe.
+
+## DEV-03B-Folgeauftrag: Vier Loviscach-Klausuren
+
+20.10.2026. Erneute Eingangskontrolle nach dem konkreten Klausurauftrag, ohne
+Wiederholung einer angeblich abgeschlossenen Inventur: Der vorherige Versuch
+scheiterte bereits am fehlenden Verzeichnis. Auch jetzt liefert ausschließlich
+`lstat` auf dem vom Betreiber benannten Eingangsroot `FileNotFoundError`, errno 2.
+Keine alternative Verzeichnissuche, keine Originaldatei geöffnet, kein privater
+Real-Ausgaberoot angelegt. Vier Klausuren sind vom Betreiber angekündigt, aber
+**null konkrete Dateiidentitäten in dieser Umgebung festgestellt**.
+
+| Eingangskriterium | Tatsächlicher Stand |
+| --- | --- |
+| Vier Dateinamen, Formate, Größen, SHA256 und PDFseitenzahlen | unbekannt; Eingangsroot nicht verfügbar |
+| Lesbarkeit, Duplikate, Beschädigung und Parserfähigkeit | `not_checked`; keine Bytes verfügbar |
+| Integriertes Klausurmanifest | keines; DEV-03A/#128 enthält drei andere CS50-Planungseinträge mit verweigerter Realverarbeitung |
+| Source-/SourceVersion-/Parserbindung der Klausuren | unbekannt; keine Identitäten aus Dateinamen oder aktuellem HEAD abgeleitet |
+| Inhaltsverarbeitungsfreigabe und privater Ausgaberoot | nicht erteilt bzw. nicht benannt |
+| Unabhängige reale Goldreferenzen / bestätigte Reviews | keine bereitgestellt |
+
+Live geprüft: Backend-master `2c51da66ac578ee8fe091419116d457c267db82c`,
+DEV-03A/#128 gemergt; dieser bestehende PR #130 weiterhin offen am Head
+`38a599ab684da8cf3579da7396a7bbe3cf56a5d4` vor diesem Nachtrag.
+Die vorhandenen A-Kandidaten werden weder in Klausuren umgedeutet noch geändert.
+Kein neues Korpusmanifest mit erfundenen Dateinamen, Hashes oder Seitenzahlen,
+keine zweite Reportarchitektur und kein zusätzlicher Dokumentations-PR.
+
+### Konkrete Freigaben und erster lokaler Lauf
+
+1. Betreiber stellt genau den benannten Eingangsroot in dieser Ausführungsumgebung
+   bereit. Ausschließlich die vier regulären Dateien nichtrekursiv inventarisieren;
+   die bereits erlaubten Metadaten-/Hash-/PDFseitenprüfungen ergeben erst dann
+   belastbare Identitäten. Keine Ersatzpfade oder zusätzlichen Dateien verwenden.
+2. Betreiber bestätigt **je Datei** Identität und SHA256, die erlaubten Schritte
+   (vollständiges lokales Lesen, PDF-v2-Parsing, C10/C13-Prüfung, lokale
+   Formel-Syntaxprüfung, private Ergebnis-/Bild-/Reviewkandidatenablage), einen
+   neuen privaten Ausgaberoot, Zugriffskreis und Aufbewahrungs-/Löschregel.
+   Eine optionale isolierte ContentStore-/EvaluationStore-Aufnahme für B1-Reviews
+   benötigt ebenfalls explizite Roots und Freigabe; kein produktiver Import.
+3. Bestehenden `parse_pdf`/PDF-v2 unter unveränderten Workerlimits ausführen.
+   Rawhash vor/nach Lauf vergleichen, ParserConfig und Implementierungsstand,
+   Dauer, Seiten-/Block-/Bildzahlen, Warnungen, Payloadhash und Locatoren privat
+   erfassen. Wiederholung in einem neuen Ziel prüft deterministische Inhalte;
+   Laufdauer ist Messmetadatum und kein deterministischer Inhaltsbestandteil.
+4. C10 prüft technische Konsistenz; C13 inventarisiert Bild-/Geometriebezüge.
+   PDF-v2 klassifiziert wörtliche mathematische Notation heuristisch und kann
+   geometrische Tabellenkandidaten liefern. Das ist keine LaTeXrekonstruktion,
+   semantische Formelerkennung oder bestätigte Tabellen-/Aufgabenstruktur.
+   Leere Seiten, Reihenfolge, Überschriften und getrennte Aufgaben erhalten bei
+   fehlender Originalreferenz lediglich begründete Reviewhypothesen.
+5. Bis zu 20 Formel-, zehn Struktur- und zehn Bild-/Tabellenstellen nach
+   unterschiedlichen Befundarten priorisieren. Erst tatsächliche Raw-/Block-/
+   Seiten-/BBoxbindungen erlauben stabile IDs und konkrete Kandidaten. Erwartete
+   Darstellung, menschliche Referenz, Reviewer und Bestätigungszeit bleiben bis
+   zur unabhängigen Prüfung unbesetzt. Keine künstliche Auffüllung der Zielzahlen.
+6. Menschen prüfen Originalstellen unabhängig und bestätigen gegebenenfalls
+   Referenzen. Erst passende bestätigte Formelpaare mit C11 vergleichen;
+   unbekannte/mehrdeutige Syntax bleibt nicht evaluierbar. Retrievalfragen werden
+   vor Suchausführung am freigegebenen Original festgelegt; keine erfundenen
+   Fragen über bislang ungelesene Klausurinhalte.
+
+Verträge bleiben `CorpusManifest`/`GoldDataset`/`GoldReference` aus C23,
+`FormulaCase` aus C11 und `Region`/`TaskSpec`/`Annotation`/`Decision` aus B1.
+Die B1-Region verlangt vollständige Source-/Parsed-/Hash-/Locatorbindungen und
+ein nichtleeres Unicode-Codepointintervall (höchstens 2.000 Zeichen). Fehlende
+oder verlorene Inhalte nicht durch eine erfundene Region ersetzen; B1s vorhandenen
+`unanchored_finding`-Vertrag nur mit einem gültigen belegten Anker verwenden.
+C11 `reference_status=absent` bedeutet eine tatsächlich annotierte Abwesenheit,
+**nicht** fehlendes Gold. Ohne unabhängige Referenz keinen künstlichen C11-Fall
+als fachlichen Vergleich ausführen. Syntaxbefund und fachliche Rekonstruktions-
+entscheidung bleiben getrennt; `gold_confirmed` erfordert echten Reviewbeleg.
+
+Aktueller Realumfang: **0 verarbeitete Dokumente, 0 verarbeitete Seiten,
+0 erzeugte reale Formel-/Struktur-/Visualkandidaten**, weil keine Originale
+verarbeitet wurden. Das sind Ausführungszähler, keine Inhaltsinventur: tatsächliche
+Block-/Formel-/Bild-/Tabellenzahlen bleiben unbekannt, technische Prüfbarkeit
+`not_evaluable`, Qualitätsnenner 0 und Qualitätsraten null. Keine Originalfehler
+nachgewiesen; die vorhandene synthetische Bildpfadkorrektur bleibt der einzige
+oben reproduzierte technische Defekt. Kein neuer Parserfix ohne Originalbeleg.
+
+Gesamtzustand des Folgeauftrags: `technical_preparation_complete`,
+**reale Ausführung blockiert** durch fehlende Erreichbarkeit und Einzelfreigaben.
+Keine Klausurtexte, Formeln, Originale oder privaten Ergebnisdateien veröffentlicht.
+PR #130, Branch und Worktree bleiben bis zur regulären Review-/Masterintegration
+erhalten; kein Merge und kein MAINT-/anderes Branchcleanup.
+
+### Erneute synthetische Abnahme des Folgeauftrags
+
+Auf unverändertem Pythoncode von PR-Head `38a599a`, mit dem oben dokumentierten
+Backend-Pytestpräfix und demselben Umfang aus sieben Testdateien erneut ausgeführt;
+ausschließlich `--basetemp=/tmp/dev03b-followup-contracts` ist neu:
+**370 passed / 0 failed / 0 skipped, 152,41 s**. Log außerhalb des Repositories:
+`/tmp/dev03b-followup-contracts.log`. Der Lauf enthält den inzwischen erweiterten
+Bildpublikationsfall sowie den synthetischen End-to-End-Rezeptlauf mit bestehenden
+C23-/C11-/C13-Reports, Input-Unverändertheit, Hashes und No-Overwrite. Keine echten
+Klausuren, Produktivstores oder externen Dienste sind Testeingaben. Die private
+synthetische Pytestablage ist keine Freigabe eines Real-Ausgaberoots.
+
+Ruff Check und Format Check erneut erfolgreich für dieselben vier Pythondateien
+(`src/content_store/adapters.py`, `src/tools_evaluation/evaluate_materials.py`,
+`scripts/acceptance/dev03_parsing.py`, `tests/test_dev03_parsing.py`). Zusätzlich
+24 vorhandene Report-Dateihashreferenzen und neun lokale Dokumentationsverweise
+geprüft; `git diff --check` erfolgreich. Keine neuen Python-/Parseränderungen,
+keine neuen oder ersetzten Maschinenreports. Historische Testläufe bleiben mit
+ihrem jeweiligen Ergebnis stehen und werden nicht zu diesem Lauf addiert.
