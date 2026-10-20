@@ -1,0 +1,120 @@
+# C26 preparation only. No UI, gateway, API or published ports.
+name: personal-assistant-cs50-worker
+x-limits: &limits
+  image: personal-assistant-runtime@sha256:${BACKEND_DIGEST:?Set reviewed built C26 runtime digest}
+  pull_policy: never
+  user: '10001:10001'
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  pids_limit: ${C26_WORKER_PIDS:-512}
+  cpus: ${C26_WORKER_CPUS:-2.0}
+  mem_limit: ${C26_WORKER_MEMORY:-1536m}
+  memswap_limit: ${C26_WORKER_MEMORY:-1536m}
+  stop_grace_period: 30s
+  tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=${C26_WORKER_TMPFS:-256m},mode=1777"]
+  logging:
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+x-catalog: &catalog
+  type: bind
+  source: ${C26_CATALOG:?Set existing approved 0700 catalog root}
+  target: /var/lib/personal-assistant/catalog
+  read_only: true
+  bind: {create_host_path: false}
+x-jobs: &jobs
+  type: bind
+  source: ${C26_JOBS:?Set existing private 0700 C16 root}
+  target: /var/lib/personal-assistant/private
+  bind: {create_host_path: false}
+x-config: &config
+  type: bind
+  source: ${C26_CONFIG:?Set existing private controller JSON}
+  target: /run/config/controller.json
+  read_only: true
+  bind: {create_host_path: false}
+x-archive: &archive
+  type: bind
+  source: ${C26_ARCHIVE:?Set existing private original archive}
+  target: /var/lib/personal-assistant/archive
+  read_only: true
+  bind: {create_host_path: false}
+x-specs: &specs
+  type: bind
+  source: ${C26_SPECS:?Set existing private snapshot and approval directory}
+  target: /run/c26
+  read_only: true
+  bind: {create_host_path: false}
+x-capacity: &capacity
+  type: bind
+  source: ${C26_LIMITS:?Set existing reviewed private capacity JSON}
+  target: /run/config/c26-limits.json
+  read_only: true
+  bind: {create_host_path: false}
+services:
+  executor:
+    <<: *limits
+    profiles: [processing]
+    restart: ${C26_WORKER_RESTART:-unless-stopped}
+    network_mode: none
+    volumes: [*jobs, *catalog, *config, *capacity]
+    entrypoint: [python, -m, scripts.cs50_worker]
+    command: [--config, /run/config/controller.json, --limits, /run/config/c26-limits.json]
+    healthcheck:
+      test: [CMD, python, -m, scripts.deployment, health, --role, worker, --config, /run/config/controller.json]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+  offline-cli:
+    <<: *limits
+    profiles: [tools]
+    restart: 'no'
+    network_mode: none
+    entrypoint: [python]
+    command: [-m, scripts.cs50_batch, --help]
+    environment: {C26_LIMITS_FILE: /run/config/c26-limits.json}
+    cpus: ${C26_CLI_CPUS:-2.0}
+    mem_limit: ${C26_CLI_MEMORY:-1536m}
+    memswap_limit: ${C26_CLI_MEMORY:-1536m}
+    pids_limit: ${C26_CLI_PIDS:-512}
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=${C26_CLI_TMPFS:-256m},mode=1777"]
+    volumes:
+      - *capacity
+      - *jobs
+      - *config
+      - *archive
+      - *specs
+      - <<: *catalog
+        read_only: false
+      - type: bind
+        source: ${C26_EXPORTS:?Set existing private report directory}
+        target: /var/lib/personal-assistant/exports
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C26_TOKEN:?Set existing private operator token file}
+        target: /run/secrets/operator.token
+        read_only: true
+        bind: {create_host_path: false}
+  downloader:
+    <<: *limits
+    profiles: [download]
+    restart: 'no'
+    entrypoint: [python]
+    command: [-m, scripts.cs50_batch, --help]
+    environment: {C26_LIMITS_FILE: /run/config/c26-limits.json}
+    cpus: ${C26_DOWNLOAD_CPUS:-1.0}
+    mem_limit: ${C26_DOWNLOAD_MEMORY:-512m}
+    memswap_limit: ${C26_DOWNLOAD_MEMORY:-512m}
+    pids_limit: 64
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=${C26_DOWNLOAD_TMPFS:-128m},mode=1777"]
+    networks: [approved-download-egress]
+    volumes:
+      - *capacity
+      - *specs
+      - <<: *archive
+        read_only: false
+networks:
+  approved-download-egress:
+    external: true
+    name: ${C26_EGRESS_NETWORK:?Set existing operator-approved restricted egress network}
