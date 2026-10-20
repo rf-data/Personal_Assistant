@@ -292,7 +292,8 @@ Der verbliebene Nachtrag verwendet den neuen eigenen Branch
 `feat/c26a-existing-backend-copy-handoff` ab diesem Master und den vorhandenen
 auftragseigenen C26-Worktree. Ursprüngliche Branchrefs, primäre Checkouts und
 andere Aufträge wurden nicht bereinigt. Die Übernahme erfolgt als separater
-Folge-PR; der bereits gemergte PR wird nicht umgeschrieben.
+[Folge-PR #136](https://github.com/rf-data/Personal_Assistant/pull/136);
+der bereits gemergte PR wird nicht umgeschrieben.
 
 Ruff Check und Format Check für alle acht betroffenen Pythondateien erfolgreich.
 22 Shellblöcke nur mit `bash -n`, eingebetteten Pythoncode nur mit AST geprüft;
