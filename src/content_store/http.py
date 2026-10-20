@@ -96,8 +96,14 @@ class ContentHTTP:
                 )
             reader = self._reader()
             attachment = False
+            if len(route) == 3 and route[0] == "sources" and route[2] == "status":
+                from src.content_store.source_status import status_reply
+
+                return status_reply(reader, route[1], query, actor)
             if route == ["sources"]:
-                result = reader.page("sources", (), query, actor)
+                from src.content_store.source_status import sources_reply
+
+                return sources_reply(reader, query, actor)
             elif len(route) == 2 and route[0] == "sources":
                 if query:
                     raise ReadFault(400, "invalid_parameter")
