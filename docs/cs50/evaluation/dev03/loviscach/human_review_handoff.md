@@ -219,8 +219,14 @@ tatsächlichen integrierten Pydanticverträgen geprüft. Der echte Paketlauf pr�
 zusätzlich alle 48 Dateieinträge einschließlich Manifest, die exakte Inventarliste,
 Paket-/Exporterhash, unveränderte E-Artefakte und Originale sowie private Rechte.
 
-Dauerhafter Code, Tests und dieser Handoff werden über einen eigenen F1-PR gegen
-master integriert. Solange der PR offen ist, bleiben ausschließlich der eigene
+Dauerhafter Code, Tests und dieser Handoff liegen in
+[F1-PR #134](https://github.com/rf-data/Personal_Assistant/pull/134) gegen master;
+der PR ist offen. Project #1 enthält ihn beim abschließenden Livecheck genau
+einmal mit Status `Backlog`; keine manuelle Project-/Workflowänderung. Die drei
+PR-Dateien enthalten ausschließlich Code, synthetische Tests und diesen Handoff.
+Commit-Hooks erfolgreich. Gitstatus für getrackte Dateien sauber; lediglich der
+bekannte eigene Ruffcache ist ignoriert. Beide primären Checkouts bleiben sauber.
+Solange der PR offen ist, bleiben der eigene
 Branch `feat/dev03f-human-review` und sein Worktree erhalten. Vollständiger
 Integrationsabschluss steht damit aus. Keine fremden, historischen oder
 MAINT-Branches/Worktrees und keine privaten Review-/E-Daten wurden bereinigt.
