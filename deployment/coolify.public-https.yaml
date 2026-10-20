@@ -1,0 +1,6 @@
+# Explicit Public HTTPS profile. Existing OIDC + individual C16 API tokens remain
+# mandatory. No public backend route and no Basic Auth replacement.
+services:
+  ui:
+    environment:
+      C26_ACCESS_PROFILE: public-https

@@ -1,0 +1,71 @@
+# C26-B1: replaces only the existing UI resource AFTER explicit host approval.
+# Coolify generates Host/TLS/redirect/service labels from its domain setting.
+# Never combine with deployment/compose.yaml (would create backend roles).
+services:
+  ui:
+    image: ${C26_UI_IMAGE:?Set reviewed UI registry image including sha256 digest}
+    pull_policy: if_not_present
+    user: '10001:10001'
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    stop_grace_period: 30s
+    pids_limit: 128
+    cpus: 0.75
+    mem_limit: 768m
+    tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777]
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: '3'}
+    expose: ['8501']
+    networks: [ingress, backend]
+    labels:
+      - traefik.docker.network=${C26_INGRESS_NETWORK:?Set actual existing Coolify ingress network}
+    environment:
+      APP_ENV: server
+      JOB_BACKEND: http
+      JOB_API_MODE: production
+      ADMIN_AUTH_MODE: oidc
+      C22_PRODUCTION: '1'
+      C26_HTTPS: '1'
+      C26_UI_ORIGIN: ${C26_UI_ORIGIN:?Set exact https origin without trailing slash}
+      C26_TRUSTED_PROXY_CIDRS: ${C26_TRUSTED_PROXY_CIDRS:?Set exact proxy IPs or dedicated ingress subnet}
+      ADMIN_OIDC_ISSUER: ${ADMIN_OIDC_ISSUER:?Set verified issuer}
+      ADMIN_OIDC_SESSION_MAX_AGE: ${ADMIN_OIDC_SESSION_MAX_AGE:-3600}
+      ADMIN_OPERATOR_SUBJECTS: ${ADMIN_OPERATOR_SUBJECTS:?Set JSON array of approved subjects}
+      ADMIN_VIEWER_SUBJECTS: ${ADMIN_VIEWER_SUBJECTS:-[]}
+      JOB_API_URL: ${JOB_API_URL:?Set existing private HTTPS API origin with valid SAN}
+      JOB_API_IDENTITIES: ${JOB_API_IDENTITIES:?Set individual subject role token-file bindings as JSON}
+      SSL_CERT_FILE: /run/ca/ca.crt
+      FORWARDED_ALLOW_IPS: ''
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+    volumes:
+      - type: bind
+        source: ${C26_UI_TOKENS:?Set existing UI-owned private token directory}
+        target: /run/secrets/c16
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C26_UI_OIDC:?Set existing UI-owned mode 0600 secrets.toml}
+        target: /home/adminui/.streamlit/secrets.toml
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C26_API_CA:?Set verified issuing CA bundle including required public issuer roots}
+        target: /run/ca/ca.crt
+        read_only: true
+        bind: {create_host_path: false}
+    healthcheck:
+      test: [CMD, python, -m, admin_ui_package.container_runtime, health]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+networks:
+  ingress:
+    external: true
+    name: ${C26_INGRESS_NETWORK:?Set existing proxy network}
+  backend:
+    external: true
+    name: ${C26_BACKEND_NETWORK:?Set existing dedicated internal API network}

@@ -1,0 +1,7 @@
+# Merge ONLY for Private HTTPS. Attach this middleware to EVERY generated UI
+# HTTPS router in Coolify custom labels, preserving its existing middleware list.
+# RemoteAddr strategy: never derive access rights from X-Forwarded-For.
+services:
+  ui:
+    labels:
+      - traefik.http.middlewares.${C26_ROUTE_ID:?Set unique resource routing ID}-private.ipallowlist.sourcerange=${C26_ALLOWED_CIDRS:?Set approved VPN egress or private CIDRs}

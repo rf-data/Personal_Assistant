@@ -71,3 +71,9 @@ Startkonfiguration, kein Lasttest: Executor 1.5 GiB/2 CPU/512 PIDs, API/Gateway 
 512 MiB/1 CPU/128 PIDs, UI 768 MiB/1 CPU/128 PIDs, Monitoring optional je 512 MiB.
 Die Summe der Limits ist keine RAM-Reservierung. Die 512-MiB-Freiplatzprüfung ist
 eine Start-/Health-Schwelle, keine Diskquota. Datenträgerquote separat einrichten.
+
+## C26-B HTTPS-Ergänzung
+
+Für den vorhandenen Coolify-Traefik und ausschließlich die bestehende UI gilt
+[HTTPS, OIDC, Rollout und Rollback](https.md). Keine Aktivierung des gesamten
+C22-Composeprofils für diesen Auftrag. Produktivfreigabe bleibt gesperrt.
