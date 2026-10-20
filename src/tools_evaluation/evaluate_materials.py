@@ -556,7 +556,7 @@ def publish(report, output, *, input_roots, input_files=()):
         "# CS50 corpus evaluation\n\nTechnical preparation; real acceptance requires manual review.\n\n"
         f"Dataset: {body['dataset_version']}\n\nGold: {body['gold_counts']}\n\n"
         + "\n".join(
-            f"- {row['entry_id']}: {row['classification']}; {', '.join(row['issues'])}"
+            f"- {row['entry_id']}: {row['classification']}; {', '.join(row['issues'])}".rstrip()
             for row in body["inventory"]
         )
         + "\n"

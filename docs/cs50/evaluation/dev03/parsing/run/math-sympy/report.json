@@ -1,0 +1,1831 @@
+{
+  "schema_version": 1,
+  "evaluator_version": "formula_evaluation_v1",
+  "purpose": "offline_evaluation_harness_not_model_quality",
+  "input_path": "docs/math_evaluation/formula_cases.v1.json",
+  "input_sha256": "2d7c5bb2f4c54508ff2436ff14fe81f9737930be77139ae9d650cc2e6184b836",
+  "equivalence_backend": "sympy",
+  "metrics": {
+    "synthetic": {
+      "case_count": 42,
+      "evaluable_count": 31,
+      "paired_count": 37,
+      "exact_matches": 10,
+      "exact_match_rate": 0.2702702702702703,
+      "normalized_matches": 12,
+      "normalized_match_rate": 0.32432432432432434,
+      "structure_comparable_count": 33,
+      "structural_matches": 12,
+      "equivalence_decided_count": 28,
+      "equivalent_count": 16,
+      "symbolic_equivalent_count": 4,
+      "undetermined_count": 11,
+      "error_frequencies": {
+        "ambiguous_source": 2,
+        "exponent_error": 7,
+        "extra_formula": 1,
+        "format_error": 2,
+        "fraction_error": 3,
+        "missing_formula": 1,
+        "not_evaluable": 11,
+        "operator_error": 7,
+        "structure_error": 17,
+        "subscript_error": 2,
+        "symbol_error": 13
+      }
+    },
+    "real": {
+      "case_count": 0,
+      "evaluable_count": 0,
+      "paired_count": 0,
+      "exact_matches": 0,
+      "exact_match_rate": null,
+      "normalized_matches": 0,
+      "normalized_match_rate": null,
+      "structure_comparable_count": 0,
+      "structural_matches": 0,
+      "equivalence_decided_count": 0,
+      "equivalent_count": 0,
+      "symbolic_equivalent_count": 0,
+      "undetermined_count": 0,
+      "error_frequencies": {}
+    }
+  },
+  "results": [
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M01",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G01",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G01",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "(a+b)^2=a^2+2ab+b^2",
+        "predicted_formula": "(a+b)^2=a^2+2ab+b^2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": true,
+      "normalized_match": true,
+      "structural_match": true,
+      "normalized_reference": "(a+b)^2=a^2+2ab+b^2",
+      "normalized_prediction": "(a+b)^2=a^2+2ab+b^2",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M02",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G01",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G01",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "(a+b)^2=a^2+2ab+b^2",
+        "predicted_formula": " $ (a + b)^2 = a^2 + 2 a b + b^2 $ ",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": false,
+      "normalized_match": true,
+      "structural_match": true,
+      "normalized_reference": "(a+b)^2=a^2+2ab+b^2",
+      "normalized_prediction": "(a+b)^2=a^2+2ab+b^2",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M03",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G01",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G01",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "(a+b)^2=a^2+2ab+b^2",
+        "predicted_formula": "a^2+b^2+2ab=(a+b)^2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "(a+b)^2=a^2+2ab+b^2",
+      "normalized_prediction": "a^2+b^2+2ab=(a+b)^2",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "sympy",
+        "reason": "equal_equation_residuals_up_to_nonzero_constant",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M04",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G01",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G01",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "(a+b)^2=a^2+2ab+b^2",
+        "predicted_formula": "(a+b)^2=a^2-2ab+b^2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "incorrect",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "(a+b)^2=a^2+2ab+b^2",
+      "normalized_prediction": "(a+b)^2=a^2-2ab+b^2",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "rational_equation_counterexample:a=-2,b=-2",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "operator_error",
+        "structure_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M05",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G02",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G02",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "(a-b)^2=a^2-2ab+b^2",
+        "predicted_formula": "(a-b)^2=a^2-2ab+b^2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": true,
+      "normalized_match": true,
+      "structural_match": true,
+      "normalized_reference": "(a-b)^2=a^2-2ab+b^2",
+      "normalized_prediction": "(a-b)^2=a^2-2ab+b^2",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M06",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G02",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G02",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "(a-b)^2=a^2-2ab+b^2",
+        "predicted_formula": "(a-b)^2=a^3-2ab+b^2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "incorrect",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "(a-b)^2=a^2-2ab+b^2",
+      "normalized_prediction": "(a-b)^2=a^3-2ab+b^2",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "rational_equation_counterexample:a=-2,b=-2",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "exponent_error",
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M07",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G03",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G03",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "(a+b)(a-b)=a^2-b^2",
+        "predicted_formula": "(a+b)(a-b)=a^2-b^2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": true,
+      "normalized_match": true,
+      "structural_match": true,
+      "normalized_reference": "(a+b)(a-b)=a^2-b^2",
+      "normalized_prediction": "(a+b)(a-b)=a^2-b^2",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M08",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G04",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G04",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "2x+4=0",
+        "predicted_formula": "x=-2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "2x+4=0",
+      "normalized_prediction": "x=-2",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "sympy",
+        "reason": "equal_equation_residuals_up_to_nonzero_constant",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M09",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G04",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G04",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "2x+4=0",
+        "predicted_formula": "x=2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "incorrect",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "2x+4=0",
+      "normalized_prediction": "x=2",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "rational_equation_counterexample:x=-2",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "operator_error",
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M10",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G05",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G05",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "x^2-5x+6=0",
+        "predicted_formula": "(x-2)(x-3)=0",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "x^2-5x+6=0",
+      "normalized_prediction": "(x-2)(x-3)=0",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "sympy",
+        "reason": "equal_equation_residuals_up_to_nonzero_constant",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M11",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G05",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G05",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "x^2-5x+6=0",
+        "predicted_formula": "x^2-6x+5=0",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "incorrect",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "x^2-5x+6=0",
+      "normalized_prediction": "x^2-6x+5=0",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "rational_equation_counterexample:x=1",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M12",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G06",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G06",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\frac{x+1}{2}",
+        "predicted_formula": "(x+1)/2",
+        "formula_format": "latex",
+        "reference_parts": [
+          "x+1"
+        ],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": true,
+      "normalized_reference": "\\frac{x+1}{2}",
+      "normalized_prediction": "(x+1)/2",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M13",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G06",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G06",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\frac{x+1}{2}",
+        "predicted_formula": "\\frac{x-1}{2}",
+        "formula_format": "latex",
+        "reference_parts": [
+          "x+1"
+        ],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "incorrect",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "\\frac{x+1}{2}",
+      "normalized_prediction": "\\frac{x-1}{2}",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "exact_rational_polynomial_identity",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "fraction_error",
+        "operator_error",
+        "structure_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M14",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G07",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G07",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\frac{x+1}{x-1}",
+        "predicted_formula": "\\frac{x+1}{x-1}",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": true,
+      "normalized_match": true,
+      "structural_match": true,
+      "normalized_reference": "\\frac{x+1}{x-1}",
+      "normalized_prediction": "\\frac{x+1}{x-1}",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M15",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G07",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G07",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\frac{x+1}{x-1}",
+        "predicted_formula": "1",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "\\frac{x+1}{x-1}",
+      "normalized_prediction": "1",
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "sympy",
+        "reason": "nonconstant_or_zero_denominator",
+        "backend_version": null
+      },
+      "error_categories": [
+        "fraction_error",
+        "not_evaluable",
+        "operator_error",
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M16",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G08",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G08",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "x^2+y^2=z^2",
+        "predicted_formula": "x^3+y^2=z^2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "incorrect",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "x^2+y^2=z^2",
+      "normalized_prediction": "x^3+y^2=z^2",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "rational_equation_counterexample:x=-2,y=0,z=-2",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "exponent_error",
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M17",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G09",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G09",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "x^3",
+        "predicted_formula": "x^2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "incorrect",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "x^3",
+      "normalized_prediction": "x^2",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "exact_rational_polynomial_identity",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "exponent_error",
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M18",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G10",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G10",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\sqrt{16}",
+        "predicted_formula": "4",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "\\sqrt{16}",
+      "normalized_prediction": "4",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "sympy",
+        "reason": "exact_rational_constants",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M19",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G11",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G11",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\sqrt{x^2}",
+        "predicted_formula": "x",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "\\sqrt{x^2}",
+      "normalized_prediction": "x",
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "sympy",
+        "reason": "root_domain_not_supported",
+        "backend_version": null
+      },
+      "error_categories": [
+        "exponent_error",
+        "not_evaluable",
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M20",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G12",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G12",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\sum_{i=1}^{n}i=\\frac{n*(n+1)}{2}",
+        "predicted_formula": "\\sum_{i=1}^{n}i=\\frac{n*(n+1)}{2}",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": true,
+      "normalized_match": true,
+      "structural_match": true,
+      "normalized_reference": "\\sum_{i=1}^{n}i=\\frac{n*(n+1)}{2}",
+      "normalized_prediction": "\\sum_{i=1}^{n}i=\\frac{n*(n+1)}{2}",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M21",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G12",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G12",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\sum_{i=1}^{n}i=\\frac{n*(n+1)}{2}",
+        "predicted_formula": "\\sum_{i=1}^{m}i=\\frac{n*(n+1)}{2}",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "\\sum_{i=1}^{n}i=\\frac{n*(n+1)}{2}",
+      "normalized_prediction": "\\sum_{i=1}^{m}i=\\frac{n*(n+1)}{2}",
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "sympy",
+        "reason": "exponent_outside_0_to_8",
+        "backend_version": null
+      },
+      "error_categories": [
+        "exponent_error",
+        "not_evaluable",
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M22",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G13",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G13",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\int_{0}^{1}x^2\\,dx=\\frac{1}{3}",
+        "predicted_formula": "\\int_{0}^{1}x^2\\,dx=\\frac{1}{3}",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": true,
+      "normalized_match": true,
+      "structural_match": true,
+      "normalized_reference": "\\int_{0}^{1}x^2\\,dx=\\frac{1}{3}",
+      "normalized_prediction": "\\int_{0}^{1}x^2\\,dx=\\frac{1}{3}",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M23",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G13",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G13",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\int_{0}^{1}x^2\\,dx=\\frac{1}{3}",
+        "predicted_formula": "\\frac{1}{3}",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "\\int_{0}^{1}x^2\\,dx=\\frac{1}{3}",
+      "normalized_prediction": "\\frac{1}{3}",
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "sympy",
+        "reason": "expression_equation_mismatch",
+        "backend_version": null
+      },
+      "error_categories": [
+        "exponent_error",
+        "not_evaluable",
+        "operator_error",
+        "structure_error",
+        "subscript_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M24",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G14",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G14",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\vec{a}+\\vec{b}",
+        "predicted_formula": "\\vec{a}+\\vec{b}",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": true,
+      "normalized_match": true,
+      "structural_match": true,
+      "normalized_reference": "\\vec{a}+\\vec{b}",
+      "normalized_prediction": "\\vec{a}+\\vec{b}",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M25",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G14",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G14",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\vec{a}+\\vec{b}",
+        "predicted_formula": "a+b",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "\\vec{a}+\\vec{b}",
+      "normalized_prediction": "a+b",
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "sympy",
+        "reason": "outside_rational_polynomial_subset",
+        "backend_version": null
+      },
+      "error_categories": [
+        "not_evaluable",
+        "structure_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M26",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G15",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G15",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "x_{1}+x_{2}",
+        "predicted_formula": "x_1+x_2",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": true,
+      "normalized_reference": "x_{1}+x_{2}",
+      "normalized_prediction": "x_1+x_2",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M27",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G15",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G15",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "x_{1}+x_{2}",
+        "predicted_formula": "x_1+x_3",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "incorrect",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "x_{1}+x_{2}",
+      "normalized_prediction": "x_1+x_3",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "exact_rational_polynomial_identity",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "structure_error",
+        "subscript_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M28",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G16",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G16",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\alpha+\\beta",
+        "predicted_formula": "α + β",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": false,
+      "normalized_match": true,
+      "structural_match": true,
+      "normalized_reference": "\\alpha+\\beta",
+      "normalized_prediction": "\\alpha+\\beta",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M29",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G17",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G17",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "2x+1",
+        "predicted_formula": "3x+1",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "incorrect",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "2x+1",
+      "normalized_prediction": "3x+1",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "exact_rational_polynomial_identity",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M30",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G18",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G18",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "x\\cdot y",
+        "predicted_formula": "x×y",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": true,
+      "normalized_reference": "x\\cdot y",
+      "normalized_prediction": "x\\times y",
+      "equivalence": {
+        "status": "equivalent",
+        "backend": "structural_identity",
+        "reason": "identical_supported_notation",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M31",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G19",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G19",
+        "gold_origin": "synthetic",
+        "reference_status": "absent",
+        "reference_formula": null,
+        "predicted_formula": null,
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "correct",
+      "exact_match": null,
+      "normalized_match": null,
+      "structural_match": null,
+      "normalized_reference": null,
+      "normalized_prediction": null,
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "none",
+        "reason": "no_comparable_formula_pair",
+        "backend_version": null
+      },
+      "error_categories": [],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M32",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G19",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G19",
+        "gold_origin": "synthetic",
+        "reference_status": "absent",
+        "reference_formula": null,
+        "predicted_formula": "x+y",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "extra_formula",
+      "exact_match": null,
+      "normalized_match": null,
+      "structural_match": null,
+      "normalized_reference": null,
+      "normalized_prediction": null,
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "none",
+        "reason": "no_comparable_formula_pair",
+        "backend_version": null
+      },
+      "error_categories": [
+        "extra_formula"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M33",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G01",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G01",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "(a+b)^2=a^2+2ab+b^2",
+        "predicted_formula": null,
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "missing_formula",
+      "exact_match": null,
+      "normalized_match": null,
+      "structural_match": null,
+      "normalized_reference": null,
+      "normalized_prediction": null,
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "none",
+        "reason": "no_comparable_formula_pair",
+        "backend_version": null
+      },
+      "error_categories": [
+        "missing_formula"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M34",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G20",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G20",
+        "gold_origin": "synthetic",
+        "reference_status": "ambiguous",
+        "reference_formula": "\\ell",
+        "predicted_formula": "1",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": null,
+      "normalized_match": null,
+      "structural_match": null,
+      "normalized_reference": null,
+      "normalized_prediction": null,
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "none",
+        "reason": "no_comparable_formula_pair",
+        "backend_version": null
+      },
+      "error_categories": [
+        "ambiguous_source",
+        "not_evaluable"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M35",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G21",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G21",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\begin{matrix}1&0\\\\0&1\\end{matrix}",
+        "predicted_formula": "\\begin{matrix}1&0\\\\0&1\\end{matrix}",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": true,
+      "normalized_match": true,
+      "structural_match": null,
+      "normalized_reference": "\\begin{matrix}1&0\\\\0&1\\end{matrix}",
+      "normalized_prediction": "\\begin{matrix}1&0\\\\0&1\\end{matrix}",
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "none",
+        "reason": "no_comparable_formula_pair",
+        "backend_version": null
+      },
+      "error_categories": [
+        "not_evaluable"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality.",
+        "reference: Unsupported LaTeX command: \\begin",
+        "prediction: Unsupported LaTeX command: \\begin"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M36",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G22",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G22",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\sin{x}",
+        "predicted_formula": "\\sin{x}",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": true,
+      "normalized_match": true,
+      "structural_match": null,
+      "normalized_reference": "\\sin{x}",
+      "normalized_prediction": "\\sin{x}",
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "none",
+        "reason": "no_comparable_formula_pair",
+        "backend_version": null
+      },
+      "error_categories": [
+        "not_evaluable"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality.",
+        "reference: Unsupported LaTeX command: \\sin",
+        "prediction: Unsupported LaTeX command: \\sin"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M37",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G06",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G06",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\frac{x+1}{2}",
+        "predicted_formula": "\\frac{x+1}{2",
+        "formula_format": "latex",
+        "reference_parts": [
+          "x+1"
+        ],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": null,
+      "normalized_reference": "\\frac{x+1}{2}",
+      "normalized_prediction": "\\frac{x+1}{2",
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "none",
+        "reason": "no_comparable_formula_pair",
+        "backend_version": null
+      },
+      "error_categories": [
+        "format_error",
+        "not_evaluable"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality.",
+        "prediction: Expected }, found None"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M38",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G06",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G06",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "\\frac{x+1}{2}",
+        "predicted_formula": "x+1",
+        "formula_format": "latex",
+        "reference_parts": [
+          "x+1"
+        ],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "partially_correct",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "\\frac{x+1}{2}",
+      "normalized_prediction": "x+1",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "exact_rational_polynomial_identity",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "fraction_error",
+        "operator_error",
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality.",
+        "Exact reconstruction of an independently annotated proper source component; the full formula is incomplete."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M39",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G23",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G23",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "(a+b)^2",
+        "predicted_formula": "a+b",
+        "formula_format": "latex",
+        "reference_parts": [
+          "a+b"
+        ],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "partially_correct",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "(a+b)^2",
+      "normalized_prediction": "a+b",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "exact_rational_polynomial_identity",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "exponent_error",
+        "structure_error",
+        "symbol_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality.",
+        "Exact reconstruction of an independently annotated proper source component; the full formula is incomplete."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M40",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G24",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G24",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "x+1",
+        "predicted_formula": "x-1",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "incorrect",
+      "exact_match": false,
+      "normalized_match": false,
+      "structural_match": false,
+      "normalized_reference": "x+1",
+      "normalized_prediction": "x-1",
+      "equivalence": {
+        "status": "not_equivalent",
+        "backend": "sympy",
+        "reason": "exact_rational_polynomial_identity",
+        "backend_version": "1.14.0"
+      },
+      "error_categories": [
+        "operator_error",
+        "structure_error"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M41",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G25",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G25",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "<math><mi>x</mi></math>",
+        "predicted_formula": "<math><mi>x</mi></math>",
+        "formula_format": "mathml",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": false,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": true,
+      "normalized_match": true,
+      "structural_match": null,
+      "normalized_reference": "<math><mi>x</mi></math>",
+      "normalized_prediction": "<math><mi>x</mi></math>",
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "none",
+        "reason": "no_comparable_formula_pair",
+        "backend_version": null
+      },
+      "error_categories": [
+        "format_error",
+        "not_evaluable"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality.",
+        "reference: Unsupported formula format: mathml",
+        "prediction: Unsupported formula format: mathml"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "case": {
+        "schema_version": 1,
+        "case_id": "M42",
+        "source_document_id": "synthetic:math-reference-sheet-v1",
+        "page": null,
+        "section": "G24",
+        "source_reference": "docs/math_evaluation/gold_references.v1.json#/references/G24",
+        "gold_origin": "synthetic",
+        "reference_status": "confirmed",
+        "reference_formula": "x+1",
+        "predicted_formula": "x+1",
+        "formula_format": "latex",
+        "reference_parts": [],
+        "evaluation_notes": [
+          "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+        ],
+        "prediction_ambiguous": true,
+        "prediction_reference": null,
+        "prediction_sha256": null
+      },
+      "evaluation_status": "undetermined",
+      "exact_match": null,
+      "normalized_match": null,
+      "structural_match": null,
+      "normalized_reference": null,
+      "normalized_prediction": null,
+      "equivalence": {
+        "status": "undetermined",
+        "backend": "none",
+        "reason": "no_comparable_formula_pair",
+        "backend_version": null
+      },
+      "error_categories": [
+        "ambiguous_source",
+        "not_evaluable"
+      ],
+      "evaluation_notes": [
+        "Own synthetic source and deliberately authored prediction; tests evaluator behavior, not extraction-model quality."
+      ]
+    }
+  ],
+  "failed_case_ids": [
+    "M04",
+    "M06",
+    "M09",
+    "M11",
+    "M13",
+    "M15",
+    "M16",
+    "M17",
+    "M19",
+    "M21",
+    "M23",
+    "M25",
+    "M27",
+    "M29",
+    "M32",
+    "M33",
+    "M34",
+    "M35",
+    "M36",
+    "M37",
+    "M38",
+    "M39",
+    "M40",
+    "M41",
+    "M42"
+  ]
+}
