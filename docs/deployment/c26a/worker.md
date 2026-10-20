@@ -2,6 +2,10 @@
 
 20.10.2026 · Basis Backend-master `ba5956014e6995538e285ae31741f3f7e89eb2cc`.
 **`deployment_prepared`, nicht `staging_tested`, nicht `production_approved`.**
+Aktuelle Betreiberwahl: **bestehenden Backendcontainer weiterverwenden**.
+[Aktueller Ablauf: Bestandssicherung über penguin und Einzelpilot](existing_backend_and_drive.md)
+hat Vorrang vor den folgenden separaten Composevorlagen. Diese bleiben eine
+vorbereitete Alternative; keine zusätzliche Instanz oder neues Image starten.
 Lokales Integrationspaket mit synthetischem Prozessnachweis; keine Installation
 oder Verbindung zum Hetzner-Host, keine echten Downloads, kein öffentlicher Dienst.
 Hostdaten wurden inzwischen vom Betreiber gemeldet. Der konkrete
@@ -92,6 +96,11 @@ zusätzlichen erwarteten SHA; Abweichungen verhindern die Übergabe.
   fortfahren; keine transaktionale Ganzbatch-Zusage.
 
 ## Bereitstellung und Coolify
+
+Dieser Abschnitt beschreibt die optionale separate Bereitstellung. Er ändert
+nicht die aktuelle Wahl des vorhandenen Containers. Dessen tatsächliche Skripte,
+Mounts und Limits sind zuerst gemäß [Bestandsprüfung](existing_backend_and_drive.md)
+zu bestätigen; die Vorlagenwerte gelten dort nicht automatisch.
 
 [Worker-Compose](../../../deployment/cs50-worker.compose.yaml),
 [Umgebungsvariablen](../../../deployment/cs50-worker.env.example),

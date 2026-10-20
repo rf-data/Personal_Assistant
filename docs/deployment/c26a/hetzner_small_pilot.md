@@ -2,6 +2,9 @@
 
 20.10.2026 · Ergänzung zu [Workervertrag](worker.md) und [Nachweisen](validation.md).
 **`deployment_prepared`; Hostinstallation, Staging und Produktivstart nicht freigegeben.**
+Aktuelle Betreiberwahl: [vorhandenes Backend verwenden und über penguin sichern](existing_backend_and_drive.md).
+Das folgende neue Containerprofil bleibt ausschließlich eine vorbereitete
+Alternative. Keine zusätzliche Instanz und kein neues Image als Standard.
 Kein SSHzugriff, keine Hostdiagnose durch den Agenten, keine Images gebaut/gepullt,
 keine echten Downloads und keine Änderungen an Coolify oder bestehenden Volumes.
 
@@ -11,7 +14,7 @@ Die folgenden Angaben wurden vom Betreiber gemeldet, nicht unabhängig geprüft:
 
 | Bereich | Gemeldeter Stand | Konsequenz für den Pilot |
 | --- | --- | --- |
-| Identität | `ubuntu-4gb-nbg1-2`, Ubuntu, Kernel 6.8.0-138-generic, x86_64 | SSHalias und unabhängige Hostkeybestätigung fehlen |
+| Identität | `ubuntu-4gb-nbg1-2`, Ubuntu, Kernel 6.8.0-138-generic, x86_64; lokaler Alias inzwischen `coolify` | Unabhängige Hostkeybestätigung und Codex-SSHfreigabe fehlen |
 | Account | Aktuell root; kein bestätigter dedizierter Deployaccount | Kein automatisierter Rootzugriff; Account/UIDrechte gesondert freigeben |
 | CPU | Zwei vCPU, AMD EPYC Rome | Ein Worker mit einer CPU; keine Whisper-/großen lokalen LLMjobs |
 | RAM | 3,7 GiB gesamt, 2,5 GiB verfügbar beim Diagnosezeitpunkt | Momentaufnahme, keine Zusage freier Kapazität beim Start |
