@@ -1,5 +1,9 @@
 # C26-B2/B3 – Ein HTML-Dokument im bestehenden Backend
 
+Für einen **neuen**, getrennten Mehrmaterial-Pilot siehe
+[C26-B4: CS50P Week 0](week0_pilot.md). Dieser Einzeldokumentablauf und ein
+bereits abgeschlossener Pilotroot werden dadurch nicht migriert oder verändert.
+
 21.10.2026. Vorbereitet, **kein ausgeführter Realpilot**. B1/#138 und B2/#139 sind
 integriert; B3 basiert auf `d18afa4c8ec45daf02ec5cf51c2edbc3d27244f6`.
 Der Betreiber meldet den erfolgreichen Image-Smoke und verifizierte Discovery-

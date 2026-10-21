@@ -767,3 +767,161 @@ Der eigene Branch `feat/c26b3-admin-bootstrap` und Worktree
 `Personal_Assistant-c26b3` bleiben bis zum PRreview/Merge erhalten; die Integration
 der dauerhaften Dokumente ist damit noch offen. Kein automatischer Merge und
 keine Bereinigung früherer Aufgaben oder fremder Git-Artefakte.
+
+## C26-B4 – Week-0-Batchvorbereitung
+
+21.10.2026. Basis master `23ebca634ad4a2ecf485d31654d4645b32cfa16b`, B3/#140
+gemergt. Der erfolgreiche Notes-Realpilot ist eine Betreiberangabe, keine hier
+erneut ausgeführte Prüfung. Der vorhandene Pilotroot, dessen Jobdatenbank,
+Artefakte, Loviscach und andere Stores wurden weder gelesen noch verändert.
+
+### Implementierter Umfang
+
+Die [neue Week-0-Anleitung](week0_pilot.md) verwendet die vorhandenen C26- und
+C16/C18-Verträge und den unveränderten B3-Bootstrap. `export --resource` kann
+1–8 explizite, unterstützte Week-0-Ressourcen auswählen; `binding.json` enthält
+dann eine begrenzte Liste vorhandener `MaterialResource`-Objekte statt eines
+Einzelobjekts. Kein neuer Manifest-/Queue-/Parser-/Authentifizierungsvertrag.
+Der bisherige Einzelmodus bleibt kompatibel. Eine ungültig lange Bindingliste
+wird vor der Modellkonstruktion abgewiesen; Datei höchstens 64 KiB.
+
+Initialisierung und Readiness prüfen alle Bindings und Einzelgenehmigungen,
+Limits und vollständige Katalog-/Raw-/Receiptclosure. Katalogzeilen müssen genau
+zu den geprüften Einträgen gehören. Jeder C16-Job verweist weiterhin auf genau
+einen erlaubten Katalogref; ein Multi-Katalog ist nicht selbst ein Jobinput.
+Genau ein laufender Job und ein Queueslot bleiben erhalten. Historie höchstens
+`3*N`, globales Jobbudget weiterhin 512 MiB und Reserve 5 GiB. Keine Migration
+des bisherigen Piloten, keine pauschale Scope- oder Rechteerweiterung.
+
+Die bestehende Downloader-Vorschau ergänzt `download_approved` ohne HTTP und
+ohne Änderung ihrer unverbindlichen `selected`-Bedeutung. Tatsächliche Transfers
+prüfen weiterhin jede Einzelgenehmigung und haben keine automatischen Retries.
+Das vorhandene `workflow report` ergänzt eine autorisierte `summary` mit
+Einzelstatus, Fehlern, Raw-/Workflowreporthashes, Block-/Code-/Unitzählungen,
+exakten Ausschluss-IDs/-gründen und Quality-Findings. Grundlage sind erneut
+gehashte C18-Qualitäts- und Handoffdateien und deren bestehende Pydanticmodelle.
+Vollständiger Codeerhalt wird gegen die kanonischen Units geprüft. Fehlende
+Abrechnung bleibt null, kein erfundener Qualitätswert; beide Knowledge-/Execution-
+Flags bleiben false. Keine extrahierten Texte im neuen Summary.
+
+### Inventar und Planung
+
+Die bestehenden Discoverymodelle liefern 16 Week-0-Materialreferenzen:
+fünf unterstützen den bestehenden Materialpfad, davon drei HTML und zwei PDF.
+Elf weitere sind Medien-/Transcript-/ZIP-/ungeklärte Präsentationsreferenzen,
+keine stillschweigend zusätzlichen Dokumente. Weitere Aufgaben/Codeeinzeldateien
+sind nicht vollständig gebunden. Die versionierten Snapshots sowie fehlende
+Originalbundles und die nur berichtete B3-Notesdatei sind im Runbook getrennt
+ausgewiesen. Vollständige fachliche Wochen-/Kursabdeckung bleibt offen.
+
+Zwei rein lokale Metadatenexporte für drei HTMLs bzw. fünf unterstützte Quellen
+validieren vorhandene Pydantic-/Hash-/Discoveryverträge, keine realen Inhalts-
+oder HTTPbundles. Vorhandenes `estimate`: 116.853 Discoverybytes;
+erforderliche freie Bytes **5.935.290.719** / **5.943.913.033** einschließlich
+Reserve und Allowances. Keine gemessenen Remotegrößen, keine Vollkurs-Diskzusage.
+
+### Tatsächliche Offlineprüfung
+
+Python 3.12.12, Pytest 9.1.1, Ruff 0.16.0; vorhandene Projektumgebung ohne
+Installation oder Sync. Testpräfix:
+
+```sh
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 \
+ /home/robfra/0_Portfolio_Projekte/gmp_compliance/.venv/bin/python -m pytest \
+ -q -p no:cacheprovider
+```
+
+Gemeinsame relevante Regression, 222 Fälle:
+
+```sh
+tests/test_cs50_week_pilot.py tests/test_cs50_pilot.py \
+tests/test_cs50_batch_worker.py tests/test_cs50_capacity.py \
+tests/test_cs50_material_mapping.py tests/test_cs50_lecture_adapter.py \
+tests/test_runtime_paths.py tests/test_job_control.py tests/test_worker_image_content.py \
+--basetemp=/dev/shm/c26b4-release
+```
+
+**219 passed / 0 failed / 3 skipped**, 160,67 s. Enthalten sind die damals zehn
+neuen Week-0-Fälle, B3-/Einzeldokumentregression, echte synthetische C16/C18-
+HTML-/PDF-/Codekomponenten, Workerstop/Resume und Runtime-only-CLIprüfungen.
+Skips: normal deaktivierter privilegierter Test sowie optionale native Docker-
+Kontext-/Vollimageprüfungen. Kein vollständiger Dockerbuild oder Docker-Redeploy
+ausgeführt. Dockerfile, COPY-Closure, Dependencies und Bind-Mounts unverändert.
+
+Anschließend wurden zwei Bindinglistengrenzfälle vor Modellkonstruktion ergänzt;
+die gesamte endgültige neue Testdatei wurde erneut ausgeführt. Zusätzlich
+schließen und öffnen alle drei Prozessvarianten den Executor nach dem ersten
+abgeschlossenen Material erneut auf demselben persistenten synthetischen Root.
+Diese zusätzliche Batch-Wiederanlaufprüfung verändert keine Runtimegrenzen.
+Die abschließenden Laufzahlen stehen im folgenden Abschlussvermerk und werden
+nicht zur überlappenden Regression addiert.
+
+Abschließender Lauf derselben neuen Testdatei mit dem obigen Präfix:
+`tests/test_cs50_week_pilot.py --basetemp=/dev/shm/c26b4-week-restart-final`:
+**12 passed / 0 failed / 0 skipped**, 36,24 s. Enthält beide zusätzlichen
+Bindinggrenzfälle und alle drei echten Batch-Executor-Wiederanläufe. Der
+vorherige 12er-Lauf ohne diese zusätzliche Restartaktion hatte ebenfalls
+12 passed, 41,17 s; kein zusätzlicher unabhängiger Prüfumfang.
+
+Die neuen Fälle verwenden mindestens drei echte synthetische HTMLpayloads,
+`httpx.MockTransport`, originale per-source Approvalmodelle, Raw-/Receipthashes,
+Kataloge und den echten C16-/Guardian-/HTML-v2-/Quality-/Handoffprozess. Kein
+statischer Reportmock ersetzt den Prozessablauf. Voller Erfolg, bewusster Cancel
+und tatsächlicher Parser-/Qualityfehler werden getrennt geprüft; unabhängige
+Materialien laufen seriell weiter. Bestätigt: Code mit URL/Whitespace/Unicode
+bleibt erhalten, Referenzblöcke werden separat ausgeschlossen, fertige Jobs
+bleiben bei Resume identisch, manipulierte Handoffbytes ergeben einen Fehler.
+Pending hat null Accounting; Reportfilter zeigen nur ausgewählte Refs, ein
+falsches Token wird abgewiesen. Teil-HTTPfehler, 1-MiB-Überschreitung, fehlende
+Einzelfreigabe und expliziter Retry bewahren erfolgreiche Downloads und
+unveränderte Eingangsdateien. Reale aktuelle Originalinhalte wurden nicht geladen.
+
+Die Mountinfo und freie Kapazität sind in den Pilotfixtures modelliert; echte
+Kernelmounts oder eine Hetznerabnahme werden daraus nicht behauptet. Der
+privilegierte B3-Test wird separat mit tatsächlichem lokalem root:root-0755 und
+wirklich abgesenkter UID/GID1000 wiederholt; nur neue synthetische Testverzeichnisse.
+
+Endgültiger privilegierter Nachweis: **1 passed / 0 failed / 0 skipped**, 1,80 s.
+Lokal `sudo -n env` mit obigen beiden Pytest-Umgebungsvariablen und zusätzlich
+`C26_BOOTSTRAP_PRIVILEGED_TESTS=1`, derselbe Interpreter, `-m pytest -q
+ -p no:cacheprovider tests/test_cs50_pilot.py::test_privileged_root_owned_mounts_real_worker_handoff
+ --basetemp=/dev/shm/c26b3-c26b4-final-handoff`. Der vorgeschriebene Namensschutz
+des unveränderten B3-Tests bleibt erhalten. Ein früherer korrekter Aufruf in
+`/dev/shm/c26b3-c26b4-handoff` hatte 1 passed, 2,44 s; überlappender Nachweis.
+
+Ruff Check und Format Check für die vier geänderten Pythondateien sowie
+`git diff --check` erfolgreich. Shellbeispiele ausschließlich `bash -n`,
+eingebettete Pythonbeispiele ausschließlich ASTvalidiert, lokale Markdownziele
+geprüft. Keine vorbereiteten Host-/Download-/Processingbefehle ausgeführt.
+
+Entwicklungsläufe bleiben getrennt: zuerst 4 pass/1 fail (falscher einzelner
+Test-Planhelfer), dann 5 pass/2 fail (zu enge Jobref-Prüfung und noch nicht vom
+Executor abgearbeiteter Cancel), dann 7 pass/1 fail (Test ordnete einen
+manipulierten Ref fälschlich nach Listenindex statt Identität zu). Ein 131er-Lauf
+hatte 129 pass/1 fail/1 skip: der negative Tokentest lieferte eine übergroße
+Policydatei und traf daher die Größenprüfung statt Authentifizierung. Mit einem
+echten synthetischen falschen Token besteht dieser Fall separat und im grünen
+gemeinsamen Lauf. Keine Assertions, Ownership-/Cleanup- oder Gateprüfungen wurden
+abgeschwächt. Ein erster privilegierter Aufruf scheiterte vor der Übergabe an der
+unveränderten Testroot-Namenssicherung; erneuter Aufruf im passenden eigenen
+Root erfolgreich. Keine Baselinefehler oder zusätzlichen Qualitätswerte erfunden.
+
+### Betriebsfreigaben und Lifecycle
+
+Offen bleiben Review/Merge, kontrollierter Update des **bestehenden** Backend-
+Images, ein frisches gleichversioniertes Bundle, neue explizite Root-/Policy-/
+Tokenpfade, tatsächlicher Principal und alle Einzelentscheidungen zu Nutzung,
+Lizenz/Robots, Download/Processing, Zugriff/Retention/Widerruf. Die alten Pilot-
+und Bundledateien bleiben unverändert. Hostkapazität und ausschließlich ein
+laufender Executor müssen vor Ort bestätigt werden. Keine neue Infrastruktur.
+
+Keine SSHverbindung, Coolify-/Containeränderung, echten Downloads oder realen
+Processingjobs. Keine Original-/Cloud-/LLM-/Whisper-/Embedding-/Qdrantverarbeitung.
+Vollkursverarbeitung, historische Migration, vollständiges Materialinventar,
+unabhängiges Gold und fachliche Freigabe bleiben separate offene Voraussetzungen.
+
+Der eigene Branch `feat/c26b4-week0-batch-pilot` und Worktree
+`Personal_Assistant-c26b4` bleiben für den offenen PR erhalten. Integration der
+dauerhaften Dokumente in master steht bis zum Review/Merge aus. Ausschließlich
+eigene synthetische Tests/Caches werden entfernt; keine Bereinigung älterer
+Branches, Worktrees, produktiver Daten oder MAINT-Bestände, kein automatischer Merge.

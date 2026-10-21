@@ -327,25 +327,57 @@ def operator_token(root):
     return private(root / "operator.token")  # Existing non-bootstrap setups.
 
 
-def limits():
+def limits(count=1):
+    if not 1 <= count <= 8:
+        raise Blocked("one_to_eight_explicit_materials_required")
     return CapacityLimits(
         reserve_bytes=RESERVE,
-        max_materials=1,
+        max_materials=count,
         archive_bytes=64 * 1024**2,
         catalog_bytes=128 * 1024**2,
         job_bytes=512 * 1024**2,
     )
 
 
-def selected(manifest):
-    batch = api.plan(manifest, [COURSE], [SOURCE])
+def selected(manifest, resources=None):
+    if resources is not None and (
+        not 1 <= len(resources) <= 8 or len(set(resources)) != len(resources)
+    ):
+        raise Blocked("one_to_eight_explicit_materials_required")
+    batch = api.plan(manifest, [COURSE], [SOURCE] if resources is None else resources)
+    if resources is not None:
+        if any(
+            "0" not in b.resource.section_keys or not api.supported(b)
+            for b in batch.materials
+        ):
+            raise Blocked("supported_week_zero_materials_required")
+        return batch
     (binding,) = batch.materials
     if (binding.original_url, binding.format, binding.role) != (URL, "html", "notes"):
         raise Blocked("selection_binding_mismatch")
     return batch
 
 
-def export(snapshot_root, destination):
+def declared(manifest, binding_file):
+    data = _json(read_file(binding_file, 65536))
+    if isinstance(data, list) and not 1 <= len(data) <= 8:
+        raise Blocked("one_to_eight_explicit_materials_required")
+    bindings = (
+        tuple(MaterialResource.model_validate(b) for b in data)
+        if isinstance(data, list)
+        else (MaterialResource.model_validate(data),)
+    )
+    batch = (
+        selected(manifest, [b.source_id for b in bindings])
+        if isinstance(data, list)
+        else selected(manifest)
+    )
+    if batch.materials != bindings:
+        raise Blocked("source_binding_changed")
+    return batch
+
+
+def export(snapshot_root, destination, resources=None):
     """Copy exactly two already-versioned discovery snapshots, not a live page."""
     snapshot_root = safe_path(Path(snapshot_root))
     destination = artifact_root(Path(destination))
@@ -367,8 +399,13 @@ def export(snapshot_root, destination):
     for name, data in contents.items():
         publish_bytes(destination / name, data)
     api.output(destination / "manifest.json", manifest)
-    batch = selected(destination / "manifest.json")
-    api.output(destination / "binding.json", batch.materials[0].model_dump(mode="json"))
+    batch = selected(destination / "manifest.json", resources)
+    api.output(
+        destination / "binding.json",
+        [b.model_dump(mode="json") for b in batch.materials]
+        if resources is not None
+        else batch.materials[0].model_dump(mode="json"),
+    )
     # Bind the exported helper version to the reviewed deployed runtime.
     publish_bytes(destination / "cs50_pilot.py", Path(__file__).read_bytes())
     api.output(
@@ -379,7 +416,14 @@ def export(snapshot_root, destination):
             if p.is_file()
         },
     )
-    return {"status": "prepared", "source_id": SOURCE, "downloaded": False}
+    return {
+        "status": "prepared",
+        "source_id": batch.materials[0].source_id
+        if len(batch.materials) == 1
+        else None,
+        "source_ids": [b.source_id for b in batch.materials],
+        "downloaded": False,
+    }
 
 
 def bundle(path):
@@ -393,11 +437,7 @@ def bundle(path):
             raise Blocked("bundle_hash_mismatch")
     if inventory["cs50_pilot.py"] != api.sha(Path(__file__).read_bytes()):
         raise Blocked("helper_version_does_not_match_bundle")
-    batch = selected(path / "manifest.json")
-    binding = MaterialResource.model_validate_json(read_file(path / "binding.json"))
-    if batch.materials != (binding,):
-        raise Blocked("bundle_binding_mismatch")
-    return batch
+    return declared(path / "manifest.json", path / "binding.json")
 
 
 def initialize(source_bundle, root, subject, token_file, *, prepared=False):
@@ -425,7 +465,7 @@ def initialize(source_bundle, root, subject, token_file, *, prepared=False):
     authenticate(
         Settings(root=root / "jobs", identities=(identity,)), "Bearer " + token
     )
-    policy = limits()
+    policy = limits(len(batch.materials))
     if (
         shutil.disk_usage(root.parent).free
         < estimate(batch, policy)["required_free_before_new_batch_bytes"]
@@ -444,31 +484,38 @@ def initialize(source_bundle, root, subject, token_file, *, prepared=False):
     api.output(root / "identity.json", identity.model_dump(mode="json"))
     if not prepared:
         publish_bytes(root / "operator.token", token.encode() + b"\n")
-    b = batch.materials[0]
-    # Intentionally incomplete operator form; existing SourceApproval rejects it.
-    request = dict(
-        material_id=b.material_id,
-        source_id=b.source_id,
-        course_id=COURSE,
-        original_url=URL,
-        download=False,
-        process=False,
-        expected_sha256=None,
-    )
-    for name in (
-        "approval",
-        "usage",
-        "license_review",
-        "robots_review",
-        "retention",
-        "revocation",
-    ):
-        request[name + "_reference"] = ""
+    requests = []
+    for b in batch.materials:
+        request = dict(
+            material_id=b.material_id,
+            source_id=b.source_id,
+            course_id=COURSE,
+            original_url=b.original_url,
+            download=False,
+            process=False,
+            expected_sha256=None,
+        )
+        for name in (
+            "approval",
+            "usage",
+            "license_review",
+            "robots_review",
+            "retention",
+            "revocation",
+        ):
+            request[name + "_reference"] = ""
+        requests.append(request)
     api.output(
         root / "approvals.json",
-        {"schema_version": 1, "sources": [request], "min_interval_seconds": 2.0},
+        {"schema_version": 1, "sources": requests, "min_interval_seconds": 2.0},
     )
-    return {"status": "awaiting_operator_approval", "source_id": SOURCE}
+    return {
+        "status": "awaiting_operator_approval",
+        "source_id": batch.materials[0].source_id
+        if len(batch.materials) == 1
+        else None,
+        "source_ids": [b.source_id for b in batch.materials],
+    }
 
 
 def inputs(root):
@@ -488,17 +535,14 @@ def inputs(root):
         policy = load_limits(root / "limits.json")
     except (OSError, ValueError) as error:
         raise Blocked("limits_missing_or_invalid") from error
-    if policy != limits():
-        raise Blocked("single_html_pilot_limits_changed")
     try:
-        batch = selected(root / "inputs/manifest.json")
-        declared = MaterialResource.model_validate_json(
-            read_file(private(root / "inputs/binding.json"))
+        batch = declared(
+            root / "inputs/manifest.json", private(root / "inputs/binding.json")
         )
     except (OSError, ValueError) as error:
         raise Blocked("discovery_manifest_or_binding_invalid") from error
-    if batch.materials != (declared,):
-        raise Blocked("source_binding_changed")
+    if policy != limits(len(batch.materials)):
+        raise Blocked("single_html_pilot_limits_changed")
     if (root / "batch.json").exists() and api.load_batch(root / "batch.json") != batch:
         raise Blocked("batch_binding_changed")
     try:
@@ -522,14 +566,15 @@ def grants(root, batch):
     try:
         approvals = api.load_approvals(root / "approvals.json")
         for step in ("download", "process"):
-            api.approval(batch.materials[0], approvals, step)
+            for b in batch.materials:
+                api.approval(b, approvals, step)
     except (OSError, ValueError) as error:
         raise Blocked("explicit_source_download_process_approval_missing") from error
     return approvals
 
 
-def archive_check(root, batch, approvals):
-    binding = api.reviewed(batch.materials[0])
+def archive_check(root, batch, approvals, material=None):
+    binding = api.reviewed(material or batch.materials[0])
     downloader = MaterialDownloader(root / "archive", max_bytes=batch.max_bytes)
     raw, receipt_path = downloader.paths(binding)
     data = read_file(private(raw), batch.max_bytes)
@@ -538,7 +583,8 @@ def archive_check(root, batch, approvals):
     if (
         receipt.origin != "http_download"
         or receipt.status not in {"verified", "completed"}
-        or receipt.mime_type not in {"text/html", "application/xhtml+xml"}
+        or binding.format == "html"
+        and receipt.mime_type not in {"text/html", "application/xhtml+xml"}
         or api.sha(data) != receipt.raw_sha256
     ):
         raise Blocked("verified_bounded_http_html_receipt_required")
@@ -563,34 +609,49 @@ def catalog(root, batch, approvals):
         {k: v for k, v in document.items() if k != "sha256"}
     ):
         raise Blocked("catalog_digest_mismatch")
-    if (
-        document["batch_sha256"] != fingerprint(batch.model_dump(mode="json"))
-        or len(document["catalog"]) != 1
-    ):
+    if document["batch_sha256"] != fingerprint(batch.model_dump(mode="json")) or len(
+        document["catalog"]
+    ) != len(batch.materials):
         raise Blocked("single_batch_catalog_required")
     downloader = MaterialDownloader(root / "archive", max_bytes=batch.max_bytes)
-    b = api.reviewed(batch.materials[0])
-    archive_check(root, batch, approvals)
-    ref, raw_entry = next(iter(document["catalog"].items()))
-    entry = CatalogEntry.model_validate(raw_entry)
+    expected = {b.material_id: b for b in batch.materials}
+    seen = set()
+    observed = {}
+    for ref, raw_entry in document["catalog"].items():
+        entry = CatalogEntry.model_validate(raw_entry)
+        if (
+            entry.root != root / "catalog" / ref
+            or entry.course_ids != (COURSE,)
+            or entry.kind != "workflow_bundle"
+        ):
+            raise Blocked("catalog_scope_or_root_mismatch")
+        files = verified_files(entry)
+        prepared = prepare(entry)
+        if len(prepared.bindings) != 1:
+            raise Blocked("catalog_source_binding_mismatch")
+        binding = next(iter(prepared.bindings.values()))
+        if expected.get(binding.material_id) != binding or binding.material_id in seen:
+            raise Blocked("catalog_source_binding_mismatch")
+        seen.add(binding.material_id)
+        archive_check(root, batch, approvals, binding)
+        raw, http_receipt = downloader.paths(api.reviewed(binding))
+        if files["raw.source"] != read_file(raw, batch.max_bytes) or files[
+            "download_receipt.v1.json"
+        ] != read_file(http_receipt):
+            raise Blocked("catalog_archive_bytes_differ")
+        observed[binding.material_id] = (ref, api.sha(files["raw.source"]))
+    rows = document["materials"]
     if (
-        entry.root != root / "catalog" / ref
-        or entry.course_ids != (COURSE,)
-        or entry.kind != "workflow_bundle"
+        len(rows) != len(expected)
+        or {r["material_id"] for r in rows} != set(expected)
+        or any(
+            r["status"] != "sealed"
+            or r["course_id"] != COURSE
+            or (r.get("source_ref"), r.get("raw_sha256")) != observed[r["material_id"]]
+            for r in rows
+        )
     ):
-        raise Blocked("catalog_scope_or_root_mismatch")
-    files = verified_files(entry)
-    raw, http_receipt = downloader.paths(b)
-    if files["raw.source"] != read_file(raw, batch.max_bytes) or files[
-        "download_receipt.v1.json"
-    ] != read_file(http_receipt):
-        raise Blocked("catalog_archive_bytes_differ")
-    prepared = prepare(entry)
-    if (
-        len(prepared.bindings) != 1
-        or next(iter(prepared.bindings.values())) != batch.materials[0]
-    ):
-        raise Blocked("catalog_source_binding_mismatch")
+        raise Blocked("catalog_material_rows_inconsistent")
     return document
 
 
@@ -603,7 +664,7 @@ def controller(root, document, identity):
         workflows_enabled=True,
         max_parallel=1,
         max_queued=1,
-        max_jobs=3,
+        max_jobs=3 * len(document["catalog"]),
         worker_ttl=10,
     )
 
@@ -612,14 +673,18 @@ def configure(root):
     root, _policy, batch, identity = inputs(root)
     if (root / "jobs/jobs.sqlite3").exists():
         raise Blocked("existing_job_database_must_not_be_adopted")
-    idle(root / "jobs")
+    idle(root / "jobs", 3 * len(batch.materials))
     document = catalog(root, batch, grants(root, batch))
     settings = controller(root, document, identity)
     api.output(root / "controller.json", settings.model_dump(mode="json"))
-    return {"status": "configured", "source_ref": next(iter(settings.catalog))}
+    return {
+        "status": "configured",
+        "source_ref": next(iter(settings.catalog)),
+        "source_refs": list(settings.catalog),
+    }
 
 
-def idle(root):
+def idle(root, max_jobs=3):
     """Read-only stopped-worker inspection, never Store(), recovery or lock creation."""
     if (root / "quarantine").exists():
         raise Blocked("job_quarantine_requires_operator_investigation")
@@ -662,9 +727,11 @@ def idle(root):
                 raise Blocked("unknown_job_database_schema")
             jobs = [
                 Job.model_validate_json(data)
-                for (data,) in connection.execute("SELECT data FROM jobs LIMIT 4")
+                for (data,) in connection.execute(
+                    "SELECT data FROM jobs LIMIT ?", (max_jobs + 1,)
+                )
             ]
-            if len(jobs) > 3:
+            if len(jobs) > max_jobs:
                 raise Blocked("pilot_job_history_limit_exceeded")
             for job in jobs:
                 if job.status in {"queued", "running", "cancel_requested"}:
@@ -687,7 +754,7 @@ def preflight(root, phase):
         ("reports", policy.report_bytes),
     ):
         check_capacity(root / name, maximum, policy.reserve_bytes)
-    jobs = idle(root / "jobs")
+    jobs = idle(root / "jobs", 3 * len(batch.materials))
     archive = {"status": "not_downloaded"}
     if phase == "plan":
         if (root / "batch.json").exists() or (root / "catalog").exists():
@@ -699,16 +766,36 @@ def preflight(root, phase):
             raise Blocked("catalog_already_published_use_processing_checks")
         if phase == "download":
             downloader = MaterialDownloader(root / "archive", max_bytes=batch.max_bytes)
-            binding = api.reviewed(batch.materials[0])
-            raw, receipt = downloader.paths(binding)
-            if raw.exists() or receipt.exists():
-                try:
-                    archive = archive_check(root, batch, approvals)
-                except (ValueError, OSError) as error:
-                    raise Blocked("archive_requires_explicit_investigation") from error
+            observations = []
+            for material in batch.materials:
+                raw, receipt = downloader.paths(api.reviewed(material))
+                if raw.exists() or receipt.exists():
+                    try:
+                        observations.append(
+                            archive_check(root, batch, approvals, material)
+                        )
+                    except (ValueError, OSError) as error:
+                        raise Blocked(
+                            "archive_requires_explicit_investigation"
+                        ) from error
+            if observations:
+                archive = (
+                    observations[0]
+                    if len(batch.materials) == 1
+                    else {"materials": observations}
+                )
         if phase == "process":
             document = catalog(root, batch, approvals)
-            archive = archive_check(root, batch, approvals)
+            archive = (
+                archive_check(root, batch, approvals)
+                if len(batch.materials) == 1
+                else {
+                    "materials": [
+                        archive_check(root, batch, approvals, b)
+                        for b in batch.materials
+                    ]
+                }
+            )
             expected = controller(root, document, identity)
             try:
                 actual = Settings.model_validate_json(
@@ -722,7 +809,8 @@ def preflight(root, phase):
                 if (
                     job.initiated_by != identity.subject
                     or job.process_id != "cs50_offline_workflow"
-                    or tuple(job.input_refs) != tuple(actual.catalog)
+                    or len(job.input_refs) != 1
+                    or job.input_refs[0] not in actual.catalog
                     or job.parameters.get("course_id") != COURSE
                 ):
                     raise Blocked("foreign_job_in_pilot_database")
@@ -733,7 +821,10 @@ def preflight(root, phase):
     return {
         "status": "ready",
         "phase": phase,
-        "source_id": SOURCE,
+        "source_id": batch.materials[0].source_id
+        if len(batch.materials) == 1
+        else None,
+        "source_ids": [b.source_id for b in batch.materials],
         "reserve_bytes": policy.reserve_bytes,
         "max_raw_bytes": batch.max_bytes,
         "archive": archive,
@@ -747,6 +838,7 @@ def main(argv=None):
     p = sub.add_parser("export")
     p.add_argument("--snapshots", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--resource", action="append")
     p = sub.add_parser("init")
     p.add_argument("--bundle", type=Path, required=True)
     p.add_argument("--root", type=Path, required=True)
@@ -781,7 +873,7 @@ def main(argv=None):
     os.umask(0o077)
     try:
         if args.command == "export":
-            result = export(args.snapshots, args.output)
+            result = export(args.snapshots, args.output, args.resource)
         elif args.command == "authorize-paths":
             result = authorize_paths(args.root, args.output)
         elif args.command == "init":
