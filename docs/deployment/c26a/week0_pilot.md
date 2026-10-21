@@ -146,6 +146,54 @@ C26_TOKEN=/app/configuration/c26_week0_01.token
 ```
 
 Neues Bundle ebenfalls an einen neuen, bestätigten Konfigurationspfad übertragen.
+Wie im erfolgreichen B3-Setup muss es für UID 1000 lesbar sein. `docker cp`
+ohne Archivoption erzeugt im Container normalerweise Root-Ownership; die
+privaten 0700/0600-Modi aus dem Export erteilen UID 1000 dann noch keinen Zugriff.
+Für **ausschließlich den gerade neu übertragenen** Metadatenordner, nach Prüfung
+seines vertrauenswürdig übertragenen `files.json`-Digests, folgende begrenzte
+Betreiberübergabe im exklusiven Setupfenster. Der neue Zielname muss mit
+`c26_week0_bundle_` beginnen; kein bestehendes B3-Bundle verwenden:
+
+```sh
+docker exec --user 0:0 --workdir /app -i "$C26_BACKEND_CONTAINER" \
+  /app/.venv/bin/python -B - "$C26_CONTAINER_BUNDLE" <<'C26_BUNDLE_HANDOFF_PY'
+import os, stat, sys
+from pathlib import Path
+from scripts import cs50_pilot as pilot
+from src.job_control.catalog import safe_path
+p = safe_path(Path(sys.argv[1]))
+assert p.parent == Path('/app/configuration')
+assert p.name.startswith('c26_week0_bundle_')
+files = ['manifest.json', 'binding.json', 'cs50_pilot.py', 'files.json']
+assert {x.name for x in p.iterdir()} == set(files) | {'cs50_python'}
+assert {x.name for x in (p / 'cs50_python').iterdir()} == {'index.html', 'week_0.html'}
+pilot.bundle(p)  # Existing hashes, helper revision and exact selected bindings.
+paths = [p / n for n in files + ['cs50_python/index.html', 'cs50_python/week_0.html']]
+paths += [p / 'cs50_python', p]  # Handoff root last; no recursive chmod/chown.
+for path in paths:
+    safe_path(path)
+    info = path.stat()
+    assert info.st_uid == 0
+    assert path.is_dir() or (stat.S_ISREG(info.st_mode) and info.st_nlink == 1)
+    assert stat.S_IMODE(info.st_mode) == (0o700 if path.is_dir() else 0o600)
+for path in paths:
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        os.fchown(fd, 1000, 1000)
+    finally:
+        os.close(fd)
+print('new_metadata_bundle_handed_to_worker')
+C26_BUNDLE_HANDOFF_PY
+docker exec --user 1000:1000 --workdir /app "$C26_BACKEND_CONTAINER" \
+  /app/.venv/bin/python -B -c \
+  'import sys; from pathlib import Path; from scripts.cs50_pilot import bundle; bundle(Path(sys.argv[1])); print("bundle_readable_and_verified")' \
+  "$C26_CONTAINER_BUNDLE"
+```
+
+Bei bereits korrekter Worker-Ownership nur den letzten Lesetest verwenden.
+Ein teilweiser Übergabefehler verlangt eine Betreiberentscheidung, keine
+Wiederübernahme unbekannter Dateien. Keine Stammrechte, Inhalte oder alten
+Konfigurationen ändern; die Befehle wurden hier nur syntaktisch geprüft.
 Wie B3 genau einmal `bootstrap --worker-uid 1000 --worker-gid 1000` als root,
 danach `verify-bootstrap` und `init --prepared` als 1000:1000. Die drei oder fünf
 SourceApproval-Zeilen vervollständigen. Alle folgenden Befehle in diesem neuen
