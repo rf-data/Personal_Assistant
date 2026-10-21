@@ -3,6 +3,8 @@
 Der [C26-B1-Nachtrag](#c26-b1--worker-image-integration) vom 21.10.2026
 ergänzt den folgenden historischen C26-A-Stand um die Skriptintegration des
 bestehenden Worker-Dockerfiles. Keine nachträgliche Umdeutung älterer Testläufe.
+Die [C26-B2-Pilotvorbereitung](#c26-b2--html-pilotvorbereitung) ergänzt den
+quellengenauen Ablauf, Betriebsdateien und die separat genehmigte Mountkorrektur.
 
 20.10.2026 · Status **`deployment_prepared`**.
 Die [Bereitstellung und Betreiberfreigaben](worker.md) sind vorbereitet.
@@ -455,3 +457,153 @@ Eigener Branch `feat/c26b1-worker-image-entrypoints` und Worktree bleiben für d
 regulären offenen PR erhalten. Kein automatischer Merge, keine Bereinigung
 historischer oder fremder Branches/Worktrees. Gitintegration, tatsächlicher
 Imagebuild und Hetzner-/Pilotabnahme sind getrennte verbleibende Schritte.
+
+## C26-B2 – HTML-Pilotvorbereitung
+
+21.10.2026, Basis `7420df62765aab127f5abeb3e39d355678844148`, B1/#138 gemergt.
+Die erfolgreiche Aktualisierung und vier CLI-Smokes des laufenden Workers sowie
+die vier Bind-Mounts und zuletzt 14 GiB freien Speicher hat der Betreiber
+gemeldet. Keine eigene Hetznerdiagnose. Der konkrete
+[HTML-Pilotablauf](html_pilot.md) verwendet ausschließlich vorhandene C26/C16/C18-
+Modelle, genau eine bestehende offizielle Notes-Resource und fünf aktive Stufen.
+
+### Gefundene Ursache und eng begrenzte Korrektur
+
+`Settings.private_paths` und `storage.artifact_root` lehnten sämtliche Ziele
+lexikalisch unter ihrem Codecheckout ab. Im Worker ist dieser `/app`, weshalb
+auch `/app/data/<Pilot>` scheiterte. Der Betreiber hat die gezielte Korrektur
+ausdrücklich genehmigt, einschließlich Mountidentität, Zweckbindung, privater
+Roots und Workerrechte; keine Freigabe für Servereingriffe.
+
+`src.runtime_paths.output_path` ergänzt nun beide bestehenden Prüfstellen.
+Externe Workspaces behalten ihren Vertrag. Interne Datenroots benötigen die
+explizite, private, UID-gebundene Policy über `PA_PERSISTENT_ROOTS_FILE`.
+Repository, genauer Unterbaum, Zweck und Mountidentität müssen übereinstimmen.
+Kein Default aufgrund des Namens `data`; Codebereiche bleiben gesperrt.
+Die Policy wird nicht gecacht. Kernelmountdaten, Symlinkfreiheit, unveränderte
+Auflösung, private Ownership und tatsächliche Schreibrechte werden erneut geprüft.
+Verschachtelte/gestapelte Mounts, unbekannte oder nicht persistente Dateisysteme,
+unlesbare Daten und fremd schreibbare Mounteltern bleiben gesperrt.
+
+Geprüfte Aufrufstellen: Materialdownload/-publikation und C26-Output verwenden
+weiter `artifact_root`; C16-Konfiguration verwendet weiter `Settings`.
+Guardian/Executor reichen ausschließlich den expliziten Policypfad zusätzlich
+in ihrer bereinigten Umgebung weiter. Kindprozesse validieren selbst erneut;
+keine übrigen Secrets oder Hostumgebung übernommen. Keine Änderung an Queue,
+SQLite-/Workflow-/Materialschemas, Source-IDs, Receiptbytes oder Parsern.
+C23-Store- und sonstige Repositorygrenzen bleiben unverändert.
+
+### Generator, Source und Readiness
+
+`scripts.cs50_pilot` exportiert genau die zwei bereits versionierten
+CS50-Python-Discovery-Snapshots, prüft deren feste SHAwerte und die vorhandene
+Notes-0-Identität. Ein lokaler tatsächlicher Export bestand; keine aktuelle
+Notes-Seite gelesen oder heruntergeladen. Manifest/Binding sind die vorhandenen
+Modelle, ohne private absolute Pfade im exportierten Source-Binding.
+Der Export kopiert ausschließlich schon versionierte Discoverybytes, keine
+Originalbestände, Credentials, Tokens oder produktiven Konfigurationen.
+
+Der Helfer erstellt nur nach ausdrücklichem Setupconfirm einen neuen privaten
+Bereich, Pfadpolicy, tatsächliche Identity/Tokenbindung, bestehende Limits und
+ein absichtlich **unbestätigtes** SourceApproval-Formular. Katalog und Controller
+entstehen erst nach gültigem vorhandenem Receipt/Bundle; niemals bestehende Roots
+oder Jobdatenbanken übernehmen. Der authentifizierte Principal wird vom Betreiber
+benannt, kein Beispielnutzer als real ausgegeben. Neue CLI im bisherigen
+Worker-Dockerfile gezielt ergänzt; kein zweiter Dienst oder neue Dependency.
+
+Preflight ist phasengebunden (plan/download/process), Exit 2 bei Blockern.
+Es erzeugt weder Dateien, SQLiteinitialisierung, Lockdateien noch HTTPverkehr.
+Nur vorhandene Locks nonblocking prüfen; bei DBbestand fehlende Lockbelege,
+nichtleeres WAL/Journal, unbekannte Schemas, laufende oder fremde Jobs sperren.
+Der spätere Writer bleibt für Autorisierung/Hashprüfung und Reservierung maßgeblich.
+Kontrollierter Workerrestart ist über bestehende C16-/C18-Mechanismen dokumentiert;
+kein Neustart des Containers und kein automatischer Resume durch den Helfer.
+
+### Tatsächliche lokale Prüfung
+
+Vorhandene Pythonumgebung unverändert: Python 3.12.12, Pytest 9.1.1,
+Pydantic 2.13.4, PyMuPDF 1.28.2, Ruff 0.16.0. Keine Paketinstallation,
+keine Lockänderung. Gemeinsames Pytestpräfix:
+
+```sh
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 \
+  "$C26_PYTHON" -m pytest -q -p no:cacheprovider
+```
+
+Abschließender Lauf auf dem endgültigen Pythoncode:
+
+```sh
+tests/test_runtime_paths.py tests/test_cs50_pilot.py tests/test_job_control.py \
+--basetemp=/dev/shm/c26b2-final
+```
+
+**91 passed / 0 failed / 0 skipped, 19,41 s**: 34 neue Pfad-/Mountfälle,
+21 neue Generator-/Preflight-/Pilotfälle und 36 bestehende C16-Fälle.
+Neue Fälle prüfen reale private Dateien/Policies und synthetische Kernelrecords:
+gleichnamige ungemountete Verzeichnisse, Zweck-/Subtree-/UIDgrenzen, Codepfade,
+Traversal/Symlinks, Nested/Stacked/Changed-Mounts, fehlende Mountdaten, private
+Policylage/-rechte, Revocation, Escaping und tatsächliche Zugriffsablehnung.
+
+Der vollständige neue synthetische Ablauf nutzt echten MockTransport-Receipt,
+Katalogversiegelung, konfigurierte C16-Authentifizierung, tatsächlichen Executor
+mit Guardian-/HTML-Workerprozessen und fünf C18-Stufen. Ein Job, completed,
+sämtliche Outputgrößen/-hashes korrekt; Resume legt keinen zweiten Job an.
+Keine bloß vorgefertigten APIantworten. Der HTTPtransport, die Kernelmountrecords
+und der verfügbare Speicher sind ausdrücklich synthetisch modelliert: lokal sind
+keine 5 GiB frei, die produktive Reserve wurde nicht abgesenkt. Die realen
+Kindprozesse arbeiten in temporären externen Testroots. Das ist kein realer
+Container-Bind-Mount-, Hostvolume-, Containerrestart- oder Hetznernachweis.
+
+Breitere relevante Regression vor den abschließenden Ergänzungen an Parentrechten
+und den Preflightchecks:
+
+```sh
+tests/test_job_control.py tests/test_deployment_operations.py \
+tests/test_cs50_material_download.py tests/test_cs50_batch_worker.py \
+tests/test_cs50_capacity.py tests/test_cs50_workflows.py \
+tests/test_worker_image_content.py --basetemp=/dev/shm/c26b2-regression
+```
+
+**154 passed / 0 failed / 2 skipped, 209,57 s.** Skips sind native optionale
+Docker-Kontextprüfung und vollständiger Worker-Imagetest. Die native Kontextprüfung
+wurde separat mit `C26_WORKER_CONTEXT_AUDIT=1` ausgeführt:
+`tests/test_worker_image_content.py::test_native_docker_context_excludes_private_files
+ --basetemp=/tmp/c26b2-native-context`: **1 passed, 2,44 s**. Scratch-Export nur
+synthetischer Dateien, kein Workerbuild, kein bestehender Container verändert.
+Der vollständige Imagetest bleibt nicht ausgeführt; kein gebautes B2-Workerimage
+vorhanden, kein Vollbuild/Host-Redeploy Bestandteil der Freigabe.
+
+Die 36 C16-Fälle überschneiden sich mit dem finalen 91er-Lauf; nicht addieren.
+Nach dem breiteren Lauf wurden Mounteltern zusätzlich gegen fremde Schreibrechte
+geschützt und die neuen Preflight-/HTTP-/DBprüfungen vervollständigt. Der endgültige
+91er-Lauf enthält die betroffenen neuen Fälle plus C16; keine neue gemeinsame
+grüne 156er-Suite oder vollständige Repositorytestsuite behauptet.
+
+Entwicklungsläufe getrennt: Pfade **31 passed, 1,00 s**; erste Pilotsuite
+**15 passed / 2 failed, 8,47 s** (Vergleich des unveränderten Discoverybindings
+mit dem separat als lizenzgeprüft markierten Receiptbinding). Korrigiert wurde
+der Vergleich, keine Hash-/Rechteprüfung entfernt. Danach **48 passed, 15,19 s**,
+**49 passed, 10,75 s**, **54 passed, 11,30 s**; diese überlappen die finale Suite.
+
+Ruff Check und Format Check für alle acht geänderten Pythondateien erfolgreich.
+42 Shellblöcke in den vier betroffenen Dokumenten ausschließlich mit `bash -n`,
+drei eingebettete Pythonbeispiele ausschließlich mit AST geprüft; 29 lokale
+Markdownverweise gültig, `git diff --check` erfolgreich. Die vorbereiteten
+Host-/Containerbefehle wurden dabei als Daten geprüft, nicht ausgeführt.
+
+### Offene Betreiberentscheidungen und Lifecycle
+
+Noch erforderlich: PRreview/Merge, freigegebener Codeupdate des bestehenden Workers,
+erneuter Smoke, echte Mount-/Benutzer-/Ressourcenprüfung, exakte neue private
+Pilot-/Policy-/Token-/Bundlepfade, tatsächlicher Principal sowie sourcebezogene
+Nutzungs-/Lizenz-/Robots-/Retentions-/Widerrufbelege und Download-/Processingfreigabe.
+Realer Download, aktuelle Notesbytes/-größe/-HTTPstatus, tatsächliche Hostreserve,
+Mountpersistenz und Restart auf Hetzner bleiben `not_checked`.
+Reale Ausführung bleibt bis zu diesen Entscheidungen **blocked**.
+
+Keine SSHverbindung, kein Build/Redeploy auf Hetzner, keine realen CS50-Downloads,
+LLM-, Embedding-, Cloud- oder Qdrantaufrufe und keine Loviscach-/Storeänderung.
+Der eigene Branch `feat/c26b2-single-html-pilot` und Worktree bleiben für den
+offenen regulären PR erhalten. Keine Bereinigung anderer oder historischer
+Git-Artefakte, kein automatischer Merge. Ein technischer PR erteilt keine
+Quellenfreigabe oder fachliche Realabnahme.

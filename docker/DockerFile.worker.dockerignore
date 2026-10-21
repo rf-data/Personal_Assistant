@@ -16,6 +16,7 @@
 !scripts/deployment.py
 !scripts/cs50_materials.py
 !scripts/cs50_workflow.py
+!scripts/cs50_pilot.py
 !scripts/worker_image_smoke.py
 **/__pycache__
 **/__pycache__/**

@@ -104,18 +104,10 @@ class Settings(Contract):
 
     @model_validator(mode="after")
     def private_paths(self):
-        repo = Path(__file__).resolve().parents[2]
+        from src.runtime_paths import output_path
+
         root = self.root
-        if (
-            not root.is_absolute()
-            or root == Path("/")
-            or ".." in root.parts
-            or root.is_relative_to(repo)
-            or repo.is_relative_to(root)
-        ):
-            raise ValueError(
-                "Job workspace must be an explicit external private directory"
-            )
+        output_path(root, "job_workspace")
         subjects = [i.subject for i in self.identities]
         tokens = [i.token_sha256 for i in self.identities]
         if len(set(subjects)) != len(subjects) or len(set(tokens)) != len(tokens):
