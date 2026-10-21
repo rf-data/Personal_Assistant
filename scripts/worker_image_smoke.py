@@ -12,7 +12,11 @@ MODULES = (
     "scripts.cs50_material_quality",
     "scripts.deployment",
 )
-RUNTIME_SCRIPTS = MODULES + ("scripts.cs50_materials", "scripts.cs50_workflow")
+RUNTIME_SCRIPTS = MODULES + (
+    "scripts.cs50_materials",
+    "scripts.cs50_workflow",
+    "scripts.cs50_pilot",
+)
 
 
 def check(root: Path) -> dict:

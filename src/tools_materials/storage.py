@@ -14,12 +14,15 @@ from src.tools_lecture.execute_cs50 import (
 
 
 def artifact_root(root):
+    from src.runtime_paths import output_path
+
     root = Path(root).absolute()
-    repo = Path(__file__).resolve().parents[2]
-    if root == repo or root.is_relative_to(repo) or repo.is_relative_to(root):
+    try:
+        output_path(root, "material_artifacts")
+    except ValueError as error:
         raise ExecutionConflict(
-            "Material artifact workspace must be outside the repository"
-        )
+            "Material artifact workspace is not authorized"
+        ) from error
     safe_path(root.parent, root)
     return root
 

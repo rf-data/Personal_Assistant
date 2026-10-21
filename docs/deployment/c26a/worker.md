@@ -3,6 +3,8 @@
 20.10.2026 · Basis Backend-master `ba5956014e6995538e285ae31741f3f7e89eb2cc`.
 **`deployment_prepared`, nicht `staging_tested`, nicht `production_approved`.**
 Aktuelle Betreiberwahl: **bestehenden Backendcontainer weiterverwenden**.
+[Konkreter Einquellenablauf C26-B2](html_pilot.md) ergänzt den bisherigen Stand
+um Betriebsdateien, Mountautorisierung und nichtdestruktives Preflight.
 [Aktueller Ablauf: Bestandssicherung über penguin und Einzelpilot](existing_backend_and_drive.md)
 hat Vorrang vor den folgenden separaten Composevorlagen. Diese bleiben eine
 vorbereitete Alternative; keine zusätzliche Instanz oder neues Image starten.

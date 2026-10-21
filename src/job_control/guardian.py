@@ -41,7 +41,7 @@ def arm_parent_death(parent, death_signal=signal.SIGTERM):
 
 
 def clean_environment():
-    return {
+    environment = {
         "PATH": "/usr/bin:/bin",
         "PYTHONPATH": str(REPOSITORY),
         "PYTHONNOUSERSITE": "1",
@@ -49,6 +49,12 @@ def clean_environment():
         "PYTHONUNBUFFERED": "1",
         "LANG": "C.UTF-8",
     }
+    # Explicit operator policy only; descendants revalidate file, grant and mount.
+    from src.runtime_paths import POLICY_ENV
+
+    if POLICY_ENV in os.environ:
+        environment[POLICY_ENV] = os.environ[POLICY_ENV]
+    return environment
 
 
 def exited_without_reaping(child):

@@ -6,6 +6,12 @@ vor dem zuvor vorbereiteten separaten Composeprofil. Status `deployment_prepared
 Keine SSHverbindung, Host-/Containeränderung, Drivekopie oder reale CS50-Ausführung.
 Die Ausführungsumgebung dieses Auftrags ist `penguin`, nicht der Hetzner-Host.
 
+Für den konkreten ersten HTMLpilot gilt die neue
+[C26-B2-Schrittfolge](html_pilot.md): ein vorhandenes Source-Binding,
+Generator/Preflight und ausdrücklich konfigurierte persistente Mountroots.
+Die ursprüngliche lexikalische Sperre für `/app/data` ist dort mit ihrer gezielten
+Korrektur und den noch erforderlichen Update-/Betreiberfreigaben dokumentiert.
+
 ## Belegte Grundlage und offene tatsächliche Prüfung
 
 Betreiberangaben: laufendes Backend mit `sleep infinity`, Streamlit und

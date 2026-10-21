@@ -30,6 +30,7 @@ COPY scripts/cs50_batch.py \
     scripts/deployment.py \
     scripts/cs50_materials.py \
     scripts/cs50_workflow.py \
+    scripts/cs50_pilot.py \
     scripts/worker_image_smoke.py ./scripts/
 
 # Import and argparse checks only: no jobs, downloads, credentials or mounts.
