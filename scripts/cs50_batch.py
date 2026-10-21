@@ -109,6 +109,10 @@ def main(argv=None):
             w["report"]["status"] in {"failed", "blocked", "cancelled", "interrupted"}
             for w in result.get("workflows", [])
         )
+        failed |= bool(
+            set(result.get("summary", {}).get("status_counts", {}))
+            & {"failed", "blocked", "interrupted", "cancelled", "unsupported", "stale"}
+        )
         return 1 if failed else 0
     except (ValueError, OSError, RuntimeError, KeyError, sqlite3.Error) as error:
         print(json.dumps(dict(status="rejected", error_class=type(error).__name__)))

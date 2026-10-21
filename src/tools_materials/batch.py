@@ -222,6 +222,11 @@ def obtain(
                 row.update(status="unsupported", reason="not_in_c18_material_contract")
             elif not execute:
                 row.update(status="selected", execute=False)
+                try:
+                    approval(binding, approvals, "download")
+                    row["download_approved"] = True
+                except PermissionError:
+                    row["download_approved"] = False
             else:
                 grant = approval(binding, approvals, "download")
                 b = reviewed(binding)
@@ -439,7 +444,7 @@ def _control(settings, token_file, catalog_file, action, refs, *, confirm, limit
                 report=report.model_dump(mode="json"),
             )
         )
-    return dict(
+    result = dict(
         schema_version=1,
         batch_sha256=document["batch_sha256"],
         materials=[
@@ -449,4 +454,110 @@ def _control(settings, token_file, catalog_file, action, refs, *, confirm, limit
             and (not row.get("source_ref") or row["source_ref"] in selected)
         ],
         workflows=workflows,
+    )
+    if action == "report":
+        result["summary"] = summarize(settings, result)
+    return result
+
+
+def summarize(settings, result):
+    """Authorized C18 observations only; no parser, extraction or quality score."""
+    from collections import Counter
+
+    from src.tools_lecture.material_handoff import (
+        LectureMaterialHandoff,
+        MaterialReview,
+    )
+
+    workflows = {w["source_ref"]: w["report"] for w in result["workflows"]}
+    rows = []
+    for item in result["materials"]:
+        report = workflows.get(item.get("source_ref"))
+        row = dict(
+            material_id=item["material_id"],
+            source_ref=item.get("source_ref"),
+            raw_sha256=item.get("raw_sha256"),
+            workflow_report_sha256=report["report_sha256"] if report else None,
+            status=report["status"] if report else item["status"],
+            errors=list(report["errors"])
+            if report
+            else [item.get("error_class", item["status"])],
+            accounting=None,
+            execution_supported=False,
+            knowledge_fact_verified=False,
+        )
+        if report and report["status"] == "completed":
+            try:
+                outputs = [o for o in report["output_refs"] if o["kind"] == "handoff"]
+                if len(outputs) != 1:
+                    raise ValueError("One material handoff required")
+                output_ref = outputs[0]
+                data = read_file(safe_path(settings.root, output_ref["path"]), 8388608)
+                if (
+                    sha(data) != output_ref["sha256"]
+                    or len(data) != output_ref["size_bytes"]
+                ):
+                    raise ValueError("Handoff output changed")
+                handoff = LectureMaterialHandoff.model_validate_json(data)
+                quality_refs = [
+                    o for o in report["output_refs"] if o["kind"] == "quality"
+                ]
+                if len(quality_refs) != 1:
+                    raise ValueError("One quality report required")
+                quality_ref = quality_refs[0]
+                quality_bytes = read_file(
+                    safe_path(settings.root, quality_ref["path"]), 8388608
+                )
+                if (
+                    sha(quality_bytes) != quality_ref["sha256"]
+                    or len(quality_bytes) != quality_ref["size_bytes"]
+                ):
+                    raise ValueError("Quality report changed")
+                review = MaterialReview.model_validate_json(quality_bytes)
+                if (
+                    review.handoff != handoff
+                    or handoff.document.binding.material_id != item["material_id"]
+                ):
+                    raise ValueError("Handoff material mismatch")
+                codes = [b for b in handoff.document.blocks if b.type == "code"]
+                preserved = all(
+                    b.block_id not in handoff.excluded_blocks
+                    and "".join(
+                        u.text
+                        for u in handoff.aggregation_units
+                        if u.block.block_id == b.block_id
+                    )
+                    == b.text
+                    for b in codes
+                )
+                row["accounting"] = dict(
+                    source_origin=handoff.document.binding.source_origin,
+                    blocks=len(handoff.document.blocks),
+                    code_blocks=len(codes),
+                    code_preserved=preserved,
+                    aggregation_units=len(handoff.aggregation_units),
+                    excluded_blocks=handoff.excluded_blocks,
+                    exclusion_reasons=dict(
+                        sorted(Counter(handoff.excluded_blocks.values()).items())
+                    ),
+                    quality_status=review.report.status,
+                    findings=dict(
+                        sorted(
+                            Counter(f.severity for f in review.report.findings).items()
+                        )
+                    ),
+                )
+                if not preserved:
+                    row.update(status="failed", errors=["code_conservation_failed"])
+            except (ValueError, OSError, KeyError, RuntimeError):
+                row.update(status="failed", errors=["handoff_verification_failed"])
+        rows.append(row)
+    counts = Counter(row["status"] for row in rows)
+    return dict(
+        materials=rows,
+        material_count=len(rows),
+        status_counts=dict(sorted(counts.items())),
+        accounted_materials=sum(r["accounting"] is not None for r in rows),
+        execution_supported=False,
+        knowledge_fact_verified=False,
     )
