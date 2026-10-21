@@ -51,6 +51,25 @@ def test_actual_cli_imports_in_runtime_only_tree(runtime_tree, monkeypatch):
     assert not (runtime_tree / "data").exists()
 
 
+@pytest.mark.parametrize("command", ["bootstrap", "verify-bootstrap", "init"])
+def test_pilot_bootstrap_cli_in_runtime_tree(runtime_tree, command):
+    result = subprocess.run(
+        [sys.executable, "-B", "-m", "scripts.cs50_pilot", command, "--help"],
+        cwd=runtime_tree,
+        env={"PATH": os.defpath, "PYTHONNOUSERSITE": "1"},
+        capture_output=True,
+        timeout=30,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr.decode(errors="replace")
+    assert b"usage:" in result.stdout
+    if command == "bootstrap":
+        assert b"--worker-uid" in result.stdout and b"--worker-gid" in result.stdout
+    if command == "init":
+        assert b"--prepared" in result.stdout
+    assert not (runtime_tree / "data").exists()
+
+
 def test_actual_smoke_module_entrypoint(runtime_tree):
     result = subprocess.run(
         [sys.executable, "-B", "-m", "scripts.worker_image_smoke"],

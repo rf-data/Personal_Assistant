@@ -4,8 +4,10 @@ import argparse
 import fcntl
 import json
 import os
+import secrets
 import shutil
 import sqlite3
+import stat
 from contextlib import ExitStack, closing
 from pathlib import Path
 
@@ -74,7 +76,8 @@ def location(root, *, policy_required=True):
             or not mounted[path]["writable"]
         ):
             raise Blocked("persistent_mount_filesystem_not_verified")
-    if not os.access(MOUNTS[0], os.W_OK | os.X_OK):
+    writable = root if root.exists() else MOUNTS[0]
+    if not os.access(writable, os.W_OK | os.X_OK):
         raise Blocked("data_mount_not_writable")
     # Preserve the actual pipeline's repository/output policy. No alias or bypass.
     if policy_required:
@@ -84,6 +87,26 @@ def location(root, *, policy_required=True):
         except (ValueError, RuntimeError) as error:
             raise Blocked("repository_output_policy_blocks_mounted_data") from error
     return root
+
+
+def path_policy(root, identity, worker_uid):
+    return dict(
+        schema_version=1,
+        repository=str(CODE),
+        roots=[
+            dict(
+                path=str(path),
+                mount_point=str(MOUNTS[0]),
+                mount_identity=identity,
+                purposes=[purpose],
+                owner_uid=worker_uid,
+            )
+            for path, purpose in (
+                (root, "material_artifacts"),
+                (root / "jobs", "job_workspace"),
+            )
+        ],
+    )
 
 
 def authorize_paths(root, output):
@@ -99,26 +122,7 @@ def authorize_paths(root, output):
     identity = mountpoints()[MOUNTS[0]]
     if any(p != MOUNTS[0] and p.is_relative_to(root) for p in mountpoints()):
         raise Blocked("nested_mount_in_pilot_area")
-    document = dict(
-        schema_version=1,
-        repository=str(CODE),
-        roots=[
-            dict(
-                path=str(root),
-                mount_point=str(MOUNTS[0]),
-                mount_identity=identity,
-                purposes=["material_artifacts"],
-                owner_uid=os.geteuid(),
-            ),
-            dict(
-                path=str(root / "jobs"),
-                mount_point=str(MOUNTS[0]),
-                mount_identity=identity,
-                purposes=["job_workspace"],
-                owner_uid=os.geteuid(),
-            ),
-        ],
-    )
+    document = path_policy(root, identity, os.geteuid())
     publish_bytes(output, (json.dumps(document, sort_keys=True) + "\n").encode())
     previous = os.environ.get(POLICY_ENV)
     try:
@@ -135,6 +139,192 @@ def authorize_paths(root, output):
         "worker_uid": os.geteuid(),
         "requires_explicit_policy_environment": True,
     }
+
+
+BOOTSTRAP = "bootstrap.json"
+
+
+def bootstrap_environment(root, policy, token, uid, gid):
+    """No creation, aliases or ownership changes to existing objects."""
+    from src.runtime_paths import checked_path
+
+    root, policy, token = map(checked_path, (root, policy, token))
+    if (
+        type(uid) is not int
+        or type(gid) is not int
+        or not 0 < uid < 2**31
+        or not 0 < gid < 2**31
+        or root.parent != MOUNTS[0]
+        or not root.name.startswith("cs50_pilot_")
+        or policy.parent != MOUNTS[3]
+        or token.parent != MOUNTS[3]
+        or policy == token
+        or MOUNTS[0] != CODE / "data"
+        or MOUNTS[3] != CODE / "configuration"
+    ):
+        raise Blocked("explicit_new_pilot_and_worker_identity_required")
+    mounted = mountpoints()
+    for point in MOUNTS:
+        checked_path(point)
+        identity = mounted.get(point, {})
+        if (
+            identity.get("filesystem") not in {"ext4", "xfs", "btrfs"}
+            or identity.get("writable") is not True
+            or identity.get("root") in {None, "/"}
+        ):
+            raise Blocked("persistent_mount_filesystem_not_verified")
+        for parent in (point, CODE):
+            info = parent.stat()
+            if (
+                not stat.S_ISDIR(info.st_mode)
+                or info.st_uid not in {0, uid}
+                or stat.S_IMODE(info.st_mode) & 0o022
+            ):
+                raise Blocked("untrusted_bootstrap_parent")
+    if any(
+        p != MOUNTS[0]
+        and p.is_relative_to(root)
+        or p not in MOUNTS
+        and (policy.is_relative_to(p) or token.is_relative_to(p))
+        and p.is_relative_to(CODE)
+        for p in mounted
+    ):
+        raise Blocked("nested_mount_in_pilot_area")
+    return root, policy, token, mounted
+
+
+def bootstrap(root, policy, token, uid, gid):
+    """Root creates only new objects; the worker must verify before initialization.
+
+    No rollback deletes partial evidence. Run only during an operator-exclusive
+    setup window; this does not isolate against a concurrent privileged attacker.
+    """
+    if os.getuid() != 0 or os.geteuid() != 0:
+        raise Blocked("administrative_bootstrap_requires_root")
+    root, policy, token, mounted = bootstrap_environment(root, policy, token, uid, gid)
+    if any(p.exists() for p in (root, policy, token)):
+        raise Blocked("bootstrap_destination_exists")
+    if shutil.disk_usage(root.parent).free < RESERVE + 1024**2:
+        raise Blocked("insufficient_capacity_including_reserve")
+    with ExitStack() as stack:
+        parents = {}
+        for point in (MOUNTS[0], MOUNTS[3]):
+            fd = os.open(point, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+            stack.callback(os.close, fd)
+            parents[point] = fd
+
+        def unchanged():
+            if bootstrap_environment(root, policy, token, uid, gid)[3] != mounted:
+                raise Blocked("bootstrap_mount_identity_changed")
+            for point, fd in parents.items():
+                a, b = os.fstat(fd), point.stat()
+                if (a.st_dev, a.st_ino) != (b.st_dev, b.st_ino):
+                    raise Blocked("bootstrap_parent_identity_changed")
+
+        def create(parent_fd, name, data):
+            unchanged()
+            fd = os.open(
+                name,
+                os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                0o600,
+                dir_fd=parent_fd,
+            )
+            with os.fdopen(fd, "wb") as stream:
+                stream.write(data)
+                stream.flush()
+                os.fchown(stream.fileno(), uid, gid)
+                os.fsync(stream.fileno())
+            os.fsync(parent_fd)
+
+        unchanged()
+        os.mkdir(root.name, 0o700, dir_fd=parents[MOUNTS[0]])
+        root_fd = os.open(
+            root.name,
+            os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+            dir_fd=parents[MOUNTS[0]],
+        )
+        stack.callback(os.close, root_fd)
+        info = os.fstat(root_fd)
+        document = path_policy(root, mounted[MOUNTS[0]], uid)
+        policy_bytes = (json.dumps(document, sort_keys=True) + "\n").encode()
+        token_bytes = (secrets.token_urlsafe(32) + "\n").encode()
+        create(parents[MOUNTS[3]], policy.name, policy_bytes)
+        create(parents[MOUNTS[3]], token.name, token_bytes)
+        receipt = dict(
+            schema_version=1,
+            worker_uid=uid,
+            worker_gid=gid,
+            root=str(root),
+            root_inode=info.st_ino,
+            root_device=info.st_dev,
+            policy=str(policy),
+            policy_sha256=api.sha(policy_bytes),
+            token=str(token),
+            token_sha256=api.sha(token_bytes),
+            mounts={str(p): mounted[p] for p in MOUNTS},
+        )
+        create(
+            root_fd, BOOTSTRAP, (json.dumps(receipt, sort_keys=True) + "\n").encode()
+        )
+        unchanged()
+        # Only descriptors for objects created above are ever chowned.
+        os.fchown(root_fd, uid, gid)
+        os.fsync(root_fd)
+        os.fsync(parents[MOUNTS[0]])
+        unchanged()
+    return {
+        "status": "awaiting_worker_verification",
+        "worker_uid": uid,
+        "worker_gid": gid,
+    }
+
+
+def verify_bootstrap(root, token, *, pristine=True):
+    from src.runtime_paths import POLICY_ENV, load_policy
+
+    root = safe_path(Path(root))
+    receipt = _json(read_file(private(root / BOOTSTRAP), 65536))
+    uid, gid = receipt["worker_uid"], receipt["worker_gid"]
+    if (os.getuid(), os.geteuid(), os.getgid(), os.getegid()) != (uid, uid, gid, gid):
+        raise Blocked("bootstrap_worker_identity_mismatch")
+    root, policy, token, mounted = bootstrap_environment(
+        root, Path(os.environ.get(POLICY_ENV, "")), Path(token), uid, gid
+    )
+    info = private(root, directory=True).stat()
+    expected = dict(
+        schema_version=1,
+        worker_uid=uid,
+        worker_gid=gid,
+        root=str(root),
+        root_inode=info.st_ino,
+        root_device=info.st_dev,
+        policy=str(policy),
+        policy_sha256=api.sha(read_file(private(policy))),
+        token=str(token),
+        token_sha256=api.sha(read_file(private(token), 257)),
+        mounts={str(p): mounted[p] for p in MOUNTS},
+    )
+    if receipt != expected or load_policy(CODE) != path_policy(
+        root, mounted[MOUNTS[0]], uid
+    ):
+        raise Blocked("bootstrap_handoff_changed")
+    for path in (root, root / BOOTSTRAP, policy, token):
+        if private(path, directory=path == root).stat().st_gid != gid:
+            raise Blocked("bootstrap_worker_group_mismatch")
+    if pristine and {p.name for p in root.iterdir()} != {BOOTSTRAP}:
+        raise Blocked("bootstrap_root_not_pristine")
+    location(root)  # Actual worker access and unchanged C16/material authorization.
+    return {"status": "worker_handoff_verified", "worker_uid": uid, "worker_gid": gid}
+
+
+def operator_token(root):
+    """Prepared pilots retain their token only at the explicit configuration path."""
+    if (root / BOOTSTRAP).exists() or (root / ".init-claimed").exists():
+        receipt = _json(read_file(private(root / BOOTSTRAP), 65536))
+        token = Path(receipt["token"])
+        verify_bootstrap(root, token, pristine=False)
+        return private(token)
+    return private(root / "operator.token")  # Existing non-bootstrap setups.
 
 
 def limits():
@@ -210,9 +400,11 @@ def bundle(path):
     return batch
 
 
-def initialize(source_bundle, root, subject, token_file):
+def initialize(source_bundle, root, subject, token_file, *, prepared=False):
+    if prepared:
+        verify_bootstrap(root, token_file)
     root = location(root)
-    if root.exists():
+    if root.exists() and not prepared:
         raise Blocked("pilot_destination_exists")
     source_bundle = safe_path(Path(source_bundle))
     batch = bundle(source_bundle)
@@ -239,14 +431,19 @@ def initialize(source_bundle, root, subject, token_file):
         < estimate(batch, policy)["required_free_before_new_batch_bytes"]
     ):
         raise Blocked("insufficient_capacity_including_reserve")
-    root.mkdir(mode=0o700)  # Exclusive; failures leave evidence, never retry in place.
+    if prepared:
+        # Exclusive claim: interrupted or competing initialization is never adopted.
+        (root / ".init-claimed").mkdir(mode=0o700)
+    else:
+        root.mkdir(mode=0o700)
     for name in ("inputs", "archive", "jobs", "reports"):
         (root / name).mkdir(mode=0o700)
     for name in (*batch.files, "binding.json"):
         publish_bytes(root / "inputs" / name, read_file(source_bundle / name))
     api.output(root / "limits.json", policy.model_dump(mode="json"))
     api.output(root / "identity.json", identity.model_dump(mode="json"))
-    publish_bytes(root / "operator.token", token.encode() + b"\n")
+    if not prepared:
+        publish_bytes(root / "operator.token", token.encode() + b"\n")
     b = batch.materials[0]
     # Intentionally incomplete operator form; existing SourceApproval rejects it.
     request = dict(
@@ -313,7 +510,7 @@ def inputs(root):
     if identity.role != "operator" or identity.courses != (COURSE,):
         raise Blocked("operator_course_grant_required")
     try:
-        token = read_file(private(root / "operator.token"), 257).decode().strip()
+        token = read_file(operator_token(root), 257).decode().strip()
     except (OSError, ValueError) as error:
         raise Blocked("operator_token_missing_or_invalid") from error
     if api.sha(token.encode()) != identity.token_sha256:
@@ -531,8 +728,7 @@ def preflight(root, phase):
                     raise Blocked("foreign_job_in_pilot_database")
             authenticate(
                 actual,
-                "Bearer "
-                + read_file(private(root / "operator.token"), 257).decode().strip(),
+                "Bearer " + read_file(operator_token(root), 257).decode().strip(),
             )
     return {
         "status": "ready",
@@ -556,7 +752,18 @@ def main(argv=None):
     p.add_argument("--root", type=Path, required=True)
     p.add_argument("--subject", required=True)
     p.add_argument("--token-file", type=Path, required=True)
+    p.add_argument("--prepared", action="store_true")
     p.add_argument("--confirm-setup", action="store_true", required=True)
+    p = sub.add_parser("bootstrap")
+    p.add_argument("--root", type=Path, required=True)
+    p.add_argument("--policy", type=Path, required=True)
+    p.add_argument("--token-file", type=Path, required=True)
+    p.add_argument("--worker-uid", type=int, required=True)
+    p.add_argument("--worker-gid", type=int, required=True)
+    p.add_argument("--confirm-setup", action="store_true", required=True)
+    p = sub.add_parser("verify-bootstrap")
+    p.add_argument("--root", type=Path, required=True)
+    p.add_argument("--token-file", type=Path, required=True)
     p = sub.add_parser("authorize-paths")
     p.add_argument("--root", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
@@ -578,7 +785,23 @@ def main(argv=None):
         elif args.command == "authorize-paths":
             result = authorize_paths(args.root, args.output)
         elif args.command == "init":
-            result = initialize(args.bundle, args.root, args.subject, args.token_file)
+            result = initialize(
+                args.bundle,
+                args.root,
+                args.subject,
+                args.token_file,
+                prepared=args.prepared,
+            )
+        elif args.command == "bootstrap":
+            result = bootstrap(
+                args.root,
+                args.policy,
+                args.token_file,
+                args.worker_uid,
+                args.worker_gid,
+            )
+        elif args.command == "verify-bootstrap":
+            result = verify_bootstrap(args.root, args.token_file)
         elif args.command == "configure":
             result = configure(args.root)
         else:
@@ -589,6 +812,7 @@ def main(argv=None):
         OSError,
         ValueError,
         RuntimeError,
+        TypeError,
         KeyError,
         StopIteration,
         sqlite3.Error,

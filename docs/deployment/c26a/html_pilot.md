@@ -1,9 +1,10 @@
-# C26-B2 – Ein HTML-Dokument im bestehenden Backend
+# C26-B2/B3 – Ein HTML-Dokument im bestehenden Backend
 
-21.10.2026. Vorbereitet, **kein ausgeführter Realpilot**. B1/#138 ist auf
-`7420df62765aab127f5abeb3e39d355678844148` integriert; der Betreiber meldet den
-erfolgreichen Vier-Modul-Smoke im aktualisierten Hetznercontainer. Die folgenden
-B2-Funktionen benötigen zusätzlich den hier vorbereiteten Codeupdate.
+21.10.2026. Vorbereitet, **kein ausgeführter Realpilot**. B1/#138 und B2/#139 sind
+integriert; B3 basiert auf `d18afa4c8ec45daf02ec5cf51c2edbc3d27244f6`.
+Der Betreiber meldet den erfolgreichen Image-Smoke und verifizierte Discovery-
+Bundlehashes; die root-owned Mounts blockieren die bisherige Erstinitialisierung.
+Der unten ergänzte B3-Bootstrap benötigt einen weiteren kontrollierten Codeupdate.
 Keine SSHverbindung, Containeränderung, Bereitstellung oder echter Download
 durch Codex. Loviscach und vorhandene Stores bleiben unverändert.
 
@@ -49,10 +50,10 @@ oder fachliche Realabnahme wird hier erzeugt.
 
 ## Einmalige Voraussetzungen nach Merge
 
-Der derzeitige B1-Container lehnt Ausgaben unter `/app/data` als Repositoryinhalt
-ab. B2 korrigiert ausschließlich diese Mountgrenze über `src.runtime_paths`.
-Für den imagebasierten Betrieb ist deshalb ein gesondert freizugebender Build/
-Redeploy **des bestehenden Backenddienstes aus dem gemergten B2-Commit** nötig.
+B2 korrigiert die Mountgrenze über `src.runtime_paths`. B3 ergänzt ausschließlich
+die Erstinitialisierung unter root-owned Mount-Stämmen. Für den imagebasierten
+Betrieb ist ein gesondert freizugebender Build/Redeploy **des bestehenden
+Backenddienstes aus dem gemergten B3-Commit** nötig.
 Kein zweiter Worker, kein alternatives Imageprofil und kein Codekopieren nach
 `/app/src` als Workaround. Diese Bereitstellung ist hier nicht ausgeführt/freigegeben.
 Standardstart `sleep infinity`, Restart-Policy und vorhandene Mounts bleiben erhalten.
@@ -70,8 +71,8 @@ Vor dem Update aktive Jobs kontrolliert stoppen; Coolify-Einstellungen erhalten,
 gemergten Commit und neue Image-ID bestätigen. Mit den gefilterten Inspectbefehlen
 aus dem [bestehenden Runbook](existing_backend_and_drive.md) Mountquellen,
 Containerbenutzer, Limits und Restart-Policy prüfen. Keine Environment-/Secretdumps.
-Alle folgenden Befehle im vorhandenen Backend mit **dem vorgesehenen Worker-UID**
-ausführen; keine pauschalen chmod-/chown-Reparaturen an bestehenden Mounts.
+Betrieb als **UID/GID 1000:1000**, nur der ausdrücklich markierte einmalige
+Bootstrap als root; keine pauschalen Rechteänderungen an bestehenden Mounts.
 
 ```sh
 /app/.venv/bin/python -B -m scripts.worker_image_smoke
@@ -81,13 +82,13 @@ ausführen; keine pauschalen chmod-/chown-Reparaturen an bestehenden Mounts.
 Erforderliche Entscheidungen vor Rootanlage: tatsächlicher C16-Principal,
 neuer direkter Pilotunterordner unter `/app/data`, neue private Policy-/Tokenpfade
 unter `/app/configuration`, Zugriffskreis, Retention und Freigabebelege. Keine
-vorausgefüllten echten Identitäten oder Tokens. Die gemeldeten 14 GiB müssen
+vorausgefüllten echten Identitäten oder Tokens. Die zuletzt gemeldeten 8,6 GiB müssen
 aktuell nachgemessen werden. Reserve 5 GiB **zuzüglich** Transfer-, Katalog-,
 Job- und Reportallowance; maximal ein Material und ein laufender Processingjob.
 
 ## Discovery-Bundle bereitstellen
 
-Auf dem lokalen geprüften B2-Checkout mit vorhandener Pythonumgebung ausführen.
+Auf dem lokalen geprüften aktuellen Checkout mit vorhandener Pythonumgebung ausführen.
 `C26_BUNDLE` ist ein ausdrücklich gewähltes neues privates Verzeichnis außerhalb
 des Repositories. Kein Download, keine Token- oder Originaldatendatei im Export:
 
@@ -124,60 +125,111 @@ vergleichen; Dateihashes allein authentifizieren keinen unbekannten Absender.
 
 ## Betriebsdateien im Container erzeugen
 
-Ab jetzt Shell **im aktualisierten Container**, gleiche explizite Variablen in
-jeder verwendeten Shell setzen. `C26_ROOT` muss neu sein und direkt unter
-`/app/data` liegen. `C26_POLICY` und `C26_TOKEN` sind neue Dateien direkt unter
-`/app/configuration`; `C26_SUBJECT` ist der tatsächlich freigegebene Principal.
-Die folgenden Schritte sind Betreiberaktionen nach separater Setupfreigabe:
+**C26-B3, root-owned Mounts:** `/app/data` und `/app/configuration` dürfen
+`root:root`, 0755 bleiben. Der Administrator erstellt ausschließlich einen neuen
+direkten Daten-Unterordner mit Präfix `cs50_pilot_` sowie die zwei ausdrücklich
+benannten neuen Konfigurationsdateien. Er übergibt nur diese neuen Objekte an
+UID/GID 1000:1000. Kein `chmod`, `chown` oder ACL-Update an bestehenden Roots,
+keine rekursive Rechteänderung. `authorize-paths` ist weiterhin für vorhandene
+schreibberechtigte Worker-Setups verfügbar; **nicht als root ausführen, um den
+Workerzugriff zu simulieren**.
+
+Nach Review/Merge muss der Betreiber zuerst den bestehenden Coolify-Backenddienst
+mit dem aktualisierten Code neu bereitstellen: gleiches
+`docker/DockerFile.worker`, Repositorywurzel als Buildkontext, vorhandene vier
+Bind-Mounts, Standardstart `sleep infinity` und bisherige Restart-Policy erhalten.
+Keine Dockerfile-/Dependency-/Composeänderung oder zweite Instanz erforderlich:
+der vorhandene COPY-Eintrag enthält bereits `scripts/cs50_pilot.py`.
+Image-Smoke und `scripts.cs50_pilot bootstrap --help` im aktualisierten Container
+prüfen. Codex führt weder Redeploy noch folgende Hostbefehle aus.
+
+Das bisherige Bundle `c26_pilot_bundle_01` und seine fünf geprüften SHA256 bleiben
+unverändert erhalten. Der Helfercode hat sich geändert: mit obigem `export` aus
+derselben B3-Revision ein **neues** Bundle erzeugen, über den genehmigten Weg an
+einen neuen Konfigurationspfad übertragen und dessen Hashes erneut prüfen. Ein
+altes Bundle gegen neuen Helfercode blockiert absichtlich. Keine alte Datei oder
+`files.json` nachträglich anpassen.
+
+Einmalig **auf dem Host**, im exklusiven Betreiberfenster ohne parallel laufenden
+Pilot, nach separater Setupfreigabe. Die folgenden konkreten Zielnamen sind vor
+Ausführung ausdrücklich zu genehmigen; existierende Ziele führen zum Abbruch.
+`C26_SUBJECT` ist der tatsächlich freigegebene C16-Principal, keine Beispiel-ID:
 
 ```sh
 set -eu
 umask 077
-: "${C26_ROOT:?Neuer freigegebener Pilotroot fehlt}"
-: "${C26_POLICY:?Neue private Policydatei fehlt}"
-: "${C26_TOKEN:?Neue private Tokendatei fehlt}"
+: "${C26_BACKEND_CONTAINER:?Bestaetigter vorhandener Backendcontainer fehlt}"
 : "${C26_SUBJECT:?Tatsaechlicher freigegebener Principal fehlt}"
-: "${C26_CONTAINER_BUNDLE:?Geprueftes Discovery-Bundle fehlt}"
-cd /app
+: "${C26_CONTAINER_BUNDLE:?Neues geprueftes B3-Discovery-Bundle fehlt}"
+C26_ROOT=/app/data/cs50_pilot_01
+C26_POLICY=/app/configuration/c26_pilot_01.paths.json
+C26_TOKEN=/app/configuration/c26_pilot_01.token
 
-/app/.venv/bin/python -B -m scripts.cs50_pilot authorize-paths \
-  --root "$C26_ROOT" --output "$C26_POLICY" --confirm-setup
-export PA_PERSISTENT_ROOTS_FILE="$C26_POLICY"
+docker exec --user 0:0 --workdir /app "$C26_BACKEND_CONTAINER" \
+  /app/.venv/bin/python -B -m scripts.cs50_pilot bootstrap \
+  --root "$C26_ROOT" --policy "$C26_POLICY" --token-file "$C26_TOKEN" \
+  --worker-uid 1000 --worker-gid 1000 --confirm-setup
 
-/app/.venv/bin/python -B - "$C26_TOKEN" <<'C26_TOKEN_PY'
-import os, secrets, sys
-from pathlib import Path
-from src.job_control.catalog import safe_path
-p = safe_path(Path(sys.argv[1]))
-assert p.parent == Path('/app/configuration')
-fd = os.open(p, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
-with os.fdopen(fd, 'w') as stream:
-    stream.write(secrets.token_urlsafe(32) + '\n')
-    stream.flush()
-    os.fsync(stream.fileno())
-C26_TOKEN_PY
+docker exec --user 1000:1000 --workdir /app \
+  --env PA_PERSISTENT_ROOTS_FILE="$C26_POLICY" "$C26_BACKEND_CONTAINER" \
+  /app/.venv/bin/python -B -m scripts.cs50_pilot verify-bootstrap \
+  --root "$C26_ROOT" --token-file "$C26_TOKEN"
 
-/app/.venv/bin/python -B -m scripts.cs50_pilot init \
+docker exec --user 1000:1000 --workdir /app \
+  --env PA_PERSISTENT_ROOTS_FILE="$C26_POLICY" "$C26_BACKEND_CONTAINER" \
+  /app/.venv/bin/python -B -m scripts.cs50_pilot init --prepared \
   --bundle "$C26_CONTAINER_BUNDLE" --root "$C26_ROOT" \
   --subject "$C26_SUBJECT" --token-file "$C26_TOKEN" --confirm-setup
 ```
 
-`authorize-paths` zeichnet die Kernelidentität von `/app/data` auf: Major/Minor,
-Dateisystemwurzel, Mountpoint, Dateisystem, Quelle und Schreibstatus. Die private
-0600-Policy ist die ausdrückliche Betreiberautorisierung für genau den neuen
-Pilotbaum (`material_artifacts`) und dessen `jobs` (`job_workspace`), nicht für
-den gesamten Mount. Policy außerhalb beider Schreibroots. Verzeichnisnamen allein
-erteilen kein Recht. Kein gemeinsamer Token mit Produktionssystemen nötig.
+`bootstrap` meldet nur `awaiting_worker_verification`, niemals einen angeblich
+startbereiten Job. Die private bestehende Policy-v1 bindet genau diesen Pilotbaum
+(`material_artifacts`) und dessen `jobs` (`job_workspace`) an die beobachtete
+Kernelmountidentität und **explizite Worker-UID**, nicht an die Admin-UID.
+Root erhält 0700, Policy/Token 0600. Alle neuen Dateien werden exklusiv erzeugt,
+synchronisiert und nur über ihre eigenen Deskriptoren übergeben. Das Token wird
+lokal zufällig erzeugt und nie ausgegeben. Es bleibt ausschließlich unter
+`C26_TOKEN`; der neue Ablauf legt keine Tokenkopie unter `/app/data` an.
 
-`init` legt ausschließlich neue private Pilotdateien an; ein bestehender Root
-oder fehlgeschlagenes Teilsetup wird nicht übernommen oder bereinigt:
+`bootstrap.json` im neuen Root bindet UID/GID, Root-Inode/Gerät, Policy-/Tokenhash
+und die vier Mountidentitäten. Das ist ein Integritätsbeleg, keine Signatur gegen
+denselben Worker oder einen privilegierten Angreifer. `verify-bootstrap` prüft
+unter der **wirklichen** UID/GID 1000 den unveränderten Beleg, private Ownership,
+Mounts, tatsächlichen Schreib-/Traversalzugriff und beide unveränderten C16- und
+Material-Pfadprüfungen. Schreibrecht auf den Mount-Stämmen ist dafür unnötig.
+Ein UID-/GID-Wechsel, nicht lesbare Mountinformation oder veränderter Mount blockiert.
+
+`init --prepared` akzeptiert ausschließlich den belegten Root mit genau dieser
+einen Belegdatei. Ein exklusiv erstellter `.init-claimed`-Ordner verhindert
+konkurrierende oder wiederholte Initialisierung und bleibt als Beleg erhalten.
+Normales `init` lehnt bestehende Roots weiterhin ab. Bereits vorhandene Ziele,
+Teilbootstrap und unterbrochenes `init` werden weder übernommen, überschrieben
+noch bereinigt: Belege erhalten und Betreiberentscheidung verlangen. Auch eine
+zweite identische Bootstrap-Ausführung ist ein Konflikt. `verify-bootstrap`
+ist vor `init` wiederholbar und schreibt nichts; nach `init` die bestehenden
+phasenbezogenen Preflights verwenden. Die vier Mount-Stämme, Loviscach-Daten und
+andere Stores bleiben unberührt. Keine atomare Mehrdatei-Transaktion behauptet.
+
+Alle folgenden Containerbefehle als **UID/GID 1000:1000** ausführen. Dazu etwa:
+
+```sh
+docker exec --user 1000:1000 --workdir /app \
+  --env PA_PERSISTENT_ROOTS_FILE="$C26_POLICY" -it "$C26_BACKEND_CONTAINER" /bin/sh
+```
+
+In jeder solchen Shell `C26_ROOT`, `C26_TOKEN`, `C26_POLICY` auf dieselben expliziten
+Pfade setzen und `PA_PERSISTENT_ROOTS_FILE` beibehalten. Das sind Pfade, keine
+Tokenwerte. Bei abweichenden Zielnamen alle Shells bewusst identisch konfigurieren.
+
+Erzeugter Bestand:
 
 | Datei/Root relativ zu `C26_ROOT` | Vorhandener Vertrag / Erzeugung |
 | --- | --- |
 | `inputs/manifest.json`, zwei HTMLdateien | Unveränderte Discovery-Snapshots und FixtureManifest |
 | `inputs/binding.json` | MaterialResource mit ursprünglicher Provenienz |
 | `limits.json` | CapacityLimits, 1 Material, 5-GiB-Reserve, 512-MiB-Jobbudget |
-| `identity.json`, `operator.token` | Identity, Operator und nur `cs50_python`; privates Token, nie ausgeben |
+| `identity.json` | Identity, Operator und nur `cs50_python`; Tokenhash, kein Klartexttoken |
+| `bootstrap.json`, `.init-claimed` | Hash-/Mount-/UID-/GID-Handoff und exklusiver Initialisierungsbeleg; keine Jobdatenbank |
 | `approvals.json` | SourceApproval-Formular, absichtlich noch ungültig/unbestätigt |
 | `archive`, `reports`, `jobs` | Neue 0700-Verzeichnisse, noch keine SQLiteinitialisierung |
 | `batch.json` | Später durch vorhandenes `cs50_batch plan` |
@@ -263,12 +315,12 @@ setzen. Keine zweite Backendinstanz, kein zweiter Executor:
 /app/.venv/bin/python -B -m scripts.deployment health \
   --config "$C26_ROOT/controller.json" --role worker
 /app/.venv/bin/python -B -m scripts.cs50_batch workflow execute \
-  --config "$C26_ROOT/controller.json" --token-file "$C26_ROOT/operator.token" \
+  --config "$C26_ROOT/controller.json" --token-file "$C26_TOKEN" \
   --catalog "$C26_ROOT/catalog/catalog.json" \
   --source-ref "$(/app/.venv/bin/python -B -c 'import json,sys; print(next(iter(json.load(open(sys.argv[1]))["catalog"])))' "$C26_ROOT/catalog/catalog.json")" \
   --limits "$C26_ROOT/limits.json" --confirm
 /app/.venv/bin/python -B -m scripts.cs50_batch workflow report \
-  --config "$C26_ROOT/controller.json" --token-file "$C26_ROOT/operator.token" \
+  --config "$C26_ROOT/controller.json" --token-file "$C26_TOKEN" \
   --catalog "$C26_ROOT/catalog/catalog.json" --limits "$C26_ROOT/limits.json"
 ```
 
@@ -341,4 +393,5 @@ Schreibbaum benötigen private Worker-Ownership. Abweichende Rechte bleiben ein
 Blocker, kein Anlass für automatische chmod-/chown-Änderungen.
 
 Die tatsächlichen lokalen Tests und verbleibenden Host-/Freigabeblockaden stehen
-im [B2-Prüfvermerk](validation.md#c26-b2--html-pilotvorbereitung).
+im [B2-Prüfvermerk](validation.md#c26-b2--html-pilotvorbereitung) und im
+[B3-Prüfvermerk](validation.md#c26-b3--administrative-erstinitialisierung-und-workerübergabe).
