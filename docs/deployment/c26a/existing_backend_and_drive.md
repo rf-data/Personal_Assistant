@@ -39,8 +39,9 @@ Im Repository geprüft:
 
 - `docker/DockerFile.worker`: Python 3.12, ffmpeg und uv, eingefrorenes
   `lecture-worker`-Extra, `COPY src`/`configuration`, PID1 `sleep infinity`.
-  Es kopiert **keine `scripts/`**. Vorhandene Modulimporte beweisen deshalb weder
-  das Vorhandensein der C26-CLI noch einen gestarteten C16-Executor.
+  Der untersuchte laufende Altstand kopiert **keine `scripts/`**. Die unten
+  dokumentierte C26-B1-Korrektur ergänzt sie im nächsten Imagebuild. Vorhandene
+  Modulimporte beweisen weiterhin keinen gestarteten C16-Executor.
 - `deployment/Dockerfile` ist das separate minimale C22/C26-Image mit Skripten.
   Es ist eine vorbereitete Alternative, kein Beleg für das laufende Image.
 - `scripts/backup_hetzner.sh` hat einen fest eingebauten SSHendpunkt und einen
@@ -390,3 +391,120 @@ und eine konkret autorisierte CS50-HTMLquelle samt Pilotroots/Principal.
 Bis dahin: **lokales Driveverzeichnis metadatenseitig erreichbar, Cloudpersistenz
 `not_checked`, Übernahme `awaiting_copy_authorization`,
 Realpilot `blocked`, lokale Loviscach-Löschung `not_authorized`.**
+
+## C26-B1 – Skripte im vorhandenen Worker-Image
+
+21.10.2026. Der Betreiber bestätigt für den bestehenden Coolify-Backenddienst
+**Dockerfile `docker/DockerFile.worker`, Build-Kontext Repositorywurzel**
+(Base Directory `/`). Keine eigene SSH-/Coolifyprüfung und keine Serveränderung.
+Der Fehler liegt im Imageinhalt, nicht in fehlendem yt-dlp: Das bisherige
+Dockerfile kopiert die vorhandenen C26-Skripte nicht.
+
+Die Korrektur kopiert ausschließlich `cs50_batch.py`, `cs50_worker.py`,
+`cs50_material_quality.py`, `deployment.py`, `cs50_materials.py` und
+`cs50_workflow.py` sowie den neuen Prüfeinstieg `worker_image_smoke.py`.
+Die beiden zusätzlichen Material-/Workflow-CLIs gehören bereits zum integrierten
+C22/C26-Laufzeitumfang. Andere Skripte, insbesondere Backup-/Cleanup-/Demo- und
+LLMprogramme, werden nicht übernommen.
+Demo-Unterbefehle mit zusätzlichen Entwicklungsdateien gehören nicht zum
+Workerumfang. Katalog-/Snapshotmanifeste, Pilotkonfiguration, Limits und Tokenfiles
+müssen wie bisher ausdrücklich über die bestätigten privaten Mounts bereitstehen;
+der Standardpfad unter `docs/course_sources` ist kein im Image enthaltener Korpus.
+
+`docker/DockerFile.worker.dockerignore` begrenzt den **Root-Build-Kontext** auf
+Lock-/Projektdateien, Laufzeit-Pythoncode, diese sieben Skripte und die vier
+bisherigen YAML-Konfigurationen. `_dev*`, Bytecode, Umgebungsdateien und
+Schlüsseldateien bleiben ausgeschlossen, ebenso `data`, `logs`, `.git`, `.venv`,
+Dokumente und das nicht für den Worker benötigte HTMLmaterial unter `src`.
+Die bisherige `docker/.dockerignore` schützt einen Build aus der Repositorywurzel
+nicht. Docker unterstützt die verwendete
+[Dockerfile-spezifische Ausschlussdatei](https://docs.docker.com/build/concepts/context/).
+Andere Dockerfiles erhalten durch diese Änderung keinen neuen Build-Kontext.
+
+Jeder künftige Build startet automatisch:
+
+```sh
+/app/.venv/bin/python -B -m scripts.worker_image_smoke
+```
+
+Der Prüfer verlangt alle sechs Laufzeitdateien und startet die vier angeforderten
+Module jeweils mit `--help`, demselben Interpreter, 30-s-Deadline und bereinigter
+Umgebung ohne Credentials oder produktive Konfigurationsvariablen. Exit 0 und
+Argparse-Ausgabe sind erforderlich; Fehlerausgaben werden nicht weitergereicht.
+Der Dockerfile-Schritt verwendet
+[`RUN --network=none`](https://docs.docker.com/reference/dockerfile/).
+Er startet keine Jobs und benötigt keine Datenmounts. Fehlende Imports blockieren
+den Build. Dies ersetzt weder einen Processingtest noch eine Hostabnahme.
+
+`uv sync --frozen --no-default-groups --extra lecture-worker --no-editable`
+bleibt unverändert. Basis plus Extra reichen für die geprüften C26-Importpfade;
+keine Dependencyänderung, kein erneutes Installieren von yt-dlp im Container.
+`WORKDIR /app`, Standardstart **`sleep infinity`**, bestehende Bind-Mounts und
+Restart-Policy bleiben unverändert. Ein Execworker startet nach einem Restart
+weiterhin nicht automatisch neu. Die bisher beweglichen Python-/uv-/APTquellen
+sind unverändert: der eingefrorene Pythonlock ist keine Zusage bitidentischer
+Gesamtimages bei beliebigen späteren Neubuilds.
+
+### Spätere manuelle Coolify-Neubereitstellung
+
+**Nur nach Merge und gesonderter Betreiberfreigabe ausführen.** Hier weder
+Build auf Hetzner noch Redeploy durchgeführt. Auf ausreichenden freien Platz für
+neue Layer und Buildcache zusätzlich zur vereinbarten 5-GiB-Reserve achten;
+alte Images, Volumes und Caches nicht als Nebenwirkung löschen.
+
+1. Den gemergten Commit auswählen und die bestehende Coolify-Anwendung beibehalten:
+   Dockerfile `docker/DockerFile.worker`, Base Directory `/`, bisheriger Startbefehl,
+   Restart-Policy, Ports, Benutzer und Ressourcenlimits. Vorher Image-ID und
+   gefilterte Mountabbildung mit den obigen Diagnosebefehlen privat festhalten.
+   Insbesondere `/srv/personal-assistant` und die bestehenden Containerziele nicht
+   umbenennen. Ein Codemount über `/app` oder `/app/scripts` kann die neuen Dateien
+   verdecken und muss vor Freigabe geklärt werden.
+2. Im bestätigten Wartungsfenster aktive Jobs kontrolliert beenden und den
+   **bestehenden** Backenddienst über Coolify aus diesem Commit neu bereitstellen.
+   Der Build muss die vier `passed`-Checks liefern; bei Fehler keine manuelle
+   Skriptkopie, Installation oder zweite Backendinstanz als Ersatz.
+3. Den tatsächlich neu bereitgestellten Container und seine Image-ID bestätigen.
+   Mit den gefilterten Inspectbefehlen Mounts, Limits und Restart-Policy gegen den
+   Vorzustand vergleichen. Loviscach, Streamlit und POT-Provider unverändert lassen.
+4. Im aktualisierten Container folgende reine CLI-Prüfungen ausführen:
+
+```sh
+set -eu
+: "${C26_BACKEND_CONTAINER:?Bestaetigter aktualisierter Backendcontainer fehlt}"
+docker exec --workdir /app "$C26_BACKEND_CONTAINER" /app/.venv/bin/python -B -m scripts.worker_image_smoke
+docker exec --workdir /app "$C26_BACKEND_CONTAINER" /app/.venv/bin/python -B -m scripts.cs50_batch --help
+docker exec --workdir /app "$C26_BACKEND_CONTAINER" /app/.venv/bin/python -B -m scripts.cs50_worker --help
+docker exec --workdir /app "$C26_BACKEND_CONTAINER" /app/.venv/bin/python -B -m scripts.cs50_material_quality --help
+docker exec --workdir /app "$C26_BACKEND_CONTAINER" /app/.venv/bin/python -B -m scripts.deployment --help
+```
+
+Erwartet: Prüfer Exit 0, viermal `status=passed`; einzelne CLIs Exit 0 und Hilfe.
+Keine `.env` oder vollständige Containerkonfiguration ausgeben. Dies bestätigt die
+Skriptintegration, nicht die fachliche Qualität oder einen bereits laufenden Job.
+Danach erst den oben dokumentierten Einquellenpilot separat freigeben: konkrete
+Source/URL und Rechte, explizite private persistente Roots, Principal/Katalog,
+verifizierte Mounts und ein aktiver Worker mit bestätigten Ressourcenlimits.
+Downloadvorschau vor Ausführung, ein Download und ein Processingjob mit SHA-/Receipt-
+und Statusprüfung, kontrollierter Wiederanlauf mit identischen Roots. Keine
+pauschale Video-/Audiofreigabe, LLMnutzung oder Drivekopie durch dieses Imageupdate.
+
+### Lokale Imageprüfung auf einem ausreichend großen Buildhost
+
+Die folgenden Befehle sind zusätzlich reproduzierbar, benötigen aber ausreichenden
+lokalen Speicher sowie freigegebenen Zugriff auf die bisherigen Basis-/APT-/PyPI-
+Buildquellen. Kein Build auf einem fremden Dockerkontext:
+
+```sh
+# Aus der Repositorywurzel, mit vorher bestaetigtem lokalem Dockerdaemon.
+docker build --file docker/DockerFile.worker --tag personal-assistant-worker:c26b1 .
+# Mit vorhandener Testumgebung; keine automatische Dependencyinstallation.
+C26_WORKER_TEST_IMAGE=personal-assistant-worker:c26b1 \
+  "$C26_PYTHON" -m pytest -q -p no:cacheprovider \
+  tests/test_worker_image_content.py::test_built_worker_image
+```
+
+Der optionale Imagetest startet ausschließlich einen neuen kurzlebigen
+Prüfcontainer: ohne Netzwerk/Pull/Hostmounts, read-only, ohne Capabilities, mit
+1 CPU/1 GiB/128 PIDs. Er verändert keinen bestehenden Container. Der tatsächliche
+lokale Ausführungsstand einschließlich der nicht ausgeführten Vollimageprüfung
+steht im [B1-Prüfvermerk](validation.md#c26-b1--worker-image-integration).

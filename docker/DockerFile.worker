@@ -23,4 +23,16 @@ RUN uv sync \
 COPY src ./src
 COPY configuration ./configuration
 
+# Runtime CLI closure shared with the existing C22/C26 deployment image.
+COPY scripts/cs50_batch.py \
+    scripts/cs50_worker.py \
+    scripts/cs50_material_quality.py \
+    scripts/deployment.py \
+    scripts/cs50_materials.py \
+    scripts/cs50_workflow.py \
+    scripts/worker_image_smoke.py ./scripts/
+
+# Import and argparse checks only: no jobs, downloads, credentials or mounts.
+RUN --network=none /app/.venv/bin/python -B -m scripts.worker_image_smoke
+
 CMD ["sleep", "infinity"]
