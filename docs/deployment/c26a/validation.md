@@ -607,3 +607,163 @@ Der eigene Branch `feat/c26b2-single-html-pilot` und Worktree bleiben für den
 offenen regulären PR erhalten. Keine Bereinigung anderer oder historischer
 Git-Artefakte, kein automatischer Merge. Ein technischer PR erteilt keine
 Quellenfreigabe oder fachliche Realabnahme.
+
+## C26-B3 – Administrative Erstinitialisierung und Workerübergabe
+
+21.10.2026. Basis: integriertes B2/#139, master
+`d18afa4c8ec45daf02ec5cf51c2edbc3d27244f6`. Befund des Betreibers:
+root-owned 0755-Bind-Mounts für Daten und Konfiguration, tatsächlicher Worker
+UID/GID 1000:1000, zuletzt 8,6 GiB frei. Keine erneute Hetznerdiagnose durch Codex.
+
+### Ursache und begrenzte Korrektur
+
+B2 verlangte bei `location` Schreibrecht auf dem Daten-Mountstamm, bei `init`
+einen noch nicht existierenden Root und erzeugte die Policy als aufrufende UID.
+Das funktioniert für einen bereits schreibberechtigten Benutzer, aber nicht für
+UID 1000 unter root-owned 0755-Stämmen. Ein Rootaufruf von `authorize-paths`
+würde dagegen Root als Policy-Worker binden. Keine fehlende Downloaddependency
+und kein Anlass, Mountrechte pauschal zu erweitern.
+
+Nur `scripts/cs50_pilot.py` erhält Runtimeänderungen. Der neue explizite
+Root-Befehl `bootstrap` erstellt exklusiv einen neuen direkten
+`/app/data/cs50_pilot_*`-Root, eine neue benannte Policy und eine neue benannte
+Tokendatei direkt im Konfigurationsmount. Worker-UID und -GID sind verpflichtende
+separate Werte, keine Ableitung aus Root. Bestehender Policy-v1-Vertrag,
+C16-Authentifizierung und C18-/C26-Verarbeitung bleiben erhalten.
+
+Geprüfte Kernelmounts, sichere Eltern, unveränderte Parent-Inodes,
+Directorydeskriptoren, `O_EXCL`/`O_NOFOLLOW`, fsync und chown ausschließlich der
+selbst neu erzeugten Deskriptoren begrenzen den Eingriff. Es gibt keine
+rekursiven chmod-/chown-Aufrufe und keine Änderung bestehender Mount-Stämme,
+Konfigurationen, Loviscach-Daten oder Stores. Das Rootverzeichnis wird zuletzt
+an den Worker übergeben. Teilfehler hinterlassen Belege und blockieren neue
+Versuche auf denselben Zielen; es gibt weder automatische Bereinigung noch eine
+behauptete atomare Mehrdatei-Transaktion.
+
+`verify-bootstrap` prüft als tatsächlicher Worker UID/GID, private Ownership,
+Mountidentitäten, Beleg-, Policy- und Tokenhashes sowie beide bestehenden
+Ausgabepfadverträge. `location` prüft bei bereits existierendem Root dessen
+Schreib-/Traversalrechte statt Schreibrecht auf den Stamm zu fordern. Bestehende
+Schutzprüfungen im gemeinsamen `src.runtime_paths` bleiben unverändert.
+`init --prepared` akzeptiert nur den belegten Root mit genau einer Belegdatei;
+eine exklusive `.init-claimed`-Anlage verhindert doppelte Initialisierung.
+Normales `init` lehnt vorhandene Roots unverändert ab.
+
+Das Token bleibt im neuen Ablauf ausschließlich am expliziten Konfigurationspfad;
+kein Klartexttoken in stdout oder unter dem Datenroot. Der bestehende
+nichtadministrative B2-Ablauf und dessen Tokenlayout bleiben kompatibel.
+Bootstrap ist keine C16-Principal-, Quellen- oder Downloadfreigabe. Unvollständige
+SourceApprovals blockieren weiterhin. Ein gültiger Beleg ist kein Schutz gegen
+denselben Worker oder einen privilegierten Angreifer; das exklusive
+Betreiberfenster bleibt erforderlich.
+
+### Tatsächliche B3-Prüfungen
+
+Vorhandene Projektumgebung: Python 3.12.12, Pytest 9.1.1, Ruff 0.16.0.
+Keine Installation oder Dependencyänderung. Die Mountidentitäten werden in den
+Tests synthetisch vorgegeben; es wird kein echter Mount erzeugt oder umgehängt.
+Nur isolierte neue Testroots, keine Originaldateien oder Produktionsdatenbanken.
+Kapazitätsfixtures modellieren freien Speicher; die produktive 5-GiB-Reserve
+wird nicht abgesenkt. Die realen C16-/Guardian-/HTML-v2-Prozessfälle liefen im
+freigegebenen lokalen tmpfs außerhalb der einschränkenden Sandbox.
+
+Gemeinsames tatsächliches Präfix:
+
+```sh
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 \
+ /home/robfra/0_Portfolio_Projekte/gmp_compliance/.venv/bin/python -m pytest \
+ -q -p no:cacheprovider
+```
+
+| Lauf | Ergebnis | Tatsächlicher Umfang |
+| --- | --- | --- |
+| Gezielte Regression, 227 Fälle | **224 passed / 0 failed / 3 skipped**, 315,99 s | Pfadverträge, Pilot, C16, C22-Operations, C26-Batch/Capacity, C18-Workflows und Runtime-Imageinhalt |
+| Abschließende Pilot-Grenzen nach zwei zusätzlichen UID-/GID-Obergrenzenfällen | **51 passed / 0 failed**, drei abgewählt, 39,08 s | Alle Nicht-Prozessfälle der endgültigen Pilotdatei, einschließlich großer/abweichender UID/GID; überlappt die Regression |
+| Echter privilegierter Handoff, endgültiger Code | **1 passed / 0 failed / 0 skipped**, 4,18 s | Neue echte root:root-0755-Teststämme, reale fchown-Übergabe, Kindprozess mit `setgroups([])`, `setgid(1000)`, `setuid(1000)`, Verify, Init und C16-Identitätsprüfung |
+
+Regression mit obigem Präfix:
+
+```sh
+tests/test_runtime_paths.py tests/test_cs50_pilot.py \
+tests/test_job_control.py tests/test_deployment_operations.py \
+tests/test_cs50_batch_worker.py tests/test_cs50_capacity.py \
+tests/test_cs50_workflows.py tests/test_worker_image_content.py \
+--basetemp=/dev/shm/c26b3-release
+```
+
+Die drei Skips sind der im normalen Benutzerlauf absichtlich deaktivierte
+privilegierte Fall sowie die beiden optionalen Docker-Kontext-/Vollimagefälle.
+Der privilegierte Fall wurde separat tatsächlich ausgeführt, kein Erfolg aus
+einem Skip abgeleitet. Kein neuer vollständiger Imagebuild und kein natives
+Docker-Kontextexperiment nötig/ausgeführt; Dockerfile und Allowlist unverändert.
+Drei neue `--help`-Fälle prüfen Bootstrap, Verify und `init --prepared` tatsächlich
+im Runtime-only-Baum ohne `docs`, Daten oder Host-PYTHONPATH.
+
+Die abschließende Grenzprüfung verwendet `tests/test_cs50_pilot.py
+ -k 'not generated_configuration and not privileged_root'
+ --basetemp=/tmp/c26b3-final-boundaries` mit demselben Präfix.
+Die Regression erfolgte vor Ergänzung der beiden Obergrenzen-Testparameter;
+deren endgültige Prüfung und alle übrigen Nicht-Prozessfälle sind im 51er-Lauf
+enthalten. Läufe überlappen, Zahlen nicht addieren.
+
+Der privilegierte Lauf wurde lokal mit `sudo -n env`, den beiden obigen
+Pytest-Umgebungsvariablen und zusätzlich `C26_BOOTSTRAP_PRIVILEGED_TESTS=1`
+ausgeführt: gleicher Interpreter, `-q -p no:cacheprovider`, ausschließlich
+`tests/test_cs50_pilot.py::test_privileged_root_owned_mounts_real_worker_handoff`,
+`--basetemp=/dev/shm/c26b3-handoff-release`. Der Kindprozess kann in beiden
+Stämmen ausdrücklich **nicht** schreiben, initialisiert seinen neuen Root aber
+erfolgreich. Stamm-UID/GID/Modus bleiben identisch, neue Ziele besitzen 1000:1000
+und 0700/0600, keine Tokenkopie unter den Daten. Das ist ein echter lokaler
+Ownership-/Zugriffsnachweis bei modellierter Mountinfo, keine Hetzner-Mountabnahme.
+
+Abgedeckt sind außerdem vorhandene Ziele und wiederholtes Setup, Symlinks,
+Traversal, Codepfade, unerlaubte Unterroots, verschachtelte/fehlende/read-only
+Mounts, unlesbare Kernelinformationen, geänderte Identität während und nach
+Bootstrap, Schreib-/chown-Fehler, unvollständige Initialisierung, manipulierte
+Policy/Token/Belege, abweichende UID/GID und alte B2-Kompatibilität. Beide
+synthetischen End-to-End-Varianten führen tatsächlich fünf C18-Stufen aus,
+prüfen Artefakthashes, tokenbasierte Authentifizierung und denselben Job bei
+Resume; die neue Variante benutzt das Konfigurationstoken direkt.
+
+Frühere Entwicklungsläufe: 22 passed/1 skip (23 ausgewählte Handofffälle),
+78 passed/1 skip (Pfad+Pilot vor Ergänzungen), je ein erfolgreicher früherer
+privilegierter Lauf. Ein anschließender eingeschränkter `/tmp`-Lauf hatte
+**49 passed / 2 failed / 1 skipped**: alter und neuer Workflow-Prozessfall
+lieferten `failed` beziehungsweise nicht bestätigten Guardian-Cleanup.
+Beide wurden danach unverändert außerhalb der Sandbox im tmpfs erfolgreich
+geprüft (**2 passed**, 12,11 s) und in der abschließenden Regression erneut
+ausgeführt. Keine nachgewiesene konkrete Einzelursache oder Baselinebehauptung
+für diese beiden Laufzeitfehler; keine Abschwächung von Cleanup/Assertions.
+
+Ruff Check und Format Check für die drei geänderten Pythondateien sowie
+`git diff --check` erfolgreich. Die Shellbeispiele werden nur syntaktisch mit
+`bash -n` geprüft, nicht ausgeführt; eingebettetes Python nur per AST. Lokale
+Dokumentverweise geprüft. Eigene synthetische Testroots und erzeugte Caches
+werden nach Abschluss entfernt; keine Bereinigung fremder oder produktiver Daten.
+
+### Auslieferung und offene Betreiberaktionen
+
+Der aktualisierte [HTML-Pilotablauf](html_pilot.md#betriebsdateien-im-container-erzeugen)
+enthält die konkreten `docker exec --user 0:0`- und `--user 1000:1000`-Befehle,
+explizite neue Pfade, Übergabeprüfung, Initialisierung und den unveränderten
+anschließenden Batch-/Workflowablauf. Kein neuer Dockerfile-/Compose-/Dependency-
+oder Restartvertrag: der Helfer ist bereits im bestehenden Image-COPY enthalten.
+Nach Review/Merge ist ein separat freizugebender Codeupdate des bestehenden
+Coolify-Backends mit demselben Dockerfile und denselben Bind-Mounts erforderlich.
+Danach Smoke, neue CLI-Hilfen, tatsächliche Mounts und Workerrechte kontrollieren.
+
+Das alte Bundle und seine fünf vom Betreiber geprüften Hashes bleiben erhalten.
+Weil der Helfercode gebunden ist, braucht B3 ein neu exportiertes Bundle aus
+derselben Revision und einen neuen Zielpfad, keine Reparatur des alten Bundles.
+Exakte Zielnamen, echter Principal, Zugriff/Retention und vollständige
+Source-/Nutzungs-/Download-/Processingfreigaben bleiben Betreiberentscheidungen.
+Freie Reserve und Mountpersistenz müssen vor Ort erneut geprüft werden.
+
+Keine SSHverbindung, Hetzneränderung, Bereitstellung, realer Download, Cloud-/
+LLM-Aufruf oder Originalverarbeitung durch Codex. Kein vollständiger Docker-
+Workerbuild und keine Container-Neustartabnahme auf Hetzner ausgeführt.
+
+Der eigene Branch `feat/c26b3-admin-bootstrap` und Worktree
+`Personal_Assistant-c26b3` bleiben bis zum PRreview/Merge erhalten; die Integration
+der dauerhaften Dokumente ist damit noch offen. Kein automatischer Merge und
+keine Bereinigung früherer Aufgaben oder fremder Git-Artefakte.
