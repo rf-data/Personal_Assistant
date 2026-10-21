@@ -38,6 +38,20 @@ def main(argv=None):
     a.add_argument("--source-ref", action="append", default=[])
     a.add_argument("--confirm", action="store_true")
     a.add_argument("--output", type=Path)
+    a = sub.add_parser(
+        "transcripts", help="Explicit offline SRT/TXT lane; no HTTP or C18 publication"
+    )
+    a.add_argument("action", choices=("preview", "import", "report"))
+    for name in ("batch", "archive", "approvals"):
+        a.add_argument("--" + name, type=Path, required=True)
+    a.add_argument("--inputs", type=Path)
+    a.add_argument("--confirm", action="store_true")
+    a.add_argument("--output", type=Path)
+    a = sub.add_parser(
+        "inventory", help="Week-0 snapshot references; no material reads or downloads"
+    )
+    a.add_argument("--manifest", type=Path, required=True)
+    a.add_argument("--output", type=Path)
     for parser in sub.choices.values():
         parser.add_argument(
             "--limits", type=Path, default=os.environ.get("C26_LIMITS_FILE")
@@ -90,6 +104,28 @@ def main(argv=None):
                         if args.output.parent == args.archive
                         else limits.report_bytes,
                     )
+        elif args.command in {"transcripts", "inventory"}:
+            from src.tools_materials import transcripts
+
+            if args.command == "inventory":
+                result = transcripts.week_inventory(args.manifest)
+            else:
+                if not args.limits or (args.action == "import" and not args.confirm):
+                    raise PermissionError(
+                        "Explicit limits and import confirmation required"
+                    )
+                if args.action != "report" and args.inputs is None:
+                    raise ValueError("Explicit local source mapping required")
+                result = transcripts.run(
+                    api.load_batch(args.batch),
+                    args.archive,
+                    api.load_approvals(args.approvals),
+                    transcripts.load_inputs(args.inputs) if args.inputs else {},
+                    action=args.action,
+                    limits=limits,
+                )
+            if args.output:
+                api.output(args.output, result, limits=limits)
         else:
             result = api.control(
                 args.config,
@@ -104,7 +140,9 @@ def main(argv=None):
                 api.output(args.output, result, limits=limits)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         rows = result.get("materials", [])
-        failed = any(r["status"] in {"blocked", "failed", "unsupported"} for r in rows)
+        failed = any(
+            r["status"] in {"blocked", "failed", "unsupported", "missing"} for r in rows
+        )
         failed |= any(
             w["report"]["status"] in {"failed", "blocked", "cancelled", "interrupted"}
             for w in result.get("workflows", [])
