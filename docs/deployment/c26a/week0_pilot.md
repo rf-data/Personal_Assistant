@@ -161,21 +161,24 @@ import os, stat, sys
 from pathlib import Path
 from scripts import cs50_pilot as pilot
 from src.job_control.catalog import safe_path
+def require(condition):
+    if not condition:
+        raise SystemExit('new_metadata_bundle_handoff_blocked')
 p = safe_path(Path(sys.argv[1]))
-assert p.parent == Path('/app/configuration')
-assert p.name.startswith('c26_week0_bundle_')
+require(p.parent == Path('/app/configuration'))
+require(p.name.startswith('c26_week0_bundle_'))
 files = ['manifest.json', 'binding.json', 'cs50_pilot.py', 'files.json']
-assert {x.name for x in p.iterdir()} == set(files) | {'cs50_python'}
-assert {x.name for x in (p / 'cs50_python').iterdir()} == {'index.html', 'week_0.html'}
+require({x.name for x in p.iterdir()} == set(files) | {'cs50_python'})
+require({x.name for x in (p / 'cs50_python').iterdir()} == {'index.html', 'week_0.html'})
 pilot.bundle(p)  # Existing hashes, helper revision and exact selected bindings.
 paths = [p / n for n in files + ['cs50_python/index.html', 'cs50_python/week_0.html']]
 paths += [p / 'cs50_python', p]  # Handoff root last; no recursive chmod/chown.
 for path in paths:
     safe_path(path)
     info = path.stat()
-    assert info.st_uid == 0
-    assert path.is_dir() or (stat.S_ISREG(info.st_mode) and info.st_nlink == 1)
-    assert stat.S_IMODE(info.st_mode) == (0o700 if path.is_dir() else 0o600)
+    require(info.st_uid == 0)
+    require(path.is_dir() or (stat.S_ISREG(info.st_mode) and info.st_nlink == 1))
+    require(stat.S_IMODE(info.st_mode) == (0o700 if path.is_dir() else 0o600))
 for path in paths:
     fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
     try:
