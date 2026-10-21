@@ -1,5 +1,9 @@
 # C26-A – Tatsächliche Readiness- und Testnachweise
 
+Der [C26-B1-Nachtrag](#c26-b1--worker-image-integration) vom 21.10.2026
+ergänzt den folgenden historischen C26-A-Stand um die Skriptintegration des
+bestehenden Worker-Dockerfiles. Keine nachträgliche Umdeutung älterer Testläufe.
+
 20.10.2026 · Status **`deployment_prepared`**.
 Die [Bereitstellung und Betreiberfreigaben](worker.md) sind vorbereitet.
 Die inzwischen gemeldeten Hostdaten werden im [kleinen Pilotplan](hetzner_small_pilot.md)
@@ -304,3 +308,150 @@ auf Gitstatus geprüft. Kein automatischer Merge/Close, keine Done-Einstufung of
 C26-Abnahmen, keine MAINT-Bereinigung. Der Folgebranch/Worktree bleibt bis zu dessen
 bestätigter Integration erhalten. `deployment_prepared` ersetzt weder Gitintegration
 noch Staging-, Cloudkopier- oder Produktionsfreigabe.
+
+## C26-B1 – Worker-Image-Integration
+
+21.10.2026, Basis `origin/master`
+`a328a764d8a2bb8167ea1f44e4e1509faaaf506c`, integrierte C26-A-PRs #135/#136.
+Der Betreiber hat Dockerfile `docker/DockerFile.worker` und Repositorywurzel
+als tatsächliche Coolify-Build-Einstellungen bestätigt. Diese Einstellungen
+wurden nicht über SSH oder eine Coolify-API abgerufen.
+
+**Implementiert:** gezielte Kopie von sechs bestehenden Laufzeitskripten und
+einem stdlib-only Smokeprüfer, obligatorischer netzwerkfreier `--help`-Check der
+vier angeforderten Module während des Builds, Dockerfile-spezifische
+Kontext-Allowlist und automatisierte Tests. Keine Änderung an Abhängigkeiten,
+Lockfile, C22-Alternativimage, Bind-Mounts, Standardstart oder Restart-Policy.
+Die bestehende [Anleitung](existing_backend_and_drive.md#c26-b1--skripte-im-vorhandenen-worker-image)
+enthält die späteren manuellen Redeploy-/Containerprüfbefehle.
+
+### Dependency- und Kontextnachweis
+
+Vorhandene Projektvenv: Python 3.12.12, Pytest 9.1.1, Pydantic 2.13.4,
+PyMuPDF 1.28.2, Ruff 0.16.0. Keine Installation oder Lockneuauflösung.
+Der offline ausgeführte Lockexport verwendet exakt das bisherige Workerprofil:
+
+```sh
+UV_CACHE_DIR=/tmp/c26b1-uv-cache uv export --offline --frozen \
+  --no-default-groups --extra lecture-worker --no-emit-project \
+  --format requirements-txt --no-hashes
+```
+
+**125 selektierte gelockte Distributionen**, einschließlich httpx, Pydantic,
+BeautifulSoup, PyMuPDF, PyYAML, pydantic-settings und python-dotenv. Marvin,
+OpenAI und LiteLLM sind nicht ausgewählt. Zusätzliche lokale Importinspektion:
+Alle vier tatsächlichen CLI-Hilfeaufrufe erfolgreich; die 16 dabei geladenen
+Distributionen sind sämtlich im selektierten Profil enthalten. Netzwerkzugriff
+wurde dabei per Python-Audithook abgewiesen. Das ersetzt keine frische Installation
+dieser 125 Distributionen und keinen vollständigen Imagetest.
+
+Die Laufzeittests kopieren Pythoncode, die vier bisherigen YAMLdateien und genau
+die sieben Image-Skripte in einen isolierten Root, ohne `docs`, Testdaten, `.env`,
+Originale oder Host-Pythonpfade. Die CLI-Prozesse erzeugen dort keine neuen Dateien.
+Negativfälle prüfen fehlende transitive Skripte, Symlinks, Import-/CLIfehler,
+Timeouts sowie die Zurückhaltung von Fehlerausgaben und privaten Umgebungsvariablen.
+
+Eine zusätzliche **tatsächlich ausgeführte lokale Docker-BuildKit-Kontextprüfung**
+verwendet ausschließlich synthetische Testdateien, dieselbe spezifische
+Ausschlussdatei und `FROM scratch; COPY . /context/`. Export nur in einen neuen
+lokalen Testroot; kein Baseimage, Paketdownload, Image-Tag, laufender Container
+oder Hostmount. Dockers eigener Matcher bestätigt die enthaltenen Laufzeitdateien
+und ausgeschlossenen Secret-/Daten-/Hilfsskript-Canaries. Das ist ausdrücklich
+**kein Build des Worker-Dockerfiles**.
+
+Der erste Kontexttest schlug fehl (14 passed / 1 failed / 1 skipped, 37,29 s):
+Verzeichnis-Ausnahmen schlossen unbeabsichtigt weitere Kinddateien ein. Diese
+Ausnahmen wurden entfernt. Die korrigierte native Prüfung bestand separat
+(1 passed, 4,78 s) und im abschließenden gemeinsamen Lauf unten. Keine echte
+Credential- oder Originaldatei war Teil dieser synthetischen Kontexte.
+
+### Tatsächliche Tests
+
+Gemeinsames Präfix mit der vorhandenen Backendvenv als `C26_PYTHON`:
+
+```sh
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 \
+  "$C26_PYTHON" -m pytest -q -p no:cacheprovider
+```
+
+Neue abschließende Suite, zusätzlich `C26_WORKER_CONTEXT_AUDIT=1`:
+
+```sh
+tests/test_worker_image_content.py --basetemp=/tmp/c26b1-worker-release
+```
+
+**15 passed / 0 failed / 1 skipped, 25,61 s.** Der Skip ist ausschließlich
+`test_built_worker_image`: kein gebautes Worker-Image zur Verfügung. Die native
+Docker-Kontextprüfung wurde ausgeführt, nicht übersprungen. Der vorherige gemeinsame
+Lauf (15 passed / 1 skipped, 70,42 s) und der reine Laufzeitlauf (14 passed /
+1 skipped, 18,46 s) überlappen; nicht addieren.
+
+Zwischen dem vorherigen Gesamtlauf und dem abschließenden Release-Lauf wurden
+versteckte Unterverzeichnisse unter `src` zusätzlich abgesichert:
+Die erste erweiterte Prüfung deckte zwei noch eingeschlossene synthetische
+Python-Canaries auf (1 failed, 5,56 s). Explizite Unterbaum-Ausschlüsse schließen
+sie aus; derselbe native Kontexttest besteht danach (1 passed, 2,58 s).
+Nur die Ignore-Regeln und deren Testcanaries wurden dabei ergänzt, keine
+Änderung am Smokeprüfer oder an den vier geprüften CLI-Modulen.
+
+Bestehende relevante Regression, gleiches Präfix:
+
+```sh
+tests/test_cs50_batch_worker.py tests/test_cs50_capacity.py \
+tests/test_cs50_material_download.py tests/test_deployment_operations.py \
+--basetemp=/tmp/c26b1-regression-final
+```
+
+**77 passed / 2 failed / 0 skipped, 223,04 s.** Die zwei Varianten von
+`test_managed_worker_cancel_restart_resume_and_stopped_backup` schlugen fehl:
+`signal` wartete zu lange auf den Abschluss der Folgejobs; `capacity` wurde
+beim anschließenden Report durch den vorhandenen Quarantänefence gesperrt.
+Keine neue Timeout-/Quarantäneumgehung oder Runtimeänderung. Der frühere gleiche
+Lauf wurde vor Abschluss unterbrochen und besitzt kein Abnahmeergebnis.
+
+Die beiden betroffenen Prozessfälle anschließend mit demselben unveränderten
+Test-/Runtimecode in neuen isolierten tmpfs-Roots außerhalb der eingeschränkten
+Sandbox nachgeprüft:
+
+```sh
+tests/test_cs50_batch_worker.py::test_managed_worker_cancel_restart_resume_and_stopped_backup \
+--basetemp=/dev/shm/c26b1-process-final
+```
+
+**2 passed / 0 failed / 0 skipped, 91,18 s.** Tatsächliche separate Worker-
+und PDFprozesse, kontrollierter Abbruch, Wiederanlauf, Resume und gestoppter
+Backup-/Restoreroundtrip. Die Schutzgrenzen blieben aktiv. Es wurde weder ein
+unveränderter Master-Baselinelauf noch eine neue gemeinsame grüne 79er-Suite
+ausgeführt; der erste Fehlerlauf bleibt sichtbar. tmpfs ist kein Nachweis eines
+persistenten Hostvolumes. Keine vollständige Repositorytestsuite.
+
+Ruff Check und Format Check für beide neuen Pythondateien erfolgreich.
+25 Shellblöcke der beiden betroffenen Runbooks nur mit `bash -n` geprüft,
+acht lokale Markdownverweise gültig; `git diff --check` erfolgreich.
+`src`, bestehende Skripte, `configuration`, `deployment`, `pyproject.toml` und
+`uv.lock` sind gegenüber der genannten Basis unverändert. Testlogs und eigene
+synthetische Testdaten liegen außerhalb des Repositories; kein Original gelesen.
+
+### Vollbuild, Hostfreigabe und Lifecycle
+
+**Vollständigen Worker-Dockerbuild und Smokeprüfung in dessen Image nicht
+ausgeführt.** Der geprüfte Dockerendpunkt ist ein lokaler Unixsocket, kein Hetzner-
+oder SSHkontext. Auf seinem Dateisystem waren vor den Tests nur rund **2,82 GB**
+frei; weder Python-3.12-slim-Basis noch Workerimage waren lokal vorhanden. Das
+bestehende breite Workerimage wurde vom Betreiber bereits mit rund **3,49 GB**
+virtueller Größe gemeldet. Diese Werte sind keine genaue Buildplatzprognose,
+reichen aber nicht für einen verantwortbaren Vollbuild einschließlich Paket-/
+Buildcache und Reserve. Deshalb kein Pull oder Vollbuildversuch, keine
+Image-/Cachelöschung und kein schlankeres Ersatzimage als vermeintlicher Nachweis.
+
+Die eingebauten Buildprüfungen und der optionale Test mit
+`C26_WORKER_TEST_IMAGE=<lokaler-image-tag>` müssen auf einem ausreichend großen,
+freigegebenen Buildhost nachgeholt werden. Defaultstart `sleep infinity` bleibt;
+ein neuer C16-Worker wird dadurch nicht automatisch gestartet oder neu gestartet.
+Kein SSHzugriff, Coolify-Redeploy, echter Download, Driveupload, produktiver
+Storeeingriff oder Eingriff in bestehende Container/Volumes/Images.
+
+Eigener Branch `feat/c26b1-worker-image-entrypoints` und Worktree bleiben für den
+regulären offenen PR erhalten. Kein automatischer Merge, keine Bereinigung
+historischer oder fremder Branches/Worktrees. Gitintegration, tatsächlicher
+Imagebuild und Hetzner-/Pilotabnahme sind getrennte verbleibende Schritte.

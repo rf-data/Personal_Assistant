@@ -1,0 +1,28 @@
+# Dockerfile-specific allowlist for Coolify's repository-root build context.
+# Keep other Dockerfiles and their build contexts unchanged.
+**
+!pyproject.toml
+!uv.lock
+!docker/DockerFile.worker
+!docker/DockerFile.worker.dockerignore
+!src/**/*.py
+!configuration/cfg_general.yaml
+!configuration/cfg_parsing.yaml
+!configuration/streamlit_general.yaml
+!configuration/streamlit_run.yaml
+!scripts/cs50_batch.py
+!scripts/cs50_worker.py
+!scripts/cs50_material_quality.py
+!scripts/deployment.py
+!scripts/cs50_materials.py
+!scripts/cs50_workflow.py
+!scripts/worker_image_smoke.py
+**/__pycache__
+**/__pycache__/**
+**/_dev*
+**/_dev*/**
+**/.*
+**/.*/**
+**/*.pem
+**/*.key
+**/*.token
