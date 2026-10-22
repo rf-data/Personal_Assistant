@@ -20,7 +20,7 @@ from src.tools_materials.inventory import CODE, capability, format_of
 from src.tools_materials.storage import locate, locked, publish_bytes
 
 
-def make_plan(manifest):
+def make_plan(manifest, *, include_code_indexes=False):
     courses = discover_fixture_courses(manifest)
     materials = []
     for c in courses:
@@ -45,7 +45,12 @@ def make_plan(manifest):
                     language=r.language,
                 )
             )
-    return MaterialPlan(courses=courses, materials=tuple(materials))
+    plan = MaterialPlan(courses=courses, materials=tuple(materials))
+    if include_code_indexes:
+        from src.tools_materials.code_discovery import extend
+
+        return extend(plan, manifest)
+    return plan
 
 
 def parser_for(binding):
