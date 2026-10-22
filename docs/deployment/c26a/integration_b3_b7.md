@@ -251,16 +251,19 @@ Stagingoperationen innerhalb desselben Prozesses, ohne vorhandene Gitdateien
 manuell zu ersetzen. Auch der reguläre Commit scheiterte **nach** erfolgreichen
 Hooks beim Update des auftragseigenen Branchrefs. Das bereits erzeugte Commitobjekt
 wird vor Veröffentlichung auf identischen geprüften Tree und beide Parents
-kontrolliert. Ein neuer auftragseigener Publikationsbranch/Reviewcheckout hält
-diesen Stand; der bestehende Remotehead von #145 wird ausschließlich per normalem
-Fast-forward aktualisiert. Kein Force-Push, Reset oder manuelle Refreparatur.
+kontrolliert. Auch die Neuanlage eines lokalen Publikationsbranches scheiterte.
+Ein neuer auftragseigener **detached** Reviewcheckout hält den geprüften
+Mergecommit; der bestehende Remotehead von #145 wird ausschließlich per normalem
+Fast-forward aktualisiert und erhält damit den dauerhaften PR-Bezug. Keine
+Behauptung einer erfolgreichen lokalen Branchanlage, kein Force-Push, Reset oder
+manuelle Refreparatur.
 Der ursprüngliche Integrationsworktree bleibt mit dokumentiertem lokalem
 Merge-/Indexzustand erhalten. Ein zu früh
 während des noch laufenden Worktreecheckouts gestarteter
 Merge brach ab; nach abgeschlossenem sauberem Checkout wurde der Merge ohne
 Autostash wiederholt. Keine Stashes, fremden Worktrees oder Daten geändert.
 
-PR #145 bleibt offen. Eigene Integrations-/Publikationsbranches und Worktrees
+PR #145 bleibt offen. Eigener Integrationsbranch und beide Worktrees
 bleiben bis zur bestätigten Integration erhalten; kein automatischer Merge oder
 historisches Cleanup. Dauerhafte Dokumente sind erst nach regulärem Merge in
 master integriert. Die technische Lieferung erteilt keine reale Betriebsfreigabe.
