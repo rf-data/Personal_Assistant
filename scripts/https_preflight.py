@@ -11,6 +11,19 @@ import re
 from pathlib import Path
 from urllib.parse import urlsplit
 
+# Explicit routable VPN address families, rather than Python's broader
+# is_private classification (which includes documentation/reserved addresses).
+VPN_RANGES = tuple(
+    ipaddress.ip_network(value)
+    for value in (
+        "10.0.0.0/8",
+        "172.16.0.0/12",
+        "192.168.0.0/16",
+        "100.64.0.0/10",
+        "fc00::/7",
+    )
+)
+
 
 class Refused(ValueError):
     pass
@@ -95,6 +108,7 @@ def check(
         "ADMIN_AUTH_MODE": "oidc",
         "C22_PRODUCTION": "1",
         "C26_HTTPS": "1",
+        "C26_ACCESS_PROFILE": profile,
         "C26_UI_ORIGIN": origin,
         "FORWARDED_ALLOW_IPS": "",
     }.items():
@@ -158,7 +172,9 @@ def check(
         "explicit_ingress_network_required",
     )
     # Traefik label keys are case-insensitive; Coolify emits entryPoints.
-    labels = {key.lower(): value for key, value in labels.items()}
+    normalized = {key.lower(): value for key, value in labels.items()}
+    require(len(normalized) == len(labels), "ambiguous_case_variant_labels_refused")
+    labels = normalized
     require(
         not any(key.startswith(("traefik.tcp.", "traefik.udp.")) for key in labels),
         "no_other_protocol_routes",
@@ -235,10 +251,10 @@ def check(
         for value in ranges.split(","):
             net = ipaddress.ip_network(value.strip(), strict=True)
             require(
-                net.prefixlen > 0
-                and net.is_private
-                and not net.is_loopback
-                and not net.is_link_local,
+                any(
+                    net.version == allowed.version and net.subnet_of(allowed)
+                    for allowed in VPN_RANGES
+                ),
                 "explicit_private_client_ranges_required",
             )
     return {

@@ -1,6 +1,6 @@
 # C26-B: HTTPS über den bestehenden Coolify-Proxy
 
-Stand 20.10.2026. Führende Ergänzung zur [C22-Architektur](architecture.md),
+Stand 22.10.2026. Führende Ergänzung zur [C22-Architektur](architecture.md),
 [Konfiguration](configuration.md), [Betrieb](operations.md) und
 [Backup/Restore](backup_restore.md). Der [C26-A-Bestandsvertrag](c26a/existing_backend_and_drive.md)
 bleibt maßgeblich für das vorhandene Backend. Keine SSH-Verbindung oder Änderung
@@ -10,7 +10,31 @@ Rollout, DNS-/Firewall-/ACME-Eingriff oder Entfernen von Images/Volumes.
 
 ## Architektur und belegter Iststand
 
-Backendbasis `449437b` (master), UI `a7da646` (main). C22 ist integriert;
+Live abgeglichen am 22.10.: Backend `master` = `3b91d39195e0d13fe0442d4594b28e431b0f4236`,
+UI `main` = `49cf9ee172aa7f46357cf1fef53158fc9ba654e7`.
+[Backend #137](https://github.com/rf-data/Personal_Assistant/pull/137) wurde am
+20.10. um 20:14:42 UTC mit Mergecommit `59e8d6b` integriert;
+[UI #18](https://github.com/rf-data/personal-assistant-ui/pull/18) um 20:13:43 UTC
+mit `49cf9ee`. Ihre bisherigen Tests basierten auf `449437b` / `a7da646` und bleiben
+historische lokale Belege. Die neue Prüfung steht im
+[Abnahmebeleg, Fortsetzung 22.10.](c26b_validation.md#fortsetzung-22102026).
+Seit #137 wurden Worker-/Runtimepfade, Pilotbootstrap, Week-0-, Transcript-,
+Code-/ZIP- und Media-Plan-Verträge integriert (#138–145). C16-Rootprüfung und
+Guardian übernehmen jetzt die explizite Mountpolicy; der HTTPS-Transportvertrag
+und das UI blieben unverändert. Der Dateikopierumfang des Workerimages wurde
+erweitert. Das belegt kein Update des laufenden Hosts.
+
+| Bereich | Status | Beleg / offene Grenze |
+| --- | --- | --- |
+| C26-B-Integration | `implemented`, `verified` | Beide Mergebelege und aktuelle Default-Commitobjekte geprüft |
+| HTTPS/OIDC/C16, Cookies/WSS | `implemented`, `verified` | Erneute lokale synthetische Tests; siehe Abnahmebeleg |
+| Private Overlay-/Routingprüfung | `implemented`, `verified` | Explizites Profil, angehängte Allowlist, kein Hostport; nur offline |
+| Echtes VPN, Gerätefreigabe, Quell-IP-Erhalt | `not_tested`, `operator_action_required` | Kein bestätigter Hostzugriff oder VPN-Bestand |
+| Hostrollen, API-TLS, Netzmitglieder, Auto-Deploy | `not_tested`, `blocked` | Aktuelles gefiltertes Inventar und Coolify-Einstellungen fehlen |
+| Domain, IdP, Secrets, Registrydigest, Backup/Alarme | `operator_action_required` | Konkrete Betreiberentscheidungen und echte Abnahme fehlen |
+| Produktivrollout | `blocked` | Separate Freigabe; #109–113, #146, UI #14/#15 offen |
+
+C22 ist integriert;
 `deployment/compose.yaml` ist ein separates Gesamtstack-Template mit API,
 internem Caddy-TLS-Gateway, Executor und UI. **Dieses Template hier nicht starten**:
 es würde zusätzliche Backendrollen erzeugen. C26-B definiert nur den Ersatz der
@@ -19,7 +43,7 @@ Browser-TLS. Die C16-URL bleibt verifiziertes privates HTTPS, ohne TLS-Downgrade
 
 ```mermaid
 flowchart LR
-  B[Browser über VPN oder Internet] -->|HTTPS 443| T[Bestehender Coolify Traefik]
+  B[Ausdrücklich autorisiertes VPN-Gerät] -->|HTTPS 443 / privates Ziel| T[Bestehender Coolify Traefik / UI-Allowlist]
   T -->|HTTP und WebSocket 8501 / bestehendes Ingressnetz| U[Vorhandene Streamlit Admin-App]
   U -->|HTTPS + individueller Bearer / separates internes Netz| A[Bestehende C16 API]
   A --> W[Vorhandener C16/C18 Executor und Queue]
@@ -30,9 +54,10 @@ Docker 29.8.2, Compose v5.6.0, 2 vCPU / 3,7 GiB RAM, zuletzt etwa 15 GiB frei.
 Das sind Betreiberangaben, keine aktuelle Hostmessung. Den SSH-Alias `coolify`
 verwendet diese Vorbereitung nicht.
 
-Der C26-A-Bericht beschreibt das laufende breite Backendimage mit PID1
-`sleep infinity`; sein Dockerfile kopiert keine `scripts/`. Modulimporte beweisen
-keine laufende C16-API und keinen aktiven Executor. Vor Freigabe müssen
+Der ältere C26-A-Bericht beschrieb ein Backendimage mit PID1 `sleep infinity`.
+Das heutige Dockerfile enthält `scripts/`; der tatsächlich installierte Stand ist
+unbekannt. Weder Modulimporte noch ein vorhandener Pilotworker beweisen eine
+laufende C16-HTTPS-API. Vor Freigabe müssen
 Image-ID/Revision, Prozessrolle, TLS-Endpunkt, private DNS-/Netzmitgliedschaft,
 einzelner Executor und identische persistente Pfade gefiltert geprüft werden.
 **Fehlt die vorhandene authentifizierte HTTPS-API, ist der Rollout blockiert.**
@@ -71,6 +96,171 @@ aller Proxyadressen. Loopback-CIDRs sind ausschließlich synthetische Testdaten.
 Kein Abschalten oder Umkonfigurieren des globalen Traefik-Ingress für Private HTTPS:
 bestehende Coolify-Administration und fremde Domains bleiben unverändert.
 
+### VPN-Wahl und Sicherheitsgrenze
+
+Es gibt keinen verifizierten installierten VPN-Stand und keine dokumentierte
+endgültige Technologieentscheidung. **Empfehlung: Tailscale als Hostdienst**,
+ohne Serve/Funnel, Exitnode, Subnetrouter, zusätzlichen Proxy oder Authdienst.
+Clients erreichen über Split-DNS den privaten Host-VPN-Endpunkt auf Port 443;
+der vorhandene Traefik bleibt zuständig. Eigene echte Domain und vorhandenes
+gültiges Zertifikat bzw. separat genehmigtes DNS-01 bleiben erforderlich.
+
+| Kriterium | WireGuard selbst betreiben | Tailscale |
+| --- | --- | --- |
+| Sicherheit | Pro Gerät eigener Schlüssel und feste Peer-IP; Schlüsselentzug, Firewall und Routen selbst pflegen | WireGuard-Datentransport; zentraler Benutzer-/Geräteentzug, explizite Gerätefreigabe und enge Grants; Abhängigkeit vom Koordinationsanbieter |
+| Wartung / Infrastruktur | Hostinterface, UDP-Zugang, DNS, Peerdateien und Updates selbst verwalten; kein Kontrollanbieter nötig | Ein Hostclient und Geräteclients; verwaltete Koordination/Relays, kein weiterer eigener Server |
+| Kosten | Keine VPN-Lizenzgebühr; vorhandener Host, Traffic und Betreiberzeit bleiben | Aktuell Personal kostenlos für nicht kommerzielle Nutzung bis 6 Nutzer; Standard 8 USD/Nutzer/Monat, Premium 18 USD; Eignung des Tarifs bestätigen |
+| Bedienung | Konfiguration je Gerät verteilen und schützen | Anmeldung, Gerätefreigabe und zentrale Regeln einfacher; Konto/MFA und Geräteablauf administrieren |
+
+Preis-/Funktionsstand am 22.10.2026 geprüft: [Tailscale-Tarife](https://tailscale.com/pricing),
+[Gerätefreigabe](https://tailscale.com/docs/features/access-control/device-management/device-approval),
+[Grants](https://tailscale.com/docs/reference/syntax/grants),
+[WireGuard](https://www.wireguard.com/), [Peer-Konfiguration](https://www.wireguard.com/quickstart/).
+Die Empfehlung folgt dem Wartungsziel, ist keine bereits getroffene Betreiberwahl.
+
+Vor Aktivierung: Nur benannte Benutzer und einzeln bestätigte Geräte aufnehmen;
+MFA am Verwaltungslogin, Device Approval und dokumentierten Geräteentzug prüfen.
+Bestehende breite Allow-Regeln durch enge Regeln ergänzungsfrei ersetzen, soweit
+für diese Anwendung genehmigt: Grants sind additiv, eine weitere enge Regel hebt
+ein bestehendes Allow-all nicht auf. Bei geteiltem Tailnet erst Auswirkungen auf
+andere Dienste prüfen. Nur benötigten Zugriff zum Host auf TCP 443 erlauben;
+Admin-/SSH-Zugriff separat erhalten und entscheiden. Andere Domains am selben
+Host/Port lassen sich durch VPN-Portregeln allein nicht unterscheiden.
+
+Traefiks UI-Allowlist enthält bevorzugt die bestätigten Geräte-IPs als `/32`
+bzw. `/128`, nicht das gesamte Tailnet. Tailscale nutzt
+[`100.64.0.0/10` und IPv6](https://tailscale.com/docs/concepts/tailscale-ip-addresses);
+das ist kein Nachweis der Geräteautorisierung. Der Checker erlaubt RFC1918,
+CGNAT und ULA, verwirft öffentliche, Dokumentations-, Loopback-, Linklocal- und
+Reservenetze. Bei WireGuard entsprechend feste einzelne Peer-IPs verwenden.
+
+**Zugang ist erst privat abgenommen, wenn von außerhalb des VPN selbst mit
+korrektem Host/SNI und gefälschtem X-Forwarded-For kein UI-/Login-/WSS-Inhalt
+erreichbar ist.** Privates DNS oder OIDC allein reichen nicht. Docker-NAT muss die
+VPN-Quelladresse bis zu Traefik erhalten. Sieht Traefik nur eine gemeinsame
+Bridge-/Host-/Proxy-IP, stoppen: diese nicht pauschal erlauben. Eine dedizierte,
+nachweislich ausschließlich vom VPN erreichbare Egress-IP erfordert eine eigene
+Topologieentscheidung. Kein Userspace-Tailscale/SOCKS-/L7-Umweg als spontane Lösung.
+IPv4 und IPv6, öffentliche IP mit UI-SNI, Ersatzdomains und sämtliche bestehenden
+Portveröffentlichungen müssen negativ geprüft werden. Öffentliche Port-443-Dienste
+für andere Anwendungen bleiben bestehen; die UI-Router lehnen öffentliche
+Anwendungszugriffe ab. Ist selbst ein öffentlicher UI-TLS-Handshake unzulässig,
+braucht es eine separat genehmigte EntryPoint-/Bind-Architektur; die bestehende
+gemeinsame 443-Terminierung erfüllt diese strengere Anforderung nicht.
+
+Nach gesondert genehmigter Aktivierung von einem Gerät **ohne VPN** ausführen,
+dann mit einem nicht freigegebenen bzw. entzogenen VPN-Gerät wiederholen:
+
+```sh
+set -eu
+: "${C26_UI_HOST:?Bestaetigter DNSname ohne Schema oder Port}"
+: "${C26_PUBLIC_IP:?Tatsaechliche oeffentliche IPv4}"
+: "${C26_APPROVED_DEVICE_IP:?Eine erlaubte VPN-IP fuer den Spoofing-Negativtest}"
+for path in / /auth/login /oauth2callback /_stcore/stream; do
+  curl --noproxy '*' --connect-timeout 5 --max-time 10 \
+    --resolve "$C26_UI_HOST:443:$C26_PUBLIC_IP" \
+    -H "X-Forwarded-For: $C26_APPROVED_DEVICE_IP" \
+    -sS -o /dev/null -w '%{http_code}\n' "https://$C26_UI_HOST$path"
+done
+```
+
+Erwartet: Ablehnung vor der UI (403/404 oder belegte Netzsperre), weder HTML noch
+Loginredirect. TLS-Verifikationsfehler zählen **nicht** als bestandene Netzsperre.
+IPv6 separat mit bestätigter öffentlicher IPv6 und passender `--resolve`-Syntax
+testen. Zusätzlich im echten Browser WSS-Verbindung von außen verweigert und vom
+freigegebenen Gerät erlaubt, Netzunterbrechung/Reconnect und Geräteentzug mit
+vorhandener Sitzung prüfen. Von erlaubt: Zertifikat/SAN verifiziert, OIDC-Login,
+individuelle C16-Rechte, Logout und Ablauf wie in Schritt 10. Kein `curl -k` und
+keine Tokens/Cookies in Shellhistorie oder Diagnosen. Öffentliche Backendports
+müssen auf Netzwerkebene unerreichbar sein; eine 401 allein erfüllt dies nicht.
+
+### Erste Betreiberprüfungen und benötigte Entscheidungen
+
+Kein SSH-/Hostkey-/Lesescope wurde für diese Fortsetzung bestätigt; deshalb hier
+keine Hostverbindung. Folgende Befehle führt der Betreiber zunächst selbst lokal
+am Host aus. Ausgabe privat behandeln; keine vollständigen Inspect-, Env-,
+Prozessargument-, VPN-Konfigurations- oder Logdumps teilen.
+
+```sh
+date -u
+uname -sr
+docker version --format '{{.Server.Version}}'
+docker compose version
+df -h / /srv
+free -h
+docker ps --format '{{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}'
+ip -br address
+ip route show
+ip -6 route show
+ss -lnt
+ss -lnu
+command -v tailscale || true
+command -v wg || true
+```
+
+Container-IDs aus diesem Inventar bewusst zuordnen, keine Namen raten:
+
+```sh
+set -eu
+: "${C26_UI_CONTAINER:?Exakt bestaetigte vorhandene UI}"
+: "${C26_BACKEND_CONTAINER:?Exakt bestaetigtes vorhandenes Backend}"
+: "${C26_PROXY_CONTAINER:?Exakt bestaetigter vorhandener Traefik}"
+for c in "$C26_UI_CONTAINER" "$C26_BACKEND_CONTAINER" "$C26_PROXY_CONTAINER"; do
+  docker inspect --format '{{.Name}} image={{.Image}} started={{.State.StartedAt}} restart={{.RestartCount}} user={{.Config.User}} network={{.HostConfig.NetworkMode}}' "$c"
+  docker inspect --format '{{json .HostConfig.PortBindings}}' "$c"
+  docker inspect --format '{{range $n,$v := .NetworkSettings.Networks}}{{$n}} {{$v.IPAddress}} {{$v.GlobalIPv6Address}};{{end}}' "$c"
+  docker top "$c" -eo pid,ppid,user,comm
+done
+docker inspect --format '{{range .Mounts}}{{.Type}} {{.Source}} -> {{.Destination}} rw={{.RW}};{{end}}' "$C26_BACKEND_CONTAINER"
+: "${C26_INGRESS_NETWORK:?Bestaetigtes vorhandenes Proxy-Netz}"
+: "${C26_BACKEND_NETWORK:?Bestaetigtes vorhandenes API-Netz}"
+for n in "$C26_INGRESS_NETWORK" "$C26_BACKEND_NETWORK"; do
+  docker network inspect --format '{{.Name}} internal={{.Internal}} {{range .Containers}}{{.Name}} {{.IPv4Address}} {{.IPv6Address}};{{end}}' "$n"
+done
+```
+
+Keine `wg showconf`-/`wg ... dump`-Ausgabe: sie kann private Schlüssel enthalten.
+Bei vorhandenem Tailscale lokal `tailscale ip -4`, `tailscale ip -6` und
+`tailscale status` prüfen; Gerätedaten redigieren, nur genehmigte IPs/Status melden.
+Firewall einschließlich IPv6 und Docker-Published-Ports sowie Traefik-Forwarded-
+und ProxyProtocol-Trust und Querylogredaktion lokal prüfen; keine Konfiguration
+ändern. Unbekannter Zustand bleibt No-Go. Ein leerer `ss`-Befund ersetzt wegen
+Docker-NAT keine PortBindings-/Firewallprüfung.
+
+In Coolify für **Backend, Pilot/Worker und UI** jeweils Ressourcen-ID, Quellbranch,
+installierte Commit-SHA/Image-ID, Auto-Deploy, Preview-Deploy, Scheduler, externe
+Webhooks/API-/Registrytrigger und aktuelle/ausstehende Deployments prüfen. Eine
+leere Queue ist kein Drain und verhindert kein Rennen mit neuen Jobs. Prozessnamen
+allein beweisen keine inaktive C16-Queue. Aktuelle Jobzustände nur über die
+vorhandene autorisierte Statusoberfläche prüfen; keine Produktions-SQLite öffnen.
+[Issue #146](https://github.com/rf-data/Personal_Assistant/issues/146) ist offen,
+ein workerbewusstes atomisches Deploymentgate ist **nicht implementiert**.
+Bis zu dessen Abnahme Auto-Deploy/Preview-/externe Trigger nur nach Betreiberfreigabe
+deaktivieren und den manuellen Release-/Idle-Zeitraum exklusiv sichern.
+[Coolify beschreibt auch externe Trigger](https://coolify.io/docs/applications/deployments/automatic-deployments);
+ein Git-Merge allein darf keine Betriebsfreigabe bedeuten.
+
+Vor jedem produktiven Schritt benötigt der Betreiber:
+
+1. **P0:** Bestätigung des aktuellen Inventars, unveränderter Persistenz und
+   abgeschirmter API; Auto-Deploy-/Jobschutz inklusive Pilot, sichere Adminrettung.
+2. **P0:** VPN-Wahl/Tarif, benannte Benutzer/Geräte, bestätigte private IPs,
+   Quell-IP-Erhalt und erlaubte Zugriffe, IPv6-Entscheidung ohne Bypass.
+3. **P0:** Eigene UI-Domain, Split-DNS-Ziel und gültiges Zertifikat/DNS-01-Verfahren;
+   IdP/Issuer/Client/Callback, erlaubte Subjects, individuelle C16-Rollen/Courses
+   und private Token-/Secretbereitstellung. Keine Secrets in den Chat kopieren.
+4. **P0:** Bestehender verifizierter privater API-TLS-Endpunkt mit CA/SAN, tatsächliche
+   Netzmitglieder/Traefik-IP, UI-Ressource/Buildtyp, überprüfter Registrydigest.
+5. **P1:** Budget, bestätigtes Backup/isolierter Restore, Alarmempfänger und Testalarm,
+   vorheriger sicherer UI-Stand und verantwortlicher Rollbackbetreiber.
+6. **Freigabe:** Zuerst genauer Read-only-Scope/Hostkey, falls Codex Hostprüfungen
+   übernehmen soll. Danach getrennte ausdrückliche Freigabe für genau benannte
+   VPN/DNS/TLS/Route-/UI-Änderungen im Wartungsfenster; kein Backend-/Pilot-Redeploy.
+
+Die offenen Issues #100, #109, #110, #111, #112, #113, #146 und UI #14/#15 wurden
+am 22.10. über GitHub gelesen. UI #14 behauptet noch fehlendes Authlib; diese
+Beschreibung ist seit Merge #18 technisch überholt, Image-/Hostabnahme bleibt offen.
+
 ## Environment und Secrets
 
 Vorlagen: [Environment](../../deployment/c26-https.env.example),
@@ -90,6 +280,7 @@ Hetzner-Storage halten; Google Drive ist kein bestätigter Hostmount.
 | `C26_BACKEND_NETWORK` | Vorhandenes separates internes API-Netz, keine Ingressmitgliedschaft der API | intern |
 | `C26_TRUSTED_PROXY_CIDRS` | Tatsächliche Traefik-Socket-IP(s), bevorzugt `/32` bzw. `/128`; kein `0/0` | intern |
 | `C26_ROUTE_ID`, `C26_ALLOWED_CIDRS` | Private-Profil: kollisionsfreier Ressourcenname und bestätigte VPN/private CIDRs | intern |
+| `C26_ACCESS_PROFILE` | Vom gewählten Overlay gesetzt; muss dem Auditprofil entsprechen, kein implizites öffentliches Profil | nicht geheim |
 | `ADMIN_OIDC_ISSUER` | Exakter vom Provider bestätigter HTTPS-`iss` | nicht geheim |
 | `ADMIN_OPERATOR_SUBJECTS`, `ADMIN_VIEWER_SUBJECTS` | JSON-Arrays, disjunkt; zunächst ein Operator und `[]` Viewer | personenbezogene Konfiguration |
 | `ADMIN_OIDC_SESSION_MAX_AGE` | Standard 3600 s; zulässig 60–28800 s | nicht geheim |
@@ -173,7 +364,7 @@ Registry-Manifestdigest sind verschiedene Werte. Kein erfundener Digest im
 Deploymenttemplate. Der Build nutzt ausschließlich `uv sync --frozen --no-dev`.
 Die Acceptance-Gruppe installiert Playwright nur lokal; sie landet nicht im Image.
 
-Die Profile zuerst offline zusammensetzen. Dabei `C26_ACCESS_PROFILE` auf genau
+Die Profile zuerst offline zusammensetzen. Dabei die Shellvariable `C26_ACCESS_PROFILE` auf genau
 `private-https` oder `public-https` setzen, `C26_ENV_FILE` privat Modus 0600 und
 `C26_PREPARED_COMPOSE` auf einen neuen **privaten** Dateipfad. Keine vollständige
 Environment-/Composeausgabe in Logs oder Git speichern.
@@ -204,6 +395,8 @@ explizit synthetisch; kein Nachweis des gewählten Providers oder Zielhosts.
    Backupziel und Restorepfad bestätigen. Aktuelle C22-Backups unverändert verwenden,
    keine Live-SQLite-Datei blind kopieren. Host-/Containerinventur aus C26-A nur
    im genehmigten Umfang, keine vollständigen Inspect-/Env-/Prozessargument-Dumps.
+   Zuvor die obigen P0-/Auto-Deploy-/Pilotprüfungen vollständig abnehmen; bei
+   unbekanntem Jobzustand keinen Containerwechsel beginnen.
 2. Genau **die bestehende UI-Ressource** bearbeiten, kein zusätzliches Resource-
    Deployment parallel starten. Auto-Deploy/Webhooks für diese Änderung deaktivieren.
    In Coolify 4.4.2 den Compose-Application-/Servicepfad der Ressource verwenden;
@@ -345,6 +538,10 @@ Rollback wird innerhalb **derselben UI-Ressource** ausgeführt:
    beenden, danach Login und Rechte neu prüfen.
 4. Health/Readiness, bestehende Adminroute und fremde Domains prüfen. Kein
    Datenrestore ohne separaten nachgewiesenen Bedarf; keine Queueduplikation.
+   Erneut öffentlich/VPN-unberechtigt/entzogenes Gerät negativ prüfen. Private
+   Allowlist und VPN-Zugriffsregeln beim Rollback erhalten. Besteht noch keine
+   sichere Vorgängerversion, nur die UI-Route sperren. VPN nicht entfernen, solange
+   davon der bestehende Adminzugang abhängt; Netze/Firewall nur separat freigeben.
 5. Fehlbefund und Ursache dokumentieren; Images, Volumes und alte Routenbelege
    erhalten. Bei abgelaufenem Zertifikat nur genehmigte Erneuerung bzw. vorheriges
    noch gültiges Zertifikat; sonst Route geschlossen lassen.
@@ -363,13 +560,11 @@ API-/Workerrolle und Revision, existierender interner TLS-Endpunkt und Netzplan,
 UI-Ressourcen-ID/Buildtyp/Proxy-IP, Zertifikat/ACMEverfahren, Budget, redigierte
 Proxylogs, Alarmziel, Backup-/Rollbackbeleg sowie explizite Host-/Rolloutfreigabe.
 
-GitHub Project #1 wurde geprüft: C26 #100, C26-02 #109, C26-03 #110,
-Monitoring #112, Go-live #113 bleiben offen. UI C26-01 #14 bleibt bis Image-/Host-
-Abnahme offen. Arbeitspakete: B1 Deployment/Audit im Backend-PR; B2 OIDC/UI im
-UI-PR; B3 E2E/Security/Operations in denselben fachlich zugeordneten Repositories.
-Keine zweite parallele Betriebsanleitung und keine automatische Issue-/Produktiv-
-Abnahme. Offene PRs und eigene Worktrees bleiben für Review erhalten; Integration
-in master/main und Lebenszyklusabschluss stehen wegen des Mergeverbots aus.
+Die ursprünglichen #137/#18 sind integriert. Die Fortsetzung wird separat zur
+Review gestellt und nicht automatisch gemergt. Ihre Branches/Worktrees bleiben bis
+zur regulären Integration erhalten; ältere Arbeitskopien enthalten teilweise
+wertvolle Venvs und fremde Änderungen und werden nicht bereinigt. Keine automatische
+Issue-/Produktivabnahme und keine zweite parallele Betriebsanleitung.
 
 Quellen, am 20.10.2026 geprüft: [Coolify Compose](https://coolify.io/docs/applications/builds/docker-compose),
 [Coolify Netzwerke](https://coolify.io/docs/services/configuration/networking),
