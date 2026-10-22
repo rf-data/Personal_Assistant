@@ -221,6 +221,11 @@ versucht werden. Unvollständige Archivpublikationen bleiben dagegen blockiert.
 
 ## Weitere Integration und noch nötige Entscheidungen
 
+C26-B7 ergänzt einen ausdrücklich nicht ausführenden
+[Media-last-Planungs- und Coveragevertrag](media_last_pilot.md). Die nachfolgenden
+Medien-/Shortsentscheidungen bleiben für die reale Ausführung erforderlich;
+Legacy-Medienfunktionen werden dadurch nicht automatisch freigegeben.
+
 1. Python: eine begrenzte explizite Dateiliste aus dem Snapshot auswählen, URLs
    inklusive Queryform entscheiden, echte Discovery-/Lecture-/Sprachbindungen
    ergänzen und unabhängig testen. Erst dann Code-v1 mit bestehenden C26/B4-
