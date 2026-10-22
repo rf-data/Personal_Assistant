@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "record_type": "c26_b6_phase_a_readiness_audit",
+  "date": "2026-10-22",
+  "baseline_commit": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+  "phase_a": "review_prepared",
+  "phase_b": "pending_b5_integration_and_contract_review",
+  "b6_implementation_present": false,
+  "b6_preflight_implemented": false,
+  "b6_production_approval": false,
+  "dependencies": [
+    {
+      "pr": 150,
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "head": "c6415d3c3f0f77f457b4b461f6841a385e827d5c"
+    },
+    {
+      "pr": 149,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "head": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb"
+    },
+    {
+      "pr": 148,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "head": "f98eedd671c8a9d9eb58a3b957eda1a91713844d"
+    }
+  ],
+  "deployment_issue": {
+    "number": 146,
+    "state": "open",
+    "production_driver_accepted": false
+  },
+  "new_verification": {
+    "b5_archive_files_match_commit": 1044,
+    "fixture_inventory_counts": {
+      "resources": 17,
+      "material_variants": 24,
+      "supported": 7,
+      "locally_present": 1,
+      "verified": 0,
+      "processed": 0,
+      "blocked": 0,
+      "manual_only": 2,
+      "open_issues": 0,
+      "selected": 0,
+      "ready": 0,
+      "reused": 0,
+      "gaps": 8
+    },
+    "export_inventory_counts": {
+      "resources": 21,
+      "material_variants": 28,
+      "supported": 11,
+      "locally_present": 3,
+      "verified": 0,
+      "processed": 0,
+      "blocked": 0,
+      "manual_only": 2,
+      "open_issues": 0,
+      "selected": 0,
+      "ready": 0,
+      "reused": 0,
+      "gaps": 6
+    },
+    "all_six_exports_hash_verified": true,
+    "offline_discovery_smokes_passed": 2,
+    "pytest_rerun": false,
+    "source_fingerprints_verified": 5,
+    "exports_identical_after_discovery": true
+  },
+  "historical_b5_tests": {
+    "regression": {
+      "passed": 358,
+      "skipped": 3
+    },
+    "final_week": {
+      "passed": 51
+    },
+    "aggregation_compatibility": {
+      "passed": 85
+    },
+    "overlap_do_not_sum": true,
+    "rerun_in_b6": false
+  },
+  "phase_b_test_cases_planned": 16,
+  "phase_b_test_cases_implemented": 0,
+  "cleanup": {
+    "cache_directories_removed": 88,
+    "files_removed": 449,
+    "allocated_bytes_removed": 4923392,
+    "available_bytes_before": 4262862848,
+    "available_bytes_after": 4266942464,
+    "inode_metrics": "not_reported_by_filesystem",
+    "skipped_cache_directories": 1,
+    "virtualenvs_removed": false,
+    "thread_writer_locks_modified": false,
+    "approval_review_retry": "succeeded",
+    "b5_review_pr_created": 150
+  },
+  "runtime": "existing_realpilot_python_3.12.12_read_only",
+  "pytest_unavailable_in_inspected_existing_environments": true,
+  "new_dependencies": false,
+  "ssh": false,
+  "downloads": false,
+  "production_jobs_started": false,
+  "deployments": false,
+  "merges": false,
+  "retention": {
+    "branch": "docs/c26b6-rollout-readiness",
+    "worktree": "Personal_Assistant-c26b6-readiness",
+    "reason": "unmerged_review"
+  },
+  "document_sha256": {
+    "docs/deployment/c26a/multi_course_readiness.md": "db1663a2ec7f4068e8b76cde8a528dde51a3e2d68b566dd052229a81575c5975",
+    "docs/deployment/c26a/multi_course_validation.md": "9a22962af7a079e2d8e2708e95cc80b0848066d126fe3a07901aa1b56fcf4f32"
+  }
+}
