@@ -40,6 +40,14 @@ def main(argv=None):
     a.add_argument("--confirm", action="store_true")
     a.add_argument("--output", type=Path)
     a = sub.add_parser(
+        "media-plan",
+        help="Read-only media-last planning; never downloads or transcribes",
+    )
+    a.add_argument("--request", type=Path, required=True)
+    a.add_argument("--approvals", type=Path, required=True)
+    a.add_argument("--previous-report", type=Path)
+    a.add_argument("--output", type=Path, required=True)
+    a = sub.add_parser(
         "code", help="Bounded offline Python/ZIP import; no HTTP/C18 publication"
     )
     a.add_argument("action", choices=("preview", "import", "report"))
@@ -120,6 +128,24 @@ def main(argv=None):
                         if args.output.parent == args.archive
                         else limits.report_bytes,
                     )
+        elif args.command == "media-plan":
+            from src.job_control.catalog import read_file, safe_path
+            from src.job_control.operations import private
+            from src.model_materials.media_plan import MediaRequest
+            from src.tools_materials import media_plan
+            from src.tools_materials.quality import _json
+
+            if not args.limits or limits.reserve_bytes < 5 * 1024**3:
+                raise PermissionError("Explicit C26 report limits/reserve required")
+            request = MediaRequest.model_validate(
+                _json(read_file(private(safe_path(args.request)), 65536))
+            )
+            result = media_plan.plan(request, api.load_approvals(args.approvals))
+            if args.previous_report:
+                media_plan.check_previous(
+                    _json(read_file(private(safe_path(args.previous_report)))), result
+                )
+            api.output(args.output, result, limits=limits)
         elif args.command in {"code", "code-inventory"}:
             from src.tools_materials import code_discovery, code_import
 
@@ -187,6 +213,7 @@ def main(argv=None):
             set(result.get("summary", {}).get("status_counts", {}))
             & {"failed", "blocked", "interrupted", "cancelled", "unsupported", "stale"}
         )
+        failed |= bool(result.get("report", {}).get("blocked"))
         return 1 if failed else 0
     except (ValueError, OSError, RuntimeError, KeyError, sqlite3.Error) as error:
         print(json.dumps(dict(status="rejected", error_class=type(error).__name__)))
