@@ -226,6 +226,11 @@ C26-B7 ergänzt einen ausdrücklich nicht ausführenden
 Medien-/Shortsentscheidungen bleiben für die reale Ausführung erforderlich;
 Legacy-Medienfunktionen werden dadurch nicht automatisch freigegeben.
 
+Die nachfolgenden Python-/ZIP-Punkte beschreiben den historischen B5-Stand.
+C26-B6 ergänzt inzwischen einen begrenzten, separat freizugebenden Offlinepfad:
+[Code-/ZIP-Vertrag und Runbook](code_zip_pilot.md). Queryansichten, reale
+Originale, Downloadfreigaben und fachliche Abnahme bleiben offen.
+
 1. Python: eine begrenzte explizite Dateiliste aus dem Snapshot auswählen, URLs
    inklusive Queryform entscheiden, echte Discovery-/Lecture-/Sprachbindungen
    ergänzen und unabhängig testen. Erst dann Code-v1 mit bestehenden C26/B4-

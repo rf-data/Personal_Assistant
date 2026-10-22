@@ -1,11 +1,13 @@
 # C26-B7: Media-last-Planung und verbleibende Materialadapter
 
-22.10.2026. Basis: Backend-master `6786b5d67b31125895d94af7b763a1002aeeea7d`.
-B3/B4/B5 sind integriert. [B6/#144](https://github.com/rf-data/Personal_Assistant/pull/144)
-und [Knowledge-Fix #143](https://github.com/rf-data/Personal_Assistant/pull/143)
-waren beim Livecheck offen, ohne Mergecommit. Keine Übernahme dieser offenen
-Branches und keine parallele Nachimplementierung. B6-Integration muss nach dessen
-Merge separat abgeglichen werden, insbesondere die gemeinsamen Batch-CLI-Erweiterungen.
+22.10.2026. Integrationsbasis: Backend-master
+`c49645734dcba6d9d1aac8d4192841fa1a655051`, einschließlich
+[B6/#144](https://github.com/rf-data/Personal_Assistant/pull/144) und
+[Knowledge-Fix #143](https://github.com/rf-data/Personal_Assistant/pull/143).
+Beide CLI-Erweiterungen sind erhalten. Aktueller gemeinsamer Prüfbericht und
+Go-/No-Go-Kriterien: [Integration B3–B7](integration_b3_b7.md).
+Die ursprüngliche B7-Abnahme auf `6786b5d` bleibt als datierter
+[historischer Nachweis](media_last_validation.md) erhalten.
 
 **Implementiert ist eine wiederverwendbare, ausschließlich lokale Planung.**
 Kein Mediaexecutor, Download, Whisper-/Frame-/LLM-Lauf, Deployment, Zugriff auf
@@ -110,8 +112,32 @@ verifiziertes lokales PDF → freigegebener offizieller PDF-Link → ausdrückli
 genehmigter Export mit nachgewiesener neuer Quellenbindung → Referenz behalten.
 Keine Export-URL wird konstruiert, kein HTML-Slideseditor als Folienparser verwendet.
 PDF-v2 erhält Seiten-/Blockreihenfolge und Bildreferenzen gemäß bestehendem Vertrag;
-nicht extrahierbare Grafik bleibt offen. B6-Code-/ZIP-Referenzen bleiben bis zu
-dessen tatsächlicher Integration außerhalb neuer B7-Adapter.
+nicht extrahierbare Grafik bleibt offen. B6-Pythonartefakte sind über die unten
+beschriebene explizite read-only Übergabe wiederverwendbar; ZIP bleibt außerhalb
+automatischer C18-Verarbeitung.
+
+## Übergabe vorhandener B6-Codeartefakte
+
+`MediaRequest.include_code_indexes=true` aktiviert dieselbe begrenzte
+Codeindex-Erweiterung wie `cs50_batch plan --include-code-indexes`. Der Default
+bleibt false; bisherige IDs und die Discoveryauswahl bleiben ohne Opt-in erhalten.
+Ein erweiterter Request benötigt einen neuen Plan. Ein alter Reportdigest ist
+keine Freigabe für die zusätzliche Auswahl.
+
+Für eine vorhandene B6-Importgruppe verwendet `EvidenceRef.kind="code"` den
+expliziten `workspace`, den zugehörigen `batch` und den SHA256 der **exakten Bytes**
+des übergeordneten `import.v1.json`. `material_id` bezeichnet die Pythondatei;
+`container_material_id` das ausgewählte ZIP, bei einer Einzeldatei deren eigene
+Material-ID. Es werden keine Archive nach ähnlichen Dateien durchsucht.
+
+Der Planer prüft Batch/Graph/Importerrevision, Rootauswahl, die vollständige
+begrenzte Dateiliste, Eltern-/Mitgliedshashes und aktuelle Process-Grants der
+gesamten Importgruppe einschließlich Geschwisterdateien. Anschließend wird der
+vorhandene C10-/Handoff erneut read-only geprüft. Kein Import, Staging, ASTprozess,
+ZIPentpacken oder Start des Codes. Widerruf, unklare Zuordnung oder manipulierte
+Artefakte sperren die Eskalation. Ein verifiziertes ZIP allein erfüllt keinen
+Textbedarf. `Adequacy` bleibt eine separate zweck- und hashgebundene Entscheidung;
+die technische Handoffprüfung bestätigt keine fachliche Codequalität.
 
 ## Separater Ressourcenvertrag
 

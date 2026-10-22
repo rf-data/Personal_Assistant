@@ -54,12 +54,13 @@ class TimeWindow(Contract):
 
 class EvidenceRef(Contract):
     material_id: NonEmpty
-    kind: Literal["transcript", "material", "media"]
+    kind: Literal["transcript", "material", "media", "code"]
     workspace: Path
     receipt_sha256: Sha | None = None
     batch: Path | None = None
     plan: Path | None = None
     relative_path: str | None = None
+    container_material_id: NonEmpty | None = None
 
     @model_validator(mode="after")
     def paths_and_contract(self):
@@ -78,7 +79,7 @@ class EvidenceRef(Contract):
                 raise ValueError("Normalized relative media path required")
         elif (
             self.receipt_sha256 is None
-            or (self.kind == "transcript" and self.batch is None)
+            or (self.kind in {"transcript", "code"} and self.batch is None)
             or (self.kind == "material" and self.plan is None)
         ):
             raise ValueError("Existing pinned receipt and batch/plan required")
@@ -121,6 +122,7 @@ class MediaRequest(Contract):
     need_text: bool = Field(default=True, strict=True)
     need_visual: bool = Field(default=False, strict=True)
     source_origin: Literal["official", "synthetic"] = "official"
+    include_code_indexes: bool = Field(default=False, strict=True)
     policy: SelectionPolicy = Field(
         default_factory=lambda: SelectionPolicy(preferred_video_resolution="360p")
     )

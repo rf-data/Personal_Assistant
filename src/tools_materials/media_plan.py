@@ -22,7 +22,9 @@ from src.tools_materials.storage import artifact_root
 
 
 def bindings(request):
-    graph = make_plan(request.manifest)
+    graph = make_plan(
+        request.manifest, include_code_indexes=request.include_code_indexes
+    )
     selected = [
         b
         for b in graph.materials
@@ -76,6 +78,11 @@ def adapter(binding):
         return "media_reference_only"
     if binding.role == "short":
         return "short_reference_only"
+    if binding.format in {"py", "zip"}:
+        from src.tools_materials.code_import import supported
+
+        if supported(binding):
+            return "b6_offline_code"
     if binding.format in {"srt", "vtt", "txt"} and binding.role in {
         "subtitles",
         "transcript",
@@ -164,7 +171,7 @@ def plan(request, approvals):
             remote_availability="not_checked",
             adapter=adapter(binding),
             technically_processable=adapter(binding)
-            in {"existing_material", "b5_offline_transcript"},
+            in {"existing_material", "b5_offline_transcript", "b6_offline_code"},
             download_approved=False,
             process_approved=False,
             processed=False,
@@ -196,7 +203,11 @@ def plan(request, approvals):
                 if mid not in grants:
                     raise PermissionError("Current process approval missing")
                 observed = media_evidence.verify(
-                    binding, evidence[mid], grants[mid], request.limits
+                    binding,
+                    evidence[mid],
+                    grants[mid],
+                    request.limits,
+                    approvals=approvals,
                 )
                 observations[mid] = observed
                 row.update(observed)
@@ -343,6 +354,10 @@ def plan(request, approvals):
         if stage in {"F1", "F2", "F3"}:
             if not row["technically_processable"]:
                 blockers.append("bounded_adapter_or_export_permission_missing")
+            if binding.format == "zip" and mid not in observations:
+                blockers.append(
+                    "zip_requires_explicit_offline_input_and_member_mapping"
+                )
         else:
             estimate = estimates.get(mid)
             maximum = (

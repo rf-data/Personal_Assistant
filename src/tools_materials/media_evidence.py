@@ -14,7 +14,7 @@ from src.tools_materials.quality import _json
 from src.tools_materials.storage import locate
 
 
-def verify(binding, ref, grant, media_limits):
+def verify(binding, ref, grant, media_limits, *, approvals=None):
     root = safe_path(ref.workspace)
     if not root.is_absolute():
         raise ValueError("Absolute evidence root required")
@@ -32,6 +32,10 @@ def verify(binding, ref, grant, media_limits):
         visual_evidence_available=False,
     )
     key = binding.material_id.split(":")[-1]
+    if ref.kind == "code":
+        from src.tools_materials.code_evidence import verify_code
+
+        return dict(result, **verify_code(binding, ref, approvals))
     if ref.kind == "media":
         if not ref.relative_path or binding.role not in {"audio", "lecture_video"}:
             raise ValueError("Explicit audio/video path required")

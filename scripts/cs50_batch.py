@@ -19,6 +19,7 @@ def main(argv=None):
     a.add_argument("--course", action="append", required=True)
     a.add_argument("--resource", action="append", default=[])
     a.add_argument("--synthetic", action="store_true")
+    a.add_argument("--include-code-indexes", action="store_true")
     a.add_argument("--output", type=Path, required=True)
     for command in ("download", "seal"):
         a = sub.add_parser(command)
@@ -47,6 +48,17 @@ def main(argv=None):
     a.add_argument("--previous-report", type=Path)
     a.add_argument("--output", type=Path, required=True)
     a = sub.add_parser(
+        "code", help="Bounded offline Python/ZIP import; no HTTP/C18 publication"
+    )
+    a.add_argument("action", choices=("preview", "import", "report"))
+    for name in ("batch", "archive", "approvals", "inputs"):
+        a.add_argument("--" + name, type=Path, required=True)
+    a.add_argument("--confirm", action="store_true")
+    a.add_argument("--output", type=Path)
+    a = sub.add_parser("code-inventory", help="Declared code-index links, no downloads")
+    a.add_argument("--manifest", type=Path, required=True)
+    a.add_argument("--output", type=Path)
+    a = sub.add_parser(
         "transcripts", help="Explicit offline SRT/TXT lane; no HTTP or C18 publication"
     )
     a.add_argument("action", choices=("preview", "import", "report"))
@@ -70,7 +82,11 @@ def main(argv=None):
         limits = load_limits(args.limits) if args.limits else CapacityLimits()
         if args.command == "plan":
             batch = api.plan(
-                args.manifest, args.course, args.resource, synthetic=args.synthetic
+                args.manifest,
+                args.course,
+                args.resource,
+                synthetic=args.synthetic,
+                include_code_indexes=args.include_code_indexes,
             )
             result = dict(
                 batch=batch.model_dump(mode="json"),
@@ -130,6 +146,26 @@ def main(argv=None):
                     _json(read_file(private(safe_path(args.previous_report)))), result
                 )
             api.output(args.output, result, limits=limits)
+        elif args.command in {"code", "code-inventory"}:
+            from src.tools_materials import code_discovery, code_import
+
+            if args.command == "code-inventory":
+                result = code_discovery.inventory(args.manifest)
+            else:
+                if not args.limits or (args.action == "import" and not args.confirm):
+                    raise PermissionError(
+                        "Explicit limits/import confirmation required"
+                    )
+                result = code_import.run(
+                    api.load_batch(args.batch),
+                    args.archive,
+                    api.load_approvals(args.approvals),
+                    code_import.load_inputs(args.inputs),
+                    action=args.action,
+                    limits=limits,
+                )
+            if args.output:
+                api.output(args.output, result, limits=limits)
         elif args.command in {"transcripts", "inventory"}:
             from src.tools_materials import transcripts
 
