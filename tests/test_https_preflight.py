@@ -114,6 +114,9 @@ def test_profiles_use_real_compose_and_explicit_gate(tmp_path, profile):
         "spoofed_ips",
         "untrusted_proxy",
         "shared_network",
+        "missing_profile",
+        "wrong_profile",
+        "ambiguous_labels",
     ],
 )
 def test_unsafe_renderings_refused(tmp_path, mutation):
@@ -164,6 +167,12 @@ def test_unsafe_renderings_refused(tmp_path, mutation):
         ui["environment"]["C26_TRUSTED_PROXY_CIDRS"] = "0.0.0.0/0"
     elif mutation == "shared_network":
         data["networks"]["backend"]["name"] = data["networks"]["ingress"]["name"]
+    elif mutation == "missing_profile":
+        del ui["environment"]["C26_ACCESS_PROFILE"]
+    elif mutation == "wrong_profile":
+        ui["environment"]["C26_ACCESS_PROFILE"] = "public-https"
+    elif mutation == "ambiguous_labels":
+        labels["traefik.http.routers.ui-https.entryPoints"] = "other"
     with pytest.raises((Refused, ValueError)):
         audit(data)
 
@@ -195,3 +204,48 @@ def test_coolify_root_path_and_camelcase_entrypoints(tmp_path):
         labels[key + ".rule"] += " && PathPrefix(`/`)"
         labels[key + ".entryPoints"] = labels.pop(key + ".entrypoints")
     audit(data, "public-https")
+
+
+@pytest.mark.parametrize(
+    "cidr",
+    [
+        "10.8.0.2/32",
+        "172.20.0.0/24",
+        "192.168.2.0/24",
+        "100.101.102.103/32",
+        "fd7a:115c:a1e0::1234/128",
+    ],
+)
+def test_vpn_address_families(tmp_path, cidr):
+    data = render(tmp_path, "private-https")
+    data["services"]["ui"]["labels"][
+        "traefik.http.middlewares.synthetic-ui-private.ipallowlist.sourcerange"
+    ] = cidr
+    audit(data)
+
+
+@pytest.mark.parametrize(
+    "cidr",
+    [
+        "0.0.0.0/0",
+        "::/0",
+        "127.0.0.0/8",
+        "169.254.0.0/16",
+        "fe80::/10",
+        "::/128",
+        "::1/128",
+        "192.0.2.0/24",
+        "2001:db8::/32",
+        "240.0.0.0/4",
+        "8.8.8.8/32",
+        "100.0.0.0/8",
+        "10.8.0.1/24",
+    ],
+)
+def test_non_vpn_or_noncanonical_ranges_refused(tmp_path, cidr):
+    data = render(tmp_path, "private-https")
+    data["services"]["ui"]["labels"][
+        "traefik.http.middlewares.synthetic-ui-private.ipallowlist.sourcerange"
+    ] = cidr
+    with pytest.raises(ValueError):
+        audit(data)
