@@ -8,39 +8,42 @@ not permission to run extraction and not proof of source semantics.
 
 from typing import Literal
 
-from pydantic import Field, model_validator
+from pydantic import Field, model_serializer, model_validator
 
 from src.model_discovery.cs50 import DiscoveryModel
 from src.model_materials.materials import ArtifactReceipt, NormalizedDocument
 from src.model_materials.quality import MaterialQualityReport
-from src.tools_materials.mapping import MaterialUnit, map_material
+from src.tools_materials.html_projection import UnresolvedReference, link_owners
+from src.tools_materials.mapping import (
+    MaterialUnit,
+    aggregation_exclusions,
+    map_material,
+)
 from src.tools_materials.quality import _inspect_material
 
 
-def aggregation_exclusions(document):
-    excluded = {}
-    for block in document.blocks:
-        if block.data.get("content_role") == "table_of_contents":
-            excluded[block.block_id] = "table_of_contents"
-        elif block.data.get("reference_only") is True or block.type == "link":
-            excluded[block.block_id] = "reference_projection"
-        elif block.type == "list" and not block.text:
-            excluded[block.block_id] = "list_structure"
-        elif document.parser.name == "pdf" and block.type == "table":
-            excluded[block.block_id] = "geometric_table_projection"
-        elif block.type not in {"heading", "paragraph", "list", "table", "code"}:
-            excluded[block.block_id] = "non_text_reference"
-    return excluded
-
-
-def _units(document):
+def _units(document, version=2):
     excluded = aggregation_exclusions(document)
-    return tuple(u for u in map_material(document) if u.block.block_id not in excluded)
+    return tuple(
+        u
+        for u in map_material(document, projection_version=version)
+        if u.block.block_id not in excluded
+    )
+
+
+def _unresolved(document):
+    if document.parser.name != "html" or document.parser.version != "2":
+        return ()
+    excluded = aggregation_exclusions(document)
+    blocks = [b for b in document.blocks if b.block_id not in excluded and b.text]
+    return link_owners(document, blocks)[1]
 
 
 class LectureMaterialHandoff(DiscoveryModel):
-    schema_version: Literal[1] = 1
-    adapter_version: Literal["cs50_lecture_material_v1"] = "cs50_lecture_material_v1"
+    schema_version: Literal[1, 2] = 1
+    adapter_version: Literal["cs50_lecture_material_v1", "cs50_lecture_material_v2"] = (
+        "cs50_lecture_material_v1"
+    )
     execution_supported: Literal[False] = False
     knowledge_fact_verified: Literal[False] = False
     course_id: str
@@ -51,9 +54,17 @@ class LectureMaterialHandoff(DiscoveryModel):
     document: NormalizedDocument
     receipt: ArtifactReceipt
     aggregation_units: tuple[MaterialUnit, ...]
+    unresolved_references: tuple[UnresolvedReference, ...] = ()
     excluded_blocks: dict[str, str]
     # Paths below refer to views within document.blocks, never extra content units.
     alternative_views: tuple[str, ...]
+
+    @model_serializer(mode="wrap")
+    def versioned_payload(self, handler):
+        payload = handler(self)
+        if self.schema_version == 1:
+            payload.pop("unresolved_references", None)
+        return payload
 
     @model_validator(mode="after")
     def check_references(self):
@@ -64,7 +75,10 @@ class LectureMaterialHandoff(DiscoveryModel):
             if "code_view" in block.data
         )
         if (
-            self.course_id != b.resource.course_id
+            self.adapter_version != f"cs50_lecture_material_v{self.schema_version}"
+            or self.unresolved_references
+            != (_unresolved(self.document) if self.schema_version == 2 else ())
+            or self.course_id != b.resource.course_id
             or self.section_keys != b.resource.section_keys
             or self.lecture_ids != b.lecture_ids
             or self.receipt.binding != b
@@ -72,13 +86,23 @@ class LectureMaterialHandoff(DiscoveryModel):
             or self.receipt.parser != self.document.parser
             or self.receipt.raw_sha256 != self.document.raw_sha256
             or self.receipt.status != "completed"
-            or self.aggregation_units != _units(self.document)
+            or self.aggregation_units != _units(self.document, self.schema_version)
             or self.excluded_blocks != aggregation_exclusions(self.document)
             or self.alternative_views != views
         ):
             raise ValueError(
                 "Handoff contradicts source binding, receipt or canonical aggregation"
             )
+        if self.schema_version == 2:
+            from src.tools_materials.quality import _Audit
+            from src.tools_materials.quality_projection import audit_html_projection
+
+            audit = _Audit()
+            audit_html_projection(
+                audit, self.document, self.aggregation_units, self.unresolved_references
+            )
+            if any(f.severity == "error" for f in audit.findings):
+                raise ValueError("Handoff projection failed technical integrity checks")
         return self
 
 
@@ -117,6 +141,9 @@ def prepare_material_handoff(**paths):
         return MaterialReview(report=report)
     binding = document.binding
     handoff = LectureMaterialHandoff(
+        schema_version=2,
+        adapter_version="cs50_lecture_material_v2",
+        unresolved_references=_unresolved(document),
         course_id=binding.resource.course_id,
         section_keys=binding.resource.section_keys,
         lecture_ids=binding.lecture_ids,

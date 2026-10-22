@@ -1,6 +1,9 @@
-# C10: Offline Material Quality Gate und Lecture-Handoff v1
+# C10: Offline Material Quality Gate und Lecture-Handoff v1/v2
 
-Stand: 16.10.2026. Basis: `master` / `90f4ade` (PR #60).
+Stand: 22.10.2026. Ursprünglicher Vertrag: `master` / `90f4ade` (PR #60).
+
+C26-A erweitert den vorhandenen Adapter um versionierte Link- und Listenmetadaten.
+Details, Kompatibilität und Grenzen: [HTML-Aggregation v2](html_aggregation_v2.md).
 
 ## Tatsächliche Übergabekette
 
@@ -77,8 +80,8 @@ bestehende Modellvalidierung das gesamte Dokument ablehnt.
 
 ## Qualitätsregeln und Ausgabe
 
-`MaterialQualityReport` hat `schema_version=1` und
-`validator_version=cs50_material_quality_v1`. Er enthält:
+Neue `MaterialQualityReport`-Ausgaben haben `schema_version=2` und
+`validator_version=cs50_material_quality_v2`; ältere v1-Berichte bleiben lesbar. Er enthält:
 
 | Feld | Vertrag |
 |---|---|
@@ -122,7 +125,7 @@ Ausgaben sind für dieselben Eingabepfade/-bytes deterministisch. Keine Uhrzeit,
 Zufalls-ID oder Dateisystemauflistung wird ergänzt. Nach Relokation ändern sich die
 expliziten Pfadangaben; Quellidentitäten und Hashes bleiben erhalten.
 Ein vollständig erzeugtes [HTML-Beispiel](../examples/material-quality-html.v1.json)
-und [PDF-Beispiel](../examples/material-quality-pdf.v1.json) verwenden ausschließlich
+und [PDF-Beispiel](../examples/material-quality-pdf.v1.json) bleiben historische v1-Nachweise und verwenden ausschließlich
 eigene synthetische Fixtures, keine Aussage über die realen CS50-Originale.
 
 ## Lecture-Handoff und einmalige Aggregation
@@ -131,8 +134,8 @@ eigene synthetische Fixtures, keine Aussage über die realen CS50-Originale.
 `MaterialReview(schema_version=1, report, handoff)`.
 Ein alter JSON-Report ist keine Eingabe oder Freigabe für einen späteren Lauf.
 
-`LectureMaterialHandoff` hat Schema **1**, Adapterversion
-`cs50_lecture_material_v1`, `execution_supported=false` und
+Neue `LectureMaterialHandoff`-Ausgaben haben Schema **2**, Adapterversion
+`cs50_lecture_material_v2` (v1 bleibt lesbar), `execution_supported=false` und
 `knowledge_fact_verified=false`. Er bindet `course_id`, `section_keys` und
 `lecture_ids` an die bereits existierenden IDs im geprüften Graphen. Er erhält
 `document: NormalizedDocument` und `receipt: ArtifactReceipt` vollständig,
@@ -141,7 +144,8 @@ Parserkonfiguration, Raw-Hash, Block-/Bildpositionen, Metadaten und Unsicherheit
 `normalized_sha256` und `plan_sha256` binden den Handoff an den geprüften Snapshot.
 
 `aggregation_units` verwendet ausschließlich das bestehende `MaterialUnit`-Modell
-und dessen exakte Zeichenfenster mit Standardfenstergröße 2.000. Für einen künftigen
+und dessen exakte Zeichenfenster mit Standardfenstergröße 2.000. V2 ergänzt
+`references`, `list_context` und das Handoff-Inventar `unresolved_references`. Für einen künftigen
 Textconsumer ist **ausschließlich diese Auswahl** der Aggregationseingang:
 
 | Originalstruktur | Aggregationsregel |

@@ -22,8 +22,10 @@ class MaterialFinding(DiscoveryModel):
 
 
 class MaterialQualityReport(DiscoveryModel):
-    schema_version: Literal[1] = 1
-    validator_version: Literal["cs50_material_quality_v1"] = "cs50_material_quality_v1"
+    schema_version: Literal[1, 2] = 1
+    validator_version: Literal[
+        "cs50_material_quality_v1", "cs50_material_quality_v2"
+    ] = "cs50_material_quality_v1"
     status: Literal["passed", "passed_with_warnings", "failed"]
     inputs: dict[str, str]
     observed_sha256: dict[str, str] = Field(default_factory=dict)
@@ -41,6 +43,8 @@ class MaterialQualityReport(DiscoveryModel):
 
     @model_validator(mode="after")
     def check_status(self):
+        if self.validator_version != f"cs50_material_quality_v{self.schema_version}":
+            raise ValueError("Quality schema and validator versions differ")
         severities = {f.severity for f in self.findings}
         expected = (
             "failed"
