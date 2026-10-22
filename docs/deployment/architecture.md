@@ -1,5 +1,12 @@
 # C22 Deploymentarchitektur und Inventar
 
+Aktuelle C26-Ergänzungen: [HTTPS/VPN](https.md),
+[workerbewusstes Deployment-Gate](deployment_gate.md). Das Gate verwendet die
+bestehenden C16-Annahme-/Dispatchpfade und DB ohne Migration; sein privates Journal
+und Locks liegen im vorhandenen Jobroot. Es ist kein zusätzlicher Dienst. Der
+konkrete Coolify-Driver und Hostbestand bleiben separat abnahmepflichtig. Die
+folgenden Versions-/Inventarangaben beschreiben den ursprünglichen C22-Stand.
+
 Stand: 17.10.2026. Grundlage Backend master `01cbf3d6`, UI main
 `4e162626`. Keine laufende Serverkonfiguration wurde ausgelesen oder verändert.
 Das Production Template ist ein gesperrter Vorbereitungsschritt; die noch offenen
