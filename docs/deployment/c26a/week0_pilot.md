@@ -1,5 +1,9 @@
 # C26-B4 – Kontrollierter CS50P-Week-0-Batch
 
+Aktueller Folgeauftrag: [C26-B5 – Wocheninventur und kontrollierte Planung](complete_week_materials.md).
+Für B5 bleiben Codeindex, Python-Dateien und ZIPs ausdrücklich `manual_only`;
+die unten dokumentierte historische B4-Auswahl ist keine B5-Downloadfreigabe.
+
 21.10.2026. Basis master `23ebca634ad4a2ecf485d31654d4645b32cfa16b`
 (B3/#140 integriert). **Vorbereitet, kein durch Codex ausgeführter Realbatch.**
 Die Betreiberangabe zum erfolgreichen B3-Notes-Pilot bleibt ein separater Befund:
