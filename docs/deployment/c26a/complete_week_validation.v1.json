@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+  "aggregation_compatibility_head": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb",
+  "deployment_gate_pr": 148,
+  "aggregation_pr": 149,
+  "python": "3.12.12",
+  "inventory_counts": {
+    "resources": 21,
+    "material_variants": 28,
+    "supported": 11,
+    "locally_present": 3,
+    "verified": 0,
+    "processed": 0,
+    "blocked": 0,
+    "manual_only": 2,
+    "open_issues": 0,
+    "selected": 0,
+    "ready": 0,
+    "reused": 0,
+    "gaps": 6
+  },
+  "regression": {
+    "counts": {
+      "passed": 358,
+      "skipped": 3
+    },
+    "modules": {
+      "tests.test_cs50_week_materials": {
+        "passed": 51
+      },
+      "tests.test_cs50_week_pilot": {
+        "passed": 12
+      },
+      "tests.test_cs50_multiformat": {
+        "passed": 32
+      },
+      "tests.test_cs50_material_quality": {
+        "passed": 94
+      },
+      "tests.test_cs50_material_processing": {
+        "passed": 8
+      },
+      "tests.test_cs50_material_e2e": {
+        "passed": 5
+      },
+      "tests.test_cs50_material_html": {
+        "passed": 7
+      },
+      "tests.test_cs50_material_html_semantics": {
+        "passed": 17,
+        "skipped": 1
+      },
+      "tests.test_cs50_material_mapping": {
+        "passed": 1
+      },
+      "tests.test_cs50_media_plan": {
+        "passed": 38
+      },
+      "tests.test_cs50_code_zip": {
+        "passed": 54
+      },
+      "tests.test_cs50_material_pdf_v2": {
+        "passed": 39,
+        "skipped": 2
+      }
+    },
+    "skips": [
+      {
+        "name": "test_optional_original_python_notes_read_only",
+        "reason": "Optional original notes artifacts are not locally provided"
+      },
+      {
+        "name": "test_optional_original_pdf_preserves_text_and_all_misclassifications[CS50_LECTURE_PDF_ARTIFACTS-32]",
+        "reason": "Optional local original not supplied via CS50_LECTURE_PDF_ARTIFACTS"
+      },
+      {
+        "name": "test_optional_original_pdf_preserves_text_and_all_misclassifications[CS50_SOURCE_PDF_ARTIFACTS-24]",
+        "reason": "Optional local original not supplied via CS50_SOURCE_PDF_ARTIFACTS"
+      }
+    ],
+    "junit_sha256": "530db939d20e199054c7d2bae87569988fe3bec26bd3208ec0fbc3855e3e486c"
+  },
+  "final_week_tests": {
+    "counts": {
+      "passed": 51
+    },
+    "modules": {
+      "tests.test_cs50_week_materials": {
+        "passed": 51
+      }
+    },
+    "skips": [],
+    "junit_sha256": "02a498ce401a593067766f380cba300cb45bb24556627e707b30d5eb1eebccb9"
+  },
+  "aggregation_compatibility": {
+    "counts": {
+      "passed": 85
+    },
+    "modules": {
+      "tests.test_cs50_week_materials": {
+        "passed": 51
+      },
+      "tests.test_cs50_html_projection": {
+        "passed": 34
+      }
+    },
+    "skips": [],
+    "junit_sha256": "63a6f02c07e760dc561c7bbea12659fbf9735ea5a6e6fc1573a293123cd49d9a"
+  },
+  "regression_seconds": 187.23,
+  "final_week_seconds": 7.72,
+  "compatibility_seconds": 20.98,
+  "tests_overlap_do_not_sum": true,
+  "source_sha256": {
+    "src/model_materials/week.py": "09f10df14d9333af7515dcbe5b1a324cb927b3d81d7969c27f71e8a005e31acd",
+    "src/tools_materials/week.py": "7a0dc969a22011e4d46ec2f6e9b560e04ad95b7cee2ccab5823a052d0269150d",
+    "scripts/cs50_week.py": "f8b10bc982b18955151174b9bfccfc54a5c929ba4e35a474ce32023d5b775f52",
+    "tests/test_cs50_week_materials.py": "64fc8eb52f8fea21e6d5160466bc5720b9629de798695ee3f35a604afffec7cf",
+    "docs/deployment/c26a/week0_resources.v1.json": "bfe7e6e1840244a12d5c4e6acbd718c8572cf0a8f72f2f46bfae42ad36f64d41"
+  },
+  "read_only_original_exports": {
+    "material_01/original.html": {
+      "bytes": 71718,
+      "sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377"
+    },
+    "material_01/normalized.v1.json": {
+      "bytes": 235908,
+      "sha256": "4b2b15552da1e800b9ff4aa46b3abe5dc7632ad904d326d3f5042586f256ced4"
+    },
+    "material_01/quality.v1.json": {
+      "bytes": 895751,
+      "sha256": "86205436b5e260488ff497e31aa68f969e7c7d9ee1b6e1eb27d0b202f2b07e8e"
+    },
+    "material_02/original.html": {
+      "bytes": 15832,
+      "sha256": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372"
+    },
+    "material_02/normalized.v1.json": {
+      "bytes": 27939,
+      "sha256": "5628de2b8f1ed009a66902d81808768e9f50b805c0541265181802a8424e1ae8"
+    },
+    "material_02/quality.v1.json": {
+      "bytes": 95339,
+      "sha256": "939da64f9b81b27c725be58f59e1811ba2ea5cafd85e6da15bd2ea9a38e67df7"
+    }
+  },
+  "production_changes": false,
+  "downloads": false,
+  "new_dependencies": false,
+  "execution_supported": false,
+  "assignment_children_c18_adapter": "blocked_pending_versioned_graph_integration",
+  "raw_real_exports_committed": false
+}

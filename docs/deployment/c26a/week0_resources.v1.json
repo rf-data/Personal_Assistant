@@ -1,0 +1,3387 @@
+{
+  "schema_version": 1,
+  "planner_version": "c26_week_materials_v1",
+  "course_id": "cs50_python",
+  "week": "0",
+  "mode": "discovery_only",
+  "request_sha256": "847e250c70eead2d4842dc558e6d643614067d005c1e18c447caf7f631511c4a",
+  "manifest_sha256": "c1b271b141011893f054a9a506b6ede1495b92bc80f6d41a8383045aebecd213",
+  "snapshots": [
+    {
+      "source_kind": "versioned_fixture",
+      "file": "cs50_python/index.html",
+      "original_url": "https://cs50.harvard.edu/python/",
+      "sha256": "228fd09a21987bc55147b7c9660c9f496dda49d234ebc1cb620e58fcb2963efe"
+    },
+    {
+      "source_kind": "versioned_fixture",
+      "file": "cs50_python/week_0.html",
+      "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+      "sha256": "8526668d7cffb93fed9e32f66888dd8b77eed2d643b4527dba0df44a5c6f08e0"
+    },
+    {
+      "source_kind": "operator_supplied_export",
+      "file": "operator_export/notes0.html",
+      "original_url": "https://cs50.harvard.edu/python/notes/0/",
+      "sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377"
+    },
+    {
+      "source_kind": "versioned_fixture",
+      "file": "cs50_python/practice_1.html",
+      "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+      "sha256": "e01e960e04562376f0381732f8a72f3883012e945bc10d2dbb93cf791a1ef6cd"
+    },
+    {
+      "source_kind": "operator_supplied_export",
+      "file": "operator_export/pset0.html",
+      "original_url": "https://cs50.harvard.edu/python/psets/0/",
+      "sha256": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372"
+    }
+  ],
+  "resources": [
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "lecture_video",
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "title": "Week 0 Functions",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "parsed",
+          "variants": [
+            {
+              "original_url": "https://video.cs50.io/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "cs50_player",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "CS50 Video Player"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k-hdr.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "hdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "HDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-360p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "360p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "360p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-720p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "720p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "720p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-1080p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "1080p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "1080p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://youtu.be/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "youtube",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "YouTube"
+                  ]
+                }
+              ]
+            }
+          ],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+              "context_path": [
+                "Lecture"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+        "format": "html",
+        "role": "lecture_video",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:e74be50785a221226621ecc251b3599cd597c132657c6bb2a1073d801f1e7d7b",
+      "title": "Week 0 Functions",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [
+        {
+          "source_kind": "versioned_fixture",
+          "file": "cs50_python/week_0.html",
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "sha256": "8526668d7cffb93fed9e32f66888dd8b77eed2d643b4527dba0df44a5c6f08e0"
+        }
+      ],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "lecture_video",
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "title": "Week 0 Functions",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "parsed",
+          "variants": [
+            {
+              "original_url": "https://video.cs50.io/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "cs50_player",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "CS50 Video Player"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k-hdr.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "hdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "HDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-360p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "360p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "360p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-720p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "720p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "720p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-1080p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "1080p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "1080p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://youtu.be/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "youtube",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "YouTube"
+                  ]
+                }
+              ]
+            }
+          ],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+              "context_path": [
+                "Lecture"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": "variant:c41a48e3ed098612bee40083d71091c45ccfddc8c090c7fa59d6b01813903209",
+        "original_url": "https://video.cs50.io/JP7ITIXGpHk",
+        "format": "cs50_player",
+        "role": "lecture_video",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:d45eb1fb6c5f81596bd3ed17c7fd705dcdd168525e7aca499a9515c996f8c4a2",
+      "title": "Week 0 Functions",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "lecture_video",
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "title": "Week 0 Functions",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "parsed",
+          "variants": [
+            {
+              "original_url": "https://video.cs50.io/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "cs50_player",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "CS50 Video Player"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k-hdr.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "hdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "HDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-360p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "360p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "360p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-720p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "720p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "720p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-1080p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "1080p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "1080p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://youtu.be/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "youtube",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "YouTube"
+                  ]
+                }
+              ]
+            }
+          ],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+              "context_path": [
+                "Lecture"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": "variant:5498b01237a9441e497ac1e3671e291d357968e2e4f69903296aec4342d47de2",
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k-hdr.mp4",
+        "format": "mp4",
+        "role": "lecture_video",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:e958be41d3990a5058e95e71596b849ed139fbbdfcb70b7b2e22ca9bb806368d",
+      "title": "Week 0 Functions",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "lecture_video",
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "title": "Week 0 Functions",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "parsed",
+          "variants": [
+            {
+              "original_url": "https://video.cs50.io/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "cs50_player",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "CS50 Video Player"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k-hdr.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "hdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "HDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-360p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "360p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "360p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-720p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "720p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "720p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-1080p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "1080p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "1080p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://youtu.be/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "youtube",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "YouTube"
+                  ]
+                }
+              ]
+            }
+          ],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+              "context_path": [
+                "Lecture"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": "variant:98f2ed7f1d7ee7485226627f896183af6ed419f46b4004ef4ac6b7ba82620e38",
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-360p.mp4",
+        "format": "mp4",
+        "role": "lecture_video",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:bdb77b95f1934c294dabb04aec4f463bd4555742efb69d59f4c9b9414208d216",
+      "title": "Week 0 Functions",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "lecture_video",
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "title": "Week 0 Functions",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "parsed",
+          "variants": [
+            {
+              "original_url": "https://video.cs50.io/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "cs50_player",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "CS50 Video Player"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k-hdr.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "hdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "HDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-360p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "360p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "360p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-720p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "720p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "720p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-1080p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "1080p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "1080p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://youtu.be/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "youtube",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "YouTube"
+                  ]
+                }
+              ]
+            }
+          ],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+              "context_path": [
+                "Lecture"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": "variant:443330e0a32d7f90054d1c004c943d25b0273d7a08b20d71c8da1d72c628e692",
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-720p.mp4",
+        "format": "mp4",
+        "role": "lecture_video",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:544cb52abd71a582538d4deae1d3172ae9c5ab43aef6bdf0e48cea546577880e",
+      "title": "Week 0 Functions",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "lecture_video",
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "title": "Week 0 Functions",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "parsed",
+          "variants": [
+            {
+              "original_url": "https://video.cs50.io/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "cs50_player",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "CS50 Video Player"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k-hdr.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "hdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "HDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-360p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "360p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "360p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-720p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "720p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "720p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-1080p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "1080p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "1080p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://youtu.be/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "youtube",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "YouTube"
+                  ]
+                }
+              ]
+            }
+          ],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+              "context_path": [
+                "Lecture"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": "variant:63fa8f5dc3ede3348f90b8accdb31743431e95a3c075250d6491eb9def629543",
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-1080p.mp4",
+        "format": "mp4",
+        "role": "lecture_video",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:f1b4ade1d82aac03962650f07fc787ed5b9f0c30b33711ec1fed0516807b1486",
+      "title": "Week 0 Functions",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "lecture_video",
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "title": "Week 0 Functions",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "parsed",
+          "variants": [
+            {
+              "original_url": "https://video.cs50.io/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "cs50_player",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "CS50 Video Player"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k-hdr.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "hdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "HDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-360p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "360p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "360p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-720p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "720p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "720p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-1080p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "1080p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "1080p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://youtu.be/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "youtube",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "YouTube"
+                  ]
+                }
+              ]
+            }
+          ],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+              "context_path": [
+                "Lecture"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": "variant:f11934e80d100c5610fa162a108ccdd7e923f6806dff40232d71b250bf54aa77",
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k.mp4",
+        "format": "mp4",
+        "role": "lecture_video",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:7ed429a327f76698063c982e3824924ab9142ebd76eb6ee283e774c511861c7f",
+      "title": "Week 0 Functions",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "lecture_video",
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "title": "Week 0 Functions",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "parsed",
+          "variants": [
+            {
+              "original_url": "https://video.cs50.io/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "cs50_player",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "CS50 Video Player"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k-hdr.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "hdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "HDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-360p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "360p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "360p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-720p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "720p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "720p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-1080p.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "1080p",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "1080p"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k.mp4",
+              "media_type": "video",
+              "language": null,
+              "format": "mp4",
+              "resolution": "4k",
+              "dynamic_range": "sdr",
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "MP4",
+                    "SDR",
+                    "4K"
+                  ]
+                }
+              ]
+            },
+            {
+              "original_url": "https://youtu.be/JP7ITIXGpHk",
+              "media_type": "video",
+              "language": null,
+              "format": "youtube",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": "JP7ITIXGpHk",
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Video",
+                    "YouTube"
+                  ]
+                }
+              ]
+            }
+          ],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+              "context_path": [
+                "Lecture"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": "variant:10030a8a05ecd0e976241c3f6a73e914e92548334d1c17f27fdc2ddd7a611e74",
+        "original_url": "https://youtu.be/JP7ITIXGpHk",
+        "format": "youtube",
+        "role": "lecture_video",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:bb08cd1d463e7fdbb5a3558ccb088d08a9a3a74e083b3d6ec220d8c641ddc27d",
+      "title": "Week 0 Functions",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "audio",
+          "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0.mp3",
+          "title": "MP3",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": "mp3",
+          "status": "referenced",
+          "variants": [
+            {
+              "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0.mp3",
+              "media_type": "audio",
+              "language": null,
+              "format": "mp3",
+              "resolution": null,
+              "dynamic_range": null,
+              "media_id": null,
+              "provenance": [
+                {
+                  "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+                  "fixture_file": "cs50_python/week_0.html",
+                  "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+                  "context_path": [
+                    "Lecture",
+                    "Audio",
+                    "MP3"
+                  ]
+                }
+              ]
+            }
+          ],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Audio",
+                "MP3"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0.mp3",
+        "format": "mp3",
+        "role": "audio",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:24ce1e23496f081db7525aee590d4360baf678f29bdb4cd5dee1ac3906836e3d",
+      "material_id": "material:33a1e511b4c788b9796eefbcfd6ebd6ccce382778452e867dd59056d22e4da24",
+      "title": "MP3",
+      "parent_resource_ids": [],
+      "variant_aliases": [
+        "variant:2b19e894e7001840e83a9bfb57ad918f1dbdef7a6b0c7d68be42b7d935ed348a"
+      ],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "notes",
+          "original_url": "https://cs50.harvard.edu/python/notes/0/",
+          "title": "Notes",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Notes"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/notes/0/",
+        "format": "html",
+        "role": "notes",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:f06e4055b5ef61f0a693c522f1c57880c88edc20c177cfb79fefbffee5b8767a",
+      "material_id": "material:6b35632313fdf6057809e17cd6bae196630ffb6c4a799eefc7d3193ae452dc14",
+      "title": "Notes",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "html",
+      "acquisition_policy": "approval_required",
+      "adapter": "c18_material",
+      "discovery_status": "classified",
+      "acquisition_status": "local_present",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "processor": "src.workflows.service.submit",
+      "planned_steps": [],
+      "local_snapshots": [
+        {
+          "source_kind": "operator_supplied_export",
+          "file": "operator_export/notes0.html",
+          "original_url": "https://cs50.harvard.edu/python/notes/0/",
+          "sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377"
+        }
+      ],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": []
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "slides",
+          "original_url": "https://docs.google.com/presentation/d/1yPirrSP2qRjnKiIFW39HJV2cmhwqAkooQkv9jZz2Hqs/edit?usp=sharing",
+          "title": "Google Slides",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Slides",
+                "Google Slides"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://docs.google.com/presentation/d/1yPirrSP2qRjnKiIFW39HJV2cmhwqAkooQkv9jZz2Hqs/edit?usp=sharing",
+        "format": "unknown",
+        "role": "slides",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:2c2678150669b2d8cb35d95b521ccd7eeccbc5b7a676c992774e95a80efe3b60",
+      "material_id": "material:2397ada0060e49e8cf15cb31c8fa0d49003a29af205504581b8e28a04e831040",
+      "title": "Google Slides",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "presentation",
+      "acquisition_policy": "review_required",
+      "adapter": "presentation_export",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": null,
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": []
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "slides",
+          "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0.pdf",
+          "title": "PDF",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": "pdf",
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Slides",
+                "PDF"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0.pdf",
+        "format": "pdf",
+        "role": "slides",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:2b18399f3ce8d176b421afd8f3d4b7352851e4e1dcb990821658f9aebd67a80f",
+      "material_id": "material:feeed96c983502e46a32e036e3385728123b8c5f7d2baf78b2a86e631eaf9937",
+      "title": "PDF",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "pdf",
+      "acquisition_policy": "approval_required",
+      "adapter": "c18_material",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": {
+        "name": "pdf",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 20,
+        "max_blocks": 1000,
+        "max_images": 20,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "processor": "src.workflows.service.submit",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": []
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "source_code",
+          "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/",
+          "title": "Index",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Index"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/",
+        "format": "html",
+        "role": "source_code",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:5f51d97877d3ddbc6699e5c9b484c47b601ce15d1373cfdef065d8fad47b5944",
+      "material_id": "material:c250d3569f2814140ca749c088ea930190072517c5682bd5574328ebacf14ed6",
+      "title": "Index",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "code",
+      "acquisition_policy": "manual_only",
+      "adapter": "manual_code",
+      "discovery_status": "classified",
+      "acquisition_status": "manual_required",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": null,
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "reference_only",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": []
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "source_code",
+          "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0.pdf",
+          "title": "PDF",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": "pdf",
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "PDF"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0.pdf",
+        "format": "pdf",
+        "role": "source_code",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:959434ab111dd5b875159fa7508d37955d604cdd6c3acc82f7d3133ea34b3a16",
+      "material_id": "material:1d61c92cd1839b652cdb2eb69e7edbbd2ebc68f63363e7687960357faeafd888",
+      "title": "PDF",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "pdf",
+      "acquisition_policy": "approval_required",
+      "adapter": "c18_material",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": {
+        "name": "pdf",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 20,
+        "max_blocks": 1000,
+        "max_images": 20,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "processor": "src.workflows.service.submit",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": []
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "source_code",
+          "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0.zip",
+          "title": "Zip",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": "zip",
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0.zip",
+        "format": "zip",
+        "role": "source_code",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:374e8ffb231647383210f7daa93113c16488bc045d3bde40bae788112593e91a",
+      "material_id": "material:3e556594c0d8d7dd8ef08802a9f21ed092f435c6c9a8b6a9f4175c03c6b744b8",
+      "title": "Zip",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "code",
+      "acquisition_policy": "manual_only",
+      "adapter": "manual_code",
+      "discovery_status": "classified",
+      "acquisition_status": "manual_required",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": null,
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "reference_only",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": []
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "subtitles",
+          "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lang/en/lecture0.srt",
+          "title": "Subtitles",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": "en",
+          "format": "srt",
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Subtitles"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lang/en/lecture0.srt",
+        "format": "srt",
+        "role": "subtitles",
+        "language": "en",
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "material_id": "material:3709d7ab818faf28e9031580e7caeabf890f568e762c2bf116a75eed51e29f34",
+      "title": "Subtitles",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "transcript",
+      "acquisition_policy": "approval_required",
+      "adapter": "offline_transcript",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.transcripts.run",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": []
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "transcript",
+          "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lang/en/lecture0.txt",
+          "title": "Transcript",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": "en",
+          "format": "txt",
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Transcript"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lang/en/lecture0.txt",
+        "format": "txt",
+        "role": "transcript",
+        "language": "en",
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:a2e464b6c0f9c80ee12ba8d455675b7131d46b95810e990e537577f3f904cfe6",
+      "material_id": "material:f06c893f08946b8f1a959620d095f2ca471ff03ea91ae55965489f62cc02b6cf",
+      "title": "Transcript",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "transcript",
+      "acquisition_policy": "approval_required",
+      "adapter": "offline_transcript",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.transcripts.run",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": []
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "short",
+          "original_url": "https://cs50.harvard.edu/python/shorts/visual_studio_code_for_cs50/",
+          "title": "Visual Studio Code for CS50",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > ol:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+              "context_path": [
+                "Shorts",
+                "Visual Studio Code for CS50"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/shorts/visual_studio_code_for_cs50/",
+        "format": "html",
+        "role": "short",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:c85b27e447cada4b75936ee75d5a4529e80ac358478d08245254c7097b0a16bc",
+      "material_id": "material:1fd40bb82d28293994c55ea8d8e63cde91d967d5265e56b139d64f79d60f82a0",
+      "title": "Visual Studio Code for CS50",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "short",
+          "original_url": "https://cs50.harvard.edu/python/shorts/functions/",
+          "title": "Functions",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > ol:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+              "context_path": [
+                "Shorts",
+                "Functions"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/shorts/functions/",
+        "format": "html",
+        "role": "short",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:d45ede732faf8b0836b8ccbf66a470e20febd296dce652cb8ca1232cb6c61272",
+      "material_id": "material:1d4c669f8a40afa6f868e0d833ea841224f66ce6983ce69e1d086aa5e07e0a54",
+      "title": "Functions",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "short",
+          "original_url": "https://cs50.harvard.edu/python/shorts/variables/",
+          "title": "Variables",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > ol:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Shorts",
+                "Variables"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/shorts/variables/",
+        "format": "html",
+        "role": "short",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:026a21a9613c476488aaab8fd80f33576d504e69f218d40099112f65a7de9c87",
+      "material_id": "material:9435830c1e1d3c1b62702e8f1bd230f772861805c2417e2faa92f36e6711fc5b",
+      "title": "Variables",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "short",
+          "original_url": "https://cs50.harvard.edu/python/shorts/return_values/",
+          "title": "Return Values",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > ol:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+              "context_path": [
+                "Shorts",
+                "Return Values"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/shorts/return_values/",
+        "format": "html",
+        "role": "short",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:e5ffb869fddee9cb06cf492ac03059dc29ce059eb5bf288dcf63bc94cd5cbdd1",
+      "material_id": "material:75ed06583efd14a27edad9a6a4df11a134780dd330712fbe65b9f46f8eb778ac",
+      "title": "Return Values",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "short",
+          "original_url": "https://cs50.harvard.edu/python/shorts/side_effects/",
+          "title": "Side Effects",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > ol:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1)",
+              "context_path": [
+                "Shorts",
+                "Side Effects"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/shorts/side_effects/",
+        "format": "html",
+        "role": "short",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:54de5c703b21c902384caa0b485fb0b57367c1e55a58c473adf37076dca8230b",
+      "material_id": "material:f78b8d069a9c21a203132bd902ce65c3e9773436bba2805c27d58ed618906cba",
+      "title": "Side Effects",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "media",
+      "acquisition_policy": "approval_required",
+      "adapter": "media_plan_only",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": null,
+      "processor": "src.tools_materials.media_plan.plan",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "problem_set",
+          "original_url": "https://cs50.harvard.edu/python/psets/0/",
+          "title": "Problem Set 0",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": null,
+          "language": null,
+          "format": null,
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Problem Set 0"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/psets/0/",
+        "format": "html",
+        "role": "problem_set",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05",
+      "material_id": "material:8d354e75c20f31ca094e6f1577ac9ff187f9ea8b5c70c57273f9ed3afd931b10",
+      "title": "Problem Set 0",
+      "parent_resource_ids": [],
+      "variant_aliases": [],
+      "category": "html",
+      "acquisition_policy": "approval_required",
+      "adapter": "c18_material",
+      "discovery_status": "classified",
+      "acquisition_status": "local_present",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "processor": "src.workflows.service.submit",
+      "planned_steps": [],
+      "local_snapshots": [
+        {
+          "source_kind": "operator_supplied_export",
+          "file": "operator_export/pset0.html",
+          "original_url": "https://cs50.harvard.edu/python/psets/0/",
+          "sha256": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372"
+        }
+      ],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": []
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "problem_set",
+          "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+          "title": "Indoor Voice",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05",
+          "language": null,
+          "format": "html",
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+              "fixture_file": "cs50_python/practice_1.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h1[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "Indoor Voice"
+              ]
+            },
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+              "fixture_file": "cs50_python/practice_1.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h1[1]/a[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "Indoor Voice"
+              ]
+            },
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+              "fixture_file": "cs50_python/practice_1.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[1]/a[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "Before You Begin"
+              ]
+            },
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+              "fixture_file": "cs50_python/practice_1.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[2]/a[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "Demo"
+              ]
+            },
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+              "fixture_file": "cs50_python/practice_1.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[3]/a[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "How to Test"
+              ]
+            },
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+              "fixture_file": "cs50_python/practice_1.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[4]/a[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "How to Submit"
+              ]
+            },
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/",
+              "fixture_file": "operator_export/pset0.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/ol[1]/li[7]/ul[1]/li[1]/a[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "Indoor Voice"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+        "format": "html",
+        "role": "problem_set",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:4ee69e33f96d9fc48e28dabd6c4a5e85498b500d3ac6234004cc004dda63f5e6",
+      "material_id": "material:83ec6dddb4cda807443858baaf2527d89f6ab2f7ab6b6ede937665afe1f9898c",
+      "title": "Indoor Voice",
+      "parent_resource_ids": [
+        "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05"
+      ],
+      "variant_aliases": [],
+      "category": "html",
+      "acquisition_policy": "approval_required",
+      "adapter": "c18_material",
+      "discovery_status": "classified",
+      "acquisition_status": "local_present",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "processor": "src.workflows.service.submit",
+      "planned_steps": [],
+      "local_snapshots": [
+        {
+          "source_kind": "versioned_fixture",
+          "file": "cs50_python/practice_1.html",
+          "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+          "sha256": "e01e960e04562376f0381732f8a72f3883012e945bc10d2dbb93cf791a1ef6cd"
+        }
+      ],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "assignment_child_not_in_existing_c18_discovery_graph"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "problem_set",
+          "original_url": "https://cs50.harvard.edu/python/psets/0/playback/",
+          "title": "Playback Speed",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05",
+          "language": null,
+          "format": "html",
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/",
+              "fixture_file": "operator_export/pset0.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/ol[1]/li[7]/ul[1]/li[2]/a[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "Playback Speed"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/psets/0/playback/",
+        "format": "html",
+        "role": "problem_set",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:250a4c6a09635fec5bc78ba47fc4b532e6c83bf814ff61ab63a9da9ea39e4dfb",
+      "material_id": "material:530ae7f41e0e82fc14dd9d7f247f07e6fc9bc87d027c3d142b91a0e03cb40a45",
+      "title": "Playback Speed",
+      "parent_resource_ids": [
+        "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05"
+      ],
+      "variant_aliases": [],
+      "category": "html",
+      "acquisition_policy": "approval_required",
+      "adapter": "c18_material",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "processor": "src.workflows.service.submit",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "assignment_child_not_in_existing_c18_discovery_graph"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "problem_set",
+          "original_url": "https://cs50.harvard.edu/python/psets/0/faces/",
+          "title": "Making Faces",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05",
+          "language": null,
+          "format": "html",
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/",
+              "fixture_file": "operator_export/pset0.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/ol[1]/li[7]/ul[1]/li[3]/a[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "Making Faces"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/psets/0/faces/",
+        "format": "html",
+        "role": "problem_set",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:31f50347c0e791010e7aceea629e268a9a14d0e584989ba7a2ba89bda5cc5f12",
+      "material_id": "material:17b56c2a299efa6948eba2e689585be695d533eb1bc5074a666e75b3fe584a09",
+      "title": "Making Faces",
+      "parent_resource_ids": [
+        "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05"
+      ],
+      "variant_aliases": [],
+      "category": "html",
+      "acquisition_policy": "approval_required",
+      "adapter": "c18_material",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "processor": "src.workflows.service.submit",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "assignment_child_not_in_existing_c18_discovery_graph"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "problem_set",
+          "original_url": "https://cs50.harvard.edu/python/psets/0/einstein/",
+          "title": "Einstein",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05",
+          "language": null,
+          "format": "html",
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/",
+              "fixture_file": "operator_export/pset0.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/ol[1]/li[7]/ul[1]/li[4]/a[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "Einstein"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/psets/0/einstein/",
+        "format": "html",
+        "role": "problem_set",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:a72ee41697270bf06d0503f78b0c6e6b6b675c4c8bc7a3fa33967e4ae9332869",
+      "material_id": "material:015c9d5d01c6788ed16527ce882a2eeb1f55127e8cf9389a7217c81a056f51aa",
+      "title": "Einstein",
+      "parent_resource_ids": [
+        "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05"
+      ],
+      "variant_aliases": [],
+      "category": "html",
+      "acquisition_policy": "approval_required",
+      "adapter": "c18_material",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "processor": "src.workflows.service.submit",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "assignment_child_not_in_existing_c18_discovery_graph"
+      ]
+    },
+    {
+      "binding": {
+        "schema_version": 1,
+        "resource": {
+          "course_id": "cs50_python",
+          "role": "problem_set",
+          "original_url": "https://cs50.harvard.edu/python/psets/0/tip/",
+          "title": "Tip Calculator",
+          "section_keys": [
+            "0"
+          ],
+          "parent_resource_id": "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05",
+          "language": null,
+          "format": "html",
+          "status": "referenced",
+          "variants": [],
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/psets/0/",
+              "fixture_file": "operator_export/pset0.html",
+              "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/ol[1]/li[7]/ul[1]/li[5]/a[1]",
+              "context_path": [
+                "Week 0",
+                "Problem Set",
+                "Tip Calculator"
+              ]
+            }
+          ]
+        },
+        "lecture_ids": [
+          "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192"
+        ],
+        "variant_id": null,
+        "original_url": "https://cs50.harvard.edu/python/psets/0/tip/",
+        "format": "html",
+        "role": "problem_set",
+        "language": null,
+        "source_origin": "official",
+        "license_status": "not_assessed"
+      },
+      "resource_id": "resource:1000d0fb21f0b535d7e876d723bf1763d03e41ddddf9a391ee77320907899069",
+      "material_id": "material:7218e4bca3b8f7ea4b89b69cc64b5692db5c98cd5a9faa8719e6d7383113e7e9",
+      "title": "Tip Calculator",
+      "parent_resource_ids": [
+        "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05"
+      ],
+      "variant_aliases": [],
+      "category": "html",
+      "acquisition_policy": "approval_required",
+      "adapter": "c18_material",
+      "discovery_status": "classified",
+      "acquisition_status": "not_requested",
+      "processing_status": "not_requested",
+      "quality_status": "not_checked",
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "processor": "src.workflows.service.submit",
+      "planned_steps": [],
+      "local_snapshots": [],
+      "selected": false,
+      "action": "none",
+      "missing_approvals": [],
+      "blockers": [],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "workflow_references": [],
+      "limitations": [
+        "assignment_child_not_in_existing_c18_discovery_graph"
+      ]
+    }
+  ],
+  "scope_material_ids": [],
+  "counts": {
+    "resources": 21,
+    "material_variants": 28,
+    "supported": 11,
+    "locally_present": 3,
+    "verified": 0,
+    "processed": 0,
+    "blocked": 0,
+    "manual_only": 2,
+    "open_issues": 0,
+    "selected": 0,
+    "ready": 0,
+    "reused": 0,
+    "gaps": 6
+  },
+  "gaps": [
+    "live_coverage_not_checked",
+    "private_archives_and_running_pilot_not_scanned",
+    "source_snapshot_not_provided:resource:250a4c6a09635fec5bc78ba47fc4b532e6c83bf814ff61ab63a9da9ea39e4dfb",
+    "source_snapshot_not_provided:resource:31f50347c0e791010e7aceea629e268a9a14d0e584989ba7a2ba89bda5cc5f12",
+    "source_snapshot_not_provided:resource:a72ee41697270bf06d0503f78b0c6e6b6b675c4c8bc7a3fa33967e4ae9332869",
+    "source_snapshot_not_provided:resource:1000d0fb21f0b535d7e876d723bf1763d03e41ddddf9a391ee77320907899069"
+  ],
+  "limits": {
+    "max_materials": 8,
+    "max_bytes": 1048576,
+    "total_raw_bytes": 8388608,
+    "reserve_bytes": 5368709120,
+    "max_parallel": 1,
+    "max_queued": 1,
+    "wall_seconds": 90,
+    "cpu_seconds": 60,
+    "memory_mb": 768,
+    "parser_memory_mb": 512,
+    "max_blocks": 1000,
+    "max_pdf_pages": 20
+  },
+  "snapshot_inventory_complete": true,
+  "full_week_discovery_verified": false,
+  "scope_processing_complete": false,
+  "technical_workflow_complete": false,
+  "subject_matter_verified": false,
+  "production_observation": "not_checked",
+  "execution_supported": false
+}
