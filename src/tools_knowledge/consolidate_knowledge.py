@@ -437,11 +437,6 @@ def consolidate_knowledge(
     )
 
     return ConsolidatedKnowledgeDocument(
-        language=document.language,
-        transcript_provenance=document.transcript_provenance,
-        course_id=document.course_id,
-        lecture_id=document.lecture_id,
-        media_id=document.media_id,
         source_id=document.source_id,
         media_id=document.media_id,
         **document.transcript_metadata(),

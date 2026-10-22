@@ -621,8 +621,6 @@ def consolidate_semantic_knowledge(
             media_id=document.media_id,
             **document.transcript_metadata(),
             transcript_url=(document.transcript_url),
-            media_id=document.media_id,
-            **document.transcript_metadata(),
             formulas=document.formulas,
             visual_candidates=(document.visual_candidates),
             stats=(
@@ -748,8 +746,6 @@ def consolidate_semantic_knowledge(
         media_id=document.media_id,
         **document.transcript_metadata(),
         transcript_url=(document.transcript_url),
-        media_id=document.media_id,
-        **document.transcript_metadata(),
         topics=topics,
         statements=canonical_all,
         formulas=[item.model_copy(deep=True) for item in document.formulas],
