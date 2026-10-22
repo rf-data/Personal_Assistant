@@ -105,7 +105,9 @@ def output(path, value, *, limits=None, budget=None):
     publish_bytes(path, raw)
 
 
-def plan(manifest, courses, resources=(), *, synthetic=False):
+def plan(
+    manifest, courses, resources=(), *, synthetic=False, include_code_indexes=False
+):
     if not courses or len(set(courses)) != len(courses):
         raise ValueError("Explicit unique course selection required")
     manifest = safe_path(Path(manifest))
@@ -117,7 +119,9 @@ def plan(manifest, courses, resources=(), *, synthetic=False):
     origin = "synthetic" if synthetic else "official"
     bindings = tuple(
         b.model_copy(update=dict(source_origin=origin))
-        for b in make_plan(manifest).materials
+        for b in make_plan(
+            manifest, include_code_indexes=include_code_indexes
+        ).materials
         if b.resource.course_id in courses
         and (not resources or b.source_id in resources or b.material_id in resources)
     )
@@ -150,6 +154,9 @@ def load_batch(path):
         sorted({b.resource.course_id for b in batch.materials}),
         [b.material_id for b in batch.materials],
         synthetic=batch.source_origin == "synthetic",
+        include_code_indexes=any(
+            b.format == "py" and b.resource.parent_resource_id for b in batch.materials
+        ),
     )
     if current.materials != batch.materials or current.files != batch.files:
         raise ValueError("Snapshot/selection binding changed")
