@@ -72,6 +72,7 @@ Produktionsänderung, echte Secrets, Downloads oder Pilotdatenzugriffe.
 | UI `test_deployment.py` | **4 passed**, 0,06 s |
 | UI `test_live_client.py`, Authbindung/Rechteentzug/Cache | **17 passed**, 0,21 s |
 | UI `test_live_ui.py`, Rechte/Fehler/Bestätigung | **6 passed**, 8,00 s |
+| Vorhandener tatsächlicher Owner-/Course-/Viewer-UI-Test gegen aktuelles sauberes Backend | **1 passed**, 17,01 s |
 | Echter Browser/TLS/Traefik/OIDC/C16/FTS mit aktuellem Code, RAM-Tempdaten | **16/16 passed** |
 | Aktualisiertes UI-Image, isoliert `network=none`, keine Ports, UID 10001 | **5/5 passed** |
 
@@ -115,6 +116,13 @@ bestand. Ein anfänglich ungültiger `RUFF_NO_CACHE=1`-Wert wurde zu `true` korr
 Fehlversuche werden nicht als erfolgreiche Abnahmen gezählt. Kein Zusammenhang
 mit produktivem Hetznerstorage behauptet, keine automatische Daten-/Imagebereinigung.
 
+Zusätzlicher bestehender Rollen-E2E: Der erste Lauf brach nach 20,10 s mit
+`Bounded test backend response timeout` ab. Der unveränderte Harness startete
+danach isoliert mit `ready=true` und sauberem Exit in 5,89 s; die unveränderte
+Wiederholung des vollständigen Rollenfalls bestand in 17,01 s. Weder Timeout
+noch Assertions wurden erhöht/abgeschwächt. Das ist ein separates lokales
+synthetisches Rollen-/C16-Ergebnis, keine echte IdP-/Produktivrollenabnahme.
+
 Reproduktion mit vorhandenen Umgebungen auf einer **lokalen Testmaschine**:
 
 ```sh
@@ -144,10 +152,27 @@ Read-only-Alternative verwendet; die Backend-Commithooks bleiben aktiv. Neue
 Commitobjekte werden anschließend per Git in den dauerhaften Objektbestand
 übernommen und in zusätzlichen auftragseigenen Reviewworktrees referenziert
 (`Personal_Assistant-c26b-vpn-review`, `personal-assistant-ui-c26b-vpn-review`,
-jeweils `review/c26b-private-vpn-validated`). Die ursprünglichen neuen
+lokale Sicherungsbranches `review/c26b-private-vpn-validated`). Das Backendreview
+ist an diesen Branch gebunden. Bei der UI scheiterte die anfängliche HEAD-
+Symrefanlage ebenfalls an ENOSPC; derselbe Commit wurde erfolgreich als
+detached Reviewworktree ausgecheckt und zusätzlich durch den neuen Branch
+gesichert. Die ursprünglichen neuen
 `*-c26b-vpn`-Arbeitskopien bleiben mit ihren Änderungen erhalten; sie stehen
 weiter auf der Basis und werden nicht als eingecheckt ausgegeben. Keine Reparatur
 gemeinsamer Indizes/Trackingrefs, kein Force-Push oder automatischer Merge.
+
+Reviewveröffentlichung: [Backend #147](https://github.com/rf-data/Personal_Assistant/pull/147)
+und [UI #19](https://github.com/rf-data/personal-assistant-ui/pull/19), jeweils
+`feat/c26b-private-vpn-review` gegen master/main. Getesteter Backendcode
+`c8c06fdb3e45e7bb454b8153bd0efe6f194e8199`, UIcode
+`371befb298f5acd55bafde8d0a20ee256cfdf229`. Dieser spätere Backendcommit ergänzt
+nur den Abschlussbeleg mit Rollenlauf und Veröffentlichung. Er wird in einer
+weiteren sauberen auftragseigenen Arbeitskopie `Personal_Assistant-c26b-vpn-final`
+(detached, zusätzlicher Sicherungsbranch `review/c26b-private-vpn-final`) erhalten.
+Die erste Backendreviewkopie behält die Änderungen dieses Belegs auf ihrem
+ursprünglichen Codecommit. Alle eigenen Arbeitskopien bleiben wegen offener
+PR-Integration und der lokalen Schreibstörung erhalten. Kein Lifecycle-Cleanup
+als abgeschlossen behauptet; alte fremde Branches/Worktrees bleiben unangetastet.
 
 ## Historischer Prüfstand 20.10.2026
 
