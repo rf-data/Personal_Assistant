@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-23",
+  "backend_default": "d180a8f6e65f900a4d0d169475d78a4cb42b0d8c",
+  "ui_default": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+  "draft_heads": {
+    "backend148": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+    "backend149": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb",
+    "ui20": "6b84e3c09f877309a3fd1c6f9cbcf61bb9f46788"
+  },
+  "review_submissions": 0,
+  "inline_review_threads": 0,
+  "head_check_runs": 0,
+  "patch_sha256": {
+    "148": "76aa75a421954e7589f55cda5df65cb6cb19caabd9b2dfa290232194660c9c74",
+    "149": "823bb383f806880521caaf13100f1be0fc3c9e5f1effb0cb5a8cd7fa7e718955"
+  },
+  "runs": [
+    {
+      "name": "integration",
+      "sha256": "5c96ceff05d9de15a6020898a5147e9ac4488da157933b3683e865838f736725",
+      "bytes": 47593,
+      "suites": [
+        {
+          "tests": "306",
+          "failures": "2",
+          "errors": "0",
+          "skipped": "0",
+          "time": "333.810"
+        }
+      ]
+    },
+    {
+      "name": "c18-repeat",
+      "sha256": "13413693425e3698ba39600403b37697b29d61af861546bb356092923ea90059",
+      "bytes": 367,
+      "suites": [
+        {
+          "tests": "1",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "8.918"
+        }
+      ]
+    },
+    {
+      "name": "transport-repeat",
+      "sha256": "644689e6c45d0fe1b9c4b209610c9abc5fd306b1f0fdcced035ab56837e20428",
+      "bytes": 377,
+      "suites": [
+        {
+          "tests": "1",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "15.770"
+        }
+      ]
+    },
+    {
+      "name": "ui",
+      "sha256": "a32ed9cbf7e730d57b38dd14f811bf33cef2dae1a83c8fe91ebeae90370213df",
+      "bytes": 2121,
+      "suites": [
+        {
+          "tests": "2",
+          "failures": "0",
+          "errors": "2",
+          "skipped": "0",
+          "time": "1.985"
+        }
+      ]
+    },
+    {
+      "name": "ui-retry",
+      "sha256": "adcc5e916c897e19517924d902fbcb175adb4764d71f17eb60f72502be305437",
+      "bytes": 2948,
+      "suites": [
+        {
+          "tests": "29",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "12.620"
+        }
+      ]
+    }
+  ],
+  "production_gate_verified": false,
+  "production_release": "blocked",
+  "host_access_performed": false,
+  "containers_changed": false,
+  "merged": false,
+  "automatic_deploy_effect": "unknown_operator_evidence_required",
+  "limitations": [
+    "broad_suite_not_green",
+    "intermittent_guardian_loss_unexplained",
+    "initial_socket_sandbox_failure",
+    "initial_ui_dependency_collection_failure",
+    "no_browser_tls_proxy_live_acceptance",
+    "no_live_driver_or_bootstrap_acceptance"
+  ]
+}
