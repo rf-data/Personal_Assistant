@@ -284,7 +284,7 @@ def test_empty_cue_cannot_be_evidence(context, tmp_path):
         )
 
 
-def test_fresh_import_blocks_even_marvin_attempt(context, tmp_path):
+def test_fresh_import_blocks_optional_runtime_dependencies(context, tmp_path):
     import os
     import subprocess
 
@@ -305,7 +305,7 @@ import sys, importlib.abc, socket
 sys.path.insert(0, {str(ROOT)!r})
 class Guard(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, *args):
-        if fullname.split('.')[0] in ('marvin', 'faster_whisper', 'yt_dlp'):
+        if fullname.split('.')[0] in ('marvin', 'faster_whisper', 'yt_dlp', 'tiktoken', 'pydantic_settings'):
             raise AssertionError('Forbidden initialization: ' + fullname)
 sys.meta_path.insert(0, Guard())
 def forbidden(*args, **kwargs):
@@ -314,6 +314,8 @@ socket.socket.connect = forbidden
 socket.getaddrinfo = forbidden
 import src.tools_knowledge.bind_cs50_transcript
 import src.tools_knowledge.consolidate_knowledge
+assert 'src.core.memory' not in sys.modules
+assert 'src.core.config' not in sys.modules
 print('real offline import passed')
 """
     result = subprocess.run(

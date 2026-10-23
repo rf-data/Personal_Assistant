@@ -1,10 +1,10 @@
 # imports
 import shutil
-from pathlib import Path
 from collections import Counter
+from pathlib import Path
 
-from src.core.memory import app_session
 from src.model_lecture.data_resources import LectureResource
+
 # from src.core.session import session
 
 
@@ -28,6 +28,8 @@ def organize_resource_file(
     course_root: Path,
     dry_run: bool = False,
 ) -> Path | None:
+
+    from src.core.memory import app_session
 
     source_path = Path(source_path)
 
@@ -77,6 +79,8 @@ def get_resource_target_folder(
     path: Path,
 ) -> str:
 
+    from src.core.memory import app_session
+
     file_type = classify_resource_file(path)
 
     if resource.resource_type == "script":
@@ -113,6 +117,8 @@ def build_file_index(
     folder: str | Path,
 ) -> list[Path]:
 
+    from src.core.memory import app_session
+
     folder = Path(folder)
 
     app_session.logger.info("Start building file index")
@@ -139,6 +145,8 @@ def find_indexed_files(
     suffix: str | None = None,
     exact: bool = True,
 ) -> list[Path]:
+
+    from src.core.memory import app_session
 
     search_name = normalize_name(file_name)
 
@@ -191,6 +199,8 @@ def ensure_dir(f_path: str | Path) -> Path:
 
 def list_folder_files(folder: Path, recursive: bool = True) -> list[Path]:
 
+    from src.core.memory import app_session
+
     folder = Path(folder)
 
     app_session.logger.info(
@@ -234,6 +244,8 @@ def find_folder_files(
 ) -> list[Path]:
     #
 
+    from src.core.memory import app_session
+
     folder = Path(folder)
 
     if not folder.exists():
@@ -273,6 +285,8 @@ def shorten_path(path, n=3):
 
 
 def move_file(src_path: Path, dst_path: Path):
+    from src.core.memory import app_session
+
     dst_path = ensure_dir(dst_path)
     src_path = ensure_dir(src_path)
 

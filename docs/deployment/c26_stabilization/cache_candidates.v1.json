@@ -1,0 +1,120 @@
+{
+  "total_allocated_bytes": 921600,
+  "candidates": [
+    {
+      "path": "Personal_Assistant-audit/.ruff_cache",
+      "allocated_bytes": 20480,
+      "files": 5
+    },
+    {
+      "path": "Personal_Assistant-c26b6-planning/scripts/__pycache__",
+      "allocated_bytes": 20480,
+      "files": 2
+    },
+    {
+      "path": "Personal_Assistant-c26b6-planning/src/model_discovery/__pycache__",
+      "allocated_bytes": 16384,
+      "files": 2
+    },
+    {
+      "path": "Personal_Assistant-c26b6-planning/src/model_materials/__pycache__",
+      "allocated_bytes": 20480,
+      "files": 2
+    },
+    {
+      "path": "Personal_Assistant-c26b6-planning/src/model_transcribe/__pycache__",
+      "allocated_bytes": 8192,
+      "files": 1
+    },
+    {
+      "path": "Personal_Assistant-c26b6-planning/src/tools_lecture/__pycache__",
+      "allocated_bytes": 102400,
+      "files": 5
+    },
+    {
+      "path": "Personal_Assistant-c26b6-planning/src/tools_materials/__pycache__",
+      "allocated_bytes": 94208,
+      "files": 6
+    },
+    {
+      "path": "Personal_Assistant-c26b6-planning/src/tools_transcribe/__pycache__",
+      "allocated_bytes": 12288,
+      "files": 1
+    },
+    {
+      "path": "Personal_Assistant-c26-week0-acceptance/.ruff_cache",
+      "allocated_bytes": 20480,
+      "files": 5
+    },
+    {
+      "path": "Personal_Assistant-c26-final-pilot/.ruff_cache",
+      "allocated_bytes": 32768,
+      "files": 8
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/.ruff_cache",
+      "allocated_bytes": 28672,
+      "files": 7
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/scripts/__pycache__",
+      "allocated_bytes": 57344,
+      "files": 4
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/agent/prompts/__pycache__",
+      "allocated_bytes": 12288,
+      "files": 1
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/core/__pycache__",
+      "allocated_bytes": 16384,
+      "files": 3
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/job_control/__pycache__",
+      "allocated_bytes": 36864,
+      "files": 3
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/model_discovery/__pycache__",
+      "allocated_bytes": 16384,
+      "files": 2
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/model_knowledge/__pycache__",
+      "allocated_bytes": 32768,
+      "files": 1
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/model_lecture/__pycache__",
+      "allocated_bytes": 12288,
+      "files": 1
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/model_transcribe/__pycache__",
+      "allocated_bytes": 8192,
+      "files": 1
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/tools_knowledge/__pycache__",
+      "allocated_bytes": 217088,
+      "files": 14
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/tools_lecture/__pycache__",
+      "allocated_bytes": 81920,
+      "files": 4
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/tools_transcribe/__pycache__",
+      "allocated_bytes": 12288,
+      "files": 1
+    },
+    {
+      "path": "Personal_Assistant-c26-stabilization/src/utils/__pycache__",
+      "allocated_bytes": 40960,
+      "files": 4
+    }
+  ]
+}

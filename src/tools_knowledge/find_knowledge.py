@@ -7,7 +7,6 @@ from functools import lru_cache
 
 from src.agent.prompts.prompt_know_extract import build_knowledge_extraction_prompt
 from src.core.config_knowledge import KnowledgeSettings
-from src.core.memory import app_session
 from src.core.retry import retry_llm_call
 from src.model_knowledge.data_knowledge import (
     ChunkKnowledgeResult,
@@ -213,6 +212,8 @@ def analyze_chunk_with_retry(
 def analyze_and_extract_chunk(
     chunk: TranscriptChunk, model_name: str
 ) -> ChunkKnowledgeResult:
+
+    from src.core.memory import app_session
 
     chunk_info = {
         "chunk_id": chunk.chunk_id,
