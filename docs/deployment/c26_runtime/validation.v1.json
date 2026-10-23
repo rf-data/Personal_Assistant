@@ -589,5 +589,33 @@
     "regular_pre_commit_checks": "passed on all eleven intended files",
     "index_failure_errno": "not captured; do not infer equality with adapter errno 28",
     "publication_receipt": "local results/github-publication.v1.json after actual creation"
+  },
+  "operator_supplement": {
+    "recorded_at_utc": "2026-10-23T18:50:23.851946+00:00",
+    "scope": "Documentation/inventory only; same PR #157, no compose/example/test/product modifications",
+    "source_record": "technical_sources.v1.json",
+    "assessment": "source_assessment.md",
+    "operator_observations": "operator_inventory.v1.json",
+    "live_github_at_start": {
+      "backend_master": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "ui_main": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "pr157_head": "3e5a1326fbf3642509ea4d3aabe09aae5067688f",
+      "pr157_draft": true,
+      "pr157_auto_merge": null
+    },
+    "new_runtime_test_runs": false,
+    "prior_failed_regression_still_open": true,
+    "label_values_are_not_build_or_trigger_proof": true,
+    "actual_startup_cause": "unverified",
+    "blocked_definition_unchanged": true,
+    "publication_method": "regular pre-commit checks, GitHub Git Data API fast-forward of own review branch; no force, no default branch update",
+    "document_checks": {
+      "json_parse": "passed",
+      "relative_links_checked": 12,
+      "shell_syntax_blocks": 6,
+      "shell_execution": false,
+      "regular_pre_commit": "passed before final documentation additions; repeated on final files",
+      "ui_service_key_mismatch_documented": true
+    }
   }
 }

@@ -25,6 +25,7 @@ beiden Netzen verbunden. Daraus folgt keine private API-Erreichbarkeit und keine
 Aussage über andere Container, Runner, Hostprozesse oder Jobroots.
 
 Image-Tag und Containername sind keine verifizierte Git-SHA-/Digestbindung.
+Application-/Compose-Labels sind inzwischen als Betreiberbefund erfasst.
 Runtimeconfig, Limits, Queue-/Workerzuordnung, Buildtyp und Trigger bleiben offen.
 Die gemeldeten `c26_week0_*.paths.json` mit `repository`, `roots`, `schema_version`
 sind **keine C16-Settings**; auch ihre Gültigkeit als Mountpolicy ist ungeprüft.
@@ -140,7 +141,7 @@ erzeugen. Bei Namespace-/Gatewayersatz muss auch die API kontrolliert neu an den
 richtigen Namespace gebunden werden. Keine automatische unabhängige Gateway-
 Ersetzung oder Parallelreplikation annehmen.
 
-**Implementierungsblocker bleiben:** tatsächlicher Coolify-Ressourcen-/Buildtyp und
+**Implementierungsblocker bleiben:** maßgebliche Coolify-Ressourcenbindung/Buildtyp und
 Raw-Compose-Verhalten, Rollenadoption ohne zweite Instanz, bestätigter privater
 Netzbestand, Runtime-/Mount-/Limitsdateien und Queue, gepinnte gebaute Images,
 Driver für den exakten Ressourcenscope sowie Trigger/Backups/TLS/VPN/OIDC.
@@ -274,3 +275,35 @@ Reviewbranch veröffentlicht; kein Defaultbranch oder bestehender PR wird
 verändert. Die lokale Arbeitskopie bleibt wegen des Indexfehlers uncommittet,
 auch wenn der Remote-Reviewcommit gesichert ist. Eine spätere Reparatur und
 Synchronisierung sind offen; kein Reset, Clean, Locklöschen oder Cleanup.
+
+## Ergänzte Betreiberinventur und Wiederverwendung bestehender Dateien
+
+Backend und UI melden `coolify.type=application`, `coolify.managed=true`, Projekt
+`personal-assistant`, Umgebung `production`; die jeweiligen Ressourcen-,
+Compose-Projekt-/Servicenamen und `/artifacts/…`-Pfade sind als
+`operator_observed` erfasst. Backend: `NetworkMode=coolify`,
+`PublishedPorts={}`, `ExposedPorts=null`, weiterhin nur `sleep infinity`.
+Das bestätigt weder Buildtyp noch Auto-/Preview-/Webhookstatus oder den
+ursächlichen Build-/Startpfad. Der Wert von `working_dir` bleibt unbekannt.
+
+Alle acht vom Betreiber benannten GitHub-Dateien wurden am unveränderten
+Defaultbranch gepinnt gelesen und gehasht. Die [Quellenbewertung](source_assessment.md)
+zeigt: Die API-/Gateway-Namespacekopplung ist bereits in C22 vorhanden und wird
+bevorzugt wiederverwendet. Der vorhandene C26-Worker ersetzt dessen Executorrolle,
+er ergänzt sie nicht. Die gesperrte Host-Mapping-Vorlage ist eine Anpassung dieser
+Rollen an die vier Bestandsmounts und getrennte UI-Ressource, kein zusätzlicher
+Stack. Sie und die vorhandenen vollständigen Stacks dürfen nicht parallel starten.
+
+Wichtiger Quellenbefund: `docker/DockerFile.worker` definiert bereits
+`CMD ["sleep", "infinity"]`, während `deployment/Dockerfile` den Deployment-
+Entrypoint hat; beide Definitionen bestehen auch unter Quellref `3b91d39…`.
+Die historische UI-Dockerfile `b2cf9ca…` startet direkt Streamlit, die aktuelle
+verwendet den geschützten Launcher. Das liefert konkrete Erklärungskandidaten,
+keinen Nachweis für die tatsächlich gebauten Images oder bewusste Overrides.
+Die ergänzten lesenden Prüfungen in [Betreiberprüfungen](operator_checks.md)
+unterscheiden Imagekonfiguration, Containerüberschreibung und Buildauswahl.
+
+Diese Ergänzung ändert ausschließlich Dokumentation/Inventur. Compose,
+Beispielconfig, Tests und Produktcode bleiben unverändert. Die bisherigen roten
+C18-/Dateisystembefunde bleiben offen; die Regression wurde für diese
+Dokumentationsergänzung nicht erneut ausgeführt. Produktion bleibt gesperrt.
