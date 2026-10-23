@@ -57,10 +57,27 @@
       ],
       "network": "coolify",
       "healthcheck_configured": false,
-      "declared_exposed_ports": []
+      "declared_exposed_ports": null,
+      "network_mode": "coolify",
+      "published_ports": {},
+      "coolify_labels": {
+        "coolify.type": "application",
+        "coolify.managed": "true",
+        "coolify.projectName": "personal-assistant",
+        "coolify.environmentName": "production",
+        "coolify.resourceName": "personal-assistantworker-1"
+      },
+      "compose_labels": {
+        "com.docker.compose.project": "syboxap8mpf8lgjzpjdsqm0z",
+        "com.docker.compose.service": "syboxap8mpf8lgjzpjdsqm0z-20261022T151524",
+        "com.docker.compose.project.config_files": "/artifacts/iigfhsmrpfmntn9h7jxyed8z/docker-compose.yaml"
+      },
+      "additional_label_keys_present": [
+        "com.docker.compose.project.working_dir"
+      ]
     },
     "observed_date": "2026-10-23",
-    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+    "source": "operator supplement supplied on 2026-10-23; no independent host, Docker or Coolify query by Codex"
   },
   "mounts": {
     "status": "operator_observed",
@@ -79,10 +96,25 @@
       "container": "streamlit-a8xzljz4fq52vt1yt43nheg5-20261014T055035",
       "image_name": "a8xzljz4fq52vt1yt43nheg5_streamlit:b2cf9ca9ba44ee770dab4d834a6ae8285f34776b",
       "command": "streamlit run app_ui.py --server.address=0.0.0.0 --server.port=8501 --server.headless=true",
-      "network": "a8xzljz4fq52vt1yt43nheg5"
+      "network": "a8xzljz4fq52vt1yt43nheg5",
+      "coolify_labels": {
+        "coolify.type": "application",
+        "coolify.managed": "true",
+        "coolify.projectName": "personal-assistant",
+        "coolify.environmentName": "production",
+        "coolify.resourceName": "personal-assistant-uimain-a8xzljz4fq52vt1yt43nheg5"
+      },
+      "compose_labels": {
+        "com.docker.compose.project": "a8xzljz4fq52vt1yt43nheg5",
+        "com.docker.compose.service": "streamlit",
+        "com.docker.compose.project.config_files": "/artifacts/fhz5foowb3446edib5gnftbx/docker/docker-compose.ui.yaml"
+      },
+      "additional_label_keys_present": [
+        "com.docker.compose.project.working_dir"
+      ]
     },
     "observed_date": "2026-10-23",
-    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+    "source": "operator supplement supplied on 2026-10-23; no independent host, Docker or Coolify query by Codex"
   },
   "traefik_networks": {
     "status": "operator_observed",
@@ -107,7 +139,7 @@
     "resource_and_build_type": {
       "status": "unverified",
       "value": null,
-      "required_evidence": "Actual Coolify resource/build type and supported namespace-preserving rendering on 4.4.7"
+      "required_evidence": "Application label is operator_observed. Actual Coolify application UUID/resource binding, build type and supported namespace-preserving rendering on 4.4.7 remain unverified; labels do not establish build pack."
     },
     "auto_deploy": {
       "status": "unverified",
@@ -153,6 +185,31 @@
       "status": "unverified",
       "value": null,
       "required_evidence": "Existing Gate.Driver adapter covering exact resource type and single-resource/namespace replacement semantics"
+    },
+    "repository_build_settings": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Read actual repository, branch, base directory, Dockerfile location, Compose location, raw/normal rendering and startup overrides in Coolify; no inferred values from artifact paths or tags."
+    },
+    "compose_working_directory": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Backend working_dir label key is reported present, but its value is not supplied; UI working_dir value not supplied either."
+    },
+    "entrypoint_discrepancy": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Match immutable running image Config.Entrypoint/Cmd to container settings and actual Coolify build/deploy record, privately classified against known startup vectors; root cause and operator intent not yet proven."
     }
+  },
+  "last_supplement_at": "2026-10-23T18:50:23.844179+00:00",
+  "label_interpretation": {
+    "application_label": {
+      "status": "operator_observed",
+      "value": "Both resources report coolify.type=application and coolify.managed=true",
+      "observed_date": "2026-10-23",
+      "source": "operator supplement supplied on 2026-10-23; no independent host, Docker or Coolify query by Codex"
+    },
+    "limits": "Labels and generated /artifacts compose paths do not prove actual Coolify build pack, selected repository/branch/Dockerfile, driver scope, triggers or running image provenance."
   }
 }

@@ -62,7 +62,9 @@ bleibt zunächst geschlossen; es gibt kein automatisches Retry/Rollback/Resume.
    Scheduler- und manueller Deployrechte vor Beobachtung/Wechsel prüfen. Ein
    deaktiviertes einzelnes Auto-Deploy-Feld reicht nicht als exklusiver Triggerpfad.
 
-Der tatsächliche Ressourcen-/Buildtyp und seine API-/Wechselwirkung fehlen.
+Die Labels melden für Backend und UI `coolify.type=application` als
+Betreiberbefund. Maßgebliche Ressourcen-ID, Buildtyp und API-/Wechselwirkung
+fehlen weiterhin; Compose-Labels bestimmen keinen Buildpack oder Triggerstatus.
 Deshalb werden weder Coolify-Endpunkte geraten noch ein deployender Adapter
 implementiert. Aktuelle [Coolify-Compose-Dokumentation](https://coolify.io/docs/applications/builds/docker-compose)
 unterscheidet Git-Application und User-defined Service; ihre Automationen sind

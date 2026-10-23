@@ -6,12 +6,61 @@ Cmd-/Args-, Compose-, Log- oder Secretdateien ausgeben. Keine unbekannte Datei
 einlesen, kein Container-`exec`, APIstart, Workerstart, Probe, Restore oder Toggle
 als Inventur. Die Befunde aus `operator_inventory.v1.json` bleiben erhalten.
 
+## Ergänzung 23.10.: bestätigte Labels und offene Startursache
+
+Backend und UI melden `coolify.type=application`, `coolify.managed=true`,
+Projekt `personal-assistant`, Umgebung `production`. Die vollständigen gemeldeten
+Ressourcen-/Composewerte stehen als `operator_observed` im Inventar. Backend:
+`NetworkMode=coolify`, `PublishedPorts={}`, `ExposedPorts=null`, nur Sleep.
+Diese Labels bestimmen weder Buildtyp noch Auto-/Preview-/Webhookstatus.
+Der Wert von `com.docker.compose.project.working_dir` ist noch nicht geliefert.
+
+Die vorhandenen Dateien haben Vorrang, siehe [Quellenbewertung](source_assessment.md).
+Den tatsächlich verwendeten Buildkontext/Dockerfilepfad und die **gerenderte**
+Startdefinition privat gegen diese Dateien vergleichen. Die gemeldeten
+`/artifacts/…`-Pfade nicht als Repositorypfad oder Inhaltsnachweis behandeln.
+Keine vollständigen Artefaktdateien oder Buildlogs teilen; nur zugeordnete Pfade,
+Quellhashes, feste Startup-Klassifikation und redigierte Unterschiede berichten.
+
+Folgende Metadaten ausschließlich auf dem Betreiberhost für die bereits
+bestätigte Rolle lesen; Codex führt sie nicht aus:
+
+```sh
+: "${C26_EXISTING_CONTAINER:?Privat bestaetigte bestehende Rolle}"
+docker container inspect --format \
+  'type={{index .Config.Labels "coolify.type"}} managed={{index .Config.Labels "coolify.managed"}} project={{index .Config.Labels "com.docker.compose.project"}} service={{index .Config.Labels "com.docker.compose.service"}}' \
+  "$C26_EXISTING_CONTAINER"
+docker container inspect --format \
+  'config_files={{index .Config.Labels "com.docker.compose.project.config_files"}} working_dir={{index .Config.Labels "com.docker.compose.project.working_dir"}}' \
+  "$C26_EXISTING_CONTAINER"
+C26_OBSERVED_IMAGE_ID=$(docker container inspect --format '{{.Image}}' "$C26_EXISTING_CONTAINER")
+docker container inspect --format \
+  'entrypoint_empty={{not .Config.Entrypoint}} legacy_ui_path={{eq .Path "streamlit"}} sleep_path={{eq .Path "sleep"}} sleep_arg={{eq (json .Args) "[\"infinity\"]"}} c16_entrypoint={{eq (json .Config.Entrypoint) "[\"python\",\"-m\",\"scripts.deployment\"]"}} ui_launcher={{eq (json .Config.Entrypoint) "[\"python\",\"-m\",\"admin_ui_package.container_runtime\"]"}} sleep_cmd={{eq (json .Config.Cmd) "[\"sleep\",\"infinity\"]"}} legacy_ui_cmd={{eq (json .Config.Cmd) "[\"streamlit\",\"run\",\"app_ui.py\",\"--server.address=0.0.0.0\",\"--server.port=8501\",\"--server.headless=true\"]"}}' \
+  "$C26_EXISTING_CONTAINER"
+docker image inspect --format \
+  'id={{.Id}} entrypoint_empty={{not .Config.Entrypoint}} c16_entrypoint={{eq (json .Config.Entrypoint) "[\"python\",\"-m\",\"scripts.deployment\"]"}} ui_launcher={{eq (json .Config.Entrypoint) "[\"python\",\"-m\",\"admin_ui_package.container_runtime\"]"}} sleep_cmd={{eq (json .Config.Cmd) "[\"sleep\",\"infinity\"]"}} legacy_ui_cmd={{eq (json .Config.Cmd) "[\"streamlit\",\"run\",\"app_ui.py\",\"--server.address=0.0.0.0\",\"--server.port=8501\",\"--server.headless=true\"]"}}' \
+  "$C26_OBSERVED_IMAGE_ID"
+```
+
+Die Vergleiche prüfen ausschließlich bekannte feste Vektoren; ein `false`
+bezeichnet keine bestimmte andere Startdefinition. Unterschiedliche Pythonpfade,
+Wrapper oder unbekannte Args privat einordnen, nicht dumpen oder ausprobieren.
+Diese vorgeschlagenen Docker-Templates wurden hier nicht gegen Docker ausgeführt.
+
+| Lesender Befund | Zulässiger Schluss / weiterer Beleg |
+| --- | --- |
+| Tatsächliches Image hat Deployment-Entrypoint; Container hat anderen Entrypoint und Sleep als effektiven Prozess | Überschreibung gegenüber dem Image liegt vor; in gerenderter Compose und Coolify-Startfeldern lokalisieren, bewusste Absicht separat bestätigen |
+| Tatsächliches Image ohne Entrypoint mit Sleep-CMD; Container unverändert ebenso | Sleep ist bereits Image-Default; vorhandene `docker/DockerFile.worker` ist ein Kandidat, tatsächlichen Buildpfad anhand Buildbeleg bestätigen |
+| UI-Image hat Legacy-Streamlit-CMD und Container unverändert denselben Start | Mit historischem UI-Build vereinbar; unveränderliche Build-/Quellbindung statt allein Tag belegen |
+| Aktuelles Launcherimage, aber direkte Streamlit-Laufzeit | Container-/Compose-/Coolify-Override prüfen; geschützten Launcher nicht durch direktes Streamlit ersetzen |
+| Gemischte/fehlende/unbekannte Metadaten oder kein Buildbeleg | Ursache bleibt `unverified`; keine Build-/Startänderung oder neue Runtimeinstanz zur Diagnose |
+
 ## Drei nächste Betreiberaktionen
 
 ### 1. Ressourcen, Trigger und sämtliche Writer lesen
 
 In Coolify 4.4.7 die bestehende Backend- und UI-Ressource öffnen, **ohne Speichern**:
-Ressourcentyp (Application/Service), Buildstrategie (Dockerfile/Compose/Registry),
+Application-Label mit maßgeblicher Ressourcen-ID abgleichen; Buildstrategie (Dockerfile/Compose/Registry),
 UUID, Repository/Branch, Base Directory, Compose Location, Raw-/Normalmodus,
 Start-Overrides, Replikate, laufende/wartende Deployments lesen. Auto Deploy,
 Preview Deployments, Git-/manuelle Webhooks, Registry-/API-/Schedulertrigger und
@@ -124,7 +173,7 @@ Traefik und Rettungszugang unverändert lassen.
 | Mounts / UID | Genau die bestätigten vier Quellen/Ziele, Config read-only; keine automatisch angelegten Hostpfade; UID 10001 nur bei nachgewiesener bestehender Berechtigung |
 | Start / Health | Exakte EntryPoints/Kommandos und Compose-Healthchecks der Vorlage; keine globalen Start-/Healthoverrides |
 | UI | Bestehende UI ersetzen, gepinntes #19/#20-Image, geschützter `container_runtime`-Launcher; vorhandenes UI-/Ingressnetz plus bestätigtes privates API-Netz |
-| UI HTTPS | Vorhandene `coolify.ui.compose.yaml` + privates Overlay; exakte Origin, private API-URL, individuelle Bindungen, OIDC-/CA-Dateien und RemoteAddr-Allowlist |
+| UI HTTPS | Bestehende UI-Ressource und bestätigten Servicekey erhalten; vorhandene C22-/C26-HTTPS-Einstellungen mit exakter Origin, privater API-URL, individuellen Bindungen, OIDC/CA und RemoteAddr-Allowlist übernehmen; `ui`-Overlay nicht blind mit `streamlit` zusammenführen |
 | Trigger | Exklusiver genehmigter Driverpfad; alle alternativen automatischen und manuellen Wege nachweislich kontrolliert; kein Merge solange unbekannt |
 
 Die aktuelle [Coolify-Dokumentation](https://coolify.io/docs/applications/builds/docker-compose)
