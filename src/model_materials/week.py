@@ -6,6 +6,7 @@ from typing import Literal
 from pydantic import Field, HttpUrl, field_validator, model_validator
 
 from src.job_control.models import Contract, Sha
+from src.model_discovery.cs50 import CourseId, ResourceRole
 from src.model_materials.materials import MaterialResource, ParserConfig
 from src.model_materials.media_plan import EvidenceRef
 from src.workflows.models import relative
@@ -310,3 +311,69 @@ class WeekReport(Contract):
         ):
             raise ValueError("Week report graph/course/parent mismatch")
         return self
+
+
+class SectionProfile(Contract):
+    key: str = Field(min_length=1, max_length=80)
+    overview_url: HttpUrl
+    assignment_roots: tuple[HttpUrl, ...] = ()
+    expected_tasks: tuple[str, ...] = ()
+    required_roles: tuple[ResourceRole, ...] = (ResourceRole.LECTURE_VIDEO,)
+
+
+class CourseProfile(Contract):
+    """Pinned configuration for the existing closed CS50 discovery/ACL catalog."""
+
+    schema_version: Literal[1] = 1
+    course_id: CourseId
+    profile_version: Literal[1] = 1
+    discovery_adapter: str = "cs50_navigation"
+    adapter_version: str = "1"
+    adapter_sha256: Sha
+    manifest_sha256: Sha
+    snapshots: dict[str, Sha] = Field(min_length=1, max_length=120)
+    sections: tuple[SectionProfile, ...] = Field(min_length=1, max_length=32)
+    material_roles: tuple[ResourceRole, ...] = tuple(ResourceRole)
+    processing_routes: tuple[Literal["html", "pdf", "transcript"], ...] = (
+        "html",
+        "pdf",
+        "transcript",
+    )
+    media: Literal["discovery_only"] = "discovery_only"
+    source_approval_required: Literal[True] = True
+    code_index: Literal["manual_only"] = "manual_only"
+    python_source: Literal["manual_only"] = "manual_only"
+    zip_archive: Literal["manual_only"] = "manual_only"
+
+    @model_validator(mode="after")
+    def unique_sections(self):
+        if len({s.key for s in self.sections}) != len(self.sections):
+            raise ValueError("Duplicate profile section")
+        for name in self.snapshots:
+            relative(name)
+        return self
+
+
+class ProfiledWeekRequest(WeekRequest):
+    """Opt-in v2; the v1 WeekRequest reader and serialized defaults are retained."""
+
+    schema_version: Literal[2] = 2
+    course_id: CourseId = "cs50_python"
+    week: str = Field(default="0", min_length=1, max_length=80)
+    profile: CourseProfile
+    selection: Literal["types", "all", "complete"] = "types"
+
+    @model_validator(mode="after")
+    def profile_scope(self):
+        if self.profile.course_id != self.course_id or self.week not in {
+            s.key for s in self.profile.sections
+        }:
+            raise ValueError("Week/course outside explicit profile")
+        return self
+
+
+class ProfiledWeekReport(WeekReport):
+    schema_version: Literal[2] = 2
+    planner_version: Literal["c26_week_materials_v2"] = "c26_week_materials_v2"
+    course_id: CourseId
+    profile_sha256: Sha

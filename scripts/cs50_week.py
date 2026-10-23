@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 from src.job_control.catalog import read_file, safe_path
-from src.model_materials.week import WeekRequest
+from src.model_materials.week import ProfiledWeekRequest, WeekRequest
 from src.tools_materials.batch import Approvals
 from src.tools_materials.quality import _json
 from src.tools_materials.week import plan_week
@@ -29,13 +29,14 @@ def main(argv=None):
     if bool(args.manifest) == bool(args.request):
         parser.error("Supply exactly one of --manifest or --request")
     try:
-        request = (
-            WeekRequest.model_validate(
-                _json(read_file(safe_path(args.request), 1048576))
+        if args.request:
+            data = _json(read_file(safe_path(args.request), 1048576))
+            model = (
+                ProfiledWeekRequest if data.get("schema_version") == 2 else WeekRequest
             )
-            if args.request
-            else WeekRequest(manifest=args.manifest.absolute(), week=args.week)
-        )
+            request = model.model_validate(data)
+        else:
+            request = WeekRequest(manifest=args.manifest.absolute(), week=args.week)
         approvals = (
             Approvals.model_validate(
                 _json(read_file(safe_path(args.approvals), 1048576))

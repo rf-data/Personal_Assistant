@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "record_type": "c26_b6_phase_b_validation",
+  "date": "2026-10-23",
+  "baseline_commit": "da9b77db0815f0c2ab65a3e819df17200e3a3897",
+  "integrated_prs": {
+    "150": "a1d5caa9141b73f6378357f1743af21b64ba76d2",
+    "151": "da9b77db0815f0c2ab65a3e819df17200e3a3897"
+  },
+  "open_dependencies": {
+    "149": {
+      "head": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb",
+      "merged": false
+    },
+    "148": {
+      "head": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+      "merged": false
+    }
+  },
+  "schema_versions": {
+    "existing_week_reader": 1,
+    "profiled_week_request_report": 2,
+    "course_profile": 1,
+    "course_request_report": 1,
+    "preflight_report": 1,
+    "approval_policy": 1,
+    "source_approval_unchanged": true,
+    "c16_c18_unchanged": true
+  },
+  "python": "3.12.12",
+  "pytest": "9.1.1",
+  "pymupdf": "1.27.2.2",
+  "runs": {
+    "b6_b5_final": {
+      "counts": {
+        "passed": 102,
+        "failed": 0,
+        "skipped": 0
+      },
+      "modules": {
+        "tests.test_cs50_course": {
+          "passed": 51,
+          "failed": 0,
+          "skipped": 0
+        },
+        "tests.test_cs50_week_materials": {
+          "passed": 51,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "seconds": 54.63,
+      "junit_sha256": "e943c2c0c2a3a219320003e58e91b675b1c81a972c3ea11bcd3aaeb7ffc7f862"
+    },
+    "b4_multiformat_c18": {
+      "counts": {
+        "passed": 68,
+        "failed": 0,
+        "skipped": 0
+      },
+      "modules": {
+        "tests.test_cs50_week_pilot": {
+          "passed": 12,
+          "failed": 0,
+          "skipped": 0
+        },
+        "tests.test_cs50_multiformat": {
+          "passed": 32,
+          "failed": 0,
+          "skipped": 0
+        },
+        "tests.test_cs50_workflows": {
+          "passed": 24,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "seconds": 186.52,
+      "junit_sha256": "4dee1c6f547da064f1d334c2d6d2928688679ec401021729abc76db2e9a4a10a"
+    },
+    "aggregation_compatibility": {
+      "counts": {
+        "passed": 136,
+        "failed": 0,
+        "skipped": 0
+      },
+      "modules": {
+        "tests.test_cs50_course": {
+          "passed": 51,
+          "failed": 0,
+          "skipped": 0
+        },
+        "tests.test_cs50_week_materials": {
+          "passed": 51,
+          "failed": 0,
+          "skipped": 0
+        },
+        "tests.test_cs50_html_projection": {
+          "passed": 34,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "seconds": 60.53,
+      "junit_sha256": "4abf20022236492cf6cd63c125815a65f963bc6871f92881ae0dcdcfe57644e2"
+    },
+    "c18_repeat": {
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "modules": {
+        "tests.test_cs50_workflows": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "seconds": 7.25,
+      "junit_sha256": "0b147650532b01424d93647bdc15d570e9f63f9a571764e5843429062dcd5e85"
+    }
+  },
+  "test_suites_overlap_do_not_sum": true,
+  "earlier_broad_run": {
+    "passed": 339,
+    "failed": 1,
+    "skipped": 3,
+    "seconds": 284.17,
+    "junit_retained": false,
+    "failure": "test_cs50_workflows.test_stale_propagates_and_resume_preserves_existing_outputs[parser]",
+    "error": "Unavailable: Unconfirmed cleanup; dispatch quarantined",
+    "baseline_repeat_passed": true,
+    "baseline_repeat_seconds": 10.68,
+    "cause_fixed": false
+  },
+  "profile_smokes": {
+    "cs50_python": {
+      "sections": 10,
+      "checked_week": "1",
+      "resources": 13,
+      "execution_supported": false
+    },
+    "cs50x": {
+      "sections": 12,
+      "checked_week": "ai",
+      "resources": 14,
+      "execution_supported": false
+    },
+    "cs50_sql": {
+      "sections": 7,
+      "checked_week": "1",
+      "resources": 11,
+      "execution_supported": false
+    },
+    "cs50_ai": {
+      "sections": 7,
+      "checked_week": "1",
+      "resources": 11,
+      "execution_supported": false
+    },
+    "cs50_web": {
+      "sections": 9,
+      "checked_week": "1",
+      "resources": 8,
+      "execution_supported": false
+    },
+    "cs50_cybersecurity": {
+      "sections": 5,
+      "checked_week": "1",
+      "resources": 8,
+      "execution_supported": false
+    }
+  },
+  "read_only_original_exports": {
+    "material_01/original.html": {
+      "bytes": 71718,
+      "sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377"
+    },
+    "material_01/normalized.v1.json": {
+      "bytes": 235908,
+      "sha256": "4b2b15552da1e800b9ff4aa46b3abe5dc7632ad904d326d3f5042586f256ced4"
+    },
+    "material_01/quality.v1.json": {
+      "bytes": 895751,
+      "sha256": "86205436b5e260488ff497e31aa68f969e7c7d9ee1b6e1eb27d0b202f2b07e8e"
+    },
+    "material_02/original.html": {
+      "bytes": 15832,
+      "sha256": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372"
+    },
+    "material_02/normalized.v1.json": {
+      "bytes": 27939,
+      "sha256": "5628de2b8f1ed009a66902d81808768e9f50b805c0541265181802a8424e1ae8"
+    },
+    "material_02/quality.v1.json": {
+      "bytes": 95339,
+      "sha256": "939da64f9b81b27c725be58f59e1811ba2ea5cafd85e6da15bd2ea9a38e67df7"
+    }
+  },
+  "source_sha256": {
+    "src/model_materials/week.py": "28a38cc513e222aa2de3fed50c3ffda30a75f8d599f24d81ad1fc6d28766cba2",
+    "src/model_materials/course.py": "38196a32a122717c941f0fb68806022c5a33cdec7c1825217722878f3b651fbb",
+    "src/tools_materials/week.py": "f829a780cf2ab856075606500c4b2698159229b71b76fa7a2ddcd707d5ae1504",
+    "src/tools_materials/course.py": "464a0830c82fef288d7d31caa6cdca3905ecefdd9916d6482192c4fd059c553d",
+    "src/tools_materials/profiles.py": "003f969f94b3a74bb706ef339cc3ba2db2000337b7c1061999ceb1779c83d83c",
+    "src/tools_materials/transcripts.py": "e0ee44b37a0b997a367e100d640292e440cc92950e98ce040bce8788d4911da8",
+    "scripts/cs50_week.py": "a658abc252140bd9a7e177c242c64cefbddbb03ccbd4704e694665e707506d1a",
+    "scripts/cs50_course.py": "60374613cd622eaed3fa02b3fe574a1d791df6867d8fb90523d8e1c272980085",
+    "tests/test_cs50_course.py": "4a9938b5d365c4546e46c68bd1ea74642280692e8c037e8fb4a91eec4bcadbcd"
+  },
+  "document_sha256": {
+    "docs/deployment/c26a/course_planning.md": "fe48ab7d0fe03179d7e69fe61579e3a99aeecf4287443e2b19e9282221932e01",
+    "docs/deployment/c26a/course_planning_validation.md": "e5969c2838fcd2cd32ee0cb6b94de595340f4e9dd7e325f31474e4601506e4cd"
+  },
+  "assignment_child_c18_graph": "blocked_pending_versioned_worker_bundle_integration",
+  "old_transcript_receipts": "stale_on_importer_revision_change_no_automatic_migration",
+  "code_policy": "manual_only_even_all_complete_approvals_html_hints",
+  "live_worker_queue": "not_proven",
+  "production_decision": "blocked",
+  "execution_supported": false,
+  "production_downloads": false,
+  "production_jobs": false,
+  "ssh": false,
+  "container_changes": false,
+  "merges": false,
+  "project_dependencies_changed": false,
+  "existing_virtualenvs_changed": false,
+  "retained_for_review": [
+    "feat/c26b6-course-planning",
+    "Personal_Assistant-c26b6-planning",
+    "Personal_Assistant-c26b6-compat",
+    "Personal_Assistant-c26b6-planning-results"
+  ]
+}
