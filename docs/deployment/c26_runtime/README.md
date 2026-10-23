@@ -1,86 +1,90 @@
-# C26 Final Runtime Integration — 23.10.2026
+# C26 Runtime Configuration & Bootstrap Finalization — 23.10.2026
 
-**GO für technisches Review und die drei lesenden Betreiberpakete. NO-GO für
-Merge, produktiven Rollenstart, Coolifyumstellung und CS50P-Pilot.**
-Die bestehende Draft-PR #157 wird fortgeführt; keine parallele Architektur-PR.
+**GO für technisches Review und lesende Betreiberinventur. NO-GO für Merge,
+Produktionsstart, Aktivierung und Pilot.** Bestehender Draft #157 fortgeführt.
+Keine Host-/Coolifyaktion, kein Deployment, Merge/Ready/Auto-Merge, produktiver
+Job, Download, ZIPimport oder Cleanup in diesem Auftrag.
 
-## Aktueller belegter Stand
+## Lieferung und aktueller Stand
 
-Backend `e502aa9…` enthält #155; UI `e4be7a2…` enthält #19. Alle relevanten Drafts
-sind aktuell offen und konfliktfrei Git-mergebar, ohne eingereichte Reviews oder
-CI-Erfolgsbelege. Vollständige SHAs und Testbindungen: [Validierung](validation.v1.json).
+- [Deaktivierter Controller](../../../deployment/c26-runtime.controller.json.example):
+  neuer Root `/app/runtime-state/c16`, Gate verpflichtend, max_jobs/queued/parallel1,
+  Execution/Workflows/PDF/Index/Import false, Identitäten und Katalog leer.
+- [Limitsvorlage](../../../deployment/c26-runtime.limits.json.example):
+  schema1, Reserve5GiB, Archiv64MiB, Katalog128MiB, Job512MiB, Report16MiB,
+  höchstens ein Material. Kein erfundenes enabled-Feld; deaktivierte Bindung.
+- [Konfigurations-/Mountplan](runtime_configuration.md) und
+  [Offline-Preflight](../../../scripts/c26_runtime_preflight.py): bestehende Modelle,
+  keine Queueöffnung/-initialisierung, keine Locks/Heartbeats. Fehlende Queue
+  ausdrücklich uninitialized; vorhandene Datei ausdrücklich nicht als gesund
+  bestätigt. Image-Digestsyntax ist noch kein Registry-/SHAbeleg.
+- [Bestehende Composearchitektur](../../../deployment/coolify.runtime-bootstrap.compose.yaml):
+  Caddy + Loopback-API im selben Namespace + genau ein Kapazitätsworker, UI separat.
+  Eigener vorgeschlagener Bind `/srv/personal-assistant/runtime/c26-v1`; historische
+  Daten für neue Rollen nur RO. APIprofil startet ausschließlich Gateway/API;
+  zusätzliches Workerprofil erfordert eigene Freigabe. Defaultcontroller verweigert
+  Workerstart. Keine öffentlichen APIports, keine neuen Runtimeabhängigkeiten.
+- [Zehnphasiges Betreiber-Runbook mit Kommandos](rollout.md): Inventory, Backup,
+  SHA/Image, explizite neue Root-/Store-/Gateprovisionierung, Gateway/API, Health,
+  Worker-Healthstart bei held, gesonderte Aktivierung, Einzelbatch, Rollback.
 
-Backend: Application / Dockerfile / Builder Deployment server. UI: Application /
-Docker Compose, Service `streamlit`. Beide: Manual deployments only, Buildcache
-und automatische Build-ARG-Injektion aktiviert, SOURCE_COMMIT Runtime only.
-Diese Angaben sind **operator_observed**, nicht länger pauschal unbekannt.
-Separate Preview-/Webhook-/API-/sonstige Trigger bleiben **unverified**.
-Der Backend-Sleep-Start war ein bewusster Platzhalter; das ist keine versehentliche
-Fehlkonfiguration. Konkrete Backend-Dockerfile-/UI-Compose-Pfadfelder und die
-Herkunft der laufenden Images bleiben offen. [Inventar](operator_inventory.v1.json).
+Historische Controller und Limits sowie RAM3,7GiB/Available2,2GiB/Swap4GiB mit
+688MiB Belegung sind nun **operator_observed** im [Inventar](operator_inventory.v1.json).
+Historische SQLite/Pilotjobs bleiben unverändert. execution=true belegt keinen
+laufenden Worker. Neue Mounts/Roots und finale Settings sind **unverified**.
 
-## Technische Ergebnisse
+[Budget](resources.md): kleiner Batch konservativ **5,703125 GiB** einschließlich
+5GiB Reserve; gemeldete20GiB reichen rechnerisch fürs reine Batchbudget.
+Backups/Images/Growth separat. RAM ist eng: etwa717MiB von2,2GiB Available nach
+1.536MiB neuer Rollenobergrenzen, nach512MiB Notfallreserve nur205MiB für Peaks.
+Keine Lastabnahme, keine Grenze stillschweigend verändert. Lokales Btrfs-/tmpfs
+ist kein Hetznerbefund; [SQLite-/ENOSPCdiagnose](diagnostics.md) bleibt offen
+abgegrenzt, keine pauschale Heilung durch einen grünen Wiederholungslauf.
 
-- Die vorhandene C22-Architektur bleibt: interner Caddy, API mit
-  `network_mode: service:api-gateway` auf `127.0.0.1:8016`, genau ein bestehender
-  C26-Kapazitätsworker, keine zweite Queue oder UI. [Source-to-Runtime-Matrix](source_assessment.md).
-- Die [gesperrte Vorlage](../../../deployment/coolify.runtime-bootstrap.compose.yaml)
-  erhält zwei kleine 4.4.7-Kompatibilitätskorrekturen: Label-Liste und einfache
-  Bindvariablen mit weiter erforderlichen Pfadwerten in `x-required-paths`.
-  Lokales daemonfreies Rendering: ohne Profil null, mit Profil drei Rollen;
-  alle sechs leeren Pfade verweigert. Kein Container, Pull oder Build.
-  [Versionsbezogener Befund und Abnahmegrenze](coolify_compatibility.md).
-- Neue tmpfs-Testroots grenzen den bisherigen Btrfs-/ENOSPC-Befund weiter ein.
-  386 bestanden, sechs optionale Fälle übersprungen; der frühere Docker-CLI-Fall
-  blieb abgewählt. Zusätzlich 54 gezielte Fälle, drei kritische Kontrollen und
-  sechs finale Definitionstests bestanden. UI: 24 Tests + neun Subtests bestanden.
-  Fünf übersprungene HTML-Exportfälle wurden gezielt nachgeholt und bestanden;
-  der Originaltranscript-Pilot bleibt mangels importiertem Bestand offen.
-  Frühere rote Läufe bleiben erhalten. [Diagnose und Unsicherheit](diagnostics.md)
-  und aktuelle Laufzahlen stehen in der Validierung. Der ursprüngliche SQLitecode
-  ist nicht nachträglich rekonstruierbar; kein allgemeiner Produktfix behauptet.
-- Geplante Rollen plus UI: 2.304 MiB. Bei 4 GiB und je 512 MiB OS-/Notfallreserve
-  bleiben nur 768 MiB für sämtliche übrigen Dienste. Live-Fit und Buildpeak fehlen;
-  im konservativen 1-GiB-Restdienste-Szenario fehlen 256 MiB. [Ressourcenbudget](resources.md).
-  Lokales Btrfs, Test-tmpfs und Hetzner-ext4/Worker-Mount werden getrennt bewertet.
+## Was noch ausschließlich der Betreiber ausführen muss
 
-## A — Welche technische Arbeit fehlt wirklich?
+1. Exakte Coolify-UUIDs/Buildpfade/Branch/Overrides, zusätzliche Trigger, alle
+   Writer/Queues, privaten TLS/VPN/OIDCweg und Ressourcenpeaks lesend belegen.
+2. Nach separater Review-/Mergefreigabe #156 → #149 → #148 → #157 integrieren,
+   UI #20 separat; kombinierte tatsächliche Versionen und gebaute Backend-/Gateway-
+   Images per SHA/Registrydigest abnehmen. Kein normaler Merge als Deployfreigabe.
+3. Vollständiges Backup/isolierten Restore, ruhenden Sleep-Rückweg und kontrollierte
+   Adoption derselben Backend-Application freigeben. Kein zweiter Compose-/UIstack.
+4. Eigenen Runtime-Bind/0700-Root und private Config/Limits/Mountpolicy ausdrücklich
+   provisionieren. Offlineprüfung; danach bestehendem Store einmalig die leere
+   Queue und dem Gate initial held anlegen lassen. Teilfehler geschlossen erhalten.
+5. Nur Gateway und API starten, Namespace/Mount/TLS/401 und Gate held prüfen.
+6. Separat den einen Worker-Healthstart mit execution=true in identitätsloser
+   Stagingconfig freigeben. API bleibt false, Gate held, Queue leer. Heartbeat,
+   Einzigkeit und RAM prüfen. Damit sind die drei Prozesse startbar, keine Jobs.
+7. Erst nach eigener finaler Settings-/Identitäts-/Katalog-/Quellenfreigabe alle
+   Rollen an dieselbe aktive Config binden, nochmals Live-/Negativchecks und neue
+   Resume-Freigabe. Ein-Material-/Ein-Job-Pilot separat; keine automatischen Folgejobs.
 
-Realen #148-Coolifydriver für bestätigte Ressourcen-/Image-/Triggerscopes
-implementieren und prüfen; dieselbe Backend-Application sicher auf den vorhandenen
-Composeverbund adoptieren; gebundene kombinierte Backend-/Gateway-/UI-Images bauen
-und abnehmen. Vorhandenen UI-Service `streamlit` mit dem geschützten privaten
-Zugriff verbinden, ohne zusätzliches `ui`. Tatsächliche Mount-/Cgroup-/TLS-/VPN-
-Abnahme fehlt. Für den unklassifizierten früheren SQLitefehler bleibt eine
-begrenzt dokumentierte Unsicherheit; die Btrfs-Umgebung ist nicht repariert.
+**Zusätzlicher technischer Restpunkt:** Die Schritte sind noch nicht allein durch
+Betreiberfreigaben vollständig: der reale reviewte #148-Driver/Koordinator für
+Livebeobachtung des tatsächlichen Coolify-Ressourcenscopes fehlt weiterhin.
+Ohne ihn kann `Gate.release` nicht sicher freigeben; die CLI prüft Pläne, führt
+aber keinen Resume aus. Keine Fake-Observation als Ersatz. Erst echten Scope
+liefern, Adapter binden/reviewen und abnehmen. Bootstrap selbst ist eine eigene
+manuell geschlossene Wartungsoperation, kein vorgetäuschter Gate.run von Sleep.
 
-## B — Welche Betreiberinformationen fehlen?
+## Validierung und Aufbewahrung
 
-Drei Pakete reichen: (1) exakte Build-/Repository-/Branch-/Startpfade, UUIDs,
-Imagebindung und zusätzliche Trigger; (2) eine echte Queue-/Writerzuordnung,
-Controllerconfig/Mountpolicy/Limits sowie RAM-/CPU-/Backup-/Rollbackbelege;
-(3) privater DNS-/TLS-/VPN-/OIDC-Bestand und konkret gebundene vorhandene
-Quellen-/Rohartefakte. Jeder offene Wert hat einen lesenden Schritt in den
-[Betreiberprüfungen](operator_checks.md). Bestätigte Manual-Deploy-/Buildwerte
-werden nicht nochmals angefordert.
+**137 finale Vertragsfälle bestanden**, keine Skips. Im breiten Lauf 345 Fälle
+bestanden; zwei testinterne Erwartungen im neuen Bootstrapfall wurden danach
+korrigiert, ohne Produktfix. Läufe überlappen, rote Belege bleiben erhalten.
+Reguläre Hooks, Ruff, JSON-/Link- und zwölf Shellsyntaxprüfungen bestanden.
+Aktuelle Tests und genaue Quellenbindung stehen in
+[runtime_configuration_validation.v1.json](runtime_configuration_validation.v1.json),
+frühere Läufe bleiben in [validation.v1.json](validation.v1.json) erhalten.
+[Source-to-Runtime](source_assessment.md), [Coolify4.4.7-Grenzen](coolify_compatibility.md),
+[Driververtrag](driver_contract.md), [PRmatrix](integration_matrix.md) und
+[lesende Betreiberpakete](operator_checks.md) bleiben Teil der Reviewlieferung.
+Alle fünf PRs erneut offen/Draft/konfliktfrei, abgefragte Reviews/Status/PR-Workflows
+leer; fehlende Checks sind kein CI-Erfolg. Master e502aa9, UI-Main e4be7a2 unverändert.
 
-## C — Was ist der nächste konkrete Schritt?
-
-Die drei lesenden Pakete liefern, zuerst die tatsächlichen Buildpfadfelder und
-zusätzlichen Trigger in den bestehenden Coolify-Applications. Danach Restarbeit
-an genau diese Werte binden. Nach ausdrücklicher Mergefreigabe
-#156 -> #149 -> #148 -> #157, UI #20 abgestimmt separat. Erst anschließend ein
-eigenes Bootstrap-/Build-/Rollbackfenster genehmigen und die
-[zwölf Abnahmephasen](rollout.md) durchlaufen. [PR-Integrationsmatrix](integration_matrix.md).
-
-Der erste Week-0-Pilot bleibt eine eigene Entscheidung: vorhandene Raw-Artefakte,
-konkret gebundene SourceApprovals, frisches C18-/B6-Preflight, ausreichendes
-Workerbudget und ausdrückliche Freigabe für genau einen begrenzten Job.
-Infrastrukturvorbereitung erzeugt keine Pilot- oder Quellenfreigabe.
-
-Keine Hetzner-/SSH-/Coolifyaktion, kein Deployment oder produktiver API-/Workerstart,
-kein Merge/Ready/Auto-Merge, keine neuen Kursdownloads, ZIP-Imports oder Bereinigung.
-Bestehende Pilotdaten, Worktrees, Umgebungen, Bundles und Locks bleiben erhalten.
-Lokale Arbeitskopie weiterhin wegen des Indexfehlers uncommittet; reguläre Hooks
-und GitHub-Git-API sichern die Reviewlieferung. Defaultbranchintegration bleibt
-aufgrund des ausdrücklichen Mergeverbots ausstehend.
+Code/Unterlagen bleiben im Draft, nicht im Defaultbranch integriert: ausdrückliches
+Mergeverbot. Lokaler Indexfehler bleibt unangetastet; reguläre Hooks und geprüfte
+GitHub-Git-API-Folgecommits sichern die Lieferung. Bestehende Worktrees/Branches,
+Venvs/Bundles/Quellarchive/Pilotdaten/Locks bleiben erhalten; kein Cleanup.

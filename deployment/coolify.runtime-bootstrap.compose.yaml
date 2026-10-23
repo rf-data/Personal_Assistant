@@ -1,10 +1,11 @@
 # REVIEW CANDIDATE ONLY. Replaces mapped roles after separate operator approval.
 # Do not combine with compose.yaml or cs50-worker.compose.yaml: duplicate executors.
-# Requires #148/#156, an existing approved queue, closed gate and private network.
+# Requires #148/#156, an explicitly provisioned NEW queue, closed gate and private network.
 name: personal-assistant-c26-runtime
 # 4.4.7 validates long bind sources before Compose interpolation. Keep these
 # sources as simple ${VAR}; enforce non-empty paths in this Compose extension.
 x-required-paths:
+  C26_HOST_RUNTIME: ${C26_HOST_RUNTIME:?Approved separate runtime directory}
   C26_HOST_DATA: ${C26_HOST_DATA:?Confirmed existing data directory}
   C26_HOST_CONFIGURATION: ${C26_HOST_CONFIGURATION:?Confirmed existing configuration directory}
   C26_HOST_LOGS: ${C26_HOST_LOGS:?Confirmed existing logs directory}
@@ -37,8 +38,13 @@ x-backend: &backend
     PA_PERSISTENT_ROOTS_FILE: /app/configuration/c26-runtime/persistent-roots.json
   volumes:
     - type: bind
+      source: ${C26_HOST_RUNTIME}
+      target: /app/runtime-state
+      bind: {create_host_path: false}
+    - type: bind
       source: ${C26_HOST_DATA}
       target: /app/data
+      read_only: true
       bind: {create_host_path: false}
     - type: bind
       source: ${C26_HOST_CONFIGURATION}
@@ -94,16 +100,17 @@ services:
       start_period: 30s
   capacity-worker:
     <<: *backend
+    profiles: [c26-worker-approved]
     network_mode: none
     entrypoint: [python, -m, scripts.cs50_worker]
-    command: [--config, /app/configuration/c26-runtime/controller.json, --limits, /app/configuration/c26-runtime/limits.json]
+    command: [--config, '${C26_WORKER_CONFIG:-/app/configuration/c26-runtime/controller.json}', --limits, /app/configuration/c26-runtime/limits.json]
     pids_limit: 128
     cpus: 1.0
     mem_limit: 1024m
     memswap_limit: 1024m
     tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=128m,mode=1777]
     healthcheck:
-      test: [CMD, python, -m, scripts.deployment, health, --role, worker, --config, /app/configuration/c26-runtime/controller.json]
+      test: [CMD, python, -m, scripts.deployment, health, --role, worker, --config, '${C26_WORKER_CONFIG:-/app/configuration/c26-runtime/controller.json}']
       interval: 15s
       timeout: 5s
       retries: 3

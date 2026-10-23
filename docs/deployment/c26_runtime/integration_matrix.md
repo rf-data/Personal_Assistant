@@ -11,7 +11,7 @@ stehen in `validation.v1.json`; #157 erhält nur eigene Folgecommits.
 | #156 | Ja / ja | Optionale Imports, eng begrenzter SQLite-Setup-BUSY-Retry; kein Transaktions- oder Jobreplay | Review zuerst; ursprünglicher unklassifizierter Fehler nicht nachträglich als BUSY erklärt |
 | #149 | Ja / ja | HTML-Aggregation/Quality; Outputs und Qualitätsentscheidungen können sich ändern | Nach #156 auf aktuellem Master prüfen; echte alte Pilotvergleiche nur soweit bereitgestellt, keine neuen Downloads |
 | #148 | Ja / ja | Gatevertrag, Settings und zusätzliche Lease-/Queuebedingungen; bestehende Queue erforderlich | Nach #149; realer Coolifydriver und Bootstrapfreigabe fehlen weiterhin |
-| #157 | Ja / ja | Bestehende drei Rollen, zwei kleine Compose-Kompatibilitätskorrekturen, gesperrte Config, Inventur und Abnahmekette; keine neuen Produkt-Pythonmodule | Nach #148; Backend von Dockerfile auf Compose adoptieren ist eine gesonderte Änderung mit Nachweisen |
+| #157 | Ja / ja | Bestehende drei Rollen, zwei kleine Compose-Kompatibilitätskorrekturen, gesperrte Config, Inventur und Abnahmekette; neue rein lesende Offline-Preflight-CLI, eigener Runtime-Bind, deaktivierte Ein-Job-/Ein-Materialvorlagen | Nach #148; Backend von Dockerfile auf Compose adoptieren ist eine gesonderte Änderung mit Nachweisen |
 | UI #20 | Ja / ja | HTTPS-/Deploymentdokumentation; geschützter Launcher bereits in #19, laufendes Image historisch | Gesondert abstimmen, bestehende Application/Service `streamlit` erhalten; kein additives `ui`-Overlay |
 
 Die unveränderten #156/#149/#148-Diffs sind im eigenen isolierten Worktree auf
@@ -36,7 +36,7 @@ noch nicht vollständig erfasst. Keine Merge-/Ready-/Auto-Merge-Aktion.
 3. Nach eigener Mergefreigabe #156 -> #149 -> #148 -> #157 integrieren; UI #20
    abgestimmt separat. Tatsächliche kombinierte SHAs neu feststellen und prüfen.
 4. Separat freigegebenes Build-/Abnahmefenster mit Budget und vollständigem
-   Rückweg. Erst dann die [zwölf Rolloutphasen](rollout.md): Annahmen geschlossen,
+   Rückweg. Erst dann die [zehn Bootstrapphasen](rollout.md): Annahmen geschlossen,
    Drain, Imagewechsel ohne Überlappung, Rollen-/Namespace-/Healthprüfung,
    VPN-/TLS-/OIDC-Negativtests, neue explizite Resume-Freigabe.
 5. Pilot separat: gebundene SourceApprovals, vorhandene Raw-Artefakte und Hashes,
@@ -47,3 +47,13 @@ Kein produktiver Schritt dieses Plans wurde ausgeführt. Defaultbranchintegratio
 bleibt wegen des ausdrücklichen Mergeverbots ausstehend. Eigene Worktrees,
 Branches, Bundles und Belege bleiben erhalten; der lokale Indexfehler wird nicht
 durch Reset, Clean oder Locklöschen umgangen.
+
+## Konfigurationsfinalisierung
+
+Die letzten Commitänderungen von #157 ergänzen ausschließlich den Offlineprüfer,
+seinen COPY im vorhandenen Runtime-Dockerfile, sichere Beispiele, Mount-/Profil-
+bindungen und Dokumentation/Tests. #148/#149/#156 werden unverändert kombiniert;
+keine neue Runtimeabhängigkeit und kein Queue-/Gate-/Transportneuentwurf. Das
+separate Workerprofil verhindert Mitstart beim alleinigen Gateway-/APIprofil.
+Der neue Jobroot ist zunächst uninitialisiert; explizite Provisionierung bleibt
+eine spätere Betreiberaktion. Die Mergefolge und sämtliche Verbote gelten weiter.

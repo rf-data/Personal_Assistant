@@ -114,3 +114,15 @@ Distributionsmetadaten. Das sagt allein nichts über jede Importierbarkeit aus,
 belegt aber keine erfolgreiche Installation des Runtimeprofils. Keine Pakete
 nachinstallieren oder daraus ungeprüft neue Pins ableiten: Exakt gepinnter
 Imagebuild und anschließende Rollen-/Import-/Health-Smokes bleiben erforderlich.
+
+## Runtime-Konfigurationsfinalisierung, nachfolgender Stand
+
+Die neue lesende `scripts.c26_runtime_preflight` wird im vorhandenen Lean-Dockerfile
+mitkopiert; keine neue Runtimeabhängigkeit. Diese gezielte Erweiterung ersetzt die
+frühere Aussage „keine Produkt-Pythonmodule geändert“ für diesen Folgecommit.
+Gate/Store/Executor/HTTP-Kern und Quellrevisionen der anderen Drafts bleiben
+unverändert. Neuer eigener Bind `/app/runtime-state`, Root `c16`, historische
+Daten nur RO. Worker zusätzliches Profil; normales APIprofil startet ihn nicht.
+Historische Controller und konkrete Limits sind jetzt Betreiberbefunde, neue
+Root-/Mount-/Settings-/Imagefreigaben bleiben ausstehend. Siehe
+[Konfigurationsvertrag](runtime_configuration.md) und [Runbook](rollout.md).
