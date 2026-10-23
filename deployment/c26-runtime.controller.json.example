@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "root": "/app/data/OPERATOR_REVIEW_REQUIRED_EXISTING_C16_ROOT",
+  "catalog": {},
+  "identities": [],
+  "execution_enabled": false,
+  "workflows_enabled": false,
+  "pdf_enabled": false,
+  "index_jobs_enabled": false,
+  "import_jobs_enabled": false,
+  "deployment_gate_required": true,
+  "max_parallel": 1,
+  "max_queued": 1,
+  "max_jobs": 100,
+  "worker_ttl": 10
+}

@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "untraced_regression": {
+    "passed": 356,
+    "failed": 1,
+    "failure": "C18 parser resume, quarantine, OperationalError without saved SQLite code"
+  },
+  "deep_diagnostic": [
+    {
+      "role": "adapter",
+      "operation": "adapter.execute",
+      "os_errno": 28,
+      "error_class": "OSError",
+      "sqlite_errorcode": null,
+      "sqlite_errorname": null,
+      "frames": [
+        {
+          "file": "<string>",
+          "function": "traced_execute",
+          "line": 55
+        },
+        {
+          "file": "adapter_worker.py",
+          "function": "execute",
+          "line": 30
+        },
+        {
+          "file": "adapter_worker.py",
+          "function": "execute_scoped",
+          "line": 86
+        },
+        {
+          "file": "engine.py",
+          "function": "run",
+          "line": 358
+        },
+        {
+          "file": "state.py",
+          "function": "save",
+          "line": 56
+        },
+        {
+          "file": "execute_cs50.py",
+          "function": "write_state",
+          "line": 71
+        }
+      ],
+      "scope": "owned synthetic adapter, development filesystem only"
+    }
+  ],
+  "local_fsync_probes": [
+    {
+      "parent": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results",
+      "probe": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/c26-owned-fsync-1792780033858340523",
+      "scope": "own new synthetic file only",
+      "fsync": "passed",
+      "free_bytes": 3703820288,
+      "inodes_total": 0
+    },
+    {
+      "parent": "/tmp",
+      "probe": "/tmp/c26-owned-fsync-1792780033943779674",
+      "scope": "own new synthetic file only",
+      "fsync": "passed",
+      "free_bytes": 3703820288,
+      "inodes_total": 0
+    }
+  ],
+  "production_filesystem_tested": false,
+  "production_capacity_source": "operator_observed ext4 /dev/sda1 ~20GiB free, not a Codex measurement",
+  "original_operational_error_cause": "unverified; new ENOSPC does not identify earlier exception",
+  "cleanup_performed": false,
+  "limits_changed": false,
+  "observed_failing_operation": "write_state line 71: os.replace(temporary, path), not fsync",
+  "bounded_allocation_probes": [
+    {
+      "bytes": 4096,
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/owned-allocation-probe-4096-1792780158213547169",
+      "status": "passed"
+    },
+    {
+      "bytes": 32768,
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/owned-allocation-probe-32768-1792780158278399370",
+      "status": "passed"
+    }
+  ],
+  "atomic_rename_probes": [
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/c26-owned-atomic-probe-1792780229475145173",
+      "status": "failed",
+      "stage": "replace",
+      "os_errno": 28
+    },
+    {
+      "path": "/tmp/c26-owned-atomic-probe-1792780229578891372",
+      "status": "passed"
+    }
+  ],
+  "tmp_adapter_diagnostics": [
+    {
+      "role": "adapter",
+      "operation": "adapter.execute",
+      "os_errno": 28,
+      "error_class": "OSError",
+      "sqlite_errorcode": null,
+      "sqlite_errorname": null,
+      "frames": [
+        {
+          "file": "<string>",
+          "function": "traced_execute",
+          "line": 55
+        },
+        {
+          "file": "adapter_worker.py",
+          "function": "execute",
+          "line": 30
+        },
+        {
+          "file": "adapter_worker.py",
+          "function": "execute_scoped",
+          "line": 86
+        },
+        {
+          "file": "engine.py",
+          "function": "run",
+          "line": 310
+        },
+        {
+          "file": "state.py",
+          "function": "save",
+          "line": 56
+        },
+        {
+          "file": "execute_cs50.py",
+          "function": "write_state",
+          "line": 71
+        }
+      ]
+    }
+  ],
+  "tmp_complete_workaround_proven": false,
+  "same_application_code_tested_outside_sandbox": true,
+  "further_write_heavy_tests_stopped": true
+}
