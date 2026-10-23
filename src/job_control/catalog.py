@@ -69,7 +69,12 @@ def prepare_indexes(settings):
             continue
         try:
             verified_files(entry)
-            indexes[ref] = make_plan(safe_path(entry.root, entry.roles["manifest"]))
+            if entry.kind == "workflow_bundle":
+                from src.workflows.definition import catalog_plan
+
+                indexes[ref] = catalog_plan(entry)
+            else:
+                indexes[ref] = make_plan(safe_path(entry.root, entry.roles["manifest"]))
         except (ValueError, OSError, KeyError):
             # Only this input becomes unavailable; never advertise a fabricated plan.
             continue

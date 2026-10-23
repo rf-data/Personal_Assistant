@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "record_type": "operator_inventory_template",
+  "operator": null,
+  "observed_at": null,
+  "production_approved": false,
+  "resources": [],
+  "resource_fields_required": [
+    "private_uuid_mapping_and_role_alias",
+    "build_type",
+    "repository_branch",
+    "installed_sha_and_verified_image_digest",
+    "instance_count",
+    "auto_and_preview_deploy",
+    "git_webhook_registry_api_scheduler_triggers",
+    "deploy_permissions",
+    "pending_deployments",
+    "queue_root_mount_uid_lock_aliases",
+    "protected_pilot_separation",
+    "network_route_and_tls_aliases",
+    "resource_limits",
+    "backup_and_restore_reference",
+    "rollback_image_and_rescue_access"
+  ],
+  "queue": {
+    "existing_single_worker": null,
+    "all_jobs_accounted_for": null,
+    "all_admission_paths_known": null,
+    "independent_import_and_pilot_processes": null,
+    "consistent_local_linux_locks_and_sqlite_wal": null
+  },
+  "vpn": {
+    "method": null,
+    "approved_devices_and_routes": null,
+    "client_source_ip_preserved": null,
+    "outside_vpn_negative_test": null
+  },
+  "https": {
+    "canonical_origin": null,
+    "domain_dns_decision": null,
+    "existing_traefik_only": null,
+    "certificate_issuer_renewal_alarm": null,
+    "no_public_direct_ports": null,
+    "exact_proxy_peers_and_allowlist": null,
+    "websocket_origin_negative_tests": null
+  },
+  "identity": {
+    "issuer_and_callback": null,
+    "individual_subject_role_mapping": null,
+    "private_api_tls_and_individual_tokens_verified": null,
+    "logout_expiry_and_revocation": null
+  },
+  "deployment": {
+    "exclusive_controlled_trigger": null,
+    "bootstrap_approval": null,
+    "exact_sha_image_approval": null,
+    "host_driver_review": null,
+    "no_worker_overlap": null,
+    "health_version_scope_evidence": null,
+    "separate_recovery_rollback_resume_approvals": null
+  },
+  "backup": {
+    "last_consistent_backup_reference": null,
+    "isolated_restore_reference": null,
+    "rollback_owner": null,
+    "rescue_access": null
+  },
+  "redaction": "Keep actual UUID/IP/hostpath/credential mappings private. Never include secrets, tokens, keys, full configs or webhook URLs."
+}

@@ -1,0 +1,515 @@
+{
+  "schema_version": 1,
+  "current_runtime_grants": "not_supplied_not_inspected",
+  "versioned_example_grants": 0,
+  "required_references": [
+    "approval_reference",
+    "usage_reference",
+    "license_review_reference",
+    "robots_review_reference",
+    "retention_reference",
+    "revocation_reference"
+  ],
+  "every_grant_requires": [
+    "exact_material_id",
+    "exact_source_id",
+    "course_id",
+    "original_url",
+    "expected_raw_sha256",
+    "explicit_process_permission",
+    "current_operator_review"
+  ],
+  "code_member_candidates": [
+    {
+      "archive_member": "src0/hello1.py",
+      "source_id": "resource:6a769c45f31823c3340320f67c2752e1300f1ca112f58cdb9e94b7e01f371441",
+      "material_id": "material:2c5b1105a9dab9b01f2b8c52a1b0ef9e8dfe73da20d95e5d42eb039e03672077",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello1.py"
+    },
+    {
+      "archive_member": "src0/calculator0.py",
+      "source_id": "resource:7747074305808a5059746db41579663038b1a81280af335339f3fb93442547e0",
+      "material_id": "material:96d7ade28146faa927a2da41ce742218d11575888b1e5f5a64aa052814d743e7",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator0.py"
+    },
+    {
+      "archive_member": "src0/hello10.py",
+      "source_id": "resource:546d0ac888a08a6dfc805b6a72accfc44f87f65f08e22504043429400339aa0b",
+      "material_id": "material:d93c33938b629cb848cdf33ec6472b0aa7e57902fee3877c599faa61a76f2f1a",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello10.py"
+    },
+    {
+      "archive_member": "src0/hello5.py",
+      "source_id": "resource:010ecd8d9aba09c4789304a2914cf632f4109e1959822836ee6156c0574c256f",
+      "material_id": "material:e3ec240146557b973233e5974cf0eca205c660d0d8cff5cac3167da525adfbbd",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello5.py"
+    },
+    {
+      "archive_member": "src0/calculator4.py",
+      "source_id": "resource:097fd4a977760683f703d96208d8f98cd960ace41d071a6ebb5a56eca5380a8d",
+      "material_id": "material:6151a951fff7f9b02900ad53569a2609a8124372c76025faf238096ddf443a05",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator4.py"
+    },
+    {
+      "archive_member": "src0/hello4.py",
+      "source_id": "resource:2e42a018a34a19011f48f3c3783c7b41f546b8e10fb520b885dca02d2d7d8105",
+      "material_id": "material:8e9a1563e4462ec0ad658f5b1aa637b6ba514bae67714456489237143e223a8d",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello4.py"
+    },
+    {
+      "archive_member": "src0/calculator5.py",
+      "source_id": "resource:72928c40e6d1c47f0580c8c553c7195073d52b9675a6f5a970f36172c8a02b28",
+      "material_id": "material:c30f589f3c0d4e3f0b8c397e0d3844fe81c668978d77144c10178b50d879a1f2",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator5.py"
+    },
+    {
+      "archive_member": "src0/hello0.py",
+      "source_id": "resource:02410e7817f88adfb3ed2e314d0e8a4bc533305812073cbec51f709e09e0fadd",
+      "material_id": "material:78e5a6a39a220b92fcc70bf23e1c303af6487b89071d6ce6b62ac268b98cf3d4",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello0.py"
+    },
+    {
+      "archive_member": "src0/calculator1.py",
+      "source_id": "resource:a114c35a6ebcc49e5c8e31477b4bb55598407b84d05da685cbdb34f701ec73b1",
+      "material_id": "material:b5bcb4601defa7460401af93f05c6533cd23f0517277ee48b930738a829e27fb",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator1.py"
+    },
+    {
+      "archive_member": "src0/hello11.py",
+      "source_id": "resource:a6c780e62e4649d36879ddf4362ce22e84d17e15df34596143344e17ee335cb0",
+      "material_id": "material:f159e400bf8201bab0ca96637ed92d75247b0575c98f1ae63a4a0af56c64764c",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello11.py"
+    },
+    {
+      "archive_member": "src0/hello7.py",
+      "source_id": "resource:a2a7304be6b953be08ad88ad79c66e610765a67f31d1fa9600ddffb7e982ed18",
+      "material_id": "material:6fa7ecc0ba67e8b80b953b0cb0a5963c5fab829187229c485c5168baa84c0ce9",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello7.py"
+    },
+    {
+      "archive_member": "src0/calculator6.py",
+      "source_id": "resource:f52c7464b476cab666efce20de9505052fd0221ef262e428197f42033d348f6c",
+      "material_id": "material:9179c24b9fb6a9f5ccf6edd18adf6c6a61015566cb893c7bde5ba2f7adc1da03",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator6.py"
+    },
+    {
+      "archive_member": "src0/hello3.py",
+      "source_id": "resource:ced87645562ae094cf634f2153a2518e092f2b23599608503352f1c9d659f0f3",
+      "material_id": "material:c8d99af03edca80f91f3ac50ec839befa891ba2d55df97671734e7b31e3d151e",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello3.py"
+    },
+    {
+      "archive_member": "src0/calculator2.py",
+      "source_id": "resource:b6ba5b37c4aec4d70b164c9f9443c35f28eb71932409ebb87ae0424b40367f76",
+      "material_id": "material:b90be4f007a0e4232b992d8b8d69e26964752ec13e79610f10caa676c6d7a0d6",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator2.py"
+    },
+    {
+      "archive_member": "src0/calculator10.py",
+      "source_id": "resource:5e202ee5e6b904a39b82409101a7f375261f475b9214c9a8f9ac876a3552bc51",
+      "material_id": "material:bfbe12e139300bb21ecd16c2a849c9b89d3ca4ce72a75e9bf73e3cc254e6452e",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator10.py"
+    },
+    {
+      "archive_member": "src0/hello2.py",
+      "source_id": "resource:dc4223fd7acd9cefd849f8baf304862448dd069b7e4f178f6c2e8e8038e83182",
+      "material_id": "material:7f8d7bfb5714836dfc0c105efbd055ab8bd3bcae7701beddb0ec6e6b372af6c4",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello2.py"
+    },
+    {
+      "archive_member": "src0/calculator3.py",
+      "source_id": "resource:a1add7cb1f90285a9abe587abd3ca483f5d72f44417e0f5a274e4fdd729cbe05",
+      "material_id": "material:7c15b16de9d37a309321e3da06a1828a2b3a0e9d48253d8a24e0d9083d6fa64d",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator3.py"
+    },
+    {
+      "archive_member": "src0/calculator11.py",
+      "source_id": "resource:b8be121a7d2eb2f78a02c5cbea317d294e5c82338c2b4474f39b5db09064f0e5",
+      "material_id": "material:b7af3042a020227f228f2703bf06b2bb95b88afcc8dbf08a29665238573525da",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator11.py"
+    },
+    {
+      "archive_member": "src0/hello6.py",
+      "source_id": "resource:57269bc4d8d268de4d44ea5e9863d2f90f5d8b8c2a4ea28d43fcee8a8a510c1b",
+      "material_id": "material:00d89843df988e30dd004236323f2aad79fd78a987faad669aeb30182e3f69fa",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello6.py"
+    },
+    {
+      "archive_member": "src0/calculator7.py",
+      "source_id": "resource:3dafc6dd564948df21de744689086ce302ac915cc1ade51e630f7d67673e0022",
+      "material_id": "material:dd33e48aa5f2b9f015baf65cdc4f50cc9844e38603dde5f03bd4154474f17616",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator7.py"
+    },
+    {
+      "archive_member": "src0/hello9.py",
+      "source_id": "resource:112c922ec272df277f966b32ba1aa457ce9c601cfb2994c22e8df40bb68a27d4",
+      "material_id": "material:410677a1fb21ae5b4fb144946060ce22eb2e4af1111c7c653664a9b555200c35",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello9.py"
+    },
+    {
+      "archive_member": "src0/calculator8.py",
+      "source_id": "resource:200dcbc7fbecc3f6c333798ac247a6f9aef0369267bd2359d02ce63d361de2d5",
+      "material_id": "material:be769ba8c9a01058e91a7dfdc006e05eca45b2be6cf9e3b304ab099c5f7d9a9e",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator8.py"
+    },
+    {
+      "archive_member": "src0/hello8.py",
+      "source_id": "resource:2e62aed639da47afc8840293abd68303bd7fadac6d85c36aa4c43b1909ac68b0",
+      "material_id": "material:bf63e3a6382c9ac384fe3709f6a1e6264ec81413382d62af1f677c421ee4f46b",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/hello8.py"
+    },
+    {
+      "archive_member": "src0/calculator9.py",
+      "source_id": "resource:4e02d169f8ad21b2872e193df93f47c0cd48740fbdd9f61e4c82d469a324c0bc",
+      "material_id": "material:2d8e9bc22f16602d1d700e0b96bb63e1ac6c248bc8b31ab1697d43fc07cb4746",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/calculator9.py"
+    }
+  ],
+  "member_raw_sha256": "not_observed; operator_bounded_content_hash_required",
+  "missing_permissions": [
+    "archive_process_grant",
+    "selected_python_member_process_grant",
+    "valid_source_and_license_usage_retention_revocation_evidence",
+    "manual_acquisition_rawhash_to_existing_source_url_attestation"
+  ],
+  "manual_acquisition_already_done": true,
+  "automatic_code_download_permitted": false,
+  "archive_matrix": [
+    {
+      "archive_name": "week_0_src.zip",
+      "week": "0",
+      "course_id": "cs50_python",
+      "bytes": 6459,
+      "sha256": "692c15dae899178bbeb8750dc3198f75262cf69032aafd2d8ac0548ebdbf237a",
+      "raw_unchanged": true,
+      "source_references": [
+        {
+          "url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0.zip",
+          "source_id": "resource:374e8ffb231647383210f7daa93113c16488bc045d3bde40bae788112593e91a",
+          "material_id": "material:3e556594c0d8d7dd8ef08802a9f21ed092f435c6c9a8b6a9f4175c03c6b744b8",
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "fixture_file": "cs50_python/week_0.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        }
+      ],
+      "download_url_byte_binding_verified": false,
+      "source_approval": "operator_action_required",
+      "importer_scope_supported": true,
+      "metadata_status": "metadata_checked",
+      "metadata_blockers": [],
+      "gif_entries": []
+    },
+    {
+      "archive_name": "week_1_src.zip",
+      "week": "1",
+      "course_id": "cs50_python",
+      "bytes": 6719,
+      "sha256": "aa4f3c4e71e7ef2c74ddf949893b4579e294d8f63f9baa0ac0b0e2a0de7ffb79",
+      "raw_unchanged": true,
+      "source_references": [
+        {
+          "url": "https://cdn.cs50.net/python/2022/x/lectures/1/src1.zip",
+          "source_id": "resource:bc9cdba13550d1a84d81bfb436c7a7d1efd86ebba9b7b260e3812ece0f00654a",
+          "material_id": "material:67c7dcb26eb09280439c1f4d5f4d513d448a99a697131d5a3440feb2cc5bf6c7",
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/1/",
+              "fixture_file": "cs50_python/week_1.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        }
+      ],
+      "download_url_byte_binding_verified": false,
+      "source_approval": "operator_action_required",
+      "importer_scope_supported": false,
+      "metadata_status": "metadata_checked",
+      "metadata_blockers": [],
+      "gif_entries": []
+    },
+    {
+      "archive_name": "week_2_src.zip",
+      "week": "2",
+      "course_id": "cs50_python",
+      "bytes": 6970,
+      "sha256": "6fa6a7ccb1473718643fa47b01d943b16f24a318358e8322685d0529d4bfd4aa",
+      "raw_unchanged": true,
+      "source_references": [
+        {
+          "url": "https://cdn.cs50.net/python/2022/x/lectures/2/src2.zip",
+          "source_id": "resource:4ae6975a8d5ab9e925d7d8a9f46e9a0575f89adb75bf34f725e3e874d65d5686",
+          "material_id": "material:2313c7fddf80fce542333483846623bdc1a9f0d537a22e6bea30b79debd546b4",
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/2/",
+              "fixture_file": "cs50_python/week_2.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        }
+      ],
+      "download_url_byte_binding_verified": false,
+      "source_approval": "operator_action_required",
+      "importer_scope_supported": false,
+      "metadata_status": "metadata_checked",
+      "metadata_blockers": [],
+      "gif_entries": []
+    },
+    {
+      "archive_name": "week_3_src.zip",
+      "week": "3",
+      "course_id": "cs50_python",
+      "bytes": 3036,
+      "sha256": "fd9e2b5a100ba445affd4ff0e25cd5bbcb5fd3978c663db490e62ff94e26feb8",
+      "raw_unchanged": true,
+      "source_references": [
+        {
+          "url": "https://cdn.cs50.net/python/2022/x/lectures/3/src3.zip",
+          "source_id": "resource:4f908de2ff1f97490056eb5a598988f481630c7c670f8de235f2e3e806e3907b",
+          "material_id": "material:c7928cbcfd5bde373c3b783a544bcdb10a30237c98546097fff334b77aa6649e",
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/3/",
+              "fixture_file": "cs50_python/week_3.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        }
+      ],
+      "download_url_byte_binding_verified": false,
+      "source_approval": "operator_action_required",
+      "importer_scope_supported": false,
+      "metadata_status": "metadata_checked",
+      "metadata_blockers": [],
+      "gif_entries": []
+    },
+    {
+      "archive_name": "week_4_src.zip",
+      "week": "4",
+      "course_id": "cs50_python",
+      "bytes": 5947,
+      "sha256": "00520804462f28e2ba7424d79688f525089fe099c1d52f415606199dc81d74c9",
+      "raw_unchanged": true,
+      "source_references": [
+        {
+          "url": "https://cdn.cs50.net/python/2022/x/lectures/4/src4.zip",
+          "source_id": "resource:f418e583e450b5960aab86b52d54cef5290eb8aaab6bf7a37be68811ae6d7520",
+          "material_id": "material:e97a5d4a2fa937f530dbdbd38814e2883bea9060f16f07678051cf9cf7f376bb",
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/4/",
+              "fixture_file": "cs50_python/week_4.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        }
+      ],
+      "download_url_byte_binding_verified": false,
+      "source_approval": "operator_action_required",
+      "importer_scope_supported": false,
+      "metadata_status": "metadata_checked",
+      "metadata_blockers": [],
+      "gif_entries": []
+    },
+    {
+      "archive_name": "week_5_src.zip",
+      "week": "5",
+      "course_id": "cs50_python",
+      "bytes": 6531,
+      "sha256": "1abeed95ecd54d7ade80b5e789444f0ebeabbc588be25f6c71a1a256a2ba24c5",
+      "raw_unchanged": true,
+      "source_references": [
+        {
+          "url": "https://cdn.cs50.net/python/2022/x/lectures/5/src5.zip",
+          "source_id": "resource:040cf653ff89cce8557c62f2e15a4f39074f0ce032d7854bad95fb183b309e46",
+          "material_id": "material:da8a8a28b31a5a853b18ef6feb87423b141a2b2f1afff4836294b28836a50e71",
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/5/",
+              "fixture_file": "cs50_python/week_5.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        }
+      ],
+      "download_url_byte_binding_verified": false,
+      "source_approval": "operator_action_required",
+      "importer_scope_supported": false,
+      "metadata_status": "metadata_checked",
+      "metadata_blockers": [],
+      "gif_entries": []
+    },
+    {
+      "archive_name": "week_6_src.zip",
+      "week": "6",
+      "course_id": "cs50_python",
+      "bytes": 11963,
+      "sha256": "d18040883349a1a1ca88e3fbb967a5915b4c50f437276aa1e47b33574239dbe5",
+      "raw_unchanged": true,
+      "source_references": [
+        {
+          "url": "https://cdn.cs50.net/python/2022/x/lectures/6/src6.zip",
+          "source_id": "resource:3c568dc28a95082166be222d584626ae2378dc9bd026b4a4ea2671fbbd5eeafd",
+          "material_id": "material:1db39e6e59323a0490e5ae6db2c995d2583abfc95f313f5e4f94b93312dfbd0a",
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/6/",
+              "fixture_file": "cs50_python/week_6.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        }
+      ],
+      "download_url_byte_binding_verified": false,
+      "source_approval": "operator_action_required",
+      "importer_scope_supported": false,
+      "metadata_status": "blocked",
+      "metadata_blockers": [
+        "unknown_type"
+      ],
+      "gif_entries": [
+        "src6/costume1.gif",
+        "src6/costume2.gif"
+      ]
+    },
+    {
+      "archive_name": "week_7_src.zip",
+      "week": "7",
+      "course_id": "cs50_python",
+      "bytes": 7064,
+      "sha256": "b41f8004fba2c7bae0e25b0d130bcb3950048f7cfb6916b888da78c4c38d39f6",
+      "raw_unchanged": true,
+      "source_references": [
+        {
+          "url": "https://cdn.cs50.net/python/2022/x/lectures/7/src7.zip",
+          "source_id": "resource:ce8855800dd84588e2e0b5db1d3eedd41a1a3004eb856c790acc14add7b1743f",
+          "material_id": "material:f878514803c6dc2dbb21c15e2a1f6395d9da2ce3c41eea3235d320952ce7cbe1",
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/7/",
+              "fixture_file": "cs50_python/week_7.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        }
+      ],
+      "download_url_byte_binding_verified": false,
+      "source_approval": "operator_action_required",
+      "importer_scope_supported": false,
+      "metadata_status": "metadata_checked",
+      "metadata_blockers": [],
+      "gif_entries": []
+    },
+    {
+      "archive_name": "week_8_src.zip",
+      "week": "8",
+      "course_id": "cs50_python",
+      "bytes": 11734,
+      "sha256": "83493d70d59f892a02eeb8639ab56b11a6ca9d3101f7a664d94edb5ed25299e9",
+      "raw_unchanged": true,
+      "source_references": [
+        {
+          "url": "https://cdn.cs50.net/python/2022/x/lectures/8/src8.zip",
+          "source_id": "resource:a74b62bf42c7c4b4ad870a9864d2429f24769471aa23cad22c26d6a95c4370b5",
+          "material_id": "material:7a282d7d2880413f3fb5181ce831973afbed8d535ba1b2bcccc493c2b579f5cb",
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/8/",
+              "fixture_file": "cs50_python/week_8.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        }
+      ],
+      "download_url_byte_binding_verified": false,
+      "source_approval": "operator_action_required",
+      "importer_scope_supported": false,
+      "metadata_status": "metadata_checked",
+      "metadata_blockers": [],
+      "gif_entries": []
+    },
+    {
+      "archive_name": "week_9_src.zip",
+      "week": "9",
+      "course_id": "cs50_python",
+      "bytes": 14954,
+      "sha256": "1777f34e0be52397e93ce9ed10762b348bc5ff9539b5272bc11a2bd82e47daa5",
+      "raw_unchanged": true,
+      "source_references": [
+        {
+          "url": "https://cdn.cs50.net/python/2022/x/lectures/9/src9.zip",
+          "source_id": "resource:7942ff111089435c7f450eff61f5922efc56c7a04613683aea296e4989401d43",
+          "material_id": "material:daa55f3748cf113ab5428265879a220dc81f7f8df49520aea33d5b8a44cd2b0c",
+          "provenance": [
+            {
+              "original_url": "https://cs50.harvard.edu/python/weeks/9/",
+              "fixture_file": "cs50_python/week_9.html",
+              "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+              "context_path": [
+                "Lecture",
+                "Source Code",
+                "Zip"
+              ]
+            }
+          ]
+        }
+      ],
+      "download_url_byte_binding_verified": false,
+      "source_approval": "operator_action_required",
+      "importer_scope_supported": false,
+      "metadata_status": "metadata_checked",
+      "metadata_blockers": [],
+      "gif_entries": []
+    }
+  ],
+  "real_source_approvals_created": 0
+}

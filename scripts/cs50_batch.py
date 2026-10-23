@@ -20,6 +20,7 @@ def main(argv=None):
     a.add_argument("--resource", action="append", default=[])
     a.add_argument("--synthetic", action="store_true")
     a.add_argument("--include-code-indexes", action="store_true")
+    a.add_argument("--assignment-snapshots", type=Path)
     a.add_argument("--output", type=Path, required=True)
     for command in ("download", "seal"):
         a = sub.add_parser(command)
@@ -81,12 +82,26 @@ def main(argv=None):
     try:
         limits = load_limits(args.limits) if args.limits else CapacityLimits()
         if args.command == "plan":
+            snapshots = ()
+            if args.assignment_snapshots:
+                from src.job_control.catalog import read_file, safe_path
+                from src.model_materials.assignments import AssignmentSnapshot
+
+                values = api._json(
+                    read_file(safe_path(args.assignment_snapshots), 16384)
+                )
+                if not isinstance(values, list) or not 1 <= len(values) <= 8:
+                    raise ValueError(
+                        "One to eight explicit overview snapshots required"
+                    )
+                snapshots = tuple(AssignmentSnapshot.model_validate(v) for v in values)
             batch = api.plan(
                 args.manifest,
                 args.course,
                 args.resource,
                 synthetic=args.synthetic,
                 include_code_indexes=args.include_code_indexes,
+                assignment_snapshots=snapshots,
             )
             result = dict(
                 batch=batch.model_dump(mode="json"),

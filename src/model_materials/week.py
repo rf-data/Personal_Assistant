@@ -106,6 +106,9 @@ class WeekRequest(Contract):
     available_memory_mb: int | None = Field(default=None, strict=True, ge=0)
     existing_worker_confirmed: bool = Field(default=False, strict=True)
     limits: WeekLimits = Field(default_factory=WeekLimits)
+    assignment_discovery: bool = Field(
+        default=False, strict=True, exclude_if=lambda value: not value
+    )
 
     @model_validator(mode="after")
     def unique(self):

@@ -1,0 +1,2480 @@
+{
+  "schema_version": 1,
+  "decision": "blocked",
+  "production_approved": false,
+  "baseline": "c4b057a75c38655e43b8ac35a35cc82645ba2826",
+  "scope": "cs50_python/week_0",
+  "assignment_discovery_opt_in": true,
+  "child_reconstruction": "offline_ready; see real-export and synthetic-worker tests",
+  "source_approvals_present": 0,
+  "exports": [
+    {
+      "export": "material_01",
+      "hashes": {
+        "original.html": {
+          "bytes": 71718,
+          "sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377"
+        },
+        "normalized.v1.json": {
+          "bytes": 235908,
+          "sha256": "4b2b15552da1e800b9ff4aa46b3abe5dc7632ad904d326d3f5042586f256ced4"
+        },
+        "quality.v1.json": {
+          "bytes": 895751,
+          "sha256": "86205436b5e260488ff497e31aa68f969e7c7d9ee1b6e1eb27d0b202f2b07e8e"
+        }
+      },
+      "blocks": 237,
+      "code_blocks": 34,
+      "links": 25,
+      "historical_quality": "passed"
+    },
+    {
+      "export": "material_02",
+      "hashes": {
+        "original.html": {
+          "bytes": 15832,
+          "sha256": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372"
+        },
+        "normalized.v1.json": {
+          "bytes": 27939,
+          "sha256": "5628de2b8f1ed009a66902d81808768e9f50b805c0541265181802a8424e1ae8"
+        },
+        "quality.v1.json": {
+          "bytes": 95339,
+          "sha256": "939da64f9b81b27c725be58f59e1811ba2ea5cafd85e6da15bd2ea9a38e67df7"
+        }
+      },
+      "blocks": 28,
+      "code_blocks": 0,
+      "links": 10,
+      "historical_quality": "passed"
+    }
+  ],
+  "counts": {
+    "resources": 21,
+    "material_variants": 28,
+    "selected": 28,
+    "locally_present": 3,
+    "approved_sources": 0,
+    "supported": 11,
+    "processed": 0,
+    "reused": 0,
+    "blocked": 28,
+    "blocked_in_scope": 28,
+    "unselected": 0,
+    "excluded": 2,
+    "failed_weeks": 0
+  },
+  "resources": [
+    {
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:e74be50785a221226621ecc251b3599cd597c132657c6bb2a1073d801f1e7d7b",
+      "title": "Week 0 Functions",
+      "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+      "role": "lecture_video",
+      "format": "html",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+          "context_path": [
+            "Lecture"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [
+        {
+          "source_kind": "versioned_fixture",
+          "file": "cs50_python/week_0.html",
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "sha256": "8526668d7cffb93fed9e32f66888dd8b77eed2d643b4527dba0df44a5c6f08e0"
+        }
+      ],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:d45eb1fb6c5f81596bd3ed17c7fd705dcdd168525e7aca499a9515c996f8c4a2",
+      "title": "Week 0 Functions",
+      "original_url": "https://video.cs50.io/JP7ITIXGpHk",
+      "role": "lecture_video",
+      "format": "cs50_player",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+          "context_path": [
+            "Lecture"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:e958be41d3990a5058e95e71596b849ed139fbbdfcb70b7b2e22ca9bb806368d",
+      "title": "Week 0 Functions",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k-hdr.mp4",
+      "role": "lecture_video",
+      "format": "mp4",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+          "context_path": [
+            "Lecture"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:bdb77b95f1934c294dabb04aec4f463bd4555742efb69d59f4c9b9414208d216",
+      "title": "Week 0 Functions",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-360p.mp4",
+      "role": "lecture_video",
+      "format": "mp4",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+          "context_path": [
+            "Lecture"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:544cb52abd71a582538d4deae1d3172ae9c5ab43aef6bdf0e48cea546577880e",
+      "title": "Week 0 Functions",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-720p.mp4",
+      "role": "lecture_video",
+      "format": "mp4",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+          "context_path": [
+            "Lecture"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:f1b4ade1d82aac03962650f07fc787ed5b9f0c30b33711ec1fed0516807b1486",
+      "title": "Week 0 Functions",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-1080p.mp4",
+      "role": "lecture_video",
+      "format": "mp4",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+          "context_path": [
+            "Lecture"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:7ed429a327f76698063c982e3824924ab9142ebd76eb6ee283e774c511861c7f",
+      "title": "Week 0 Functions",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0-4k.mp4",
+      "role": "lecture_video",
+      "format": "mp4",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+          "context_path": [
+            "Lecture"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:4305fcd17cb0d9c50cfdd5e2718461e8369cb883189de96bda796f04cc800192",
+      "material_id": "material:bb08cd1d463e7fdbb5a3558ccb088d08a9a3a74e083b3d6ec220d8c641ddc27d",
+      "title": "Week 0 Functions",
+      "original_url": "https://youtu.be/JP7ITIXGpHk",
+      "role": "lecture_video",
+      "format": "youtube",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+          "context_path": [
+            "Lecture"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:24ce1e23496f081db7525aee590d4360baf678f29bdb4cd5dee1ac3906836e3d",
+      "material_id": "material:33a1e511b4c788b9796eefbcfd6ebd6ccce382778452e867dd59056d22e4da24",
+      "title": "MP3",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0.mp3",
+      "role": "audio",
+      "format": "mp3",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+          "context_path": [
+            "Lecture",
+            "Audio",
+            "MP3"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:f06e4055b5ef61f0a693c522f1c57880c88edc20c177cfb79fefbffee5b8767a",
+      "material_id": "material:6b35632313fdf6057809e17cd6bae196630ffb6c4a799eefc7d3193ae452dc14",
+      "title": "Notes",
+      "original_url": "https://cs50.harvard.edu/python/notes/0/",
+      "role": "notes",
+      "format": "html",
+      "category": "html",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+          "context_path": [
+            "Lecture",
+            "Notes"
+          ]
+        }
+      ],
+      "raw_sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377",
+      "raw_bytes": 71718,
+      "local_snapshots": [
+        {
+          "source_kind": "operator_supplied_export",
+          "file": "operator_export/material_01.html",
+          "original_url": "https://cs50.harvard.edu/python/notes/0/",
+          "sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377"
+        }
+      ],
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "planned_steps": [
+        "verify_local_source_hash",
+        "prepare_existing_one_source_c18_bundle",
+        "existing_controller_preview",
+        "operator_submit_to_existing_single_worker"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "local_source_not_pinned_to_current_source_approval",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:2c2678150669b2d8cb35d95b521ccd7eeccbc5b7a676c992774e95a80efe3b60",
+      "material_id": "material:2397ada0060e49e8cf15cb31c8fa0d49003a29af205504581b8e28a04e831040",
+      "title": "Google Slides",
+      "original_url": "https://docs.google.com/presentation/d/1yPirrSP2qRjnKiIFW39HJV2cmhwqAkooQkv9jZz2Hqs/edit?usp=sharing",
+      "role": "slides",
+      "format": "unknown",
+      "category": "presentation",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+          "context_path": [
+            "Lecture",
+            "Slides",
+            "Google Slides"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [],
+      "action": "blocked",
+      "missing_approvals": [],
+      "blockers": [
+        "unsupported_or_separate_export_review_required",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:2b18399f3ce8d176b421afd8f3d4b7352851e4e1dcb990821658f9aebd67a80f",
+      "material_id": "material:feeed96c983502e46a32e036e3385728123b8c5f7d2baf78b2a86e631eaf9937",
+      "title": "PDF",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lecture0.pdf",
+      "role": "slides",
+      "format": "pdf",
+      "category": "pdf",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+          "context_path": [
+            "Lecture",
+            "Slides",
+            "PDF"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": {
+        "name": "pdf",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 20,
+        "max_blocks": 1000,
+        "max_images": 20,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "planned_steps": [
+        "verify_local_source_hash",
+        "prepare_existing_one_source_c18_bundle",
+        "existing_controller_preview",
+        "operator_submit_to_existing_single_worker"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:5f51d97877d3ddbc6699e5c9b484c47b601ce15d1373cfdef065d8fad47b5944",
+      "material_id": "material:c250d3569f2814140ca749c088ea930190072517c5682bd5574328ebacf14ed6",
+      "title": "Index",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/",
+      "role": "source_code",
+      "format": "html",
+      "category": "code",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+          "context_path": [
+            "Lecture",
+            "Source Code",
+            "Index"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [],
+      "action": "blocked",
+      "missing_approvals": [],
+      "blockers": [
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:959434ab111dd5b875159fa7508d37955d604cdd6c3acc82f7d3133ea34b3a16",
+      "material_id": "material:1d61c92cd1839b652cdb2eb69e7edbbd2ebc68f63363e7687960357faeafd888",
+      "title": "PDF",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0.pdf",
+      "role": "source_code",
+      "format": "pdf",
+      "category": "pdf",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+          "context_path": [
+            "Lecture",
+            "Source Code",
+            "PDF"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": {
+        "name": "pdf",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 20,
+        "max_blocks": 1000,
+        "max_images": 20,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "planned_steps": [
+        "verify_local_source_hash",
+        "prepare_existing_one_source_c18_bundle",
+        "existing_controller_preview",
+        "operator_submit_to_existing_single_worker"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:374e8ffb231647383210f7daa93113c16488bc045d3bde40bae788112593e91a",
+      "material_id": "material:3e556594c0d8d7dd8ef08802a9f21ed092f435c6c9a8b6a9f4175c03c6b744b8",
+      "title": "Zip",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0.zip",
+      "role": "source_code",
+      "format": "zip",
+      "category": "code",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+          "context_path": [
+            "Lecture",
+            "Source Code",
+            "Zip"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [],
+      "action": "blocked",
+      "missing_approvals": [],
+      "blockers": [
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:fde25833bbf19ce14828f9b719ded15fe02cc15f313551b1357c34f571f5e0b5",
+      "material_id": "material:3709d7ab818faf28e9031580e7caeabf890f568e762c2bf116a75eed51e29f34",
+      "title": "Subtitles",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lang/en/lecture0.srt",
+      "role": "subtitles",
+      "format": "srt",
+      "category": "transcript",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1)",
+          "context_path": [
+            "Lecture",
+            "Subtitles"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "verify_local_transcript_hash",
+        "existing_offline_transcript_adapter"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:a2e464b6c0f9c80ee12ba8d455675b7131d46b95810e990e537577f3f904cfe6",
+      "material_id": "material:f06c893f08946b8f1a959620d095f2ca471ff03ea91ae55965489f62cc02b6cf",
+      "title": "Transcript",
+      "original_url": "https://cdn.cs50.net/python/2022/x/lectures/0/lang/en/lecture0.txt",
+      "role": "transcript",
+      "format": "txt",
+      "category": "transcript",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1)",
+          "context_path": [
+            "Lecture",
+            "Transcript"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "verify_local_transcript_hash",
+        "existing_offline_transcript_adapter"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:c85b27e447cada4b75936ee75d5a4529e80ac358478d08245254c7097b0a16bc",
+      "material_id": "material:1fd40bb82d28293994c55ea8d8e63cde91d967d5265e56b139d64f79d60f82a0",
+      "title": "Visual Studio Code for CS50",
+      "original_url": "https://cs50.harvard.edu/python/shorts/visual_studio_code_for_cs50/",
+      "role": "short",
+      "format": "html",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > ol:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+          "context_path": [
+            "Shorts",
+            "Visual Studio Code for CS50"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:d45ede732faf8b0836b8ccbf66a470e20febd296dce652cb8ca1232cb6c61272",
+      "material_id": "material:1d4c669f8a40afa6f868e0d833ea841224f66ce6983ce69e1d086aa5e07e0a54",
+      "title": "Functions",
+      "original_url": "https://cs50.harvard.edu/python/shorts/functions/",
+      "role": "short",
+      "format": "html",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > ol:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+          "context_path": [
+            "Shorts",
+            "Functions"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:026a21a9613c476488aaab8fd80f33576d504e69f218d40099112f65a7de9c87",
+      "material_id": "material:9435830c1e1d3c1b62702e8f1bd230f772861805c2417e2faa92f36e6711fc5b",
+      "title": "Variables",
+      "original_url": "https://cs50.harvard.edu/python/shorts/variables/",
+      "role": "short",
+      "format": "html",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > ol:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+          "context_path": [
+            "Shorts",
+            "Variables"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:e5ffb869fddee9cb06cf492ac03059dc29ce059eb5bf288dcf63bc94cd5cbdd1",
+      "material_id": "material:75ed06583efd14a27edad9a6a4df11a134780dd330712fbe65b9f46f8eb778ac",
+      "title": "Return Values",
+      "original_url": "https://cs50.harvard.edu/python/shorts/return_values/",
+      "role": "short",
+      "format": "html",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > ol:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+          "context_path": [
+            "Shorts",
+            "Return Values"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:54de5c703b21c902384caa0b485fb0b57367c1e55a58c473adf37076dca8230b",
+      "material_id": "material:f78b8d069a9c21a203132bd902ce65c3e9773436bba2805c27d58ed618906cba",
+      "title": "Side Effects",
+      "original_url": "https://cs50.harvard.edu/python/shorts/side_effects/",
+      "role": "short",
+      "format": "html",
+      "category": "media",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > ol:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1)",
+          "context_path": [
+            "Shorts",
+            "Side Effects"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": null,
+      "planned_steps": [
+        "existing_media_plan_with_explicit_purpose_and_evidence"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "media_requires_separate_existing_media_plan; no_download_or_whisper",
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": [
+        "use_existing_media_plan_with_purpose_adequacy_and_capacity; no_week_media_execution"
+      ]
+    },
+    {
+      "resource_id": "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05",
+      "material_id": "material:8d354e75c20f31ca094e6f1577ac9ff187f9ea8b5c70c57273f9ed3afd931b10",
+      "title": "Problem Set 0",
+      "original_url": "https://cs50.harvard.edu/python/psets/0/",
+      "role": "problem_set",
+      "format": "html",
+      "category": "html",
+      "parent_resource_ids": [],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "fixture_file": "cs50_python/week_0.html",
+          "locator": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > main:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+          "context_path": [
+            "Problem Set 0"
+          ]
+        }
+      ],
+      "raw_sha256": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372",
+      "raw_bytes": 15832,
+      "local_snapshots": [
+        {
+          "source_kind": "operator_supplied_export",
+          "file": "operator_export/material_02.html",
+          "original_url": "https://cs50.harvard.edu/python/psets/0/",
+          "sha256": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372"
+        }
+      ],
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "planned_steps": [
+        "verify_local_source_hash",
+        "prepare_existing_one_source_c18_bundle",
+        "existing_controller_preview",
+        "operator_submit_to_existing_single_worker"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "local_source_not_pinned_to_current_source_approval",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:4ee69e33f96d9fc48e28dabd6c4a5e85498b500d3ac6234004cc004dda63f5e6",
+      "material_id": "material:83ec6dddb4cda807443858baaf2527d89f6ab2f7ab6b6ede937665afe1f9898c",
+      "title": "Indoor Voice",
+      "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+      "role": "problem_set",
+      "format": "html",
+      "category": "html",
+      "parent_resource_ids": [
+        "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05"
+      ],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+          "fixture_file": "cs50_python/practice_1.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h1[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "Indoor Voice"
+          ]
+        },
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+          "fixture_file": "cs50_python/practice_1.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h1[1]/a[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "Indoor Voice"
+          ]
+        },
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+          "fixture_file": "cs50_python/practice_1.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[1]/a[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "Before You Begin"
+          ]
+        },
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+          "fixture_file": "cs50_python/practice_1.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[2]/a[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "Demo"
+          ]
+        },
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+          "fixture_file": "cs50_python/practice_1.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[3]/a[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "How to Test"
+          ]
+        },
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+          "fixture_file": "cs50_python/practice_1.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/h2[4]/a[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "How to Submit"
+          ]
+        },
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/",
+          "fixture_file": "operator_export/material_02.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/ol[1]/li[7]/ul[1]/li[1]/a[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "Indoor Voice"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [
+        {
+          "source_kind": "versioned_fixture",
+          "file": "cs50_python/practice_1.html",
+          "original_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+          "sha256": "e01e960e04562376f0381732f8a72f3883012e945bc10d2dbb93cf791a1ef6cd"
+        }
+      ],
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "planned_steps": [
+        "verify_local_source_hash",
+        "prepare_existing_one_source_c18_bundle",
+        "existing_controller_preview",
+        "operator_submit_to_existing_single_worker"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:250a4c6a09635fec5bc78ba47fc4b532e6c83bf814ff61ab63a9da9ea39e4dfb",
+      "material_id": "material:530ae7f41e0e82fc14dd9d7f247f07e6fc9bc87d027c3d142b91a0e03cb40a45",
+      "title": "Playback Speed",
+      "original_url": "https://cs50.harvard.edu/python/psets/0/playback/",
+      "role": "problem_set",
+      "format": "html",
+      "category": "html",
+      "parent_resource_ids": [
+        "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05"
+      ],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/",
+          "fixture_file": "operator_export/material_02.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/ol[1]/li[7]/ul[1]/li[2]/a[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "Playback Speed"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "planned_steps": [
+        "verify_local_source_hash",
+        "prepare_existing_one_source_c18_bundle",
+        "existing_controller_preview",
+        "operator_submit_to_existing_single_worker"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:31f50347c0e791010e7aceea629e268a9a14d0e584989ba7a2ba89bda5cc5f12",
+      "material_id": "material:17b56c2a299efa6948eba2e689585be695d533eb1bc5074a666e75b3fe584a09",
+      "title": "Making Faces",
+      "original_url": "https://cs50.harvard.edu/python/psets/0/faces/",
+      "role": "problem_set",
+      "format": "html",
+      "category": "html",
+      "parent_resource_ids": [
+        "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05"
+      ],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/",
+          "fixture_file": "operator_export/material_02.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/ol[1]/li[7]/ul[1]/li[3]/a[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "Making Faces"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "planned_steps": [
+        "verify_local_source_hash",
+        "prepare_existing_one_source_c18_bundle",
+        "existing_controller_preview",
+        "operator_submit_to_existing_single_worker"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:a72ee41697270bf06d0503f78b0c6e6b6b675c4c8bc7a3fa33967e4ae9332869",
+      "material_id": "material:015c9d5d01c6788ed16527ce882a2eeb1f55127e8cf9389a7217c81a056f51aa",
+      "title": "Einstein",
+      "original_url": "https://cs50.harvard.edu/python/psets/0/einstein/",
+      "role": "problem_set",
+      "format": "html",
+      "category": "html",
+      "parent_resource_ids": [
+        "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05"
+      ],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/",
+          "fixture_file": "operator_export/material_02.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/ol[1]/li[7]/ul[1]/li[4]/a[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "Einstein"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "planned_steps": [
+        "verify_local_source_hash",
+        "prepare_existing_one_source_c18_bundle",
+        "existing_controller_preview",
+        "operator_submit_to_existing_single_worker"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    },
+    {
+      "resource_id": "resource:1000d0fb21f0b535d7e876d723bf1763d03e41ddddf9a391ee77320907899069",
+      "material_id": "material:7218e4bca3b8f7ea4b89b69cc64b5692db5c98cd5a9faa8719e6d7383113e7e9",
+      "title": "Tip Calculator",
+      "original_url": "https://cs50.harvard.edu/python/psets/0/tip/",
+      "role": "problem_set",
+      "format": "html",
+      "category": "html",
+      "parent_resource_ids": [
+        "resource:1200b44f5efad4c2796fe526c66701859159dc235f6c7d947edf25a9935bdf05"
+      ],
+      "provenance": [
+        {
+          "original_url": "https://cs50.harvard.edu/python/psets/0/",
+          "fixture_file": "operator_export/material_02.html",
+          "locator": "/html[1]/body[1]/div[2]/div[1]/main[1]/ol[1]/li[7]/ul[1]/li[5]/a[1]",
+          "context_path": [
+            "Week 0",
+            "Problem Set",
+            "Tip Calculator"
+          ]
+        }
+      ],
+      "raw_sha256": null,
+      "raw_bytes": null,
+      "local_snapshots": [],
+      "parser": {
+        "name": "html",
+        "version": "2",
+        "max_bytes": 1048576,
+        "max_pages": 100,
+        "max_blocks": 1000,
+        "max_images": 100,
+        "timeout": 10.0,
+        "memory_mb": 512
+      },
+      "planned_steps": [
+        "verify_local_source_hash",
+        "prepare_existing_one_source_c18_bundle",
+        "existing_controller_preview",
+        "operator_submit_to_existing_single_worker"
+      ],
+      "action": "blocked",
+      "missing_approvals": [
+        "source_process_approval"
+      ],
+      "blockers": [
+        "verified_local_input_required",
+        "capacity_unknown_or_insufficient_including_5gib_reserve",
+        "memory_capacity_unknown_or_insufficient",
+        "existing_single_worker_and_queue_limits_not_confirmed",
+        "selected_scope_exceeds_material_limit"
+      ],
+      "limitations": []
+    }
+  ],
+  "minimum_handoff_version": 2,
+  "preflight": {
+    "schema_version": 1,
+    "environment": "offline",
+    "plan_sha256": "71eb1f94e5649a0b79869bf347ad988e1a51943570044558d6a713c744b234ae",
+    "checks": [
+      {
+        "code": "identity_conflicts",
+        "scope": "cs50_python",
+        "required": true,
+        "status": "pass",
+        "reason": "Stable material bindings and raw digests",
+        "evidence_sha256": null
+      },
+      {
+        "code": "planning_queue",
+        "scope": "cs50_python",
+        "required": false,
+        "status": "unknown",
+        "reason": "Operator observation only; one worker, at most one occupied queue slot; freshness <=300s",
+        "evidence_sha256": null
+      },
+      {
+        "code": "pilot_reference",
+        "scope": "cs50_python",
+        "required": true,
+        "status": "fail",
+        "reason": "Additional targeted acceptance required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "handoff_version",
+        "scope": "cs50_python",
+        "required": true,
+        "status": "fail",
+        "reason": "Available handoff v1; requested minimum v2",
+        "evidence_sha256": null
+      },
+      {
+        "code": "guardian_budgets",
+        "scope": "0",
+        "required": true,
+        "status": "pass",
+        "reason": "Planning budgets must fit the existing C16 registry",
+        "evidence_sha256": null
+      },
+      {
+        "code": "week_discovery",
+        "scope": "0",
+        "required": true,
+        "status": "pass",
+        "reason": "Pinned manifest/profile and existing B5 identities",
+        "evidence_sha256": "c8dc2725db3db5422c4f3ee68ac92b0ea68ea9b57ec813b217d99f7f57d7f5a1"
+      },
+      {
+        "code": "required_resources",
+        "scope": "0",
+        "required": true,
+        "status": "pass",
+        "reason": "Expected roles/references present",
+        "evidence_sha256": null
+      },
+      {
+        "code": "planning_capacity",
+        "scope": "0",
+        "required": true,
+        "status": "unknown",
+        "reason": "Operator planning observation; does not prove live worker readiness",
+        "evidence_sha256": null
+      },
+      {
+        "code": "bounded_batch_scope",
+        "scope": "0",
+        "required": true,
+        "status": "fail",
+        "reason": "Existing maximum material count retained; scope never truncated",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:e74be50785a221226621ecc251b3599cd597c132657c6bb2a1073d801f1e7d7b",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:e74be50785a221226621ecc251b3599cd597c132657c6bb2a1073d801f1e7d7b",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:d45eb1fb6c5f81596bd3ed17c7fd705dcdd168525e7aca499a9515c996f8c4a2",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:d45eb1fb6c5f81596bd3ed17c7fd705dcdd168525e7aca499a9515c996f8c4a2",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:e958be41d3990a5058e95e71596b849ed139fbbdfcb70b7b2e22ca9bb806368d",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:e958be41d3990a5058e95e71596b849ed139fbbdfcb70b7b2e22ca9bb806368d",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:bdb77b95f1934c294dabb04aec4f463bd4555742efb69d59f4c9b9414208d216",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:bdb77b95f1934c294dabb04aec4f463bd4555742efb69d59f4c9b9414208d216",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:544cb52abd71a582538d4deae1d3172ae9c5ab43aef6bdf0e48cea546577880e",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:544cb52abd71a582538d4deae1d3172ae9c5ab43aef6bdf0e48cea546577880e",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:f1b4ade1d82aac03962650f07fc787ed5b9f0c30b33711ec1fed0516807b1486",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:f1b4ade1d82aac03962650f07fc787ed5b9f0c30b33711ec1fed0516807b1486",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:7ed429a327f76698063c982e3824924ab9142ebd76eb6ee283e774c511861c7f",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:7ed429a327f76698063c982e3824924ab9142ebd76eb6ee283e774c511861c7f",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:bb08cd1d463e7fdbb5a3558ccb088d08a9a3a74e083b3d6ec220d8c641ddc27d",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:bb08cd1d463e7fdbb5a3558ccb088d08a9a3a74e083b3d6ec220d8c641ddc27d",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:33a1e511b4c788b9796eefbcfd6ebd6ccce382778452e867dd59056d22e4da24",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:33a1e511b4c788b9796eefbcfd6ebd6ccce382778452e867dd59056d22e4da24",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:6b35632313fdf6057809e17cd6bae196630ffb6c4a799eefc7d3193ae452dc14",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:6b35632313fdf6057809e17cd6bae196630ffb6c4a799eefc7d3193ae452dc14",
+        "required": true,
+        "status": "fail",
+        "reason": "local_source_not_pinned_to_current_source_approval,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377"
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:2397ada0060e49e8cf15cb31c8fa0d49003a29af205504581b8e28a04e831040",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:2397ada0060e49e8cf15cb31c8fa0d49003a29af205504581b8e28a04e831040",
+        "required": true,
+        "status": "fail",
+        "reason": "unsupported_or_separate_export_review_required,selected_scope_exceeds_material_limit,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:feeed96c983502e46a32e036e3385728123b8c5f7d2baf78b2a86e631eaf9937",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:feeed96c983502e46a32e036e3385728123b8c5f7d2baf78b2a86e631eaf9937",
+        "required": true,
+        "status": "fail",
+        "reason": "verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": null
+      },
+      {
+        "code": "manual_code_policy",
+        "scope": "0:material:c250d3569f2814140ca749c088ea930190072517c5682bd5574328ebacf14ed6",
+        "required": true,
+        "status": "pass",
+        "reason": "Reference only; explicit import workflow required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:1d61c92cd1839b652cdb2eb69e7edbbd2ebc68f63363e7687960357faeafd888",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:1d61c92cd1839b652cdb2eb69e7edbbd2ebc68f63363e7687960357faeafd888",
+        "required": true,
+        "status": "fail",
+        "reason": "verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": null
+      },
+      {
+        "code": "manual_code_policy",
+        "scope": "0:material:3e556594c0d8d7dd8ef08802a9f21ed092f435c6c9a8b6a9f4175c03c6b744b8",
+        "required": true,
+        "status": "pass",
+        "reason": "Reference only; explicit import workflow required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:3709d7ab818faf28e9031580e7caeabf890f568e762c2bf116a75eed51e29f34",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:3709d7ab818faf28e9031580e7caeabf890f568e762c2bf116a75eed51e29f34",
+        "required": true,
+        "status": "fail",
+        "reason": "verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:f06c893f08946b8f1a959620d095f2ca471ff03ea91ae55965489f62cc02b6cf",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:f06c893f08946b8f1a959620d095f2ca471ff03ea91ae55965489f62cc02b6cf",
+        "required": true,
+        "status": "fail",
+        "reason": "verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:1fd40bb82d28293994c55ea8d8e63cde91d967d5265e56b139d64f79d60f82a0",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:1fd40bb82d28293994c55ea8d8e63cde91d967d5265e56b139d64f79d60f82a0",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:1d4c669f8a40afa6f868e0d833ea841224f66ce6983ce69e1d086aa5e07e0a54",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:1d4c669f8a40afa6f868e0d833ea841224f66ce6983ce69e1d086aa5e07e0a54",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:9435830c1e1d3c1b62702e8f1bd230f772861805c2417e2faa92f36e6711fc5b",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:9435830c1e1d3c1b62702e8f1bd230f772861805c2417e2faa92f36e6711fc5b",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:75ed06583efd14a27edad9a6a4df11a134780dd330712fbe65b9f46f8eb778ac",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:75ed06583efd14a27edad9a6a4df11a134780dd330712fbe65b9f46f8eb778ac",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:f78b8d069a9c21a203132bd902ce65c3e9773436bba2805c27d58ed618906cba",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:f78b8d069a9c21a203132bd902ce65c3e9773436bba2805c27d58ed618906cba",
+        "required": true,
+        "status": "fail",
+        "reason": "media_requires_separate_existing_media_plan; no_download_or_whisper,verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval,processing_route_outside_profile",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:8d354e75c20f31ca094e6f1577ac9ff187f9ea8b5c70c57273f9ed3afd931b10",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:8d354e75c20f31ca094e6f1577ac9ff187f9ea8b5c70c57273f9ed3afd931b10",
+        "required": true,
+        "status": "fail",
+        "reason": "local_source_not_pinned_to_current_source_approval,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372"
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:83ec6dddb4cda807443858baaf2527d89f6ab2f7ab6b6ede937665afe1f9898c",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:83ec6dddb4cda807443858baaf2527d89f6ab2f7ab6b6ede937665afe1f9898c",
+        "required": true,
+        "status": "fail",
+        "reason": "verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:530ae7f41e0e82fc14dd9d7f247f07e6fc9bc87d027c3d142b91a0e03cb40a45",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:530ae7f41e0e82fc14dd9d7f247f07e6fc9bc87d027c3d142b91a0e03cb40a45",
+        "required": true,
+        "status": "fail",
+        "reason": "verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:17b56c2a299efa6948eba2e689585be695d533eb1bc5074a666e75b3fe584a09",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:17b56c2a299efa6948eba2e689585be695d533eb1bc5074a666e75b3fe584a09",
+        "required": true,
+        "status": "fail",
+        "reason": "verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:015c9d5d01c6788ed16527ce882a2eeb1f55127e8cf9389a7217c81a056f51aa",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:015c9d5d01c6788ed16527ce882a2eeb1f55127e8cf9389a7217c81a056f51aa",
+        "required": true,
+        "status": "fail",
+        "reason": "verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": null
+      },
+      {
+        "code": "source_approval_policy",
+        "scope": "0:material:7218e4bca3b8f7ea4b89b69cc64b5692db5c98cd5a9faa8719e6d7383113e7e9",
+        "required": true,
+        "status": "fail",
+        "reason": "unique_explicit_source_policy_review_required",
+        "evidence_sha256": null
+      },
+      {
+        "code": "material_binding_raw_parser_quality",
+        "scope": "0:material:7218e4bca3b8f7ea4b89b69cc64b5692db5c98cd5a9faa8719e6d7383113e7e9",
+        "required": true,
+        "status": "fail",
+        "reason": "verified_local_input_required,selected_scope_exceeds_material_limit,source_process_approval",
+        "evidence_sha256": null
+      },
+      {
+        "code": "nonempty_processing_scope",
+        "scope": "cs50_python",
+        "required": true,
+        "status": "pass",
+        "reason": "Explicit selected resources",
+        "evidence_sha256": null
+      },
+      {
+        "code": "live_worker_queue",
+        "scope": "cs50_python",
+        "required": false,
+        "status": "unknown",
+        "reason": "Fresh worker/heartbeat/queue admission evidence is unavailable",
+        "evidence_sha256": null
+      },
+      {
+        "code": "persistent_paths_capacity",
+        "scope": "cs50_python",
+        "required": false,
+        "status": "unknown",
+        "reason": "Live persistent mounts, writable roots and remaining capacity unverified",
+        "evidence_sha256": null
+      },
+      {
+        "code": "deployment_gate",
+        "scope": "cs50_python",
+        "required": false,
+        "status": "unknown",
+        "reason": "Issue #146: productive gate/driver acceptance not demonstrated",
+        "evidence_sha256": null
+      }
+    ],
+    "decision": "blocked",
+    "production_decision": "blocked",
+    "execution_supported": false
+  },
+  "storage": {
+    "zip_import": {
+      "schema_version": 1,
+      "purpose": "zip-import",
+      "status": "blocked",
+      "execution_permitted": false,
+      "free_bytes": 3930124288,
+      "reserve_bytes": 5368709120,
+      "additional_allowance_bytes": 83886080,
+      "required_free_bytes": 5452595200,
+      "inode_free": null,
+      "inode_status": "unknown",
+      "blockers": [
+        "insufficient_free_bytes_with_existing_reserve_and_output_allowance"
+      ],
+      "operator_checks": [
+        "correct_target_filesystem_and_mount",
+        "inode_capacity",
+        "source_approvals_and_hash_bindings",
+        "worker_and_queue_if_applicable"
+      ],
+      "budget": {
+        "archive_budget_bytes": 67108864,
+        "report_budget_bytes": 16777216
+      }
+    },
+    "example_single_child_c18": {
+      "schema_version": 1,
+      "purpose": "week-pilot",
+      "status": "blocked",
+      "execution_permitted": false,
+      "free_bytes": 3930124288,
+      "reserve_bytes": 5368709120,
+      "additional_allowance_bytes": 2171057580,
+      "required_free_bytes": 7539766700,
+      "inode_free": null,
+      "inode_status": "unknown",
+      "blockers": [
+        "insufficient_free_bytes_with_existing_reserve_and_output_allowance"
+      ],
+      "operator_checks": [
+        "correct_target_filesystem_and_mount",
+        "inode_capacity",
+        "source_approvals_and_hash_bindings",
+        "worker_and_queue_if_applicable"
+      ],
+      "budget": {
+        "schema_version": 1,
+        "materials": 1,
+        "raw_upper_bytes": 1048576,
+        "discovery_bytes": 2602412,
+        "archive_increment_allowance_bytes": 2097152,
+        "catalog_increment_allowance_bytes": 4699564,
+        "job_budget_bytes": 2147483648,
+        "report_budget_bytes": 16777216,
+        "free_reserve_bytes": 5368709120,
+        "required_free_before_new_batch_bytes": 7539766700,
+        "parser_expansion_is_not_known": true,
+        "source_lengths_are_not_known": true
+      }
+    }
+  },
+  "archive_inventory_reused": "docs/deployment/c26a/manual_zip_inventory.v1.json",
+  "raw_archives_available": 10,
+  "raw_archives_changed": 0,
+  "raw_archives_extracted": 0,
+  "real_zip_imports": 0,
+  "real_jobs_started": 0,
+  "new_real_full_artifact_chains_verified": 0,
+  "synthetic_end_to_end_chain_tested": true,
+  "missing_real_task_contents": [
+    "Playback Speed",
+    "Making Faces",
+    "Einstein",
+    "Tip Calculator"
+  ],
+  "indoor_fixture": "versioned_discovery_snapshot; not a newly approved production import",
+  "completion": {
+    "discovery": false,
+    "technical": false,
+    "content": false,
+    "productive_pilot": false
+  },
+  "proposed_course_request": {
+    "schema_version": 1,
+    "manifest": "${REPO}/docs/course_sources/cs50/manifest.json",
+    "course_id": "cs50_python",
+    "profile": {
+      "schema_version": 1,
+      "course_id": "cs50_python",
+      "profile_version": 1,
+      "discovery_adapter": "cs50_navigation",
+      "adapter_version": "1",
+      "adapter_sha256": "01404e4957380f12eee6fc87f19cb3f94d65ba5221bab6197bb3b7d31d42bd1f",
+      "manifest_sha256": "c1b271b141011893f054a9a506b6ede1495b92bc80f6d41a8383045aebecd213",
+      "snapshots": {
+        "cs50_python/index.html": "228fd09a21987bc55147b7c9660c9f496dda49d234ebc1cb620e58fcb2963efe",
+        "cs50_python/lecture_5.html": "0855465b0458067ce5b6889d5e3929a49de108aa8d01d877c25e80bea0cd8367",
+        "cs50_python/cdn.html": "fbedb5c020f2ec86b225ef43b2a30bd4f4849310f65d4bcaff98fa3748e875e0",
+        "cs50_python/practice_1.html": "e01e960e04562376f0381732f8a72f3883012e945bc10d2dbb93cf791a1ef6cd",
+        "cs50_python/week_0.html": "8526668d7cffb93fed9e32f66888dd8b77eed2d643b4527dba0df44a5c6f08e0",
+        "cs50_python/week_5.html": "1af9d9d6e121e71c9ba30f6e128aca138ac573167862ff6eaf21afb7481627b4",
+        "cs50_python/week_1.html": "85b4b1e35a47ee7fa7d1a470de16ce4f496d456181a45ff64a9bc8c9c1741d33",
+        "cs50_python/week_2.html": "3943de7b64a8d22bfd799e30e5b27dcab1319e6fdb1126869e6c858bc6ffb619",
+        "cs50_python/week_3.html": "2215f138a304e3d0a147d805b42d57abd158db842305422a764efe8920e2a440",
+        "cs50_python/week_4.html": "4e2a606cb268d12bdd797fcb5f036d1a7ea1556a1b8d269117ef1bcd0f4d4f34",
+        "cs50_python/week_6.html": "38d15d66e0b6d3cf40d4ea954f1f3212253d210e9d0ec7d2a1eb06ab2f9dad61",
+        "cs50_python/week_7.html": "94496821a0f94e88afd8c82239c918a42546ae31b1dc0350ac56691bdda7cb83",
+        "cs50_python/week_8.html": "551046b1384e8431e5ba01419e9bebb9bdfa443cc16843386a92ec3d81c07390",
+        "cs50_python/week_9.html": "f2e66ff4150bc074629498070da4d91551a69f5576aca084d18464f09c65828a"
+      },
+      "sections": [
+        {
+          "key": "0",
+          "overview_url": "https://cs50.harvard.edu/python/weeks/0/",
+          "assignment_roots": [
+            "https://cs50.harvard.edu/python/psets/0/"
+          ],
+          "expected_tasks": [
+            "Indoor Voice",
+            "Playback Speed",
+            "Making Faces",
+            "Einstein",
+            "Tip Calculator"
+          ],
+          "required_roles": [
+            "lecture_video"
+          ]
+        },
+        {
+          "key": "5",
+          "overview_url": "https://cs50.harvard.edu/python/weeks/5/",
+          "assignment_roots": [
+            "https://cs50.harvard.edu/python/psets/5/"
+          ],
+          "expected_tasks": [],
+          "required_roles": [
+            "lecture_video"
+          ]
+        },
+        {
+          "key": "1",
+          "overview_url": "https://cs50.harvard.edu/python/weeks/1/",
+          "assignment_roots": [
+            "https://cs50.harvard.edu/python/psets/1/"
+          ],
+          "expected_tasks": [],
+          "required_roles": [
+            "lecture_video"
+          ]
+        },
+        {
+          "key": "2",
+          "overview_url": "https://cs50.harvard.edu/python/weeks/2/",
+          "assignment_roots": [
+            "https://cs50.harvard.edu/python/psets/2/"
+          ],
+          "expected_tasks": [],
+          "required_roles": [
+            "lecture_video"
+          ]
+        },
+        {
+          "key": "3",
+          "overview_url": "https://cs50.harvard.edu/python/weeks/3/",
+          "assignment_roots": [
+            "https://cs50.harvard.edu/python/psets/3/"
+          ],
+          "expected_tasks": [],
+          "required_roles": [
+            "lecture_video"
+          ]
+        },
+        {
+          "key": "4",
+          "overview_url": "https://cs50.harvard.edu/python/weeks/4/",
+          "assignment_roots": [
+            "https://cs50.harvard.edu/python/psets/4/"
+          ],
+          "expected_tasks": [],
+          "required_roles": [
+            "lecture_video"
+          ]
+        },
+        {
+          "key": "6",
+          "overview_url": "https://cs50.harvard.edu/python/weeks/6/",
+          "assignment_roots": [
+            "https://cs50.harvard.edu/python/psets/6/"
+          ],
+          "expected_tasks": [],
+          "required_roles": [
+            "lecture_video"
+          ]
+        },
+        {
+          "key": "7",
+          "overview_url": "https://cs50.harvard.edu/python/weeks/7/",
+          "assignment_roots": [
+            "https://cs50.harvard.edu/python/psets/7/"
+          ],
+          "expected_tasks": [],
+          "required_roles": [
+            "lecture_video"
+          ]
+        },
+        {
+          "key": "8",
+          "overview_url": "https://cs50.harvard.edu/python/weeks/8/",
+          "assignment_roots": [
+            "https://cs50.harvard.edu/python/psets/8/"
+          ],
+          "expected_tasks": [],
+          "required_roles": [
+            "lecture_video"
+          ]
+        },
+        {
+          "key": "9",
+          "overview_url": "https://cs50.harvard.edu/python/weeks/9/",
+          "assignment_roots": [],
+          "expected_tasks": [],
+          "required_roles": [
+            "lecture_video"
+          ]
+        }
+      ],
+      "material_roles": [
+        "lecture_video",
+        "audio",
+        "notes",
+        "slides",
+        "source_code",
+        "subtitles",
+        "transcript",
+        "short",
+        "section",
+        "demo",
+        "problem_set",
+        "quiz",
+        "project",
+        "practice",
+        "starter_files",
+        "reference",
+        "other"
+      ],
+      "processing_routes": [
+        "html",
+        "pdf",
+        "transcript"
+      ],
+      "media": "discovery_only",
+      "source_approval_required": true,
+      "code_index": "manual_only",
+      "python_source": "manual_only",
+      "zip_archive": "manual_only"
+    },
+    "weeks": [
+      "0"
+    ],
+    "mode": "process_existing",
+    "material_types": [
+      "html",
+      "pdf",
+      "transcript",
+      "media"
+    ],
+    "selection": "complete",
+    "source_origin": "official",
+    "week_inputs": [
+      {
+        "schema_version": 2,
+        "manifest": "${REPO}/docs/course_sources/cs50/manifest.json",
+        "course_id": "cs50_python",
+        "week": "0",
+        "mode": "process_existing",
+        "material_types": [
+          "html",
+          "pdf",
+          "transcript",
+          "media"
+        ],
+        "material_ids": [],
+        "source_origin": "official",
+        "discovery_exports": [
+          {
+            "label": "operator_export/material_01.html",
+            "role": "lecture_notes",
+            "path": "${QUALITY_EXPORT}/material_01/original.html",
+            "original_url": "https://cs50.harvard.edu/python/notes/0/",
+            "sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377"
+          },
+          {
+            "label": "operator_export/material_02.html",
+            "role": "assignment",
+            "path": "${QUALITY_EXPORT}/material_02/original.html",
+            "original_url": "https://cs50.harvard.edu/python/psets/0/",
+            "sha256": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372"
+          }
+        ],
+        "local_sources": [
+          {
+            "material_id": "material:6b35632313fdf6057809e17cd6bae196630ffb6c4a799eefc7d3193ae452dc14",
+            "path": "${QUALITY_EXPORT}/material_01/original.html",
+            "expected_sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377"
+          },
+          {
+            "material_id": "material:8d354e75c20f31ca094e6f1577ac9ff187f9ea8b5c70c57273f9ed3afd931b10",
+            "path": "${QUALITY_EXPORT}/material_02/original.html",
+            "expected_sha256": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372"
+          }
+        ],
+        "evidence": [],
+        "workflow_references": [],
+        "available_bytes": 3935588352,
+        "available_memory_mb": null,
+        "existing_worker_confirmed": false,
+        "limits": {
+          "max_materials": 8,
+          "max_bytes": 1048576,
+          "total_raw_bytes": 8388608,
+          "reserve_bytes": 5368709120,
+          "max_parallel": 1,
+          "max_queued": 1,
+          "wall_seconds": 90,
+          "cpu_seconds": 60,
+          "memory_mb": 768,
+          "parser_memory_mb": 512,
+          "max_blocks": 1000,
+          "max_pdf_pages": 20
+        },
+        "assignment_discovery": true,
+        "profile": {
+          "schema_version": 1,
+          "course_id": "cs50_python",
+          "profile_version": 1,
+          "discovery_adapter": "cs50_navigation",
+          "adapter_version": "1",
+          "adapter_sha256": "01404e4957380f12eee6fc87f19cb3f94d65ba5221bab6197bb3b7d31d42bd1f",
+          "manifest_sha256": "c1b271b141011893f054a9a506b6ede1495b92bc80f6d41a8383045aebecd213",
+          "snapshots": {
+            "cs50_python/index.html": "228fd09a21987bc55147b7c9660c9f496dda49d234ebc1cb620e58fcb2963efe",
+            "cs50_python/lecture_5.html": "0855465b0458067ce5b6889d5e3929a49de108aa8d01d877c25e80bea0cd8367",
+            "cs50_python/cdn.html": "fbedb5c020f2ec86b225ef43b2a30bd4f4849310f65d4bcaff98fa3748e875e0",
+            "cs50_python/practice_1.html": "e01e960e04562376f0381732f8a72f3883012e945bc10d2dbb93cf791a1ef6cd",
+            "cs50_python/week_0.html": "8526668d7cffb93fed9e32f66888dd8b77eed2d643b4527dba0df44a5c6f08e0",
+            "cs50_python/week_5.html": "1af9d9d6e121e71c9ba30f6e128aca138ac573167862ff6eaf21afb7481627b4",
+            "cs50_python/week_1.html": "85b4b1e35a47ee7fa7d1a470de16ce4f496d456181a45ff64a9bc8c9c1741d33",
+            "cs50_python/week_2.html": "3943de7b64a8d22bfd799e30e5b27dcab1319e6fdb1126869e6c858bc6ffb619",
+            "cs50_python/week_3.html": "2215f138a304e3d0a147d805b42d57abd158db842305422a764efe8920e2a440",
+            "cs50_python/week_4.html": "4e2a606cb268d12bdd797fcb5f036d1a7ea1556a1b8d269117ef1bcd0f4d4f34",
+            "cs50_python/week_6.html": "38d15d66e0b6d3cf40d4ea954f1f3212253d210e9d0ec7d2a1eb06ab2f9dad61",
+            "cs50_python/week_7.html": "94496821a0f94e88afd8c82239c918a42546ae31b1dc0350ac56691bdda7cb83",
+            "cs50_python/week_8.html": "551046b1384e8431e5ba01419e9bebb9bdfa443cc16843386a92ec3d81c07390",
+            "cs50_python/week_9.html": "f2e66ff4150bc074629498070da4d91551a69f5576aca084d18464f09c65828a"
+          },
+          "sections": [
+            {
+              "key": "0",
+              "overview_url": "https://cs50.harvard.edu/python/weeks/0/",
+              "assignment_roots": [
+                "https://cs50.harvard.edu/python/psets/0/"
+              ],
+              "expected_tasks": [
+                "Indoor Voice",
+                "Playback Speed",
+                "Making Faces",
+                "Einstein",
+                "Tip Calculator"
+              ],
+              "required_roles": [
+                "lecture_video"
+              ]
+            },
+            {
+              "key": "5",
+              "overview_url": "https://cs50.harvard.edu/python/weeks/5/",
+              "assignment_roots": [
+                "https://cs50.harvard.edu/python/psets/5/"
+              ],
+              "expected_tasks": [],
+              "required_roles": [
+                "lecture_video"
+              ]
+            },
+            {
+              "key": "1",
+              "overview_url": "https://cs50.harvard.edu/python/weeks/1/",
+              "assignment_roots": [
+                "https://cs50.harvard.edu/python/psets/1/"
+              ],
+              "expected_tasks": [],
+              "required_roles": [
+                "lecture_video"
+              ]
+            },
+            {
+              "key": "2",
+              "overview_url": "https://cs50.harvard.edu/python/weeks/2/",
+              "assignment_roots": [
+                "https://cs50.harvard.edu/python/psets/2/"
+              ],
+              "expected_tasks": [],
+              "required_roles": [
+                "lecture_video"
+              ]
+            },
+            {
+              "key": "3",
+              "overview_url": "https://cs50.harvard.edu/python/weeks/3/",
+              "assignment_roots": [
+                "https://cs50.harvard.edu/python/psets/3/"
+              ],
+              "expected_tasks": [],
+              "required_roles": [
+                "lecture_video"
+              ]
+            },
+            {
+              "key": "4",
+              "overview_url": "https://cs50.harvard.edu/python/weeks/4/",
+              "assignment_roots": [
+                "https://cs50.harvard.edu/python/psets/4/"
+              ],
+              "expected_tasks": [],
+              "required_roles": [
+                "lecture_video"
+              ]
+            },
+            {
+              "key": "6",
+              "overview_url": "https://cs50.harvard.edu/python/weeks/6/",
+              "assignment_roots": [
+                "https://cs50.harvard.edu/python/psets/6/"
+              ],
+              "expected_tasks": [],
+              "required_roles": [
+                "lecture_video"
+              ]
+            },
+            {
+              "key": "7",
+              "overview_url": "https://cs50.harvard.edu/python/weeks/7/",
+              "assignment_roots": [
+                "https://cs50.harvard.edu/python/psets/7/"
+              ],
+              "expected_tasks": [],
+              "required_roles": [
+                "lecture_video"
+              ]
+            },
+            {
+              "key": "8",
+              "overview_url": "https://cs50.harvard.edu/python/weeks/8/",
+              "assignment_roots": [
+                "https://cs50.harvard.edu/python/psets/8/"
+              ],
+              "expected_tasks": [],
+              "required_roles": [
+                "lecture_video"
+              ]
+            },
+            {
+              "key": "9",
+              "overview_url": "https://cs50.harvard.edu/python/weeks/9/",
+              "assignment_roots": [],
+              "expected_tasks": [],
+              "required_roles": [
+                "lecture_video"
+              ]
+            }
+          ],
+          "material_roles": [
+            "lecture_video",
+            "audio",
+            "notes",
+            "slides",
+            "source_code",
+            "subtitles",
+            "transcript",
+            "short",
+            "section",
+            "demo",
+            "problem_set",
+            "quiz",
+            "project",
+            "practice",
+            "starter_files",
+            "reference",
+            "other"
+          ],
+          "processing_routes": [
+            "html",
+            "pdf",
+            "transcript"
+          ],
+          "media": "discovery_only",
+          "source_approval_required": true,
+          "code_index": "manual_only",
+          "python_source": "manual_only",
+          "zip_archive": "manual_only"
+        },
+        "selection": "complete"
+      }
+    ],
+    "policies": [],
+    "evaluated_at": null,
+    "reference": null,
+    "infrastructure_revision": null,
+    "environment": "offline",
+    "minimum_handoff_version": 2,
+    "queue_observation": null
+  }
+}

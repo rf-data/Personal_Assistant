@@ -20,7 +20,11 @@ from src.tools_materials.inventory import CODE, capability, format_of
 from src.tools_materials.storage import locate, locked, publish_bytes
 
 
-def make_plan(manifest, *, include_code_indexes=False):
+def make_plan(manifest, *, include_code_indexes=False, assignment_snapshots=()):
+    if assignment_snapshots:
+        from src.tools_materials.profiles import bounded_manifest
+
+        bounded_manifest(Path(manifest))
     courses = discover_fixture_courses(manifest)
     materials = []
     for c in courses:
@@ -46,6 +50,10 @@ def make_plan(manifest, *, include_code_indexes=False):
                 )
             )
     plan = MaterialPlan(courses=courses, materials=tuple(materials))
+    if assignment_snapshots:
+        from src.tools_materials.assignments import extend
+
+        plan = extend(plan, manifest, assignment_snapshots)
     if include_code_indexes:
         from src.tools_materials.code_discovery import extend
 

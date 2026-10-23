@@ -6,6 +6,7 @@ from typing import Annotated, Literal
 from pydantic import Field, field_validator, model_validator
 
 from src.job_control.models import Contract, Course, Identifier, ScopeId, Sha
+from src.model_materials.assignments import AssignmentSnapshot
 
 Relative = Annotated[str, Field(min_length=1, max_length=400)]
 StageStatus = Literal[
@@ -37,7 +38,7 @@ def relative(value):
 
 
 class Definition(Contract):
-    schema_version: Literal[1] = 1
+    schema_version: Literal[1, 2] = 1
     workflow_type: Literal["cs50_offline_materials_v1"] = "cs50_offline_materials_v1"
     course_id: Course
     section: ScopeId | None = None
@@ -47,9 +48,18 @@ class Definition(Contract):
     max_bytes: int = Field(default=524288, ge=1, le=1048576)
     max_blocks: int = Field(default=1000, ge=1, le=2000)
     continue_independent: bool = Field(default=True, strict=True)
+    assignment_snapshots: tuple[AssignmentSnapshot, ...] = Field(
+        default=(), max_length=8, exclude_if=lambda value: not value
+    )
 
     @model_validator(mode="after")
     def paths(self):
+        if bool(self.assignment_snapshots) != (self.schema_version == 2):
+            raise ValueError("Workflow v2 requires explicit assignment snapshots")
+        for snapshot in self.assignment_snapshots:
+            relative(snapshot.path.as_posix())
+            if snapshot.path.as_posix() in self.sources.values():
+                raise ValueError("Discovery snapshot cannot stand in for task content")
         for path in self.sources.values():
             relative(path)
         if len(set(self.sources.values())) != len(self.sources) or len(
