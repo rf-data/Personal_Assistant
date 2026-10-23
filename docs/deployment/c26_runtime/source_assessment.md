@@ -52,7 +52,8 @@ Launcher und den vorhandenen HTTPS-Einstellungen anzubinden. Es wird kein zweite
 Betriebsstack eingeführt. Keine der Dateien jetzt importieren oder aktivieren.
 
 **Wiederverwendung in der realen Coolify-Application bleibt unverified**, bis
-maßgebliche Ressourcen-ID/Buildtyp, gerenderte Namespace-/Netzverträge,
+maßgebliche Ressourcen-ID/Buildpfade, bestätigte Umstellung der Backend-
+Application von Dockerfile auf Compose, gerenderte Namespace-/Netzverträge,
 Rollenersatz ohne Überlappung, Mounts, Config/Limits/Queue und Trigger belegt sind.
 `coolify.type=application` und die Compose-Labels allein schließen diese Lücke
 nicht. Der `/artifacts/…`-Pfad bezeichnet eine gemeldete Deploydatei; er beweist
@@ -69,9 +70,9 @@ tatsächliche Repository-/Branch-/Dockerfileauswahl.
 
 Ein Image-Tag, der wie eine Quell-SHA aussieht, verknüpft noch kein tatsächliches
 Image mit diesem Quellstand. Die historische Analyse zeigt vorhandene mögliche
-Definitionen, nicht die Laufzeitprovenienz. Eine **bewusste** Startüberschreibung
-benötigt zusätzlich einen bestätigten Betreiberentscheid; Konfigurationsdifferenz
-allein beweist diese Absicht nicht.
+Definitionen, nicht die Laufzeitprovenienz. Die **bewusste Platzhalterabsicht** ist inzwischen vom Betreiber bestätigt.
+Ob sie über die vorhandene Sleep-Dockerfile oder eine Startüberschreibung
+umgesetzt wurde, bleibt ohne Build-/Imagemetadaten offen.
 
 Die [ergänzten lesenden Betreiberprüfungen](operator_checks.md) vergleichen das
 tatsächlich referenzierte Image mit dem Container und dem Coolify-Buildbeleg.
@@ -82,3 +83,34 @@ klassifizieren und lediglich `unverified` melden. Kein Startversuch zur Diagnose
 **GO:** Quellenreview und lesende Inventur. **NO-GO:** Merge, Rollenstart,
 Build-/Triggeränderung, neue Container, produktive Jobs oder Gatefreigabe.
 Die ursprüngliche rote C18-Regression und fehlende Liveabnahmen bleiben bestehen.
+
+## Konsolidierte Source-to-Runtime-Matrix
+
+| Rolle / Status | Quelle und Dependencies | Einstieg / Zuordnung | Verbleibender Beleg |
+| --- | --- | --- | --- |
+| Bestandsbackend, bewusster Platzhalter | `docker/DockerFile.worker`: Python 3.12, ffmpeg/git/curl/tmux, `uv sync --extra lecture-worker` mit u. a. Whisper/Docling/OCR/tiktoken; Projektvenv `/app/.venv`, kein gesetzter Runtime-venv-PATH in dieser Dockerfile | `CMD ["sleep", "infinity"]`; passt zum Befund. Application/Dockerfile/Deployment-server sind bestätigt | Tatsächlich gewählte Dockerfile und Base Directory, Image-ID/RepoDigest/Buildrevision/Overrides bleiben offen; kein Startversuch im alten Image |
+| Vorgesehene API und genau ein C26-Worker | `deployment/Dockerfile` mit eigener `deployment/runtime/pyproject.toml`/Lock: Pydantic/Settings, httpx, bs4, Typer, dotenv, YAML, returns, tenacity, PyMuPDF. Keine Whisper-/Docling-/OCR-/LLM-Pflicht; tiktoken nicht für diese Offline-Rollen ergänzen | `/opt/venv` im PATH, UID 10001; Deployment-Entrypoint, Workerrolle überschreibt auf `scripts.cs50_worker`; identisches Backendimage | Kombinierter Commit mit #148/#156; #148 ergänzt Gate-CLI-COPY. Gebautes Image und exakte gepinnte Runtimeabhängigkeiten noch nicht geprüft; Testvenv ist kein Imagebeleg |
+| Interner Gateway | Eigenes vorhandenes `deployment/gateway.Dockerfile`: geprüftes Python-Basisimage + Caddy-Binary + stdlib-Healthscript, keine Backendvenv nötig | Caddy `run`, bestehendes Caddyfile TLS 8443 -> Namespace-Loopback 8016 | Separates Gatewayimage/Digest, TLS/SAN/CA und realer Namespacebezug; Backendimage allein ist kein Gatewayimage |
+| Bestehende UI | `docker/DockerFile.UI` + UI-Lockfile; aktueller geschützter Launcher statt historischer Streamlit-CMD | Bestehende Docker-Compose-Application und Service `streamlit` bleiben erhalten; gezeigter Inhalt entspricht der Repositorydatei | Genaues Compose-Pfadfeld und laufende Buildrevision/Digest fehlen. Grunddatei hat `JOB_BACKEND=disabled`, `ADMIN_AUTH_MODE=disabled` und ist damit keine fertige private C26-Anbindung |
+
+Es werden weiterhin **zwei bestehende Applications** vorgesehen: Backend nach
+separat genehmigter Adoption mit drei Diensten, UI mit genau dem vorhandenen
+Streamlitservice. Kein neuer User-defined Service oder zusätzlicher C16-Executor.
+Die bestehende Dockerfile-Buildstrategie kann nicht allein durch ein anderes CMD
+einen Composeverbund mit `service:api-gateway` bereitstellen. Die notwendige
+Umstellung ist ein späterer expliziter Betreiberentscheid, kein bestätigter Istwert.
+
+Die schmale Runtime ist quellseitig auf die vorgesehenen HTML-/PDF-/C18-Rollen
+ausgerichtet, kein Ersatz für sämtliche Lecture-/Audio-/OCR-Funktionen des alten
+Workers. Andere Loviscach-/Pilotwriter müssen vor Ablösung separat zugeordnet
+sein. Es werden keine bestehenden Fähigkeiten, Quellen oder Daten migriert.
+Die Imagebuild-/Import-/Healthabnahme bleibt technische Restarbeit; keine neuen
+Images oder Pakete wurden für diese Prüfung heruntergeladen.
+
+Die bestehende Testumgebung ist außerdem nicht identisch mit dem Image-Lock:
+Distributionsmetadaten melden unter anderem Pydantic 2.14.1 statt 2.13.4 und
+PyMuPDF 1.27.2.2 statt 1.28.2; für pydantic-settings/returns fehlen dort
+Distributionsmetadaten. Das sagt allein nichts über jede Importierbarkeit aus,
+belegt aber keine erfolgreiche Installation des Runtimeprofils. Keine Pakete
+nachinstallieren oder daraus ungeprüft neue Pins ableiten: Exakt gepinnter
+Imagebuild und anschließende Rollen-/Import-/Health-Smokes bleiben erforderlich.
