@@ -312,5 +312,26 @@
     ],
     "limits_exact_host_path": "unverified",
     "interpretation": "max_materials=1 is the proposed first batch cap; historical observed values vary."
+  },
+  "resource_binding_review": {
+    "prepared_at_utc": "2026-10-23T20:59:07.805175+00:00",
+    "matrix": "coolify_resource_binding.v1.json",
+    "operator_questions": "operator_binding_check.md",
+    "driver_plan": "coolify_driver_plan.md",
+    "application_uuids_status": "requires_operator_confirmation",
+    "read_client": "implemented, offline-tested only, no default transport/credentials/CLI",
+    "gate_live_driver": "unverified / not implemented",
+    "gate_scope_extension": "proposed versioned runtime_scope_sha256; no core/schema/journal modification",
+    "production_approved": false
+  },
+  "historical_pilot_roots": {
+    "status": "operator_observed",
+    "observed_date": "2026-10-23",
+    "value": [
+      "/srv/personal-assistant/data/cs50_pilot_01",
+      "/srv/personal-assistant/data/cs50_pilot_week0_01",
+      "/srv/personal-assistant/data/cs50_pilot_week0_02"
+    ],
+    "interpretation": "Keep unchanged; week0_01 root reported, no exact additional controller/queue state inferred."
   }
 }

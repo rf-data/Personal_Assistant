@@ -6,7 +6,7 @@ Keine Host-/Coolifyaktion durch Codex. Historische Roots werden niemals übernom
 [Mount-/Konfigurationsvertrag](runtime_configuration.md),
 [Driververtrag](driver_contract.md), [Ressourcen](resources.md).
 
-Wichtig: Es fehlt weiterhin der reale, reviewte #148-Driver mit vollständiger
+Wichtig: Es fehlt weiterhin der reale, reviewte #148-Driver mit expliziter Mehrrollen-Scopebindung und vollständiger
 Livebeobachtung des genehmigten Ressourcenscopes. Das verhindert Phase 8 und
 reguläre spätere Deploy-/Rollbackoperationen. Ein Testdriver oder gespeichertes
 Inventar darf ihn nicht ersetzen. Dieses Runbook ist noch kein ausführbares
@@ -288,3 +288,8 @@ Rollbackplan und kompatiblen Images; Recovery bleibt zunächst verified/geschlos
 Resume separat. Kein altes Image auf Definition-v2-Jobs loslassen, keine Daten-
 oder Journalüberschreibung. Restore nur in neuen getrennten Root. Unbekanntes
 Guardian-/SQLite-/Cleanupverhalten bleibt NO-GO und wird untersucht.
+
+Die konkrete nächste technische Arbeit und Grenze für den obigen Ablauf steht
+im [4.4.7-Driverplan](coolify_driver_plan.md): Readclient vorhanden, Livecollector
+und versionierte Gate-Scopebindung noch nicht. Nur lesende Betreiberfragen:
+[fünf Pakete](operator_binding_check.md). Es wurde kein Bootstrap ausgeführt.

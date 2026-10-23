@@ -75,3 +75,11 @@ kontrolliert werden. Ohne Beleg: **NO-GO**, keine zweite Application als Ausweg.
 Das neue Profil und der zusätzliche Runtime-Bind wurden erneut ausschließlich
 daemonfrei geprüft. `/app/data` ist für die neuen Rollen RO, `/app/runtime-state`
 ist der eigene RW-Bind; Produktionsmounts wurden weder erzeugt noch verändert.
+
+## Same-Application-Buildtypwechsel, zusätzlicher Quellbeleg
+
+Die versionsgebundene [Ressourcenbindungsprüfung](coolify_driver_plan.md) belegt
+PATCH auf die vorhandene Application und die Cleanupwirkung eines Buildtypwechsels:
+Dockerfile-spezifische Felder werden beim Verlassen geleert. Dieselbe UUID ist
+grundsätzlich weiterverwendbar, aber Rückweg/Backup/Quelle/Rendering bleiben
+bestätigungspflichtig. Keine produktive PATCH-, Raw- oder Normalparserausführung.

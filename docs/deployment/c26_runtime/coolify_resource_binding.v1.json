@@ -1,0 +1,481 @@
+{
+  "schema_version": 1,
+  "prepared_at_utc": "2026-10-23T20:55:36.773820+00:00",
+  "production_approved": false,
+  "valid_statuses": [
+    "verified_from_repository",
+    "operator_observed",
+    "unverified",
+    "requires_operator_confirmation"
+  ],
+  "input_states": [
+    "value",
+    "explicit_empty",
+    "coolify_default",
+    "not_displayed",
+    "not_checked"
+  ],
+  "resources": {
+    "backend": {
+      "application_name": {
+        "value": "personal-assistantworker-1",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "application_uuid": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "Application URL/Overview; nicht aus Composeprojekt ableiten",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "resource_type": {
+        "value": "application",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "project": {
+        "value": "personal-assistant",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "environment": {
+        "value": "production",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "repository": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "Source: tatsächlich konfiguriertes Repository",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "branch": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "Source: tatsächlich konfigurierter Branch",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "build_strategy": {
+        "value": "Dockerfile",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "builder": {
+        "value": "Deployment server",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "base_directory": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "General/Build: Base directory",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "dockerfile_location": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "General/Build: Dockerfile location; docker/DockerFile.worker ist nur Kandidat",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "compose_location": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "Noch keine bestätigte Repository-Compose-Location der bestehenden Dockerfile-Application",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "custom_build_command": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "General/Build: Build command und ggf. Compose custom build command",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "custom_start_command": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "General/Build: Start command und ggf. Compose custom start command",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "observed_start": {
+        "value": [
+          "sleep",
+          "infinity"
+        ],
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "placeholder_intent": {
+        "value": "bewusst gewählter Platzhalter",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "git_auto_deploy": {
+        "value": "Manual deployments only",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "additional_triggers": {
+        "value": null,
+        "status": "unverified",
+        "source": "Preview/Webhook/API/Registry/Scheduler/Rechte nicht vollständig geprüft"
+      },
+      "reported_image_reference": {
+        "value": "syboxap8mpf8lgjzpjdsqm0z:3b91d39195e0d13fe0442d4594b28e431b0f4236",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "image_id": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "docker inspect .Image / docker image inspect .Id",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "repo_digests": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "docker image inspect .RepoDigests; leere Liste ausdrücklich melden",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "build_sha": {
+        "value": null,
+        "status": "unverified",
+        "source": "Tag-Suffix und SOURCE_COMMIT Runtime only sind kein Buildbeleg"
+      },
+      "compose_project": {
+        "value": "syboxap8mpf8lgjzpjdsqm0z",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "compose_service": {
+        "value": "syboxap8mpf8lgjzpjdsqm0z-20261022T151524",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "generated_compose_file": {
+        "value": "/artifacts/iigfhsmrpfmntn9h7jxyed8z/docker-compose.yaml",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "build_cache": {
+        "value": true,
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "inject_build_args": {
+        "value": true,
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "source_commit_availability": {
+        "value": "Runtime only",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      }
+    },
+    "ui": {
+      "application_name": {
+        "value": "personal-assistant-uimain-a8xzljz4fq52vt1yt43nheg5",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "application_uuid": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "Application URL/Overview; nicht aus Containername ableiten",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "resource_type": {
+        "value": "application",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "project": {
+        "value": "personal-assistant",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "environment": {
+        "value": "production",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "repository": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "Source: tatsächlich konfiguriertes Repository",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "branch": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "Source: tatsächlich konfigurierter Branch",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "build_strategy": {
+        "value": "Docker Compose",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "builder": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "UI Buildereinstellung nicht bestätigt",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "base_directory": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "General/Build: Base directory",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "dockerfile_location": {
+        "value": "docker/DockerFile.UI",
+        "status": "verified_from_repository",
+        "source": "UI main e4be7a2, docker/docker-compose.ui.yaml: build.context .. und dockerfile. Auswahl der realen Compose-Location bleibt offen."
+      },
+      "compose_location": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "General/Build: Docker compose location; gezeigter Inhalt stimmt, Feldwert nicht bestätigt",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "custom_build_command": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "General/Build: Custom build command",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "custom_start_command": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "General/Build: Custom start command",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "observed_start": {
+        "value": "streamlit run app_ui.py --server.address=0.0.0.0 --server.port=8501 --server.headless=true",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "placeholder_intent": {
+        "value": null,
+        "status": "unverified",
+        "source": "Laufender UI-Start weicht vom aktuellen geschützten Launcher ab; Buildprovenienz fehlt"
+      },
+      "git_auto_deploy": {
+        "value": "Manual deployments only",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "additional_triggers": {
+        "value": null,
+        "status": "unverified",
+        "source": "Preview/Webhook/API/Registry/Scheduler/Rechte nicht vollständig geprüft"
+      },
+      "reported_image_reference": {
+        "value": "a8xzljz4fq52vt1yt43nheg5_streamlit:b2cf9ca9ba44ee770dab4d834a6ae8285f34776b",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "image_id": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "docker inspect .Image / docker image inspect .Id",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "repo_digests": {
+        "value": null,
+        "status": "requires_operator_confirmation",
+        "source": "docker image inspect .RepoDigests; keine Image-ID als Ersatz",
+        "input_state": "not_checked",
+        "effective_value": null
+      },
+      "build_sha": {
+        "value": null,
+        "status": "unverified",
+        "source": "Historischer Tagname allein kein unveränderlicher Buildbeleg"
+      },
+      "compose_project": {
+        "value": "a8xzljz4fq52vt1yt43nheg5",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "compose_service": {
+        "value": "streamlit",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "generated_compose_file": {
+        "value": "/artifacts/fhz5foowb3446edib5gnftbx/docker/docker-compose.ui.yaml",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "build_cache": {
+        "value": true,
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "inject_build_args": {
+        "value": true,
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "source_commit_availability": {
+        "value": "Runtime only",
+        "status": "operator_observed",
+        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      }
+    }
+  },
+  "intended_repositories": {
+    "backend": "rf-data/Personal_Assistant",
+    "ui": "rf-data/personal-assistant-ui"
+  },
+  "repository_artifacts": [
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "commit": "e470d3a9ebaaad5361ed533a7baa2a6dbaf00c28",
+      "path": "deployment/Dockerfile",
+      "sha256": "c4e26a35ef4a4bf95fc522c3db98160f0727ef38df76a0146f56984300fe1a04",
+      "status": "verified_from_repository"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "commit": "e470d3a9ebaaad5361ed533a7baa2a6dbaf00c28",
+      "path": "docker/DockerFile.worker",
+      "sha256": "cea58be3d25d6971163d046ca92357296f35eb008ae6a543d2ec57566e0b1ece",
+      "status": "verified_from_repository"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "commit": "e470d3a9ebaaad5361ed533a7baa2a6dbaf00c28",
+      "path": "deployment/compose.yaml",
+      "sha256": "a9c887bc76bbe0be1115767c6dfa8775c6c8e5802e461d68eebae75d5320e550",
+      "status": "verified_from_repository"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "commit": "e470d3a9ebaaad5361ed533a7baa2a6dbaf00c28",
+      "path": "deployment/cs50-worker.compose.yaml",
+      "sha256": "f32794123ceba2df0c1819f306ef72318363ac59b0fdb4d611cec331c76b887a",
+      "status": "verified_from_repository"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "commit": "e470d3a9ebaaad5361ed533a7baa2a6dbaf00c28",
+      "path": "deployment/coolify.private-https.yaml",
+      "sha256": "1e6b3e810c9a9dc4256ce87b969489269b9f9daec2cf393b2125303f5f65d8d7",
+      "status": "verified_from_repository"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "commit": "e470d3a9ebaaad5361ed533a7baa2a6dbaf00c28",
+      "path": "deployment/coolify.public-https.yaml",
+      "sha256": "6b644690d84feccc9fdbdb6aaa153a29a32056a0359ac684b41f2e9700d256d9",
+      "status": "verified_from_repository"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "commit": "e470d3a9ebaaad5361ed533a7baa2a6dbaf00c28",
+      "path": "deployment/Caddyfile",
+      "sha256": "89f70d421eb8897fe598268a26ec301d7565b035353b41f3b290ff33acd83c19",
+      "status": "verified_from_repository"
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "commit": "e470d3a9ebaaad5361ed533a7baa2a6dbaf00c28",
+      "path": "deployment/coolify.runtime-bootstrap.compose.yaml",
+      "sha256": "de24a57f16e8bd0fd13f5e7253f08d173f68a152d64e23593a7991bfd3d01b1b",
+      "status": "verified_from_repository"
+    },
+    {
+      "repository": "rf-data/personal-assistant-ui",
+      "commit": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "path": "docker/DockerFile.UI",
+      "sha256": "9a587374fca2b25c33204dcd922434cc413917c2c01e5ea90840d5e984a914c4",
+      "status": "verified_from_repository"
+    },
+    {
+      "repository": "rf-data/personal-assistant-ui",
+      "commit": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "path": "docker/docker-compose.ui.yaml",
+      "sha256": "9d32bee79855b13a2f03266a7888b782b9e6de706e316f07c459101b088e64ca",
+      "status": "verified_from_repository"
+    }
+  ],
+  "github_workflows": {
+    "status": "verified_from_repository",
+    "value": "Keine .github/workflows-Dateien in beiden geprüften Gitbäumen; .github enthält Issuevorlagen. Externe CI/Apps/Trigger dadurch nicht ausgeschlossen."
+  },
+  "coolify_version_source": {
+    "tag": "v4.4.7",
+    "commit": "86c21c0d5babfa8c7d65a9c27e5863c629a89c7c",
+    "files": [
+      {
+        "path": "routes/api.php",
+        "git_blob": "a44b95a1d25b21ad8283e927ba8b17801e0e8f90",
+        "url": "https://github.com/coollabsio/coolify/blob/86c21c0d5babfa8c7d65a9c27e5863c629a89c7c/routes/api.php"
+      },
+      {
+        "path": "app/Http/Controllers/Api/ApplicationsController.php",
+        "git_blob": "d2918e947c6d596f1f4622c17acb2f14133679fe",
+        "url": "https://github.com/coollabsio/coolify/blob/86c21c0d5babfa8c7d65a9c27e5863c629a89c7c/app/Http/Controllers/Api/ApplicationsController.php"
+      },
+      {
+        "path": "app/Http/Controllers/Api/DeployController.php",
+        "git_blob": "5c405f3e17f01098ae29f28dab6c9ef8ccc28821",
+        "url": "https://github.com/coollabsio/coolify/blob/86c21c0d5babfa8c7d65a9c27e5863c629a89c7c/app/Http/Controllers/Api/DeployController.php"
+      },
+      {
+        "path": "app/Models/Application.php",
+        "git_blob": "d7020d9d80631b94310fa0cad44f09945c96c1b7",
+        "url": "https://github.com/coollabsio/coolify/blob/86c21c0d5babfa8c7d65a9c27e5863c629a89c7c/app/Models/Application.php"
+      },
+      {
+        "path": "app/Enums/ApplicationDeploymentStatus.php",
+        "git_blob": "6a934c75d1cb77794975827506891cc50d841f50",
+        "url": "https://github.com/coollabsio/coolify/blob/86c21c0d5babfa8c7d65a9c27e5863c629a89c7c/app/Enums/ApplicationDeploymentStatus.php"
+      },
+      {
+        "path": "app/Models/ApplicationDeploymentQueue.php",
+        "git_blob": "5994f187dee3f88fbd2c150689aa5b4b7adf345e",
+        "url": "https://github.com/coollabsio/coolify/blob/86c21c0d5babfa8c7d65a9c27e5863c629a89c7c/app/Models/ApplicationDeploymentQueue.php"
+      },
+      {
+        "path": "app/Http/Controllers/Api/ApplicationPreviewsController.php",
+        "git_blob": "453d6056957bd52a3ad53fe61ab57363908d4f13",
+        "url": "https://github.com/coollabsio/coolify/blob/86c21c0d5babfa8c7d65a9c27e5863c629a89c7c/app/Http/Controllers/Api/ApplicationPreviewsController.php"
+      },
+      {
+        "path": "resources/views/livewire/project/application/general.blade.php",
+        "git_blob": "3f8ef0fce9036bf19feb8b72217a0a816c3cd651",
+        "url": "https://github.com/coollabsio/coolify/blob/86c21c0d5babfa8c7d65a9c27e5863c629a89c7c/resources/views/livewire/project/application/general.blade.php"
+      }
+    ]
+  },
+  "decision": {
+    "same_backend_application": "conditionally_supported_in_source_not_host_verified",
+    "build_strategy_change": "Dockerfile to dockercompose required for the existing three-role Compose candidate",
+    "ui": "keep independent existing streamlit Application",
+    "driver": "read-only projection and replay checks only; no Gate Observation or deployment permit",
+    "gate_scope_extension": "smallest explicit versioned runtime_scope_sha256 proposal, not implemented",
+    "production": "NO-GO"
+  }
+}

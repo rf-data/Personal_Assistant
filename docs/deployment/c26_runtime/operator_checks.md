@@ -1,3 +1,7 @@
+Aktuelle minimale Folgeprüfung: [fünf Ressourcenbindungspakete](operator_binding_check.md).
+Die nachfolgenden historischen drei Pakete bleiben als breitere Inventur erhalten;
+bestätigte Werte werden nicht erneut als unbekannt angefordert.
+
 # Verbleibende Betreiberprüfungen — drei lesende Pakete
 
 Nur vom Betreiber ausführen. Codex greift nicht auf Hetzner, Coolify oder private

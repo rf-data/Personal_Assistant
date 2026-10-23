@@ -18,7 +18,7 @@ bleibt zunächst geschlossen; es gibt kein automatisches Retry/Rollback/Resume.
 | Ebene | Aktueller Nachweis |
 | --- | --- |
 | Gate-Kern | Lokal testbare Implementierung und Regression; noch Draft #148 |
-| Coolify-Driver | **unverified / nicht implementiert für diesen Hostbestand** |
+| Coolify-Driver | Live-/Deploydriver weiter **unverified**; belegter Readclient und Offlinekonsistenzprüfer vorhanden, keine Gate-Observation/Freigabe |
 | Echte Betreiberfreigaben | Nicht vorgelegt; keine Approval aus Inventur erzeugt |
 | Produktive Abnahme | Nicht durchgeführt |
 
@@ -111,3 +111,17 @@ exakte Scope und diese Nebenwirkungen müssen im Plan gebunden werden. Ein
 inaktives Profil macht einen Coolify-Deployaufruf nicht sicher. Die bestätigte
 Manual-Deploy-Einstellung senkt die Erwartung eines normalen Git-Autodeploys,
 schließt separate Deployrechte und Hooks aber nicht aus.
+
+## Präzisierung aus der Ressourcenbindungsprüfung
+
+[Coolify-4.4.7-Driverplan](coolify_driver_plan.md) bindet die konkret belegten
+Read-/Writeendpunkte, die verborgene numerische Application-ID und den
+applicationbezogenen Historypfad. Implementiert sind nur Readprojektion und
+Offlinekonsistenz. Gateway-/Worker-/Mount-/TLS-/Triggerbelege brauchen einen
+unabhängigen vollständigen Livecollector. Der v1-Backendplan bindet den
+Gatewaydigest nicht explizit; ein versioniertes runtime_scope_sha256 ist die
+kleinste vorgeschlagene Vertragserweiterung, nicht bereits integriert.
+Kein stilles Umdeuten vorhandener geschützter-Ressourcen-Hashes. Bestehende
+v1-Fingerprints/Journale müssen kompatibel bleiben; bis Review und Livebindung
+kein Mehrrollendeploy/Resume. Der neue Reporttyp kann nicht direkt an Gate
+übergeben werden. Quelle und negative Grenztests stehen im Driverplan/Beleg.
