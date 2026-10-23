@@ -1,0 +1,2601 @@
+{
+  "schema_version": 1,
+  "archives": [
+    {
+      "archive_name": "week_0_src.zip",
+      "schema_version": 1,
+      "archive_bytes": 6459,
+      "sha256": "692c15dae899178bbeb8750dc3198f75262cf69032aafd2d8ac0548ebdbf237a",
+      "entry_count": 25,
+      "declared_uncompressed_bytes": 3082,
+      "compression_ratio": 1.2698805109188298,
+      "members": [
+        {
+          "name": "src0/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src0/hello1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 136,
+          "compressed_bytes": 107,
+          "crc32": "194e908f"
+        },
+        {
+          "name": "src0/calculator0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 58,
+          "compressed_bytes": 57,
+          "crc32": "6266d6c0"
+        },
+        {
+          "name": "src0/hello10.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 179,
+          "compressed_bytes": 133,
+          "crc32": "acd72d64"
+        },
+        {
+          "name": "src0/hello5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 91,
+          "compressed_bytes": 85,
+          "crc32": "b31b2366"
+        },
+        {
+          "name": "src0/calculator4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 126,
+          "compressed_bytes": 93,
+          "crc32": "214fb2f7"
+        },
+        {
+          "name": "src0/hello4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 147,
+          "compressed_bytes": 109,
+          "crc32": "364d77e1"
+        },
+        {
+          "name": "src0/calculator5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 130,
+          "compressed_bytes": 96,
+          "crc32": "7ac328de"
+        },
+        {
+          "name": "src0/hello0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 76,
+          "compressed_bytes": 71,
+          "crc32": "d392e667"
+        },
+        {
+          "name": "src0/calculator1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 165,
+          "compressed_bytes": 122,
+          "crc32": "ceabdd55"
+        },
+        {
+          "name": "src0/hello11.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 167,
+          "compressed_bytes": 121,
+          "crc32": "948297f4"
+        },
+        {
+          "name": "src0/hello7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 136,
+          "compressed_bytes": 113,
+          "crc32": "653818ac"
+        },
+        {
+          "name": "src0/calculator6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 115,
+          "compressed_bytes": 88,
+          "crc32": "db3aa27d"
+        },
+        {
+          "name": "src0/hello3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 114,
+          "compressed_bytes": 98,
+          "crc32": "f7a76f96"
+        },
+        {
+          "name": "src0/calculator2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 122,
+          "compressed_bytes": 91,
+          "crc32": "1de39d58"
+        },
+        {
+          "name": "src0/calculator10.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 139,
+          "compressed_bytes": 110,
+          "crc32": "58f862fa"
+        },
+        {
+          "name": "src0/hello2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 100,
+          "compressed_bytes": 88,
+          "crc32": "6e54d374"
+        },
+        {
+          "name": "src0/calculator3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 121,
+          "compressed_bytes": 92,
+          "crc32": "95954d3b"
+        },
+        {
+          "name": "src0/calculator11.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 182,
+          "compressed_bytes": 128,
+          "crc32": "3a980e64"
+        },
+        {
+          "name": "src0/hello6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 105,
+          "compressed_bytes": 98,
+          "crc32": "d7edb8e2"
+        },
+        {
+          "name": "src0/calculator7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 136,
+          "compressed_bytes": 107,
+          "crc32": "a653da47"
+        },
+        {
+          "name": "src0/hello9.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 142,
+          "compressed_bytes": 114,
+          "crc32": "7333b574"
+        },
+        {
+          "name": "src0/calculator8.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 108,
+          "compressed_bytes": 84,
+          "crc32": "e5a6aa50"
+        },
+        {
+          "name": "src0/hello8.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 145,
+          "compressed_bytes": 112,
+          "crc32": "584093a9"
+        },
+        {
+          "name": "src0/calculator9.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 142,
+          "compressed_bytes": 110,
+          "crc32": "187a1e30"
+        }
+      ],
+      "possible_duplicates_crc_size": [],
+      "duplicate_contents_verified": false,
+      "member_contents_verified": false,
+      "course_id": null,
+      "week": null,
+      "binding_status": "operator_evidence_required",
+      "status": "metadata_checked",
+      "blockers": [],
+      "import_approved": false,
+      "limits": {
+        "raw_bytes": 1048576,
+        "members": 64,
+        "member_bytes": 1048576,
+        "total_bytes": 8388608,
+        "ratio": 100,
+        "seconds": 5
+      },
+      "duplicate_archive_of": null,
+      "operator_declared_course_id": "cs50_python",
+      "filename_week": "0",
+      "archive_root_components": [
+        "src0"
+      ],
+      "week_evidence": "filename_and_archive_root_consistent; original_download_receipt_missing",
+      "original_download_url_verified": false,
+      "approval_status": "operator_action_required",
+      "file_types": {
+        ".py": 24
+      }
+    },
+    {
+      "archive_name": "week_1_src.zip",
+      "schema_version": 1,
+      "archive_bytes": 6719,
+      "sha256": "aa4f3c4e71e7ef2c74ddf949893b4579e294d8f63f9baa0ac0b0e2a0de7ffb79",
+      "entry_count": 24,
+      "declared_uncompressed_bytes": 4945,
+      "compression_ratio": 1.6825450833616877,
+      "members": [
+        {
+          "name": "src1/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src1/agree0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 123,
+          "compressed_bytes": 94,
+          "crc32": "e125fd3b"
+        },
+        {
+          "name": "src1/agree1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 145,
+          "compressed_bytes": 113,
+          "crc32": "d0787532"
+        },
+        {
+          "name": "src1/agree2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 157,
+          "compressed_bytes": 118,
+          "crc32": "ce40c6b6"
+        },
+        {
+          "name": "src1/agree3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 165,
+          "compressed_bytes": 118,
+          "crc32": "40cb60d1"
+        },
+        {
+          "name": "src1/agree4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 155,
+          "compressed_bytes": 118,
+          "crc32": "a556dd87"
+        },
+        {
+          "name": "src1/compare0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 211,
+          "compressed_bytes": 120,
+          "crc32": "82e7400f"
+        },
+        {
+          "name": "src1/compare1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 232,
+          "compressed_bytes": 132,
+          "crc32": "0e0bdd86"
+        },
+        {
+          "name": "src1/compare2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 212,
+          "compressed_bytes": 125,
+          "crc32": "cf46d0c2"
+        },
+        {
+          "name": "src1/compare3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 196,
+          "compressed_bytes": 124,
+          "crc32": "f3472e7b"
+        },
+        {
+          "name": "src1/compare4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 163,
+          "compressed_bytes": 103,
+          "crc32": "e421ee9c"
+        },
+        {
+          "name": "src1/compare5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 165,
+          "compressed_bytes": 106,
+          "crc32": "0944e68a"
+        },
+        {
+          "name": "src1/grade0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 330,
+          "compressed_bytes": 149,
+          "crc32": "8cfee1f4"
+        },
+        {
+          "name": "src1/grade1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 330,
+          "compressed_bytes": 148,
+          "crc32": "82c26854"
+        },
+        {
+          "name": "src1/grade2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 275,
+          "compressed_bytes": 137,
+          "crc32": "2de88d8c"
+        },
+        {
+          "name": "src1/grade3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 251,
+          "compressed_bytes": 122,
+          "crc32": "6b481fb9"
+        },
+        {
+          "name": "src1/house0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 289,
+          "compressed_bytes": 148,
+          "crc32": "b0badd90"
+        },
+        {
+          "name": "src1/house1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 199,
+          "compressed_bytes": 126,
+          "crc32": "f71bf79f"
+        },
+        {
+          "name": "src1/house2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 290,
+          "compressed_bytes": 136,
+          "crc32": "62fb72ce"
+        },
+        {
+          "name": "src1/house3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 204,
+          "compressed_bytes": 131,
+          "crc32": "3e9378a8"
+        },
+        {
+          "name": "src1/parity0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 118,
+          "compressed_bytes": 101,
+          "crc32": "94c20f40"
+        },
+        {
+          "name": "src1/parity1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 262,
+          "compressed_bytes": 157,
+          "crc32": "70b1c1e4"
+        },
+        {
+          "name": "src1/parity2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 246,
+          "compressed_bytes": 162,
+          "crc32": "d0113e3b"
+        },
+        {
+          "name": "src1/parity3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 227,
+          "compressed_bytes": 151,
+          "crc32": "3a48c4bd"
+        }
+      ],
+      "possible_duplicates_crc_size": [],
+      "duplicate_contents_verified": false,
+      "member_contents_verified": false,
+      "course_id": null,
+      "week": null,
+      "binding_status": "operator_evidence_required",
+      "status": "metadata_checked",
+      "blockers": [],
+      "import_approved": false,
+      "limits": {
+        "raw_bytes": 1048576,
+        "members": 64,
+        "member_bytes": 1048576,
+        "total_bytes": 8388608,
+        "ratio": 100,
+        "seconds": 5
+      },
+      "duplicate_archive_of": null,
+      "operator_declared_course_id": "cs50_python",
+      "filename_week": "1",
+      "archive_root_components": [
+        "src1"
+      ],
+      "week_evidence": "filename_and_archive_root_consistent; original_download_receipt_missing",
+      "original_download_url_verified": false,
+      "approval_status": "operator_action_required",
+      "file_types": {
+        ".py": 23
+      }
+    },
+    {
+      "archive_name": "week_2_src.zip",
+      "schema_version": 1,
+      "archive_bytes": 6970,
+      "sha256": "6fa6a7ccb1473718643fa47b01d943b16f24a318358e8322685d0529d4bfd4aa",
+      "entry_count": 27,
+      "declared_uncompressed_bytes": 4028,
+      "compression_ratio": 1.4583635047067343,
+      "members": [
+        {
+          "name": "src2/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src2/cat0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 94,
+          "compressed_bytes": 67,
+          "crc32": "8c26e71f"
+        },
+        {
+          "name": "src2/cat1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 96,
+          "compressed_bytes": 85,
+          "crc32": "3c7481bd"
+        },
+        {
+          "name": "src2/cat10.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 131,
+          "compressed_bytes": 109,
+          "crc32": "f0908e1c"
+        },
+        {
+          "name": "src2/cat11.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 252,
+          "compressed_bytes": 154,
+          "crc32": "3c2b9f12"
+        },
+        {
+          "name": "src2/cat2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 101,
+          "compressed_bytes": 88,
+          "crc32": "1a38aaaf"
+        },
+        {
+          "name": "src2/cat3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 100,
+          "compressed_bytes": 87,
+          "crc32": "cf8374d2"
+        },
+        {
+          "name": "src2/cat4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 95,
+          "compressed_bytes": 86,
+          "crc32": "195ffa06"
+        },
+        {
+          "name": "src2/cat5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 79,
+          "compressed_bytes": 76,
+          "crc32": "c3e32af0"
+        },
+        {
+          "name": "src2/cat6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 77,
+          "compressed_bytes": 71,
+          "crc32": "28b853df"
+        },
+        {
+          "name": "src2/cat7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 86,
+          "compressed_bytes": 80,
+          "crc32": "2b0bc60b"
+        },
+        {
+          "name": "src2/cat8.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 63,
+          "compressed_bytes": 63,
+          "crc32": "3bdd6705"
+        },
+        {
+          "name": "src2/cat9.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 169,
+          "compressed_bytes": 124,
+          "crc32": "820f5d32"
+        },
+        {
+          "name": "src2/hogwarts0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 135,
+          "compressed_bytes": 95,
+          "crc32": "78e1a1be"
+        },
+        {
+          "name": "src2/hogwarts1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 123,
+          "compressed_bytes": 100,
+          "crc32": "2d22f9c1"
+        },
+        {
+          "name": "src2/hogwarts2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 158,
+          "compressed_bytes": 124,
+          "crc32": "fe6a0744"
+        },
+        {
+          "name": "src2/hogwarts3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 262,
+          "compressed_bytes": 134,
+          "crc32": "f3c27045"
+        },
+        {
+          "name": "src2/hogwarts4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 250,
+          "compressed_bytes": 150,
+          "crc32": "2758aeb0"
+        },
+        {
+          "name": "src2/hogwarts5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 450,
+          "compressed_bytes": 215,
+          "crc32": "23d9db71"
+        },
+        {
+          "name": "src2/mario0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 62,
+          "compressed_bytes": 41,
+          "crc32": "2ed416f4"
+        },
+        {
+          "name": "src2/mario1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 74,
+          "compressed_bytes": 71,
+          "crc32": "1ba53358"
+        },
+        {
+          "name": "src2/mario2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 173,
+          "compressed_bytes": 112,
+          "crc32": "bb882a2e"
+        },
+        {
+          "name": "src2/mario3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 172,
+          "compressed_bytes": 120,
+          "crc32": "53687493"
+        },
+        {
+          "name": "src2/mario4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 150,
+          "compressed_bytes": 107,
+          "crc32": "a35ee02f"
+        },
+        {
+          "name": "src2/mario5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 233,
+          "compressed_bytes": 132,
+          "crc32": "879b8aca"
+        },
+        {
+          "name": "src2/mario6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 199,
+          "compressed_bytes": 129,
+          "crc32": "60c343e3"
+        },
+        {
+          "name": "src2/mario7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 244,
+          "compressed_bytes": 142,
+          "crc32": "41124507"
+        }
+      ],
+      "possible_duplicates_crc_size": [],
+      "duplicate_contents_verified": false,
+      "member_contents_verified": false,
+      "course_id": null,
+      "week": null,
+      "binding_status": "operator_evidence_required",
+      "status": "metadata_checked",
+      "blockers": [],
+      "import_approved": false,
+      "limits": {
+        "raw_bytes": 1048576,
+        "members": 64,
+        "member_bytes": 1048576,
+        "total_bytes": 8388608,
+        "ratio": 100,
+        "seconds": 5
+      },
+      "duplicate_archive_of": null,
+      "operator_declared_course_id": "cs50_python",
+      "filename_week": "2",
+      "archive_root_components": [
+        "src2"
+      ],
+      "week_evidence": "filename_and_archive_root_consistent; original_download_receipt_missing",
+      "original_download_url_verified": false,
+      "approval_status": "operator_action_required",
+      "file_types": {
+        ".py": 26
+      }
+    },
+    {
+      "archive_name": "week_3_src.zip",
+      "schema_version": 1,
+      "archive_bytes": 3036,
+      "sha256": "fd9e2b5a100ba445affd4ff0e25cd5bbcb5fd3978c663db490e62ff94e26feb8",
+      "entry_count": 11,
+      "declared_uncompressed_bytes": 1916,
+      "compression_ratio": 1.478395061728395,
+      "members": [
+        {
+          "name": "src3/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src3/number0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 79,
+          "compressed_bytes": 78,
+          "crc32": "50bbb9bc"
+        },
+        {
+          "name": "src3/number1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 137,
+          "compressed_bytes": 107,
+          "crc32": "e304f81a"
+        },
+        {
+          "name": "src3/number2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 138,
+          "compressed_bytes": 111,
+          "crc32": "4033d93d"
+        },
+        {
+          "name": "src3/number3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 140,
+          "compressed_bytes": 111,
+          "crc32": "322c15b9"
+        },
+        {
+          "name": "src3/number4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 177,
+          "compressed_bytes": 127,
+          "crc32": "8cdc57d5"
+        },
+        {
+          "name": "src3/number5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 304,
+          "compressed_bytes": 176,
+          "crc32": "621701ce"
+        },
+        {
+          "name": "src3/number6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 270,
+          "compressed_bytes": 159,
+          "crc32": "8290e6c4"
+        },
+        {
+          "name": "src3/number7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 237,
+          "compressed_bytes": 148,
+          "crc32": "f9d8ab4d"
+        },
+        {
+          "name": "src3/number8.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 210,
+          "compressed_bytes": 136,
+          "crc32": "aa1a37e4"
+        },
+        {
+          "name": "src3/number9.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 224,
+          "compressed_bytes": 143,
+          "crc32": "b096c567"
+        }
+      ],
+      "possible_duplicates_crc_size": [],
+      "duplicate_contents_verified": false,
+      "member_contents_verified": false,
+      "course_id": null,
+      "week": null,
+      "binding_status": "operator_evidence_required",
+      "status": "metadata_checked",
+      "blockers": [],
+      "import_approved": false,
+      "limits": {
+        "raw_bytes": 1048576,
+        "members": 64,
+        "member_bytes": 1048576,
+        "total_bytes": 8388608,
+        "ratio": 100,
+        "seconds": 5
+      },
+      "duplicate_archive_of": null,
+      "operator_declared_course_id": "cs50_python",
+      "filename_week": "3",
+      "archive_root_components": [
+        "src3"
+      ],
+      "week_evidence": "filename_and_archive_root_consistent; original_download_receipt_missing",
+      "original_download_url_verified": false,
+      "approval_status": "operator_action_required",
+      "file_types": {
+        ".py": 10
+      }
+    },
+    {
+      "archive_name": "week_4_src.zip",
+      "schema_version": 1,
+      "archive_bytes": 5947,
+      "sha256": "00520804462f28e2ba7424d79688f525089fe099c1d52f415606199dc81d74c9",
+      "entry_count": 23,
+      "declared_uncompressed_bytes": 3205,
+      "compression_ratio": 1.3667377398720681,
+      "members": [
+        {
+          "name": "src4/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src4/average.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 80,
+          "compressed_bytes": 63,
+          "crc32": "5577657e"
+        },
+        {
+          "name": "src4/generate0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 109,
+          "compressed_bytes": 86,
+          "crc32": "f4777e5b"
+        },
+        {
+          "name": "src4/generate1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 94,
+          "compressed_bytes": 83,
+          "crc32": "03ac0a95"
+        },
+        {
+          "name": "src4/generate2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 84,
+          "compressed_bytes": 66,
+          "crc32": "42e75cd3"
+        },
+        {
+          "name": "src4/generate3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 130,
+          "compressed_bytes": 105,
+          "crc32": "c02f0814"
+        },
+        {
+          "name": "src4/itunes0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 220,
+          "compressed_bytes": 154,
+          "crc32": "b34ec7cb"
+        },
+        {
+          "name": "src4/itunes1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 250,
+          "compressed_bytes": 175,
+          "crc32": "1bc270db"
+        },
+        {
+          "name": "src4/itunes2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 291,
+          "compressed_bytes": 202,
+          "crc32": "89d136e7"
+        },
+        {
+          "name": "src4/name0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 77,
+          "compressed_bytes": 70,
+          "crc32": "f5b10f71"
+        },
+        {
+          "name": "src4/name1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 138,
+          "compressed_bytes": 109,
+          "crc32": "23dc2d2c"
+        },
+        {
+          "name": "src4/name2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 194,
+          "compressed_bytes": 126,
+          "crc32": "f07ba946"
+        },
+        {
+          "name": "src4/name3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 193,
+          "compressed_bytes": 125,
+          "crc32": "dbd76c19"
+        },
+        {
+          "name": "src4/name4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 157,
+          "compressed_bytes": 124,
+          "crc32": "32162f73"
+        },
+        {
+          "name": "src4/say0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 127,
+          "compressed_bytes": 106,
+          "crc32": "d1da3da4"
+        },
+        {
+          "name": "src4/say1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 114,
+          "compressed_bytes": 95,
+          "crc32": "4eb6b5da"
+        },
+        {
+          "name": "src4/say2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 113,
+          "compressed_bytes": 94,
+          "crc32": "3615f4aa"
+        },
+        {
+          "name": "src4/say3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 113,
+          "compressed_bytes": 94,
+          "crc32": "800e14da"
+        },
+        {
+          "name": "src4/say4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 113,
+          "compressed_bytes": 94,
+          "crc32": "8153320b"
+        },
+        {
+          "name": "src4/say5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 117,
+          "compressed_bytes": 95,
+          "crc32": "88b978a6"
+        },
+        {
+          "name": "src4/sayings0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 96,
+          "compressed_bytes": 58,
+          "crc32": "2b25f413"
+        },
+        {
+          "name": "src4/sayings1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 186,
+          "compressed_bytes": 105,
+          "crc32": "b981011d"
+        },
+        {
+          "name": "src4/sayings2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 209,
+          "compressed_bytes": 116,
+          "crc32": "935d0133"
+        }
+      ],
+      "possible_duplicates_crc_size": [],
+      "duplicate_contents_verified": false,
+      "member_contents_verified": false,
+      "course_id": null,
+      "week": null,
+      "binding_status": "operator_evidence_required",
+      "status": "metadata_checked",
+      "blockers": [],
+      "import_approved": false,
+      "limits": {
+        "raw_bytes": 1048576,
+        "members": 64,
+        "member_bytes": 1048576,
+        "total_bytes": 8388608,
+        "ratio": 100,
+        "seconds": 5
+      },
+      "duplicate_archive_of": null,
+      "operator_declared_course_id": "cs50_python",
+      "filename_week": "4",
+      "archive_root_components": [
+        "src4"
+      ],
+      "week_evidence": "filename_and_archive_root_consistent; original_download_receipt_missing",
+      "original_download_url_verified": false,
+      "approval_status": "operator_action_required",
+      "file_types": {
+        ".py": 22
+      }
+    },
+    {
+      "archive_name": "week_5_src.zip",
+      "schema_version": 1,
+      "archive_bytes": 6531,
+      "sha256": "1abeed95ecd54d7ade80b5e789444f0ebeabbc588be25f6c71a1a256a2ba24c5",
+      "entry_count": 23,
+      "declared_uncompressed_bytes": 4726,
+      "compression_ratio": 1.7720284964379454,
+      "members": [
+        {
+          "name": "src5/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src5/test_calculator4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 643,
+          "compressed_bytes": 186,
+          "crc32": "4b243345"
+        },
+        {
+          "name": "src5/test_calculator5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 184,
+          "compressed_bytes": 86,
+          "crc32": "c439051d"
+        },
+        {
+          "name": "src5/test/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src5/test/__init__.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src5/test/test_hello1c.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 151,
+          "compressed_bytes": 92,
+          "crc32": "104f658b"
+        },
+        {
+          "name": "src5/test_calculator1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 244,
+          "compressed_bytes": 134,
+          "crc32": "587c086e"
+        },
+        {
+          "name": "src5/test_hello1b.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 200,
+          "compressed_bytes": 130,
+          "crc32": "66af766e"
+        },
+        {
+          "name": "src5/hello1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 203,
+          "compressed_bytes": 142,
+          "crc32": "c397a07e"
+        },
+        {
+          "name": "src5/calculator0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 182,
+          "compressed_bytes": 128,
+          "crc32": "3a980e64"
+        },
+        {
+          "name": "src5/calculator4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 213,
+          "compressed_bytes": 147,
+          "crc32": "da2143d1"
+        },
+        {
+          "name": "src5/calculator5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 206,
+          "compressed_bytes": 141,
+          "crc32": "cc749fba"
+        },
+        {
+          "name": "src5/hello0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 182,
+          "compressed_bytes": 131,
+          "crc32": "0a8953b7"
+        },
+        {
+          "name": "src5/calculator1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 213,
+          "compressed_bytes": 147,
+          "crc32": "da2143d1"
+        },
+        {
+          "name": "src5/calculator6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 212,
+          "compressed_bytes": 145,
+          "crc32": "c6c3a9d5"
+        },
+        {
+          "name": "src5/calculator2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 213,
+          "compressed_bytes": 147,
+          "crc32": "da2143d1"
+        },
+        {
+          "name": "src5/test_hello1a.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 151,
+          "compressed_bytes": 92,
+          "crc32": "104f658b"
+        },
+        {
+          "name": "src5/calculator3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 213,
+          "compressed_bytes": 147,
+          "crc32": "da2143d1"
+        },
+        {
+          "name": "src5/calculator7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 212,
+          "compressed_bytes": 145,
+          "crc32": "c6c3a9d5"
+        },
+        {
+          "name": "src5/test_calculator6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 281,
+          "compressed_bytes": 114,
+          "crc32": "42a7eaf9"
+        },
+        {
+          "name": "src5/test_calculator2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 176,
+          "compressed_bytes": 110,
+          "crc32": "3cb231f5"
+        },
+        {
+          "name": "src5/test_calculator3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 330,
+          "compressed_bytes": 158,
+          "crc32": "0493f263"
+        },
+        {
+          "name": "src5/test_calculator7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 317,
+          "compressed_bytes": 145,
+          "crc32": "a9109e46"
+        }
+      ],
+      "possible_duplicates_crc_size": [
+        [
+          "src5/calculator4.py",
+          "src5/calculator1.py"
+        ],
+        [
+          "src5/calculator1.py",
+          "src5/calculator2.py"
+        ],
+        [
+          "src5/test/test_hello1c.py",
+          "src5/test_hello1a.py"
+        ],
+        [
+          "src5/calculator2.py",
+          "src5/calculator3.py"
+        ],
+        [
+          "src5/calculator6.py",
+          "src5/calculator7.py"
+        ]
+      ],
+      "duplicate_contents_verified": false,
+      "member_contents_verified": false,
+      "course_id": null,
+      "week": null,
+      "binding_status": "operator_evidence_required",
+      "status": "metadata_checked",
+      "blockers": [],
+      "import_approved": false,
+      "limits": {
+        "raw_bytes": 1048576,
+        "members": 64,
+        "member_bytes": 1048576,
+        "total_bytes": 8388608,
+        "ratio": 100,
+        "seconds": 5
+      },
+      "duplicate_archive_of": null,
+      "operator_declared_course_id": "cs50_python",
+      "filename_week": "5",
+      "archive_root_components": [
+        "src5"
+      ],
+      "week_evidence": "filename_and_archive_root_consistent; original_download_receipt_missing",
+      "original_download_url_verified": false,
+      "approval_status": "operator_action_required",
+      "file_types": {
+        ".py": 21
+      }
+    },
+    {
+      "archive_name": "week_6_src.zip",
+      "schema_version": 1,
+      "archive_bytes": 11963,
+      "sha256": "d18040883349a1a1ca88e3fbb967a5915b4c50f437276aa1e47b33574239dbe5",
+      "entry_count": 28,
+      "declared_uncompressed_bytes": 9181,
+      "compression_ratio": 1.2282274247491638,
+      "members": [
+        {
+          "name": "src6/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src6/costume1.gif",
+          "kind": "file",
+          "extension": ".gif",
+          "declared_bytes": 2009,
+          "compressed_bytes": 2009,
+          "crc32": "e80199d5"
+        },
+        {
+          "name": "src6/costume2.gif",
+          "kind": "file",
+          "extension": ".gif",
+          "declared_bytes": 2016,
+          "compressed_bytes": 2016,
+          "crc32": "0aef52f3"
+        },
+        {
+          "name": "src6/costumes.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 260,
+          "compressed_bytes": 178,
+          "crc32": "1d590e2f"
+        },
+        {
+          "name": "src6/names.txt",
+          "kind": "file",
+          "extension": ".txt",
+          "declared_bytes": 25,
+          "compressed_bytes": 25,
+          "crc32": "fe619e05"
+        },
+        {
+          "name": "src6/names0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 90,
+          "compressed_bytes": 80,
+          "crc32": "4287fa07"
+        },
+        {
+          "name": "src6/names1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 159,
+          "compressed_bytes": 125,
+          "crc32": "e1f58e27"
+        },
+        {
+          "name": "src6/names2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 116,
+          "compressed_bytes": 94,
+          "crc32": "564958a3"
+        },
+        {
+          "name": "src6/names3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 124,
+          "compressed_bytes": 106,
+          "crc32": "944a0d55"
+        },
+        {
+          "name": "src6/names4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 125,
+          "compressed_bytes": 112,
+          "crc32": "54ca2dae"
+        },
+        {
+          "name": "src6/names5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 137,
+          "compressed_bytes": 104,
+          "crc32": "f20ed081"
+        },
+        {
+          "name": "src6/names6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 134,
+          "compressed_bytes": 103,
+          "crc32": "fa658d67"
+        },
+        {
+          "name": "src6/names7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 197,
+          "compressed_bytes": 133,
+          "crc32": "1bff561b"
+        },
+        {
+          "name": "src6/students0.csv",
+          "kind": "file",
+          "extension": ".csv",
+          "declared_bytes": 68,
+          "compressed_bytes": 50,
+          "crc32": "5c80ba21"
+        },
+        {
+          "name": "src6/students0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 159,
+          "compressed_bytes": 124,
+          "crc32": "cf08faca"
+        },
+        {
+          "name": "src6/students1.csv",
+          "kind": "file",
+          "extension": ".csv",
+          "declared_bytes": 68,
+          "compressed_bytes": 67,
+          "crc32": "688a1a6a"
+        },
+        {
+          "name": "src6/students1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 162,
+          "compressed_bytes": 122,
+          "crc32": "1aad336b"
+        },
+        {
+          "name": "src6/students10.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 227,
+          "compressed_bytes": 150,
+          "crc32": "d3fd2bd2"
+        },
+        {
+          "name": "src6/students11.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 280,
+          "compressed_bytes": 177,
+          "crc32": "f42a8e1e"
+        },
+        {
+          "name": "src6/students2.csv",
+          "kind": "file",
+          "extension": ".csv",
+          "declared_bytes": 78,
+          "compressed_bytes": 77,
+          "crc32": "ef28953e"
+        },
+        {
+          "name": "src6/students2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 249,
+          "compressed_bytes": 159,
+          "crc32": "4ced490c"
+        },
+        {
+          "name": "src6/students3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 396,
+          "compressed_bytes": 219,
+          "crc32": "e0a7e916"
+        },
+        {
+          "name": "src6/students4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 354,
+          "compressed_bytes": 210,
+          "crc32": "d57499b8"
+        },
+        {
+          "name": "src6/students5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 307,
+          "compressed_bytes": 190,
+          "crc32": "503c46e7"
+        },
+        {
+          "name": "src6/students6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 383,
+          "compressed_bytes": 222,
+          "crc32": "ec409632"
+        },
+        {
+          "name": "src6/students7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 360,
+          "compressed_bytes": 212,
+          "crc32": "7bf2f5c1"
+        },
+        {
+          "name": "src6/students8.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 340,
+          "compressed_bytes": 202,
+          "crc32": "aee85f33"
+        },
+        {
+          "name": "src6/students9.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 358,
+          "compressed_bytes": 209,
+          "crc32": "5f7497f5"
+        }
+      ],
+      "possible_duplicates_crc_size": [],
+      "duplicate_contents_verified": false,
+      "member_contents_verified": false,
+      "course_id": null,
+      "week": null,
+      "binding_status": "operator_evidence_required",
+      "status": "blocked",
+      "blockers": [
+        "unknown_type"
+      ],
+      "import_approved": false,
+      "limits": {
+        "raw_bytes": 1048576,
+        "members": 64,
+        "member_bytes": 1048576,
+        "total_bytes": 8388608,
+        "ratio": 100,
+        "seconds": 5
+      },
+      "duplicate_archive_of": null,
+      "operator_declared_course_id": "cs50_python",
+      "filename_week": "6",
+      "archive_root_components": [
+        "src6"
+      ],
+      "week_evidence": "filename_and_archive_root_consistent; original_download_receipt_missing",
+      "original_download_url_verified": false,
+      "approval_status": "operator_action_required",
+      "file_types": {
+        ".gif": 2,
+        ".py": 21,
+        ".txt": 1,
+        ".csv": 3
+      }
+    },
+    {
+      "archive_name": "week_7_src.zip",
+      "schema_version": 1,
+      "archive_bytes": 7064,
+      "sha256": "b41f8004fba2c7bae0e25b0d130bcb3950048f7cfb6916b888da78c4c38d39f6",
+      "entry_count": 24,
+      "declared_uncompressed_bytes": 4222,
+      "compression_ratio": 1.319375,
+      "members": [
+        {
+          "name": "src7/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src7/format1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 216,
+          "compressed_bytes": 154,
+          "crc32": "6829caf9"
+        },
+        {
+          "name": "src7/format0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 190,
+          "compressed_bytes": 135,
+          "crc32": "59dc627b"
+        },
+        {
+          "name": "src7/validate5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 144,
+          "compressed_bytes": 115,
+          "crc32": "9547ece3"
+        },
+        {
+          "name": "src7/twitter1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 174,
+          "compressed_bytes": 130,
+          "crc32": "4f8f2637"
+        },
+        {
+          "name": "src7/twitter5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 214,
+          "compressed_bytes": 182,
+          "crc32": "4864b803"
+        },
+        {
+          "name": "src7/validate1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 175,
+          "compressed_bytes": 126,
+          "crc32": "d7010ba9"
+        },
+        {
+          "name": "src7/validate12.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 193,
+          "compressed_bytes": 154,
+          "crc32": "e3d40c27"
+        },
+        {
+          "name": "src7/twitter4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 199,
+          "compressed_bytes": 162,
+          "crc32": "524f8eb1"
+        },
+        {
+          "name": "src7/validate0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 154,
+          "compressed_bytes": 116,
+          "crc32": "b96a0246"
+        },
+        {
+          "name": "src7/validate4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 185,
+          "compressed_bytes": 139,
+          "crc32": "d33df56a"
+        },
+        {
+          "name": "src7/twitter0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 168,
+          "compressed_bytes": 128,
+          "crc32": "b6271dba"
+        },
+        {
+          "name": "src7/validate3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 239,
+          "compressed_bytes": 159,
+          "crc32": "7bd375ba"
+        },
+        {
+          "name": "src7/validate10.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 179,
+          "compressed_bytes": 139,
+          "crc32": "c24cb0d6"
+        },
+        {
+          "name": "src7/validate7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 153,
+          "compressed_bytes": 121,
+          "crc32": "c266dce8"
+        },
+        {
+          "name": "src7/twitter3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 180,
+          "compressed_bytes": 146,
+          "crc32": "845d9fd5"
+        },
+        {
+          "name": "src7/validate6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 151,
+          "compressed_bytes": 120,
+          "crc32": "51f982bf"
+        },
+        {
+          "name": "src7/twitter2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 141,
+          "compressed_bytes": 118,
+          "crc32": "32d7ea05"
+        },
+        {
+          "name": "src7/validate2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 230,
+          "compressed_bytes": 147,
+          "crc32": "13b497db"
+        },
+        {
+          "name": "src7/validate11.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 180,
+          "compressed_bytes": 139,
+          "crc32": "8799b1ec"
+        },
+        {
+          "name": "src7/validate9.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 187,
+          "compressed_bytes": 143,
+          "crc32": "a67c44f8"
+        },
+        {
+          "name": "src7/format3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 203,
+          "compressed_bytes": 150,
+          "crc32": "978ec4e1"
+        },
+        {
+          "name": "src7/validate8.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 166,
+          "compressed_bytes": 132,
+          "crc32": "2427d63d"
+        },
+        {
+          "name": "src7/format2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 201,
+          "compressed_bytes": 145,
+          "crc32": "bedf740b"
+        }
+      ],
+      "possible_duplicates_crc_size": [],
+      "duplicate_contents_verified": false,
+      "member_contents_verified": false,
+      "course_id": null,
+      "week": null,
+      "binding_status": "operator_evidence_required",
+      "status": "metadata_checked",
+      "blockers": [],
+      "import_approved": false,
+      "limits": {
+        "raw_bytes": 1048576,
+        "members": 64,
+        "member_bytes": 1048576,
+        "total_bytes": 8388608,
+        "ratio": 100,
+        "seconds": 5
+      },
+      "duplicate_archive_of": null,
+      "operator_declared_course_id": "cs50_python",
+      "filename_week": "7",
+      "archive_root_components": [
+        "src7"
+      ],
+      "week_evidence": "filename_and_archive_root_consistent; original_download_receipt_missing",
+      "original_download_url_verified": false,
+      "approval_status": "operator_action_required",
+      "file_types": {
+        ".py": 23
+      }
+    },
+    {
+      "archive_name": "week_8_src.zip",
+      "schema_version": 1,
+      "archive_bytes": 11734,
+      "sha256": "83493d70d59f892a02eeb8639ab56b11a6ca9d3101f7a664d94edb5ed25299e9",
+      "entry_count": 33,
+      "declared_uncompressed_bytes": 12791,
+      "compression_ratio": 1.969057881773399,
+      "members": [
+        {
+          "name": "src8/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src8/hat0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 289,
+          "compressed_bytes": 196,
+          "crc32": "4bdc786f"
+        },
+        {
+          "name": "src8/hat1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 256,
+          "compressed_bytes": 176,
+          "crc32": "d98953ce"
+        },
+        {
+          "name": "src8/student0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 126,
+          "compressed_bytes": 103,
+          "crc32": "43719877"
+        },
+        {
+          "name": "src8/student1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 273,
+          "compressed_bytes": 155,
+          "crc32": "1c49792e"
+        },
+        {
+          "name": "src8/student10.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 385,
+          "compressed_bytes": 192,
+          "crc32": "fdc39c73"
+        },
+        {
+          "name": "src8/student11.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 378,
+          "compressed_bytes": 199,
+          "crc32": "be4ee35d"
+        },
+        {
+          "name": "src8/student12.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 581,
+          "compressed_bytes": 292,
+          "crc32": "4a5802c5"
+        },
+        {
+          "name": "src8/student13.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 541,
+          "compressed_bytes": 272,
+          "crc32": "fc974dbd"
+        },
+        {
+          "name": "src8/student14.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 595,
+          "compressed_bytes": 290,
+          "crc32": "5ac93b20"
+        },
+        {
+          "name": "src8/student15.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 720,
+          "compressed_bytes": 335,
+          "crc32": "b09e3aaa"
+        },
+        {
+          "name": "src8/student16.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 1171,
+          "compressed_bytes": 463,
+          "crc32": "6d4b1002"
+        },
+        {
+          "name": "src8/student17.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 709,
+          "compressed_bytes": 352,
+          "crc32": "6f1d4909"
+        },
+        {
+          "name": "src8/student18.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 745,
+          "compressed_bytes": 324,
+          "crc32": "cf2c61ee"
+        },
+        {
+          "name": "src8/student19.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 875,
+          "compressed_bytes": 347,
+          "crc32": "168d6c24"
+        },
+        {
+          "name": "src8/student2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 261,
+          "compressed_bytes": 157,
+          "crc32": "f86cc944"
+        },
+        {
+          "name": "src8/student20.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 450,
+          "compressed_bytes": 217,
+          "crc32": "7ca5b325"
+        },
+        {
+          "name": "src8/student3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 278,
+          "compressed_bytes": 169,
+          "crc32": "ca5102b0"
+        },
+        {
+          "name": "src8/student4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 392,
+          "compressed_bytes": 244,
+          "crc32": "277bebed"
+        },
+        {
+          "name": "src8/student5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 327,
+          "compressed_bytes": 189,
+          "crc32": "8dbe7c2d"
+        },
+        {
+          "name": "src8/student6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 298,
+          "compressed_bytes": 161,
+          "crc32": "dbe71f7b"
+        },
+        {
+          "name": "src8/student7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 288,
+          "compressed_bytes": 173,
+          "crc32": "b52c98cf"
+        },
+        {
+          "name": "src8/student8.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 366,
+          "compressed_bytes": 210,
+          "crc32": "3d9fef60"
+        },
+        {
+          "name": "src8/student9.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 323,
+          "compressed_bytes": 164,
+          "crc32": "0357df45"
+        },
+        {
+          "name": "src8/type0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 49,
+          "compressed_bytes": 45,
+          "crc32": "2616bef2"
+        },
+        {
+          "name": "src8/type1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 59,
+          "compressed_bytes": 55,
+          "crc32": "e25421f2"
+        },
+        {
+          "name": "src8/type2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 45,
+          "compressed_bytes": 42,
+          "crc32": "38f27990"
+        },
+        {
+          "name": "src8/type3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 49,
+          "compressed_bytes": 44,
+          "crc32": "40fa9cc0"
+        },
+        {
+          "name": "src8/type4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 51,
+          "compressed_bytes": 49,
+          "crc32": "f44630b6"
+        },
+        {
+          "name": "src8/type5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 55,
+          "compressed_bytes": 50,
+          "crc32": "0f12e169"
+        },
+        {
+          "name": "src8/vault0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 585,
+          "compressed_bytes": 258,
+          "crc32": "a959e85f"
+        },
+        {
+          "name": "src8/vault1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 656,
+          "compressed_bytes": 277,
+          "crc32": "1eec3842"
+        },
+        {
+          "name": "src8/wizard.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 615,
+          "compressed_bytes": 296,
+          "crc32": "7d852daa"
+        }
+      ],
+      "possible_duplicates_crc_size": [],
+      "duplicate_contents_verified": false,
+      "member_contents_verified": false,
+      "course_id": null,
+      "week": null,
+      "binding_status": "operator_evidence_required",
+      "status": "metadata_checked",
+      "blockers": [],
+      "import_approved": false,
+      "limits": {
+        "raw_bytes": 1048576,
+        "members": 64,
+        "member_bytes": 1048576,
+        "total_bytes": 8388608,
+        "ratio": 100,
+        "seconds": 5
+      },
+      "duplicate_archive_of": null,
+      "operator_declared_course_id": "cs50_python",
+      "filename_week": "8",
+      "archive_root_components": [
+        "src8"
+      ],
+      "week_evidence": "filename_and_archive_root_consistent; original_download_receipt_missing",
+      "original_download_url_verified": false,
+      "approval_status": "operator_action_required",
+      "file_types": {
+        ".py": 32
+      }
+    },
+    {
+      "archive_name": "week_9_src.zip",
+      "schema_version": 1,
+      "archive_bytes": 14954,
+      "sha256": "1777f34e0be52397e93ce9ed10762b348bc5ff9539b5272bc11a2bd82e47daa5",
+      "entry_count": 51,
+      "declared_uncompressed_bytes": 10821,
+      "compression_ratio": 1.573277115440535,
+      "members": [
+        {
+          "name": "src9/",
+          "kind": "directory",
+          "extension": "",
+          "declared_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "name": "src9/sleep3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 257,
+          "compressed_bytes": 163,
+          "crc32": "62f73267"
+        },
+        {
+          "name": "src9/unpack8.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 119,
+          "compressed_bytes": 102,
+          "crc32": "5f106e41"
+        },
+        {
+          "name": "src9/meows6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 204,
+          "compressed_bytes": 138,
+          "crc32": "2b13808f"
+        },
+        {
+          "name": "src9/bank0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 126,
+          "compressed_bytes": 98,
+          "crc32": "35fb0637"
+        },
+        {
+          "name": "src9/meows2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 127,
+          "compressed_bytes": 98,
+          "crc32": "70cf7e5e"
+        },
+        {
+          "name": "src9/bank1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 254,
+          "compressed_bytes": 143,
+          "crc32": "541b3e94"
+        },
+        {
+          "name": "src9/gryffindors8.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 132,
+          "compressed_bytes": 103,
+          "crc32": "b4129458"
+        },
+        {
+          "name": "src9/meows3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 144,
+          "compressed_bytes": 113,
+          "crc32": "dce48d05"
+        },
+        {
+          "name": "src9/sleep2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 211,
+          "compressed_bytes": 148,
+          "crc32": "d0d86977"
+        },
+        {
+          "name": "src9/meows7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 205,
+          "compressed_bytes": 137,
+          "crc32": "224fb12a"
+        },
+        {
+          "name": "src9/gryffindors7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 135,
+          "compressed_bytes": 111,
+          "crc32": "90f4880a"
+        },
+        {
+          "name": "src9/unpack2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 186,
+          "compressed_bytes": 136,
+          "crc32": "e8204b3a"
+        },
+        {
+          "name": "src9/yell1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 228,
+          "compressed_bytes": 150,
+          "crc32": "eb62f936"
+        },
+        {
+          "name": "src9/say.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 138,
+          "compressed_bytes": 98,
+          "crc32": "b4c67e4e"
+        },
+        {
+          "name": "src9/gryffindors3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 392,
+          "compressed_bytes": 182,
+          "crc32": "d10d0cc2"
+        },
+        {
+          "name": "src9/meows8.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 147,
+          "compressed_bytes": 110,
+          "crc32": "f899f5bf"
+        },
+        {
+          "name": "src9/meows12.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 183,
+          "compressed_bytes": 125,
+          "crc32": "c9dabda8"
+        },
+        {
+          "name": "src9/unpack6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 194,
+          "compressed_bytes": 137,
+          "crc32": "0178978d"
+        },
+        {
+          "name": "src9/yell0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 150,
+          "compressed_bytes": 114,
+          "crc32": "b6c004c6"
+        },
+        {
+          "name": "src9/gryffindors2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 439,
+          "compressed_bytes": 206,
+          "crc32": "0802dd94"
+        },
+        {
+          "name": "src9/meows9.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 169,
+          "compressed_bytes": 126,
+          "crc32": "28252008"
+        },
+        {
+          "name": "src9/meows13.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 240,
+          "compressed_bytes": 159,
+          "crc32": "64229f14"
+        },
+        {
+          "name": "src9/unpack7.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 104,
+          "compressed_bytes": 85,
+          "crc32": "d303b11e"
+        },
+        {
+          "name": "src9/yell4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 202,
+          "compressed_bytes": 146,
+          "crc32": "d397534d"
+        },
+        {
+          "name": "src9/gryffindors6.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 164,
+          "compressed_bytes": 120,
+          "crc32": "9a603889"
+        },
+        {
+          "name": "src9/unpack3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 161,
+          "compressed_bytes": 126,
+          "crc32": "1560f4a3"
+        },
+        {
+          "name": "src9/yell3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 178,
+          "compressed_bytes": 127,
+          "crc32": "cbc24b5a"
+        },
+        {
+          "name": "src9/gryffindors1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 405,
+          "compressed_bytes": 183,
+          "crc32": "5b4a062e"
+        },
+        {
+          "name": "src9/unpack4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 183,
+          "compressed_bytes": 130,
+          "crc32": "cbf996ce"
+        },
+        {
+          "name": "src9/meows10.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 340,
+          "compressed_bytes": 207,
+          "crc32": "134d6ae4"
+        },
+        {
+          "name": "src9/gryffindors5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 183,
+          "compressed_bytes": 131,
+          "crc32": "13899644"
+        },
+        {
+          "name": "src9/meows14.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 267,
+          "compressed_bytes": 182,
+          "crc32": "29c76335"
+        },
+        {
+          "name": "src9/unpack0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 93,
+          "compressed_bytes": 88,
+          "crc32": "cb0aaa92"
+        },
+        {
+          "name": "src9/gryffindors4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 205,
+          "compressed_bytes": 141,
+          "crc32": "f4c9a78a"
+        },
+        {
+          "name": "src9/unpack1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 222,
+          "compressed_bytes": 169,
+          "crc32": "cd72fa68"
+        },
+        {
+          "name": "src9/yell2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 255,
+          "compressed_bytes": 163,
+          "crc32": "230aa82a"
+        },
+        {
+          "name": "src9/gryffindors0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 420,
+          "compressed_bytes": 188,
+          "crc32": "3df23ad9"
+        },
+        {
+          "name": "src9/unpack5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 243,
+          "compressed_bytes": 153,
+          "crc32": "d4dccd06"
+        },
+        {
+          "name": "src9/meows11.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 251,
+          "compressed_bytes": 160,
+          "crc32": "237280d7"
+        },
+        {
+          "name": "src9/houses1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 407,
+          "compressed_bytes": 193,
+          "crc32": "a0dd2071"
+        },
+        {
+          "name": "src9/bank2.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 286,
+          "compressed_bytes": 142,
+          "crc32": "d59f4704"
+        },
+        {
+          "name": "src9/meows0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 79,
+          "compressed_bytes": 74,
+          "crc32": "6aa83bd6"
+        },
+        {
+          "name": "src9/sleep1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 148,
+          "compressed_bytes": 117,
+          "crc32": "e4095138"
+        },
+        {
+          "name": "src9/meows4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 147,
+          "compressed_bytes": 109,
+          "crc32": "92aaf228"
+        },
+        {
+          "name": "src9/sleep0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 88,
+          "compressed_bytes": 83,
+          "crc32": "ced85d74"
+        },
+        {
+          "name": "src9/meows5.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 127,
+          "compressed_bytes": 96,
+          "crc32": "0727d6b4"
+        },
+        {
+          "name": "src9/houses0.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 451,
+          "compressed_bytes": 209,
+          "crc32": "02405cc4"
+        },
+        {
+          "name": "src9/sleep4.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 204,
+          "compressed_bytes": 137,
+          "crc32": "597c7907"
+        },
+        {
+          "name": "src9/bank3.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 462,
+          "compressed_bytes": 201,
+          "crc32": "7f4aa9a9"
+        },
+        {
+          "name": "src9/meows1.py",
+          "kind": "file",
+          "extension": ".py",
+          "declared_bytes": 166,
+          "compressed_bytes": 121,
+          "crc32": "8b17f2cd"
+        }
+      ],
+      "possible_duplicates_crc_size": [],
+      "duplicate_contents_verified": false,
+      "member_contents_verified": false,
+      "course_id": null,
+      "week": null,
+      "binding_status": "operator_evidence_required",
+      "status": "metadata_checked",
+      "blockers": [],
+      "import_approved": false,
+      "limits": {
+        "raw_bytes": 1048576,
+        "members": 64,
+        "member_bytes": 1048576,
+        "total_bytes": 8388608,
+        "ratio": 100,
+        "seconds": 5
+      },
+      "duplicate_archive_of": null,
+      "operator_declared_course_id": "cs50_python",
+      "filename_week": "9",
+      "archive_root_components": [
+        "src9"
+      ],
+      "week_evidence": "filename_and_archive_root_consistent; original_download_receipt_missing",
+      "original_download_url_verified": false,
+      "approval_status": "operator_action_required",
+      "file_types": {
+        ".py": 50
+      }
+    }
+  ],
+  "import_permitted": false,
+  "record_type": "manual_zip_inventory",
+  "observed_date": "2026-10-23",
+  "source_root": "operator_authorized_read_only_directory",
+  "expected_archives": 10,
+  "observed_archives": 10,
+  "metadata_checked": 9,
+  "blocked": 1,
+  "raw_hashes_unchanged_on_repeat": true,
+  "raw_archive_copies_created": 0,
+  "member_contents_read": false,
+  "archives_imported": 0,
+  "approval_lookup": {
+    "versioned_file": "deployment/cs50-source-approvals.json.example",
+    "source_grants": 0,
+    "runtime_private_catalog": "not_supplied_not_inspected"
+  },
+  "course_week_binding": "operator_course_declaration_plus_local_names_and_roots; not a verified HTTP acquisition chain"
+}

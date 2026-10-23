@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-23",
+  "base": "d180a8f6e65f900a4d0d169475d78a4cb42b0d8c",
+  "runs": [
+    {
+      "name": "materials",
+      "sha256": "c3d93b7525d5007fa5c6811ec6c4cc23506a78028d08df2a1eb77cfb0a87c570",
+      "suites": [
+        {
+          "tests": "244",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "2",
+          "time": "261.736"
+        }
+      ]
+    },
+    {
+      "name": "final",
+      "sha256": "5935dc35bbaa698ddb06e2e7432831ee2acf5694b820abde124b0adea31d6143",
+      "suites": [
+        {
+          "tests": "72",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "71.795"
+        }
+      ]
+    },
+    {
+      "name": "child-final",
+      "sha256": "03cbf49f564e68733437bf12b9fcdac4d76f830a69d5afdc721c8538debdcbce",
+      "suites": [
+        {
+          "tests": "1",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "7.150"
+        }
+      ]
+    }
+  ],
+  "files": {
+    "src/tools_materials/code_zip.py": {
+      "sha256": "530be98f9eec5bce8369433db6cc37a0abe43587aede683f092d81a3474602c8",
+      "bytes": 8724
+    },
+    "scripts/cs50_zip_inventory.py": {
+      "sha256": "d3a1e826b97956a09fb4bdd0c144cfeafdd1a86f07ea46fecf1c7f29e4f3b9c9",
+      "bytes": 2589
+    },
+    "tests/test_cs50_zip_inventory.py": {
+      "sha256": "52c49813d705537c5fd3e5e5b10a94a0dc53e6b449b78c3d04320cdbfc974baf",
+      "bytes": 5102
+    },
+    "tests/test_cs50_week0_acceptance.py": {
+      "sha256": "81c5e5e4cc198cd4b7d2525c50540d2b077286983b66892450a7ee013b325300",
+      "bytes": 4450
+    },
+    "docs/deployment/c26a/week0_final_plan.v1.json": {
+      "sha256": "7dff17e89b20c2cf3fcc81793beb00fd02f70084441dc6456be1918fd133aa13",
+      "bytes": 253195
+    },
+    "docs/deployment/c26a/manual_zip_inventory.v1.json": {
+      "sha256": "ee04297863a6a7036db5cabec263e918ed7ee3dd5d7e661474d63319358c43c2",
+      "bytes": 70864
+    }
+  },
+  "exports_verified_unchanged": 6,
+  "zip_raws_verified_unchanged": 10,
+  "archives_inventoried": 10,
+  "metadata_passed": 9,
+  "metadata_blocked": 1,
+  "real_archives_imported": 0,
+  "real_import_status": "operator_action_required",
+  "real_child_worker_status": "blocked_reproduced_in_existing_prepare",
+  "real_full_artifact_chains_newly_verified": 0,
+  "production_jobs_started": 0,
+  "network_course_downloads": 0,
+  "production_ready": false,
+  "limits_increased": false,
+  "source_approvals_created": 0,
+  "overlapping_test_runs": true
+}
