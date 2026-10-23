@@ -30,7 +30,8 @@
         "free_gib_approx": 20,
         "inodes_free_percent_approx": 91,
         "material_data_mb_approx": 755,
-        "docker_images_gb_approx": 9.2
+        "docker_images_gb_approx": 9.2,
+        "ram_gib_approx": 4
       },
       "observed_date": "2026-10-23",
       "source": "operator terminal observations supplied in this task; not independently queried by Codex"
@@ -74,7 +75,17 @@
       },
       "additional_label_keys_present": [
         "com.docker.compose.project.working_dir"
-      ]
+      ],
+      "coolify_settings": {
+        "resource_type": "Application",
+        "auto_deploy": "Manual deployments only",
+        "build_cache": true,
+        "automatic_build_argument_injection": true,
+        "source_commit_availability": "Runtime only (preserves cache)",
+        "build_strategy": "Dockerfile",
+        "builder": "Deployment server"
+      },
+      "placeholder_intent": "sleep infinity was intentionally selected as a placeholder; not an unintended startup misconfiguration"
     },
     "observed_date": "2026-10-23",
     "source": "operator supplement supplied on 2026-10-23; no independent host, Docker or Coolify query by Codex"
@@ -111,7 +122,23 @@
       },
       "additional_label_keys_present": [
         "com.docker.compose.project.working_dir"
-      ]
+      ],
+      "coolify_settings": {
+        "resource_type": "Application",
+        "auto_deploy": "Manual deployments only",
+        "build_cache": true,
+        "automatic_build_argument_injection": true,
+        "source_commit_availability": "Runtime only (preserves cache)",
+        "build_strategy": "Docker Compose"
+      },
+      "shown_compose_content": {
+        "matches_repository_path": "docker/docker-compose.ui.yaml",
+        "exact_coolify_compose_location_setting": null,
+        "JOB_BACKEND": "disabled",
+        "ADMIN_AUTH_MODE": "disabled",
+        "STREAMLIT_SERVER_PORT": 8501,
+        "active_public_host_port_in_shown_service": false
+      }
     },
     "observed_date": "2026-10-23",
     "source": "operator supplement supplied on 2026-10-23; no independent host, Docker or Coolify query by Codex"
@@ -136,16 +163,6 @@
     "source": "operator terminal observations supplied in this task; not independently queried by Codex"
   },
   "unverified": {
-    "resource_and_build_type": {
-      "status": "unverified",
-      "value": null,
-      "required_evidence": "Application label is operator_observed. Actual Coolify application UUID/resource binding, build type and supported namespace-preserving rendering on 4.4.7 remain unverified; labels do not establish build pack."
-    },
-    "auto_deploy": {
-      "status": "unverified",
-      "value": null,
-      "required_evidence": "Actual Auto Deploy/Preview/Git/Webhook/registry/API/scheduled triggers and queued deployments"
-    },
     "runtime_configuration": {
       "status": "unverified",
       "value": null,
@@ -189,7 +206,7 @@
     "repository_build_settings": {
       "status": "unverified",
       "value": null,
-      "required_evidence": "Read actual repository, branch, base directory, Dockerfile location, Compose location, raw/normal rendering and startup overrides in Coolify; no inferred values from artifact paths or tags."
+      "required_evidence": "Exact backend Base Directory and Dockerfile Location, exact UI Base Directory and Compose Location, repository/branch and startup override fields. Shown UI content match is confirmed; actual path fields were not supplied."
     },
     "compose_working_directory": {
       "status": "unverified",
@@ -199,10 +216,25 @@
     "entrypoint_discrepancy": {
       "status": "unverified",
       "value": null,
-      "required_evidence": "Match immutable running image Config.Entrypoint/Cmd to container settings and actual Coolify build/deploy record, privately classified against known startup vectors; root cause and operator intent not yet proven."
+      "required_evidence": "Intentional placeholder is confirmed. Exact build-file selection versus container startup override and immutable running image provenance remain unverified; compare actual image/container metadata with build record."
+    },
+    "application_binding_and_rendering": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Actual application UUIDs, selected Raw/Normal/compose parser settings and safe adoption of the same backend Application from Dockerfile to Compose, without an additional stack; actual rendered namespace/mount/label binding."
+    },
+    "additional_deployment_triggers": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Read Preview, manual Git webhook/API/registry/scheduled triggers, deployment permissions and queued runs; Manual deployments only is already confirmed and must not be reclassified unknown."
+    },
+    "live_memory_cpu_budget": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Coolify server RAM/CPU charts, current container memory and limits, host OS/control-plane/other-container headroom, build peak; planned role limits alone do not establish host fit."
     }
   },
-  "last_supplement_at": "2026-10-23T18:50:23.844179+00:00",
+  "last_supplement_at": "2026-10-23T19:31:05.120463+00:00",
   "label_interpretation": {
     "application_label": {
       "status": "operator_observed",
@@ -211,5 +243,15 @@
       "source": "operator supplement supplied on 2026-10-23; no independent host, Docker or Coolify query by Codex"
     },
     "limits": "Labels and generated /artifacts compose paths do not prove actual Coolify build pack, selected repository/branch/Dockerfile, driver scope, triggers or running image provenance."
+  },
+  "manual_deployment_policy": {
+    "status": "operator_observed",
+    "value": {
+      "backend": "Manual deployments only",
+      "ui": "Manual deployments only",
+      "interpretation": "Normal Git push/merge is not intended to trigger deployment under this setting; independent API/webhook/preview/manual/scheduled triggers are not ruled out."
+    },
+    "observed_date": "2026-10-23",
+    "source": "Operator confirmation in Final Runtime Integration request; no independent host/Coolify query by Codex"
   }
 }

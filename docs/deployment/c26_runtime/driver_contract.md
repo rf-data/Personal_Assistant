@@ -63,8 +63,9 @@ bleibt zunächst geschlossen; es gibt kein automatisches Retry/Rollback/Resume.
    deaktiviertes einzelnes Auto-Deploy-Feld reicht nicht als exklusiver Triggerpfad.
 
 Die Labels melden für Backend und UI `coolify.type=application` als
-Betreiberbefund. Maßgebliche Ressourcen-ID, Buildtyp und API-/Wechselwirkung
-fehlen weiterhin; Compose-Labels bestimmen keinen Buildpack oder Triggerstatus.
+Betreiberbefund. Backend/Dockerfile und UI/Docker-Compose sind nun zusätzlich
+bestätigt, beide mit Manual deployments only. Maßgebliche Ressourcen-ID, genaue
+Buildpfade, zusätzliche Trigger und sichere API-/Wechselwirkung fehlen weiterhin.
 Deshalb werden weder Coolify-Endpunkte geraten noch ein deployender Adapter
 implementiert. Aktuelle [Coolify-Compose-Dokumentation](https://coolify.io/docs/applications/builds/docker-compose)
 unterscheidet Git-Application und User-defined Service; ihre Automationen sind
@@ -87,3 +88,13 @@ Neuere Definition-v2-Jobs nicht mit dem alten Image verarbeiten. Normaler
 Gate-Rollback benötigt ein geprüftes kompatibles SHA/Digestpaar und eigene
 Rollbackfreigabe; Restore kopiert ausschließlich in einen separaten Zielroot und
 wird niemals automatisch aktiviert. Quarantäne und Journal beibehalten.
+
+## Konkrete 4.4.7-Grenze
+
+Die [versionsbezogene Prüfung](coolify_compatibility.md) zeigt einen vorhandenen
+Raw-Compose-Pfad. Er ersetzt noch keinen Driver: Coolify kann selbst im Rawpfad
+Images pullen, alte Container stoppen und Hilfsnetze/Labels bearbeiten. Der
+exakte Scope und diese Nebenwirkungen müssen im Plan gebunden werden. Ein
+inaktives Profil macht einen Coolify-Deployaufruf nicht sicher. Die bestätigte
+Manual-Deploy-Einstellung senkt die Erwartung eines normalen Git-Autodeploys,
+schließt separate Deployrechte und Hooks aber nicht aus.

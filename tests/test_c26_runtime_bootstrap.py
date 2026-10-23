@@ -1,6 +1,7 @@
 """Preparation contracts and refused starts. No Docker CLI or host access."""
 
 import json
+import re
 import shutil
 from pathlib import Path
 
@@ -32,7 +33,9 @@ def test_candidate_preserves_loopback_namespace_and_single_capacity_worker():
     for service in services.values():
         assert not service.get("ports") and not service.get("build")
         assert service["profiles"] == ["c26-runtime-approved"]
-        assert service["labels"] == {"traefik.enable": "false"}
+        # Raw Compose in Coolify 4.4.7 appends numeric list entries; a mapping
+        # would become a mixed mapping when management labels are appended.
+        assert service["labels"] == ["traefik.enable=false"]
         assert service["read_only"] and service["cap_drop"] == ["ALL"]
         assert service["restart"] == "no" and service["pull_policy"] == "never"
         assert service["mem_limit"] == service["memswap_limit"]
@@ -40,6 +43,12 @@ def test_candidate_preserves_loopback_namespace_and_single_capacity_worker():
         for mount in service["volumes"]:
             assert mount["bind"]["create_host_path"] is False
             assert mount["target"] != "/var/run/docker.sock"
+            # The 4.4.7 bind-source validator accepts simple references; the
+            # Compose extension must still reject every missing/empty path.
+            variable = re.fullmatch(r"\$\{([A-Z0-9_]+)\}", mount["source"])
+            assert variable
+            name = variable[1]
+            assert data["x-required-paths"][name].startswith("${" + name + ":?")
     assert api["volumes"] == worker["volumes"]
     assert {m["target"] for m in api["volumes"]} == {
         "/app/data",

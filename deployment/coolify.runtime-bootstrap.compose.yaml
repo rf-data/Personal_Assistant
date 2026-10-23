@@ -2,6 +2,15 @@
 # Do not combine with compose.yaml or cs50-worker.compose.yaml: duplicate executors.
 # Requires #148/#156, an existing approved queue, closed gate and private network.
 name: personal-assistant-c26-runtime
+# 4.4.7 validates long bind sources before Compose interpolation. Keep these
+# sources as simple ${VAR}; enforce non-empty paths in this Compose extension.
+x-required-paths:
+  C26_HOST_DATA: ${C26_HOST_DATA:?Confirmed existing data directory}
+  C26_HOST_CONFIGURATION: ${C26_HOST_CONFIGURATION:?Confirmed existing configuration directory}
+  C26_HOST_LOGS: ${C26_HOST_LOGS:?Confirmed existing logs directory}
+  C26_HOST_CACHE: ${C26_HOST_CACHE:?Confirmed existing cache directory}
+  C26_CADDYFILE: ${C26_CADDYFILE:?Existing reviewed deployment/Caddyfile}
+  C26_TLS_DIRECTORY: ${C26_TLS_DIRECTORY:?Existing private TLS directory}
 x-role: &role
   profiles: [c26-runtime-approved]
   pull_policy: never
@@ -16,7 +25,8 @@ x-role: &role
   mem_limit: 256m
   memswap_limit: 256m
   tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777]
-  labels: {traefik.enable: 'false'}
+  # Coolify 4.4.7 oldRawParser appends management labels to this list.
+  labels: ['traefik.enable=false']
   logging:
     driver: json-file
     options: {max-size: 10m, max-file: '3'}
@@ -27,20 +37,20 @@ x-backend: &backend
     PA_PERSISTENT_ROOTS_FILE: /app/configuration/c26-runtime/persistent-roots.json
   volumes:
     - type: bind
-      source: ${C26_HOST_DATA:?Confirmed existing /srv/personal-assistant/data}
+      source: ${C26_HOST_DATA}
       target: /app/data
       bind: {create_host_path: false}
     - type: bind
-      source: ${C26_HOST_CONFIGURATION:?Confirmed existing /srv/personal-assistant/configuration}
+      source: ${C26_HOST_CONFIGURATION}
       target: /app/configuration
       read_only: true
       bind: {create_host_path: false}
     - type: bind
-      source: ${C26_HOST_LOGS:?Confirmed existing /srv/personal-assistant/logs}
+      source: ${C26_HOST_LOGS}
       target: /app/logs
       bind: {create_host_path: false}
     - type: bind
-      source: ${C26_HOST_CACHE:?Confirmed existing /srv/personal-assistant/cache}
+      source: ${C26_HOST_CACHE}
       target: /app/.cache
       bind: {create_host_path: false}
 services:
@@ -55,12 +65,12 @@ services:
         aliases: ['${C26_API_DNS:?Approved private API DNS name}']
     volumes:
       - type: bind
-        source: ${C26_CADDYFILE:?Existing reviewed copy of deployment/Caddyfile}
+        source: ${C26_CADDYFILE}
         target: /etc/caddy/Caddyfile
         read_only: true
         bind: {create_host_path: false}
       - type: bind
-        source: ${C26_TLS_DIRECTORY:?Existing private API TLS directory, not read by Codex}
+        source: ${C26_TLS_DIRECTORY}
         target: /run/tls
         read_only: true
         bind: {create_host_path: false}
