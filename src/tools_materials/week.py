@@ -17,6 +17,8 @@ from src.model_discovery.cs50 import Provenance, ResourceCandidate
 from src.model_materials.materials import MaterialResource, ParserConfig
 from src.model_materials.media_plan import MediaLimits
 from src.model_materials.week import (
+    ProfiledWeekReport,
+    ProfiledWeekRequest,
     Snapshot,
     WeekReport,
     WeekRequest,
@@ -29,14 +31,7 @@ from src.tools_materials import media_evidence, transcripts
 from src.tools_materials.inventory import CODE, official
 from src.tools_materials.parse_html import dom_path
 from src.tools_materials.processing import make_plan
-
-EXPECTED_TASKS = (
-    "Indoor Voice",
-    "Playback Speed",
-    "Making Faces",
-    "Einstein",
-    "Tip Calculator",
-)
+from src.tools_materials.profiles import EXPECTED_TASKS, validate_profile
 
 
 def routing(binding, limits):
@@ -44,7 +39,11 @@ def routing(binding, limits):
     path = unquote(unquote(urlsplit(binding.original_url).path)).lower()
     suffix = Path(path).suffix.lstrip(".")
     fmt = binding.format.lower()
-    code_path = any(p.startswith("src") and p[3:].isdigit() for p in path.split("/"))
+    code_path = any(
+        p in {"src", "code", "source_code", "sources"}
+        or (p.startswith("src") and p[3:].isdigit())
+        for p in path.split("/")
+    )
     transcript = suffix == fmt and (binding.role, fmt) in {
         ("subtitles", "srt"),
         ("transcript", "txt"),
@@ -98,6 +97,11 @@ def routing(binding, limits):
 def _inventory(request):
     path = safe_path(request.manifest)
     manifest = load_fixture_manifest(path)
+    profiled = isinstance(request, ProfiledWeekRequest)
+    profile = validate_profile(request.profile, path) if profiled else None
+    section = (
+        next(s for s in profile.sections if s.key == request.week) if profile else None
+    )
     graph = make_plan(path)  # Existing index/week parsing; never parse code indexes.
     course = next(
         (c for c in manifest.courses if c.course_id == request.course_id), None
@@ -120,7 +124,11 @@ def _inventory(request):
         b
         for b in selected
         if b.role == "problem_set"
-        and urlsplit(b.original_url).path == f"/python/psets/{request.week}/"
+        and (
+            b.original_url in {str(u) for u in section.assignment_roots}
+            if section
+            else urlsplit(b.original_url).path == f"/python/psets/{request.week}/"
+        )
     ]
     observed_pages = [
         p
@@ -128,7 +136,11 @@ def _inventory(request):
         if p.role == "course_index"
         or (
             p.role == "week_overview"
-            and urlsplit(str(p.url)).path == f"/python/weeks/{request.week}/"
+            and (
+                str(p.url) == str(section.overview_url)
+                if section
+                else urlsplit(str(p.url)).path == f"/python/weeks/{request.week}/"
+            )
         )
     ]
     extra_paths = {}
@@ -530,7 +542,10 @@ def _observations(row, request, approvals):
 
 def plan_week(request, approvals=None):
     """Inventory/plan only; no auto-dispatch, acquisition or recursive discovery."""
-    request = WeekRequest.model_validate_json(request.model_dump_json())
+    request_type = (
+        ProfiledWeekRequest if isinstance(request, ProfiledWeekRequest) else WeekRequest
+    )
+    request = request_type.model_validate_json(request.model_dump_json())
     approvals = (
         api.Approvals.model_validate_json(approvals.model_dump_json())
         if approvals
@@ -552,9 +567,15 @@ def plan_week(request, approvals=None):
     ):
         raise ValueError("Local evidence refers to an unknown/out-of-week material")
     scope = named or (
-        {r.material_id for r in rows if r.category in request.material_types}
-        if request.mode != "discovery_only"
-        else set()
+        {r.material_id for r in rows}
+        if isinstance(request, ProfiledWeekRequest)
+        and request.selection in {"all", "complete"}
+        and request.mode != "discovery_only"
+        else (
+            {r.material_id for r in rows if r.category in request.material_types}
+            if request.mode != "discovery_only"
+            else set()
+        )
     )
     if named and any(
         r.material_id in named
@@ -615,7 +636,17 @@ def plan_week(request, approvals=None):
             and row.binding.original_url not in observed_urls
         ):
             gaps.append("source_snapshot_not_provided:" + row.resource_id)
-    if request.week == "0":
+    section = (
+        next(s for s in request.profile.sections if s.key == request.week)
+        if isinstance(request, ProfiledWeekRequest)
+        else None
+    )
+    expected_tasks = (
+        section.expected_tasks
+        if section
+        else (EXPECTED_TASKS if request.week == "0" else ())
+    )
+    if expected_tasks:
         titles = {
             r.title.casefold()
             for r in result
@@ -623,8 +654,15 @@ def plan_week(request, approvals=None):
         }
         gaps.extend(
             "task_not_proven:" + name
-            for name in EXPECTED_TASKS
+            for name in expected_tasks
             if name.casefold() not in titles
+        )
+    if section:
+        roles = {r.binding.role for r in result}
+        gaps.extend(
+            "required_role_missing:" + role.value
+            for role in section.required_roles
+            if role.value not in roles
         )
     selected = [r for r in result if r.selected]
     complete = bool(selected) and all(
@@ -634,7 +672,14 @@ def plan_week(request, approvals=None):
         for r in selected
     )
     counts = week_counts(result, gaps)
-    return WeekReport(
+    report_type = ProfiledWeekReport if section else WeekReport
+    extra = (
+        {"profile_sha256": fingerprint(request.profile.model_dump(mode="json"))}
+        if section
+        else {}
+    )
+    return report_type(
+        **extra,
         course_id=request.course_id,
         week=request.week,
         mode=request.mode,

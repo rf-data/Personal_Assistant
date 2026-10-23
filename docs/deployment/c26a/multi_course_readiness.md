@@ -1,5 +1,9 @@
 # C26-B6: Multi-Week und Multi-Course, Phase A
 
+Fortsetzung vom 23.10.2026: [Phase-B-Implementierung und aktuelle Grenzen](course_planning.md).
+Der folgende Text dokumentiert den damaligen Phase-A-Stand; B5 und dieser Entwurf
+sind inzwischen integriert. Produktionsfreigabe und C18-Aufgabenbindung bleiben offen.
+
 Stand: 22.10.2026. Entwurf auf `master` / `e581e201ef6b3d6c06aca14de845e0687d213b37`.
 **Implementierungs- und Produktionsstatus: ausstehend.** Dieser Review enthält
 Bestandsaufnahme, Architektur, Pilotmatrix und Testplan. Er implementiert weder

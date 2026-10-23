@@ -16,6 +16,7 @@ from src.job_control.operations import private
 from src.model_lecture.data_resources import LectureDocument
 from src.model_materials.materials import MaterialResource
 from src.model_transcribe.data_transcribe import TranscriptDocument
+from src.tools_lecture.cs50_manifest import COURSE_PATHS
 from src.tools_lecture.execute_cs50 import sync_directory, validate_order
 from src.tools_materials import batch as api
 from src.tools_materials.capacity import MIB, check_capacity
@@ -45,9 +46,9 @@ class TranscriptReceipt(Contract):
 
 def supported(binding):
     return (
-        binding.resource.course_id == "cs50_python"
+        binding.resource.course_id in COURSE_PATHS
         and official(binding.original_url)
-        and binding.resource.section_keys == ("0",)
+        and len(binding.resource.section_keys) == 1
         and (binding.role, binding.format)
         in {("subtitles", "srt"), ("transcript", "txt")}
         and bool(binding.language and binding.language.strip())
@@ -72,7 +73,12 @@ def revision():
 def checked(batch, limits):
     limits.batch_size(batch)
     if not 1 <= len(batch.materials) <= 2 or not all(map(supported, batch.materials)):
-        raise ValueError("Select one or two bound Week-0 SRT/TXT resources")
+        raise ValueError("Select one or two bound SRT/TXT resources")
+    if (
+        len({(b.resource.course_id, b.resource.section_keys) for b in batch.materials})
+        != 1
+    ):
+        raise ValueError("Transcript batch must belong to one course and section")
     if limits.reserve_bytes < 5 * 1024**3 or limits.archive_bytes > 64 * MIB:
         raise ValueError(
             "C26 reserve/budget must remain at least 5 GiB / at most 64 MiB"
@@ -80,7 +86,7 @@ def checked(batch, limits):
     # Re-derive graph membership and lecture IDs from hashed discovery snapshots.
     current = api.plan(
         batch.manifest,
-        ["cs50_python"],
+        sorted({b.resource.course_id for b in batch.materials}),
         [b.material_id for b in batch.materials],
         synthetic=batch.source_origin == "synthetic",
     )
@@ -128,7 +134,7 @@ def lecture(binding, digest):
     return LectureDocument(
         title=binding.resource.title,
         source_url=binding.original_url,
-        lecture_no="0",
+        lecture_no=binding.resource.section_keys[0],
         lecture_blocks=list(binding.resource.section_keys),
         file_type=binding.format,
         local_path=Path("source." + binding.format),
