@@ -1,0 +1,104 @@
+# REVIEW CANDIDATE ONLY. Replaces mapped roles after separate operator approval.
+# Do not combine with compose.yaml or cs50-worker.compose.yaml: duplicate executors.
+# Requires #148/#156, an existing approved queue, closed gate and private network.
+name: personal-assistant-c26-runtime
+x-role: &role
+  profiles: [c26-runtime-approved]
+  pull_policy: never
+  user: '10001:10001'
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  restart: 'no'
+  stop_grace_period: 30s
+  pids_limit: 64
+  cpus: 0.25
+  mem_limit: 256m
+  memswap_limit: 256m
+  tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777]
+  labels: {traefik.enable: 'false'}
+  logging:
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+x-backend: &backend
+  <<: *role
+  image: ${C26_RUNTIME_IMAGE:?Reviewed C22 runtime image including sha256 digest}
+  environment:
+    PA_PERSISTENT_ROOTS_FILE: /app/configuration/c26-runtime/persistent-roots.json
+  volumes:
+    - type: bind
+      source: ${C26_HOST_DATA:?Confirmed existing /srv/personal-assistant/data}
+      target: /app/data
+      bind: {create_host_path: false}
+    - type: bind
+      source: ${C26_HOST_CONFIGURATION:?Confirmed existing /srv/personal-assistant/configuration}
+      target: /app/configuration
+      read_only: true
+      bind: {create_host_path: false}
+    - type: bind
+      source: ${C26_HOST_LOGS:?Confirmed existing /srv/personal-assistant/logs}
+      target: /app/logs
+      bind: {create_host_path: false}
+    - type: bind
+      source: ${C26_HOST_CACHE:?Confirmed existing /srv/personal-assistant/cache}
+      target: /app/.cache
+      bind: {create_host_path: false}
+services:
+  api-gateway:
+    <<: *role
+    image: ${C26_GATEWAY_IMAGE:?Reviewed existing C22 gateway build including sha256 digest}
+    entrypoint: [caddy]
+    command: [run, --config, /etc/caddy/Caddyfile, --adapter, caddyfile]
+    environment: {API_DNS: '${C26_API_DNS:?Approved private DNS name matching API certificate SAN}'}
+    networks:
+      private-api:
+        aliases: ['${C26_API_DNS:?Approved private API DNS name}']
+    volumes:
+      - type: bind
+        source: ${C26_CADDYFILE:?Existing reviewed copy of deployment/Caddyfile}
+        target: /etc/caddy/Caddyfile
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C26_TLS_DIRECTORY:?Existing private API TLS directory, not read by Codex}
+        target: /run/tls
+        read_only: true
+        bind: {create_host_path: false}
+    healthcheck:
+      test: [CMD, python, /opt/gateway_health.py]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+  api:
+    <<: *backend
+    network_mode: service:api-gateway
+    depends_on: {api-gateway: {condition: service_started}}
+    entrypoint: [python, -m, scripts.deployment]
+    command: [api, --config, /app/configuration/c26-runtime/controller.json, --port, '8016']
+    healthcheck:
+      test: [CMD, python, -m, scripts.deployment, health, --role, api, --config, /app/configuration/c26-runtime/controller.json]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+  capacity-worker:
+    <<: *backend
+    network_mode: none
+    entrypoint: [python, -m, scripts.cs50_worker]
+    command: [--config, /app/configuration/c26-runtime/controller.json, --limits, /app/configuration/c26-runtime/limits.json]
+    pids_limit: 128
+    cpus: 1.0
+    mem_limit: 1024m
+    memswap_limit: 1024m
+    tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=128m,mode=1777]
+    healthcheck:
+      test: [CMD, python, -m, scripts.deployment, health, --role, worker, --config, /app/configuration/c26-runtime/controller.json]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+networks:
+  private-api:
+    external: true
+    name: ${C26_PRIVATE_API_NETWORK:?Existing operator-approved dedicated internal API network}

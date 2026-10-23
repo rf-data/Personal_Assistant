@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "prepared_at": "2026-10-23T18:08:13.368819+00:00",
+  "production_approved": false,
+  "host": {
+    "status": "operator_observed",
+    "value": "ubuntu-4gb-nbg1-2",
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "coolify_version": {
+    "status": "operator_observed",
+    "value": "4.4.7",
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "traefik_version": {
+    "status": "operator_observed",
+    "value": "3.6",
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "capacity": {
+    "production": {
+      "status": "operator_observed",
+      "value": {
+        "device": "/dev/sda1",
+        "filesystem": "ext4",
+        "total_gib_approx": 38,
+        "free_gib_approx": 20,
+        "inodes_free_percent_approx": 91,
+        "material_data_mb_approx": 755,
+        "docker_images_gb_approx": 9.2
+      },
+      "observed_date": "2026-10-23",
+      "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+    },
+    "production_fresh_budget": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Fresh target statvfs plus bounded batch, image staging, backup and host RAM/CPU headroom; do not substitute laptop capacity"
+    }
+  },
+  "backend": {
+    "status": "operator_observed",
+    "value": {
+      "container": "syboxap8mpf8lgjzpjdsqm0z-20261022T151524",
+      "image_name": "syboxap8mpf8lgjzpjdsqm0z:3b91d39195e0d13fe0442d4594b28e431b0f4236",
+      "started_at": "2026-10-22T15:15:40Z",
+      "restart_policy": "unless-stopped",
+      "command": [
+        "sleep",
+        "infinity"
+      ],
+      "reported_processes": [
+        "sleep infinity"
+      ],
+      "network": "coolify",
+      "healthcheck_configured": false,
+      "declared_exposed_ports": []
+    },
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "mounts": {
+    "status": "operator_observed",
+    "value": {
+      "/app/data": "/srv/personal-assistant/data",
+      "/app/configuration": "/srv/personal-assistant/configuration",
+      "/app/logs": "/srv/personal-assistant/logs",
+      "/app/.cache": "/srv/personal-assistant/cache"
+    },
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "ui": {
+    "status": "operator_observed",
+    "value": {
+      "container": "streamlit-a8xzljz4fq52vt1yt43nheg5-20261014T055035",
+      "image_name": "a8xzljz4fq52vt1yt43nheg5_streamlit:b2cf9ca9ba44ee770dab4d834a6ae8285f34776b",
+      "command": "streamlit run app_ui.py --server.address=0.0.0.0 --server.port=8501 --server.headless=true",
+      "network": "a8xzljz4fq52vt1yt43nheg5"
+    },
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "traefik_networks": {
+    "status": "operator_observed",
+    "value": [
+      "coolify",
+      "a8xzljz4fq52vt1yt43nheg5"
+    ],
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "paths_file_top_level_keys": {
+    "status": "operator_observed",
+    "value": [
+      "repository",
+      "roots",
+      "schema_version"
+    ],
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "unverified": {
+    "resource_and_build_type": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Actual Coolify resource/build type and supported namespace-preserving rendering on 4.4.7"
+    },
+    "auto_deploy": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Actual Auto Deploy/Preview/Git/Webhook/registry/API/scheduled triggers and queued deployments"
+    },
+    "runtime_configuration": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Existing private C16 Settings JSON, Limits JSON and separate mount policy; file metadata and filtered field review"
+    },
+    "queue_and_workers": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "All C16/independent pilot roots, live jobs, ownership, unique executor and guardian locks"
+    },
+    "revision_and_digest": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Actual image ID/RepoDigest/build provenance and deployment SHA; tags are not proof"
+    },
+    "private_network": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Existing dedicated internal API network and exclusive members; shared coolify network is not accepted as proof"
+    },
+    "tls_dns_vpn": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Exact trusted SAN/name/CA, private DNS, real VPN paths and RemoteAddr negative checks"
+    },
+    "oidc_and_devices": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Exact issuer/callback, individual subject-role-course bindings, approved/revoked users/devices"
+    },
+    "backup_restore_rollback": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Backup scope/freshness, isolated restore proof, pinned prior image and complete state/namespace/role rollback"
+    },
+    "coolify_driver": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Existing Gate.Driver adapter covering exact resource type and single-resource/namespace replacement semantics"
+    }
+  }
+}
