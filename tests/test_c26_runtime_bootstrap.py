@@ -30,9 +30,13 @@ def test_candidate_preserves_loopback_namespace_and_single_capacity_worker():
     assert "--limits" in worker["command"]
     assert data["networks"]["private-api"]["external"] is True
     assert set(services["api-gateway"]["networks"]) == {"private-api"}
-    for service in services.values():
+    for name, service in services.items():
         assert not service.get("ports") and not service.get("build")
-        assert service["profiles"] == ["c26-runtime-approved"]
+        assert service["profiles"] == [
+            "c26-worker-approved"
+            if name == "capacity-worker"
+            else "c26-runtime-approved"
+        ]
         # Raw Compose in Coolify 4.4.7 appends numeric list entries; a mapping
         # would become a mixed mapping when management labels are appended.
         assert service["labels"] == ["traefik.enable=false"]
@@ -49,8 +53,10 @@ def test_candidate_preserves_loopback_namespace_and_single_capacity_worker():
             assert variable
             name = variable[1]
             assert data["x-required-paths"][name].startswith("${" + name + ":?")
+    assert next(m for m in api["volumes"] if m["target"] == "/app/data")["read_only"]
     assert api["volumes"] == worker["volumes"]
     assert {m["target"] for m in api["volumes"]} == {
+        "/app/runtime-state",
         "/app/data",
         "/app/configuration",
         "/app/logs",
@@ -116,3 +122,41 @@ def test_required_gate_refuses_missing_existing_queue(tmp_path):
     assert main(["--config", str(config), "--limits", str(limits)]) == 2
     assert {p.name for p in root.iterdir()} <= {".operations.lock"}
     assert not (root / "jobs.sqlite3").exists()
+
+
+def test_explicit_cold_provision_keeps_gate_held_and_worker_idle(tmp_path):
+    if "deployment_gate_required" not in Settings.model_fields:
+        pytest.skip("Explicit integration dependency #148")
+    from src.job_control.deployment_gate import Gate, require_existing_queue
+
+    from scripts.cs50_worker import CapacityExecutor
+    from src.job_control.controller import Controller
+    from src.job_control.operations import health
+    from src.job_control.store import Store, Unavailable
+
+    root = tmp_path / "new-runtime"
+    root.mkdir(mode=0o700)
+    settings = Settings(root=root, deployment_gate_required=True, max_jobs=1)
+    with pytest.raises(Unavailable):
+        require_existing_queue(settings)
+    assert list(root.iterdir()) == []
+    # Explicit operator-equivalent provisioning only, never preflight/startup.
+    Store(root, deployment_gate_required=True)
+    gate = Gate(settings)
+    gate.initialize()
+    assert gate.status()["phase"] == "held"
+    with pytest.raises(Unavailable):
+        CapacityExecutor(settings, CapacityLimits())
+    worker_settings = settings.model_copy(update={"execution_enabled": True})
+    worker = CapacityExecutor(worker_settings, CapacityLimits())
+    try:
+        worker.step()
+        health(worker_settings, "worker")
+        assert not worker.store.all()
+        assert Controller(settings).settings.execution_enabled is False
+        assert gate.status()["phase"] == "held"
+        with pytest.raises((Unavailable, BlockingIOError)):
+            CapacityExecutor(worker_settings, CapacityLimits())
+    finally:
+        worker.close()
+    assert gate.status()["phase"] == "held"

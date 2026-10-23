@@ -31,7 +31,11 @@
         "inodes_free_percent_approx": 91,
         "material_data_mb_approx": 755,
         "docker_images_gb_approx": 9.2,
-        "ram_gib_approx": 4
+        "ram_gib_approx": 3.7,
+        "mem_available_gib_approx": 2.2,
+        "swap_gib_approx": 4,
+        "swap_used_mib_approx": 688,
+        "substantial_current_swap_io": false
       },
       "observed_date": "2026-10-23",
       "source": "operator terminal observations supplied in this task; not independently queried by Codex"
@@ -166,7 +170,7 @@
     "runtime_configuration": {
       "status": "unverified",
       "value": null,
-      "required_evidence": "Existing private C16 Settings JSON, Limits JSON and separate mount policy; file metadata and filtered field review"
+      "required_evidence": "Historical configs now known; NEW /app/runtime-state/c16 root, its own mount/policy, disabled controller and conservative limits require explicit provisioning approval. No historical queue adoption."
     },
     "queue_and_workers": {
       "status": "unverified",
@@ -231,10 +235,10 @@
     "live_memory_cpu_budget": {
       "status": "unverified",
       "value": null,
-      "required_evidence": "Coolify server RAM/CPU charts, current container memory and limits, host OS/control-plane/other-container headroom, build peak; planned role limits alone do not establish host fit."
+      "required_evidence": "RAM 3.7 GiB / available 2.2 GiB / Swap 4 GiB (688 MiB used) operator-observed. Fresh peak, CPU count, effective role limits, residual control-plane memory and build window remain unverified."
     }
   },
-  "last_supplement_at": "2026-10-23T19:31:05.120463+00:00",
+  "last_supplement_at": "2026-10-23T20:28:51.835530+00:00",
   "label_interpretation": {
     "application_label": {
       "status": "operator_observed",
@@ -253,5 +257,60 @@
     },
     "observed_date": "2026-10-23",
     "source": "Operator confirmation in Final Runtime Integration request; no independent host/Coolify query by Codex"
+  },
+  "historical_runtime_controllers": {
+    "status": "operator_observed",
+    "observed_date": "2026-10-23",
+    "value": [
+      {
+        "host_path": "/srv/personal-assistant/data/cs50_pilot_01/controller.json",
+        "schema_version": 1,
+        "root": "/app/data/cs50_pilot_01/jobs",
+        "execution_enabled": true,
+        "max_jobs": 3,
+        "max_parallel": 1,
+        "max_queued": 1,
+        "worker_ttl": 10.0,
+        "workflows_enabled": true,
+        "pdf_enabled": false,
+        "index_jobs_enabled": false,
+        "import_jobs_enabled": false
+      },
+      {
+        "host_path": "/srv/personal-assistant/data/cs50_pilot_week0_02/controller.json",
+        "schema_version": 1,
+        "root": "/app/data/cs50_pilot_week0_02/jobs",
+        "execution_enabled": true,
+        "max_jobs": 6,
+        "max_parallel": 1,
+        "max_queued": 1,
+        "worker_ttl": 10.0,
+        "workflows_enabled": true,
+        "pdf_enabled": false,
+        "index_jobs_enabled": false,
+        "import_jobs_enabled": false
+      }
+    ],
+    "interpretation": "Historical only, unchanged. Enabled config does not prove an active worker. Never adopt these queues for the new runtime."
+  },
+  "historical_capacity_limits": {
+    "status": "operator_observed",
+    "observed_date": "2026-10-23",
+    "value": {
+      "schema_version": 1,
+      "reserve_bytes": 5368709120,
+      "archive_bytes": 67108864,
+      "catalog_bytes": 134217728,
+      "job_bytes": 536870912,
+      "report_bytes": 16777216,
+      "max_materials": 1
+    },
+    "historical_max_materials": [
+      1,
+      2,
+      3
+    ],
+    "limits_exact_host_path": "unverified",
+    "interpretation": "max_materials=1 is the proposed first batch cap; historical observed values vary."
   }
 }

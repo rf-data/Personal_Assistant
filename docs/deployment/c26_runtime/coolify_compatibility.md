@@ -44,8 +44,10 @@ Alle Werte waren `example.invalid` bzw. nicht gemountete synthetische Pfade.
 
 - Ohne gesetzte Pflichtwerte: Fehler.
 - Ohne aktiviertes Profil: null Services.
-- Mit `c26-runtime-approved`: exakt Gateway, API und Kapazitätsworker.
-- Jeder der sechs leeren Pflichtpfade: Fehler.
+- Ursprünglich mit `c26-runtime-approved`: drei Rollen. Die aktuelle Finalisierung
+  trennt jetzt bewusst: dieses Profil startet nur Gateway/API, zusätzliches
+  `c26-worker-approved` erlaubt erst den einen Worker.
+- Jeder der nun sieben leeren Pflichtpfade: Fehler.
 - Namespacekopplung, Worker ohne Netz, keine Hostports, Traefik deaktiviert und
   keine automatische Hostpfadanlage: im lokalen Rendering bestätigt.
 
@@ -61,7 +63,7 @@ Raw als Kandidat, die drei Rollen der bestehenden Vorlage, keine Domains/Ports
 und kein zusätzlich injiziertes Netz an der API. Base Directory Repositoryroot
 und `deployment/coolify.runtime-bootstrap.compose.yaml` sind **Vorschläge**, keine
 bestätigten Coolifyfelder. Images vorab an SHA/Digest binden; die Vorlage baut
-nichts. Alle Variablen einschließlich der sechs Pflichtpfade müssen im späteren
+nichts. Alle Variablen einschließlich der sieben Pflichtpfade müssen im späteren
 freigegebenen Deployment explizit gebunden werden; nicht auf automatische
 Erkennung der `x-`-Erweiterung in der Coolify-Oberfläche vertrauen.
 
@@ -69,3 +71,7 @@ Vor dieser Umstellung die tatsächliche Ressourcenadoption und endgültige
 gerenderte Konfiguration in einer separat freigegebenen Testumgebung prüfen.
 Genau dieser Scope muss vom bestehenden #148-Gate über einen realen Driver
 kontrolliert werden. Ohne Beleg: **NO-GO**, keine zweite Application als Ausweg.
+
+Das neue Profil und der zusätzliche Runtime-Bind wurden erneut ausschließlich
+daemonfrei geprüft. `/app/data` ist für die neuen Rollen RO, `/app/runtime-state`
+ist der eigene RW-Bind; Produktionsmounts wurden weder erzeugt noch verändert.

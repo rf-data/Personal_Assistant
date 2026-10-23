@@ -73,13 +73,26 @@ nicht identisch. Verhalten der installierten Version 4.4.7 bleibt zu bestätigen
 
 ## Erstbootstrap und Rollbackgrenze
 
-Ein alter ungegateter Container kann nicht durch den noch uninitialisierten Gate-
-Kern geschützt werden. Erstbootstrap ist eine eigene genehmigte Wartungsoperation:
-alle Annahmepfade schließen, Writer/Jobs nachweislich idle, vorhandene Queue und
-Backups prüfen, alte Rollen ohne Überlappung ablösen, Gate bewusst `held`
-initialisieren, gatefähige Rollen starten und erst nach Abnahme separat freigeben.
-`scripts.deployment_gate initialize --confirm` ist **schreibend**, keine Inventur.
-Es erzeugt keine C16-Datenbank. Ohne bestätigte bestehende Queue bleibt es blockiert.
+Ein alter ungegateter Container ist nicht durch den noch uninitialisierten Kern
+geschützt. Erstbootstrap ist eine eigene genehmigte Wartungsoperation. Hier wird
+ausdrücklich ein **neuer, separater** Root provisioniert; keine historischen
+Pilotqueues übernehmen. Zuerst Annahmen sperren, alle Writer idle belegen,
+Backups/Images/Mountpolicy prüfen. Eine eigene leere-Root-Freigabe erlaubt dem
+Betreiber genau einmal `Store(new_root, deployment_gate_required=True)` und
+anschließend `Gate.initialize()`. Ohne dieses ausdrückliche Provisionieren
+verweigern API/Worker weiterhin eine fehlende Queue. Gate initialisiert seine
+Journale auf `held`, erzeugt aber selbst keine C16-Datenbank. Teilfehler bleiben
+gesperrt und dürfen nicht durch Löschen von Locks oder Auto-Init umgangen werden.
+
+Das [Runbook](rollout.md) bindet die Reihenfolge und Kommandos. Für den ersten
+Worker-Healthstart muss execution bewusst in einer separaten identitätslosen
+Stagingconfig aktiviert werden, API bleibt deaktiviert und Gate held. Diese
+Übergangsconfig ist keine abschließende Readiness. Nach eigener Aktivierungs-
+freigabe alle Rollen auf gemeinsame finale Settings binden. `Gate.release` aus
+held benötigt Current=Target der nun gestarteten Runtime, frische Livebeobachtung
+und eigene Resume-Freigabe. `Gate.run(deploy)` aus einem unbekannten/Sleepzustand
+ist kein Ersatz. Ohne realen reviewten Driver/Koordinator bleibt die Freigabe
+blockiert; die Gate-CLI hat absichtlich keinen Resume-/Deploybefehl.
 
 Das alte gemeldete Sleep-Image ist kein nachgewiesener gatefähiger Runtime-
 Rollbacktarget. Es kann nach eigener Freigabe den früheren **ruhenden Zustand**

@@ -123,3 +123,14 @@ Bestehende UI-Application/Service `streamlit` erhalten, geschützten Launcher un
 individuelle C16-/OIDC-/Origin-/CA-Bindungen übernehmen. `ui`-Overlays nicht blind
 hinzufügen. Aktuelle UI-Grundwerte disabled bleiben bis zur separaten Freigabe
 unverändert. Alle anderen Bestandsressourcen und Daten bleiben bestehen.
+
+## Aktualisierung: bekannte historische Controller und konservative Limits
+
+Die zwei historischen Controllerpfade und ihre Felder sind nun ausdrücklich
+operator_observed im Inventar dokumentiert. Sie werden nicht als unbekannt
+nachgefordert oder für die neue Runtime verwendet. Ebenso sind Reserve5GiB,
+Archiv64MiB, Katalog128MiB, Job512MiB, Report16MiB bestätigt; exakter historischer
+Limitspfad bleibt offen. RAM3,7GiB/Available2,2GiB/Swap4GiB, davon688MiB benutzt,
+sind gemeldet. Frische Peaks/effektive Limits/CPUzahl fehlen weiterhin.
+Die spätere neue Root-/Mountpolicy-Provisionierung ist schreibend, separat
+freizugeben und **nicht** Bestandteil dieser lesenden Pakete.
