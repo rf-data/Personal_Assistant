@@ -77,7 +77,7 @@ def check_capacity(root, maximum, reserve, additional=0):
 
 def estimate(batch, limits):
     limits.batch_size(batch)
-    snapshot = sum(len(read_file(batch.manifest.parent / n)) for n in batch.files)
+    snapshot = sum(len(read_file(batch.input_path(n))) for n in batch.files)
     count = len(batch.materials)
     raw = count * batch.max_bytes
     # Explicit planning allowance, not a promise about PDF decompression size.

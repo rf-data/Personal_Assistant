@@ -6,14 +6,11 @@ batch is an input for the existing reviewed C16/C18 path, never an execution gra
 
 from pathlib import Path
 from types import SimpleNamespace
-from urllib.parse import unquote, urldefrag, urljoin, urlsplit
-
-from bs4 import BeautifulSoup
+from urllib.parse import unquote, urlsplit
 
 from src.job_control.catalog import read_file, safe_path
 from src.job_control.models import fingerprint
 from src.job_control.pdf_adapter import PDF_CONFIG
-from src.model_discovery.cs50 import Provenance, ResourceCandidate
 from src.model_materials.materials import MaterialResource, ParserConfig
 from src.model_materials.media_plan import MediaLimits
 from src.model_materials.week import (
@@ -29,7 +26,6 @@ from src.tools_lecture.cs50_manifest import load_fixture_manifest
 from src.tools_materials import batch as api
 from src.tools_materials import media_evidence, transcripts
 from src.tools_materials.inventory import CODE, official
-from src.tools_materials.parse_html import dom_path
 from src.tools_materials.processing import make_plan
 from src.tools_materials.profiles import EXPECTED_TASKS, validate_profile
 
@@ -102,7 +98,12 @@ def _inventory(request):
     section = (
         next(s for s in profile.sections if s.key == request.week) if profile else None
     )
-    graph = make_plan(path)  # Existing index/week parsing; never parse code indexes.
+    if request.assignment_discovery:
+        from src.tools_materials.assignments import for_week
+
+        graph = make_plan(path, assignment_snapshots=for_week(request))
+    else:
+        graph = make_plan(path)  # Legacy index/week parsing; no code-index parsing.
     course = next(
         (c for c in manifest.courses if c.course_id == request.course_id), None
     )
@@ -177,91 +178,16 @@ def _inventory(request):
             else safe_path(path.parent, page.file)
         )
 
-    for parent in parents:
-        base_path = urlsplit(parent.original_url).path
-        for page in (*course.pages, *additional_pages):
-            url = str(page.url)
-            if page.role != "assignment" or not url.startswith(parent.original_url):
-                continue
-            raw = read_file(snapshot_path(page), 1048576)
-            soup = BeautifulSoup(raw, "html.parser")
-            main = soup.find("main")
-            if main is None:
-                continue
-            observed_pages.append(page)
-            candidates = []
-            # The manifest URL itself proves the existence of a supplied child page.
-            if url != parent.original_url:
-                candidates.append((url, main.find("h1") or main))
-            candidates.extend(
-                (urldefrag(urljoin(url, str(a["href"])))[0], a)
-                for a in main.select("a[href]")
-            )
-            for child_url, node in candidates:
-                parsed = urlsplit(child_url)
-                tail = parsed.path.removeprefix(base_path).strip("/")
-                if (
-                    (parsed.scheme, parsed.netloc) != ("https", "cs50.harvard.edu")
-                    or parsed.query
-                    or not parsed.path.startswith(base_path)
-                    or not tail
-                    or "/" in tail
-                    or not parsed.path.endswith("/")
-                ):
-                    continue
-                if node.find_parent(["nav", "aside", "footer"]) is not None:
-                    continue
-                evidence = Provenance(
-                    original_url=url,
-                    fixture_file=page.file,
-                    locator=dom_path(node),
-                    context_path=(
-                        f"Week {request.week}",
-                        "Problem Set",
-                        node.get_text(" ", strip=True),
-                    ),
-                )
-                matches = [
-                    b
-                    for b in selected
-                    if b.original_url == child_url
-                    and b.role == "problem_set"
-                    and b.variant_id is None
-                ]
-                if matches:
-                    binding = matches[0]
-                    resource = binding.resource.model_copy(
-                        update={
-                            "provenance": tuple(
-                                dict.fromkeys((*binding.resource.provenance, evidence))
-                            )
-                        }
-                    )
-                    # Provenance models contain no mutable data; de-duplicate by value below.
-                    selected[selected.index(binding)] = binding.model_copy(
-                        update={"resource": resource}
-                    )
-                else:
-                    resource = ResourceCandidate(
-                        course_id=request.course_id,
-                        role="problem_set",
-                        original_url=child_url,
-                        title=node.get_text(" ", strip=True) or child_url,
-                        section_keys=(request.week,),
-                        parent_resource_id=parent.source_id,
-                        format="html",
-                        provenance=(evidence,),
-                    )
-                    binding = MaterialResource(
-                        resource=resource,
-                        lecture_ids=parent.lecture_ids,
-                        original_url=child_url,
-                        format="html",
-                        role="problem_set",
-                        source_origin=request.source_origin,
-                    )
-                    selected.append(binding)
-                parent_ids.setdefault(binding.material_id, set()).add(parent.source_id)
+    from src.tools_materials.assignments import children
+
+    pages = [
+        (p, read_file(snapshot_path(p), 1048576))
+        for p in (*course.pages, *additional_pages)
+        if p.role == "assignment"
+        and any(str(p.url).startswith(b.original_url) for b in parents)
+    ]
+    selected, parent_ids, observed = children(selected, parents, pages, request.week)
+    observed_pages.extend(p for p, _ in pages if p.file in observed)
     expanded, aliases = [], {}
     for binding in selected:
         expanded.append(binding)
@@ -700,9 +626,11 @@ def prepare_material_batches(request, approvals):
     """Recheck inputs and return one-source batches for the existing C18 path.
 
     No controller call and no write. Transcript rows use the existing transcript
-    adapter separately. New assignment-child IDs stay blocked until that adapter
-    can reproduce their graph inside the immutable C18 bundle.
+    adapter separately. Assignment children require the explicit pinned-overview
+    opt-in; each batch carries the same proof into its immutable C18 bundle.
     """
+    from src.tools_materials.assignments import for_week
+
     report = plan_week(request, approvals)
     batches = []
     for row in report.resources:
@@ -722,6 +650,11 @@ def prepare_material_batches(request, approvals):
             [request.course_id],
             [row.material_id],
             synthetic=request.source_origin == "synthetic",
+            **(
+                dict(assignment_snapshots=for_week(request))
+                if request.assignment_discovery
+                else {}
+            ),
         )
         batches.append(batch.model_copy(update={"max_bytes": request.limits.max_bytes}))
     return report, tuple(batches)

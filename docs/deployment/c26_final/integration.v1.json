@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-23",
+  "backend_default": {
+    "branch": "master",
+    "sha": "c4b057a75c38655e43b8ac35a35cc82645ba2826"
+  },
+  "ui_default": {
+    "branch": "main",
+    "sha": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff"
+  },
+  "integrated_backend_prs": [
+    144,
+    147,
+    150,
+    151,
+    152,
+    153,
+    154
+  ],
+  "integrated_ui_prs": [
+    19
+  ],
+  "open_prs": [
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "number": 148,
+      "url": "https://github.com/rf-data/Personal_Assistant/pull/148",
+      "head_sha": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+      "base_sha": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergeable": true
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "number": 149,
+      "url": "https://github.com/rf-data/Personal_Assistant/pull/149",
+      "head_sha": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb",
+      "base_sha": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergeable": true
+    },
+    {
+      "repository": "rf-data/personal-assistant-ui",
+      "number": 20,
+      "url": "https://github.com/rf-data/personal-assistant-ui/pull/20",
+      "head_sha": "6b84e3c09f877309a3fd1c6f9cbcf61bb9f46788",
+      "base_sha": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergeable": true
+    }
+  ],
+  "review_submissions": 0,
+  "inline_review_threads": 0,
+  "head_check_runs": 0,
+  "commit_statuses": {
+    "state": "pending",
+    "total_count": 0,
+    "interpretation": "no_status_results"
+  },
+  "issue146": "open",
+  "draft_diffs_apply_to_current_master": true,
+  "followup_applies_with_both_backend_drafts": true,
+  "decisions": {
+    "html149": "technical_review_recommended; operator_trigger_gate_before_merge",
+    "deployment148": "retain_draft; live_driver_bootstrap_and_runtime_diagnostic_open",
+    "ui20": "technical_documentation_review_recommended; live_acceptance_missing"
+  },
+  "release_decision": "operator_action_required",
+  "production_approved": false,
+  "automatic_deploy_trigger_state": "unknown",
+  "host_access": false,
+  "productive_downloads": 0,
+  "productive_worker_starts": 0,
+  "merges": 0,
+  "remaining_operators": [
+    "resource_role_buildtype_and_instance_inventory",
+    "all_auto_preview_webhook_api_registry_scheduler_triggers_and_pending_deployments",
+    "queue_root_mount_uid_lock_wal_and_pilot_separation",
+    "exact_installed_sha_and_registry_digest_build_binding",
+    "vpn_devices_routes_source_ip_and_public_negative_tests",
+    "domain_dns_tls_proxy_and_certificate_renewal",
+    "private_https_api_oidc_callback_individual_roles_and_revocation",
+    "consistent_backup_isolated_restore_rollback_and_rescue_access",
+    "exclusive_host_driver_and_separate_bootstrap_deploy_recovery_rollback_resume_approvals"
+  ],
+  "runtime_diagnostic": {
+    "baseline": "current_master_with_unchanged_148_149_without_new_child_code",
+    "observed": "stale_config_resume_quarantine_with_SQLite_OperationalError",
+    "sqlite_errorcode": "not_recorded_in_original_guardian_event",
+    "causal_fix_claimed": false,
+    "policy_weakened": false
+  }
+}

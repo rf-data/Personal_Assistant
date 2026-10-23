@@ -11,6 +11,7 @@ from src.job_control.catalog import read_file, safe_path, verified_files
 from src.job_control.controller import Controller, authenticate
 from src.job_control.models import CatalogEntry, Contract, Sha, fingerprint
 from src.job_control.operations import fence, preflight, private
+from src.model_materials.assignments import AssignmentSnapshot
 from src.model_materials.materials import ArtifactReceipt, MaterialResource
 from src.tools_materials.capacity import (
     CapacityLimits,
@@ -28,15 +29,26 @@ from src.workflows.service import inspect, submit
 
 
 class Batch(Contract):
-    schema_version: Literal[1] = 1
+    schema_version: Literal[1, 2] = 1
     manifest: Path
     files: dict[str, Sha] = Field(min_length=1, max_length=120)
     materials: tuple[MaterialResource, ...] = Field(min_length=1, max_length=32)
     source_origin: Literal["official", "synthetic"] = "official"
     max_bytes: int = Field(default=1048576, strict=True, ge=1, le=1048576)
+    assignment_snapshots: tuple[AssignmentSnapshot, ...] = Field(
+        default=(), max_length=8, exclude_if=lambda value: not value
+    )
 
     @model_validator(mode="after")
     def identities(self):
+        if bool(self.assignment_snapshots) != (self.schema_version == 2):
+            raise ValueError("Batch v2 requires explicit assignment snapshots")
+        for snapshot in self.assignment_snapshots:
+            if (
+                not snapshot.path.is_absolute()
+                or self.files.get(snapshot.file) != snapshot.sha256
+            ):
+                raise ValueError("Snapshot path/hash missing from batch closure")
         if not self.manifest.is_absolute() or ".." in self.manifest.parts:
             raise ValueError("Explicit snapshot manifest required")
         if len({b.material_id for b in self.materials}) != len(self.materials):
@@ -44,6 +56,16 @@ class Batch(Contract):
         for name in self.files:
             safe_path(self.manifest.parent, name)
         return self
+
+    def input_path(self, name):
+        matches = [s for s in self.assignment_snapshots if s.file == name]
+        if len(matches) > 1 or name not in self.files:
+            raise ValueError("Ambiguous or undeclared batch input")
+        return (
+            safe_path(matches[0].path)
+            if matches
+            else safe_path(self.manifest.parent, name)
+        )
 
 
 class SourceApproval(Contract):
@@ -106,10 +128,22 @@ def output(path, value, *, limits=None, budget=None):
 
 
 def plan(
-    manifest, courses, resources=(), *, synthetic=False, include_code_indexes=False
+    manifest,
+    courses,
+    resources=(),
+    *,
+    synthetic=False,
+    include_code_indexes=False,
+    assignment_snapshots=(),
 ):
     if not courses or len(set(courses)) != len(courses):
         raise ValueError("Explicit unique course selection required")
+    assignment_snapshots = tuple(
+        AssignmentSnapshot.model_validate_json(s.model_dump_json())
+        if isinstance(s, AssignmentSnapshot)
+        else AssignmentSnapshot.model_validate(s)
+        for s in assignment_snapshots
+    )
     manifest = safe_path(Path(manifest))
     raw = read_file(manifest)
     data = _json(raw)
@@ -117,14 +151,43 @@ def plan(
     if set(courses) - known:
         raise ValueError("Unknown selected course")
     origin = "synthetic" if synthetic else "official"
+    prepared = make_plan(
+        manifest,
+        include_code_indexes=include_code_indexes,
+        assignment_snapshots=assignment_snapshots,
+    )
+    if assignment_snapshots and (
+        len(courses) != 1
+        or any(
+            not any(
+                b.role == "problem_set"
+                and b.original_url == str(s.url)
+                and b.resource.course_id == courses[0]
+                for b in prepared.materials
+            )
+            for s in assignment_snapshots
+        )
+    ):
+        raise ValueError(
+            "Assignment batch requires snapshots from exactly its selected course"
+        )
     bindings = tuple(
         b.model_copy(update=dict(source_origin=origin))
-        for b in make_plan(
-            manifest, include_code_indexes=include_code_indexes
-        ).materials
+        for b in prepared.materials
         if b.resource.course_id in courses
         and (not resources or b.source_id in resources or b.material_id in resources)
     )
+    if assignment_snapshots:
+        from src.model_materials.week import WeekLimits
+        from src.tools_materials.week import routing
+
+        if any(
+            routing(b, WeekLimits())[1:3] != ("approval_required", "c18_material")
+            for b in bindings
+        ):
+            raise PermissionError(
+                "Overview proof cannot authorize a manual code/media import"
+            )
     if resources and set(resources) - {
         key for b in bindings for key in (b.source_id, b.material_id)
     }:
@@ -136,8 +199,15 @@ def plan(
             if page.get("sha256") and sha(content) != page["sha256"]:
                 raise ValueError("Discovery snapshot hash mismatch")
             files[page["file"]] = sha(content)
+    for snapshot in assignment_snapshots:
+        files[snapshot.file] = snapshot.sha256
     return Batch(
-        manifest=manifest, files=files, materials=bindings, source_origin=origin
+        schema_version=2 if assignment_snapshots else 1,
+        manifest=manifest,
+        files=files,
+        materials=bindings,
+        source_origin=origin,
+        assignment_snapshots=assignment_snapshots,
     )
 
 
@@ -147,7 +217,7 @@ def load_batch(path):
     if data["sha256"] != fingerprint(batch.model_dump(mode="json")):
         raise ValueError("Batch digest mismatch")
     for name, digest in batch.files.items():
-        if sha(read_file(safe_path(batch.manifest.parent, name))) != digest:
+        if sha(read_file(batch.input_path(name))) != digest:
             raise ValueError("Snapshot bytes changed")
     current = plan(
         batch.manifest,
@@ -157,6 +227,7 @@ def load_batch(path):
         include_code_indexes=any(
             b.format == "py" and b.resource.parent_resource_id for b in batch.materials
         ),
+        assignment_snapshots=batch.assignment_snapshots,
     )
     if current.materials != batch.materials or current.files != batch.files:
         raise ValueError("Snapshot/selection binding changed")
@@ -288,6 +359,12 @@ def seal(batch, archive, destination, approvals, *, limits=None):
     limits = limits or CapacityLimits()
     limits.batch_size(batch)
     destination = artifact_root(Path(destination))
+    if any(
+        destination.is_relative_to(s.path.parent)
+        or s.path.parent.is_relative_to(destination)
+        for s in batch.assignment_snapshots
+    ):
+        raise ValueError("Separate overview source and catalog output roots required")
     private(destination.parent, directory=True)
     if (
         destination == archive
@@ -318,6 +395,10 @@ def seal(batch, archive, destination, approvals, *, limits=None):
                 rows.append(row)
                 continue
             grant = approval(binding, approvals, "process")
+            if batch.assignment_snapshots and grant.expected_sha256 is None:
+                raise PermissionError(
+                    "Assignment processing requires a concrete raw hash"
+                )
             b = reviewed(binding)
             receipt = downloader.validate(b)
             raw_path, receipt_path = downloader.paths(b)
@@ -336,7 +417,7 @@ def seal(batch, archive, destination, approvals, *, limits=None):
             for name in batch.files:
                 path = root / "discovery" / name
                 path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
-                data = read_file(safe_path(batch.manifest.parent, name))
+                data = read_file(batch.input_path(name))
                 if sha(data) != batch.files[name]:
                     raise ValueError("Snapshot changed during handoff")
                 publish_bytes(path, data)
@@ -345,10 +426,15 @@ def seal(batch, archive, destination, approvals, *, limits=None):
             publish_bytes(root / "download_receipt.v1.json", receipt_bytes)
             output(root / "approval.json", grant.model_dump(mode="json"))
             definition = Definition(
+                schema_version=batch.schema_version,
                 course_id=binding.resource.course_id,
                 sources={binding.source_id: "raw.source"},
                 source_origin=batch.source_origin,
                 max_bytes=batch.max_bytes,
+                assignment_snapshots=tuple(
+                    s.model_copy(update=dict(path=Path("discovery") / s.file))
+                    for s in batch.assignment_snapshots
+                ),
             )
             output(root / "workflow.json", definition.model_dump(mode="json"))
             entry = CatalogEntry(

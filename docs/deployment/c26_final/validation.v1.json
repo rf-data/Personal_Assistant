@@ -1,0 +1,348 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-23",
+  "baseline": "c4b057a75c38655e43b8ac35a35cc82645ba2826",
+  "python": "3.12.12",
+  "source_files": {
+    "scripts/c26_storage_preflight.py": "e3fe6739deebd88a3b9f8fd329620486e4b1d1ef749546ba56a64495cc890e69",
+    "scripts/cs50_batch.py": "e33015729ec074ecc3825e8e7d3d8c23faec2197d767516c5411e60e1747bb2c",
+    "src/job_control/catalog.py": "9ab9d41319151138401e4223577117380048fcfa6518c0834395612289b15226",
+    "src/model_materials/assignments.py": "3df01d8902c4aa3a7ecaa9fb578b3fde13be6bd386e577ca5df645998a0bfeea",
+    "src/model_materials/week.py": "c40aa078af16a8f928a00511145a66bbb299af2f8057917a1f91c0fcd23a388f",
+    "src/tools_materials/assignments.py": "4c902aa515ebb51c4c671ee5b19a083b21dfddf28e69a183684ba436d60c54ac",
+    "src/tools_materials/batch.py": "b25e3ee5d2e58685ecd687cab2d717f435a13fe499b17bed73180f246f3b8b8d",
+    "src/tools_materials/capacity.py": "2a986dae78b49472fb87c17f11acb6b6bf01dfe44abb64396fe42bd83dd783c6",
+    "src/tools_materials/course.py": "b0aa717eff358bec4f397624321ae475064af72d8eb6ac0e5984a491e1ec8213",
+    "src/tools_materials/processing.py": "2d651372ebd67252ef0a1ac6949579c60836391232db6b7638cfbc8889e00258",
+    "src/tools_materials/week.py": "1c71df47bf4c711a9c9dadb5cc08400808e09a17600fafb229927b089f36df2b",
+    "src/workflows/definition.py": "e8206f2635cb1209a6daff1920ded5fb724f9f0d69b3fd0439a87ca5b5c2c1bd",
+    "src/workflows/models.py": "4e539b7154b464d9e28e0f0a31f1bdc55856c77e45049b70aa4e8d6f0094dd9c",
+    "tests/test_c26_storage_preflight.py": "e4ec531dcc2e44106e5247a4b1f62281eb0bda6d48eca2def32d828b8f70cdc8",
+    "tests/test_cs50_assignment_integration.py": "de957e38c19d30c2456eb10eb7325a72ff4af25870ae96efde011ec009abe8a0"
+  },
+  "source_files_equal_on_compatibility_copy": true,
+  "patches": {
+    "pr148.patch": "76aa75a421954e7589f55cda5df65cb6cb19caabd9b2dfa290232194660c9c74",
+    "pr149.patch": "823bb383f806880521caaf13100f1be0fc3c9e5f1effb0cb5a8cd7fa7e718955",
+    "implementation-before-root-guard.patch": "98ebb8b76a2df2d529f69b28f4d76ed5c2526de227c0ff6736c6ff27fa6433c5",
+    "final-root-guard.patch": "d36391be2fdea9430bb9d2629c87d2b959cbf85daf8c2b003c9b3465eecde24d",
+    "implementation.patch": "0d06181b046ae14e5015e0f32e1686bbf0e81bfdcd141acf4f85a156b9744b92"
+  },
+  "runs": [
+    {
+      "name": "baseline-c18",
+      "sha256": "3487b6378c686a4db36b8d53d760f0e3f21e5fe48d5671d45dccd8d8aaf4eb80",
+      "suites": [
+        {
+          "tests": "1",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "4.479"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "planner",
+      "sha256": "0ba70e52f1715b288302b3f3391efa0525e8fc1bd53f01d44a29f3a0991828bb",
+      "suites": [
+        {
+          "tests": "116",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "40.833"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "assignments",
+      "sha256": "31f704816d649e7cb9cca6ef2f4f006d8648af06ec8ce867e53f46d2b1020744",
+      "suites": [
+        {
+          "tests": "10",
+          "failures": "1",
+          "errors": "0",
+          "skipped": "0",
+          "time": "13.936"
+        }
+      ],
+      "issues": [
+        {
+          "name": "test_real_export_five_ids_provenance_and_worker_admission",
+          "kind": "failure",
+          "message": "AssertionError: assert [MaterialReso...ot_assessed')] == [MaterialReso...ot_assessed')]\n  \n  At index 0 diff: MaterialResource(schema_version=1, resource=ResourceCandidate(course_id='cs50_python', role=<ResourceRole.PROBLEM_SET: 'problem_set'>, origi"
+        }
+      ]
+    },
+    {
+      "name": "assignments-fixed",
+      "sha256": "ed1bd583ab23e817894126e49e5bfdf113487a716a99ead0a46c3643901d5e6b",
+      "suites": [
+        {
+          "tests": "10",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "101.852"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "ui",
+      "sha256": "748c7fc1fea965c1b4b28ff2b7c1ad4ba4b00768f00ae5f6b0750c5d88027fba",
+      "suites": [
+        {
+          "tests": "29",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "3.121"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "trace-baseline",
+      "sha256": "c0dddade35c5ed8d5b08bbb290099958d9a82b2fa26c73cc3380c775d640613a",
+      "suites": [
+        {
+          "tests": "25",
+          "failures": "1",
+          "errors": "0",
+          "skipped": "0",
+          "time": "129.120"
+        }
+      ],
+      "issues": [
+        {
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[config]",
+          "kind": "failure",
+          "message": "src.job_control.store.Unavailable: Unconfirmed cleanup; dispatch quarantined"
+        }
+      ]
+    },
+    {
+      "name": "trace-targets",
+      "sha256": "43cb72047e720628171c52ae258864fa5d3062582623b94db6d88bd88bda42ed",
+      "suites": [
+        {
+          "tests": "3",
+          "failures": "3",
+          "errors": "0",
+          "skipped": "0",
+          "time": "2.548"
+        }
+      ],
+      "issues": [
+        {
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[config]",
+          "kind": "failure",
+          "message": "AssertionError: assert 'failed' == 'completed'\n  \n  - completed\n  + failed"
+        },
+        {
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[parser]",
+          "kind": "failure",
+          "message": "AssertionError: assert 'failed' == 'completed'\n  \n  - completed\n  + failed"
+        },
+        {
+          "name": "test_metadata_permission_and_hash_tamper_are_rejected",
+          "kind": "failure",
+          "message": "AssertionError: assert 'failed' == 'completed'\n  \n  - completed\n  + failed"
+        }
+      ]
+    },
+    {
+      "name": "trace-targets-fixed",
+      "sha256": "13038fee022896e7f05df7f9799f9399e8e619859739c2bc2d98e3db40c89322",
+      "suites": [
+        {
+          "tests": "3",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "19.525"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "trace-deep",
+      "sha256": "39229ba000b9161db84780dfdd3aa22e940f338f3ce3b9e35daa6078a2f50008",
+      "suites": [
+        {
+          "tests": "24",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "172.760"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "storage-tests",
+      "sha256": "c2e4dd94e6de8151fdefeca4dce84c36bdda4e576ce8ac5251455db7e818203a",
+      "suites": [
+        {
+          "tests": "5",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.760"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "regression",
+      "sha256": "12aeac93be24b9a7185f0df60ff183c12cab2ab561bc8995d4e811ccf7c91459",
+      "suites": [
+        {
+          "tests": "256",
+          "failures": "0",
+          "errors": "3",
+          "skipped": "0",
+          "time": "520.299"
+        }
+      ],
+      "issues": [
+        {
+          "name": "test_full_six_course_end_to_end_and_resume",
+          "kind": "error",
+          "message": "failed on setup with \"ModuleNotFoundError: No module named 'tiktoken'\""
+        },
+        {
+          "name": "test_explicit_six_ids_and_cli_gate",
+          "kind": "error",
+          "message": "failed on setup with \"ModuleNotFoundError: No module named 'tiktoken'\""
+        },
+        {
+          "name": "test_isolated_course_cli_v2_resume",
+          "kind": "error",
+          "message": "failed on setup with \"ModuleNotFoundError: No module named 'tiktoken'\""
+        }
+      ]
+    },
+    {
+      "name": "manual-policy",
+      "sha256": "97aae0e08f97b518711937e7c0f82fbe598c4d945c6b0e5a911fb59ea1f423d7",
+      "suites": [
+        {
+          "tests": "1",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "3.128"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "batch-loopback",
+      "sha256": "3c612cef5d3871ae39d5631f92d90bb3168d9045a1c825629479ae600edd9a2b",
+      "suites": [
+        {
+          "tests": "3",
+          "failures": "0",
+          "errors": "3",
+          "skipped": "0",
+          "time": "1.063"
+        }
+      ],
+      "issues": [
+        {
+          "name": "test_full_six_course_end_to_end_and_resume",
+          "kind": "error",
+          "message": "failed on setup with \"ModuleNotFoundError: No module named 'tiktoken'\""
+        },
+        {
+          "name": "test_explicit_six_ids_and_cli_gate",
+          "kind": "error",
+          "message": "failed on setup with \"ModuleNotFoundError: No module named 'tiktoken'\""
+        },
+        {
+          "name": "test_isolated_course_cli_v2_resume",
+          "kind": "error",
+          "message": "failed on setup with \"ModuleNotFoundError: No module named 'tiktoken'\""
+        }
+      ]
+    },
+    {
+      "name": "compat",
+      "sha256": "169e62c80bd2635d5eb25926c6ce459e1488eef2202938a8af0a2cdb560b3664",
+      "suites": [
+        {
+          "tests": "436",
+          "failures": "0",
+          "errors": "3",
+          "skipped": "0",
+          "time": "502.081"
+        }
+      ],
+      "issues": [
+        {
+          "name": "test_full_six_course_end_to_end_and_resume",
+          "kind": "error",
+          "message": "failed on setup with \"ModuleNotFoundError: No module named 'tiktoken'\""
+        },
+        {
+          "name": "test_explicit_six_ids_and_cli_gate",
+          "kind": "error",
+          "message": "failed on setup with \"ModuleNotFoundError: No module named 'tiktoken'\""
+        },
+        {
+          "name": "test_isolated_course_cli_v2_resume",
+          "kind": "error",
+          "message": "failed on setup with \"ModuleNotFoundError: No module named 'tiktoken'\""
+        }
+      ]
+    },
+    {
+      "name": "final-assignments",
+      "sha256": "84fffc23a1b26447c1d822181f666c2cbdb8755d94fb5961f1fd14386232e07c",
+      "suites": [
+        {
+          "tests": "20",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "152.418"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "final-compat-assignments",
+      "sha256": "501d5eaf64ca9b1c830f88a4a8db3f0401b51c7ef3d0cb63e6f521b4947362f5",
+      "suites": [
+        {
+          "tests": "20",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "154.693"
+        }
+      ],
+      "issues": []
+    }
+  ],
+  "final_new_tests": 20,
+  "broad_compatibility_passed": 433,
+  "broad_compatibility_errors": 3,
+  "open_test_environment_dependency": "tiktoken_not_locally_available",
+  "invalid_harness_attempt": "trace-targets: logger reused existing exclusive filenames; not a product regression",
+  "causal_guardian_fix_claimed": false,
+  "original_exports_unchanged": 6,
+  "original_zips_unchanged": 10,
+  "real_imports": 0,
+  "production_jobs": 0,
+  "host_access": false,
+  "merges": false,
+  "production_approved": false,
+  "overlapping_runs": true,
+  "real_source_grants_created": 0
+}

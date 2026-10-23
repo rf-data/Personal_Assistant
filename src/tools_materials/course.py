@@ -32,11 +32,13 @@ LIVE_BLOCKERS = {
 
 def contracts_revision():
     from src.job_control import registry
+    from src.model_materials import assignments as assignment_models
     from src.model_materials import course as course_models
     from src.model_materials import materials
     from src.model_materials import week as week_models
-    from src.tools_materials import capacity, profiles, week
+    from src.tools_materials import assignments, capacity, processing, profiles, week
     from src.workflows import definition
+    from src.workflows import models as workflow_models
 
     return fingerprint(
         {
@@ -57,6 +59,10 @@ def contracts_revision():
                 week_models,
                 course_models,
                 registry,
+                assignments,
+                assignment_models,
+                processing,
+                workflow_models,
             )
         }
     )

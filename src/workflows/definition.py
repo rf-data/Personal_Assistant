@@ -81,6 +81,41 @@ class Prepared:
     input_errors: dict
 
 
+def catalog_plan(entry, definition=None):
+    """Reconstruct the same versioned discovery at admission and in the worker."""
+    if definition is None:
+        files = verified_files(entry)
+        definition = Definition.model_validate_json(files[entry.roles["workflow"]])
+    if definition.course_id not in entry.course_ids:
+        raise ValueError("Workflow course contradicts approved catalog")
+    refs = []
+    for snapshot in definition.assignment_snapshots:
+        name = snapshot.path.as_posix()
+        if entry.files.get(name) != snapshot.sha256:
+            raise ValueError(
+                "Overview is absent from the approved catalog hash closure"
+            )
+        refs.append(snapshot.model_copy(update=dict(path=safe_path(entry.root, name))))
+    plan = make_plan(
+        entry.root / entry.roles["manifest"], assignment_snapshots=tuple(refs)
+    )
+    if any(
+        not any(
+            b.role == "problem_set"
+            and b.original_url == str(s.url)
+            and b.resource.course_id == definition.course_id
+            and (
+                definition.section is None
+                or definition.section in b.resource.section_keys
+            )
+            for b in plan.materials
+        )
+        for s in refs
+    ):
+        raise ValueError("Overview contradicts workflow course/section")
+    return plan
+
+
 def prepare(entry, *, plan=None, strict=True):
     errors = {}
     if strict:
@@ -97,12 +132,31 @@ def prepare(entry, *, plan=None, strict=True):
     definition = Definition.model_validate_json(files[entry.roles["workflow"]])
     if definition.course_id not in entry.course_ids:
         raise ValueError("Workflow course contradicts approved catalog")
-    plan = plan or make_plan(entry.root / entry.roles["manifest"])
+    if definition.assignment_snapshots:
+        reconstructed = catalog_plan(entry, definition)
+        if plan is not None and plan != reconstructed:
+            raise ValueError(
+                "Cached discovery contradicts pinned overview reconstruction"
+            )
+        plan = reconstructed
+    else:
+        plan = plan or make_plan(entry.root / entry.roles["manifest"])
     bindings = {}
     for resource, path in sorted(definition.sources.items()):
         (binding,) = plan.select(
             course=definition.course_id, section=definition.section, resource=resource
         )
+        if definition.assignment_snapshots:
+            from src.model_materials.week import WeekLimits
+            from src.tools_materials.week import routing
+
+            if routing(binding, WeekLimits())[1:3] != (
+                "approval_required",
+                "c18_material",
+            ):
+                raise PermissionError(
+                    "Overview proof cannot authorize manual code/media"
+                )
         if definition.lecture_ids and not set(binding.lecture_ids) & set(
             definition.lecture_ids
         ):
@@ -134,6 +188,10 @@ def prepare(entry, *, plan=None, strict=True):
         resources=sorted(definition.sources),
         source_origin=definition.source_origin,
     )
+    if definition.assignment_snapshots:
+        scope["assignment_snapshots"] = [
+            s.model_dump(mode="json") for s in definition.assignment_snapshots
+        ]
     stages.append(
         Stage(
             stage_id=plan_id,
