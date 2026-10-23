@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+  "python": "3.12.12",
+  "final_tests": {
+    "passed": 314,
+    "skipped": 5,
+    "failed": 0,
+    "errors": 0,
+    "seconds": 129.14
+  },
+  "test_modules": {
+    "tests.test_cs50_html_projection": {
+      "passed": 32,
+      "skipped": 2
+    },
+    "tests.test_cs50_material_contracts": {
+      "passed": 4
+    },
+    "tests.test_cs50_material_html": {
+      "passed": 7
+    },
+    "tests.test_cs50_material_html_semantics": {
+      "passed": 17,
+      "skipped": 1
+    },
+    "tests.test_cs50_material_quality": {
+      "passed": 94
+    },
+    "tests.test_cs50_material_mapping": {
+      "passed": 1
+    },
+    "tests.test_cs50_material_processing": {
+      "passed": 8
+    },
+    "tests.test_cs50_material_e2e": {
+      "passed": 5
+    },
+    "tests.test_cs50_material_code": {
+      "passed": 9
+    },
+    "tests.test_cs50_material_pdf_v2": {
+      "passed": 39,
+      "skipped": 2
+    },
+    "tests.test_cs50_code_zip": {
+      "passed": 54
+    },
+    "tests.test_cs50_multiformat": {
+      "passed": 32
+    },
+    "tests.test_cs50_week_pilot": {
+      "passed": 12
+    }
+  },
+  "real_week0_comparison": "pending_user_local_exports_no_ssh_no_downloads",
+  "raw_fixtures_modified": false,
+  "production_changes": false,
+  "new_dependencies": false,
+  "source_sha256": {
+    "src/model_materials/quality.py": "0c79ee3def9d8c749ecde2b5c92d68f8bc1f26c78a7780e7cc96088bfd3a751b",
+    "src/tools_lecture/material_handoff.py": "116293fd1720c80a954b57dcdd84bd3bd26243e87e9201e407feb49d0dfc41e2",
+    "src/tools_materials/mapping.py": "b7f47ad4b6494a0abac7c83cb539e4e4321173173a84df4c1867c6d8cecff93c",
+    "src/tools_materials/quality.py": "df63fd8511b245e095084b4f7879b310b09242244be129ed8e460d5cf822083a",
+    "src/tools_materials/html_projection.py": "ad35cee25cdef2483b3d9cdd74a359e7d0034bfcf31122e50544368cbad88686",
+    "src/tools_materials/quality_projection.py": "4548ffd5be1e3431e651a706886c5fb4f0ba489de972dec7ebe8ac1b79cbdd0c",
+    "tests/test_cs50_html_projection.py": "6877cfee120ab6405d510236c233092acd4acde2227110882100e47af4a18aaf",
+    "tests/fixtures/material_quality/html_projection_baseline.v1.json": "2c91fb8c3428fadfd66460d6b1aff56913a02d462eb6ee1ecb6dcbbf669ce0ae"
+  },
+  "junit_sha256": "7406d0ff1cabd0827983190e6434eb3259fb350da0236bc1a467247206827956",
+  "latest_projection_tests": {
+    "passed": 32,
+    "skipped": 2,
+    "failed": 0,
+    "errors": 0,
+    "junit_sha256": "0c8a930edc0a32c4aea605b3ee8f99c71f28e71787ff8986d85c06e11d50fa49"
+  }
+}

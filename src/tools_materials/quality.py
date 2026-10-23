@@ -645,6 +645,9 @@ def _inspect_material(*, normalized_path, receipt_path, raw_path, plan_path, wor
             audit.add("input_invalid", str(exc), input="raw")
     if doc:
         _structure(audit, doc)
+        from src.tools_materials.quality_projection import audit_html_projection
+
+        audit_html_projection(audit, doc)
         if observed.get("raw") != doc.raw_sha256:
             audit.add(
                 "raw_hash_mismatch",
@@ -784,6 +787,8 @@ def _inspect_material(*, normalized_path, receipt_path, raw_path, plan_path, wor
     errors = any(f.severity == "error" for f in audit.findings)
     warnings = any(f.severity == "warning" for f in audit.findings)
     report = MaterialQualityReport(
+        schema_version=2,
+        validator_version="cs50_material_quality_v2",
         status="failed" if errors else "passed_with_warnings" if warnings else "passed",
         inputs=inputs,
         observed_sha256=observed,
