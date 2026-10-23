@@ -5,6 +5,25 @@ Produktionsstart, Aktivierung und Pilot.** Bestehender Draft #157 fortgeführt.
 Keine Host-/Coolifyaktion, kein Deployment, Merge/Ready/Auto-Merge, produktiver
 Job, Download, ZIPimport oder Cleanup in diesem Auftrag.
 
+## Aktuelle Ressourcenbindung und Drivergrenze
+
+Fortsetzung auf #157: [vollständige Build-/Ressourcenmatrix](resource_matrix.md),
+[fünf konkrete lesende Betreiberpakete](operator_binding_check.md) und
+[versionsgebundener Driverplan](coolify_driver_plan.md).
+Der neue Readclient verwendet ausschließlich zwei belegte GET-Pfade mit explizitem
+Transport; Offlinebeobachtungen ergeben nie eine Gate-Observation oder Freigabe.
+
+Die bestehende Backend-Application ist im 4.4.7-Quellmodell grundsätzlich von
+Dockerfile auf dockercompose umstellbar. Tatsächliche UUID/Pfade/Rendering und
+sicherer Rückweg fehlen; der Wechsel löscht gespeicherte buildtypspezifische
+Felder. Noch keine gesicherte Produktionsadoption. Für den Dreirollenwechsel
+braucht der Gateplan eine explizite versionierte Scopebindung; nur Backend-
+SHA/Image und eine Container-ID reichen nicht als vollständige Rollenfreigabe.
+Kern #148 bleibt unverändert. 277 kombinierte Regressionsfälle und zuletzt
+69 gezielte Offlinefälle bestanden; Läufe überlappen. Kein produktiver HTTPaufruf.
+Neuer Validierungsbeleg:
+[resource_binding_validation.v1.json](resource_binding_validation.v1.json).
+
 ## Lieferung und aktueller Stand
 
 - [Deaktivierter Controller](../../../deployment/c26-runtime.controller.json.example):
@@ -69,13 +88,13 @@ aber keinen Resume aus. Keine Fake-Observation als Ersatz. Erst echten Scope
 liefern, Adapter binden/reviewen und abnehmen. Bootstrap selbst ist eine eigene
 manuell geschlossene Wartungsoperation, kein vorgetäuschter Gate.run von Sleep.
 
-## Validierung und Aufbewahrung
+## Frühere Konfigurationsvalidierung und Aufbewahrung
 
-**137 finale Vertragsfälle bestanden**, keine Skips. Im breiten Lauf 345 Fälle
+**Vorherige Konfigurationsfinalisierung: 137 Vertragsfälle bestanden**, keine Skips. Im breiten Lauf 345 Fälle
 bestanden; zwei testinterne Erwartungen im neuen Bootstrapfall wurden danach
 korrigiert, ohne Produktfix. Läufe überlappen, rote Belege bleiben erhalten.
 Reguläre Hooks, Ruff, JSON-/Link- und zwölf Shellsyntaxprüfungen bestanden.
-Aktuelle Tests und genaue Quellenbindung stehen in
+Die Belege dieser vorherigen Konfigurationsfinalisierung stehen in
 [runtime_configuration_validation.v1.json](runtime_configuration_validation.v1.json),
 frühere Läufe bleiben in [validation.v1.json](validation.v1.json) erhalten.
 [Source-to-Runtime](source_assessment.md), [Coolify4.4.7-Grenzen](coolify_compatibility.md),
@@ -85,6 +104,7 @@ Alle fünf PRs erneut offen/Draft/konfliktfrei, abgefragte Reviews/Status/PR-Wor
 leer; fehlende Checks sind kein CI-Erfolg. Master e502aa9, UI-Main e4be7a2 unverändert.
 
 Code/Unterlagen bleiben im Draft, nicht im Defaultbranch integriert: ausdrückliches
-Mergeverbot. Lokaler Indexfehler bleibt unangetastet; reguläre Hooks und geprüfte
-GitHub-Git-API-Folgecommits sichern die Lieferung. Bestehende Worktrees/Branches,
+Mergeverbot. Alte lokale Indexzustände bleiben unangetastet. Diese Fortsetzung verwendet
+eine neue isolierte Quellkopie mit eigenen RAM-Gitmetadaten und einen eigenen
+Kompatibilitätsworktree; reguläre Hooks sichern die Reviewlieferung. Bestehende Worktrees/Branches,
 Venvs/Bundles/Quellarchive/Pilotdaten/Locks bleiben erhalten; kein Cleanup.
