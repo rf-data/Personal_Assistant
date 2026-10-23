@@ -1,0 +1,147 @@
+{
+  "measured_at": "2026-10-23T17:43:12.427011+00:00",
+  "filesystems": {
+    "workspace": {
+      "path": "/home/robfra/0_Portfolio_Projekte",
+      "free_bytes": 3797241856,
+      "total_bytes": 33930240000,
+      "inode_total": 0,
+      "inode_available": null,
+      "mount": {
+        "filesystems": [
+          {
+            "target": "/home/robfra/0_Portfolio_Projekte",
+            "source": "/dev/vdc[/lxd/storage-pools/default/containers/penguin/rootfs/home/robfra/0_Portfolio_Projekte]",
+            "fstype": "btrfs"
+          }
+        ]
+      }
+    },
+    "tmp": {
+      "path": "/tmp",
+      "free_bytes": 3797241856,
+      "total_bytes": 33930240000,
+      "inode_total": 0,
+      "inode_available": null,
+      "mount": {
+        "filesystems": [
+          {
+            "target": "/tmp",
+            "source": "/dev/vdc[/lxd/storage-pools/default/containers/penguin/rootfs/tmp]",
+            "fstype": "btrfs"
+          }
+        ]
+      }
+    },
+    "codex": {
+      "path": "/home/robfra/.codex",
+      "free_bytes": 3797241856,
+      "total_bytes": 33930240000,
+      "inode_total": 0,
+      "inode_available": null,
+      "mount": {
+        "filesystems": [
+          {
+            "target": "/",
+            "source": "/dev/vdc[/lxd/storage-pools/default/containers/penguin/rootfs]",
+            "fstype": "btrfs"
+          }
+        ]
+      }
+    },
+    "cache": {
+      "path": "/home/robfra/.cache",
+      "free_bytes": 3797241856,
+      "total_bytes": 33930240000,
+      "inode_total": 0,
+      "inode_available": null,
+      "mount": {
+        "filesystems": [
+          {
+            "target": "/",
+            "source": "/dev/vdc[/lxd/storage-pools/default/containers/penguin/rootfs]",
+            "fstype": "btrfs"
+          }
+        ]
+      }
+    },
+    "drive": {
+      "path": "/mnt/chromeos/GoogleDrive/MyDrive/1_Projekte_Datens\u00e4tze/1_Projekte/00_GMP_Compliance/data/lectures/harvard/cs50_python",
+      "free_bytes": 1152921434626039808,
+      "total_bytes": 1152921504606846976,
+      "inode_total": 1708,
+      "inode_available": 9223372036854774099,
+      "mount": {
+        "filesystems": [
+          {
+            "target": "/mnt/chromeos",
+            "source": "9p",
+            "fstype": "9p"
+          }
+        ]
+      }
+    }
+  },
+  "one_material_c18": {
+    "schema_version": 1,
+    "purpose": "week-pilot",
+    "status": "blocked",
+    "execution_permitted": false,
+    "free_bytes": 3797196800,
+    "reserve_bytes": 5368709120,
+    "additional_allowance_bytes": 2171041748,
+    "required_free_bytes": 7539750868,
+    "inode_free": null,
+    "inode_status": "unknown",
+    "blockers": [
+      "insufficient_free_bytes_with_existing_reserve_and_output_allowance"
+    ],
+    "operator_checks": [
+      "correct_target_filesystem_and_mount",
+      "inode_capacity",
+      "source_approvals_and_hash_bindings",
+      "worker_and_queue_if_applicable"
+    ],
+    "budget": {
+      "schema_version": 1,
+      "materials": 1,
+      "raw_upper_bytes": 1048576,
+      "discovery_bytes": 2586580,
+      "archive_increment_allowance_bytes": 2097152,
+      "catalog_increment_allowance_bytes": 4683732,
+      "job_budget_bytes": 2147483648,
+      "report_budget_bytes": 16777216,
+      "free_reserve_bytes": 5368709120,
+      "required_free_before_new_batch_bytes": 7539750868,
+      "parser_expansion_is_not_known": true,
+      "source_lengths_are_not_known": true
+    },
+    "deficit_bytes": 3742554068
+  },
+  "zip_reference_only": {
+    "schema_version": 1,
+    "purpose": "zip-import",
+    "status": "blocked",
+    "execution_permitted": false,
+    "free_bytes": 3797196800,
+    "reserve_bytes": 5368709120,
+    "additional_allowance_bytes": 83886080,
+    "required_free_bytes": 5452595200,
+    "inode_free": null,
+    "inode_status": "unknown",
+    "blockers": [
+      "insufficient_free_bytes_with_existing_reserve_and_output_allowance"
+    ],
+    "operator_checks": [
+      "correct_target_filesystem_and_mount",
+      "inode_capacity",
+      "source_approvals_and_hash_bindings",
+      "worker_and_queue_if_applicable"
+    ],
+    "budget": {
+      "archive_budget_bytes": 67108864,
+      "report_budget_bytes": 16777216
+    },
+    "deficit_bytes": 1655398400
+  }
+}

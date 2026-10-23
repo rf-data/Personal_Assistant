@@ -1,0 +1,496 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-23T17:44:52.265738+00:00",
+  "backend_base": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+  "ui_base": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+  "task_branch": "fix/c26-stabilization",
+  "github": [
+    {
+      "number": 148,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "auto_merge": null,
+      "updated_at": "2026-10-22T17:42:22Z",
+      "repository": "rf-data/Personal_Assistant",
+      "head": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+      "base": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+      "reviews": [],
+      "inline_comments": 0,
+      "checks": [],
+      "commit_status": "pending",
+      "status_count": 0
+    },
+    {
+      "number": 149,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "auto_merge": null,
+      "updated_at": "2026-10-22T18:06:15Z",
+      "repository": "rf-data/Personal_Assistant",
+      "head": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb",
+      "base": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+      "reviews": [],
+      "inline_comments": 0,
+      "checks": [],
+      "commit_status": "pending",
+      "status_count": 0
+    },
+    {
+      "number": 155,
+      "state": "closed",
+      "draft": false,
+      "merged": true,
+      "mergeable": null,
+      "mergeable_state": "unknown",
+      "auto_merge": null,
+      "updated_at": "2026-10-23T17:03:30Z",
+      "repository": "rf-data/Personal_Assistant",
+      "head": "7a8e96d3a9004fabcf86962e6f0859479348c83a",
+      "base": "c4b057a75c38655e43b8ac35a35cc82645ba2826",
+      "reviews": [],
+      "inline_comments": 0,
+      "checks": [],
+      "commit_status": "pending",
+      "status_count": 0
+    },
+    {
+      "number": 20,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "auto_merge": null,
+      "updated_at": "2026-10-22T17:42:24Z",
+      "repository": "rf-data/personal-assistant-ui",
+      "head": "6b84e3c09f877309a3fd1c6f9cbcf61bb9f46788",
+      "base": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "reviews": [],
+      "inline_comments": 0,
+      "checks": [],
+      "commit_status": "pending",
+      "status_count": 0
+    }
+  ],
+  "default_ci": [
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "branch": "master",
+      "sha": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "checks": [],
+      "commit_status": "pending",
+      "status_count": 0,
+      "actions_runs": []
+    },
+    {
+      "repo": "rf-data/personal-assistant-ui",
+      "branch": "main",
+      "sha": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "checks": [],
+      "commit_status": "pending",
+      "status_count": 0,
+      "actions_runs": []
+    }
+  ],
+  "local_inventory": [
+    {
+      "repository": "gmp_compliance",
+      "registered_worktrees": 75,
+      "prunable_entries": 10,
+      "primary_branch": "feat/c20b-workflow-http",
+      "primary_status": ""
+    },
+    {
+      "repository": "personal-assistant-ui",
+      "registered_worktrees": 17,
+      "prunable_entries": 0,
+      "primary_branch": "main",
+      "primary_status": ""
+    }
+  ],
+  "relevant_existing_worktrees": [
+    {
+      "path": "gmp_compliance",
+      "head": "65b3f09155263d447c4f4540f5b3bba9f78017c1",
+      "status": [],
+      "mutation": false
+    },
+    {
+      "path": "personal-assistant-ui",
+      "head": "b2cf9ca9ba44ee770dab4d834a6ae8285f34776b",
+      "status": [],
+      "mutation": false
+    },
+    {
+      "path": "Personal_Assistant-c26-final-pilot",
+      "head": "7a8e96d3a9004fabcf86962e6f0859479348c83a",
+      "status": [],
+      "mutation": false
+    },
+    {
+      "path": "Personal_Assistant-c26-final-compat",
+      "head": "c4b057a75c38655e43b8ac35a35cc82645ba2826",
+      "status": [
+        "M deployment/Dockerfile",
+        " M deployment/Dockerfile.dockerignore",
+        " M docker/DockerFile.worker",
+        " M docker/DockerFile.worker.dockerignore",
+        " M docs/cs50/contracts/material_quality.md",
+        " M docs/deployment/architecture.md",
+        " M docs/deployment/c26b_validation.md",
+        " M docs/deployment/configuration.md",
+        " M docs/deployment/https.md",
+        " M docs/deployment/operations.md",
+        " M docs/job_control/contract.v1.json",
+        " M scripts/cs50_batch.py",
+        " M scripts/worker_image_smoke.py",
+        " M src/job_control/catalog.py",
+        " M src/job_control/controller.py",
+        " M src/job_control/executor.py",
+        " M src/job_control/models.py",
+        " M src/job_control/operations.py",
+        " M src/job_control/store.py",
+        " M src/model_materials/quality.py",
+        " M src/model_materials/week.py",
+        " M src/tools_lecture/material_handoff.py",
+        " M src/tools_materials/batch.py",
+        " M src/tools_materials/capacity.py",
+        " M src/tools_materials/course.py",
+        " M src/tools_materials/mapping.py",
+        " M src/tools_materials/processing.py",
+        " M src/tools_materials/quality.py",
+        " M src/tools_materials/week.py",
+        " M src/workflows/definition.py",
+        " M src/workflows/models.py",
+        "?? docs/cs50/contracts/html_aggregation_v2.md",
+        "?? docs/deployment/c26_gate_validation.md",
+        "?? docs/deployment/c26a/html_aggregation_validation.md",
+        "?? docs/deployment/deployment_gate.md",
+        "?? scripts/c26_storage_preflight.py",
+        "?? scripts/deployment_gate.py",
+        "?? src/job_control/deployment_gate.py",
+        "?? src/model_materials/assignments.py",
+        "?? src/tools_materials/assignments.py",
+        "?? src/tools_materials/html_projection.py",
+        "?? src/tools_materials/quality_projection.py",
+        "?? tests/test_c26_storage_preflight.py",
+        "?? tests/test_cs50_assignment_integration.py",
+        "?? tests/test_cs50_html_projection.py",
+        "?? tests/test_deployment_gate.py"
+      ],
+      "mutation": false
+    },
+    {
+      "path": "Personal_Assistant-c26-gate",
+      "head": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+      "status": [
+        "M deployment/Dockerfile",
+        " M deployment/Dockerfile.dockerignore",
+        " M docker/DockerFile.worker",
+        " M docker/DockerFile.worker.dockerignore",
+        " M docs/deployment/architecture.md",
+        " M docs/deployment/c26b_validation.md",
+        " M docs/deployment/configuration.md",
+        " M docs/deployment/https.md",
+        " M docs/deployment/operations.md",
+        " M docs/job_control/contract.v1.json",
+        " M scripts/worker_image_smoke.py",
+        " M src/job_control/controller.py",
+        " M src/job_control/executor.py",
+        " M src/job_control/models.py",
+        " M src/job_control/operations.py",
+        " M src/job_control/store.py",
+        "?? .review-artifacts/",
+        "?? docs/deployment/c26_gate_validation.md",
+        "?? docs/deployment/deployment_gate.md",
+        "?? scripts/deployment_gate.py",
+        "?? src/job_control/deployment_gate.py",
+        "?? tests/test_deployment_gate.py"
+      ],
+      "mutation": false
+    },
+    {
+      "path": "Personal_Assistant-c26a-html-projection",
+      "head": null,
+      "status": "unavailable",
+      "mutation": false
+    },
+    {
+      "path": "personal-assistant-ui-c26-final-check",
+      "head": "6b84e3c09f877309a3fd1c6f9cbcf61bb9f46788",
+      "status": [],
+      "mutation": false
+    }
+  ],
+  "sources": [
+    {
+      "file": "src/core/retry.py",
+      "sha256": "e68c6d63e6e56ac8bc137d1e8142b2c856126a86548d312084bcabf45c7f273f"
+    },
+    {
+      "file": "src/job_control/store.py",
+      "sha256": "40f7010bffe2764bd4160415c581742487357ea28f0f3e351518b18fabc2ce7e"
+    },
+    {
+      "file": "src/tools_knowledge/find_knowledge.py",
+      "sha256": "5201f628af588931b962843e65b20286242bf15ae23dec291a6cf5cd02d2c8d3"
+    },
+    {
+      "file": "src/utils/general_helper.py",
+      "sha256": "333754fafe220cb3c9c36ab05754bdbdc1ec578af2c436e6e6f096a90695aad2"
+    },
+    {
+      "file": "src/utils/path_helper.py",
+      "sha256": "67c2e2b98dd8c5699e8818bc46a63e9ec27456732aa36a4fdc45db8a8971a287"
+    },
+    {
+      "file": "tests/test_cs50_knowledge_input.py",
+      "sha256": "720ba8f4a07c1342a986e3dd3d113125ee007ab1fbbdf5154b302fe66ed98b23"
+    },
+    {
+      "file": "tests/test_job_store_contention.py",
+      "sha256": "35d5beda467940511529d5b4d70790014f62888bfaf44d9e0d8e1c862cb51f5c"
+    }
+  ],
+  "compatibility_equivalence": [
+    {
+      "file": "src/core/retry.py",
+      "sha256": "e68c6d63e6e56ac8bc137d1e8142b2c856126a86548d312084bcabf45c7f273f",
+      "equal_in_compat": true
+    },
+    {
+      "file": "src/tools_knowledge/find_knowledge.py",
+      "sha256": "5201f628af588931b962843e65b20286242bf15ae23dec291a6cf5cd02d2c8d3",
+      "equal_in_compat": true
+    },
+    {
+      "file": "src/utils/general_helper.py",
+      "sha256": "333754fafe220cb3c9c36ab05754bdbdc1ec578af2c436e6e6f096a90695aad2",
+      "equal_in_compat": true
+    },
+    {
+      "file": "src/utils/path_helper.py",
+      "sha256": "67c2e2b98dd8c5699e8818bc46a63e9ec27456732aa36a4fdc45db8a8971a287",
+      "equal_in_compat": true
+    },
+    {
+      "file": "tests/test_cs50_knowledge_input.py",
+      "sha256": "720ba8f4a07c1342a986e3dd3d113125ee007ab1fbbdf5154b302fe66ed98b23",
+      "equal_in_compat": true
+    },
+    {
+      "file": "tests/test_job_store_contention.py",
+      "sha256": "35d5beda467940511529d5b4d70790014f62888bfaf44d9e0d8e1c862cb51f5c",
+      "equal_in_compat": true
+    },
+    {
+      "file": "src/job_control/store.py",
+      "function": "Store.connection",
+      "sha256": "fabd5a3d4618a9fe3a556febdb59d0ae0c8211e802a989ff88205843de5447ee",
+      "equal_in_compat": true,
+      "full_file_expected_different_because": "PR148 adds admission fence elsewhere"
+    }
+  ],
+  "patch_sha256": {
+    "pr148.patch": "76aa75a421954e7589f55cda5df65cb6cb19caabd9b2dfa290232194660c9c74",
+    "pr149.patch": "823bb383f806880521caaf13100f1be0fc3c9e5f1effb0cb5a8cd7fa7e718955",
+    "ui20.patch": "6d6c99569e2a801370ea37c5d0d48f2d42d94c8e9414cd35fd63d027596a666f",
+    "stabilization.patch": "dc8705b812d0b98c03f3443d72aefb817d640811e65de55502943c2d6d0855d6"
+  },
+  "test_environment": {
+    "python": "3.12.12",
+    "sqlite": "3.50.4",
+    "pytest": "9.1.1",
+    "optional_tiktoken_installed": false,
+    "optional_pydantic_settings_installed": false,
+    "new_packages_installed": false,
+    "environment_reused": "Personal_Assistant-c26b6-planning-results/test-env",
+    "ui_existing_packages_reused": "personal-assistant-ui-c26b/.venv",
+    "sandbox": "synthetic local process/fixture tests; no production access"
+  },
+  "runs": [
+    {
+      "name": "import-targets",
+      "source_scope": "intermediate optional settings import failure after first lazy-import change",
+      "passed_cases": 0,
+      "failures": 0,
+      "errors": 3,
+      "skipped": 0,
+      "junit_declared_tests": 3,
+      "seconds": 1.606,
+      "xml_sha256": "bc5fbe35568c63208ecc1e6903fa5a3ab4b6f49b65a26be16623f7d9a6e8b52b",
+      "log_sha256": "0329db453e1f6c57ee62db4ee358f78554ba6f5f4cda5ef5f76931923086c876",
+      "failed_cases": [
+        "test_full_six_course_end_to_end_and_resume",
+        "test_explicit_six_ids_and_cli_gate",
+        "test_isolated_course_cli_v2_resume"
+      ],
+      "skips": []
+    },
+    {
+      "name": "import-targets-fixed",
+      "source_scope": "three original batch cases after optional import correction",
+      "passed_cases": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "junit_declared_tests": 3,
+      "seconds": 1089.324,
+      "xml_sha256": "b9b80587c015556b7df0d3a61c3308a06d6b473e6f28475ab0f2d6f32867b702",
+      "log_sha256": "13b660e9b968c1a247a7df236a467a3adf3a0f6ff3f8fa8071c357f2547a5c4e",
+      "failed_cases": [],
+      "skips": []
+    },
+    {
+      "name": "sqlite-before",
+      "source_scope": "expected red real-lock regression before SQLite correction",
+      "passed_cases": 2,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "junit_declared_tests": 4,
+      "seconds": 3.109,
+      "xml_sha256": "1ac97efea349ba8bb031693ff7ccd9f58aa469be77be465f353b2305c594a662",
+      "log_sha256": "3d7d95b50986c8a8bcdcc395f16794915de718a42866e173d3618c7ee3916acf",
+      "failed_cases": [
+        "test_transient_setup_busy_reopens_before_entering_transaction[False]",
+        "test_transient_setup_busy_reopens_before_entering_transaction[True]"
+      ],
+      "skips": []
+    },
+    {
+      "name": "focused",
+      "source_scope": "Knowledge input plus first four SQLite regressions",
+      "passed_cases": 31,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "junit_declared_tests": 32,
+      "seconds": 65.355,
+      "xml_sha256": "c90580b00350226f82e21096c617a23166ddc26cf0493810dcc33fb2b52b2f1d",
+      "log_sha256": "ee406293bcaa9c45e8886c3ea980cdba74c1799f3e3da5361a36020a4d4f4381",
+      "failed_cases": [],
+      "skips": [
+        {
+          "name": "test_real_local_pilot",
+          "reason": "Imported original pilot unavailable"
+        }
+      ]
+    },
+    {
+      "name": "c18-1",
+      "source_scope": "unchanged master SQLite implementation with task-only diagnostic harness",
+      "passed_cases": 23,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "junit_declared_tests": 24,
+      "seconds": 169.533,
+      "xml_sha256": "0c95f4df36131e847cfe468bca5a570fbf019137fa8c9a76ae3fd7ce76e6ad7b",
+      "log_sha256": "39cd5e228f674b9e56cf91d381464c00b14fcb0dd95f5925a9fc067e10e11fd2",
+      "failed_cases": [
+        "test_partial_failure_and_independent_branch_strategy[False]"
+      ],
+      "skips": []
+    },
+    {
+      "name": "c18-2",
+      "source_scope": "corrected SQLite setup, full C18 plus first four regressions",
+      "passed_cases": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "junit_declared_tests": 28,
+      "seconds": 261.08,
+      "xml_sha256": "398514865a3c8d117bc4ef837c758cf7e153821fe7d1919ede9d8f79145067c0",
+      "log_sha256": "9019429a7dd8b4942196decd36cf261f0b3cf912edc45532b407658fae8c4cde",
+      "failed_cases": [],
+      "skips": []
+    },
+    {
+      "name": "compat",
+      "source_scope": "master155 plus task correction plus unchanged PR149/PR148",
+      "passed_cases": 493,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "junit_declared_tests": 493,
+      "seconds": 1046.77,
+      "xml_sha256": "0d0424dc0d96e98cd435a0456f8d93017b8202510b0c48016303ee9a6b350244",
+      "log_sha256": "832b07154e46f3d3ba558e2bfc9e1b0b9dd120e9622077e33f422504025b0d8f",
+      "failed_cases": [],
+      "skips": []
+    },
+    {
+      "name": "knowledge-regression",
+      "source_scope": "final source Knowledge runner/schedule/report/budget/checkpoints",
+      "passed_cases": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "junit_declared_tests": 65,
+      "seconds": 836.088,
+      "xml_sha256": "a5308eb005415db4ee940784acd8661940e6571ef090bbc5f1527c61f4a12ccc",
+      "log_sha256": "52fca29331e76aea97ee24b45f2dc39c8a3dda6e94f774dae2ab5fc3b381cb17",
+      "failed_cases": [],
+      "skips": []
+    },
+    {
+      "name": "ui",
+      "source_scope": "current UI main plus unchanged PR20",
+      "passed_cases": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "junit_declared_tests": 33,
+      "seconds": 11.301,
+      "xml_sha256": "b50becc003abf977c092900628b2418bdc6b62dcfceb00b99cb8258f2f14b8ab",
+      "log_sha256": "d415e4e3320ab02d7373635da82b676c0c12148aa0acd7d355d149eb89e27f5f",
+      "failed_cases": [],
+      "skips": [],
+      "passed_subtests_from_pytest_summary": 9
+    }
+  ],
+  "lint": {
+    "format_all_changed_python": "passed",
+    "new_tests_and_sqlite_file": "passed",
+    "full_touched_legacy_files": "three pre-existing F821; baseline and current match",
+    "pre_existing_names": [
+      "_get_extract_knowledge",
+      "classify_resource_file",
+      "run_name"
+    ]
+  },
+  "decisions": {
+    "code_review": "GO",
+    "readonly_operator_inventory": "GO",
+    "merge": "NO-GO",
+    "production_deployment": "NO-GO",
+    "week0_pilot": "NO-GO",
+    "auto_merge": false,
+    "ready_transitions": false
+  },
+  "preserved": {
+    "production_databases_untouched": true,
+    "existing_archives_not_imported": true,
+    "new_course_downloads": 0,
+    "source_approvals_created": 0,
+    "storage_limits_changed": false,
+    "files_deleted": 0,
+    "other_worktrees_modified": false
+  },
+  "limitations": [
+    "historical Config-resume exact SQLite error code not recorded",
+    "original lock holder not proven",
+    "production mount/queue/worker/trigger/SHA/digest/TLS/VPN/OIDC/rollback unverified",
+    "runtime grants not supplied or inspected",
+    "no full optional-profile suite or production image/host acceptance",
+    "default-branch documentation integration pending explicit merge gate"
+  ]
+}
