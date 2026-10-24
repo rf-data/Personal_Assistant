@@ -1,5 +1,8 @@
 # C26 Runtime Configuration & Bootstrap Finalization — 23.10.2026
 
+Aktualisierung 24.10.2026: [Bericht A – Offline-Runtimeobserver und versionierter Mehrrollenscope](runtime_observer_report.md), [Bericht B – Draftreview und Integrationssimulation](draft_consolidation_report.md). Der neue v2-Operationsumschlag ist kein v1-Gatepermit; Livecollector, Gateerzwingung und mutierender Driver bleiben gesperrt. Die zuvor offenen Repository-/Branch-/Buildpfade und lokalen Image-IDs sind inzwischen operator_observed in den Inventaren; Registry-/Buildprovenienz bleibt offen.
+
+
 **GO für technisches Review und lesende Betreiberinventur. NO-GO für Merge,
 Produktionsstart, Aktivierung und Pilot.** Bestehender Draft #157 fortgeführt.
 Keine Host-/Coolifyaktion, kein Deployment, Merge/Ready/Auto-Merge, produktiver
@@ -28,7 +31,7 @@ Der neue Readclient verwendet ausschließlich zwei belegte GET-Pfade mit explizi
 Transport; Offlinebeobachtungen ergeben nie eine Gate-Observation oder Freigabe.
 
 Die bestehende Backend-Application ist im 4.4.7-Quellmodell grundsätzlich von
-Dockerfile auf dockercompose umstellbar. Application-UUIDs sind nun operator_observed. Buildpfade/Rendering und
+Dockerfile auf dockercompose umstellbar. Application-UUIDs sind nun operator_observed. Source-/Buildpfade sind operator_observed; tatsächliches Rendering und
 sicherer Rückweg fehlen; der Wechsel löscht gespeicherte buildtypspezifische
 Felder. Noch keine gesicherte Produktionsadoption. Für den Dreirollenwechsel
 braucht der Gateplan eine explizite versionierte Scopebindung; nur Backend-
@@ -76,7 +79,7 @@ abgegrenzt, keine pauschale Heilung durch einen grünen Wiederholungslauf.
 
 ## Was noch ausschließlich der Betreiber ausführen muss
 
-1. Exakte Buildpfade/Branch/Overrides, verbleibende Scope-UUIDs, zusätzliche Trigger, alle
+1. Effektive Overrides und Rendering der bestätigten Source-/Buildpfade, verbleibende Scope-UUIDs, zusätzliche Trigger, alle
    Writer/Queues, privaten TLS/VPN/OIDCweg und Ressourcenpeaks lesend belegen.
 2. Nach separater Review-/Mergefreigabe #156 → #149 → #148 → #157 integrieren,
    UI #20 separat; kombinierte tatsächliche Versionen und gebaute Backend-/Gateway-

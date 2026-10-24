@@ -1,5 +1,8 @@
 # Gate-Kern und noch fehlender Coolifyadapter
 
+Aktualisierung 24.10.2026: [Bericht A – Offline-Runtimeobserver und versionierter Mehrrollenscope](runtime_observer_report.md), [Bericht B – Draftreview und Integrationssimulation](draft_consolidation_report.md). Der neue v2-Operationsumschlag ist kein v1-Gatepermit; Livecollector, Gateerzwingung und mutierender Driver bleiben gesperrt. Die zuvor offenen Repository-/Branch-/Buildpfade und lokalen Image-IDs sind inzwischen operator_observed in den Inventaren; Registry-/Buildprovenienz bleibt offen.
+
+
 Der vorhandene Kern in #148 wird unverändert verwendet. `admission()` sperrt neue
 Requests und Starts unter demselben Lock wie Dispatch. Während `draining` können
 bereits angenommene Jobs enden; `deploying` verhindert weitere Dispatches.
@@ -66,7 +69,8 @@ Die Labels melden für Backend und UI `coolify.type=application` als
 Betreiberbefund. Backend/Dockerfile und UI/Docker-Compose sind nun zusätzlich
 bestätigt, beide mit Manual deployments only. Die ausdrücklich benannten
 Application-UUIDs, Previewanzeige None und vorhandene APIeinstiege sind nun
-operator_observed. Genaue Buildpfade, weitere Scopezuordnung, zusätzliche
+operator_observed. Source-/Buildpfade sind seit 24.10. ebenfalls operator_observed;
+effektive Overrides/Rendering, weitere Scopezuordnung, zusätzliche
 Trigger/Rechte und sichere API-/Wechselwirkung fehlen weiterhin.
 Deshalb werden weder Coolify-Endpunkte geraten noch ein deployender Adapter
 implementiert. Aktuelle [Coolify-Compose-Dokumentation](https://coolify.io/docs/applications/builds/docker-compose)

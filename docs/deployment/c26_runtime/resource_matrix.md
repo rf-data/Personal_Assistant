@@ -1,4 +1,4 @@
-# Build- und Coolify-Ressourcenmatrix — 23.10.2026
+# Build- und Coolify-Ressourcenmatrix — 24.10.2026
 
 Jede Zelle nennt Wert und Status. JSON mit Quellen, Eingabestaaten und Quellfingerprints:
 [coolify_resource_binding.v1.json](coolify_resource_binding.v1.json).
@@ -14,13 +14,13 @@ nicht aus Namen/Composeprojekten abgeleitet.
 | Coolify-Typ | application — `operator_observed` | application — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Projekt | personal-assistant — `operator_observed` | personal-assistant — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Environment | production — `operator_observed` | production — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
-| Tatsächliches Repository | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
-| Tatsächlicher Branch | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
+| Tatsächliches Repository | rf-data/Personal_Assistant — `operator_observed` | rf-data/personal-assistant-ui — `operator_observed` | Betreiberauftrag Runtime Observer, 24.10.2026; Image-ID stimmt mit lokaler Containerreferenz überein, kein Build-/Registrybeweis |
+| Tatsächlicher Branch | master — `operator_observed` | main — `operator_observed` | Betreiberauftrag Runtime Observer, 24.10.2026; Image-ID stimmt mit lokaler Containerreferenz überein, kein Build-/Registrybeweis |
 | Build strategy | Dockerfile — `operator_observed` | Docker Compose — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Builder | Deployment server — `operator_observed` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
-| Base Directory | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
-| Dockerfile-Pfad | offen — `requires_operator_confirmation` | docker/DockerFile.UI — `verified_from_repository` | Backendauswahl offen; UI-Repository build.context/build.dockerfile belegt |
-| Repository-Compose-Pfad | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
+| Base Directory | / — `operator_observed` | / — `operator_observed` | Betreiberauftrag Runtime Observer, 24.10.2026; Image-ID stimmt mit lokaler Containerreferenz überein, kein Build-/Registrybeweis |
+| Dockerfile-Pfad | /docker/DockerFile.worker — `operator_observed` | docker/DockerFile.UI — `verified_from_repository` | Betreiberauftrag Runtime Observer, 24.10.2026; Image-ID stimmt mit lokaler Containerreferenz überein, kein Build-/Registrybeweis |
+| Repository-Compose-Pfad | nicht als aktive Dockerfile-Application-Composeauswahl bestätigt | /docker/docker-compose.ui.yaml — `operator_observed` | Betreiberauftrag Runtime Observer, 24.10.2026; Image-ID stimmt mit lokaler Containerreferenz überein, kein Build-/Registrybeweis |
 | Custom Build Command | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Custom Start Command | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Beobachteter Start | ["sleep", "infinity"] — `operator_observed` | streamlit run app_ui.py --server.address=0.0.0.0 --server.port=8501 --server.headless=true — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
@@ -30,7 +30,7 @@ nicht aus Namen/Composeprojekten abgeleitet.
 | APIberechtigte Akteure / tatsächliche Nutzung | offen — `unverified` | offen — `unverified` | Endpunktexistenz beweist weder Berechtigung noch Ausführung |
 | Weitere Trigger | offen — `unverified` | offen — `unverified` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Gemeldete Imagereferenz / Tag | syboxap8mpf8lgjzpjdsqm0z:3b91d39195e0d13fe0442d4594b28e431b0f4236 — `operator_observed` | a8xzljz4fq52vt1yt43nheg5_streamlit:b2cf9ca9ba44ee770dab4d834a6ae8285f34776b — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
-| Lokale Image-ID | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
+| Lokale Image-ID | sha256:671b8e9bbf92afa6e5968d90a5e1d026a6539eb6b31ec3b94f16f1fc1e6c7f36 — `operator_observed` | sha256:4fd15dc9fc0135a22e85e23a028a018592c35288022f1d4d992ffa70fd9bb237 — `operator_observed` | Betreiberauftrag Runtime Observer, 24.10.2026; Image-ID stimmt mit lokaler Containerreferenz überein, kein Build-/Registrybeweis |
 | Registry-RepoDigests | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Bewiesene Build-SHA | offen — `unverified` | offen — `unverified` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Compose-Projekt | syboxap8mpf8lgjzpjdsqm0z — `operator_observed` | a8xzljz4fq52vt1yt43nheg5 — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
@@ -40,7 +40,7 @@ nicht aus Namen/Composeprojekten abgeleitet.
 ## Technische Auswahl, nicht produktiver Befund
 
 - `deployment/Dockerfile`: Lean-C22-Runtime, PYTHON_IMAGE und UV_IMAGE erforderlich, `/opt/venv`, UID10001, ENTRYPOINT `python -m scripts.deployment`; #148 ergänzt Gate-CLI.
-- `docker/DockerFile.worker`: schwerere lecture-worker-Extras, unpinned Python/uv-Auswahl, CMD `sleep infinity`. Passt zum gemeldeten Platzhalter, ist aber nicht als ausgewählte Coolifydatei bewiesen. Keine Extrasinstallation in diesem Auftrag.
+- `docker/DockerFile.worker`: schwerere lecture-worker-Extras, unpinned Python/uv-Auswahl, CMD `sleep infinity`. Die Auswahl dieses Pfades ist jetzt operator_observed; unabhängige Build-/Registryprovenienz fehlt. Keine Extrasinstallation in diesem Auftrag.
 - `deployment/compose.yaml`: vorhandene Caddy/API-Namespacekopplung; vollständiger Stack enthält weitere Rollen/UI. Nicht zusätzlich starten. `cs50-worker.compose.yaml` bietet weitere getrennte Profile, die nicht zum Bootstrap addiert werden.
 - `coolify.runtime-bootstrap.compose.yaml`: vorhandene drei Rollen, neuer eigener Runtime-Bind, getrennte API-/Workerprofile, keine öffentliche APIroute. `Caddyfile` leitet internes TLS auf Loopback8016 weiter.
 - `coolify.private-https.yaml`/`public-https.yaml`: UI-Service heißt dort `ui`; reale UI und UI-Repo verwenden `streamlit`. Blindes Überlagern würde eine zweite UI riskieren.
