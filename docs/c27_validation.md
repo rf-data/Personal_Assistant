@@ -589,3 +589,137 @@ fachliche Abnahme, keine neue Browserinstallation oder vollständige Browserabna
 kein Live-LLM, keine Produktions-/DB-/Queue-/Serveränderungen, keine Migration.
 Storage-/Collection-Sicherheitslimits unverändert. Kein ENOSPC; Btrfs meldete
 zuletzt rund 4,9 GB frei. Keine Bereinigung bestehender Dateien/Worktrees/Venvs.
+
+## C27 nach erster funktionaler Betreiberabnahme
+
+### Betreiberbericht, 24.10.2026
+
+Der Betreiber meldet die manuelle funktionale Abnahme von Loviscach `mathe_1 /
+01.01.2` als **8/8 erfolgreich**. Dies ist der erhaltene Betreiberbericht, keine
+von Codex nachträglich behauptete manuelle Browserprüfung:
+
+| Prüfpunkt | Betreiberergebnis |
+|---|---|
+| Lokaler UI-Start | erfolgreich |
+| Lektionenauswahl | erfolgreich |
+| Anzeige der ausgewählten Quelle | erfolgreich |
+| Quellenprovenienz | erfolgreich |
+| Mock-Generierung | erfolgreich |
+| Kennzeichnung `needs_review` | erfolgreich |
+| Markdown-Download | erfolgreich |
+| LaTeX-Download | erfolgreich |
+
+Freigegeben ist ausschließlich die technische MVP-Basis für weitere lokale Tests.
+**Keine fachliche Freigabe, keine Merge-/Ready-/Deploymentfreigabe.** Die unten
+beschriebenen Darstellungsänderungen folgen auf diese Abnahme und wurden gezielt
+automatisiert geprüft. Sie sind kein zusätzlicher manueller Abnahmebericht.
+
+### Gezielte Änderungen und tatsächlich ausgeführte Prüfungen
+
+- Quellenverzeichnis standardmäßig nur für im Dokument zitierte Belegblöcke.
+  Q-Labels bleiben auf die ursprüngliche vollständige Evidenzfolge bezogen;
+  auch zitierte Formelvarianten aus Zwischenständen behalten ihre Quellen.
+  In der UI ist die vollständige technische Evidenz optional einsehbar und als
+  Summary-JSON herunterladbar. Der Schalter löst keine Generierung aus. Backend:
+  `render(..., include_all_evidence=True)` erlaubt die explizite technische Fassung.
+- Zeiten nur in der Darstellung auf höchstens zwei Nachkommastellen gerundet.
+  Raw-Lokatoren, SHA256, native Segmentbezüge und Source-IDs unverändert; unbekannte
+  Zeiten werden weiterhin als unbekannt behandelt, niemals als Null ersetzt.
+- Mock bleibt unverändert begrenzt: einfach kompakt zwei/ausführlich vier
+  Ausschnitte je Lektion, hierarchisch zwei je Abschnitt. 01.01.2 hat weiterhin
+  25 eingelesene/versionierte Segmente, von denen der kompakte Mock Q1/Q2 zitiert.
+  **2/25 beabsichtigt**, keine künstliche Abdeckung. Unvollständige wörtliche
+  Ausschnitte sind in Export und UI als Demonstrationsmaterial ausgewiesen;
+  keine vollständige didaktische Synthese oder fachliche Bewertung behauptet.
+- TeX-v2: sichere Umbruchstellen in langen Hash-/Evidence-Datentokens, weiterhin
+  TeX-Escaping; deutsche Babel-Locale und Flattersatz. v1-Datei bleibt erhalten.
+  Die neue Templateversion invalidiert einfache Cachekeys; keine historischen
+  Cachedateien gelöscht/überschrieben, keine Eingangsdateien geändert.
+- **87 Backendtests bestanden** in 28,97 s: `test_lecture_summary.py` (35),
+  `test_lecture_summary_acceptance.py` (8), `test_lecture_summary_hierarchy.py`
+  (39), `test_lecture_summary_presentation.py` (5). Das sind gezielte Export-,
+  Quellen-, Cache-, Quality-Gate-, Hierarchie-/Formel-/Resume- sowie Preflighttests,
+  keine erneute vollständige Recovery-Regression.
+- **10 UI-AppTests plus drei Subtests bestanden** in 25,09 s. Einschließlich
+  optionalem Evidenz-/JSON-Schalter ohne erneute Generierung, Standarddownloads,
+  Auswahl, Fehler, Authentifizierung/Operatorrolle und deaktiviertem Jobbackend.
+- Ruff 0.16.0: Formatierung und Checks aller geänderten Pythondateien aus vorhandenem
+  Pre-commit-Cache, keine Installation. Vollständiger Pre-commit-Manager/Hooklauf
+  weiterhin nicht als erfolgreich behauptet.
+
+Backendtestbefehl im neuen eigenen `Personal_Assistant-c27-review`-Worktree:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+  /home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-planning-results/test-env/bin/python -B -m pytest \
+  -q -p no:cacheprovider tests/test_lecture_summary_presentation.py \
+  tests/test_lecture_summary.py tests/test_lecture_summary_acceptance.py \
+  tests/test_lecture_summary_hierarchy.py \
+  --basetemp=/tmp/c27-review-backend-20261024-01
+```
+
+UI im eigenen `personal-assistant-ui-c27-review`-Worktree: dieselbe vorhandene
+UI-Umgebung wie zuvor, `PYTHONPATH` auf den neuen Backend-Worktree und UI-Root;
+pytest über `site.addsitedir` nach den UI-Paketen ergänzt. Nur
+`tests/test_lecture_summary_ui.py`, `-p no:cacheprovider`, eigener Basetemp.
+Dependencies unverändert gegenüber C27-C: Python 3.12.12, pytest 9.1.1;
+Backend-Pydantic 2.14.1/core 2.50.1, UI 2.14.0/core 2.50.0, Streamlit 1.65.0.
+Die bereits dokumentierte Backend-Lockabweichung 2.13.4/core 2.46.4 bleibt bestehen.
+
+### Tatsächliche LuaLaTeX-Kompilation und Originaldatei
+
+Vorhanden: `/usr/bin/lualatex`, LuaHBTeX 1.15.0, TeX Live 2022/Debian,
+Systemformat und Pakete `fontspec`, `babel`, `amsmath`, `amssymb`, `geometry`.
+`ngerman.ldf` ist nicht vorhanden; v2 verwendet vorhandene deutsche Babel-
+Locale-Daten. Kein TeX-Paket, Font oder Systempaket wurde installiert.
+
+Erster isolierter Versuch mit leerem Schriftcache: nach 40 s kontrolliert am
+Zeitlimit beendet. Ein folgender Diagnoseversuch mit deaktiviertem Fontscan fand
+die Namen-Datenbank im eigenen Schreibcache nicht; kein PDF. Daraufhin wurden
+**3.521.847 Bytes vorhandene Latin-Modern-/Schriftnamen-Cachedateien** in den
+eigenen Prüfbereich übernommen. Kein Neuaufbau einer Systemumgebung. Frühere
+Versuche bleiben als Diagnoseartefakte erhalten. Erste erfolgreiche Kompilationen
+zeigten noch Überbreiten; nach Flattersatz in v2 nochmals gezielt kompiliert:
+
+| Finale Fassung für echte 01.01.2-Mock-Summary | Ergebnis |
+|---|---|
+| `summary-final.tex`, zwei zitierte Belege | Exit 0, PDF mit 2 Seiten |
+| `technical-evidence-final.tex`, alle 25 Belege | Exit 0, PDF mit 5 Seiten |
+| Beide finale Logs | 0 `Overfull \\hbox`, 0 fehlende Zeichen, keine TeX-Fehler |
+
+Kompilation ausschließlich im eigenen privaten Exportverzeichnis, Argumentliste
+ohne Shell, `-no-shell-escape -interaction=nonstopmode -halt-on-error -recorder`,
+40-s-Walltimeout, CPU 25 s, Adressraum 1 GiB, Dateigröße 10 MiB, private Cache- und
+Ausgabepfade, keine Auto-Formatgenerierung/Live-Fontscans. Keine Compilerintegration
+in den UI-Download und kein produktiver TeX-Dienst. PyMuPDF hat die erzeugten PDFs
+zusätzlich geöffnet; Q1 in der Normalfassung, Q25 nur in der technischen Fassung,
+Demo-Kennzeichnung vorhanden. Das beweist Exportfähigkeit, keine fachliche Qualität.
+
+Privater Prüfbereich:
+`/home/robfra/0_Portfolio_Projekte/c27-review-evidence-20261024/`;
+finale PDFs und Logs unter `tex-final/`. Keine Quelle oder private Summary im Git.
+Der reale SourceCollector-/Mock-Lauf wurde mit gesperrtem `socket.connect` und
+verbotenem `httpx.Client` ausgeführt. Alle 25 Evidence-Records blieben erhalten,
+Status `needs_review`, Original-SHA256 vor/nach Generierung identisch:
+`79a5dd28560679324fdfb3ab0b90307148add6e83267018235157dd718e756ce`.
+
+### Kontrollierter Live-Test nur vorbereitet
+
+Der [aktualisierte separate Vorschlag](c27_live_test_proposal.md) legt
+`gpt-6-luna`, genau eine einfache Anfrage für 01.01.2, vollständige 25 Segmente
+mit 1.813 Textbytes, maximal 2.000 Ausgabetokens und ein vorgeschlagenes
+Betreiberbudget von **0,01 USD** fest. Vollständiger JSON-Request: 13.348 Bytes;
+plus 2.048 Framingreserve **15.396 Inputeinheiten**, gesamt **17.396** reserviert.
+Prompt, Schema, Optionen und alle Quellenmetadaten im Payload berücksichtigt.
+Preflight reproduzierbar mit `inspect --case text`, ohne HTTP-Client/Keyzugriff.
+Private vollständige Requestdatei und Fingerprint zur lokalen Durchsicht vorhanden;
+keine Live-Konfiguration aktiviert. Die Geldgrenze ist eine tarifabhängige
+Betreiberbudgetplanung, kein implementierter Dollar-Hardcap im einfachen Provider.
+
+Offen: fachliche und visuelle Quellen-/Formelprüfung, tatsächlicher Modellzugang,
+Kompatibilität einer Live-Antwort, Usage/Kostenabrechnung und gesonderte spätere
+Upload-/Kostenfreigabe. Kein Live-Aufruf, kein neuer Browserlauf, keine vollständige
+398-/157-Testregression. Kein ENOSPC, keine Installation, Löschung, Migration,
+Produktions-/Serveränderung oder neue Portfreigabe. Backend #158 und UI #21 bleiben
+Drafts. Die beiden neuen eigenen Branches/Worktrees bleiben wegen des untersagten
+Merges fürs Review erhalten; Dokumente liegen im Draft, nicht in master/main.

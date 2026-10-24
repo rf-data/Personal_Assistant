@@ -41,6 +41,40 @@ def md_escape(text):
     return text.replace("\n", " ").replace("\r", " ")
 
 
+def tex_evidence(text):
+    """Break long data tokens without accepting TeX commands from the source."""
+    return "".join(
+        r"\allowbreak{}".join(
+            tex_escape(token[i : i + 12]) for i in range(0, len(token), 12)
+        )
+        if len(token) >= 25 and not token.isspace()
+        else tex_escape(token)
+        for token in re.split(r"(\s+)", text)
+    )
+
+
+def cited_source_ids(summary):
+    """Include every rendered claim, including retained intermediate formulas."""
+    cited = {
+        source_id
+        for _, items in sections(summary.content)
+        for c in items
+        for source_id in c.source_ids
+    }
+    if summary.processing is not None:
+        cited.update(
+            source_id
+            for f in summary.processing.formula_variants
+            for source_id in f.source_ids
+        )
+    return cited
+
+
+def seconds(value):
+    # Display only: exact locator values and evidence identity remain untouched.
+    return f"{value:.2f}".rstrip("0").rstrip(".") or "0"
+
+
 def sections(draft):
     yield "Lernziele", draft.learning_objectives
     yield "Vorkenntnisse", draft.prerequisites
@@ -56,11 +90,13 @@ def sections(draft):
     yield "Wichtigste Erkenntnisse", draft.takeaways
 
 
-def render(summary, *, latex=False):
+def render(summary, *, latex=False, include_all_evidence=False):
     if summary.validation_status == "failed":
         raise ValueError("Failed summary cannot be exported")
     escape = tex_escape if latex else md_escape
     labels = {e.source_id: f"Q{i}" for i, e in enumerate(summary.evidence, 1)}
+    cited = cited_source_ids(summary)
+    mock = summary.model == "mock-extractive-v1"
     title = escape(summary.content.title)
     output = [r"\section*{" + title + "}" if latex else "# " + title]
     output.append(escape("Lektionen: " + ", ".join(summary.selection.lecture_ids)))
@@ -68,6 +104,15 @@ def render(summary, *, latex=False):
         escape("Qualität: " + summary.validation_status + " · Modell: " + summary.model)
     )
     output.extend(escape(m) for m in summary.validation_messages)
+    if mock:
+        output.append(
+            escape(
+                "Demonstrationsmaterial (Mock): begrenzte wörtliche, möglicherweise unvollständige "
+                "Ausschnitte; keine vollständige didaktische Synthese oder fachliche Abdeckung. "
+                "Im einfachen Modus höchstens zwei Ausschnitte je Lektion (Kompakt), vier "
+                "(Ausführlich); hierarchisch höchstens zwei je Abschnitt."
+            )
+        )
     if summary.processing is not None:
         p = summary.processing
         output.append(
@@ -113,7 +158,16 @@ def render(summary, *, latex=False):
             refs = ", ".join(labels[s] for s in claim.source_ids)
             label = f"[{claim.kind}; {claim.quality}; {refs or 'ohne Quellenbeleg'}]"
             line = (
-                escape(claim.text)
+                escape(
+                    (
+                        "Demonstrationsausschnitt (wörtlich, möglicherweise unvollständig): "
+                        if mock
+                        and claim.evidence_quote
+                        and not isinstance(claim, Formula)
+                        else ""
+                    )
+                    + claim.text
+                )
                 + " "
                 + (escape(label) if latex else "`" + label + "`")
             )
@@ -140,7 +194,23 @@ def render(summary, *, latex=False):
     output.append(
         r"\section*{Quellenverzeichnis}" if latex else "## Quellenverzeichnis"
     )
+    output.append(
+        escape(
+            f"Im Dokument zitierte Belegblöcke: {len(cited)} von {len(summary.evidence)} registrierten. "
+            "Registriert bedeutet nicht zitiert oder fachlich abgedeckt. "
+            "Die Q-Nummern bleiben stabil. Vollständige technische Evidenz einschließlich "
+            "unzitierter Blöcke bleibt im Summary-JSON erhalten und ist in der Oberfläche optional einsehbar."
+        )
+    )
+    if include_all_evidence:
+        output.append(
+            escape(
+                "Technische Evidenz: alle registrierten Belegblöcke, auch unzitierte."
+            )
+        )
     for evidence in summary.evidence:
+        if not include_all_evidence and evidence.source_id not in cited:
+            continue
         loc = evidence.locator
         position = f"{loc.origin_pointer}; Zeitstatus {loc.time_status}"
         if loc.page is not None:
@@ -148,7 +218,10 @@ def render(summary, *, latex=False):
         if loc.line_start is not None:
             position += f"; Zeilen {loc.line_start}–{loc.line_end}"
         if loc.start is not None:
-            position += f"; {loc.start}–{loc.end} s; Segment {loc.original_segment_id}"
+            end = seconds(loc.end) if loc.end is not None else "unbekannt"
+            position += (
+                f"; {seconds(loc.start)}–{end} s; Segment {loc.original_segment_id}"
+            )
         if loc.dom:
             position += "; DOM " + loc.dom
         info = (
@@ -177,12 +250,12 @@ def render(summary, *, latex=False):
             )
         if evidence.warnings:
             info += "; Quellenhinweise " + ", ".join(evidence.warnings)
-        if (
-            summary.processing is not None
-            and evidence.source_id in summary.processing.uncited_source_ids
-        ):
-            info += "; im Endergebnis nicht zitiert (keine vollständige fachliche Abdeckung behauptet)"
-        output.append((r"\par\small " if latex else "- ") + escape(info))
+        if evidence.source_id not in cited:
+            info += "; im Dokument nicht zitiert (keine vollständige fachliche Abdeckung behauptet)"
+        output.append(
+            (r"\par\small " if latex else "- ")
+            + (tex_evidence(info) if latex else escape(info))
+        )
     body = "\n\n".join(output) + "\n"
     result = (
         TEMPLATE.read_text(encoding="utf-8").replace("@@BODY@@", body)

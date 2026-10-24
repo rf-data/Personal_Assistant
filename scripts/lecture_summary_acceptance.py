@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from scripts.lecture_summary import registered_lecture, write_catalog
+from src.content_store.models import sha256
 from src.lecture_summary.models import Catalog, Selection
 from src.lecture_summary.providers import SummaryProvider
 from src.lecture_summary.sources import collect
@@ -51,33 +52,47 @@ def selection(ids):
     return Selection(provider_id="loviscach", course_id="mathe_1", lecture_ids=ids)
 
 
-def inspect(config_path, *, model):
+def inspect(config_path, *, model, case=None):
     """Read/hash selected sources and check the actual prompt budget, without a client."""
     from src.lecture_summary.local import load_service
 
     if not model.strip():
         raise ValueError("Explicit model name required for preflight")
+    if case is not None and case not in CASES:
+        raise ValueError("Unknown acceptance case")
     service = load_service(config_path, offline_only=True)
     try:
         report = {}
-        for case, ids in CASES.items():
+        for case_name, ids in CASES.items():
+            if case is not None and case_name != case:
+                continue
             chosen = selection(ids)
             evidence, _ = collect(service.catalog, chosen, service.storage)
             payload = SummaryProvider.request_payload(evidence, chosen, model=model)
             budget = RequestBudget(
                 maximum=1, token_budget=64000, input_limit=30000, output_limit=2000
             )
-            bound = len(json.dumps(payload, ensure_ascii=False).encode()) + 2048
+            encoded = json.dumps(payload, ensure_ascii=False).encode()
+            bound = len(encoded) + 2048
             try:
                 budget.claim(payload)
                 error = None
             except ValueError as exc:
                 error = str(exc)
-            report[case] = {
+            report[case_name] = {
                 "lecture_ids": ids,
                 "source_blocks": len(evidence),
+                "source_text_utf8_bytes": sum(len(e.text.encode()) for e in evidence),
+                "payload_utf8_bytes": len(encoded),
+                "payload_sha256": sha256(encoded),
+                "framing_allowance": 2048,
                 "input_upper_bound": bound,
                 "output_limit": budget.output_limit,
+                "reserved_total": budget.reserved,
+                "maximum_requests": budget.maximum,
+                "artifacts": sorted(
+                    {(e.artifact_id, e.artifact_sha256) for e in evidence}
+                ),
                 "live_budget_ok": error is None,
                 "error": error,
             }
@@ -96,11 +111,14 @@ def main(argv=None):
     check = commands.add_parser("inspect")
     check.add_argument("--config", type=Path, required=True)
     check.add_argument("--model", required=True)
+    check.add_argument("--case", choices=tuple(CASES))
     args = parser.parse_args(argv)
     if args.command == "prepare":
         print(prepare(args.root, args.workspace))
     else:
-        print(json.dumps(inspect(args.config, model=args.model), indent=2))
+        print(
+            json.dumps(inspect(args.config, model=args.model, case=args.case), indent=2)
+        )
 
 
 if __name__ == "__main__":

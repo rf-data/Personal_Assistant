@@ -13,7 +13,7 @@ Quality = Literal[
     "verified_from_source", "uncertain", "requires_visual_context", "unsupported"
 ]
 PROMPT_VERSION = "lecture-summary-de-v1"
-TEMPLATE_VERSION = "lecture-print-de-v1"
+TEMPLATE_VERSION = "lecture-print-de-v2"
 SOURCE_ADAPTER_VERSION = "lecture-sources-v2"
 
 

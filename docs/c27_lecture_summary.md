@@ -19,6 +19,13 @@ geprüft: im einfachen Modus passt der kurze Textfall; vollständige Formel-/Gru
 überschreiten dessen Grenze. C27-C verarbeitet alle drei Fälle hierarchisch offline
 innerhalb der bestehenden Obergrenzen. Fachliche und Live-Modellabnahme bleiben offen.
 
+**Erste funktionale Betreiberabnahme:** 01.01.2 erfolgreich (8/8 laut Betreiber).
+Folgeverbesserungen: zitierte Quellen als Standard, vollständige Evidenz optional
+als JSON, Anzeigezeiten mit höchstens zwei Nachkommastellen, explizite Mock-
+Ausschnittkennzeichnung und TeX-v2 mit nachgewiesener LuaLaTeX-Kompilation.
+Q1/Q2 von 25 Segmenten entsprechen der unveränderten kompakten Mock-Stichprobe.
+[Aktueller Validierungsnachweis](c27_validation.md#c27-nach-erster-funktionaler-betreiberabnahme).
+
 C27 ist ein synchroner, ausdrücklich aktivierter Entwicklungsmodus. Er benötigt
 keinen C16-Worker, Controller, Queue, Content-Store oder Datenbankbootstrap.
 Produktionskonfiguration, historische Pilotdaten und die fünf geschützten Drafts

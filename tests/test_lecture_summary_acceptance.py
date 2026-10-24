@@ -6,7 +6,13 @@ import httpx
 import pytest
 
 from scripts.lecture_summary import register
-from scripts.lecture_summary_acceptance import CASES, SOURCES, inspect, prepare, selection
+from scripts.lecture_summary_acceptance import (
+    CASES,
+    SOURCES,
+    inspect,
+    prepare,
+    selection,
+)
 from src.lecture_summary.local import load_service
 from src.lecture_summary.providers import MockProvider, SummaryProvider
 from src.lecture_summary.sources import collect
@@ -58,7 +64,9 @@ def test_missing_originals_fail_before_any_output(tmp_path):
 
 def test_preflight_creates_no_http_client(originals, tmp_path, monkeypatch):
     config = prepare(originals, tmp_path / "workspace")
-    monkeypatch.setattr(httpx, "Client", lambda **kw: pytest.fail("HTTP client forbidden"))
+    monkeypatch.setattr(
+        httpx, "Client", lambda **kw: pytest.fail("HTTP client forbidden")
+    )
     report = inspect(config, model="synthetic-model")
     assert set(report) == set(CASES)
     assert all(case["live_budget_ok"] for case in report.values())
@@ -72,7 +80,9 @@ def test_live_config_is_rejected_before_client_or_key_lookup(
     values.update(model="synthetic-live", allow_source_upload=True)
     config.write_text(json.dumps(values))
     monkeypatch.setenv("OPENAI_API_KEY", "synthetic-not-a-secret")
-    monkeypatch.setattr(httpx, "Client", lambda **kw: pytest.fail("HTTP client forbidden"))
+    monkeypatch.setattr(
+        httpx, "Client", lambda **kw: pytest.fail("HTTP client forbidden")
+    )
     with pytest.raises(ValueError, match="unchanged mock"):
         inspect(config, model="synthetic-live")
 
@@ -96,7 +106,9 @@ def test_large_complete_request_is_rejected_without_client(
         )
     )
     config = prepare(originals, tmp_path / "workspace")
-    monkeypatch.setattr(httpx, "Client", lambda **kw: pytest.fail("HTTP client forbidden"))
+    monkeypatch.setattr(
+        httpx, "Client", lambda **kw: pytest.fail("HTTP client forbidden")
+    )
     report = inspect(config, model="synthetic-model")
     assert report["text"]["input_upper_bound"] > 30000
     assert not report["text"]["live_budget_ok"]
@@ -115,17 +127,23 @@ def test_preflight_and_real_dispatch_use_identical_payload(originals, tmp_path):
         return httpx.Response(
             200,
             json={
-                "choices": [{
-                    "finish_reason": "stop",
-                    "message": {
-                        "content": MockProvider().generate(evidence, chosen).model_dump_json()
-                    },
-                }]
+                "choices": [
+                    {
+                        "finish_reason": "stop",
+                        "message": {
+                            "content": MockProvider()
+                            .generate(evidence, chosen)
+                            .model_dump_json()
+                        },
+                    }
+                ]
             },
         )
 
     provider = SummaryProvider(
-        api_key="synthetic", model="synthetic-model", allow_source_upload=True,
+        api_key="synthetic",
+        model="synthetic-model",
+        allow_source_upload=True,
         transport=httpx.MockTransport(respond),
     )
     try:
@@ -143,8 +161,35 @@ def test_preflight_and_real_dispatch_use_identical_payload(originals, tmp_path):
 def test_existing_one_file_register_remains_usable(originals, tmp_path):
     lecture, stem, title = SOURCES[0]
     config = register(
-        tmp_path / "single", originals,
+        tmp_path / "single",
+        originals,
         f"loviscach/mathe_1/transcripts/{lecture}_{stem}.json",
-        "loviscach", "mathe_1", lecture, title, "transcript_json",
+        "loviscach",
+        "mathe_1",
+        lecture,
+        title,
+        "transcript_json",
     )
     assert len(load_service(config).catalog.lectures) == 1
+
+
+def test_single_case_preflight_preserves_full_payload_budget(
+    originals, tmp_path, monkeypatch
+):
+    config = prepare(originals, tmp_path / "workspace")
+    # The excluded cases are deliberately unavailable: only the selected source is read.
+    for lecture, stem, _ in SOURCES[1:]:
+        (originals / f"loviscach/mathe_1/transcripts/{lecture}_{stem}.json").unlink()
+    monkeypatch.setattr(
+        httpx, "Client", lambda **kw: pytest.fail("HTTP client forbidden")
+    )
+    report = inspect(config, model="synthetic-model", case="text")
+    assert set(report) == {"text"}
+    case = report["text"]
+    assert (
+        case["input_upper_bound"]
+        == case["payload_utf8_bytes"] + case["framing_allowance"]
+    )
+    assert case["reserved_total"] == case["input_upper_bound"] + 2000
+    assert case["maximum_requests"] == 1 and len(case["payload_sha256"]) == 64
+    assert len(case["artifacts"]) == 1 and case["live_budget_ok"]

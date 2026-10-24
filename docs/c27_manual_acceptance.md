@@ -3,6 +3,11 @@
 Stand 24.10.2026. Implementierung in Backend-Draft #158 und UI-Draft #21.
 Keine Produktionsfreigabe. Diese Anleitung ersetzt die temporären `/tmp`-Helfer.
 
+**Betreiberabnahme 24.10.2026:** Für 01.01.2 sind laut Betreiber alle acht
+funktionalen Prüfpunkte erfolgreich. Keine fachliche, Merge- oder Deploymentfreigabe.
+Die anschließenden Darstellungsverbesserungen sind gezielt automatisiert geprüft;
+[Nachweise und Grenzen](c27_validation.md#c27-nach-erster-funktionaler-betreiberabnahme).
+
 ## Vorbereitung und dauerhafter Start
 
 Benötigt: beide C27-Checkouts, Python 3.12 und die bestehenden UI-/Backend-
@@ -13,8 +18,8 @@ Auf diesem Rechner sind geeignete Dependencies bereits vorhanden:
 
 ```bash
 c27_python=/home/robfra/0_Portfolio_Projekte/personal-assistant-ui-c26b/.venv/bin/python
-c27_backend=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27
-c27_ui=/home/robfra/0_Portfolio_Projekte/personal-assistant-ui-c27
+c27_backend=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27-review
+c27_ui=/home/robfra/0_Portfolio_Projekte/personal-assistant-ui-c27-review
 c27_workspace=/home/robfra/0_Portfolio_Projekte/c27-local-mvp
 c27_sources=/mnt/chromeos/GoogleDrive/MyDrive/1_Projekte_Datensätze/1_Projekte/00_GMP_Compliance/data/lectures
 ```
@@ -82,12 +87,31 @@ für diesen Prozess gesetzt; C16-/C26-Konfiguration und `.env` werden nicht geä
    Damit lassen sich Bedienung, Auswahl, Provenienz und Export abnehmen.
 6. Ergebnisstatus **needs_review** sowie Inhaltsarten/Qualitätszustände prüfen.
    Wesentliche Aussagen sollen Q-Referenzen tragen. Im **Quellenverzeichnis**
-   stehen Course-/Lecture-/Artefakt-/Dokument-/Chunk-/Source-IDs, SHA256,
+   stehen standardmäßig nur tatsächlich zitierte Belegblöcke mit stabilen Q-Nummern,
+   Course-/Lecture-/Artefakt-/Dokument-/Chunk-/Source-IDs, SHA256,
    JSON-Pointer, Segment-ID und vorhandene Zeitbereiche. Dies belegt eine Stelle
    im Transkript; ohne verifizierte Media-ID ist es kein bewiesener Video-Link.
+   Zeiten haben höchstens zwei Nachkommastellen. Mit **Vollständige technische
+   Evidenz anzeigen** alle registrierten Belege einsehen und das zusätzliche
+   Summary-JSON herunterladen. Es enthält weiterhin die exakten Zeiten und alle
+   Original-IDs; die Anzeige löst keine weitere Generierung aus.
 7. **Markdown herunterladen** und **LaTeX herunterladen** anklicken. Downloads
    im Browser explizit speichern. `.tex` ist ein vollständiges LuaLaTeX-Dokument;
    kein PDF wird automatisch kompiliert. Unicode, Formeln und Warnungen prüfen.
+
+Im einfachen Mock-Modus zitiert **Kompakt** absichtlich höchstens zwei,
+**Ausführlich** höchstens vier Ausschnitte je Lektion. Bei 01.01.2 sind Q1/Q2
+von 25 registrierten Segmenten beabsichtigt: keine vollständige Inhaltsabdeckung.
+Wörtliche Abschnitte können mitten im Satz beginnen/enden und sind ausdrücklich
+Demonstrationsmaterial. Der Live-Adapter würde alle 25 ausgewählten Segmente
+erhalten, nicht die Mock-Stichprobe. Keine fachliche Synthese aus dem Mock ableiten.
+
+Die aktuelle TeX-Vorlage ist `lecture-print-de-v2` (LuaLaTeX, deutsche Babel-
+Locale, sichere Umbruchstellen in langen IDs). Die v1-Datei und historische
+Records bleiben erhalten; neue Exporte benutzen v2. Neue einfache Cachekeys
+berücksichtigen v2; alte Cachedateien werden nicht gelöscht oder überschrieben.
+Ein bereits laufender alter UI-Prozess übernimmt die neuen Checkoutpfade nicht:
+regulär mit Strg+C stoppen und mit den obigen Variablen neu starten.
 
 Der Cache unter `workspace/cache/` enthält private vollständige Summary-JSONs
 einschließlich ausgewählter Quelltexte und Provenienz, Modus/Modell/Promptversion.
