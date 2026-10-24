@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "classification": "reproduced_busy_during_connection_setup",
+  "production_database_accessed": false,
+  "test_sqlite_version": "3.50.4",
+  "historical_readonly_inspector_sqlite_version": "3.40.1",
+  "historical_config_resume_exact_sqlite_code": "not_recorded",
+  "original_lock_holder": "not_proven",
+  "observations": [
+    {
+      "error_class": "OperationalError",
+      "sqlite_errorcode": 5,
+      "sqlite_errorname": "SQLITE_BUSY",
+      "frames": [
+        {
+          "file": "guardian.py",
+          "function": "execute",
+          "line": 158
+        },
+        {
+          "file": "guardian.py",
+          "function": "supervise",
+          "line": 113
+        },
+        {
+          "file": "guardian.py",
+          "function": "should_stop",
+          "line": 148
+        },
+        {
+          "file": "store.py",
+          "function": "get",
+          "line": 142
+        },
+        {
+          "file": "contextlib.py",
+          "function": "__enter__",
+          "line": 137
+        },
+        {
+          "file": "store.py",
+          "function": "connection",
+          "line": 123
+        }
+      ],
+      "scope": "new_owned_synthetic_C18_test"
+    }
+  ],
+  "red_regression_result": {
+    "failed": 2,
+    "passed": 2
+  },
+  "correction_scope": "setup_only_before_begin_or_yield_with_existing_2_second_bound",
+  "job_or_transaction_retry": false,
+  "quarantine_preserved": true
+}

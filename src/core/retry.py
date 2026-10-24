@@ -5,15 +5,12 @@ import traceback
 
 from tenacity import (
     RetryCallState,
+    before_sleep_log,
     retry,
     retry_if_exception,
     stop_after_attempt,
     wait_random_exponential,
-    before_sleep_log,
 )
-
-from src.core.memory import app_session
-
 
 RETRYABLE_STATUS_CODES = {
     408,  # timeout
@@ -22,16 +19,6 @@ RETRYABLE_STATUS_CODES = {
     429,  # rate limit
 }
 
-
-import logging
-
-from tenacity import (
-    retry,
-    retry_if_exception,
-    stop_after_attempt,
-    wait_random_exponential,
-    before_sleep_log,
-)
 
 logger = logging.getLogger(__name__)
 
@@ -180,6 +167,8 @@ def format_retry_exception(retry_state: RetryCallState) -> str:
 def log_before_retry(
     retry_state: RetryCallState,
 ) -> None:
+    from src.core.memory import app_session
+
     message = retry_summary(
         # format_retry_exception(
         retry_state
@@ -229,6 +218,8 @@ def log_before_retry(
 
 
 def my_before_sleep(retry_state):
+    from src.core.memory import app_session
+
     if retry_state.attempt_number == 1:
         loglevel = logging.INFO
     else:

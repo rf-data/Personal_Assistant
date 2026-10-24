@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "operator_pilot_proposal_not_source_approval",
+  "course_id": "cs50_python",
+  "week": "0",
+  "source_id": "resource:f06e4055b5ef61f0a693c522f1c57880c88edc20c177cfb79fefbffee5b8767a",
+  "material_id": "material:6b35632313fdf6057809e17cd6bae196630ffb6c4a799eefc7d3193ae452dc14",
+  "original_url": "https://cs50.harvard.edu/python/notes/0/",
+  "existing_raw_sha256": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377",
+  "existing_raw_bytes": 71718,
+  "materials": 1,
+  "c16_jobs": 1,
+  "max_parallel": 1,
+  "max_queued": 1,
+  "source_approval_state": "not_supplied_not_inspected_in_runtime_catalog",
+  "existing_chain_receipts": "not_fully_supplied",
+  "execution_permitted": false
+}

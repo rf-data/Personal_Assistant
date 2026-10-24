@@ -117,10 +117,31 @@ class Store:
     @contextmanager
     def connection(self, write=False):
         safe_path(self.root, "jobs.sqlite3")
-        db = sqlite3.connect(self.path, timeout=2)
+        # A last-connection WAL cleanup can briefly return SQLITE_BUSY even to
+        # connection-local PRAGMAs, sometimes without invoking the busy handler.
+        # Reopen only before any transaction/body, within the existing 2s bound.
+        # Never replay a transaction, commit or job after a locking error.
+        deadline = time.monotonic() + 2
+        while True:
+            db = sqlite3.connect(self.path, timeout=max(0, deadline - time.monotonic()))
+            try:
+                db.execute("PRAGMA foreign_keys=ON")
+                db.execute("PRAGMA synchronous=FULL")
+            except sqlite3.OperationalError as error:
+                db.close()
+                remaining = deadline - time.monotonic()
+                if (
+                    getattr(error, "sqlite_errorcode", 0) & 0xFF != sqlite3.SQLITE_BUSY
+                    or remaining <= 0
+                ):
+                    raise
+                time.sleep(min(0.01, remaining))
+            except BaseException:
+                db.close()
+                raise
+            else:
+                break
         try:
-            db.execute("PRAGMA foreign_keys=ON")
-            db.execute("PRAGMA synchronous=FULL")
             if write:
                 db.execute("BEGIN IMMEDIATE")
             yield db

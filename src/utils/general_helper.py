@@ -17,8 +17,6 @@ from typing import Any, Literal
 from dotenv import find_dotenv, load_dotenv
 from pydantic import BaseModel
 
-from src.core.config import folder_env_vars
-from src.core.memory import app_session
 from src.utils.path_helper import ensure_dir  # , shorten_path
 
 ## USE STANDARD_LIBRARIES --> csv, json, configparser, ipaddress, sqlite3, heapq, bisect...
@@ -55,6 +53,8 @@ def load_env_vars(name: list | str = ".env"):
     """
     Load environment variables from .env files if available.
     """
+    from src.core.memory import app_session
+
     # session_path = find_dotenv(filename=".env.session")
     # if session_path and os.path.exists(session_path):
     #     load_dotenv(session_path, override=True)
@@ -185,6 +185,9 @@ def save_to_cache(
     data: dict,
     metadata: dict | None = None,
 ):
+    from src.core.config import folder_env_vars
+    from src.core.memory import app_session
+
     cache_dir = folder_env_vars.cache_dir
 
     fn = Path(cache_dir) / folder / f"{key}.json"
@@ -207,6 +210,9 @@ def save_to_cache(
 
 
 def load_from_cache(key: str, folder: str | Path, cls=None):
+    from src.core.config import folder_env_vars
+    from src.core.memory import app_session
+
     cache_dir = folder_env_vars.cache_dir
 
     fn = Path(cache_dir) / folder / f"{key}.json"
