@@ -1563,7 +1563,8 @@
         "live_collector_implementation",
         "registry_verifier_implementation",
         "operator_acceptance",
-        "trigger_inventory_completeness"
+        "trigger_inventory_completeness",
+        "coolify_server_side_freshness"
       ],
       "items": {
         "type": "string"

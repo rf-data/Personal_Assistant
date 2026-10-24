@@ -89,6 +89,13 @@ Fingerprintprüfung nach dem HTTP-Response wäre dafür unzureichend. Redirects,
 Proxy-/Environmentübernahme und automatische Transportretries sind abgeschaltet.
 Ein Zertifikatswechsel benötigt neue geprüfte Policy und explizite Freigabe;
 keine automatische Zertifikatsübernahme oder CA-Ausweichroute.
+Requests tragen Cache-Vermeidungsheader; nichtnullige/unverständliche `Age`-
+oder `Warning`-Header werden abgelehnt. Die vorhandenen Coolify-GETs bieten
+keinen Nonce-gebundenen serverseitigen Erfassungszeitpunkt. Deshalb bleibt
+`coolify_server_side_freshness` ausdrücklich unverified, auch bei erfolgreicher
+TLS-Abfrage. Ein Cache ohne korrekte Header kann clientseitig nicht sicher
+ausgeschlossen werden; kein authentifizierter Capture wird als vollständiger
+Live-Nachweis oder Gatefreigabe akzeptiert.
 
 Credentials sind audiencegebunden, höchstens eine Stunde gültig und enthalten nur
 einen begrenzten Bearertoken ohne Headersteuerzeichen. Der Providervertrag fordert
@@ -188,7 +195,7 @@ Hostlabels. Fehlender/falscher Beleg, label_only oder unverified bleiben NO-GO.
 | `directly_observed` | Authentifiziert empfangene technische Host-/Coolifyclaims | nur simuliert getestet; kein real beobachteter Host |
 | `independently_verified` | Getrennt bezogene Receiptidentität und Inhalts-Hash | nur simuliert getestet; echte Verifierkette offen |
 | `operator_reported` | Vorgegebener Scope und Target-/Trustpolicy | Konfigurationsannahmen, keine technischen Messungen |
-| `unverified` | Liveproducer/Registryverifier, Betreiberabnahme, Vollständigkeit der Triggerinventur | ausdrücklich offen, HOLD |
+| `unverified` | Liveproducer/Registryverifier, Betreiberabnahme, Triggerinventur, serverseitige Coolifyfrische | ausdrücklich offen, HOLD |
 | `simulated` | Aus Fake-Transports stammende Gruppen und Buildbelege | alle positiven Testcapturen dieses Auftrags |
 
 ## Integration mit C26-D
@@ -235,12 +242,12 @@ TLS-/Hostnamefehler sind als Fake-Transportfehler geprüft; **kein echter
 TLS-Handshake** oder Serverzugriff wurde ausgeführt. Die Offlinefixture sperrt
 Sockets. Die Testantworten behaupten keinen erfolgreichen Livecollector.
 
-- Finale Collectorsuite: **82 passed**, 2,11 s; keine Skips.
+- Finale Collectorsuite: **86 passed**, 2,03 s; keine Skips.
 - Relevante bestehende #161-Regression: **357 passed**, 58,41 s; keine Skips:
   `test_deployment_gate`, `test_deployment_gate_v2`, `test_coolify_observer`,
   `test_coolify_readiness`, `test_c26_runtime_preflight`,
   `test_c26_runtime_bootstrap`, `test_runtime_paths`, `test_deployment_operations`.
-- Zusammen **439 unterschiedliche bestandene Tests**. Frühere überlappende
+- Zusammen **443 unterschiedliche bestandene Tests**. Frühere überlappende
   Entwicklungsläufe werden nicht addiert. Der erste Lauf deckte einen bereits
   konsumierten HTTPX-Fakeresponse auf; der Reader wurde für gestreamte und
   bereits im Speicher befindliche Antworten korrekt getrennt. Kein offener Fehler.

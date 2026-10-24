@@ -247,6 +247,7 @@ class Capture(Model):
         "registry_verifier_implementation",
         "operator_acceptance",
         "trigger_inventory_completeness",
+        "coolify_server_side_freshness",
     )
     live_accepted: Literal[False] = False
     deployment_permitted: Literal[False] = False
@@ -422,6 +423,8 @@ class _Session:
                     "Authorization": "Bearer " + token,
                     "Accept": "application/json",
                     "Accept-Encoding": "identity",
+                    "Cache-Control": "no-store, no-cache",
+                    "Pragma": "no-cache",
                     "X-C26-Batch-ID": self.batch_id,
                     "X-C26-Request-ID": request_id,
                     "X-C26-Request-SHA256": request_hash,
@@ -455,6 +458,11 @@ class _Session:
                         != "identity"
                         or response.headers.get("content-type", "").split(";")[0]
                         != "application/json"
+                    ):
+                        raise ValueError()
+                    if (
+                        response.headers.get("age", "0") != "0"
+                        or "warning" in response.headers
                     ):
                         raise ValueError()
                     length = response.headers.get("content-length")

@@ -700,3 +700,26 @@ def test_streaming_deadline_checks_each_network_chunk_without_buffering(prepared
     with pytest.raises(Refused):
         collector(prepared, monotonic=lambda: elapsed).capture(*prepared[:2])
     assert chunks == 8
+
+
+@pytest.mark.parametrize(
+    "headers",
+    [{"Age": "1"}, {"Age": "unknown"}, {"Warning": '110 - "Response is stale"'}],
+)
+def test_detectable_cached_or_stale_http_evidence_is_refused(prepared, headers):
+    prepared[4]["coolify"].headers = headers
+    with pytest.raises(Refused):
+        run(prepared)
+    assert len(prepared[4]["coolify"].requests) == 1
+
+
+def test_request_cache_controls_do_not_claim_coolify_server_freshness(prepared):
+    result = run(prepared)
+    for server in prepared[4].values():
+        assert all(
+            r.headers["Cache-Control"] == "no-store, no-cache"
+            and r.headers["Pragma"] == "no-cache"
+            for r in server.requests
+        )
+    assert "coolify_server_side_freshness" in result.unverified
+    assert result.live_accepted is False
