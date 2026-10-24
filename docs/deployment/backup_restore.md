@@ -1,5 +1,12 @@
 # Konsistentes Backup und isolierter Restore
 
+Die [C26-Betriebsabnahmevorbereitung vom 24.10.2026](c26_operations_acceptance.md#backup-und-späterer-isolierter-wiederherstellungstest)
+ergänzt die offene Scope-/Offsite-/Secret-/Coolify- und Restorecheckliste.
+`scripts/backup_hetzner.sh --dry` verbindet sich weiterhin per SSH und erzeugt
+lokale Verzeichnisse; **auch diesen Modus nicht als offline Preflight ausführen**.
+Die unten stehenden mutierenden Backup-/Restorebefehle wurden in jenem Auftrag
+nicht ausgeführt und sind keine aktuelle Betreiberfreigabe.
+
 Das neue lokale Werkzeug unterstützt **gestoppte, C22-verwaltete** API-/Executor-
 Rollen. `scripts/backup_hetzner.sh` bleibt unverändert und wird nicht ausgeführt.
 Eine VPS-/Hetzner-Snapshotfunktion wurde weder aufgerufen noch als konsistentes
