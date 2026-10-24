@@ -290,45 +290,7 @@ Testoperationen liefen in der normalen Codex-Sandbox auf dem lokalen Btrfs unter
 
 Backendtests verwenden unverändert das vorhandene
 `Personal_Assistant-c26b6-planning-results/test-env/bin/python`: Python 3.12.12,
-pytest 9.1.1, Pydantic 2.14.1/core 2.50.1, HTTPX 0.28.1. Das erfüllt den
-Backend-Dependencyvertrag, ist aber **kein neuer Nachweis mit exakten Backend-
-Lockpins**. Die frühere exakte Prüfung mit 2.13.4/core 2.46.4 bleibt historisch.
-Keine Pakete in dieser fremden Umgebung ergänzt oder geändert.
-
-UI/CLI/Demo verwenden unverändert das vorhandene
-`personal-assistant-ui-c26b/.venv/bin/python`: Python 3.12.12, Streamlit 1.65.0,
-Pydantic 2.14.0/core 2.50.0, pydantic-settings 2.15.0. Alle 52 installierten
-Lockpakete wurden mit `uv.lock` verglichen: keine Versionsabweichung. Die virtuelle
-Projektwurzel ist kein installiertes Paket; das Python-Paket `tzdata` ist laut
-Lock nur für Windows/Emscripten erforderlich und fehlt unter Linux erwartbar.
-Dies ist keine Aussage über den separat vom Betreiber reparierten dpkg-Zustand.
-Es wurde keine vorhandene C26-Umgebung umgebaut.
-
-Der zusätzliche Lauf umfasst `test_cs50_material_contracts`,
-`test_cs50_material_mapping`, `test_cs50_material_html`,
-`test_official_transcript_import`, `test_transcript_unknown_time`,
-`test_cs50_workflows`, `test_c26_storage_preflight`, `test_c26_copy_inventory`,
-`test_cs50_selection`, `test_c26_integrated_pipeline`, `test_cs50_multiformat`,
-`test_cs50_lecture_adapter`, `test_cs50_course`, `test_cs50_discovery` und
-`test_cs50_material_e2e`. Der Skip ist weiterhin der ausdrücklich opt-in
-Originalmaterialtest in `test_cs50_course`; keine Originalfreigabe ergänzt.
-
-Testfixtures liegen klein und isoliert unter
-`/tmp/c27-recovery-smoke-20261024`; bei direkten Aufrufen sind Bytecode und pytest-Cache deaktiviert,
-optionale pytest-Plugins nicht automatisch geladen. Keine produktiven Dienste
-gestartet oder historischen CS50-Pilotdaten geöffnet. Die UI-Skips benötigen
-weiterhin gesonderte C16-/Review-Backendkonfiguration und sind nicht bestanden.
-
-### Erneute reale Demo und begrenzte Inventur
-
-Die oben dokumentierte echte Loviscach-Datei wurde ausdrücklich erneut registriert
-unter `/tmp/c27-recovery-demo-20261024/summary.json`. Markdown 47.512 Bytes,
-LaTeX 48.809 Bytes und JSON 153.409 Bytes liegen in dessen `exports/`.
-Summary-ID und Eingangs-SHA256 stimmen mit der früheren Demo überein; Vorher- und
-Nachherhash des Transkripts identisch. Status bleibt `needs_review`.
-
-Auf diesem Rechner startet
-`bash /tmp/c27-recovery-start-ui-20261024.sh` die bestehende Admin-App auf
+pytest 9.1.…615 tokens truncated…n-App auf
 Loopback mit Operator-Demoanmeldung und `JOB_BACKEND=disabled`. Der Helfer prüft
 Interpreter und Konfiguration; er installiert nichts. Er verwendet die oben
 genannte vorhandene UI-Umgebung und beide C27-Checkouts. Helfer, Konfiguration und
@@ -360,3 +322,62 @@ ausgeführt. Der optionale PDF-/LuaLaTeX-Smoke wurde nicht wiederholt; vollstän
 Installationen, SSH-Verbindung, Produktivänderung, Migration, Merge oder Deployment.
 Die eigenen Branches/Arbeitsstände bleiben wegen der ungemergten Draft-PRs
 erhalten; Dokumentation ist dort reviewbar und noch nicht in master/main integriert.
+
+## Ergänzung: Vorbereitung der manuellen Abnahme
+
+24.10.2026, nach dem erfolgreichen Recovery-Lauf. Keine erneute vollständige
+Regression. Änderungen ausschließlich für die lokale C27-Abnahme:
+
+- Versionierter UI-Starthelfer `scripts/lecture_summary_local.py`, vorhandene
+  Admin-App auf Loopback, explizite lokale Anmeldung/Operatorrolle,
+  `JOB_BACKEND=disabled`, Prüfmodus ohne Serverstart, keine Installation.
+- Expliziter Backend-Katalogaufbau `scripts/lecture_summary_acceptance.py`,
+  Wiederverwendung der bisherigen Registrierung, Storagegrenze und Modelle.
+  Privater persistenter Workspace statt notwendiger `/tmp`-Helfer.
+- Request-Payload aus dem bisherigen Provider unverändert extrahiert, damit
+  die Offline-Budgetprüfung exakt denselben Request prüft. `offline_only` am
+  bestehenden Loader verweigert Live-Konfiguration vor HTTP-Client/Keyzugriff.
+- [Bedienungs-/Abnahmeanleitung](c27_manual_acceptance.md), drei belegte Fälle
+  mit Segmentstellen, Fingerprints, Prüfformeln und fachlicher Checkliste;
+  [separater Live-Testvorschlag](c27_live_test_proposal.md), nicht ausgeführt.
+
+Gezielt tatsächlich ausgeführt:
+
+| Prüfung | Ergebnis |
+|---|---|
+| Neue Katalog-/Preflightfälle plus bestehende C27-Service-/Vertragsfälle | **63 bestanden**, 3,57 s (7 neu + 56 bestehend) |
+| Neue Launcherfälle plus bestehende C27-Streamlit-Fälle | **13 bestanden**, 6,464 s (7 neu + 6 bestehend) |
+| Versionierter Launcher `--check` am echten privaten Katalog | Bestanden, kein Server/Modellaufruf |
+| Tatsächlicher Start/Health/Stopp der bestehenden Streamlit-App | Bestanden auf `127.0.0.1:8501`, HTTP 200/`ok`, nur eigener Prozess beendet |
+| Alle drei tatsächlichen Loviscach-Auswahlen mit Mock, MD/TeX/JSON | Bestanden; alle vier Eingangs-SHA256 unverändert |
+| Offline-Modellbudget am tatsächlichen vollständigen Request | Fall A 15.396/passt; B 30.929 und C 47.186/Abbruch vor HTTP bei Limit 30.000 |
+| Python-Syntax, Diffcheck und Dokumentations-/Katalogfingerprints | Bestanden |
+
+Der erste Socketversuch scheiterte in der normalen Codex-Sandbox bereits bei
+`socket.socket()` mit `PermissionError: [Errno 1] Operation not permitted`.
+Für den anschließenden begrenzten Loopback-Smoke wurde `require_escalated`
+verwendet. Es wurde kein fremder Server beendet, kein öffentlicher Listener und
+kein kostenpflichtiger Request gestartet. Der geprüfte eigene Server ist wieder
+gestoppt. Funktionale UI-Prüfung erfolgt zusätzlich über die sechs AppTests.
+
+Die drei echten Mock-Demos liegen unter
+`/home/robfra/0_Portfolio_Projekte/c27-local-mvp/mock-export-{text,formulas,group}`;
+der private Cache und die Konfiguration liegen im gleichen Workspace.
+Ein kleiner zuvor vorbereiteter Zwischenkatalog `c27-local-acceptance` bleibt
+unverändert erhalten; benötigt wird ausschließlich `c27-local-mvp`. Keine
+Bereinigung alter Worktrees, Projektdateien, Venvs oder Hilfsartefakte.
+
+Die Eingangsabschätzung von Fall A verwendet die kürzere vorhandene Fortsetzung
+01.01.2; der alte 01.01.1-Text überschritt das Modellbudget. Die Formel- und
+Gruppenfälle sind nur für Offline-/Bedienungs-/Provenienztests freigelegt;
+ihre vollständige Live-Synthese bleibt unter den unveränderten Grenzen blockiert.
+Das wird nicht als bestandener fachlicher Test ausgegeben. Das einzelne vorhandene
+Vektorrechnungs-PDF wurde begrenzt read-only geprüft: Lückentext, kein vollständiger
+Formelbeleg. Es wurde nicht als zusätzliche Summaryquelle registriert oder kopiert.
+
+Keine neue Dependency, kein Live-LLM-Aufruf, keine API-Keyabfrage, kein Upload,
+kein neues ENOSPC, keine Änderung an C16-/C26-Produktion, keine Migration,
+keine Merges/Ready-Umstellung/Deployments. Die früheren 398 Backend-/157 UI-Erfolge
+sind der vorherige vollständige Recovery-Nachweis und wurden hier nicht als
+erneut ausgeführte Vollregression ausgegeben. Branches/Arbeitsstände bleiben für
+die ungemergten Draft-PRs erhalten.
