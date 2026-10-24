@@ -10,7 +10,7 @@ from src.lecture_summary.service import SummaryService
 from src.tools_materials.storage import RegisteredStorage
 
 
-def load_service(config_path):
+def load_service(config_path, *, offline_only=False):
     path = Path(config_path)
     config_reader = RegisteredStorage(
         {"config": {"path": str(path.parent), "readonly": True}}
@@ -37,6 +37,8 @@ def load_service(config_path):
         raise ValueError("Source upload permission must be an explicit boolean")
     if type(config.get("schema_version")) is not int or config["schema_version"] != 1:
         raise ValueError("Unsupported summary configuration")
+    if offline_only and config.get("model", "mock-extractive-v1") != "mock-extractive-v1":
+        raise ValueError("Preflight requires the unchanged mock configuration")
     # Catalog belongs to this trusted config directory, not a widget-provided path.
     catalog = Catalog.model_validate_json(
         config_reader.read("config", config["catalog"])
