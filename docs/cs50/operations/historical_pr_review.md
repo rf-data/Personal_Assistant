@@ -1,5 +1,11 @@
 # Historische PRs #6, #9, #10 und #11
 
+**Neuer Abgleich vom 24.10.2026:** [Delta-Matrizen für #6/#9/#11 gegen
+master 29114d2](legacy_pr_delta_audit_2026-10-24.md). Der unten noch als offen
+beschriebene TXT-/Guard-Rest aus #9 ist inzwischen durch C23-05 behoben.
+Aktuelle Empfehlung für #6, #9 und #11: **CLOSE**, ohne Schließungsaktion.
+Die folgenden Abschnitte bleiben als historische Befunde erhalten.
+
 Prüfbasis: master `8ba519ed04c04c92573594ebe74b69a3c00aab1b`, GitHub-Metadaten und
 aktuelle PR-Patches am 14.10.2026. Alle vier PRs sind noch offen. Keine Schließung
 oder Merge-Aktion wurde ausgeführt. „Ersetzt“ bezeichnet den fachlichen Vertrag,
