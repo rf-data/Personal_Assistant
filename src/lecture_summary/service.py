@@ -12,15 +12,43 @@ from src.lecture_summary.validation import validate
 
 
 class SummaryService:
-    def __init__(self, catalog, storage, provider, *, cache=None):
+    def __init__(self, catalog, storage, provider, *, cache=None, hierarchy=None):
         self.catalog, self.storage, self.provider = catalog, storage, provider
         # Optional existing writable registered directory. No implicit mkdir.
         self.cache = cache
+        self.hierarchy = hierarchy
+        self.strategy = "hierarchical" if hierarchy is not None else "simple"
+
+    def preflight(self, selection):
+        if self.hierarchy is None:
+            return None
+        from src.lecture_summary.hierarchy import make_plan, public_plan
+
+        evidence, _ = collect(self.catalog, selection, self.storage)
+        if not self.cache:
+            raise ValueError("Hierarchical mode requires a registered writable cache")
+        with self.storage.parent(
+            self.cache[0], self.cache[1] + "/.hierarchy-check", write=True
+        ):
+            pass
+        return public_plan(
+            make_plan(
+                evidence,
+                selection,
+                self.provider.model,
+                self.hierarchy,
+                offline=getattr(self.provider, "offline", False),
+            )
+        )
 
     def generate(self, selection, *, cancelled=lambda: False):
         if cancelled():
             raise InterruptedError("Summary cancelled before collection")
         selection = type(selection).model_validate_json(selection.model_dump_json())
+        if self.hierarchy is not None:
+            from src.lecture_summary.hierarchy import generate
+
+            return generate(self, selection, self.hierarchy, cancelled)
         evidence, versions = collect(self.catalog, selection, self.storage)
         key = cache_key(selection, versions, self.provider.model)
         location = None

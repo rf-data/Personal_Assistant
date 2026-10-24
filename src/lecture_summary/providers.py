@@ -33,6 +33,62 @@ class MockProvider:
     """Deterministic extractive demonstration, explicitly not an LLM simulation of expertise."""
 
     model = "mock-extractive-v1"
+    offline = True
+
+    def hierarchical(self, payload, result_type):
+        """Controlled wire-format responses, never semantic/formula reconstruction."""
+        from types import SimpleNamespace
+
+        from src.lecture_summary.models import Formula, SectionDraft, Selection
+
+        data = json.loads(payload["messages"][1]["content"])
+        if result_type is SectionDraft:
+            return SectionDraft(
+                title="Offline-Abschnitt (Mock)",
+                claims=tuple(
+                    Claim(
+                        text=s["text"][:180],
+                        source_ids=(s["source_id"],),
+                        evidence_quote=s["text"][:180],
+                        quality="uncertain",
+                    )
+                    for s in data["sources"][:2]
+                ),
+                notices=(
+                    "Mock: höchstens zwei Ausschnitte je Abschnitt; keine vollständige Synthese.",
+                ),
+            )
+        evidence = tuple(SimpleNamespace(**s) for s in data["sources"])
+        draft = self.generate(evidence, Selection.model_validate(data["selection"]))
+
+        def learning_hint(claim):
+            return claim.model_copy(update={"source_ids": (), "quality": "unsupported"})
+
+        return draft.model_copy(
+            update={
+                "learning_objectives": tuple(
+                    learning_hint(c) for c in draft.learning_objectives
+                ),
+                "topics": tuple(
+                    t.model_copy(
+                        update={
+                            "explanations": tuple(
+                                Claim.model_validate(c)
+                                for p in data["intermediates"]
+                                for c in p["claims"]
+                            ),
+                            "formulas": tuple(
+                                Formula.model_validate(f)
+                                for p in data["intermediates"]
+                                for f in p["formulas"]
+                            ),
+                            "questions": tuple(learning_hint(c) for c in t.questions),
+                        }
+                    )
+                    for t in draft.topics
+                ),
+            }
+        )
 
     def generate(self, evidence, selection):
         excerpts = {}
@@ -144,12 +200,27 @@ class SummaryProvider(OpenAIHTTPProvider):
         return payload
 
     def generate(self, evidence, selection):
-        from src.tools_knowledge.cs50_extraction_provider import ENDPOINT
-
         payload = self.request_payload(
             evidence, selection, model=self.model, output_limit=self.budget.output_limit
         )
         self.budget.claim(payload)
+        return self._complete(payload, Draft)
+
+    def hierarchical(self, payload, result_type):
+        # Each call keeps the original one-request/no-retry contract. The service
+        # separately reserves the whole run (<=64000) before any dispatch.
+        budget = RequestBudget(
+            maximum=1,
+            token_budget=64000,
+            input_limit=30000,
+            output_limit=payload["max_completion_tokens"],
+        )
+        budget.claim(payload)
+        return self._complete(payload, result_type)
+
+    def _complete(self, payload, result_type):
+        from src.tools_knowledge.cs50_extraction_provider import ENDPOINT
+
         try:
             with self.client.stream("POST", ENDPOINT, json=payload) as response:
                 if response.status_code != 200:
@@ -182,4 +253,4 @@ class SummaryProvider(OpenAIHTTPProvider):
             or not isinstance(message.get("content"), str)
         ):
             raise ValueError("Summary provider refused or omitted content")
-        return Draft.model_validate_json(message["content"])
+        return result_type.model_validate_json(message["content"])

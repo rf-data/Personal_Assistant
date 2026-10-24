@@ -6,14 +6,18 @@ und [UI #21](https://github.com/rf-data/personal-assistant-ui/pull/21).
 **C27-B:** [vollständige Dateiinventur, konkreter Legacy-Review, sicherer Adapter,
 Katalogkandidat und getrennte GO-/NO-GO-Entscheidung](c27b_legacy_catalog.md).
 Die frühere 4.000-Einträge-Inventur weiter unten ist ein historischer Zwischenstand.
+**C27-C:** [Expliziter hierarchischer Modus, Budgetplanung, wiederaufnehmbare
+Zwischenstände und Offline-Vergleich aller drei Fälle](c27c_hierarchical_summary.md).
+Der einfache Modus bleibt Default; Quell-, Storage- und Requestobergrenzen gelten weiter.
 **Manuelle Abnahme:** Dauerhafter Start über den versionierten UI-Helfer
 `scripts/lecture_summary_local.py` und einen privaten persistenten Katalog.
 [Bedienungsanleitung, drei belegte Loviscach-Fälle und fachliche Checkliste](c27_manual_acceptance.md).
 Der [separate Live-Testvorschlag](c27_live_test_proposal.md) ist ausschließlich
 vorbereitet; kein API-Aufruf oder Upload ausgeführt. Die `/tmp`-Recovery-Helfer
 werden nicht mehr benötigt. Das vollständige Modellrequestbudget wurde offline
-geprüft: der kurze Textfall passt, die vollständigen Formel-/Gruppenfälle liegen
-über der bestehenden Grenze und sind vorerst nur offline evaluierbar.
+geprüft: im einfachen Modus passt der kurze Textfall; vollständige Formel-/Gruppenfälle
+überschreiten dessen Grenze. C27-C verarbeitet alle drei Fälle hierarchisch offline
+innerhalb der bestehenden Obergrenzen. Fachliche und Live-Modellabnahme bleiben offen.
 
 C27 ist ein synchroner, ausdrücklich aktivierter Entwicklungsmodus. Er benötigt
 keinen C16-Worker, Controller, Queue, Content-Store oder Datenbankbootstrap.

@@ -68,6 +68,39 @@ def render(summary, *, latex=False):
         escape("Qualität: " + summary.validation_status + " · Modell: " + summary.model)
     )
     output.extend(escape(m) for m in summary.validation_messages)
+    if summary.processing is not None:
+        p = summary.processing
+        output.append(
+            escape(
+                f"Hierarchischer Lauf: {p.status}; Abschnitte {len(p.completed_section_ids)}/{len(p.section_ids)}; "
+                f"davon im Endergebnis zitiert {len(p.final_section_ids)}; "
+                f"Originalblöcke verarbeitet {len(p.mapped_source_ids)}; Zwischenstände zitieren "
+                f"{len(p.intermediate_source_ids)}; Endergebnis zitiert {len(p.final_source_ids)}; "
+                f"nicht im Endergebnis zitiert {len(p.uncited_source_ids)}. "
+                f"Reservierte Aufrufe {p.requests_reserved}, neu in diesem Aufruf {p.requests_this_invocation}, "
+                f"Cache-Stufen {p.cached_stages}; Gesamtobergrenze {p.planned_token_upper_bound}; "
+                f"Kostenobergrenze {p.cost_upper_bound_microusd} Mikro-USD (konfigurierte Annahmen)."
+            )
+        )
+        output.extend(escape(n) for n in p.notices)
+        if p.formula_variants:
+            output.append(
+                r"\subsection*{Formelvarianten aus Zwischenständen}"
+                if latex
+                else "## Formelvarianten aus Zwischenständen"
+            )
+            for f in p.formula_variants:
+                refs = ", ".join(labels[s] for s in f.source_ids)
+                output.append(
+                    escape(
+                        f"{f.text}; {f.quality}; {refs}; Notation: {f.notation}; Voraussetzungen: {f.assumptions}"
+                    )
+                )
+                output.append(
+                    (r"\[" + f.latex + r"\]" if latex else "$$\n" + f.latex + "\n$$")
+                    if safe_formula(f.latex)
+                    else escape(f.latex)
+                )
     for heading, items in sections(summary.content):
         if not items:
             continue
@@ -139,9 +172,16 @@ def render(summary, *, latex=False):
         if evidence.parent_artifact_ids:
             info += "; Parent-Artefakte " + ", ".join(evidence.parent_artifact_ids)
         if evidence.parent_segment_ids:
-            info += "; Parent-Segmente " + ", ".join(map(str, evidence.parent_segment_ids))
+            info += "; Parent-Segmente " + ", ".join(
+                map(str, evidence.parent_segment_ids)
+            )
         if evidence.warnings:
             info += "; Quellenhinweise " + ", ".join(evidence.warnings)
+        if (
+            summary.processing is not None
+            and evidence.source_id in summary.processing.uncited_source_ids
+        ):
+            info += "; im Endergebnis nicht zitiert (keine vollständige fachliche Abdeckung behauptet)"
         output.append((r"\par\small " if latex else "- ") + escape(info))
     body = "\n\n".join(output) + "\n"
     result = (

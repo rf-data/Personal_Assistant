@@ -504,3 +504,88 @@ Full-Lock-Neuinstallation und produktive Integration bleiben ausdrücklich offen
 Kein erneutes ENOSPC bei Worktree-, Quellcode-, Test- oder Berichtsschreibvorgängen.
 `df -hT` im Workspace während C27-B: Btrfs `/dev/vdc`, 34 GB gesamt, etwa 5 GB frei.
 Keine APT-/dpkg-Reparatur, keine Cache-/Worktree-/Datenlöschung durchgeführt.
+
+## C27-C Hierarchische Verarbeitung
+
+24.10.2026, Basis Backend-Draft `117aa841` und UI-Draft `bb5742cc`.
+[Architektur, Grenzen, Kosten, Startbefehle und fachliche Risiken](c27c_hierarchical_summary.md).
+Separate eigene Worktrees `Personal_Assistant-c27c` und `personal-assistant-ui-c27c`,
+Branches `feat/c27c-hierarchical-summary` / `feat/c27c-hierarchy-status`.
+Die Änderungen werden den bestehenden Drafts #158/#21 hinzugefügt. Keine Merges,
+Ready-Umstellung, Deployments oder Produktivänderungen. Dokumente und Arbeitsstände
+bleiben bis zum gesonderten Review/Merge im Draft; keine Defaultbranch-Integration behauptet.
+
+| Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|
+| Neue kontrollierte Backendfälle, Abschlussstand | 39 bestanden, 0 Skips, 29,14 s; Netzwerk gesperrt, HTTP ausschließlich MockTransport |
+| Entwicklungslauf neue/bestehende C27-/Legacy-/Runtime-Path-Fälle | 170 bestanden, 1 fehlgeschlagen bei 171 Fällen. Der neue 160-Block-Test erwartete fälschlich nur zwei finale Mock-Zitate; bei zwei Abschnitten sind es vier. Erwartung auf vollständige Verarbeitung und explizite Abschnitts-/Zitierabdeckung korrigiert; neue Fälle danach vollständig bestanden |
+| Aktueller master `e6827520` plus C27/C27-B/C27-C | 164 bestanden, 1 optionaler Skip, 40,62 s: neue 39 Hierarchiefälle, bestehende 63 C27-Fälle, 38 C27-B-Fälle und 25 HTML-/Referenz-/Hierarchiefälle. Skip: nicht bereitgestellte optionale Original-Python-Notes, kein Ersatzdownload |
+| UI / versionierter Starthelfer | 16 bestanden, zusätzlich 6 Subtests, 27,11 s; darin drei neue Fälle für sichtbaren Plan/Downloads, Budgetablehnung und unvollständige Läufe; Auth-/Operator-/kein-Job-Guards weiterhin geprüft |
+| UI nach finaler Cache-Envelope-Ergänzung | Nur die drei betroffenen Hierarchiefälle erneut bestanden; sechs andere AppTests abgewählt, keine Vollregression |
+| Versionierter lokaler UI-Helfer `--check` | Neue hierarchische Mock-Konfiguration erfolgreich geladen, kein Server und kein Modellaufruf |
+| Reale Offline-Demo | Alle drei vorhandenen Loviscach-Fälle in einfachem und hierarchischem Mock-Modus, je MD/TeX/JSON. Hierarchie: 25/90/145 Originalblöcke verarbeitet, 2/2/3 Aufrufe, alle `needs_review`; vier Quell-SHA unverändert, 0 bezahlte API-Aufrufe |
+| Reproduzierbarer Setup-/Demo-/Cachetest | Teil der neuen 39 Fälle: synthetische explizite Lecture-Dateien, drei Fälle, sechs TeX-Exporte, Wiederholung ohne neue Providerdispatches und ohne HTTP-Clienterstellung; keine Überschreibung vorhandener Workspaces |
+
+Die master-Kompatibilität wurde in einem eigenen kleinen Quellcodesnapshot unter
+`/tmp/c27c-master-compat-20261024` geprüft, nicht durch einen Git-Merge. Während
+C27-C wurde master von `29114d2e` auf `e6827520` weitergeführt: ausschließlich
+extern gemergte Auditdokumentation aus #159, keine neuen Produktivcodeänderungen.
+Der Snapshot enthält den tatsächlichen neuen master plus die C27-Dateien.
+Vorhandene fremde Worktrees wurden nicht verändert. Die frühere komplette
+398-/157-Test-Recovery-Regression wurde nicht wiederholt.
+
+Neue Fälle umfassen zusätzlich: maximal 160 Blöcke ohne Eingangssampling,
+unbekannte Originalzeitstempel ohne zeitbasiertes Chunking, deterministic ordering,
+unbekannte Aliase/erfundene Belege, fehlende oder veränderte Quellen,
+unveränderte technische Obergrenzen, Kostenannahmen vor Live-Dispatch,
+überdimensionierte Zwischenstände/Reduce-Requests, Formula-Unsicherheit und
+Konfliktvarianten in MD/TeX, keine automatische Formelverifizierung,
+Cacheinvalidierung/Modell-/Promptmetadaten, exklusives Reservieren bei Konkurrenz,
+Abbruch zwischen validierten Stufen und gesperrter Retry nach unklarem Teilfehler.
+
+Backend mit vorhandener Umgebung:
+
+```bash
+export PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=.
+/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-planning-results/test-env/bin/python -B -m pytest \
+  -q -p no:cacheprovider tests/test_lecture_summary_hierarchy.py
+```
+
+Für den master-Lauf wurden im Snapshot zusätzlich
+`test_lecture_summary.py`, `test_lecture_summary_contract.py`,
+`test_lecture_summary_acceptance.py`, `test_lecture_summary_legacy.py`,
+`test_cs50_material_html.py` und `test_cs50_material_html_semantics.py` ausgeführt.
+`test_runtime_paths.py` bestand bereits im oben benannten Entwicklungslauf.
+Backend: Python 3.12.12, pytest 9.1.1, Pydantic 2.14.1/core 2.50.1; weiterhin
+abweichend vom Backend-Lock 2.13.4/core 2.46.4. Kein Neuaufbau der Umgebung.
+
+UI mit Python aus `personal-assistant-ui-c26b/.venv`, Streamlit 1.65.0,
+Pydantic 2.14.0/core 2.50.0; pytest weiterhin nur über `site.addsitedir` aus dem
+vorhandenen Backend-Test-Venv ergänzt (Suchpfad nach UI-Paketen), keine Installation.
+Ausführung analog zum C27-B-Befehl mit C27-C-PYTHONPATH, AppTest und Starthelfer.
+
+Zusätzlich wurde nun ein bereits vorhandener Ruff-0.16.0-Formatter im
+Pre-commit-Cache entdeckt und verwendet: Formatierung und Ruff-Checks aller
+geänderten Pythondateien in beiden Repositories erfolgreich, keine Installation.
+Das ist ein neuer C27-C-Nachweis und ändert die historische C27-B-Aussage nicht.
+Der vollständige Pre-commit-Manager/Git-Hooklauf wurde nicht als bestanden behauptet.
+AST, Whitespace/EOF, Dateigrößen und lokale Dokumentlinks werden ebenfalls geprüft;
+veröffentlichte Git-Trees werden mit den lokal gestagten Trees verglichen.
+
+Finale private Demo: `c27c-local-demo-final-20261024/comparison.json`,
+Konfiguration/Cache: `c27c-local-mvp-20261024`, jeweils unter
+`/home/robfra/0_Portfolio_Projekte`. Frühere eigene Probe-/Demoartefakte bleiben
+erhalten. Gegenüber dem einfachen Requestbudget 15.396 / 30.929 / 47.186 liegen
+die hierarchischen konservativen **Gesamt**reservierungen beim inerten Modelllabel
+bei 32.005 / 42.988 / 62.279, mit 18.000 reservierten Reduce-Inputeinheiten.
+Diese Einheiten sind keine gemessene Usage oder verifizierte aktuelle Preisauskunft.
+Tatsächliche Kosten 0; keine API-Keyabfrage für die Mock-Demos, keine Übertragung.
+
+Fachliche Risiken bleiben offen: repräsentative Inhaltsauswahl, Herleitungen,
+Notation, Quelleninterpretation und visuelle Mathematikprüfung. Die reale Mock-Demo
+erfindet keine Formeln; Formelgates wurden mit ausdrücklich synthetischen Fällen
+getestet. TeX wurde gerendert, nicht mit einer Engine kompiliert. Keine manuelle
+fachliche Abnahme, keine neue Browserinstallation oder vollständige Browserabnahme,
+kein Live-LLM, keine Produktions-/DB-/Queue-/Serveränderungen, keine Migration.
+Storage-/Collection-Sicherheitslimits unverändert. Kein ENOSPC; Btrfs meldete
+zuletzt rund 4,9 GB frei. Keine Bereinigung bestehender Dateien/Worktrees/Venvs.
