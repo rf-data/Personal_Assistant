@@ -109,14 +109,13 @@ class SummaryProvider(OpenAIHTTPProvider):
             transport=transport,
         )
 
-    def generate(self, evidence, selection):
-        from src.tools_knowledge.cs50_extraction_provider import ENDPOINT
-
+    @staticmethod
+    def request_payload(evidence, selection, *, model, output_limit=2000):
         payload = {
-            "model": self.model.removeprefix("openai:"),
+            "model": model.removeprefix("openai:"),
             "n": 1,
             "store": False,
-            "max_completion_tokens": self.budget.output_limit,
+            "max_completion_tokens": output_limit,
             "response_format": {"type": "json_object"},
             "messages": [
                 {"role": "system", "content": SYSTEM},
@@ -142,6 +141,14 @@ class SummaryProvider(OpenAIHTTPProvider):
                 },
             ],
         }
+        return payload
+
+    def generate(self, evidence, selection):
+        from src.tools_knowledge.cs50_extraction_provider import ENDPOINT
+
+        payload = self.request_payload(
+            evidence, selection, model=self.model, output_limit=self.budget.output_limit
+        )
         self.budget.claim(payload)
         try:
             with self.client.stream("POST", ENDPOINT, json=payload) as response:
