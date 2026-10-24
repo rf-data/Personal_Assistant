@@ -1,5 +1,8 @@
 # Coolify 4.4.7: konkreter Driververtrag und Implementierungsgrenze
 
+Aktualisierung 24.10.2026: [Bericht A – Offline-Runtimeobserver und versionierter Mehrrollenscope](runtime_observer_report.md), [Bericht B – Draftreview und Integrationssimulation](draft_consolidation_report.md). Der neue v2-Operationsumschlag ist kein v1-Gatepermit; Livecollector, Gateerzwingung und mutierender Driver bleiben gesperrt. Die zuvor offenen Repository-/Branch-/Buildpfade und lokalen Image-IDs sind inzwischen operator_observed in den Inventaren; Registry-/Buildprovenienz bleibt offen.
+
+
 Stand 23.10.2026. Bestehende Architektur unverändert: Caddy, API im gemeinsamen
 Loopback-Namespace, genau ein Kapazitätsworker, eigene C16-Queue, UI separat.
 Das ist eine Ergänzung zu [driver_contract.md](driver_contract.md), keine zweite

@@ -87,7 +87,11 @@
         "automatic_build_argument_injection": true,
         "source_commit_availability": "Runtime only (preserves cache)",
         "build_strategy": "Dockerfile",
-        "builder": "Deployment server"
+        "builder": "Deployment server",
+        "repository": "rf-data/Personal_Assistant",
+        "branch": "master",
+        "base_directory": "/",
+        "dockerfile_location": "/docker/DockerFile.worker"
       },
       "placeholder_intent": "sleep infinity was intentionally selected as a placeholder; not an unintended startup misconfiguration",
       "application_uuid": "syboxap8mpf8lgjzpjdsqm0z",
@@ -95,19 +99,19 @@
         "application_uuid": {
           "value": "syboxap8mpf8lgjzpjdsqm0z",
           "status": "operator_observed",
-          "source": "Direkt in Coolify-Oberfl\u00e4che gepr\u00fcfte Betreibererg\u00e4nzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
           "observed_date": "2026-10-23"
         },
         "auto_deploy": {
           "value": "Manual deployments only",
           "status": "operator_observed",
-          "source": "Direkt in Coolify-Oberfl\u00e4che gepr\u00fcfte Betreibererg\u00e4nzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
           "observed_date": "2026-10-23"
         },
         "preview_deployments_display": {
           "value": "None",
           "status": "operator_observed",
-          "source": "Direkt in Coolify-Oberfl\u00e4che gepr\u00fcfte Betreibererg\u00e4nzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
           "observed_date": "2026-10-23"
         },
         "preview_feature_enabled": {
@@ -120,7 +124,7 @@
             "relative_pattern": "/api/v1/deploy?uuid=<application_uuid>&force=false"
           },
           "status": "operator_observed",
-          "source": "Direkt in Coolify-Oberfl\u00e4che gepr\u00fcfte Betreibererg\u00e4nzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
           "observed_date": "2026-10-23"
         },
         "authorized_actors": {
@@ -131,6 +135,22 @@
           "value": null,
           "status": "unverified"
         }
+      },
+      "image_id": "sha256:671b8e9bbf92afa6e5968d90a5e1d026a6539eb6b31ec3b94f16f1fc1e6c7f36",
+      "image_id_matches_container": true,
+      "runtime_observer_operator_supplement": {
+        "status": "operator_observed",
+        "observed_date": "2026-10-24",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "values": {
+          "repository": "rf-data/Personal_Assistant",
+          "branch": "master",
+          "base_directory": "/",
+          "dockerfile_location": "/docker/DockerFile.worker",
+          "image_id": "sha256:671b8e9bbf92afa6e5968d90a5e1d026a6539eb6b31ec3b94f16f1fc1e6c7f36"
+        },
+        "independent_build_provenance": "unverified",
+        "registry_digest": "unverified"
       }
     },
     "observed_date": "2026-10-23",
@@ -175,7 +195,11 @@
         "build_cache": true,
         "automatic_build_argument_injection": true,
         "source_commit_availability": "Runtime only (preserves cache)",
-        "build_strategy": "Docker Compose"
+        "build_strategy": "Docker Compose",
+        "repository": "rf-data/personal-assistant-ui",
+        "branch": "main",
+        "base_directory": "/",
+        "compose_location": "/docker/docker-compose.ui.yaml"
       },
       "shown_compose_content": {
         "matches_repository_path": "docker/docker-compose.ui.yaml",
@@ -190,19 +214,19 @@
         "application_uuid": {
           "value": "a8xzljz4fq52vt1yt43nheg5",
           "status": "operator_observed",
-          "source": "Direkt in Coolify-Oberfl\u00e4che gepr\u00fcfte Betreibererg\u00e4nzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
           "observed_date": "2026-10-23"
         },
         "auto_deploy": {
           "value": "Manual deployments only",
           "status": "operator_observed",
-          "source": "Direkt in Coolify-Oberfl\u00e4che gepr\u00fcfte Betreibererg\u00e4nzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
           "observed_date": "2026-10-23"
         },
         "preview_deployments_display": {
           "value": "None",
           "status": "operator_observed",
-          "source": "Direkt in Coolify-Oberfl\u00e4che gepr\u00fcfte Betreibererg\u00e4nzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
           "observed_date": "2026-10-23"
         },
         "preview_feature_enabled": {
@@ -215,7 +239,7 @@
             "relative_pattern": "/api/v1/deploy?uuid=<application_uuid>&force=false"
           },
           "status": "operator_observed",
-          "source": "Direkt in Coolify-Oberfl\u00e4che gepr\u00fcfte Betreibererg\u00e4nzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
           "observed_date": "2026-10-23"
         },
         "authorized_actors": {
@@ -226,6 +250,22 @@
           "value": null,
           "status": "unverified"
         }
+      },
+      "image_id": "sha256:4fd15dc9fc0135a22e85e23a028a018592c35288022f1d4d992ffa70fd9bb237",
+      "image_id_matches_container": true,
+      "runtime_observer_operator_supplement": {
+        "status": "operator_observed",
+        "observed_date": "2026-10-24",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "values": {
+          "repository": "rf-data/personal-assistant-ui",
+          "branch": "main",
+          "base_directory": "/",
+          "compose_location": "/docker/docker-compose.ui.yaml",
+          "image_id": "sha256:4fd15dc9fc0135a22e85e23a028a018592c35288022f1d4d992ffa70fd9bb237"
+        },
+        "independent_build_provenance": "unverified",
+        "registry_digest": "unverified"
       }
     },
     "observed_date": "2026-10-23",
@@ -264,7 +304,7 @@
     "revision_and_digest": {
       "status": "unverified",
       "value": null,
-      "required_evidence": "Actual image ID/RepoDigest/build provenance and deployment SHA; tags are not proof"
+      "required_evidence": "Local backend/UI image IDs now operator_observed and match container references. Registry RepoDigests, independent build provenance and deployed build SHA remain unverified; tags and image IDs are not replacements."
     },
     "private_network": {
       "status": "unverified",
@@ -294,7 +334,7 @@
     "repository_build_settings": {
       "status": "unverified",
       "value": null,
-      "required_evidence": "Exact backend Base Directory and Dockerfile Location, exact UI Base Directory and Compose Location, repository/branch and startup override fields. Shown UI content match is confirmed; actual path fields were not supplied."
+      "required_evidence": "Repository/branch/base directories, backend /docker/DockerFile.worker and UI /docker/docker-compose.ui.yaml now operator_observed 24.10.2026. Still unverified: effective custom build/start overrides, rendered/adopted runtime and build provenance."
     },
     "compose_working_directory": {
       "status": "unverified",
@@ -304,17 +344,17 @@
     "entrypoint_discrepancy": {
       "status": "unverified",
       "value": null,
-      "required_evidence": "Intentional placeholder is confirmed. Exact build-file selection versus container startup override and immutable running image provenance remain unverified; compare actual image/container metadata with build record."
+      "required_evidence": "Intentional sleep placeholder and selected /docker/DockerFile.worker now operator_observed. Exact historical image build provenance and any effective startup overrides remain unverified; UI protected-launcher discrepancy still open."
     },
     "application_binding_and_rendering": {
       "status": "unverified",
       "value": null,
-      "required_evidence": "Application-UUIDs operator_observed (Backend syboxap8mpf8lgjzpjdsqm0z / UI a8xzljz4fq52vt1yt43nheg5). Weiter offen: Raw/Normalparser, sichere Adoption derselben Backend-Application und tats\u00e4chliches Rollen-/Mount-/Labelrendering."
+      "required_evidence": "Application-UUIDs operator_observed (Backend syboxap8mpf8lgjzpjdsqm0z / UI a8xzljz4fq52vt1yt43nheg5). Weiter offen: Raw/Normalparser, sichere Adoption derselben Backend-Application und tatsächliches Rollen-/Mount-/Labelrendering."
     },
     "additional_deployment_triggers": {
       "status": "unverified",
       "value": null,
-      "required_evidence": "Manual only, Previewanzeige None und vorhandene Deployment-APIeinstiege sind operator_observed. Offen: tats\u00e4chliches Previewfeatureflag, Webhook/API/Registry/Schedulerakteure und Ausf\u00fchrung; unabh\u00e4ngige Trigger-/Rechteinventur und aktueller exklusiver Kontrollbeleg n\u00f6tig."
+      "required_evidence": "Manual only, Previewanzeige None und vorhandene Deployment-APIeinstiege sind operator_observed. Offen: tatsächliches Previewfeatureflag, Webhook/API/Registry/Schedulerakteure und Ausführung; unabhängige Trigger-/Rechteinventur und aktueller exklusiver Kontrollbeleg nötig."
     },
     "live_memory_cpu_budget": {
       "status": "unverified",
@@ -418,5 +458,6 @@
       "/srv/personal-assistant/data/cs50_pilot_week0_02"
     ],
     "interpretation": "Keep unchanged; week0_01 root reported, no exact additional controller/queue state inferred."
-  }
+  },
+  "latest_operator_supplement_date": "2026-10-24"
 }

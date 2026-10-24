@@ -44,18 +44,20 @@
         "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
       },
       "repository": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "Source: tatsächlich konfiguriertes Repository",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "rf-data/Personal_Assistant",
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24",
+        "input_state": "value",
+        "effective_value": "rf-data/Personal_Assistant"
       },
       "branch": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "Source: tatsächlich konfigurierter Branch",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "master",
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24",
+        "input_state": "value",
+        "effective_value": "master"
       },
       "build_strategy": {
         "value": "Dockerfile",
@@ -68,18 +70,20 @@
         "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
       },
       "base_directory": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "General/Build: Base directory",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "/",
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24",
+        "input_state": "value",
+        "effective_value": "/"
       },
       "dockerfile_location": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "General/Build: Dockerfile location; docker/DockerFile.worker ist nur Kandidat",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "/docker/DockerFile.worker",
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24",
+        "input_state": "value",
+        "effective_value": "/docker/DockerFile.worker"
       },
       "compose_location": {
         "value": null,
@@ -132,11 +136,12 @@
         "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
       },
       "image_id": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "docker inspect .Image / docker image inspect .Id",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "sha256:671b8e9bbf92afa6e5968d90a5e1d026a6539eb6b31ec3b94f16f1fc1e6c7f36",
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24",
+        "input_state": "value",
+        "effective_value": "sha256:671b8e9bbf92afa6e5968d90a5e1d026a6539eb6b31ec3b94f16f1fc1e6c7f36"
       },
       "repo_digests": {
         "value": null,
@@ -210,6 +215,12 @@
         "value": null,
         "status": "unverified",
         "source": "Keine echten Aufrufe getestet; keine zugehörigen Coolify-Ausführungsbelege vorgelegt"
+      },
+      "image_id_matches_container": {
+        "value": true,
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24"
       }
     },
     "ui": {
@@ -240,18 +251,20 @@
         "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
       },
       "repository": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "Source: tatsächlich konfiguriertes Repository",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "rf-data/personal-assistant-ui",
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24",
+        "input_state": "value",
+        "effective_value": "rf-data/personal-assistant-ui"
       },
       "branch": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "Source: tatsächlich konfigurierter Branch",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "main",
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24",
+        "input_state": "value",
+        "effective_value": "main"
       },
       "build_strategy": {
         "value": "Docker Compose",
@@ -266,11 +279,12 @@
         "effective_value": null
       },
       "base_directory": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "General/Build: Base directory",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "/",
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24",
+        "input_state": "value",
+        "effective_value": "/"
       },
       "dockerfile_location": {
         "value": "docker/DockerFile.UI",
@@ -278,11 +292,12 @@
         "source": "UI main e4be7a2, docker/docker-compose.ui.yaml: build.context .. und dockerfile. Auswahl der realen Compose-Location bleibt offen."
       },
       "compose_location": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "General/Build: Docker compose location; gezeigter Inhalt stimmt, Feldwert nicht bestätigt",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "/docker/docker-compose.ui.yaml",
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24",
+        "input_state": "value",
+        "effective_value": "/docker/docker-compose.ui.yaml"
       },
       "custom_build_command": {
         "value": null,
@@ -325,11 +340,12 @@
         "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
       },
       "image_id": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "docker inspect .Image / docker image inspect .Id",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "sha256:4fd15dc9fc0135a22e85e23a028a018592c35288022f1d4d992ffa70fd9bb237",
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24",
+        "input_state": "value",
+        "effective_value": "sha256:4fd15dc9fc0135a22e85e23a028a018592c35288022f1d4d992ffa70fd9bb237"
       },
       "repo_digests": {
         "value": null,
@@ -403,6 +419,12 @@
         "value": null,
         "status": "unverified",
         "source": "Keine echten Aufrufe getestet; keine zugehörigen Coolify-Ausführungsbelege vorgelegt"
+      },
+      "image_id_matches_container": {
+        "value": true,
+        "status": "operator_observed",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "observed_date": "2026-10-24"
       }
     }
   },
@@ -541,5 +563,6 @@
     "production": "NO-GO"
   },
   "trigger_supplement_at_utc": "2026-10-23T21:39:01.713667+00:00",
-  "trigger_audit_report": "deployment_trigger_audit.v1.json"
+  "trigger_audit_report": "deployment_trigger_audit.v1.json",
+  "latest_operator_supplement_date": "2026-10-24"
 }
