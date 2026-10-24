@@ -1,0 +1,314 @@
+{
+  "$defs": {
+    "BuildAuthorityContract": {
+      "additionalProperties": false,
+      "properties": {
+        "identity_checks": {
+          "const": "issuer_repository_revision_platform_image_digest_attestation",
+          "default": "issuer_repository_revision_platform_image_digest_attestation",
+          "title": "Identity Checks",
+          "type": "string"
+        },
+        "independent_verification_executed": {
+          "const": false,
+          "default": false,
+          "title": "Independent Verification Executed",
+          "type": "boolean"
+        },
+        "label_only_accepted": {
+          "const": false,
+          "default": false,
+          "title": "Label Only Accepted",
+          "type": "boolean"
+        },
+        "live_accepted": {
+          "const": false,
+          "default": false,
+          "title": "Live Accepted",
+          "type": "boolean"
+        },
+        "mode": {
+          "const": "offline_contract",
+          "default": "offline_contract",
+          "title": "Mode",
+          "type": "string"
+        },
+        "receipt_hash": {
+          "const": "preapproved_canonical_sha256;never_adopt_host_hash",
+          "default": "preapproved_canonical_sha256;never_adopt_host_hash",
+          "title": "Receipt Hash",
+          "type": "string"
+        },
+        "receipt_schema": {
+          "const": "collector_build_receipt/1",
+          "default": "collector_build_receipt/1",
+          "title": "Receipt Schema",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "source_independence": {
+          "const": "separate_administration_and_signing_trust_from_host",
+          "default": "separate_administration_and_signing_trust_from_host",
+          "title": "Source Independence",
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "title": "BuildAuthorityContract",
+      "type": "object"
+    },
+    "ProducerContract": {
+      "additionalProperties": false,
+      "properties": {
+        "authorization": {
+          "const": "audience_bound_read_only;resource_and_query_allowlist",
+          "default": "audience_bound_read_only;resource_and_query_allowlist",
+          "title": "Authorization",
+          "type": "string"
+        },
+        "capture_semantics": {
+          "const": "fresh_observation_per_nonce;stable_snapshot_id_per_scan",
+          "default": "fresh_observation_per_nonce;stable_snapshot_id_per_scan",
+          "title": "Capture Semantics",
+          "type": "string"
+        },
+        "envelope_schema": {
+          "const": "collector_envelope/1",
+          "default": "collector_envelope/1",
+          "title": "Envelope Schema",
+          "type": "string"
+        },
+        "failure_policy": {
+          "const": "no_partial_success;no_unknown_to_true;no_retry",
+          "default": "no_partial_success;no_unknown_to_true;no_retry",
+          "title": "Failure Policy",
+          "type": "string"
+        },
+        "live_accepted": {
+          "const": false,
+          "default": false,
+          "title": "Live Accepted",
+          "type": "boolean"
+        },
+        "max_response_bytes": {
+          "default": 65536,
+          "exclusiveMinimum": 0,
+          "maximum": 65536,
+          "title": "Max Response Bytes",
+          "type": "integer"
+        },
+        "max_validity_seconds": {
+          "default": 30,
+          "exclusiveMinimum": 0,
+          "maximum": 30,
+          "title": "Max Validity Seconds",
+          "type": "integer"
+        },
+        "mode": {
+          "const": "offline_contract",
+          "default": "offline_contract",
+          "title": "Mode",
+          "type": "string"
+        },
+        "query_kinds": {
+          "default": [
+            "inventory",
+            "container",
+            "image",
+            "boundary"
+          ],
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "const": "inventory",
+              "type": "string"
+            },
+            {
+              "const": "container",
+              "type": "string"
+            },
+            {
+              "const": "image",
+              "type": "string"
+            },
+            {
+              "const": "boundary",
+              "type": "string"
+            }
+          ],
+          "title": "Query Kinds",
+          "type": "array"
+        },
+        "replay_policy": {
+          "const": "single_use_request_nonce;reject_reuse_and_cross_binding",
+          "default": "single_use_request_nonce;reject_reuse_and_cross_binding",
+          "title": "Replay Policy",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "secret_policy": {
+          "const": "typed_projection_only;no_env_logs_commands_tokens",
+          "default": "typed_projection_only;no_env_logs_commands_tokens",
+          "title": "Secret Policy",
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "title": "ProducerContract",
+      "type": "object"
+    },
+    "Target": {
+      "additionalProperties": false,
+      "description": "Trusted private configuration; never constructed from lecture/API input.",
+      "properties": {
+        "adapter_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adapter Id"
+        },
+        "certificate_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Certificate Sha256",
+          "type": "string"
+        },
+        "origin": {
+          "maxLength": 256,
+          "title": "Origin",
+          "type": "string"
+        },
+        "purpose": {
+          "enum": [
+            "metadata",
+            "coolify",
+            "build"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "subject_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Subject Id",
+          "type": "string"
+        },
+        "target_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Target Id",
+          "type": "string"
+        },
+        "trust_domain": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Trust Domain",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_id",
+        "purpose",
+        "origin",
+        "subject_id",
+        "trust_domain",
+        "certificate_sha256"
+      ],
+      "title": "Target",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "authorization": {
+      "const": "external_fixture_verifier;operator_grant/1",
+      "default": "external_fixture_verifier;operator_grant/1",
+      "title": "Authorization",
+      "type": "string"
+    },
+    "build_authority": {
+      "$ref": "#/$defs/BuildAuthorityContract"
+    },
+    "deployment_permitted": {
+      "const": false,
+      "default": false,
+      "title": "Deployment Permitted",
+      "type": "boolean"
+    },
+    "driver": {
+      "const": "inert",
+      "default": "inert",
+      "title": "Driver",
+      "type": "string"
+    },
+    "gate_protocol": {
+      "const": "c26-gate-v2",
+      "default": "c26-gate-v2",
+      "title": "Gate Protocol",
+      "type": "string"
+    },
+    "live_gate_enabled": {
+      "const": false,
+      "default": false,
+      "title": "Live Gate Enabled",
+      "type": "boolean"
+    },
+    "mode": {
+      "const": "offline_fixture",
+      "default": "offline_fixture",
+      "title": "Mode",
+      "type": "string"
+    },
+    "producer": {
+      "$ref": "#/$defs/ProducerContract"
+    },
+    "protocol": {
+      "const": "c26-coordinator-integration/1",
+      "default": "c26-coordinator-integration/1",
+      "title": "Protocol",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "witness": {
+      "const": "local_test_only;cas_anchor/1",
+      "default": "local_test_only;cas_anchor/1",
+      "title": "Witness",
+      "type": "string"
+    }
+  },
+  "required": [
+    "producer",
+    "build_authority"
+  ],
+  "title": "IntegrationContract",
+  "type": "object"
+}

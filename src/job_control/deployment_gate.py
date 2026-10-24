@@ -113,6 +113,8 @@ class Driver(Protocol):
 
 def settings_digest(settings):
     data = settings.model_dump(mode="json")
+    if data.get("coordinator_test_required") is False:
+        data.pop("coordinator_test_required")
     # Preserve byte-for-byte v1 hash semantics for pre-C26-D configurations.
     if data.get("deployment_gate_protocol") == "c26-gate-v1":
         data.pop("deployment_gate_protocol")
@@ -320,16 +322,26 @@ def _append(root, rows, phase, operation, plan, reason, approval=None, *, versio
 @contextmanager
 def admission(settings):
     root = settings.root
-    if not settings.deployment_gate_required and not journal_present(root):
+    if (
+        not settings.deployment_gate_required
+        and not journal_present(root)
+        and not safe_path(root, "coordinator-test-enrollment.v1.json").exists()
+        and not getattr(settings, "coordinator_test_required", False)
+    ):
         yield
         return
     fd = None
     try:
         fd = _fd(root, LOCK)
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        if _read(root, version=selected_version(settings))[-1]["phase"] != "open":
+        rows = _read(root, version=selected_version(settings))
+        from src.job_control.coordinator_state import guard
+
+        if rows[-1]["phase"] != "open" or not guard(
+            root, rows, required=getattr(settings, "coordinator_test_required", False)
+        ):
             raise Blocked("deployment_drain_admissions_closed")
-    except (OSError, ValueError, KeyError, Blocked) as error:
+    except (OSError, ValueError, KeyError, Unavailable, sqlite3.Error) as error:
         if fd is not None:
             os.close(fd)
         raise Blocked("deployment_gate_unavailable") from error
@@ -343,7 +355,12 @@ def admission(settings):
 def dispatch(settings):
     """A damaged gate pauses dispatch; existing children keep running/being reaped."""
     root = settings.root
-    if not settings.deployment_gate_required and not journal_present(root):
+    if (
+        not settings.deployment_gate_required
+        and not journal_present(root)
+        and not safe_path(root, "coordinator-test-enrollment.v1.json").exists()
+        and not getattr(settings, "coordinator_test_required", False)
+    ):
         yield True
         return
     allowed = False
@@ -351,11 +368,16 @@ def dispatch(settings):
     try:
         fd = _fd(root, LOCK)
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        allowed = _read(root, version=selected_version(settings))[-1]["phase"] in {
-            "open",
-            "draining",
-        }
-    except (OSError, ValueError, KeyError, Blocked):
+        rows = _read(root, version=selected_version(settings))
+        from src.job_control.coordinator_state import guard
+
+        allowed = rows[-1]["phase"] in {"open", "draining"} and guard(
+            root,
+            rows,
+            dispatch=True,
+            required=getattr(settings, "coordinator_test_required", False),
+        )
+    except (OSError, ValueError, KeyError, Unavailable, sqlite3.Error):
         if fd is not None:
             os.close(fd)
             fd = None
@@ -468,6 +490,23 @@ class Gate:
                     phase=rows[-1]["phase"],
                     sequence=len(rows),
                 )
+                if (
+                    getattr(self.settings, "coordinator_test_required", False)
+                    or safe_path(
+                        self.root, "coordinator-test-enrollment.v1.json"
+                    ).exists()
+                ):
+                    from src.job_control.coordinator_state import guard
+
+                    if not guard(
+                        self.root,
+                        rows,
+                        required=getattr(
+                            self.settings, "coordinator_test_required", False
+                        ),
+                    ):
+                        result["status"] = "blocked"
+                        result["coordinator_test_blocked"] = True
                 if self.version == 2:
                     result.update(
                         schema_version=2,
@@ -477,10 +516,18 @@ class Gate:
                         production_release="blocked",
                     )
                 return result
-        except (OSError, ValueError, KeyError, Blocked, sqlite3.Error):
+        except (OSError, ValueError, KeyError, Unavailable, sqlite3.Error):
             return dict(status="blocked", phase="unknown")
 
     def _approval(self, plan, approval, action):
+        if (
+            getattr(self.settings, "coordinator_test_required", False)
+            or safe_path(self.root, "coordinator-test-enrollment.v1.json").exists()
+        ):
+            from src.job_control.deployment_coordinator import _GuardedGate
+
+            if type(self) is not _GuardedGate:
+                raise Blocked("coordinator_session_required")
         if selected_version(self.settings) != self.version:
             raise Blocked("gate_protocol_changed")
         journal_name(self.root, self.version)

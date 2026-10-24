@@ -28,6 +28,7 @@ OMIT = {
     ".deployment-admission.lock",
     ".deployment-owner.lock",
     ".deployment-worker.lock",
+    ".coordinator-session.lock",
 }
 
 

@@ -41,6 +41,7 @@ class Controller:
             settings.root,
             deployment_gate_required=settings.deployment_gate_required,
             deployment_gate_protocol=settings.deployment_gate_protocol,
+            coordinator_test_required=settings.coordinator_test_required,
         )
         self.indexes = prepare_indexes(settings)
 

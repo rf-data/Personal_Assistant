@@ -30,7 +30,9 @@ class Store:
         *,
         deployment_gate_required=False,
         deployment_gate_protocol="c26-gate-v1",
+        coordinator_test_required=False,
     ):
+        self.coordinator_test_required = coordinator_test_required
         self.deployment_gate_required = deployment_gate_required
         self.deployment_gate_protocol = deployment_gate_protocol
         self.root = safe_path(root)
