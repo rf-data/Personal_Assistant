@@ -1,6 +1,8 @@
 # C27 Lecture Summarizer: lokaler MVP
 
 Stand: 24.10.2026. Backendbasis `e502aa9` (master); UI-Basis `e4be7a2` (main).
+Draft-PRs: [Backend #158](https://github.com/rf-data/Personal_Assistant/pull/158)
+und [UI #21](https://github.com/rf-data/personal-assistant-ui/pull/21).
 C27 ist ein synchroner, ausdrücklich aktivierter Entwicklungsmodus. Er benötigt
 keinen C16-Worker, Controller, Queue, Content-Store oder Datenbankbootstrap.
 Produktionskonfiguration, historische Pilotdaten und die fünf geschützten Drafts

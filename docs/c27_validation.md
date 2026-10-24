@@ -22,6 +22,8 @@ Dependencies oder Lockdateien im Produkt geändert.
 Details, Startanleitung, tatsächliche Inventur und der zehnteilige Vorschlag
 zur späteren Storageharmonisierung: [C27-Anleitung](c27_lecture_summary.md).
 Die Änderungen gehören ausschließlich in separate C27-Draft-PRs beider Repos.
+Lieferung: [Backend-Draft #158](https://github.com/rf-data/Personal_Assistant/pull/158)
+und [UI-Draft #21](https://github.com/rf-data/personal-assistant-ui/pull/21).
 
 ## B. Demonstration
 
@@ -141,6 +143,8 @@ separat versioniertes Quellen-Enrichment an. Keine dieser Erweiterungen wurde
 automatisch aktiviert.
 
 Geschützte Drafts sind read-only geprüft: Backend #148/#149/#156/#157 und UI #20.
+Abschließender API-Vergleich: alle fünf Head-SHAs, Beschreibungen und Draftzustände
+stimmen mit der ersten C27-Inventur überein; sämtliche Drafts blieben unverändert.
 Keine SSH-/Hetzner-/Coolifyaktion, keine Produktivqueue/-datenbank, kein Download,
 kein externer Quellenbezug, kein Merge/Ready/Auto-Merge und keine Migration.
 
