@@ -94,6 +94,7 @@ class Settings(Contract):
     identities: tuple[Identity, ...] = ()
     execution_enabled: bool = Field(default=False, strict=True)
     deployment_gate_required: bool = Field(default=False, strict=True)
+    coordinator_test_required: bool = Field(default=False, strict=True)
     deployment_gate_protocol: Literal["c26-gate-v1", "c26-gate-v2"] = "c26-gate-v1"
     workflows_enabled: bool = Field(default=False, strict=True)
     pdf_enabled: bool = Field(default=False, strict=True)
@@ -113,6 +114,13 @@ class Settings(Contract):
             and not self.deployment_gate_required
         ):
             raise ValueError("v2 requires an explicitly mandatory deployment gate")
+        if self.coordinator_test_required and (
+            not self.deployment_gate_required
+            or self.deployment_gate_protocol != "c26-gate-v2"
+        ):
+            raise ValueError(
+                "Coordinator test profile requires explicit mandatory v2 gate"
+            )
         root = self.root
         output_path(root, "job_workspace")
         subjects = [i.subject for i in self.identities]

@@ -455,6 +455,7 @@ def test_v1_settings_hash_and_defaults_preserved(v2):
     legacy = settings.model_copy(update={"deployment_gate_protocol": "c26-gate-v1"})
     before = legacy.model_dump(mode="json")
     before.pop("deployment_gate_protocol")
+    before.pop("coordinator_test_required")
     assert settings_digest(legacy) == hashlib.sha256(canonical(before)).hexdigest()
     assert Settings.model_fields["deployment_gate_protocol"].default == "c26-gate-v1"
 

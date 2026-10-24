@@ -1,0 +1,215 @@
+{
+  "$defs": {
+    "Challenge": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "deploy",
+            "rollback",
+            "recover",
+            "resume"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "created_at": {
+          "title": "Created At",
+          "type": "number"
+        },
+        "environment_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Environment Id",
+          "type": "string"
+        },
+        "epoch": {
+          "exclusiveMinimum": 0,
+          "title": "Epoch",
+          "type": "integer"
+        },
+        "evidence_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Evidence Sha256",
+          "type": "string"
+        },
+        "expires_at": {
+          "title": "Expires At",
+          "type": "number"
+        },
+        "instance_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Instance Sha256",
+          "type": "string"
+        },
+        "journal_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Journal Sha256",
+          "type": "string"
+        },
+        "mode": {
+          "const": "offline_fixture",
+          "default": "offline_fixture",
+          "title": "Mode",
+          "type": "string"
+        },
+        "plan_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Plan Sha256",
+          "type": "string"
+        },
+        "protocol": {
+          "const": "c26-coordinator/1",
+          "default": "c26-coordinator/1",
+          "title": "Protocol",
+          "type": "string"
+        },
+        "resource_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Resource Id",
+          "type": "string"
+        },
+        "root_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Root Id",
+          "type": "string"
+        },
+        "runtime_scope_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Runtime Scope Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "server_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Server Id",
+          "type": "string"
+        },
+        "session_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "epoch",
+        "root_id",
+        "action",
+        "resource_id",
+        "server_id",
+        "environment_id",
+        "plan_sha256",
+        "runtime_scope_sha256",
+        "sequence",
+        "journal_sha256",
+        "instance_sha256",
+        "evidence_sha256",
+        "created_at",
+        "expires_at"
+      ],
+      "title": "Challenge",
+      "type": "object"
+    },
+    "OperatorGrant": {
+      "additionalProperties": false,
+      "properties": {
+        "challenge": {
+          "$ref": "#/$defs/Challenge"
+        },
+        "expires_at": {
+          "title": "Expires At",
+          "type": "number"
+        },
+        "grant_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Grant Id",
+          "type": "string"
+        },
+        "issued_at": {
+          "title": "Issued At",
+          "type": "number"
+        },
+        "issuer": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Issuer",
+          "type": "string"
+        },
+        "mode": {
+          "const": "offline_fixture",
+          "default": "offline_fixture",
+          "title": "Mode",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "observer",
+            "operator"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "subject": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "grant_id",
+        "issuer",
+        "subject",
+        "role",
+        "challenge",
+        "issued_at",
+        "expires_at"
+      ],
+      "title": "OperatorGrant",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "grant": {
+      "$ref": "#/$defs/OperatorGrant"
+    },
+    "mode": {
+      "const": "fixture_authority",
+      "default": "fixture_authority",
+      "title": "Mode",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "signature": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Signature",
+      "type": "string"
+    }
+  },
+  "required": [
+    "grant",
+    "signature"
+  ],
+  "title": "SignedGrant",
+  "type": "object"
+}

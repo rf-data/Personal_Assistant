@@ -1,0 +1,156 @@
+{
+  "base_branch": "feat/c26e-authenticated-runtime-collector",
+  "base_pr": 162,
+  "base_sha": "28e9a608d74270278cf037e35957d0bae08d50b2",
+  "base_tree": "adcf8bb87bb8eabc0e13b7866d84ba2e9aff0e43",
+  "branch": "feat/c26f-independent-coordinator",
+  "checks": {
+    "AST_JSON": "passed",
+    "cached_hooks": "passed: whitespace, EOF, JSON, AST, debug statements, large files, Ruff format; YAML/TOML without applicable files",
+    "documentation_links": "passed",
+    "git_diff_check": "passed",
+    "ruff_check": "passed",
+    "ruff_format": "passed"
+  },
+  "cherry_picks_148_157": 0,
+  "date": "2026-10-25",
+  "default_branch_integration": false,
+  "deployment_permitted": false,
+  "distinct_passed_tests": 611,
+  "environment": {
+    "PyMuPDF": "1.27.2.2",
+    "PyYAML": "6.0.3",
+    "httpx": "0.28.1",
+    "installations": false,
+    "pre_commit": "4.6.2",
+    "pydantic": "2.14.1",
+    "pydantic_core": "2.50.1",
+    "pytest": "9.1.1",
+    "python": "3.12.12",
+    "ruff": "0.16.0",
+    "runtime_lock_differences": {
+      "PyMuPDF": "1.28.2",
+      "pydantic": "2.13.4",
+      "pydantic_core": "2.46.4"
+    },
+    "runtime_lock_exact": false,
+    "sqlite": "3.50.4"
+  },
+  "inherited_161": "8b0ba2d4ab5d0cd6fc8dfa69783276efd929666f",
+  "live_gate_enabled": false,
+  "master_basis": "e68275205fefb7a5f6db42bc45060e505bfcefb5",
+  "new_distinct_cases": 65,
+  "not_executed": [
+    "complete_project_or_UI_regression",
+    "new_real_TLS_or_loopback_server_tests",
+    "producer_registry_identity_witness_live_acceptance",
+    "runtime_image_build",
+    "production_queue_database_volume_or_journal_operations",
+    "deployment"
+  ],
+  "production_release": "HOLD",
+  "protected_prs": {
+    "158": "a0d3ebf7f64d44dd843f1848e70dc70a3a3af835",
+    "160": "ecac8cfa844a7e4da9e0066a2c49c0c49fb3541d",
+    "161": "8b0ba2d4ab5d0cd6fc8dfa69783276efd929666f",
+    "162": "28e9a608d74270278cf037e35957d0bae08d50b2",
+    "ui21": "218003222d418acc9e93585cd3367b694cd247e2"
+  },
+  "remaining_production_requirements": [
+    "private_metadata_producer_and_scope_limited_authorization",
+    "independent_registry_build_attestation_authority",
+    "real_TLS_credential_freshness_and_complete_trigger_evidence",
+    "independent_operator_identity_and_public_verification_anchor",
+    "independent_external_monotonic_CAS_fencing_service",
+    "independent_coordinator_host_and_root_policy_all_writers",
+    "separate_versioned_live_gate_integration",
+    "separately_approved_permit_bound_mutating_driver",
+    "complete_technical_and_organizational_operations_acceptance_160"
+  ],
+  "retention": "Own branch/worktree retained for draft review; explicit no-merge/no-delete instruction",
+  "safety": {
+    "all_runtime_data_simulated": true,
+    "authorization": "fixture_issuer_and_verifier_only",
+    "cleanup": false,
+    "driver": "in_memory_only",
+    "enospc": false,
+    "new_listeners": 0,
+    "productive_queue_or_journal_operations": 0,
+    "real_credentials_or_identity_proofs": false,
+    "real_deployments_or_restarts": 0,
+    "server_or_production_connections": 0,
+    "witness": "local_test_only_NOT_independent_rollback_protection"
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "docs/deployment/c26_runtime/coordinator_anchor.v1.schema.json": "ba09a464c702815ac1ba243213d87d14b248269eb611e082e1af58903997bfeb",
+    "docs/deployment/c26_runtime/coordinator_challenge.v1.schema.json": "f541ca7b5d3851f7f4e550656020f0096c855beeef2914e1b4599688028b409b",
+    "docs/deployment/c26_runtime/coordinator_driver_receipt.v1.schema.json": "f83404e3ff2e3ec4669fac2136ae4346651d7795e97606854ba3f6d166608821",
+    "docs/deployment/c26_runtime/coordinator_enrollment.v1.schema.json": "cd005419a63e753bca054e1aedf8930c56d740d112d578e6c12469ee2022336e",
+    "docs/deployment/c26_runtime/coordinator_grant.v1.schema.json": "d3a633db2cb07bb3221e74777c271de2e878cc2ee6f03b3e0275e8a628516688",
+    "docs/deployment/c26_runtime/coordinator_integration.v1.schema.json": "76d72048e116a946c4d761c3620a2f63e7dcb42743c2f3996a7619b9cbe4ca49",
+    "docs/deployment/c26f_deployment_coordinator.md": "fdc51b7178b14afa2b33487547e6d603e1e0a65e522d975ed41d9e74dfe3041f",
+    "docs/job_control/contract.v1.json": "861a4fc6664a5df6a323341e53c5bcff1eb851712df763f3e48b95910eea0b20",
+    "src/job_control/controller.py": "d45204007b8194adf90e346e85200b7cf6dee48c2c900d5e72c1d7e43d736303",
+    "src/job_control/coordinator_contracts.py": "2c07a7588d358f0de3b0d8fb42ce0370079ff5e211d7a2c5a841640871a26454",
+    "src/job_control/coordinator_state.py": "28477ecd109e455aad2d1d746ecf7c76f475e14616388f8ab5e08308b51dbb49",
+    "src/job_control/deployment_coordinator.py": "426e41481813bd9975705b0499b8e639a1b168ddde41976251bb0b1a7e8a9c78",
+    "src/job_control/deployment_gate.py": "c05d08886870151bb90f6570744978e79d6209ebeeab34c008e073c07ce65b80",
+    "src/job_control/executor.py": "19387c6873ed5a0748eb4f07d755f5d3cd95598f3d1c99c34c7c5953202f554f",
+    "src/job_control/models.py": "96b994580c1d1ec97c3b8274b450c821941c0d2ba6b45d7e9bbef559bf4442f1",
+    "src/job_control/operations.py": "8603d5d125965d90f3897a40a54cece548fda271150031f715b5e2735bd8b5c8",
+    "src/job_control/store.py": "dc9adbb6f51234584f5cd95bd05420396406ddee367ca185c686428cb0e6059e",
+    "tests/test_coordinator_contracts.py": "059b25176c9d4d0dc35317a967895fe3c878f8833046f635725a42703b00e789",
+    "tests/test_deployment_coordinator.py": "3ac778bcdd02c548cba4b2b97cbe312c7329fb072aeb5d0e599b600c50a6394d",
+    "tests/test_deployment_gate_v2.py": "146f9c90583f7f2279a8231aaa229a0b2f0f02d4cf40cabddf84278904f3543b"
+  },
+  "status": "offline_draft",
+  "task": "C26-F",
+  "test_environment": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "python": "../Personal_Assistant-c26b6-planning-results/test-env/bin/python"
+  },
+  "test_runs": [
+    {
+      "additional_distinct": 546,
+      "command": "-B -m pytest -q -p no:cacheprovider tests/test_deployment_gate.py tests/test_deployment_gate_v2.py tests/test_coolify_observer.py tests/test_coolify_readiness.py tests/test_c26_runtime_preflight.py tests/test_c26_runtime_bootstrap.py tests/test_runtime_paths.py tests/test_deployment_operations.py tests/test_job_control.py tests/test_job_executor.py tests/test_job_store_contention.py tests/test_https_preflight.py tests/test_runtime_collector.py --basetemp=/tmp/c26f-regression-01",
+      "failed": 0,
+      "kind": "existing_regression",
+      "passed": 546,
+      "seconds": 148.3,
+      "skipped": 0
+    },
+    {
+      "additional_distinct": 62,
+      "command": "-B -m pytest -q -p no:cacheprovider tests/test_deployment_coordinator.py tests/test_coordinator_contracts.py --basetemp=/tmp/c26f-final-03",
+      "failed": 0,
+      "kind": "coordinator_and_contracts",
+      "passed": 62,
+      "seconds": 67.3,
+      "skipped": 0
+    },
+    {
+      "additional_distinct": 1,
+      "command": "-B -m pytest -q -p no:cacheprovider tests/test_deployment_coordinator.py::test_driver_refuses_a_caller_claiming_to_be_a_permit tests/test_deployment_coordinator.py::test_success_separate_resume_and_no_coordinator_signing_api tests/test_coordinator_contracts.py::test_full_c26e_capture_drives_only_inert_coordinator --basetemp=/tmp/c26f-capability-01",
+      "failed": 0,
+      "kind": "strict_driver_capability_followup",
+      "overlap": 2,
+      "passed": 3,
+      "seconds": 6.49,
+      "skipped": 0
+    },
+    {
+      "additional_distinct": 2,
+      "command": "-B -m pytest -q -p no:cacheprovider tests/test_coordinator_contracts.py::test_witness_contract_version_is_not_boolean tests/test_deployment_coordinator.py::test_success_separate_resume_and_no_coordinator_signing_api tests/test_coordinator_contracts.py::test_full_c26e_capture_drives_only_inert_coordinator tests/test_deployment_coordinator.py::test_published_coordinator_schemas_match_models tests/test_job_control.py::test_transport_contract_snapshot tests/test_deployment_gate_v2.py::test_v1_settings_hash_and_defaults_preserved --basetemp=/tmp/c26f-version-01",
+      "failed": 0,
+      "kind": "strict_witness_version_followup",
+      "overlap": 5,
+      "passed": 7,
+      "seconds": 5.41,
+      "skipped": 0
+    }
+  ],
+  "timezone": "Europe/Berlin",
+  "worktree": "Personal_Assistant-c26f"
+}

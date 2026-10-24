@@ -26,6 +26,7 @@ class Executor:
             settings.root,
             deployment_gate_required=settings.deployment_gate_required,
             deployment_gate_protocol=settings.deployment_gate_protocol,
+            coordinator_test_required=settings.coordinator_test_required,
         )
         if safe_path(settings.root, "quarantine").exists():
             raise Unavailable("Unconfirmed cleanup requires operator review")
