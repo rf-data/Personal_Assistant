@@ -3,6 +3,12 @@
 24.10.2026. Isolierte C27-Arbeitsstände auf Backend `e502aa9` und UI `e4be7a2`.
 Diese Lieferung ist ein lokaler benutzbarer MVP; keine Produktionsfreigabe.
 
+**Aktualisierung nach der Betreibermeldung zum Speicher:** Die unten genannten
+großen Testläufe sind tatsächlich ausgeführte frühere Läufe. Die damaligen
+RAM-Umgebungen sind inzwischen entfallen. In der Fortsetzung wurden nur 21 kleine
+Vertragsfälle und die lokale CLI-Demo erneut ausgeführt; Details und aktuelle
+Blockaden stehen am Ende dieses Berichts. Keine Umgebung wurde neu installiert.
+
 ## A. Implementierung
 
 `src/lecture_summary/` enthält versionierte Summary-/Auswahl-/Provenienzmodelle,
@@ -156,3 +162,86 @@ Arbeitsverzeichnissen erstellt. Diese Metadaten sind temporär; Remote-Draftbran
 sichern die Commits dauerhaft. Bestehende Primärcheckouts und sämtliche fremden
 Artefakte bleiben unverändert. Integration der Dokumentation in master/main
 bleibt bis zu einem separat freigegebenen Merge ausdrücklich ausstehend.
+
+## Ergänzung: Speicherstatus und begrenzte Fortsetzung
+
+Die Betreibermeldung nennt Btrfs auf `/dev/vdc`, 32 GB, nach eigener Bereinigung
+27 GB belegt / 4,9 GB verfügbar / 85 %. Browsercachebereinigung und Pruning von
+zehn verwaisten Worktree-Registrierungen wurden vom Betreiber vorgenommen,
+nicht durch C27. Der gemeldete Fehler beim Ersetzen von `/var/lib/dpkg/status`
+und der `tzdata`-Status `reinstreq` sind Betreiberbeobachtungen. APT/dpkg wurden
+in dieser Fortsetzung weder aufgerufen noch repariert. Die ENOSPC-Ursache bleibt
+unbewiesen; es liegen keine belastbaren Quota-/Btrfs-Metadatennachweise vor.
+
+Aktuelle eigene read-only Beobachtung in der Standard-Codex-Sandbox:
+`df -hT /tmp /home/robfra/0_Portfolio_Projekte` bestätigt für beide Pfade Btrfs,
+32G / 27G / 4,9G / 85 %. `findmnt -T /tmp` zeigt
+`/dev/vdc[/lxd/storage-pools/default/containers/penguin/rootfs/tmp]`, Btrfs,
+unter anderem `rw,nosuid,nodev,idmapped,discard,space_cache=v2`.
+Das sind Mountinformationen, kein Quotanachweis oder Beweis fehlerfreier Writes.
+
+### Aktueller Zustand und tatsächlich wiederholte Prüfungen
+
+- Beide Remote-Drafts und ihre damaligen Heads waren vollständig vorhanden:
+  Backend `0f4d8af400b9f6e755a5f58c38d8ec67b8eb978a`,
+  UI `c055927f464a0e709c2d2d01869afb05fec85452`.
+- Alle 23 veröffentlichten C27-Dateien wurden vor diesen reinen
+  Dokumentationsänderungen über Git-Blob-SHAs bytegenau mit den lokalen Dateien
+  verglichen: alle identisch. Kein unvollständiger C27-Produktcode festgestellt.
+- `/dev/shm` ist inzwischen leer. Die früheren RAM-Git-Metadaten, Venvs,
+  Roh-Testlogs und die frühere Demo sind nicht mehr vorhanden. Die Ursache ihres
+  Wegfalls wurde nicht untersucht. Die gesicherten Remotecommits bleiben erhalten.
+- Der lokale Git-Index steht deshalb weiterhin auf der jeweiligen ursprünglichen
+  Basis; `M`/untracked in diesen Arbeitsverzeichnissen bedeuten hier nicht, dass
+  die veröffentlichten C27-Dateien verloren oder nur lokal vorhanden wären.
+  Kein Indexreset, keine neue große Arbeitskopie und keine Bereinigung durchgeführt.
+- Mit bereits vorhandenen Paketen wurde ausschließlich
+  `tests/test_lecture_summary_contract.py` erneut ausgeführt: **21 bestanden**,
+  1,63 Sekunden. Python 3.12.12, Pydantic 2.14.1/core 2.50.1, HTTPX 0.28.1;
+  diese verbliebene Umgebung ist ausdrücklich kein erneuter exakter Locknachweis.
+  Bytecode-/pytest-Cache waren deaktiviert, `--capture=sys`, `-x` und ein neues
+  kleines Fixtureverzeichnis unter `/tmp/c27-followup-contract-20261024-a` gesetzt.
+- Die bereits verwendete echte Loviscach-Lektion wurde mit diesen vorhandenen
+  Dependencies nochmals per Mock-CLI registriert und exportiert. Neue private
+  Ausgabe: `/tmp/c27-followup-demo-20261024-a`; Markdown 47.512 Bytes,
+  LaTeX 48.809 Bytes, Summary-JSON 153.409 Bytes. Status `needs_review`,
+  102 Quellenblöcke; Eingangs-SHA256 unverändert wie oben. Keine Medien-/PDFkopien,
+  kein Modellaufruf, kein Upload, keine neue Materialbeschaffung.
+- Bei diesen kleinen neuen Schreib- und Testoperationen trat **kein neues ENOSPC**
+  auf. Das ist keine Freigabe für große Git-/uv-/pip-Operationen.
+
+**Aktuell nicht wiederholt / blockiert:** vollständige UI-/C18-/C26-/Material-
+Regressionen, UI-Start und UI-Demo sowie erneuter Test mit exakt gelocktem Venv,
+weil deren nachgewiesene RAM-Umgebung entfallen ist und kein Neuaufbau erfolgt.
+Die früheren bestandenen Läufe bleiben historische Nachweise für den identischen
+Code; ihre flüchtigen Rohlogs sind aktuell nicht erneut verfügbar. Optionale
+E2E-Skips, Live-Modell-/Fachprüfung und der nicht bestandene optionale PDF-Smoke
+bleiben wie oben ausgewiesen. Der alte Helfer `/tmp/c27-start-demo.sh` erkennt
+das fehlende RAM-Setup und ist **kein aktuell nutzbarer UI-Schnellstart**.
+
+### Historische ENOSPC-Operationen und Beleggrenzen
+
+Diese Fehler stammen aus der ersten C27-Entwicklung, nicht aus einem neuen
+Installationsversuch nach der Betreibermeldung:
+
+| Operation | Betroffener Pfad / genaue Meldung | Ausführung und Zustand |
+|---|---|---|
+| `git worktree add` | Backend: `fatal: couldn't set 'refs/heads/feat/c27-lecture-summarizer'`; UI: `.git/config: No space left on device` | Standard-Codex-Sandbox; Backendversuch zusätzlich mit `require_escalated`. Keine geschützten Branches geändert; UI-Arbeitsdateien wurden angelegt |
+| Isolierter `git clone --shared --no-checkout` | C27-`.git/config`: `No space left on device`; weiterer separater Versuch: `unable to move new alternates file into place: No space left on device` | Standard-Sandbox bzw. beim Alternatesversuch `require_escalated`; keine nachträgliche Bereinigung fremder Git-Daten |
+| `uv sync --locked --no-dev` | Ziel `/tmp/c27-backend-venv`, Cache `/tmp/c27-uv-cache`; `error: No space left on device (os error 28)` ohne genaueren Fehlerpfad | Standard-Sandbox; nicht als erfolgreich eingerichtete Umgebung verwendet |
+| Isolierte pip-Installation | `/tmp/c27-python-deps/lib/python3.12/site-packages/urllib3-2.8.0.dist-info/METADATA`; später `/tmp/c27-core-deps/.../pygments/formatters` und `.../annotated_types-0.8.0.dist-info/INSTALLER*.tmp` → `INSTALLER`: jeweils `Errno 28` | `require_escalated`; unvollständige Paket-/Installationsmetadaten blieben als solche erkannt, nicht als vollständiges Venv abgenommen |
+| pytest-Fixtures | `/tmp/pytest-of-unknown/pytest-0/.../l1.txt`: `OSError: [Errno 28] No space left on device` | Codex-Exec mit `require_escalated`; synthetische Fixtures teilweise leer/unvollständig, Lauf fehlgeschlagen, keine Originalquelle geändert |
+| Sandbox-Initialisierung | synthetische Bubblewrap-Mounttargets `/home/robfra/0_Portfolio_Projekte/.git` bzw. `/tmp/.agents`: `No space left on device (os error 28)` | Fehler vor dem Start des eigentlichen Befehls innerhalb der separaten Codex-Sandbox; Exit 101 |
+
+Damals wurde `df -h` mit 32G / 29G / 3,1G / 91 % erfasst, jedoch nicht zu
+jedem Fehler ein eigenes `df -hT` für den exakten Pfad. Diese fehlenden
+Zeitpunktbelege werden nicht nachträglich als gemessen ausgegeben. Es gibt keinen
+Beleg für eine konkrete Quota- oder Metadatenursache und keine nachträgliche
+Diagnose allein aus den freien Bytes oder den Btrfs-Inodeangaben.
+
+Für jede weitere ENOSPC-Operation gilt: betroffenen Vorgang abbrechen, Pfad,
+Fehlermeldung, `df -hT`, Sandboxkontext und belegte Mount-/Quotainformationen
+festhalten; Partialdateien/Indexzustand nennen und die betroffene Fortsetzung als
+blockiert ausweisen. Keine stillen großen Installationswiederholungen und keine
+eigenständige Systemreparatur. Produktivbetrieb und alle C16-/C26-Drafts bleiben
+außerhalb der C27-Änderungen.
