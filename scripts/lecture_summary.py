@@ -13,10 +13,8 @@ from src.runtime_paths import checked_path, output_path
 from src.tools_materials.storage import RegisteredStorage
 
 
-def register(workspace, root, relative, provider, course, lecture, title, format):
+def registered_lecture(root, relative, provider, course, lecture, title, format):
     """Explicit one-file binding, no guessed lecture IDs or edits to originals."""
-    workspace = output_path(checked_path(workspace), "material_artifacts")
-    workspace.mkdir(mode=0o700, parents=False, exist_ok=True)
     storage = RegisteredStorage({"source": {"path": str(root), "readonly": True}})
     raw = storage.read("source", relative)
     artifact = Artifact(
@@ -31,17 +29,19 @@ def register(workspace, root, relative, provider, course, lecture, title, format
         if format in {"knowledge_json", "document_json", "transcript_json"}
         else "original",
     )
-    catalog = Catalog(
-        lectures=(
-            Lecture(
-                provider_id=provider,
-                course_id=course,
-                lecture_id=lecture,
-                title=title,
-                sources=(artifact,),
-            ),
-        )
+    return Lecture(
+        provider_id=provider,
+        course_id=course,
+        lecture_id=lecture,
+        title=title,
+        sources=(artifact,),
     )
+
+
+def write_catalog(workspace, root, catalog, *, cache=False):
+    """Create a private, new local binding; never replace an existing catalog."""
+    workspace = output_path(checked_path(workspace), "material_artifacts")
+    workspace.mkdir(mode=0o700, parents=False, exist_ok=False)
     output = RegisteredStorage({"output": {"path": str(workspace), "readonly": False}})
     output.create("output", "catalog.json", catalog.model_dump_json(indent=2).encode())
     config = {
@@ -51,8 +51,20 @@ def register(workspace, root, relative, provider, course, lecture, title, format
         "allow_source_upload": False,
         "storage_roots": {"source": {"path": str(root), "readonly": True}},
     }
+    if cache:
+        # Parent already passed the existing output-policy check. No source writes.
+        output.path("output", "cache", write=True).mkdir(mode=0o700)
+        config["storage_roots"]["workspace"] = {"path": str(workspace), "readonly": False}
+        config["cache"] = ["workspace", "cache"]
     output.create("output", "summary.json", json.dumps(config, indent=2).encode())
     return workspace / "summary.json"
+
+
+def register(workspace, root, relative, provider, course, lecture, title, format):
+    lecture_record = registered_lecture(
+        root, relative, provider, course, lecture, title, format
+    )
+    return write_catalog(workspace, root, Catalog(lectures=(lecture_record,)))
 
 
 def main():
