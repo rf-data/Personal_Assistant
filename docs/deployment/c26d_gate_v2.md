@@ -49,7 +49,9 @@ Dockerfile-CLIpfade sind erhalten und durch relevante Regression geprüft.
 Merge-Bases zum genannten master: #148
 `e581e201ef6b3d6c06aca14de845e0687d213b37`, #157
 `e502aa915ad0e928dbe7e92eacd44fff0152912b`. Alle eigenen C26-D-Änderungen
-folgen auf `1984f30`; diese Trennung erlaubt später eine gezielte Übernahme nur
+folgen auf `1984f30`; Implementierungscommit ist
+`ae98536cd4d6b6f317cf5c09a2ae53d3aefb5991`, gefolgt von der ergänzenden
+Validierungsdokumentation. Diese Trennung erlaubt später eine gezielte Übernahme nur
 der Integration, falls die Original-PRs zuvor integriert werden.
 
 #160 (`ecac8cfa844a7e4da9e0066a2c49c0c49fb3541d`) bleibt unabhängige
@@ -180,20 +182,32 @@ vorhandenem Pre-commit-Cache. Keine Behauptung eines exakten Runtime-Imagebelegs
 
 Alle pytest-Läufe mit `PYTHONDONTWRITEBYTECODE=1`,
 `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`, `-B -m pytest -q -p no:cacheprovider` und jeweils
-eigenem neuen `/tmp/c26d-*`-Basetemp. Testfixture sperrt echte Netzwerkverbindungen;
-SQLite und flock arbeiten nur auf neu erzeugten synthetischen lokalen Roots.
+eigenem neuen `/tmp/c26d-*`-Basetemp. Gate-/Queue-Unitfixtures sperren Netzwerkzugriffe; SQLite und flock arbeiten nur
+auf neu erzeugten synthetischen lokalen Roots. Die gesonderten Transporttests
+starten ausschließlich eine testeigene Loopback-API und synthetische lokale Worker.
 
 | Lauf | Ergebnis |
 | --- | --- |
 | Früher gezielter #148/#157-Baseline-/Integrationslauf | 238 passed; später im erweiterten Lauf enthalten |
 | Erweiterte relevante Regression: `test_deployment_gate`, `test_coolify_observer`, `test_coolify_readiness`, `test_c26_runtime_preflight`, `test_c26_runtime_bootstrap`, `test_job_control`, `test_job_executor`, `test_job_store_contention`, `test_deployment_operations`, `test_https_preflight` | **365 passed**, 99,21 s; keine Skips |
-| Finale C26-D-Tests: `tests/test_deployment_gate_v2.py` | **61 passed**; keine Skips |
+| Finale C26-D-Tests: `tests/test_deployment_gate_v2.py` | **61 passed**, 19,54 s; keine Skips |
+| Persistent-Root-Grenzen: `tests/test_runtime_paths.py` | **34 passed** im ergänzenden Grenzlauf |
+| Lokaler C16-/C26-Transport: `tests/test_deployment_transport.py` | **2 passed**, 17,16 s; isolierte Loopback-Fixtures, außerhalb der Sandbox |
 
-Die beiden finalen disjunkten Testgruppen ergeben 426 bestandene Fälle. Frühere
+Die vier finalen disjunkten Testgruppen ergeben **462 bestandene Fälle**.
+Der erste ergänzende Grenzlauf ergab 34 passed und zwei Transportfehler:
+`socket.socket()` wurde von der Codex-Sandbox mit `PermissionError: [Errno 1]
+Operation not permitted` verweigert, bevor API/Worker gestartet wurden. Nur diese
+zwei Fälle wurden mit genehmigter Sandboxausnahme erneut ausgeführt; danach grün.
+Kein Produktiv- oder externer Netzwerkzugriff, keine Installation oder Bereinigung. Frühere
 Läufe werden nicht addiert. In der Entwicklung wurden eine falsche Erwartung an
 die weiterhin gültige verschachtelte Scopeversion 1 und eine doppelte
 Fixture-Leasefreigabe im Restoretest korrigiert; keine offenen Testfehler.
-Ruff-/Hook-/Whitespace-/Schema- und Quellfingerprintnachweise siehe
+Reguläre Pre-commit-Prüfungen und Commit-Hooks bestanden mit bestehendem
+Pre-commit 4.6.2 aus `../ai-job-search/.venv`: Whitespace/EOF/JSON/AST/
+Debugstatements/Dateigröße/Ruffformat. YAML-/TOML-Hooks ohne betroffene Dateien
+übersprungen; keine übersprungenen pytest-Fälle. Ruffcheck und Formatcheck für
+alle elf betroffenen Pythondateien ebenfalls bestanden. Details siehe
 [Validierungsmanifest](c26d_validation.v2.json).
 
 Nicht durchgeführt: vollständige Projekt-/UI-Regression, neue Imagebuilds,

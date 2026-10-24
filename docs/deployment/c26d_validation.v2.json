@@ -3,6 +3,7 @@
     "AST_JSON_links": "passed",
     "cached_pre_commit": "passed: trailing-whitespace, EOF, JSON, AST, debug-statements, large-files, Ruff format; YAML/TOML not applicable",
     "git_diff_check": "passed",
+    "regular_commit_hooks": "passed",
     "ruff_check": "passed",
     "ruff_format": "passed"
   },
@@ -16,6 +17,7 @@
     "PyYAML": "6.0.3",
     "httpx": "0.28.1",
     "new_installations": false,
+    "pre_commit": "4.6.2",
     "pydantic": "2.14.1",
     "pydantic_core": "2.50.1",
     "pytest": "9.1.1",
@@ -29,7 +31,8 @@
     "runtime_lock_exact": false,
     "sqlite": "3.50.4"
   },
-  "final_disjoint_tests_passed": 426,
+  "final_disjoint_tests_passed": 462,
+  "implementation_commit": "ae98536cd4d6b6f317cf5c09a2ae53d3aefb5991",
   "integration_base_sha": "1984f30b05eae28c17e1b200cb23d44ec08bf957",
   "master_sha": "e68275205fefb7a5f6db42bc45060e505bfcefb5",
   "master_tree_sha": "d63fcfaf5dab63817dc03fefafb5817f53388195",
@@ -61,7 +64,7 @@
     "docs/deployment/c26_runtime/gate_journal_event.v2.schema.json": "201bfc03db744e714def0901b6113003e626ac5bdf5d102f78b6a9a9fec89265",
     "docs/deployment/c26_runtime/gate_observation.v2.schema.json": "9596638ce3a9779fa7bac9c765ca1e04cb746c028b37952beae421990fb38226",
     "docs/deployment/c26_runtime/gate_plan.v2.schema.json": "e85e1b879d621bab7d1d0e5bc9b61e93269a6fa04e27ff3187c92ec8add4ec75",
-    "docs/deployment/c26d_gate_v2.md": "bc1704d01fa0b2cf24ec8e5cfe80cb58c81560e9e67d539cbd55f9b136465db9",
+    "docs/deployment/c26d_gate_v2.md": "9ce7598abe0c957a02b4892dc4c3c2f83dca3e34f0163c9da4aeb2fa2a3333cf",
     "docs/job_control/contract.v1.json": "00577d0a716facca14827276ddec03c82cbac67114f77662cb05ab0d2e87823b",
     "scripts/deployment_gate.py": "1fc554feb1edc10f622767384b03c2d5f9bdd49517812002a22e870d72dbbff5",
     "src/job_control/controller.py": "c51ef8b3a669949eb44e6964dcc432f8e85c99ab622f850346b05130fb2f617a",
@@ -97,6 +100,24 @@
       "kind": "v2_integration",
       "passed": 61,
       "seconds": 19.54,
+      "skipped": 0
+    },
+    {
+      "command": "-B -m pytest -q -p no:cacheprovider tests/test_runtime_paths.py tests/test_deployment_transport.py --basetemp=/tmp/c26d-boundary-01",
+      "failed": 2,
+      "failure": "Both transport cases: socket.socket() PermissionError [Errno 1] Operation not permitted; Codex sandbox blocks sockets before API/worker launch. Existing source unchanged.",
+      "kind": "persistent_root_and_transport_initial_sandbox",
+      "passed": 34,
+      "seconds": 1.22,
+      "skipped": 0
+    },
+    {
+      "command": "-B -m pytest -q -p no:cacheprovider tests/test_deployment_transport.py --basetemp=/tmp/c26d-transport-02",
+      "failed": 0,
+      "kind": "transport_final_sandbox_exception",
+      "passed": 2,
+      "scope": "Only test-owned synthetic local API/workers on loopback; no external or production access.",
+      "seconds": 17.16,
       "skipped": 0
     }
   ]
