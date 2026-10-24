@@ -4,7 +4,9 @@ Bitte nur die folgenden fünf Pakete aus den **bestehenden** Applications liefer
 Projekt `personal-assistant`, Environment `production`: Backend
 `personal-assistantworker-1`, UI
 `personal-assistant-uimain-a8xzljz4fq52vt1yt43nheg5`. Buildtypen und Manual deployments
-only sind bereits bestätigt und werden nicht nochmals als unbekannt abgefragt.
+only, Previewanzeige None und vorhandene APIeinstiege sind bereits bestätigt.
+Die Application-UUIDs wurden ausdrücklich benannt: Backend syboxap8mpf8lgjzpjdsqm0z,
+UI a8xzljz4fq52vt1yt43nheg5. Diese Werte nicht nochmals als unbekannt abfragen.
 
 Keine Eingabe ändern, Checkbox umschalten oder Save/Deploy/Restart/Load Compose/
 Reload betätigen. Einige Felder speichern sofort. Nur sichtbare Werte ablesen.
@@ -12,18 +14,17 @@ Keine Secrets, Envwerte, API-Tokens, Webhookgeheimnisse/-URLs, Cookies,
 privaten Schlüssel oder vollständigen Logs/Inspectausgaben teilen. Befehle nur
 redigiert, ohne Secretargumente; sonst lediglich „Override vorhanden“ melden.
 
-## 1. Zwei Application-UUIDs und Sourcebindung
+## 1. Sourcebindung und ergänzende Scope-UUIDs
 
-In jeder genannten Application **Overview/Configuration**, anschließend typischerweise
-**Source/Git** öffnen. Die Application-UUID aus dem Application-URLsegment bzw.
-angezeigter UUID, tatsächlich gewähltes Repository und Branch ablesen; zusätzlich
+In den bestehenden, bereits durch ihre UUID benannten Applications unter
+**Source/Git** tatsächlich gewähltes Repository und Branch ablesen; zusätzlich
 Projekt/Environment/Server-UUID, soweit angezeigt. Nur IDs/Repositorynamen teilen,
-keine URL mit Token/Query. Nicht aus `sybox…`, `a8xz…`, Containername oder Label
-auf die Application-UUID schließen.
+keine URL mit Token/Query. Bereits bestätigte Application-UUIDs bleiben
+operator_observed; Repository-/Branch-/Scopezuordnung ist damit nicht bewiesen.
 
-Zuordnung: JSONmatrix `resources.backend|ui.application_uuid`, `repository`, `branch`;
-die ergänzenden Scope-UUIDs an denselben Applicationdatensatz. Ein Repositoryname
-im Auftrag bezeichnet das Zielrepository, nicht die bestätigte Coolifyauswahl.
+Zuordnung: JSONmatrix `repository`, `branch`; ergänzende Scope-UUIDs an denselben
+Applicationdatensatz. Ein Repositoryname im Auftrag bezeichnet das Zielrepository,
+nicht die bestätigte Coolifyauswahl.
 
 ## 2. Buildpfade und Overrides einschließlich Leerzuständen
 
@@ -54,13 +55,16 @@ ist kein eingegebener oder bereits bewiesener wirksamer Pfad. Werte in
 
 Je Application **Advanced/Preview deployments/Webhooks** sowie zugehörige
 GitHub-App-/Repository-Webhooks und vorhandene **Keys & Tokens/API-Rechte** nur
-ansehen. Melden: Preview aktiviert/aus; separate Git-/Webhook-/API-/Registry-/
+ansehen. Bereits belegt ist Previewanzeige None; offen bleibt das explizite
+Featureflag. Melden: separate Git-/Webhook-/API-/Registry-/
 Schedulerauslöser; berechtigte Deployakteure/Scopes; ausstehende Deployments und
 aktive Previews. Keine URLs, geheimen Werte oder Tokens liefern/neu erzeugen.
 Nicht sichtbare oder nicht geprüfte Trigger ausdrücklich offen lassen.
 
 Zuordnung `additional_triggers`: pro Mechanismus Zustand, Quelle/Datum und wer
-ihn kontrolliert. Für späteren Driver braucht es einen exklusiven, genehmigten
+ihn kontrolliert. Die Repositoryprüfung steht im [Triggernachtrag](deployment_trigger_audit.md).
+Ein angezeigter APIeinstieg beweist weder berechtigte Akteure noch Aufrufe.
+Für späteren Driver braucht es einen exklusiven, genehmigten
 Wechselpfad samt gebundenem Triggerkontrollbeleg. Manual only allein reicht nicht.
 
 ## 4. Image-/Buildprovenienz beider laufender Container

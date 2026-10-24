@@ -23,11 +23,10 @@
         "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
       },
       "application_uuid": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "Application URL/Overview; nicht aus Composeprojekt ableiten",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "syboxap8mpf8lgjzpjdsqm0z",
+        "status": "operator_observed",
+        "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+        "observed_date": "2026-10-23"
       },
       "resource_type": {
         "value": "application",
@@ -119,12 +118,13 @@
       "git_auto_deploy": {
         "value": "Manual deployments only",
         "status": "operator_observed",
-        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+        "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+        "observed_date": "2026-10-23"
       },
       "additional_triggers": {
         "value": null,
         "status": "unverified",
-        "source": "Preview/Webhook/API/Registry/Scheduler/Rechte nicht vollständig geprüft"
+        "source": "Git-/Webhook-/APIakteure, Registry/Scheduler und tatsächliche Ausführung nicht abschließend geprüft; Previewanzeige None und APIeinstieg sind bestätigt"
       },
       "reported_image_reference": {
         "value": "syboxap8mpf8lgjzpjdsqm0z:3b91d39195e0d13fe0442d4594b28e431b0f4236",
@@ -179,6 +179,37 @@
         "value": "Runtime only",
         "status": "operator_observed",
         "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "preview_deployments_display": {
+        "value": "None",
+        "status": "operator_observed",
+        "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+        "observed_date": "2026-10-23"
+      },
+      "preview_feature_enabled": {
+        "value": null,
+        "status": "unverified",
+        "source": "None ist angezeigter Previewbestand, kein expliziter Nachweis des Feature-/Triggerflags"
+      },
+      "deployment_api_entrypoint": {
+        "value": {
+          "available": true,
+          "relative_pattern": "/api/v1/deploy?uuid=<application_uuid>&force=false",
+          "http_method_verified": false
+        },
+        "status": "operator_observed",
+        "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+        "observed_date": "2026-10-23"
+      },
+      "deployment_api_authorized_actors": {
+        "value": null,
+        "status": "unverified",
+        "source": "Angezeigter Einstiegspunkt belegt weder Tokenrechte noch berechtigte Akteure"
+      },
+      "deployment_api_actual_execution": {
+        "value": null,
+        "status": "unverified",
+        "source": "Keine echten Aufrufe getestet; keine zugehörigen Coolify-Ausführungsbelege vorgelegt"
       }
     },
     "ui": {
@@ -188,11 +219,10 @@
         "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
       },
       "application_uuid": {
-        "value": null,
-        "status": "requires_operator_confirmation",
-        "source": "Application URL/Overview; nicht aus Containername ableiten",
-        "input_state": "not_checked",
-        "effective_value": null
+        "value": "a8xzljz4fq52vt1yt43nheg5",
+        "status": "operator_observed",
+        "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+        "observed_date": "2026-10-23"
       },
       "resource_type": {
         "value": "application",
@@ -281,12 +311,13 @@
       "git_auto_deploy": {
         "value": "Manual deployments only",
         "status": "operator_observed",
-        "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+        "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+        "observed_date": "2026-10-23"
       },
       "additional_triggers": {
         "value": null,
         "status": "unverified",
-        "source": "Preview/Webhook/API/Registry/Scheduler/Rechte nicht vollständig geprüft"
+        "source": "Git-/Webhook-/APIakteure, Registry/Scheduler und tatsächliche Ausführung nicht abschließend geprüft; Previewanzeige None und APIeinstieg sind bestätigt"
       },
       "reported_image_reference": {
         "value": "a8xzljz4fq52vt1yt43nheg5_streamlit:b2cf9ca9ba44ee770dab4d834a6ae8285f34776b",
@@ -341,6 +372,37 @@
         "value": "Runtime only",
         "status": "operator_observed",
         "source": "Operatorauftrag 23.10.2026; keine unabhängige Hostabfrage"
+      },
+      "preview_deployments_display": {
+        "value": "None",
+        "status": "operator_observed",
+        "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+        "observed_date": "2026-10-23"
+      },
+      "preview_feature_enabled": {
+        "value": null,
+        "status": "unverified",
+        "source": "None ist angezeigter Previewbestand, kein expliziter Nachweis des Feature-/Triggerflags"
+      },
+      "deployment_api_entrypoint": {
+        "value": {
+          "available": true,
+          "relative_pattern": "/api/v1/deploy?uuid=<application_uuid>&force=false",
+          "http_method_verified": false
+        },
+        "status": "operator_observed",
+        "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+        "observed_date": "2026-10-23"
+      },
+      "deployment_api_authorized_actors": {
+        "value": null,
+        "status": "unverified",
+        "source": "Angezeigter Einstiegspunkt belegt weder Tokenrechte noch berechtigte Akteure"
+      },
+      "deployment_api_actual_execution": {
+        "value": null,
+        "status": "unverified",
+        "source": "Keine echten Aufrufe getestet; keine zugehörigen Coolify-Ausführungsbelege vorgelegt"
       }
     }
   },
@@ -422,7 +484,7 @@
   ],
   "github_workflows": {
     "status": "verified_from_repository",
-    "value": "Keine .github/workflows-Dateien in beiden geprüften Gitbäumen; .github enthält Issuevorlagen. Externe CI/Apps/Trigger dadurch nicht ausgeschlossen."
+    "value": "Keine .github/workflows-Dateien in geprüften Default-/Draft-Gitbäumen; registrierte GitHub-Workflows und historische Runs separat in deployment_trigger_audit.v1.json. Keine pauschale Triggerfreiheit."
   },
   "coolify_version_source": {
     "tag": "v4.4.7",
@@ -477,5 +539,7 @@
     "driver": "read-only projection and replay checks only; no Gate Observation or deployment permit",
     "gate_scope_extension": "smallest explicit versioned runtime_scope_sha256 proposal, not implemented",
     "production": "NO-GO"
-  }
+  },
+  "trigger_supplement_at_utc": "2026-10-23T21:39:01.713667+00:00",
+  "trigger_audit_report": "deployment_trigger_audit.v1.json"
 }

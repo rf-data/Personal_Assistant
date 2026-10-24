@@ -64,8 +64,10 @@ bleibt zunächst geschlossen; es gibt kein automatisches Retry/Rollback/Resume.
 
 Die Labels melden für Backend und UI `coolify.type=application` als
 Betreiberbefund. Backend/Dockerfile und UI/Docker-Compose sind nun zusätzlich
-bestätigt, beide mit Manual deployments only. Maßgebliche Ressourcen-ID, genaue
-Buildpfade, zusätzliche Trigger und sichere API-/Wechselwirkung fehlen weiterhin.
+bestätigt, beide mit Manual deployments only. Die ausdrücklich benannten
+Application-UUIDs, Previewanzeige None und vorhandene APIeinstiege sind nun
+operator_observed. Genaue Buildpfade, weitere Scopezuordnung, zusätzliche
+Trigger/Rechte und sichere API-/Wechselwirkung fehlen weiterhin.
 Deshalb werden weder Coolify-Endpunkte geraten noch ein deployender Adapter
 implementiert. Aktuelle [Coolify-Compose-Dokumentation](https://coolify.io/docs/applications/builds/docker-compose)
 unterscheidet Git-Application und User-defined Service; ihre Automationen sind
@@ -125,3 +127,15 @@ Kein stilles Umdeuten vorhandener geschützter-Ressourcen-Hashes. Bestehende
 v1-Fingerprints/Journale müssen kompatibel bleiben; bis Review und Livebindung
 kein Mehrrollendeploy/Resume. Der neue Reporttyp kann nicht direkt an Gate
 übergeben werden. Quelle und negative Grenztests stehen im Driverplan/Beleg.
+
+## Aktueller Triggerbeleg: keine automatische Freigabe
+
+Der [Triggernachtrag](deployment_trigger_audit.md) trennt Konfiguration,
+Berechtigung und tatsächliche Ausführung. Manual only, None und ein vorhandener
+APIeinstieg setzen weder additional_triggers_controlled noch ein Permit auf true.
+None wird nicht in preview_deployments_enabled=false umgedeutet. Der dynamische
+GitHub-Dependency-Graph-Workflow und sein fehlgeschlagener historischer Run
+belegen keinen Coolifydeploy. Weitere Akteure/Webhooks/Registry/Scheduler und
+Liveausführung bleiben unverified. Ohne aktuellen vollständigen Kontrollbeleg
+verweigert der unveränderte Driver-/Gatevertrag geschlossen. Kein Triggerpolicy-
+Approval aus der Betreiberinventur erzeugt; kein echter Endpointtest ausgeführt.

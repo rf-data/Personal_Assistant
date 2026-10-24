@@ -4,12 +4,13 @@ Jede Zelle nennt Wert und Status. JSON mit Quellen, Eingabestaaten und Quellfing
 [coolify_resource_binding.v1.json](coolify_resource_binding.v1.json).
 `requires_operator_confirmation` verlangt eine konkrete lesende Betreiberangabe;
 `unverified` bezeichnet einen nicht belegten Zusammenhang. Repositorybefund beweist
-keine produktive Auswahl. Namen/Composeprojekte sind keine bestätigten Application-UUIDs.
+keine produktive Auswahl. Die Application-UUIDs wurden jetzt ausdrücklich vom Betreiber benannt; sie werden
+nicht aus Namen/Composeprojekten abgeleitet.
 
 | Merkmal | Backend | UI | Nachweis |
 | --- | --- | --- | --- |
 | Ressourcenname | personal-assistantworker-1 — `operator_observed` | personal-assistant-uimain-a8xzljz4fq52vt1yt43nheg5 — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
-| Application-UUID | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
+| Application-UUID | syboxap8mpf8lgjzpjdsqm0z — `operator_observed` | a8xzljz4fq52vt1yt43nheg5 — `operator_observed` | Direkte Coolify-Betreiberergänzung |
 | Coolify-Typ | application — `operator_observed` | application — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Projekt | personal-assistant — `operator_observed` | personal-assistant — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Environment | production — `operator_observed` | production — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
@@ -24,6 +25,9 @@ keine produktive Auswahl. Namen/Composeprojekte sind keine bestätigten Applicat
 | Custom Start Command | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Beobachteter Start | ["sleep", "infinity"] — `operator_observed` | streamlit run app_ui.py --server.address=0.0.0.0 --server.port=8501 --server.headless=true — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Git-Autodeploy | Manual deployments only — `operator_observed` | Manual deployments only — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
+| Preview Deployments, Anzeige | None — `operator_observed` | None — `operator_observed` | Kein Nachweis eines deaktivierten Featureflags |
+| Deployment-APIeinstieg vorhanden | ja — `operator_observed` | ja — `operator_observed` | Nur relatives Muster, keine vollständigen URLs; keine Aufrufe |
+| APIberechtigte Akteure / tatsächliche Nutzung | offen — `unverified` | offen — `unverified` | Endpunktexistenz beweist weder Berechtigung noch Ausführung |
 | Weitere Trigger | offen — `unverified` | offen — `unverified` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Gemeldete Imagereferenz / Tag | syboxap8mpf8lgjzpjdsqm0z:3b91d39195e0d13fe0442d4594b28e431b0f4236 — `operator_observed` | a8xzljz4fq52vt1yt43nheg5_streamlit:b2cf9ca9ba44ee770dab4d834a6ae8285f34776b — `operator_observed` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
 | Lokale Image-ID | offen — `requires_operator_confirmation` | offen — `requires_operator_confirmation` | Betreiberauftrag; offene Auswahlfelder: [fünf Prüfpakete](operator_binding_check.md) |
@@ -47,3 +51,12 @@ Image-ID (`sha256:…`, lokale Konfiguration), Tag und Registry-RepoDigest (`nam
 
 Dieselbe Application ist im Quellmodell grundsätzlich umstellbar, aber nicht live abgenommen.
 [Entscheidung und kleinste Gate-Erweiterung](coolify_driver_plan.md). Kein Save/Load/Deploy ausgeführt.
+
+## Aktueller Triggernachtrag
+
+Die [Triggerprüfung](deployment_trigger_audit.md) trennt Gitquellen, registrierte
+Actions-Metadaten, Berechtigungen und Ausführung. Backend: ein aktiver dynamischer
+Dependency-Graph-Workflow und ein historischer fehlgeschlagener Run; UI: keine
+registrierten Workflows/Runs. Daraus folgt kein belegter Coolifydeploy. Preview
+None bedeutet angezeigter Bestand, nicht automatisch deaktivierte Previewfunktion.
+Der zusätzliche Trigger-Scope bleibt unverified und fail-closed.

@@ -5,6 +5,20 @@ Produktionsstart, Aktivierung und Pilot.** Bestehender Draft #157 fortgeführt.
 Keine Host-/Coolifyaktion, kein Deployment, Merge/Ready/Auto-Merge, produktiver
 Job, Download, ZIPimport oder Cleanup in diesem Auftrag.
 
+## Triggernachtrag, Prüfstand 24.10.2026
+
+Betreiberbefund vom 23.10.: beide ausdrücklich benannten Application-UUIDs,
+Manual deployments only, Previewanzeige None und vorhandene Deployment-
+APIeinstiege sind operator_observed. Nur relatives Endpointmuster gespeichert;
+keine Coolify-/Webhookaufrufe. None belegt kein deaktiviertes Previewfeature.
+GitHub: keine Workflowdateien in geprüften Default-/Draftbäumen; Backend hat
+aber einen registrierten aktiven dynamischen Dependency-Graph-Workflow und
+einen historischen fehlgeschlagenen Run. UI: keine registrierten Workflows/Runs.
+Berechtigungen und tatsächliche Coolifyausführung bleiben davon getrennt und
+weiter offen; additional_triggers_controlled wird nicht freigegeben.
+[Prüfung und Grenzen](deployment_trigger_audit.md),
+[maschinenlesbare Belege](deployment_trigger_audit.v1.json).
+
 ## Aktuelle Ressourcenbindung und Drivergrenze
 
 Fortsetzung auf #157: [vollständige Build-/Ressourcenmatrix](resource_matrix.md),
@@ -14,7 +28,7 @@ Der neue Readclient verwendet ausschließlich zwei belegte GET-Pfade mit explizi
 Transport; Offlinebeobachtungen ergeben nie eine Gate-Observation oder Freigabe.
 
 Die bestehende Backend-Application ist im 4.4.7-Quellmodell grundsätzlich von
-Dockerfile auf dockercompose umstellbar. Tatsächliche UUID/Pfade/Rendering und
+Dockerfile auf dockercompose umstellbar. Application-UUIDs sind nun operator_observed. Buildpfade/Rendering und
 sicherer Rückweg fehlen; der Wechsel löscht gespeicherte buildtypspezifische
 Felder. Noch keine gesicherte Produktionsadoption. Für den Dreirollenwechsel
 braucht der Gateplan eine explizite versionierte Scopebindung; nur Backend-
@@ -62,7 +76,7 @@ abgegrenzt, keine pauschale Heilung durch einen grünen Wiederholungslauf.
 
 ## Was noch ausschließlich der Betreiber ausführen muss
 
-1. Exakte Coolify-UUIDs/Buildpfade/Branch/Overrides, zusätzliche Trigger, alle
+1. Exakte Buildpfade/Branch/Overrides, verbleibende Scope-UUIDs, zusätzliche Trigger, alle
    Writer/Queues, privaten TLS/VPN/OIDCweg und Ressourcenpeaks lesend belegen.
 2. Nach separater Review-/Mergefreigabe #156 → #149 → #148 → #157 integrieren,
    UI #20 separat; kombinierte tatsächliche Versionen und gebaute Backend-/Gateway-
