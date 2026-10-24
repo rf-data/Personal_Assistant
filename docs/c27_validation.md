@@ -3,11 +3,15 @@
 24.10.2026. Isolierte C27-Arbeitsstände auf Backend `e502aa9` und UI `e4be7a2`.
 Diese Lieferung ist ein lokaler benutzbarer MVP; keine Produktionsfreigabe.
 
-**Aktualisierung nach der Betreibermeldung zum Speicher:** Die unten genannten
-großen Testläufe sind tatsächlich ausgeführte frühere Läufe. Die damaligen
-RAM-Umgebungen sind inzwischen entfallen. In der Fortsetzung wurden nur 21 kleine
-Vertragsfälle und die lokale CLI-Demo erneut ausgeführt; Details und aktuelle
-Blockaden stehen am Ende dieses Berichts. Keine Umgebung wurde neu installiert.
+**Aktueller Stand nach der Diskvergrößerung:** Git-/uv-/pytest-Smokes und alle
+90 C27-/Rootpolicyfälle sowie weitere 308 Backendregressionsfälle erneut
+bestanden (1 optionaler Backend-Skip); vollständige UI-Suite erneut
+157 bestanden/25 opt-in Skips. Vorhandene Python-3.12-Umgebungen wurden ohne
+Paketinstallation wiederverwendet. Die echte Loviscach-Mock-Demo funktioniert
+wieder in CLI und Streamlit-AppTest einschließlich beider Downloads. Der neue
+Nachweis steht unter „Ergänzung: erneute Prüfung nach Diskvergrößerung“ am Ende.
+Die früheren RAM-Läufe und die zwischenzeitliche Blockade bleiben als historische
+Nachweise getrennt erhalten.
 
 ## A. Implementierung
 
@@ -180,7 +184,7 @@ Aktuelle eigene read-only Beobachtung in der Standard-Codex-Sandbox:
 unter anderem `rw,nosuid,nodev,idmapped,discard,space_cache=v2`.
 Das sind Mountinformationen, kein Quotanachweis oder Beweis fehlerfreier Writes.
 
-### Aktueller Zustand und tatsächlich wiederholte Prüfungen
+### Damaliger Zustand und tatsächlich wiederholte Prüfungen
 
 - Beide Remote-Drafts und ihre damaligen Heads waren vollständig vorhanden:
   Backend `0f4d8af400b9f6e755a5f58c38d8ec67b8eb978a`,
@@ -210,7 +214,7 @@ Das sind Mountinformationen, kein Quotanachweis oder Beweis fehlerfreier Writes.
 - Bei diesen kleinen neuen Schreib- und Testoperationen trat **kein neues ENOSPC**
   auf. Das ist keine Freigabe für große Git-/uv-/pip-Operationen.
 
-**Aktuell nicht wiederholt / blockiert:** vollständige UI-/C18-/C26-/Material-
+**In dieser Zwischenphase nicht wiederholt / blockiert:** vollständige UI-/C18-/C26-/Material-
 Regressionen, UI-Start und UI-Demo sowie erneuter Test mit exakt gelocktem Venv,
 weil deren nachgewiesene RAM-Umgebung entfallen ist und kein Neuaufbau erfolgt.
 Die früheren bestandenen Läufe bleiben historische Nachweise für den identischen
@@ -245,3 +249,114 @@ festhalten; Partialdateien/Indexzustand nennen und die betroffene Fortsetzung al
 blockiert ausweisen. Keine stillen großen Installationswiederholungen und keine
 eigenständige Systemreparatur. Produktivbetrieb und alle C16-/C26-Drafts bleiben
 außerhalb der C27-Änderungen.
+
+## Ergänzung: erneute Prüfung nach Diskvergrößerung
+
+24.10.2026, nach der Betreibermeldung zur vergrößerten Crostini-Disk. Eigene
+Messung vor dem Lauf: `/dev/vdc`, Btrfs, 34G gesamt / 28G belegt / 5,4G verfügbar,
+84 %; später 5,2G verfügbar / 85 %. Dies sind eigene zeitpunktbezogene Messwerte,
+keine Bestätigung einer bestimmten Btrfs-/Quotaursache. Alle neuen Schreib- und
+Testoperationen liefen in der normalen Codex-Sandbox auf dem lokalen Btrfs unter
+`/tmp`, nicht im früheren RAM-Ausweichsetup. Kein neues ENOSPC.
+
+### Kleine Git-/uv-/pytest-Smokes
+
+- Neues, kleines Repository `/tmp/c27-recovery-smoke-20261024`: `git init`,
+  lokale Git-Konfiguration, zwei erfolgreiche Commits, `git mv`, atomarer Replace,
+  `git fsck --no-reflogs` und abschließend sauberer Index. Keine vorhandenen
+  Git-Daten oder Worktrees verändert oder gelöscht.
+- uv 0.9.15 erkannte das vorhandene CPython 3.12.12 und erzeugte mit
+  `uv venv --offline --python <vorhandener Interpreter>` ein kleines neues Venv.
+  `uv run --offline --no-project --python <vorhandenes Test-Venv> python -B -m
+  pytest ...` bestand den synthetischen Schreib-/Replace-Smoke: **1 bestanden**.
+  Keine Dependencyinstallation oder große Synchronisation wurde ausgeführt.
+- Der erste uv-Interpreterlistenaufruf scheiterte beim Öffnen von
+  `/home/robfra/.cache/uv/sdists-v9/.git` mit `Read-only file system (os error 30)`.
+  Das ist die Sandbox-Schreibgrenze des Standardcaches. Mit dem neuen expliziten
+  `UV_CACHE_DIR=/tmp/c27-recovery-uv-cache` liefen die Prüfungen erfolgreich;
+  dies war kein erneutes ENOSPC.
+
+### Tatsächlich erneut ausgeführte C27-/UI-Prüfungen
+
+| Lauf | Neues Ergebnis |
+|---|---|
+| C27-Service-/Export-/Storagefälle und Vertragsfälle | 56 bestanden |
+| Bestehende `test_runtime_paths.py` | 34 bestanden; gemeinsam mit C27 **90 bestanden in 2,32 s** |
+| Zusätzliche Lecture-/Material-/C18-/C26-Regression, 15 Testdateien | **308 bestanden, 1 opt-in Skip**, 323,47 s; zusammen mit dem disjunkten C27-/Rootlauf **398 bestanden, 1 Skip** |
+| Vollständige UI-Suite `unittest discover -s tests -q` | **182 ausgeführt: 157 bestanden, 25 opt-in Skips**, 63,236 s; alle 6 C27-AppTests enthalten |
+| Echte Loviscach-CLI mit Mock und unveränderter Quelle | Bestanden, Markdown/LaTeX/JSON erneut geschrieben |
+| Echte Loviscach-Lektion im kanonischen Streamlit-AppTest | Bestanden, beide Downloadbuttons, keine Jobaktion und kein Netzwerk |
+| Git-Diffprüfung und Syntaxprüfung des temporären Starthelfers | Bestanden |
+
+Backendtests verwenden unverändert das vorhandene
+`Personal_Assistant-c26b6-planning-results/test-env/bin/python`: Python 3.12.12,
+pytest 9.1.1, Pydantic 2.14.1/core 2.50.1, HTTPX 0.28.1. Das erfüllt den
+Backend-Dependencyvertrag, ist aber **kein neuer Nachweis mit exakten Backend-
+Lockpins**. Die frühere exakte Prüfung mit 2.13.4/core 2.46.4 bleibt historisch.
+Keine Pakete in dieser fremden Umgebung ergänzt oder geändert.
+
+UI/CLI/Demo verwenden unverändert das vorhandene
+`personal-assistant-ui-c26b/.venv/bin/python`: Python 3.12.12, Streamlit 1.65.0,
+Pydantic 2.14.0/core 2.50.0, pydantic-settings 2.15.0. Alle 52 installierten
+Lockpakete wurden mit `uv.lock` verglichen: keine Versionsabweichung. Die virtuelle
+Projektwurzel ist kein installiertes Paket; das Python-Paket `tzdata` ist laut
+Lock nur für Windows/Emscripten erforderlich und fehlt unter Linux erwartbar.
+Dies ist keine Aussage über den separat vom Betreiber reparierten dpkg-Zustand.
+Es wurde keine vorhandene C26-Umgebung umgebaut.
+
+Der zusätzliche Lauf umfasst `test_cs50_material_contracts`,
+`test_cs50_material_mapping`, `test_cs50_material_html`,
+`test_official_transcript_import`, `test_transcript_unknown_time`,
+`test_cs50_workflows`, `test_c26_storage_preflight`, `test_c26_copy_inventory`,
+`test_cs50_selection`, `test_c26_integrated_pipeline`, `test_cs50_multiformat`,
+`test_cs50_lecture_adapter`, `test_cs50_course`, `test_cs50_discovery` und
+`test_cs50_material_e2e`. Der Skip ist weiterhin der ausdrücklich opt-in
+Originalmaterialtest in `test_cs50_course`; keine Originalfreigabe ergänzt.
+
+Testfixtures liegen klein und isoliert unter
+`/tmp/c27-recovery-smoke-20261024`; bei direkten Aufrufen sind Bytecode und pytest-Cache deaktiviert,
+optionale pytest-Plugins nicht automatisch geladen. Keine produktiven Dienste
+gestartet oder historischen CS50-Pilotdaten geöffnet. Die UI-Skips benötigen
+weiterhin gesonderte C16-/Review-Backendkonfiguration und sind nicht bestanden.
+
+### Erneute reale Demo und begrenzte Inventur
+
+Die oben dokumentierte echte Loviscach-Datei wurde ausdrücklich erneut registriert
+unter `/tmp/c27-recovery-demo-20261024/summary.json`. Markdown 47.512 Bytes,
+LaTeX 48.809 Bytes und JSON 153.409 Bytes liegen in dessen `exports/`.
+Summary-ID und Eingangs-SHA256 stimmen mit der früheren Demo überein; Vorher- und
+Nachherhash des Transkripts identisch. Status bleibt `needs_review`.
+
+Auf diesem Rechner startet
+`bash /tmp/c27-recovery-start-ui-20261024.sh` die bestehende Admin-App auf
+Loopback mit Operator-Demoanmeldung und `JOB_BACKEND=disabled`. Der Helfer prüft
+Interpreter und Konfiguration; er installiert nichts. Er verwendet die oben
+genannte vorhandene UI-Umgebung und beide C27-Checkouts. Helfer, Konfiguration und
+Exporte sind temporär und kein Bestandteil der Repositorylieferung. Eine neue
+HTTP-Serversitzung wurde hierfür nicht gestartet; der funktionale Nachweis
+erfolgte über den echten Streamlit-AppTest. Keine Browserinstallation nötig.
+
+Die erneute Inventur am echten Google-Drive-Mount lief read-only mit
+`--max-entries 4000`: **3.920 tatsächlich vorhandene Dateien, 4.000 besuchte
+Einträge, `truncated=true`, 4 übersprungene Einträge**. Der private JSON-Bericht
+liegt unter `/tmp/c27-recovery-smoke-20261024/inventory.json` (1.696.551 Bytes).
+Dies ist keine vollständige Inventur; nicht besuchte Metadatenreferenzen bleiben
+unverifiziert. Keine Medien/PDFs geöffnet, kopiert oder verschoben.
+
+Der erfasste Teil enthält bei Loviscach `mathe_1` 607 Transkript-JSON,
+538 Untertitel-VTT, 28 PDF-Dokumente und 578 Knowledge-JSON; außerdem u.a.
+`info_1`, `info_2_c#` und LAKBB-Kurse mit Transkripten und teils geparsten Skripten.
+Verzeichniskandidaten ohne bestätigte Metadatenzuordnung werden weiterhin nicht
+als gesicherte Course-/Lectureidentitäten ausgegeben. Die ältere detaillierte
+Verfügbarkeitstabelle und der Storage-/Migrationsvorschlag stehen in der Anleitung.
+
+### Verbleibende Nachweisgrenzen
+
+Die zuvor fehlende UI-/Mock-Demoumgebung blockiert diese Prüfungen nicht mehr.
+Ein neuer exakter Backend-Locklauf, optionale C16-/Review-E2E-Tests,
+Live-Modellgenerierung und fachliche/formelbezogene Abnahme wurden nicht
+ausgeführt. Der optionale PDF-/LuaLaTeX-Smoke wurde nicht wiederholt; vollständige
+`.tex`-Exporte sind geprüft. Keine APT-/dpkg-Reparatur, Bereinigung, großen
+Installationen, SSH-Verbindung, Produktivänderung, Migration, Merge oder Deployment.
+Die eigenen Branches/Arbeitsstände bleiben wegen der ungemergten Draft-PRs
+erhalten; Dokumentation ist dort reviewbar und noch nicht in master/main integriert.
