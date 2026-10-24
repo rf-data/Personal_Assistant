@@ -3,12 +3,16 @@
 Stand: 24.10.2026. Backendbasis `e502aa9` (master); UI-Basis `e4be7a2` (main).
 Draft-PRs: [Backend #158](https://github.com/rf-data/Personal_Assistant/pull/158)
 und [UI #21](https://github.com/rf-data/personal-assistant-ui/pull/21).
-**Aktueller Umgebungsstand:** Das frühere RAM-Venv und die Streamlit-Demo sind
-nicht mehr vorhanden. Der temporäre Helfer `/tmp/c27-start-demo.sh` ist deshalb
-kein aktuell nutzbarer Schnellstart. Die folgenden Setupbefehle beschreiben eine
-normal eingerichtete Umgebung; derzeit keine großen `uv sync`-/pip-Läufe starten.
-Die begrenzte Fortsetzung nutzt ausschließlich vorhandene Pakete und ist im
-[Prüfbericht](c27_validation.md#ergänzung-speicherstatus-und-begrenzte-fortsetzung) dokumentiert.
+**Aktueller Umgebungsstand nach Diskvergrößerung:** Git-/uv-/pytest-Smokes,
+90 C27-/Rootpolicyfälle und die vollständige UI-Suite erneut bestanden.
+Vorhandene Python-3.12-Umgebungen wurden ohne Paketinstallation wiederverwendet.
+Die Loviscach-Demo wurde neu registriert und über CLI und Streamlit-AppTest mit
+beiden Downloads geprüft. Auf diesem Rechner startet
+`bash /tmp/c27-recovery-start-ui-20261024.sh` die bestehende Admin-App auf
+Loopback mit dieser Demo. Der Helfer und die Konfiguration sind temporär;
+die unten folgende Anleitung beschreibt die dauerhafte Einrichtung.
+Der alte RAM-Helfer `/tmp/c27-start-demo.sh` bleibt überholt. Details im
+[Prüfbericht](c27_validation.md#ergänzung-erneute-prüfung-nach-diskvergrößerung).
 C27 ist ein synchroner, ausdrücklich aktivierter Entwicklungsmodus. Er benötigt
 keinen C16-Worker, Controller, Queue, Content-Store oder Datenbankbootstrap.
 Produktionskonfiguration, historische Pilotdaten und die fünf geschützten Drafts
