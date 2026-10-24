@@ -1,5 +1,12 @@
 # Gate-Kern und noch fehlender Coolifyadapter
 
+C26-D, 24.10.2026: [Versionierte Gateintegration](../c26d_gate_v2.md) ergänzt
+hier beschriebenes v1-Verhalten um einen expliziten v2-Offlinevertrag. Frühere
+Aussagen zur fehlenden Gatebindung sind historische Ausgangsnachweise. Der
+v1-Default und die deaktivierte Controllervorlage bleiben unverändert; sie sind
+**nicht für eine produktive v2-Runtime freigegeben**. Kein automatisches Upgrade,
+kein Livecollector/Driver und keine Produktivfreigabe; Status **HOLD**.
+
 Aktualisierung 24.10.2026: [Bericht A – Offline-Runtimeobserver und versionierter Mehrrollenscope](runtime_observer_report.md), [Bericht B – Draftreview und Integrationssimulation](draft_consolidation_report.md). Der neue v2-Operationsumschlag ist kein v1-Gatepermit; Livecollector, Gateerzwingung und mutierender Driver bleiben gesperrt. Die zuvor offenen Repository-/Branch-/Buildpfade und lokalen Image-IDs sind inzwischen operator_observed in den Inventaren; Registry-/Buildprovenienz bleibt offen.
 
 

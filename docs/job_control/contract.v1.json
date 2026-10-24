@@ -555,6 +555,15 @@
           "title": "Catalog",
           "type": "object"
         },
+        "deployment_gate_protocol": {
+          "default": "c26-gate-v1",
+          "enum": [
+            "c26-gate-v1",
+            "c26-gate-v2"
+          ],
+          "title": "Deployment Gate Protocol",
+          "type": "string"
+        },
         "deployment_gate_required": {
           "default": false,
           "title": "Deployment Gate Required",

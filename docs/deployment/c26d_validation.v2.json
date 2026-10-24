@@ -1,0 +1,103 @@
+{
+  "checks": {
+    "AST_JSON_links": "passed",
+    "cached_pre_commit": "passed: trailing-whitespace, EOF, JSON, AST, debug-statements, large-files, Ruff format; YAML/TOML not applicable",
+    "git_diff_check": "passed",
+    "ruff_check": "passed",
+    "ruff_format": "passed"
+  },
+  "cleanup_performed": false,
+  "date": "2026-10-24",
+  "default_branch_integration": false,
+  "deployment_permitted": false,
+  "enospc_observed": false,
+  "environment": {
+    "PyMuPDF": "1.27.2.2",
+    "PyYAML": "6.0.3",
+    "httpx": "0.28.1",
+    "new_installations": false,
+    "pydantic": "2.14.1",
+    "pydantic_core": "2.50.1",
+    "pytest": "9.1.1",
+    "python": "3.12.12",
+    "ruff": "0.16.0",
+    "runtime_lock_differences": {
+      "PyMuPDF": "1.28.2",
+      "pydantic": "2.13.4",
+      "pydantic_core": "2.46.4"
+    },
+    "runtime_lock_exact": false,
+    "sqlite": "3.50.4"
+  },
+  "final_disjoint_tests_passed": 426,
+  "integration_base_sha": "1984f30b05eae28c17e1b200cb23d44ec08bf957",
+  "master_sha": "e68275205fefb7a5f6db42bc45060e505bfcefb5",
+  "master_tree_sha": "d63fcfaf5dab63817dc03fefafb5817f53388195",
+  "not_executed": [
+    "complete_project_or_ui_regression",
+    "exact_runtime_lock_installation",
+    "new_container_image_build",
+    "live_collector",
+    "live_driver",
+    "production_acceptance",
+    "production_queue_or_database_or_journal_operation",
+    "server_or_coolify_connection",
+    "deployment"
+  ],
+  "production_release": "HOLD",
+  "protected_unchanged": {
+    "158": "a0d3ebf7f64d44dd843f1848e70dc70a3a3af835",
+    "160": "ecac8cfa844a7e4da9e0066a2c49c0c49fb3541d",
+    "ui21": "218003222d418acc9e93585cd3367b694cd247e2"
+  },
+  "retain_branch_and_worktree": "Draft pending review; user forbids merge/deletion",
+  "schema_version": 2,
+  "source_prs": {
+    "148": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+    "157": "80c31e52f76c1f3f62102b6884752b722f796e7c"
+  },
+  "source_sha256": {
+    "docs/deployment/c26_runtime/gate_approval.v2.schema.json": "784622693d9804767375d036ce16f59972ffb4f4b2c1bf8a24d19d4567a90fca",
+    "docs/deployment/c26_runtime/gate_journal_event.v2.schema.json": "201bfc03db744e714def0901b6113003e626ac5bdf5d102f78b6a9a9fec89265",
+    "docs/deployment/c26_runtime/gate_observation.v2.schema.json": "9596638ce3a9779fa7bac9c765ca1e04cb746c028b37952beae421990fb38226",
+    "docs/deployment/c26_runtime/gate_plan.v2.schema.json": "e85e1b879d621bab7d1d0e5bc9b61e93269a6fa04e27ff3187c92ec8add4ec75",
+    "docs/deployment/c26d_gate_v2.md": "bc1704d01fa0b2cf24ec8e5cfe80cb58c81560e9e67d539cbd55f9b136465db9",
+    "docs/job_control/contract.v1.json": "00577d0a716facca14827276ddec03c82cbac67114f77662cb05ab0d2e87823b",
+    "scripts/deployment_gate.py": "1fc554feb1edc10f622767384b03c2d5f9bdd49517812002a22e870d72dbbff5",
+    "src/job_control/controller.py": "c51ef8b3a669949eb44e6964dcc432f8e85c99ab622f850346b05130fb2f617a",
+    "src/job_control/coolify_observer.py": "5c884951fd183d666c9958c62b340dac90e155cac9508b0d4d98ae58e6c5059a",
+    "src/job_control/coolify_readiness.py": "f675227c28ce491528d384df0f830cb75393a620f3532297b67f4dabe91e5c8e",
+    "src/job_control/deployment_gate.py": "62f76e6c5ce0577f4359724b5362329e842bbd2834d95a623ccf26cc5057c553",
+    "src/job_control/deployment_scope.py": "be1ad30a42f7864760087be1018b004c1201c5b7d589fb210c38b4ba258d788c",
+    "src/job_control/executor.py": "8b4b74843b8d65ea0889251808f8b552e9098bb40ffa69d979526a205e85171f",
+    "src/job_control/models.py": "0dba0d0f1d7150786ef5b71576c1cb76c8c40b3ca63a1c3874f1660649e37954",
+    "src/job_control/operations.py": "9ba8167c85bd975331b5b32a3847a79d3b04d2149aec1b619b022fda640b6979",
+    "src/job_control/store.py": "e12d4c71353a216a8694e0223bd64b9d0eee6e953ffb0829ac8d133cc16543db",
+    "tests/test_deployment_gate_v2.py": "80072586b82346c369669e8102f25e9b873cc62c51efb77d96f3733754831ca2"
+  },
+  "status": "offline_validated",
+  "task": "C26-D",
+  "test_environment": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "python": "../Personal_Assistant-c26b6-planning-results/test-env/bin/python"
+  },
+  "test_runs": [
+    {
+      "command": "-B -m pytest -q -p no:cacheprovider tests/test_deployment_gate.py tests/test_coolify_observer.py tests/test_coolify_readiness.py tests/test_c26_runtime_preflight.py tests/test_c26_runtime_bootstrap.py tests/test_job_control.py tests/test_job_executor.py tests/test_job_store_contention.py tests/test_deployment_operations.py tests/test_https_preflight.py --basetemp=/tmp/c26d-regression-02",
+      "failed": 0,
+      "kind": "relevant_regression",
+      "passed": 365,
+      "seconds": 99.21,
+      "skipped": 0
+    },
+    {
+      "command": "-B -m pytest -q -p no:cacheprovider tests/test_deployment_gate_v2.py --basetemp=/tmp/c26d-v2-final-02",
+      "failed": 0,
+      "kind": "v2_integration",
+      "passed": 61,
+      "seconds": 19.54,
+      "skipped": 0
+    }
+  ]
+}

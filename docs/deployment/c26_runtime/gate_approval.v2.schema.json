@@ -1,0 +1,77 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "approval_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Approval Id",
+      "type": "string"
+    },
+    "approved_by": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Approved By",
+      "type": "string"
+    },
+    "action": {
+      "enum": [
+        "deploy",
+        "rollback",
+        "recover",
+        "resume"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "plan_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Plan Sha256",
+      "type": "string"
+    },
+    "approved_at": {
+      "title": "Approved At",
+      "type": "number"
+    },
+    "expires_at": {
+      "title": "Expires At",
+      "type": "number"
+    },
+    "confirmed": {
+      "title": "Confirmed",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": 2,
+      "default": 2,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "protocol": {
+      "const": "c26-gate-v2",
+      "default": "c26-gate-v2",
+      "title": "Protocol",
+      "type": "string"
+    },
+    "mode": {
+      "const": "offline_fixture",
+      "default": "offline_fixture",
+      "title": "Mode",
+      "type": "string"
+    },
+    "runtime_scope_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Runtime Scope Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "approval_id",
+    "approved_by",
+    "action",
+    "plan_sha256",
+    "approved_at",
+    "expires_at",
+    "confirmed",
+    "runtime_scope_sha256"
+  ],
+  "title": "ApprovalV2",
+  "type": "object"
+}

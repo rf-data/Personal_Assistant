@@ -43,9 +43,15 @@ def main(argv=None):
         if args.command == "initialize":
             gate.initialize()
         elif args.command == "check-plan":
+            if gate.version == 2:
+                from src.job_control.deployment_scope import ApprovalV2, PlanV2
+
+                plan_type, approval_type = PlanV2, ApprovalV2
+            else:
+                plan_type, approval_type = Plan, Approval
             gate._approval(
-                document(args.plan, Plan),
-                document(args.approval, Approval),
+                document(args.plan, plan_type),
+                document(args.approval, approval_type),
                 args.action,
             )
             print(

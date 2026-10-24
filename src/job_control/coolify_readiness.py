@@ -282,7 +282,9 @@ class ConsistencyReport(Model):
     production_release: Literal["blocked"] = "blocked"
 
 
-def check_snapshot(binding: RuntimeBinding, reading: RuntimeRead, *, now: float):
+def check_snapshot(
+    binding: RuntimeBinding, reading: RuntimeRead, *, now: float, require_health=True
+):
     """Pure replay consistency; claimed health must still come from a live collector."""
     if not isinstance(binding, RuntimeBinding) or not isinstance(reading, RuntimeRead):
         raise Refused("typed_evidence_required")
@@ -343,7 +345,7 @@ def check_snapshot(binding: RuntimeBinding, reading: RuntimeRead, *, now: float)
         for name in RoleBinding.model_fields:
             if getattr(actual, name) != getattr(expected, name):
                 raise Refused("role_image_revision_or_mount_mismatch")
-        if not actual.healthy or not actual.ready:
+        if require_health and (not actual.healthy or not actual.ready):
             raise Refused("role_health_unconfirmed")
     api, gateway, worker = roles["api"], roles["api-gateway"], roles["capacity-worker"]
     if (

@@ -24,8 +24,15 @@ class Unavailable(RuntimeError):
 
 
 class Store:
-    def __init__(self, root, *, deployment_gate_required=False):
+    def __init__(
+        self,
+        root,
+        *,
+        deployment_gate_required=False,
+        deployment_gate_protocol="c26-gate-v1",
+    ):
         self.deployment_gate_required = deployment_gate_required
+        self.deployment_gate_protocol = deployment_gate_protocol
         self.root = safe_path(root)
         self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
         if self.root.stat().st_mode & 0o077:

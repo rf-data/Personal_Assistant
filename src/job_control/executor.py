@@ -23,7 +23,9 @@ class Executor:
 
             require_existing_queue(settings)
         self.store = Store(
-            settings.root, deployment_gate_required=settings.deployment_gate_required
+            settings.root,
+            deployment_gate_required=settings.deployment_gate_required,
+            deployment_gate_protocol=settings.deployment_gate_protocol,
         )
         if safe_path(settings.root, "quarantine").exists():
             raise Unavailable("Unconfirmed cleanup requires operator review")

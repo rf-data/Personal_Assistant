@@ -38,7 +38,9 @@ class Controller:
 
             require_existing_queue(settings)
         self.store = Store(
-            settings.root, deployment_gate_required=settings.deployment_gate_required
+            settings.root,
+            deployment_gate_required=settings.deployment_gate_required,
+            deployment_gate_protocol=settings.deployment_gate_protocol,
         )
         self.indexes = prepare_indexes(settings)
 

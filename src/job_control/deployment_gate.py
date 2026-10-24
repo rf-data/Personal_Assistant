@@ -26,6 +26,7 @@ from src.job_control.operations import database, fence, private
 from src.job_control.store import Unavailable
 
 JOURNAL = "deployment-gate.v1.jsonl"
+JOURNAL_V2 = "deployment-gate.v2.jsonl"
 LOCK = ".deployment-admission.lock"
 OWNER = ".deployment-owner.lock"
 WORKER = ".deployment-worker.lock"
@@ -111,7 +112,36 @@ class Driver(Protocol):
 
 
 def settings_digest(settings):
-    return hashlib.sha256(canonical(settings.model_dump(mode="json"))).hexdigest()
+    data = settings.model_dump(mode="json")
+    # Preserve byte-for-byte v1 hash semantics for pre-C26-D configurations.
+    if data.get("deployment_gate_protocol") == "c26-gate-v1":
+        data.pop("deployment_gate_protocol")
+    return hashlib.sha256(canonical(data)).hexdigest()
+
+
+def selected_version(settings):
+    protocol = getattr(settings, "deployment_gate_protocol", "c26-gate-v1")
+    if protocol not in {"c26-gate-v1", "c26-gate-v2"}:
+        raise Blocked("unknown_gate_protocol")
+    if protocol == "c26-gate-v2" and not settings.deployment_gate_required:
+        raise Blocked("v2_mandatory_gate_required")
+    return 2 if protocol == "c26-gate-v2" else 1
+
+
+def journal_present(root):
+    return any(safe_path(root, name).exists() for name in (JOURNAL, JOURNAL_V2))
+
+
+def journal_name(root, version=None):
+    found = [
+        v
+        for v, name in ((1, JOURNAL), (2, JOURNAL_V2))
+        if safe_path(root, name).exists()
+    ]
+    if len(found) > 1 or found and version is not None and found != [version]:
+        raise Blocked("gate_journal_protocol_mismatch")
+    version = version or (found[0] if found else 1)
+    return JOURNAL_V2 if version == 2 else JOURNAL
 
 
 def require_existing_queue(settings):
@@ -121,6 +151,8 @@ def require_existing_queue(settings):
             root = private(settings.root, directory=True)
             with database(root):
                 pass
+            if selected_version(settings) == 2:
+                _read(root, version=2)
         except (OSError, ValueError, sqlite3.Error):
             raise Blocked("existing_private_c16_queue_required") from None
 
@@ -171,8 +203,19 @@ def _lock(root, name, *, create=False, shared=False, timeout=0):
         os.close(fd)
 
 
-def _read(root):
-    fd = _fd(root, JOURNAL)
+def _unique_json(pairs):
+    data = {}
+    for key, value in pairs:
+        if key in data:
+            raise ValueError("Duplicate journal field")
+        data[key] = value
+    return data
+
+
+def _read(root, *, version=None):
+    name = journal_name(root, version)
+    version = 2 if name == JOURNAL_V2 else 1
+    fd = _fd(root, name)
     try:
         data = os.read(fd, MAX_BYTES + 1)
     finally:
@@ -183,7 +226,11 @@ def _read(root):
     previous = "0" * 64
     for line in data.splitlines():
         try:
-            row = json.loads(line)
+            row = (
+                json.loads(line, object_pairs_hook=_unique_json)
+                if version == 2
+                else json.loads(line)
+            )
         except (ValueError, TypeError, RecursionError):
             raise Blocked("gate_journal_invalid") from None
         if not isinstance(row, dict) or "sha256" not in row:
@@ -191,16 +238,23 @@ def _read(root):
         checksum = row.pop("sha256")
         if (
             set(row)
-            != {
-                "sequence",
-                "previous",
-                "at",
-                "phase",
-                "operation",
-                "plan",
-                "reason",
-                "approval",
-            }
+            != (
+                {
+                    "sequence",
+                    "previous",
+                    "at",
+                    "phase",
+                    "operation",
+                    "plan",
+                    "reason",
+                    "approval",
+                }
+                | (
+                    {"schema_version", "protocol", "mode", "runtime_scope_sha256"}
+                    if version == 2
+                    else set()
+                )
+            )
             or type(row["sequence"]) is not int
             or row["sequence"] != len(rows) + 1
             or row["previous"] != previous
@@ -210,17 +264,23 @@ def _read(root):
             or len(rows) >= MAX_EVENTS
         ):
             raise Blocked("gate_journal_invalid")
-        if row["plan"] is not None:
-            Plan.model_validate(row["plan"])
-        if row["approval"] is not None:
-            Approval.model_validate(row["approval"])
+        if version == 2:
+            from src.job_control.deployment_scope import JournalEventV2
+
+            JournalEventV2.model_validate(row | {"sha256": checksum})
+        else:
+            if row["plan"] is not None:
+                Plan.model_validate(row["plan"])
+            if row["approval"] is not None:
+                Approval.model_validate(row["approval"])
         row["sha256"] = checksum
         previous = checksum
         rows.append(row)
     return rows
 
 
-def _append(root, rows, phase, operation, plan, reason, approval=None):
+def _append(root, rows, phase, operation, plan, reason, approval=None, *, version=None):
+    version = version or (rows[0].get("schema_version", 1) if rows else 1)
     row = dict(
         sequence=len(rows) + 1,
         previous=rows[-1]["sha256"] if rows else "0" * 64,
@@ -231,9 +291,20 @@ def _append(root, rows, phase, operation, plan, reason, approval=None):
         reason=reason,
         approval=approval.model_dump(mode="json") if approval else None,
     )
+    if version == 2:
+        row.update(
+            schema_version=2,
+            protocol="c26-gate-v2",
+            mode="offline_fixture",
+            runtime_scope_sha256=plan.operation.runtime_scope_sha256 if plan else None,
+        )
     row["sha256"] = hashlib.sha256(canonical(row)).hexdigest()
+    if version == 2:
+        from src.job_control.deployment_scope import JournalEventV2
+
+        JournalEventV2.model_validate(row)
     data = canonical(row) + b"\n"
-    fd = _fd(root, JOURNAL)
+    fd = _fd(root, journal_name(root, version))
     try:
         if len(rows) >= MAX_EVENTS or os.fstat(fd).st_size + len(data) > MAX_BYTES:
             raise Blocked("gate_audit_capacity")
@@ -249,14 +320,14 @@ def _append(root, rows, phase, operation, plan, reason, approval=None):
 @contextmanager
 def admission(settings):
     root = settings.root
-    if not settings.deployment_gate_required and not safe_path(root, JOURNAL).exists():
+    if not settings.deployment_gate_required and not journal_present(root):
         yield
         return
     fd = None
     try:
         fd = _fd(root, LOCK)
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        if _read(root)[-1]["phase"] != "open":
+        if _read(root, version=selected_version(settings))[-1]["phase"] != "open":
             raise Blocked("deployment_drain_admissions_closed")
     except (OSError, ValueError, KeyError, Blocked) as error:
         if fd is not None:
@@ -272,7 +343,7 @@ def admission(settings):
 def dispatch(settings):
     """A damaged gate pauses dispatch; existing children keep running/being reaped."""
     root = settings.root
-    if not settings.deployment_gate_required and not safe_path(root, JOURNAL).exists():
+    if not settings.deployment_gate_required and not journal_present(root):
         yield True
         return
     allowed = False
@@ -280,7 +351,10 @@ def dispatch(settings):
     try:
         fd = _fd(root, LOCK)
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        allowed = _read(root)[-1]["phase"] in {"open", "draining"}
+        allowed = _read(root, version=selected_version(settings))[-1]["phase"] in {
+            "open",
+            "draining",
+        }
     except (OSError, ValueError, KeyError, Blocked):
         if fd is not None:
             os.close(fd)
@@ -294,9 +368,11 @@ def dispatch(settings):
 
 def register_worker(settings):
     if not settings.deployment_gate_required:
+        if journal_present(settings.root):
+            _read(settings.root, version=selected_version(settings))
         return None
     with _lock(settings.root, LOCK):
-        _read(settings.root)
+        _read(settings.root, version=selected_version(settings))
         fd = _fd(settings.root, WORKER, create=True)
         try:
             fcntl.flock(fd, fcntl.LOCK_SH | fcntl.LOCK_NB)
@@ -344,12 +420,15 @@ class Gate:
             raise Blocked("explicit_gate_configuration_required")
         self.settings = settings
         self.root = private(settings.root, directory=True)
+        self.version = selected_version(settings)
+        self._active_permit = None
+        self._permit_claimed = False
 
     def initialize(self):
         """Explicit bootstrap only. Does not open admissions or initialize a DB."""
         if any(
             safe_path(self.root, name).exists()
-            for name in (JOURNAL, LOCK, OWNER, WORKER)
+            for name in (JOURNAL, JOURNAL_V2, LOCK, OWNER, WORKER)
         ):
             raise Blocked("existing_gate_requires_manual_recovery")
         with (
@@ -359,12 +438,20 @@ class Gate:
         ):
             with database(self.root):
                 pass
-            path = safe_path(self.root, JOURNAL)
+            path = safe_path(self.root, JOURNAL_V2 if self.version == 2 else JOURNAL)
             fd = os.open(
                 path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600
             )
             os.close(fd)
-            _append(self.root, [], "held", None, None, "initialized_closed")
+            _append(
+                self.root,
+                [],
+                "held",
+                None,
+                None,
+                "initialized_closed",
+                version=self.version,
+            )
             fd = os.open(self.root, os.O_DIRECTORY | os.O_RDONLY)
             try:
                 os.fsync(fd)
@@ -375,16 +462,43 @@ class Gate:
         """Read-only: no Store construction, lock/file creation or heartbeat write."""
         try:
             with _lock(self.root, LOCK):
-                rows = _read(self.root)
-                return dict(
+                rows = _read(self.root, version=self.version)
+                result = dict(
                     status="blocked" if rows[-1]["phase"] != "open" else "open",
                     phase=rows[-1]["phase"],
                     sequence=len(rows),
                 )
+                if self.version == 2:
+                    result.update(
+                        schema_version=2,
+                        protocol="c26-gate-v2",
+                        mode="offline_fixture",
+                        deployment_permitted=False,
+                        production_release="blocked",
+                    )
+                return result
         except (OSError, ValueError, KeyError, Blocked, sqlite3.Error):
             return dict(status="blocked", phase="unknown")
 
     def _approval(self, plan, approval, action):
+        if selected_version(self.settings) != self.version:
+            raise Blocked("gate_protocol_changed")
+        journal_name(self.root, self.version)
+        if self.version == 2:
+            from src.job_control.deployment_scope import ApprovalV2, PlanV2, snapshot
+
+            plan = snapshot(plan, PlanV2, 65536)
+            approval = snapshot(approval, ApprovalV2)
+            _read(self.root, version=2)
+            root = plan.operation.current.jobroot
+            info = self.root.stat()
+            if str(self.root) not in {root.source, root.destination} or (
+                info.st_dev,
+                info.st_ino,
+            ) != (root.device, root.inode):
+                raise Blocked("v2_coordinator_jobroot_mismatch")
+        elif type(plan) is not Plan or type(approval) is not Approval:
+            raise Blocked("explicit_v1_plan_and_approval_required")
         if not isinstance(plan, Plan) or not isinstance(approval, Approval):
             raise Blocked("explicit_plan_and_approval_required")
         approval.check(plan, action)
@@ -429,6 +543,12 @@ class Gate:
             observed = driver.observe(plan)
         except Exception:
             raise Blocked("deployment_driver_observation_failed") from None
+        if self.version == 2:
+            from src.job_control.deployment_scope import ObservationV2, snapshot
+
+            return snapshot(observed, ObservationV2).check(
+                plan, target=target, require_health=require_health
+            )
         if not isinstance(observed, Observation):
             raise Blocked("live_observation_required")
         if not (
@@ -450,7 +570,7 @@ class Gate:
 
     def _record(self, phase, approval, plan, reason):
         with _lock(self.root, LOCK, timeout=2):
-            rows = _read(self.root)
+            rows = _read(self.root, version=self.version)
             return _append(
                 self.root,
                 rows,
@@ -463,9 +583,15 @@ class Gate:
 
     def _refused(self, reason):
         with _lock(self.root, LOCK, timeout=2):
-            rows = _read(self.root)
+            rows = _read(self.root, version=self.version)
             state = rows[-1]
-            plan = Plan.model_validate(state["plan"]) if state["plan"] else None
+            if self.version == 2:
+                from src.job_control.deployment_scope import PlanV2
+
+                plan_type = PlanV2
+            else:
+                plan_type = Plan
+            plan = plan_type.model_validate(state["plan"]) if state["plan"] else None
             _append(self.root, rows, state["phase"], state["operation"], plan, reason)
 
     def run(self, plan, approval, driver, *, drain_timeout=60):
@@ -484,12 +610,21 @@ class Gate:
                 if action not in {"deploy", "rollback"}:
                     raise Blocked("deploy_or_rollback_approval_required")
                 self._approval(plan, approval, action)
+                if self.version == 2:
+                    from src.job_control.deployment_scope import (
+                        ApprovalV2,
+                        PlanV2,
+                        snapshot,
+                    )
+
+                    plan = snapshot(plan, PlanV2, 65536)
+                    approval = snapshot(approval, ApprovalV2)
                 self._observe(
                     driver, plan, target=False, require_health=action != "rollback"
                 )
                 with _lock(self.root, LOCK, timeout=2):
                     self._approval(plan, approval, action)
-                    rows = _read(self.root)
+                    rows = _read(self.root, version=self.version)
                     state = rows[-1]
                     permitted = (
                         state["phase"] == "open"
@@ -518,7 +653,7 @@ class Gate:
                             self._idle()
                             _append(
                                 self.root,
-                                _read(self.root),
+                                _read(self.root, version=self.version),
                                 "deploying",
                                 approval.approval_id,
                                 plan,
@@ -538,7 +673,24 @@ class Gate:
                     driver, plan, target=False, require_health=action != "rollback"
                 )
                 self._approval(plan, approval, action)
-                permit = Permit(self, plan, approval.approval_id, approval)
+                if self.version == 2:
+                    from src.job_control.deployment_scope import PermitV2
+
+                    permit = PermitV2(
+                        self, plan, approval.approval_id, approval, driver, before
+                    )
+                    self._active_permit = (
+                        permit,
+                        plan.digest,
+                        approval.model_dump_json(),
+                        approval.approval_id,
+                        id(driver),
+                        before.container_id,
+                        before.binding.model_dump_json(),
+                    )
+                    self._permit_claimed = False
+                else:
+                    permit = Permit(self, plan, approval.approval_id, approval)
                 permit.check()
                 try:
                     driver.deploy(plan, permit)
@@ -548,6 +700,12 @@ class Gate:
                     "verifying", approval, plan, "container_change_requires_live_checks"
                 )
                 after = self._observe(driver, plan, target=True)
+                if self.version == 2:
+                    from src.job_control.deployment_scope import replacement
+
+                    if not self._permit_claimed:
+                        raise Blocked("v2_driver_did_not_claim_permit")
+                    replacement(plan, before, after)
                 if before.container_id == after.container_id:
                     raise Blocked("replacement_instance_not_verified")
                 with _lock(self.root, LOCK, timeout=2):
@@ -555,16 +713,23 @@ class Gate:
                     self._approval(plan, approval, action)
                     _append(
                         self.root,
-                        _read(self.root),
+                        _read(self.root, version=self.version),
                         "verified",
                         approval.approval_id,
                         plan,
                         "live_checks_passed_admissions_held",
                         approval,
                     )
-                return dict(
+                result = dict(
                     status="verified", admissions="closed", production_release="blocked"
                 )
+                if self.version == 2:
+                    result.update(
+                        status="verified_offline",
+                        mode="offline_fixture",
+                        deployment_permitted=False,
+                    )
+                return result
             except Exception:
                 if started:
                     self._record(
@@ -579,6 +744,7 @@ class Gate:
             finally:
                 if permit is not None:
                     permit.active = False
+                self._active_permit = None
 
     def release(self, plan, approval, driver, *, recovery=False):
         try:
@@ -597,9 +763,18 @@ class Gate:
         with fence(self.root), _lock(self.root, OWNER):
             action = "recover" if recovery else "resume"
             self._approval(plan, approval, action)
+            if self.version == 2:
+                from src.job_control.deployment_scope import (
+                    ApprovalV2,
+                    PlanV2,
+                    snapshot,
+                )
+
+                plan = snapshot(plan, PlanV2, 65536)
+                approval = snapshot(approval, ApprovalV2)
             observed = self._observe(driver, plan, target=True)
             with _lock(self.root, LOCK, timeout=2):
-                rows = _read(self.root)
+                rows = _read(self.root, version=self.version)
                 allowed = (
                     {"recovery", "draining", "deploying", "verifying"}
                     if recovery
@@ -609,6 +784,15 @@ class Gate:
                     r["operation"] == approval.approval_id for r in rows
                 ):
                     raise Blocked("explicit_verified_release_required")
+                if self.version == 2:
+                    if recovery and rows[-1]["plan"] != plan.model_dump(mode="json"):
+                        raise Blocked("v2_recovery_operation_mismatch")
+                    if (
+                        not recovery
+                        and rows[-1]["phase"] == "held"
+                        and plan.operation.current != plan.operation.target
+                    ):
+                        raise Blocked("v2_bootstrap_identical_scope_required")
                 if not recovery:
                     if rows[-1]["phase"] == "held":
                         if (

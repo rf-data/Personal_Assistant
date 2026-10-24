@@ -537,9 +537,19 @@ def _verify_host(scope, evidence):
 
 
 def observe_runtime(
-    binding: ObserverBinding, plan: OperationPlan, *, collector, client, now
+    binding: ObserverBinding,
+    plan: OperationPlan,
+    *,
+    collector,
+    client,
+    now,
+    require_health=True,
 ):
-    """One bounded offline observation. Never converted into #148 Observation."""
+    """Bounded offline consistency, reused by the explicit C26-D v2 gate.
+
+    Health may be waived only for the known current side of an approved rollback;
+    identity, provenance, triggers, freshness and worker heartbeat remain required.
+    """
     if not isinstance(binding, ObserverBinding) or not isinstance(plan, OperationPlan):
         raise Refused("typed_binding_and_operation_required")
     try:
@@ -620,7 +630,7 @@ def observe_runtime(
             observed_at=provenance.observed_at,
             roles=role_reads,
         )
-        check_snapshot(legacy, reading, now=now)
+        check_snapshot(legacy, reading, now=now, require_health=require_health)
         instances = sorted(
             (r.role, r.container_id, r.network_namespace) for r in reading.roles
         )

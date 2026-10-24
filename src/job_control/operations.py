@@ -336,7 +336,10 @@ def restore(snapshot, destination):
         verified_files(entry.model_copy(update={"root": snapshot / "catalog" / key}))
     jobs = quiescent(snapshot / "workspace")
     copy_files(snapshot / "workspace", destination)
-    if (destination / "deployment-gate.v1.jsonl").exists():
+    if any(
+        (destination / name).exists()
+        for name in ("deployment-gate.v1.jsonl", "deployment-gate.v2.jsonl")
+    ):
         from src.job_control.deployment_gate import hold_restored_root
 
         hold_restored_root(destination)

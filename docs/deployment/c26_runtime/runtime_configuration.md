@@ -1,5 +1,12 @@
 # Deaktivierte Runtime-Konfiguration und eigener Mount
 
+C26-D, 24.10.2026: [Versionierte Gateintegration](../c26d_gate_v2.md) ergänzt
+hier beschriebenes v1-Verhalten um einen expliziten v2-Offlinevertrag. Frühere
+Aussagen zur fehlenden Gatebindung sind historische Ausgangsnachweise. Der
+v1-Default und die deaktivierte Controllervorlage bleiben unverändert; sie sind
+**nicht für eine produktive v2-Runtime freigegeben**. Kein automatisches Upgrade,
+kein Livecollector/Driver und keine Produktivfreigabe; Status **HOLD**.
+
 Stand 23.10.2026; Vorschlag, keine Pfad-/Betriebsfreigabe. Vorlagen:
 [Controller](../../../deployment/c26-runtime.controller.json.example),
 [Limits](../../../deployment/c26-runtime.limits.json.example),
