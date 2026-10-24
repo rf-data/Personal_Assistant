@@ -1,0 +1,63 @@
+{
+  "additionalProperties": false,
+  "description": "Trusted private configuration; never constructed from lecture/API input.",
+  "properties": {
+    "adapter_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Adapter Id"
+    },
+    "certificate_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Certificate Sha256",
+      "type": "string"
+    },
+    "origin": {
+      "maxLength": 256,
+      "title": "Origin",
+      "type": "string"
+    },
+    "purpose": {
+      "enum": [
+        "metadata",
+        "coolify",
+        "build"
+      ],
+      "title": "Purpose",
+      "type": "string"
+    },
+    "subject_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Subject Id",
+      "type": "string"
+    },
+    "target_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Target Id",
+      "type": "string"
+    },
+    "trust_domain": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Trust Domain",
+      "type": "string"
+    }
+  },
+  "required": [
+    "target_id",
+    "purpose",
+    "origin",
+    "subject_id",
+    "trust_domain",
+    "certificate_sha256"
+  ],
+  "title": "Target",
+  "type": "object"
+}

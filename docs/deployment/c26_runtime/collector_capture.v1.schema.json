@@ -1,0 +1,1591 @@
+{
+  "$defs": {
+    "ApplicationRead": {
+      "additionalProperties": false,
+      "properties": {
+        "auto_deploy_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Auto Deploy Enabled"
+        },
+        "base_directory": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Base Directory"
+        },
+        "build_pack": {
+          "enum": [
+            "dockerfile",
+            "dockercompose"
+          ],
+          "title": "Build Pack",
+          "type": "string"
+        },
+        "docker_compose_location": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Docker Compose Location"
+        },
+        "git_branch": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Git Branch"
+        },
+        "git_commit_sha": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Git Commit Sha"
+        },
+        "git_repository": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Git Repository"
+        },
+        "preview_deployments_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Preview Deployments Enabled"
+        },
+        "uuid": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uuid",
+        "build_pack",
+        "git_repository",
+        "git_branch",
+        "git_commit_sha",
+        "base_directory",
+        "docker_compose_location",
+        "auto_deploy_enabled",
+        "preview_deployments_enabled"
+      ],
+      "title": "ApplicationRead",
+      "type": "object"
+    },
+    "Boundary": {
+      "additionalProperties": false,
+      "properties": {
+        "caddy_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Caddy Sha256"
+        },
+        "compose_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Compose Sha256"
+        },
+        "environment_uuid": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Environment Uuid",
+          "type": "string"
+        },
+        "external_intake_fenced": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "External Intake Fenced"
+        },
+        "external_jobs_idle": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "External Jobs Idle"
+        },
+        "jobroot_writer_ids": {
+          "items": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "title": "Jobroot Writer Ids",
+          "type": "array"
+        },
+        "persistence_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Persistence Sha256"
+        },
+        "private_network_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Private Network Id"
+        },
+        "private_network_internal": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Private Network Internal"
+        },
+        "protected_resources_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Protected Resources Sha256"
+        },
+        "server_uuid": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Server Uuid",
+          "type": "string"
+        },
+        "settings_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Settings Sha256"
+        },
+        "tls_binding_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tls Binding Sha256"
+        },
+        "tls_verified": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tls Verified"
+        },
+        "trigger_actors": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "title": "Trigger Actors",
+          "type": "array"
+        },
+        "trigger_inventory_complete": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Trigger Inventory Complete"
+        },
+        "trigger_policy_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Trigger Policy Sha256"
+        },
+        "writer_inventory_complete": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Writer Inventory Complete"
+        }
+      },
+      "required": [
+        "server_uuid",
+        "environment_uuid",
+        "compose_sha256",
+        "settings_sha256",
+        "persistence_sha256",
+        "protected_resources_sha256",
+        "caddy_sha256",
+        "tls_binding_sha256",
+        "trigger_policy_sha256",
+        "trigger_inventory_complete",
+        "trigger_actors",
+        "private_network_id",
+        "private_network_internal",
+        "tls_verified",
+        "external_intake_fenced",
+        "external_jobs_idle",
+        "writer_inventory_complete",
+        "jobroot_writer_ids"
+      ],
+      "title": "Boundary",
+      "type": "object"
+    },
+    "BuildReceipt": {
+      "additionalProperties": false,
+      "description": "Canonical receipt whose hash was independently approved in RoleScope.\n\nIts assertion needs a separate trusted registry/build verifier. A host label\nor its self-declared 'verified_build_receipt' flag cannot satisfy this check.",
+      "properties": {
+        "authority_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Authority Id",
+          "type": "string"
+        },
+        "image_id": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "title": "Image Id",
+          "type": "string"
+        },
+        "repo_digest": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(/[A-Za-z0-9][A-Za-z0-9._:-]*)*@sha256:[a-f0-9]{64}$",
+          "title": "Repo Digest",
+          "type": "string"
+        },
+        "repository": {
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+          "title": "Repository",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^[a-f0-9]{40}$",
+          "title": "Revision",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "verification": {
+          "const": "registry_digest_and_build_attestation_verified",
+          "title": "Verification",
+          "type": "string"
+        }
+      },
+      "required": [
+        "authority_id",
+        "repository",
+        "revision",
+        "image_id",
+        "repo_digest",
+        "verification"
+      ],
+      "title": "BuildReceipt",
+      "type": "object"
+    },
+    "CaptureProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Adapter Id",
+          "type": "string"
+        },
+        "batch_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Batch Id",
+          "type": "string"
+        },
+        "binding_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Binding Sha256",
+          "type": "string"
+        },
+        "collector_version": {
+          "const": "c26-authenticated-collector/1",
+          "default": "c26-authenticated-collector/1",
+          "title": "Collector Version",
+          "type": "string"
+        },
+        "host_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Host Id",
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "simulated",
+            "authenticated_read_only"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "observed_at": {
+          "title": "Observed At",
+          "type": "number"
+        },
+        "runtime_scope_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Runtime Scope Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 2,
+          "default": 2,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "transport_policy_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Transport Policy Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode",
+        "host_id",
+        "adapter_id",
+        "observed_at",
+        "batch_id",
+        "binding_sha256",
+        "runtime_scope_sha256",
+        "transport_policy_sha256"
+      ],
+      "title": "CaptureProvenance",
+      "type": "object"
+    },
+    "CapturedHostEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "boundary": {
+          "$ref": "#/$defs/Boundary"
+        },
+        "containers": {
+          "items": {
+            "$ref": "#/$defs/Container"
+          },
+          "maxItems": 3,
+          "title": "Containers",
+          "type": "array"
+        },
+        "images": {
+          "items": {
+            "$ref": "#/$defs/Image"
+          },
+          "maxItems": 3,
+          "title": "Images",
+          "type": "array"
+        },
+        "inventory": {
+          "$ref": "#/$defs/Inventory"
+        },
+        "provenance": {
+          "$ref": "#/$defs/CaptureProvenance"
+        }
+      },
+      "required": [
+        "provenance",
+        "inventory",
+        "boundary",
+        "containers",
+        "images"
+      ],
+      "title": "CapturedHostEvidence",
+      "type": "object"
+    },
+    "Container": {
+      "additionalProperties": false,
+      "properties": {
+        "application_uuid": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Application Uuid",
+          "type": "string"
+        },
+        "command_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Command Sha256"
+        },
+        "compose_project": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Compose Project",
+          "type": "string"
+        },
+        "container_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Container Id",
+          "type": "string"
+        },
+        "health_contract_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Health Contract Sha256"
+        },
+        "healthy": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Healthy"
+        },
+        "heartbeat_at": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Heartbeat At"
+        },
+        "host_ports": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 16,
+          "title": "Host Ports",
+          "type": "array"
+        },
+        "image_id": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "title": "Image Id",
+          "type": "string"
+        },
+        "jobroot": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Mount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mounts": {
+          "items": {
+            "$ref": "#/$defs/Mount"
+          },
+          "maxItems": 8,
+          "title": "Mounts",
+          "type": "array"
+        },
+        "network_ids": {
+          "items": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "maxItems": 4,
+          "title": "Network Ids",
+          "type": "array"
+        },
+        "network_mode": {
+          "maxLength": 100,
+          "title": "Network Mode",
+          "type": "string"
+        },
+        "network_namespace": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Network Namespace"
+        },
+        "process_verified": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Process Verified"
+        },
+        "readiness_contract_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Readiness Contract Sha256"
+        },
+        "ready": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Ready"
+        },
+        "role": {
+          "enum": [
+            "api",
+            "api-gateway",
+            "capacity-worker"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "running": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Running"
+        },
+        "service": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Service",
+          "type": "string"
+        },
+        "settings_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Settings Sha256"
+        }
+      },
+      "required": [
+        "container_id",
+        "application_uuid",
+        "compose_project",
+        "service",
+        "role",
+        "image_id",
+        "command_sha256",
+        "settings_sha256",
+        "mounts",
+        "jobroot",
+        "running",
+        "process_verified",
+        "healthy",
+        "ready",
+        "health_contract_sha256",
+        "readiness_contract_sha256",
+        "network_mode",
+        "network_namespace",
+        "network_ids",
+        "host_ports",
+        "heartbeat_at"
+      ],
+      "title": "Container",
+      "type": "object"
+    },
+    "DeploymentRead": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "maxLength": 200,
+          "title": "Commit",
+          "type": "string"
+        },
+        "deployment_uuid": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Deployment Uuid",
+          "type": "string"
+        },
+        "pull_request_id": {
+          "minimum": 0,
+          "title": "Pull Request Id",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "in_progress",
+            "finished",
+            "failed",
+            "cancelled-by-user"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "deployment_uuid",
+        "commit",
+        "status",
+        "pull_request_id"
+      ],
+      "title": "DeploymentRead",
+      "type": "object"
+    },
+    "Image": {
+      "additionalProperties": false,
+      "properties": {
+        "build_receipt_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Build Receipt Sha256"
+        },
+        "image_id": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "title": "Image Id",
+          "type": "string"
+        },
+        "provenance": {
+          "enum": [
+            "verified_build_receipt",
+            "label_only",
+            "unverified"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        },
+        "repo_digests": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(/[A-Za-z0-9][A-Za-z0-9._:-]*)*@sha256:[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Repo Digests",
+          "type": "array"
+        },
+        "repository": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Repository"
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{40}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Revision"
+        }
+      },
+      "required": [
+        "image_id",
+        "repo_digests",
+        "repository",
+        "revision",
+        "provenance",
+        "build_receipt_sha256"
+      ],
+      "title": "Image",
+      "type": "object"
+    },
+    "Inventory": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Complete"
+        },
+        "members": {
+          "items": {
+            "$ref": "#/$defs/Member"
+          },
+          "maxItems": 64,
+          "title": "Members",
+          "type": "array"
+        }
+      },
+      "required": [
+        "complete",
+        "members"
+      ],
+      "title": "Inventory",
+      "type": "object"
+    },
+    "Member": {
+      "additionalProperties": false,
+      "properties": {
+        "application_uuid": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Application Uuid"
+        },
+        "compose_project": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Compose Project"
+        },
+        "container_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Container Id",
+          "type": "string"
+        },
+        "writable_sources": {
+          "items": {
+            "maxLength": 512,
+            "pattern": "^/[A-Za-z0-9_./-]+$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "title": "Writable Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "container_id",
+        "application_uuid",
+        "compose_project",
+        "writable_sources"
+      ],
+      "title": "Member",
+      "type": "object"
+    },
+    "Mount": {
+      "additionalProperties": false,
+      "properties": {
+        "destination": {
+          "maxLength": 512,
+          "pattern": "^/[A-Za-z0-9_./-]+$",
+          "title": "Destination",
+          "type": "string"
+        },
+        "device": {
+          "minimum": 0,
+          "title": "Device",
+          "type": "integer"
+        },
+        "inode": {
+          "exclusiveMinimum": 0,
+          "title": "Inode",
+          "type": "integer"
+        },
+        "read_only": {
+          "title": "Read Only",
+          "type": "boolean"
+        },
+        "source": {
+          "maxLength": 512,
+          "pattern": "^/[A-Za-z0-9_./-]+$",
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "destination",
+        "read_only",
+        "device",
+        "inode"
+      ],
+      "title": "Mount",
+      "type": "object"
+    },
+    "ObserverBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Adapter Id",
+          "type": "string"
+        },
+        "deployment_uuid": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Deployment Uuid",
+          "type": "string"
+        },
+        "host_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Host Id",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "current",
+            "target"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "scope": {
+          "$ref": "#/$defs/RuntimeScope"
+        }
+      },
+      "required": [
+        "scope",
+        "phase",
+        "deployment_uuid",
+        "host_id",
+        "adapter_id"
+      ],
+      "title": "ObserverBinding",
+      "type": "object"
+    },
+    "ObserverReport": {
+      "additionalProperties": false,
+      "properties": {
+        "binding_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Binding Sha256"
+        },
+        "deployment_permitted": {
+          "const": false,
+          "default": false,
+          "title": "Deployment Permitted",
+          "type": "boolean"
+        },
+        "evidence_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Sha256"
+        },
+        "instance_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Instance Sha256"
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed At"
+        },
+        "production_release": {
+          "const": "blocked",
+          "default": "blocked",
+          "title": "Production Release",
+          "type": "string"
+        },
+        "reasons": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "runtime_scope_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Runtime Scope Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "verified_offline",
+            "NO-GO"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unverified": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Unverified",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status",
+        "runtime_scope_sha256"
+      ],
+      "title": "ObserverReport",
+      "type": "object"
+    },
+    "RequestReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Capture Id"
+        },
+        "certificate_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Certificate Sha256",
+          "type": "string"
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expires At"
+        },
+        "finished_at": {
+          "title": "Finished At",
+          "type": "number"
+        },
+        "mode": {
+          "enum": [
+            "simulated",
+            "authenticated_read_only"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed At"
+        },
+        "query": {
+          "enum": [
+            "inventory",
+            "container",
+            "image",
+            "boundary",
+            "application",
+            "deployment",
+            "build"
+          ],
+          "title": "Query",
+          "type": "string"
+        },
+        "request_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "started_at": {
+          "title": "Started At",
+          "type": "number"
+        },
+        "target_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Target Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_id",
+        "query",
+        "request_id",
+        "started_at",
+        "finished_at",
+        "certificate_sha256",
+        "mode",
+        "capture_id",
+        "observed_at",
+        "expires_at"
+      ],
+      "title": "RequestReceipt",
+      "type": "object"
+    },
+    "RoleScope": {
+      "additionalProperties": false,
+      "properties": {
+        "build_receipt_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Build Receipt Sha256",
+          "type": "string"
+        },
+        "command_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Command Sha256",
+          "type": "string"
+        },
+        "health_contract_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Health Contract Sha256",
+          "type": "string"
+        },
+        "image": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(/[A-Za-z0-9][A-Za-z0-9._:-]*)*@sha256:[a-f0-9]{64}$",
+          "title": "Image",
+          "type": "string"
+        },
+        "image_id": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "title": "Image Id",
+          "type": "string"
+        },
+        "mounts": {
+          "items": {
+            "$ref": "#/$defs/Mount"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Mounts",
+          "type": "array"
+        },
+        "readiness_contract_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Readiness Contract Sha256",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^[a-f0-9]{40}$",
+          "title": "Revision",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "api",
+            "api-gateway",
+            "capacity-worker"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "service": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Service",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "service",
+        "revision",
+        "image",
+        "image_id",
+        "build_receipt_sha256",
+        "command_sha256",
+        "health_contract_sha256",
+        "readiness_contract_sha256",
+        "mounts"
+      ],
+      "title": "RoleScope",
+      "type": "object"
+    },
+    "RuntimeScope": {
+      "additionalProperties": false,
+      "description": "Immutable approved state. No future container/deployment IDs or timestamps.",
+      "properties": {
+        "allowed_trigger_actors": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Allowed Trigger Actors",
+          "type": "array"
+        },
+        "application_uuid": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Application Uuid",
+          "type": "string"
+        },
+        "base_directory": {
+          "const": "/",
+          "default": "/",
+          "title": "Base Directory",
+          "type": "string"
+        },
+        "branch": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Branch",
+          "type": "string"
+        },
+        "caddy_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Caddy Sha256",
+          "type": "string"
+        },
+        "compose_location": {
+          "maxLength": 512,
+          "pattern": "^/[A-Za-z0-9_./-]+$",
+          "title": "Compose Location",
+          "type": "string"
+        },
+        "compose_project": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Compose Project",
+          "type": "string"
+        },
+        "compose_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Compose Sha256",
+          "type": "string"
+        },
+        "environment_uuid": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Environment Uuid",
+          "type": "string"
+        },
+        "jobroot": {
+          "$ref": "#/$defs/Mount"
+        },
+        "namespace_contract": {
+          "const": "api-shares-gateway;worker-isolated",
+          "default": "api-shares-gateway;worker-isolated",
+          "title": "Namespace Contract",
+          "type": "string"
+        },
+        "persistence_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Persistence Sha256",
+          "type": "string"
+        },
+        "private_network_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Private Network Id",
+          "type": "string"
+        },
+        "private_network_internal": {
+          "const": true,
+          "default": true,
+          "title": "Private Network Internal",
+          "type": "boolean"
+        },
+        "private_network_name": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Private Network Name",
+          "type": "string"
+        },
+        "protected_resources_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Protected Resources Sha256",
+          "type": "string"
+        },
+        "protected_ui_uuid": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Protected Ui Uuid",
+          "type": "string"
+        },
+        "published_host_ports": {
+          "default": [],
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 0,
+          "title": "Published Host Ports",
+          "type": "array"
+        },
+        "repository": {
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+          "title": "Repository",
+          "type": "string"
+        },
+        "roles": {
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/RoleScope"
+            },
+            {
+              "$ref": "#/$defs/RoleScope"
+            },
+            {
+              "$ref": "#/$defs/RoleScope"
+            }
+          ],
+          "title": "Roles",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "server_uuid": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Server Uuid",
+          "type": "string"
+        },
+        "settings_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Settings Sha256",
+          "type": "string"
+        },
+        "tls_binding_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Tls Binding Sha256",
+          "type": "string"
+        },
+        "trigger_policy_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Trigger Policy Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "application_uuid",
+        "protected_ui_uuid",
+        "server_uuid",
+        "environment_uuid",
+        "repository",
+        "branch",
+        "compose_location",
+        "compose_project",
+        "compose_sha256",
+        "settings_sha256",
+        "persistence_sha256",
+        "protected_resources_sha256",
+        "caddy_sha256",
+        "tls_binding_sha256",
+        "trigger_policy_sha256",
+        "allowed_trigger_actors",
+        "private_network_id",
+        "private_network_name",
+        "jobroot",
+        "roles"
+      ],
+      "title": "RuntimeScope",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "application": {
+      "$ref": "#/$defs/ApplicationRead"
+    },
+    "binding": {
+      "$ref": "#/$defs/ObserverBinding"
+    },
+    "build_receipts": {
+      "items": {
+        "$ref": "#/$defs/BuildReceipt"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "title": "Build Receipts",
+      "type": "array"
+    },
+    "deployment": {
+      "$ref": "#/$defs/DeploymentRead"
+    },
+    "deployment_permitted": {
+      "const": false,
+      "default": false,
+      "title": "Deployment Permitted",
+      "type": "boolean"
+    },
+    "directly_observed": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Directly Observed",
+      "type": "array"
+    },
+    "evidence": {
+      "$ref": "#/$defs/CapturedHostEvidence"
+    },
+    "independently_verified": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Independently Verified",
+      "type": "array"
+    },
+    "live_accepted": {
+      "const": false,
+      "default": false,
+      "title": "Live Accepted",
+      "type": "boolean"
+    },
+    "mode": {
+      "enum": [
+        "simulated",
+        "authenticated_read_only"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "observer": {
+      "$ref": "#/$defs/ObserverReport"
+    },
+    "operator_reported": {
+      "default": [
+        "approved_scope",
+        "target_and_trust_policy"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "title": "Operator Reported",
+      "type": "array"
+    },
+    "production_release": {
+      "const": "blocked",
+      "default": "blocked",
+      "title": "Production Release",
+      "type": "string"
+    },
+    "receipts": {
+      "items": {
+        "$ref": "#/$defs/RequestReceipt"
+      },
+      "maxItems": 24,
+      "minItems": 1,
+      "title": "Receipts",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "simulated": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Simulated",
+      "type": "array"
+    },
+    "status": {
+      "enum": [
+        "simulated_consistent",
+        "authenticated_capture"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "unverified": {
+      "default": [
+        "live_collector_implementation",
+        "registry_verifier_implementation",
+        "operator_acceptance",
+        "trigger_inventory_completeness"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "title": "Unverified",
+      "type": "array"
+    }
+  },
+  "required": [
+    "mode",
+    "status",
+    "binding",
+    "evidence",
+    "application",
+    "deployment",
+    "observer",
+    "receipts",
+    "build_receipts",
+    "directly_observed",
+    "independently_verified",
+    "simulated"
+  ],
+  "title": "Capture",
+  "type": "object"
+}

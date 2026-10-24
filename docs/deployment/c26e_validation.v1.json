@@ -1,0 +1,120 @@
+{
+  "actual_live_requests": 0,
+  "actual_tls_handshakes": 0,
+  "all_positive_captures_simulated": true,
+  "base_branch": "feat/c26d-operation-gate-v2",
+  "base_pr": 161,
+  "base_sha": "8b0ba2d4ab5d0cd6fc8dfa69783276efd929666f",
+  "base_tree": "995e2dda5879a8d10efeb13f57f4adeef9719706",
+  "branch": "feat/c26e-authenticated-runtime-collector",
+  "checks": {
+    "AST_JSON": "passed",
+    "cached_hooks": "passed: whitespace, EOF, JSON, AST, debug statements, large files, Ruff format; YAML/TOML no applicable files",
+    "documentation_links": "passed",
+    "git_diff_check": "passed",
+    "ruff_check": "passed",
+    "ruff_format": "passed"
+  },
+  "cherry_picks_of_148_157": 0,
+  "cleanup": false,
+  "date": "2026-10-24",
+  "default_branch_integration": false,
+  "deployment_permitted": false,
+  "distinct_passed_tests": 439,
+  "enospc": false,
+  "environment": {
+    "PyMuPDF": "1.27.2.2",
+    "PyYAML": "6.0.3",
+    "httpx": "0.28.1",
+    "new_installations": false,
+    "pre_commit": "4.6.2",
+    "pydantic": "2.14.1",
+    "pydantic_core": "2.50.1",
+    "pytest": "9.1.1",
+    "python": "3.12.12",
+    "ruff": "0.16.0",
+    "runtime_lock_differences": {
+      "PyMuPDF": "1.28.2",
+      "pydantic": "2.13.4",
+      "pydantic_core": "2.46.4"
+    },
+    "runtime_lock_exact": false,
+    "sqlite": "3.50.4"
+  },
+  "independent_registry_verification_executed": false,
+  "limits": {
+    "automatic_retries": 0,
+    "cooperative_budget_seconds": 8,
+    "expected_valid_requests": 20,
+    "hard_process_deadline": false,
+    "max_requests": 24,
+    "response_coolify_bytes": 131072,
+    "response_metadata_or_build_bytes": 65536,
+    "timeout_per_io_phase_seconds": 3,
+    "total_response_bytes": 2097152
+  },
+  "live_accepted": false,
+  "not_executed": [
+    "complete_backend_or_UI_regression",
+    "new_loopback_subprocess_transport_tests",
+    "live_TLS_handshake",
+    "real_credential_access",
+    "real_host_or_Coolify_or_registry_request",
+    "producer_service_activation",
+    "container_build_or_download",
+    "production_queue_database_or_journal_operation",
+    "deployment"
+  ],
+  "original_branches_changed": false,
+  "production_release": "HOLD",
+  "public_test_certificate": "Synthetic non-CA leaf for collector.example.test; no private key stored; context construction only, no live TLS proof.",
+  "real_credentials_accessed_or_created": false,
+  "remaining": [
+    "private_metadata_producer_implementation_and_acceptance",
+    "independent_registry_and_build_verifier_acceptance",
+    "real_TLS_hostname_expiry_rotation_tests",
+    "credential_issuer_and_permissions_acceptance",
+    "operator_approved_read_only_capture",
+    "independent_coordinator_operator_identity_and_replay_protection",
+    "separately_versioned_live_gate_integration",
+    "full_operations_acceptance_160"
+  ],
+  "retain_worktree_and_branch": "Open draft and explicit no-merge/no-delete instruction",
+  "schema_version": 1,
+  "source_sha256": {
+    "docs/deployment/c26_runtime/collector_build_receipt.v1.schema.json": "15291d8b4ff0490f2bdba0f272271daf8df7cd7d9f62ad452bd7b433a8911bfb",
+    "docs/deployment/c26_runtime/collector_capture.v1.schema.json": "62ccb2539e0e8a9cf5fc509e9aa432d15bd6016d8c626a6aaec7d9a3036361e1",
+    "docs/deployment/c26_runtime/collector_envelope.v1.schema.json": "e1d02bf286945bb9b49752b1e552b715805379de79a2e599cae3e132adec42e0",
+    "docs/deployment/c26_runtime/collector_target.v1.schema.json": "4ad3f78bd87a6dc3deeb1ca3010e3990264f7d5776c8ae9483cc292a697ba0b8",
+    "docs/deployment/c26e_runtime_collector.md": "87167f32cd54f992bd16f67ac926236423b2ba068e557939c270678ef0f01613",
+    "src/job_control/runtime_collector.py": "74a7e46af8c1822ced2bec347e5434b17c56ac3db4684dfe4b56f84543292f09",
+    "tests/fixtures/c26e/public-test-leaf.pem": "61c450adac37340e9f4e3cd0ab887a115974e8e82440c03752b10b726302ace3",
+    "tests/test_runtime_collector.py": "0301f83a88d7c64db62a49aa5cc6e13a0c95dc2cfc379f1755a162cd0683230a"
+  },
+  "status": "offline_draft",
+  "task": "C26-E",
+  "test_environment": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "python": "../Personal_Assistant-c26b6-planning-results/test-env/bin/python"
+  },
+  "test_runs": [
+    {
+      "command": "-B -m pytest -q -p no:cacheprovider tests/test_runtime_collector.py --basetemp=/tmp/c26e-final-01",
+      "failed": 0,
+      "kind": "collector_final",
+      "passed": 82,
+      "seconds": 2.11,
+      "skipped": 0
+    },
+    {
+      "command": "-B -m pytest -q -p no:cacheprovider tests/test_deployment_gate.py tests/test_deployment_gate_v2.py tests/test_coolify_observer.py tests/test_coolify_readiness.py tests/test_c26_runtime_preflight.py tests/test_c26_runtime_bootstrap.py tests/test_runtime_paths.py tests/test_deployment_operations.py --basetemp=/tmp/c26e-regression-01",
+      "failed": 0,
+      "kind": "c26d_relevant_regression",
+      "passed": 357,
+      "seconds": 58.41,
+      "skipped": 0
+    }
+  ],
+  "worktree": "Personal_Assistant-c26e"
+}
