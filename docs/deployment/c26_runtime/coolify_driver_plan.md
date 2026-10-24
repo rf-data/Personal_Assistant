@@ -55,8 +55,9 @@ heutigen Sleepbestand. UUIDs/Projekt/Source/Buildpfade, volle Commitbindung,
 Settings/Persistenz/geschützte UI/Triggerbeleg/Netz/TLS und drei Rollen mit jeweils
 Revision, Registrydigest, separater Image-ID und Mountfingerprint sind erforderlich.
 API und Worker teilen Backendimage/SHA/Mounts; UI-UUID muss verschieden sein.
-Application-UUIDs sind weiterhin unbekannt, daher gibt es keine vorausgefüllte
-produktive Bindingdatei. Alle positiven Beispiele existieren ausschließlich in Tests.
+Application-UUIDs wurden inzwischen ausdrücklich als Betreiberbefund benannt.
+Die weiteren Rollen-/Image-/Mount-/Triggerbelege fehlen weiterhin; deshalb gibt
+es keine freigegebene produktive Bindingdatei. Alle positiven Beispiele existieren ausschließlich in Tests.
 
 `check_snapshot`/`check_observation_pair` verlangen vollständige Containerliste,
 exakt drei eindeutige Rollen, keinen weiteren Writer/Worker, passende Mount-/
@@ -177,3 +178,15 @@ Health, einzelner Worker bei held. Keine historischen Queueübernahmen.
 Erst neue gemeinsame Settings/Identitäten/Quellenfreigaben und echter Scope-
 Driver erlauben separate Resume-/Einzelbatchentscheidung. Kommandos nur im
 [bereits vorbereiteten Runbook](rollout.md); nichts davon hier ausgeführt.
+
+## Nachtrag zu realen Deployment-Einstiegen
+
+Die Oberfläche zeigt für beide benannten Applications einen Deployment-API-
+Einstieg an. Gespeichert wird nur das relative Muster aus dem
+[Triggerbeleg](deployment_trigger_audit.md), keine vollständige URL oder Secrets.
+Anzeige, Berechtigung und Aufruf sind getrennte Nachweise. Insbesondere folgt
+weder eine HTTPmethodenabnahme noch ein aktiver externer Hook oder bekannter
+berechtigter APIakteur daraus. Der vorhandene Readclient bleibt auf seinen zwei
+GETpfaden; `/api/v1/deploy` wird nicht als lesender Test aufgerufen. Preview None
+ist kein Ersatz für ein explizit geprüftes Featureflag. Quell-/Actionsbefunde
+schließen externe oder indirekte Trigger nicht aus; der Driver bleibt fail-closed.
