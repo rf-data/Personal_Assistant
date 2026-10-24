@@ -14,6 +14,7 @@ Quality = Literal[
 ]
 PROMPT_VERSION = "lecture-summary-de-v1"
 TEMPLATE_VERSION = "lecture-print-de-v1"
+SOURCE_ADAPTER_VERSION = "lecture-sources-v2"
 
 
 class Artifact(Contract):
@@ -100,6 +101,9 @@ class Evidence(Contract):
     parent_artifact_ids: tuple[Name, ...] = ()
     native_source_id: Name | None = None
     native_document_id: Name | None = None
+    native_chunk_id: Name | None = None
+    native_item_id: Name | None = None
+    parent_segment_ids: tuple[int, ...] = Field(default=(), max_length=1600)
     media_id: Name | None = None
     original_artifact_sha256: Sha | None = None
     text: Text
@@ -159,6 +163,7 @@ class Summary(Contract):
         default_factory=lambda: {
             "markdown": "utf-8; commonmark; lecture-summary-v1",
             "latex": TEMPLATE_VERSION + "; lualatex; no compilation performed",
+            "source_adapter": SOURCE_ADAPTER_VERSION,
         }
     )
 
@@ -167,6 +172,7 @@ def cache_key(selection, versions, model):
     return fingerprint(
         {
             "schema": 1,
+            "source_adapter": SOURCE_ADAPTER_VERSION,
             "selection": selection.model_dump(mode="json"),
             "versions": versions,
             "model": model,

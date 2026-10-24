@@ -112,16 +112,18 @@ def source_blocks(artifact, raw):
         doc = TranscriptKnowledgeDocument.model_validate_json(raw)
         for i, chunk in enumerate(doc.chunks):
             if chunk.extraction:
-                for j, statement in enumerate(chunk.extraction.statements):
-                    yield (
-                        statement.text,
-                        ContentLocator(
-                            raw_artifact_sha256=sha,
-                            origin_pointer=f"/chunks/{i}/extraction/statements/{j}",
-                            time_status="unknown",
-                        ),
-                        ("derived_knowledge_not_independent_evidence",),
-                    )
+                for field in ("statements", "formulas"):
+                    for j, item in enumerate(getattr(chunk.extraction, field)):
+                        yield (
+                            item.text if field == "statements" else item.plain_text,
+                            ContentLocator(
+                                raw_artifact_sha256=sha,
+                                origin_pointer=f"/chunks/{i}/extraction/{field}/{j}",
+                                time_status="unknown",
+                            ),
+                            ("derived_knowledge_not_independent_evidence",)
+                            + (("derived_formula_requires_source_review",) if field == "formulas" else ()),
+                        )
 
 
 def collect(catalog, selection, storage):
@@ -201,6 +203,16 @@ def collect(catalog, selection, storage):
                 source_id = "evidence:" + fingerprint(
                     [lecture.provider_id, lecture.course_id, lecture.lecture_id, chunk]
                 )
+                item_metadata = {}
+                if artifact.format == "knowledge_json":
+                    parts = locator.origin_pointer.split("/")
+                    native_chunk = native["chunks"][int(parts[2])]
+                    item = native_chunk["extraction"][parts[4]][int(parts[5])]
+                    item_metadata = dict(
+                        native_chunk_id=native_chunk["analysis"]["chunk_id"],
+                        native_item_id=item.get("statement_id") or item.get("expression_id"),
+                        parent_segment_ids=tuple(item.get("segment_ids", [])),
+                    )
                 evidence.append(
                     Evidence(
                         source_id=source_id,
@@ -219,6 +231,7 @@ def collect(catalog, selection, storage):
                         source_url=source_url,
                         parent_artifact_ids=artifact.parent_artifact_ids,
                         **metadata,
+                        **item_metadata,
                     )
                 )
                 total += len(text.encode("utf-8"))

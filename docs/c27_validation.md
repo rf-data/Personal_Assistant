@@ -419,3 +419,88 @@ keine Merges/Ready-Umstellung/Deployments. Die früheren 398 Backend-/157 UI-Erf
 sind der vorherige vollständige Recovery-Nachweis und wurden hier nicht als
 erneut ausgeführte Vollregression ausgegeben. Branches/Arbeitsstände bleiben für
 die ungemergten Draft-PRs erhalten.
+
+## C27-B Legacy Compatibility
+
+24.10.2026, Ausgangspunkt Backend-Draft `4fedf844`, isolierter neuer Worktree
+`Personal_Assistant-c27b`, Branch `feat/c27b-legacy-catalog`. Vollständiger
+[Code-/Inventur-/Adapterbericht und GO-/NO-GO](c27b_legacy_catalog.md).
+UI #21 unverändert `bb5742cc`; beide PRs bleiben Drafts. Keine Merges oder Deployment-
+und Produktionsänderungen. Dokumentation wartet im Draft auf gesondertes Review;
+keine Integration in den Defaultbranch behauptet. Arbeitsstände bleiben erhalten.
+
+Tatsächlich ausgeführte zielgerichtete Läufe, keine Summierung über Wiederholungen:
+
+| Prüfung | Ergebnis / Geltungsbereich |
+|---|---|
+| Erster neuer Adapterlauf | 30 bestanden / 1 fehlgeschlagen; Test deckte eine Variable auf, die den Evidence-Chunk-Fingerprint mit einem nativen Knowledge-Dict überschrieb. Korrigiert, danach alle betroffenen Tests erfolgreich |
+| C27/Storage nach Korrektur | 128 bestanden: 31 damalige neue Legacy-Fälle, 63 bestehende C27-Fälle, 34 `test_runtime_paths.py`; 0 Skips |
+| C27 nach Erweiterung der Knowledge-/Exportprovenienz | 97 bestanden: 34 damalige neue Legacy-Fälle plus dieselben 63 C27-Fälle; 0 Skips |
+| Abschließender Adapterstand | 38 bestanden, 0 Skips; Schemaerkennung, native/fehlende/widersprüchliche IDs, doppelte Keys/Chunks/Items, Parent-Provenienz/Segmente/Zeiten, Kopien/Rootunabhängigkeit, sichere Pfade, Links/Mounts, fehlende Roots, PermissionError, simuliertes ENOSPC ohne Retry, CLI-Roundtrip und unveränderte Quellen |
+| Aktueller master `29114d2e` + C27/C27-B | 125 bestanden / 1 optionaler Skip: 38 Legacy-Fälle, 63 C27-Fälle, 25 HTML-/Hierarchie-/Referenzfälle aus #149. Skip: `test_optional_original_python_notes_read_only`, Original-Notes-Artefakte nicht bereitgestellt. Kein Download als Ersatz |
+| Finale Adapter-Metadaten im gleichen master-Snapshot | Abschließende 38 Legacy-Fälle erneut bestanden; keine Wiederholung der ganzen Regression |
+| UI + dauerhafter Starthelfer | 13 bestanden, zusätzlich 6 Subtests bestanden; vorhandene AppTests/Auth-/Operator-/kein-Job-/Download-/Fehler-Guards und Launcherfälle |
+| Echter Kandidat, finaler Adapter | Fünf vorhandene Loviscach-JSONs akzeptiert, keine Review-Ablehnung; Kataloginhalt identisch zum vorbereiteten Kandidaten |
+| Offline-UI-Startvorprüfung | Versionierter Launcher mit `--backend Personal_Assistant-c27b --config .../c27b-legacy-candidate-20261024/summary.json --check`: OFFLINE-DEMO / Mock; kein Server/Modellaufruf |
+| Reale End-to-End-Demo | Vorhandenes 01.01.2-Transcript plus TranscriptKnowledgeDocument: 43 Evidenceblöcke, davon 18 Knowledge; MD/TeX/JSON, `needs_review`; fünf Original-SHA vor/nach Verarbeitung unverändert |
+| Offline-Requestbudget des neuen Kandidaten | Text mit Knowledge 21.043/passt; Formeln 30.929 und Gruppe 47.186/Abbruch vor HTTP bei Limit 30.000. Nur Request-Aufbau/RequestBudget, keine Clienterstellung oder Übertragung |
+| Read-only-Gesamtinventur | Zwei abgeschlossene Läufe: je 9.348 Einträge / 8.779 Dateien; final 4.806 Metadatenreferenzen, 2.861 vorhandene Dateiverweise, 93 fehlende, 1.852 ohne lokalen Verweis. 45 Metadaten-JSONs gelesen, 5 >2 MiB begrenzt nicht gelesen. Dateiabdeckung vollständig, Metadateninterpretation/Identitäten ausdrücklich nicht vollständig |
+
+Die Quelle des aktuellen-master-Checks ist ein eigener Quellcodesnapshot unter
+`/tmp/c27b-master-compat-20261024` aus lokal vorhandenen Git-Objekten `29114d2e` plus
+den C27-/C27-B-Dateien. Kein Git-Merge, keine Änderung fremder Worktrees oder
+Produktivdaten. GitHub-master wurde zusätzlich read-only mit diesem SHA abgeglichen.
+Er enthält bereits #156 und #149; C27-B hängt nicht von einem laufenden C16-/C26-
+Worker ab und ändert dessen Verträge nicht.
+
+Backendbefehle (vorhandenes Python 3.12.12, pytest 9.1.1):
+
+```bash
+export PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=.
+/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-planning-results/test-env/bin/python -B -m pytest \
+  -q -p no:cacheprovider tests/test_lecture_summary_legacy.py \
+  tests/test_lecture_summary.py tests/test_lecture_summary_contract.py \
+  tests/test_lecture_summary_acceptance.py tests/test_runtime_paths.py
+```
+
+Die Tabelle benennt die tatsächlich gewachsenen Testsammlungen während der
+Entwicklung; der obige Sammelbefehl enthält am Ende 135 Fälle, die nicht nochmals
+als ein zusätzlicher Gesamtbestand ausgeführt wurden. Der master-Check ergänzte
+`tests/test_cs50_material_html.py` und `tests/test_cs50_material_html_semantics.py`
+und ließ die unveränderten Runtime-Path-Fälle weg. Letzter Adapterlauf nur das neue
+Testmodul, nach Änderungen an dessen Guards und CLI-Roundtrip.
+
+Backend verwendet Pydantic 2.14.1/core 2.50.1 statt der im Lockfile festgelegten
+2.13.4/core 2.46.4; keine heimliche Neuinstallation. UI-Python aus
+`personal-assistant-ui-c26b/.venv` verwendet Streamlit 1.65.0, Pydantic 2.14.0/core
+2.50.0. Dieses UI-Venv hat kein pytest: direkter Versuch `-m pytest` scheiterte
+entsprechend. Für den erfolgreichen UI-Lauf wurde pytest über `site.addsitedir`
+aus dem vorhandenen Backend-Test-Venv ergänzt, ohne Installation oder Änderung
+der bestehenden Umgebungen; UI-Pakete behalten Suchpfadpriorität:
+
+```python
+import site
+site.addsitedir('/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-planning-results/test-env/lib/python3.12/site-packages')
+import pytest
+raise SystemExit(pytest.main([
+    '-q', '-p', 'no:cacheprovider',
+    'tests/test_lecture_summary_ui.py', 'tests/test_lecture_summary_local_start.py',
+    '--basetemp=/tmp/c27b-ui-validation',
+]))
+```
+
+Ausführung im UI-Checkout, UI-Python, `PYTHONPATH=<C27-B-Backend>:.`, Plugin-Autoload
+und Bytecode ausgeschaltet. Die obigen bereits verwendeten Temp-Verzeichnisse
+werden nicht zur Bereinigung bestehender Daten erneut beansprucht.
+
+Zusätzlich Python-AST/Syntax, Diff-/Whitespace-/EOF-/Dateigrößenprüfung und lokale
+Dokumentlinks. Keine neuen Dependencies, Browser oder schweren Testartefakte.
+Ruff/Pre-commit nicht installiert; vorhandener Git-Hook verweist auf ein nicht
+verfügbares altes Projekt-Venv. Kein bestandener Hooklauf behauptet, Veröffentlichung
+über einen normalen einzelnen Git-Daten-Commit ohne Merge/Force-Update. Automatische
+mathematische Prüfung, Live-LLM, PDF-Kompilation, vollständige UI-Browserabnahme,
+Full-Lock-Neuinstallation und produktive Integration bleiben ausdrücklich offen.
+
+Kein erneutes ENOSPC bei Worktree-, Quellcode-, Test- oder Berichtsschreibvorgängen.
+`df -hT` im Workspace während C27-B: Btrfs `/dev/vdc`, 34 GB gesamt, etwa 5 GB frei.
+Keine APT-/dpkg-Reparatur, keine Cache-/Worktree-/Datenlöschung durchgeführt.

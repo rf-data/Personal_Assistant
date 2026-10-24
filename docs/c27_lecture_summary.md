@@ -3,6 +3,9 @@
 Stand: 24.10.2026. Backendbasis `e502aa9` (master); UI-Basis `e4be7a2` (main).
 Draft-PRs: [Backend #158](https://github.com/rf-data/Personal_Assistant/pull/158)
 und [UI #21](https://github.com/rf-data/personal-assistant-ui/pull/21).
+**C27-B:** [vollständige Dateiinventur, konkreter Legacy-Review, sicherer Adapter,
+Katalogkandidat und getrennte GO-/NO-GO-Entscheidung](c27b_legacy_catalog.md).
+Die frühere 4.000-Einträge-Inventur weiter unten ist ein historischer Zwischenstand.
 **Manuelle Abnahme:** Dauerhafter Start über den versionierten UI-Helfer
 `scripts/lecture_summary_local.py` und einen privaten persistenten Katalog.
 [Bedienungsanleitung, drei belegte Loviscach-Fälle und fachliche Checkliste](c27_manual_acceptance.md).
@@ -28,7 +31,7 @@ eine Integration in master/main wird nicht behauptet.
 | Legacy-Pfade | `LectureCourse.root`, `src/utils/path_helper.py`, `src/core/config.py`: Provider/Kurs unter `data_lectures`, Kategorie-/Dateinamen bleiben erhalten |
 | Transkripte | `TranscriptDocument` und `TranscriptSegment`; C27 übernimmt Segment-ID, Zeitbereich und explizit unbekannte Zeiten. Es transkribiert oder lädt nichts herunter |
 | PDF/HTML | Vorhandene Parser unter `src/tools_materials/parse_*`; C27 liest deren `NormalizedDocument` mit Seiten-/DOM-Lokatoren. Ungeparste PDFs/HTML werden nicht automatisch verarbeitet |
-| Wissen/Chunking | `TranscriptKnowledgeDocument`, vorhandene Knowledge-Pipelines/Consolidation; vorhandene Extrakte sind abgeleitete Kandidaten. C27 liest deren Statements mit JSON-Pointern; kein zweiter Extraktionsprozess |
+| Wissen/Chunking | `TranscriptKnowledgeDocument`, vorhandene Knowledge-Pipelines/Consolidation; vorhandene Extrakte sind abgeleitete Kandidaten. C27 liest Statements und Formeltext mit JSON-Pointern, nativen IDs und expliziten Parent-Referenzen; kein zweiter Extraktionsprozess |
 | Provenienz | `ContentLocator`, `Contract`, kanonische Fingerprints/SHA256 aus C23; native Source-/Dokument-/Media-IDs bleiben zusätzlich erhalten |
 | Storage | Erweiterung von `src/tools_materials/storage.py`, weiterhin `safe_path`, `checked_path`, `output_path` und Kernel-Mountprüfung. Kein unabhängiger PathResolver |
 | LLM | Vorhandener `OpenAIHTTPProvider`, HTTPX-Client und `RequestBudget`; kein neues SDK. Legacy-LiteLLM/Marvin laden beim Import teilweise Sessions/Logging und werden für den Offlinepfad nicht initialisiert |

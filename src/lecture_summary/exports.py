@@ -129,11 +129,19 @@ def render(summary, *, latex=False):
         for label, value in (
             ("native Source-ID", evidence.native_source_id),
             ("native Dokument-ID", evidence.native_document_id),
+            ("nativer Knowledge-Chunk", evidence.native_chunk_id),
+            ("natives Knowledge-Item", evidence.native_item_id),
             ("Media-ID", evidence.media_id),
             ("Original-SHA256", evidence.original_artifact_sha256),
         ):
             if value:
                 info += f"; {label} {value}"
+        if evidence.parent_artifact_ids:
+            info += "; Parent-Artefakte " + ", ".join(evidence.parent_artifact_ids)
+        if evidence.parent_segment_ids:
+            info += "; Parent-Segmente " + ", ".join(map(str, evidence.parent_segment_ids))
+        if evidence.warnings:
+            info += "; Quellenhinweise " + ", ".join(evidence.warnings)
         output.append((r"\par\small " if latex else "- ") + escape(info))
     body = "\n\n".join(output) + "\n"
     result = (
