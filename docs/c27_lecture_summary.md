@@ -3,16 +3,15 @@
 Stand: 24.10.2026. Backendbasis `e502aa9` (master); UI-Basis `e4be7a2` (main).
 Draft-PRs: [Backend #158](https://github.com/rf-data/Personal_Assistant/pull/158)
 und [UI #21](https://github.com/rf-data/personal-assistant-ui/pull/21).
-**Aktueller Umgebungsstand nach Diskvergrößerung:** Git-/uv-/pytest-Smokes,
-90 C27-/Rootpolicyfälle und die vollständige UI-Suite erneut bestanden.
-Vorhandene Python-3.12-Umgebungen wurden ohne Paketinstallation wiederverwendet.
-Die Loviscach-Demo wurde neu registriert und über CLI und Streamlit-AppTest mit
-beiden Downloads geprüft. Auf diesem Rechner startet
-`bash /tmp/c27-recovery-start-ui-20261024.sh` die bestehende Admin-App auf
-Loopback mit dieser Demo. Der Helfer und die Konfiguration sind temporär;
-die unten folgende Anleitung beschreibt die dauerhafte Einrichtung.
-Der alte RAM-Helfer `/tmp/c27-start-demo.sh` bleibt überholt. Details im
-[Prüfbericht](c27_validation.md#ergänzung-erneute-prüfung-nach-diskvergrößerung).
+**Manuelle Abnahme:** Dauerhafter Start über den versionierten UI-Helfer
+`scripts/lecture_summary_local.py` und einen privaten persistenten Katalog.
+[Bedienungsanleitung, drei belegte Loviscach-Fälle und fachliche Checkliste](c27_manual_acceptance.md).
+Der [separate Live-Testvorschlag](c27_live_test_proposal.md) ist ausschließlich
+vorbereitet; kein API-Aufruf oder Upload ausgeführt. Die `/tmp`-Recovery-Helfer
+werden nicht mehr benötigt. Das vollständige Modellrequestbudget wurde offline
+geprüft: der kurze Textfall passt, die vollständigen Formel-/Gruppenfälle liegen
+über der bestehenden Grenze und sind vorerst nur offline evaluierbar.
+
 C27 ist ein synchroner, ausdrücklich aktivierter Entwicklungsmodus. Er benötigt
 keinen C16-Worker, Controller, Queue, Content-Store oder Datenbankbootstrap.
 Produktionskonfiguration, historische Pilotdaten und die fünf geschützten Drafts
