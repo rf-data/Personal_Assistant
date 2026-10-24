@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+  "real_week0_comparison": "pending_local_exports_no_remote_access",
+  "fixtures": [
+    {
+      "file": "cs50x/lecture_0.html",
+      "url": "https://cs50.harvard.edu/x/notes/0/",
+      "raw_sha256": "e966a32e53130acdc6c821ab77343f8a251688e52e93eb1dd12312451be2280b",
+      "blocks": 660,
+      "code_blocks": 15,
+      "units_before": 191,
+      "units_after": 191,
+      "excluded": 466,
+      "links": 52,
+      "projected_links": 35,
+      "windows_sha256": "7bf478f40647f8e6c49d69a9c36eccbdb186cc6ca1ce97f6a33f02e1872b4362"
+    },
+    {
+      "file": "cs50_python/lecture_5.html",
+      "url": "https://cs50.harvard.edu/python/notes/5/",
+      "raw_sha256": "0855465b0458067ce5b6889d5e3929a49de108aa8d01d877c25e80bea0cd8367",
+      "blocks": 111,
+      "code_blocks": 16,
+      "units_before": 82,
+      "units_after": 82,
+      "excluded": 29,
+      "links": 16,
+      "projected_links": 10,
+      "windows_sha256": "a2de80608c934dda1c3a40e3f1c691b253b65b330477df99928f01db7b9967bf"
+    },
+    {
+      "file": "cs50_python/practice_1.html",
+      "url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+      "raw_sha256": "e01e960e04562376f0381732f8a72f3883012e945bc10d2dbb93cf791a1ef6cd",
+      "blocks": 40,
+      "code_blocks": 6,
+      "units_before": 30,
+      "units_after": 30,
+      "excluded": 10,
+      "links": 7,
+      "projected_links": 7,
+      "windows_sha256": "a05597f890efba4202dc4bc1b73527d9747d1b81c36d7f6a21a6bb2ac8758807"
+    },
+    {
+      "file": "cs50_ai/lecture_1.html",
+      "url": "https://cs50.harvard.edu/ai/notes/1/",
+      "raw_sha256": "27f12cea52cf1fb33444ed63dd50cdec230f1b48bd8f370f208a743db5aa4e40",
+      "blocks": 268,
+      "code_blocks": 3,
+      "units_before": 206,
+      "units_after": 206,
+      "excluded": 52,
+      "links": 9,
+      "projected_links": 9,
+      "windows_sha256": "6ab75f5f21f97c1646210f7b911b72a96fbeaf18ff9aee829ac618331ad49873"
+    },
+    {
+      "file": "cs50_ai/practice.html",
+      "url": "https://cs50.harvard.edu/ai/projects/4/shopping/",
+      "raw_sha256": "27dd092c335a06c6f52e7e22dcdb64349c6492c73d340642f83bc881357e000b",
+      "blocks": 93,
+      "code_blocks": 4,
+      "units_before": 63,
+      "units_after": 63,
+      "excluded": 30,
+      "links": 22,
+      "projected_links": 22,
+      "windows_sha256": "03f6203af25169715f91118c7559c33a72f861667c4dab94977e1f1763d2873d"
+    }
+  ]
+}
