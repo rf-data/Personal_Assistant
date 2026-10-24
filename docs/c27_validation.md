@@ -290,7 +290,45 @@ Testoperationen liefen in der normalen Codex-Sandbox auf dem lokalen Btrfs unter
 
 Backendtests verwenden unverändert das vorhandene
 `Personal_Assistant-c26b6-planning-results/test-env/bin/python`: Python 3.12.12,
-pytest 9.1.…615 tokens truncated…n-App auf
+pytest 9.1.1, Pydantic 2.14.1/core 2.50.1, HTTPX 0.28.1. Das erfüllt den
+Backend-Dependencyvertrag, ist aber **kein neuer Nachweis mit exakten Backend-
+Lockpins**. Die frühere exakte Prüfung mit 2.13.4/core 2.46.4 bleibt historisch.
+Keine Pakete in dieser fremden Umgebung ergänzt oder geändert.
+
+UI/CLI/Demo verwenden unverändert das vorhandene
+`personal-assistant-ui-c26b/.venv/bin/python`: Python 3.12.12, Streamlit 1.65.0,
+Pydantic 2.14.0/core 2.50.0, pydantic-settings 2.15.0. Alle 52 installierten
+Lockpakete wurden mit `uv.lock` verglichen: keine Versionsabweichung. Die virtuelle
+Projektwurzel ist kein installiertes Paket; das Python-Paket `tzdata` ist laut
+Lock nur für Windows/Emscripten erforderlich und fehlt unter Linux erwartbar.
+Dies ist keine Aussage über den separat vom Betreiber reparierten dpkg-Zustand.
+Es wurde keine vorhandene C26-Umgebung umgebaut.
+
+Der zusätzliche Lauf umfasst `test_cs50_material_contracts`,
+`test_cs50_material_mapping`, `test_cs50_material_html`,
+`test_official_transcript_import`, `test_transcript_unknown_time`,
+`test_cs50_workflows`, `test_c26_storage_preflight`, `test_c26_copy_inventory`,
+`test_cs50_selection`, `test_c26_integrated_pipeline`, `test_cs50_multiformat`,
+`test_cs50_lecture_adapter`, `test_cs50_course`, `test_cs50_discovery` und
+`test_cs50_material_e2e`. Der Skip ist weiterhin der ausdrücklich opt-in
+Originalmaterialtest in `test_cs50_course`; keine Originalfreigabe ergänzt.
+
+Testfixtures liegen klein und isoliert unter
+`/tmp/c27-recovery-smoke-20261024`; bei direkten Aufrufen sind Bytecode und pytest-Cache deaktiviert,
+optionale pytest-Plugins nicht automatisch geladen. Keine produktiven Dienste
+gestartet oder historischen CS50-Pilotdaten geöffnet. Die UI-Skips benötigen
+weiterhin gesonderte C16-/Review-Backendkonfiguration und sind nicht bestanden.
+
+### Erneute reale Demo und begrenzte Inventur
+
+Die oben dokumentierte echte Loviscach-Datei wurde ausdrücklich erneut registriert
+unter `/tmp/c27-recovery-demo-20261024/summary.json`. Markdown 47.512 Bytes,
+LaTeX 48.809 Bytes und JSON 153.409 Bytes liegen in dessen `exports/`.
+Summary-ID und Eingangs-SHA256 stimmen mit der früheren Demo überein; Vorher- und
+Nachherhash des Transkripts identisch. Status bleibt `needs_review`.
+
+Auf diesem Rechner startet
+`bash /tmp/c27-recovery-start-ui-20261024.sh` die bestehende Admin-App auf
 Loopback mit Operator-Demoanmeldung und `JOB_BACKEND=disabled`. Der Helfer prüft
 Interpreter und Konfiguration; er installiert nichts. Er verwendet die oben
 genannte vorhandene UI-Umgebung und beide C27-Checkouts. Helfer, Konfiguration und
