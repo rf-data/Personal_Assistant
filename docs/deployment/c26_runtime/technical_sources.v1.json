@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-10-23T18:47:40.962102+00:00",
+  "current_default_files": [
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "ref": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "path": "deployment/Dockerfile",
+      "git_blob": "9afa4fc2e70e96c8b9f9a2247f0e3a2eb4dafa7f",
+      "sha256": "f959cb0a64130745227cda08af3bb362bc215fd4fb97daf86d0c9df744e144a4",
+      "url": "https://github.com/rf-data/Personal_Assistant/blob/e502aa915ad0e928dbe7e92eacd44fff0152912b/deployment/Dockerfile",
+      "local_read_matches": true
+    },
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "ref": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "path": "deployment/compose.yaml",
+      "git_blob": "07201c01b187fa0c2fe122a7b239fb607d193eb5",
+      "sha256": "a9c887bc76bbe0be1115767c6dfa8775c6c8e5802e461d68eebae75d5320e550",
+      "url": "https://github.com/rf-data/Personal_Assistant/blob/e502aa915ad0e928dbe7e92eacd44fff0152912b/deployment/compose.yaml",
+      "local_read_matches": true
+    },
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "ref": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "path": "deployment/cs50-worker.compose.yaml",
+      "git_blob": "df6aa0bf50a6d7cd1f7d28114602dfc27b8db46b",
+      "sha256": "f32794123ceba2df0c1819f306ef72318363ac59b0fdb4d611cec331c76b887a",
+      "url": "https://github.com/rf-data/Personal_Assistant/blob/e502aa915ad0e928dbe7e92eacd44fff0152912b/deployment/cs50-worker.compose.yaml",
+      "local_read_matches": true
+    },
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "ref": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "path": "deployment/coolify.private-https.yaml",
+      "git_blob": "d26017e4c6f1dbfe49f6b34c6675e105d843d4a0",
+      "sha256": "1e6b3e810c9a9dc4256ce87b969489269b9f9daec2cf393b2125303f5f65d8d7",
+      "url": "https://github.com/rf-data/Personal_Assistant/blob/e502aa915ad0e928dbe7e92eacd44fff0152912b/deployment/coolify.private-https.yaml",
+      "local_read_matches": true
+    },
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "ref": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "path": "deployment/coolify.public-https.yaml",
+      "git_blob": "851052aabc577866b6caecfe3a41b40e845d2506",
+      "sha256": "6b644690d84feccc9fdbdb6aaa153a29a32056a0359ac684b41f2e9700d256d9",
+      "url": "https://github.com/rf-data/Personal_Assistant/blob/e502aa915ad0e928dbe7e92eacd44fff0152912b/deployment/coolify.public-https.yaml",
+      "local_read_matches": true
+    },
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "ref": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "path": "deployment/Caddyfile",
+      "git_blob": "29db8a02ee3d82cfa0cae4123881a97a8e60eda9",
+      "sha256": "89f70d421eb8897fe598268a26ec301d7565b035353b41f3b290ff33acd83c19",
+      "url": "https://github.com/rf-data/Personal_Assistant/blob/e502aa915ad0e928dbe7e92eacd44fff0152912b/deployment/Caddyfile",
+      "local_read_matches": true
+    },
+    {
+      "repo": "rf-data/personal-assistant-ui",
+      "ref": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "path": "docker/DockerFile.UI",
+      "git_blob": "6fafc0b64838734473ee5e29316d86ef77a515c2",
+      "sha256": "9a587374fca2b25c33204dcd922434cc413917c2c01e5ea90840d5e984a914c4",
+      "url": "https://github.com/rf-data/personal-assistant-ui/blob/e4be7a2fbf5b20beda0db854462dd2d70c2c93ff/docker/DockerFile.UI",
+      "local_read_matches": true
+    },
+    {
+      "repo": "rf-data/personal-assistant-ui",
+      "ref": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "path": "docker/docker-compose.ui.yaml",
+      "git_blob": "630884fca9b4bdd99b57ab6688ae7bb2dd6a6630",
+      "sha256": "9d32bee79855b13a2f03266a7888b782b9e6de706e316f07c459101b088e64ca",
+      "url": "https://github.com/rf-data/personal-assistant-ui/blob/e4be7a2fbf5b20beda0db854462dd2d70c2c93ff/docker/docker-compose.ui.yaml",
+      "local_read_matches": true
+    }
+  ],
+  "alternate_existing_worker_files": [
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "path": "docker/DockerFile.worker",
+      "ref": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "git_blob": "1d6b392ad0ceab13d48d5a114b01b7fbccf3b31a",
+      "sha256": "cea58be3d25d6971163d046ca92357296f35eb008ae6a543d2ec57566e0b1ece",
+      "url": "https://github.com/rf-data/Personal_Assistant/blob/e502aa915ad0e928dbe7e92eacd44fff0152912b/docker/DockerFile.worker"
+    },
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "path": "docker/DockerFile.worker",
+      "ref": "3b91d39195e0d13fe0442d4594b28e431b0f4236",
+      "git_blob": "1d6b392ad0ceab13d48d5a114b01b7fbccf3b31a",
+      "sha256": "cea58be3d25d6971163d046ca92357296f35eb008ae6a543d2ec57566e0b1ece",
+      "url": "https://github.com/rf-data/Personal_Assistant/blob/3b91d39195e0d13fe0442d4594b28e431b0f4236/docker/DockerFile.worker"
+    }
+  ],
+  "historical_startup_sources": [
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "path": "deployment/Dockerfile",
+      "ref": "3b91d39195e0d13fe0442d4594b28e431b0f4236",
+      "git_blob": "9afa4fc2e70e96c8b9f9a2247f0e3a2eb4dafa7f",
+      "url": "https://github.com/rf-data/Personal_Assistant/blob/3b91d39195e0d13fe0442d4594b28e431b0f4236/deployment/Dockerfile",
+      "sha256": "f959cb0a64130745227cda08af3bb362bc215fd4fb97daf86d0c9df744e144a4",
+      "startup": "C16 deployment ENTRYPOINT"
+    },
+    {
+      "repo": "rf-data/personal-assistant-ui",
+      "path": "docker/DockerFile.UI",
+      "ref": "b2cf9ca9ba44ee770dab4d834a6ae8285f34776b",
+      "git_blob": "9b0c4ab22e52e986d9032b26c601f958febf2644",
+      "url": "https://github.com/rf-data/personal-assistant-ui/blob/b2cf9ca9ba44ee770dab4d834a6ae8285f34776b/docker/DockerFile.UI",
+      "sha256": "91696b83cbfb16e0f861bfa237ea404786da440ddb8b633e1addd67d46185f88",
+      "startup": "streamlit CMD"
+    },
+    {
+      "repo": "rf-data/personal-assistant-ui",
+      "path": "docker/docker-compose.ui.yaml",
+      "ref": "b2cf9ca9ba44ee770dab4d834a6ae8285f34776b",
+      "git_blob": "8b3bae8c25d55f31394f36c208a32d4eee1b729a",
+      "url": "https://github.com/rf-data/personal-assistant-ui/blob/b2cf9ca9ba44ee770dab4d834a6ae8285f34776b/docker/docker-compose.ui.yaml",
+      "sha256": "9ffb91a484b49026364dde49a154be47423cd91917de7c352ce65a3a9133455c",
+      "startup": "streamlit build service, no startup override"
+    }
+  ],
+  "dockerfile_histories": [
+    {
+      "repo": "rf-data/Personal_Assistant",
+      "path": "deployment/Dockerfile",
+      "commits": [
+        {
+          "sha": "4ca068ca8107cdec7f9430bfbb52ca1f9f497372",
+          "date": "2026-10-20T16:19:05Z",
+          "title": "Adapt C26 worker for the small Hetzner pilot"
+        },
+        {
+          "sha": "cdd6de841f36863a1071588281e786b9158d1932",
+          "date": "2026-10-20T13:59:55Z",
+          "title": "feat(c26a): prepare private CS50 batch processing worker"
+        },
+        {
+          "sha": "f2842788efd487227ca95c8960f971ea14877cad",
+          "date": "2026-10-17T07:53:27Z",
+          "title": "C22: prepare single-host operations, private deployment profiles and verified restore"
+        }
+      ]
+    },
+    {
+      "repo": "rf-data/personal-assistant-ui",
+      "path": "docker/DockerFile.UI",
+      "commits": [
+        {
+          "sha": "07280633e0a3a529d566484e3f964d8ba9a999be",
+          "date": "2026-10-17T07:52:19Z",
+          "title": "C22: prepare locked UI container and fail-closed production startup"
+        },
+        {
+          "sha": "b003a87098c6bb434e0e266128448032697f3646",
+          "date": "2026-10-16T06:48:15Z",
+          "title": "feat(admin): consolidate UI with safe simulated job control"
+        },
+        {
+          "sha": "b2cf9ca9ba44ee770dab4d834a6ae8285f34776b",
+          "date": "2026-10-14T05:50:16Z",
+          "title": "Refactor code structure for improved readability and maintainability"
+        },
+        {
+          "sha": "2a9855af1020bab8afa356571786ceb8ea13aff6",
+          "date": "2026-10-10T12:24:24Z",
+          "title": "Change CMD to run app_ui.py in Dockerfile"
+        },
+        {
+          "sha": "86f818d9909f5f873787431444e26377d52ff725",
+          "date": "2026-10-10T11:52:15Z",
+          "title": "Changes to be committed:"
+        }
+      ]
+    }
+  ],
+  "inferences": {
+    "reuse_existing_transport": "deployment/compose.yaml already couples API namespace to api-gateway; Caddyfile forwards to 127.0.0.1:8016",
+    "backend_actual_build": "unverified; deployment/Dockerfile has deployment ENTRYPOINT at both refs, alternate docker/DockerFile.worker has sleep CMD at both refs",
+    "ui_actual_build": "unverified; observed start is consistent with historical b2cf9ca source, not proof of image lineage",
+    "compose_labels_prove_build_type": false,
+    "compose_labels_prove_triggers_disabled": false
+  },
+  "runtime_or_deployment_changes": false
+}
