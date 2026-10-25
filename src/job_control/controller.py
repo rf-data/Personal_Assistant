@@ -33,7 +33,15 @@ def authenticate(settings, authorization):
 class Controller:
     def __init__(self, settings):
         self.settings = settings
-        self.store = Store(settings.root)
+        if settings.deployment_gate_required:
+            from src.job_control.deployment_gate import require_existing_queue
+
+            require_existing_queue(settings)
+        self.store = Store(
+            settings.root,
+            deployment_gate_required=settings.deployment_gate_required,
+            deployment_gate_protocol=settings.deployment_gate_protocol,
+        )
         self.indexes = prepare_indexes(settings)
 
     def authenticate(self, authorization):
@@ -115,7 +123,9 @@ class Controller:
             raise Conflict("Preview changed or no longer valid")
         if request.start and not self.store.worker_available(self.settings.worker_ttl):
             raise Unavailable("Worker unavailable")
-        with self.store.connection(write=True) as db:
+        from src.job_control.deployment_gate import admission
+
+        with admission(self.settings), self.store.connection(write=True) as db:
             old = existing(db)
             if old:
                 return old

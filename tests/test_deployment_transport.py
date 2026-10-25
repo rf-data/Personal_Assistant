@@ -10,9 +10,12 @@ import sys
 import time
 from pathlib import Path
 
+import pytest
+
 from scripts.job_control_demo import DEMO_TOKEN, build_inputs
 from src.job_control.models import Identity, Settings
 from src.job_control.operations import backup, health, restore
+from src.tools_materials.capacity import CapacityLimits
 
 
 def until(call, timeout=20):
@@ -28,7 +31,8 @@ def until(call, timeout=20):
     raise AssertionError("Owned synthetic role did not become ready")
 
 
-def test_managed_api_worker_restart_idempotence_and_restore(tmp_path):
+@pytest.mark.parametrize("worker_kind", ["c16", "c26"])
+def test_managed_api_worker_restart_idempotence_and_restore(tmp_path, worker_kind):
     root = tmp_path / "private"
     root.mkdir(mode=0o700)
     settings = Settings(
@@ -47,6 +51,10 @@ def test_managed_api_worker_restart_idempotence_and_restore(tmp_path):
     config = tmp_path / "controller.json"
     config.write_text(settings.model_dump_json())
     config.chmod(0o600)
+    # Synthetic local budget only; production C26 reserve/limits stay unchanged.
+    limits = tmp_path / "synthetic-limits.json"
+    limits.write_text(CapacityLimits().model_dump_json())
+    limits.chmod(0o600)
     with socket.socket() as reservation:
         reservation.bind(("127.0.0.1", 0))
         port = reservation.getsockname()[1]
@@ -64,6 +72,18 @@ def test_managed_api_worker_restart_idempotence_and_restore(tmp_path):
         ]
         if role == "api":
             args += ["--port", str(port)]
+        elif worker_kind == "c26":
+            # Replace the regular worker subcommand; retain the same config/root.
+            args = [
+                sys.executable,
+                "-B",
+                "-m",
+                "scripts.cs50_worker",
+                "--config",
+                str(config),
+                "--limits",
+                str(limits),
+            ]
         child = subprocess.Popen(
             args,
             cwd=repo,
@@ -131,6 +151,9 @@ def test_managed_api_worker_restart_idempotence_and_restore(tmp_path):
         )
         worker = launch("worker")
         until(lambda: (health(settings, "worker"), True)[1])
+        duplicate = launch("worker")
+        assert duplicate.wait(timeout=10) == 2
+        health(settings, "worker")
         stop(worker)
         worker = launch("worker")
         until(lambda: (health(settings, "worker"), True)[1])

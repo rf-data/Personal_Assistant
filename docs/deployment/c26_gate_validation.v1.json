@@ -1,0 +1,116 @@
+{
+  "browser_retest": {
+    "attempts": 2,
+    "reasons": [
+      "Docker overlay mount ENOSPC; pinned Traefik version probe exits 125",
+      "synthetic helper with isolated env stages frozen fixtures on affected /tmp; second attempt ends before ready"
+    ],
+    "status": "blocked",
+    "successful_full_runs": 0
+  },
+  "date": "2026-10-22",
+  "default_heads": {
+    "backend": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+    "ui": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff"
+  },
+  "development_attempts": [
+    {
+      "failed": 1,
+      "name": "gate_diagnostic_lock_race",
+      "passed": 58,
+      "resolved": "bounded coordinator lock wait; final 66 pass"
+    },
+    {
+      "errors": 2,
+      "failed": 7,
+      "name": "initial_broad_without_global_RAM_tmp",
+      "passed": 143,
+      "resolved": "new Settings snapshot updated exactly; all other unexpected failures absent with global RAM tmp; known C18 remains"
+    }
+  ],
+  "environment": {
+    "pydantic": "2.13.4",
+    "pytest": "9.1.1",
+    "python": "3.12.12",
+    "sqlite": "3.50.4",
+    "temporary_data": "RAM; TMPDIR=/dev/shm"
+  },
+  "not_tested": [
+    "production_host",
+    "production_coolify_driver",
+    "actual_trigger_fencing",
+    "initial_bootstrap",
+    "actual_vpn_devices_routes",
+    "production_domain_tls_oidc",
+    "existing_private_authenticated_api",
+    "real_pilot_state",
+    "production_backup_restore_alert_delivery",
+    "fresh_browser_container_e2e"
+  ],
+  "production_release": "blocked",
+  "runtime_cli_smoke": {
+    "failed": 0,
+    "passed": 5
+  },
+  "schema_version": 1,
+  "scope": "isolated_local_synthetic_only",
+  "source_sha256": {
+    "deployment/Dockerfile": "752e904a8459041c3b3359f5a2ca0c46b2f847af878a0c387eba986688ff902d",
+    "deployment/Dockerfile.dockerignore": "e114b2c66ed2e3d3f272b38427d0dfb05b2fd92daff6fd371e5bc20e9d6d4a5f",
+    "docker/DockerFile.worker": "884e7ff082c424583d548fb8732a4cddacc95e8a70da978b2e44956ba2421740",
+    "docker/DockerFile.worker.dockerignore": "344b91fe4c1245aa5368d372fe125800c0e15a75721c4dad1df1848364abebee",
+    "docs/job_control/contract.v1.json": "cd3acffb855c2ba626fd3d9c14d157a84076b698c7ecd10d375c4953f1c68321",
+    "scripts/deployment_gate.py": "5c5ebbe642799d9d4defdaa893e4f0344daaa631993cd5079b8ea44ab0c45fb3",
+    "scripts/worker_image_smoke.py": "28140ec17542d520791a990c7f759b7f861595c962189c66546d55ccef1a6b6a",
+    "src/job_control/controller.py": "3f5da4f6b04ee88dccdb3d59cf391606363e63b6d7222efcecbf3cbbf4977886",
+    "src/job_control/deployment_gate.py": "ed79a728cb66a14e31bfdd8d3982417efde4fb34e08f415dcf8ca68d4700a4bb",
+    "src/job_control/executor.py": "1b9fdadbb8e29774d904412aae9b72ab03f38cab2e6ffeced3ea1ea147a29da0",
+    "src/job_control/models.py": "29f6a135a60ed4bed5d02284ca26667a0f285226dc18c4fba433a60a0a0c8f54",
+    "src/job_control/operations.py": "da2bfd6bf50139588997c97fc01d2fb90f31f7103d28ee7b9680c0b1ef971637",
+    "src/job_control/store.py": "49e505a857d9410e338750e5a237aacea3cae2ee63b4b11ecfe34ab9c68fdc8c",
+    "tests/test_deployment_gate.py": "bd5dd9f00e973d165e7c8a2908e4f002aaf30043d57ba013ba95226832edbdcc"
+  },
+  "suites": [
+    {
+      "errors": 0,
+      "failed": 0,
+      "name": "gate_final",
+      "passed": 66,
+      "seconds": 37.004,
+      "skipped": 0,
+      "tests": 66
+    },
+    {
+      "errors": 0,
+      "failed": 1,
+      "name": "broad_regression",
+      "passed": 264,
+      "seconds": 277.008,
+      "skipped": 2,
+      "tests": 267
+    },
+    {
+      "errors": 0,
+      "failed": 0,
+      "name": "pilot_regression",
+      "passed": 83,
+      "seconds": 67.648,
+      "skipped": 0,
+      "tests": 83
+    },
+    {
+      "errors": 0,
+      "failed": 1,
+      "name": "unchanged_master_c18_baseline",
+      "passed": 0,
+      "seconds": 3.005,
+      "skipped": 0,
+      "tests": 1
+    }
+  ],
+  "ui_security": {
+    "https_oidc_passed": 11,
+    "production_guards_passed": 9,
+    "source": "integrated main e4be7a2"
+  }
+}

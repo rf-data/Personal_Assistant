@@ -1,5 +1,13 @@
 # Konfiguration und Profile
 
+Das neue optionale Controllerfeld `deployment_gate_required` ist strikt boolesch
+und standardmäßig `false`. Erst nach dem separat genehmigten
+[Gate-Bootstrap](deployment_gate.md) auf `true` setzen. Dann verweigert ein
+fehlendes/defektes Gatejournal Annahme und Dispatch. Ein vorhandenes Journal wird
+auch von neuem Code mit Defaultflag respektiert; alte Images kennen diese Sperre
+nicht. Deshalb kein Mischbetrieb und kein automatisches Bootstrap durch Merge.
+Keine bestehende Konfigurationsdatei wird hier umgeschrieben.
+
 Alle Befehle sind manuell aus dem Backend-Repository auszuführen. Beispiele
 bezeichnen Platzhalter, keine vorhandenen Serverpfade. Secrets bleiben außerhalb
 von Git und Buildkontext. [Sicherheitsvertrag](security.md),
