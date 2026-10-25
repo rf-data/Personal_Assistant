@@ -1,0 +1,233 @@
+{
+  "schema_version": 1,
+  "kind": "c26-readonly-offline-operations-preflight",
+  "date": "2026-10-24",
+  "timezone": "Europe/Berlin",
+  "decision": {
+    "infrastructure": "HOLD",
+    "admin_app": "HOLD",
+    "productive_c26_runtime": "HOLD",
+    "readonly_offline_preparation": "GO"
+  },
+  "sources": {
+    "backend_master": "e68275205fefb7a5f6db42bc45060e505bfcefb5",
+    "pr148": {
+      "head": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+      "merge_base": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+      "state": "open",
+      "draft": true
+    },
+    "pr157": {
+      "head": "80c31e52f76c1f3f62102b6884752b722f796e7c",
+      "merge_base": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "state": "open",
+      "draft": true,
+      "added_files_blob_verified": 38,
+      "modified_files_blob_verified": 2,
+      "retrieval": "read-only GitHub connector; reconstructed bytes verified against Git blob SHA"
+    },
+    "merged_prs": [
+      156,
+      149
+    ],
+    "ui_main": "ba34e98c14e66921bf9c515c82a16201bc8baa1a",
+    "ui20": "merged; documentation only",
+    "ui_code_reference": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+    "ui_code_tree_comparison": [
+      "docs/c26_https.md"
+    ],
+    "protected_c27_heads_at_start": {
+      "backend158": "a0d3ebf7f64d44dd843f1848e70dc70a3a3af835",
+      "ui21": "218003222d418acc9e93585cd3367b694cd247e2"
+    }
+  },
+  "source_only_integration": {
+    "method": "git merge-file --stdout over copied sources; no merge commit or branch integration",
+    "order": [
+      "current master including 156/149",
+      "148 product changes",
+      "157 product changes"
+    ],
+    "overlapping_comparisons": [
+      {
+        "change": "pr148",
+        "path": "deployment/Dockerfile",
+        "conflicts": 0
+      },
+      {
+        "change": "pr148",
+        "path": "deployment/Dockerfile.dockerignore",
+        "conflicts": 0
+      },
+      {
+        "change": "pr148",
+        "path": "scripts/worker_image_smoke.py",
+        "conflicts": 0
+      },
+      {
+        "change": "pr148",
+        "path": "src/job_control/controller.py",
+        "conflicts": 0
+      },
+      {
+        "change": "pr148",
+        "path": "src/job_control/executor.py",
+        "conflicts": 0
+      },
+      {
+        "change": "pr148",
+        "path": "src/job_control/models.py",
+        "conflicts": 0
+      },
+      {
+        "change": "pr148",
+        "path": "src/job_control/operations.py",
+        "conflicts": 0
+      },
+      {
+        "change": "pr148",
+        "path": "src/job_control/store.py",
+        "conflicts": 0
+      },
+      {
+        "change": "pr157",
+        "path": "deployment/Dockerfile",
+        "conflicts": 0
+      },
+      {
+        "change": "pr157",
+        "path": "tests/test_deployment_transport.py",
+        "conflicts": 0
+      }
+    ],
+    "all_conflicts": 0,
+    "store_retry_and_gate_guards_retained": true,
+    "both_clis_in_dockerfile": true,
+    "source_comparison_sha256": "ab1a46f655761b60bc8f0e70a5baf71a9cb9714ba99aeac0330fbb08b437db57"
+  },
+  "validation": {
+    "backend": {
+      "passed": 166,
+      "skipped": 0,
+      "seconds": 1.97,
+      "files": {
+        "test_coolify_readiness.py": 69,
+        "test_coolify_observer.py": 66,
+        "test_c26_runtime_preflight.py": 30,
+        "test_c26_runtime_bootstrap.py::test_candidate_preserves_loopback_namespace_and_single_capacity_worker": 1
+      }
+    },
+    "ui": {
+      "passed": 20,
+      "subtests_passed": 9,
+      "skipped": 0,
+      "seconds": 2.59,
+      "files": [
+        "test_https_security.py",
+        "test_container_runtime.py"
+      ],
+      "earlier_probe": "Initial own source archive omitted app_admin_new.py and app_ui.py; two subtests failed with FileNotFoundError. Both exact reference files added; final targeted suite passed."
+    },
+    "denied_in_test_processes": [
+      "socket.socket.connect",
+      "sqlite3.connect"
+    ],
+    "bash_blocks_syntax_checked_only": 10,
+    "schema_models_match": [
+      "RuntimeScope / runtime_scope.v1.schema.json",
+      "OperationPlan / runtime_operation.v2.schema.json",
+      "HostEvidence / host_metadata.v1.schema.json"
+    ],
+    "full_regression": false,
+    "backup_restore_volume_or_gate_lifecycle_tests_executed": false
+  },
+  "dependencies": {
+    "backend": {
+      "python": "3.12.12",
+      "sqlite_library": "3.50.4",
+      "pytest": "9.1.1",
+      "pydantic": "2.14.1",
+      "pydantic-core": "2.50.1",
+      "httpx": "0.28.1",
+      "pyyaml": "6.0.3",
+      "pymupdf": "1.27.2.2"
+    },
+    "backend_runtime_lock_deviations": {
+      "pydantic": "2.13.4",
+      "pydantic-core": "2.46.4",
+      "pymupdf": "1.28.2"
+    },
+    "ui": {
+      "streamlit": "1.65.0",
+      "authlib": "1.9.1",
+      "pydantic": "2.14.0",
+      "pydantic-core": "2.50.0",
+      "httpx": "0.28.1"
+    },
+    "installs": false,
+    "exact_backend_runtime_image_acceptance": false
+  },
+  "operator_observed_not_remeasured": {
+    "os": "Ubuntu 24.04.5 LTS",
+    "vcpus": 2,
+    "ram_gb": 4,
+    "root_free_gb": 18,
+    "root_used_percent": 52,
+    "ram_or_swap_pressure": "no acute pressure reported",
+    "coolify_domain_tls": "valid certificate reported",
+    "admin_domain": "DNS resolves, no app assignment",
+    "streamlit": "internal 8501, no Docker healthcheck reported",
+    "cloud_firewall": "activated; 8000/6001/6002 still reachable from operator network",
+    "cloud_init": "older hotplug interface detection error"
+  },
+  "github_actions_metadata": {
+    "backend_runs_total": 1,
+    "latest_backend_run": {
+      "id": 25686254534,
+      "event": "dynamic",
+      "created_at": "2026-05-11T17:29:27Z",
+      "conclusion": "failure"
+    },
+    "ui_runs_total": 0,
+    "workflow_files_in_checked_trees": 0,
+    "fresh_workflow_list": "not supported by GitHub connector endpoint allowlist",
+    "hosted_ci_success_claimed": false
+  },
+  "safety": {
+    "server_ssh": false,
+    "target_domain_or_server_network_probes": false,
+    "cloud_or_coolify_api": false,
+    "live_llm": false,
+    "production_data_or_queue_or_volume_operations": false,
+    "backups_or_restore_triggered": false,
+    "container_start_restart_build_pull": false,
+    "dns_firewall_domain_or_auth_changes": false,
+    "merges_ready_or_deployment_calls": false,
+    "c27_changes": false,
+    "secret_files_read_or_reported": false,
+    "cleanup": false,
+    "enospc_observed": false
+  },
+  "tool_limitation": {
+    "operation": "targeted git fetch of PR157 into new local audit ref",
+    "executed": false,
+    "reason": "automatic approval review could not complete due usage limit",
+    "source_access_resolved": "read-only GitHub source retrieval plus exact Git blob verification; no host access requested"
+  },
+  "artifacts": {
+    "audit_worktree": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-operations-preflight",
+    "own_branch": "audit/c26-operations-preflight",
+    "source157_snapshot": "/tmp/c26-operations-source157-20261024",
+    "validation_snapshot": "/tmp/c26-operations-validation-20261024",
+    "retained_reason": "No merges or cleanup authorized; durable records pending Draft review and default-branch integration"
+  },
+  "manual_acceptance_outstanding": [
+    "external IPv4/IPv6 origin tests from a second network",
+    "actual cloud firewall attachment and rule union",
+    "installed Coolify/Traefik/UI/runtime image and build identities",
+    "OIDC roles, WSS and access boundaries",
+    "all live collector/coordinator/trigger/writer/namespace/mount/queue proofs",
+    "capacity, alerts, encrypted offsite backup and isolated restore",
+    "separate change and production approval"
+  ]
+}
