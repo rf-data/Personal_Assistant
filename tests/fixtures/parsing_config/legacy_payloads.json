@@ -1,0 +1,7 @@
+[
+  {"model": "ParseSettings", "payload": {"name_log": "historic", "name_logfile": "run", "file_name": "notes.pdf", "page_range": [3, 1], "pdf": {"extraction_model": "pymupdf", "save": ["md"], "assemble": ["md"]}}, "reject": ["parsing"]},
+  {"model": "ParseSettings", "payload": {"url_path": null, "file_name": null, "pdf": {"classify_header_footer": false, "classify_foot_notes": false, "classify_headings": true}, "wiki": {"article_to_parse": [314204], "parser": "html.parser"}}},
+  {"model": "GeneralSettings", "payload": {"pdf": {"x_gap_words": 35, "width_thresh": 0.45}, "md_elements": ["heading", "paragraph"]}},
+  {"model": "ChunkSettings", "payload": {"max_tokens": "512", "transformer_model": null, "spacy_language": null}},
+  {"model": "ParseSettings", "payload": {"pdf": null}, "reject": ["legacy", "parsing"]}
+]

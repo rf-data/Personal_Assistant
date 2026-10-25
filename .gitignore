@@ -31,6 +31,10 @@ __init__.py
 # other documents / files
 *.json
 
+# Synthetic parsing contracts captured on MAINT-03B; no private configurations.
+!/tests/fixtures/parsing_config/maint03b_contracts.json
+!/tests/fixtures/parsing_config/legacy_payloads.json
+
 # exclude folder from pushing
 .cache/**
 

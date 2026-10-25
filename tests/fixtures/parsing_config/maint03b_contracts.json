@@ -1,0 +1,2507 @@
+{
+  "legacy": {
+    "ParseFileSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        }
+      },
+      "validation_schema_sha256": "31a491bef5837d40f424d13322f7a4ea017a4d343862052799d0908c1e81b449",
+      "serialization_schema_sha256": "31a491bef5837d40f424d13322f7a4ea017a4d343862052799d0908c1e81b449",
+      "config": {}
+    },
+    "ParseDOCXSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false,
+        "tbl_text_mode": "brief"
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "tbl_text_mode": {
+          "annotation": "typing.Literal['long', 'brief']",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "'brief'"
+        }
+      },
+      "validation_schema_sha256": "dcbc8387e3daaec6d7c3b789ff8cc2d1ef60391fe22cdea90381d6c3ca8e939d",
+      "serialization_schema_sha256": "dcbc8387e3daaec6d7c3b789ff8cc2d1ef60391fe22cdea90381d6c3ca8e939d",
+      "config": {}
+    },
+    "ParseHTMLSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false,
+        "apollo": false,
+        "parser": ""
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "apollo": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "bool",
+          "default": null
+        },
+        "parser": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "str",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "41409c814673f3f5def98f5c8f0d3c8ebad8afaa19ba4e1edc634b24e0b381b2",
+      "serialization_schema_sha256": "41409c814673f3f5def98f5c8f0d3c8ebad8afaa19ba4e1edc634b24e0b381b2",
+      "config": {}
+    },
+    "ParseMDSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        }
+      },
+      "validation_schema_sha256": "2b76bf05742b73dde94e152253f1508431b727adacb48ea739ce6a13caf4a130",
+      "serialization_schema_sha256": "2b76bf05742b73dde94e152253f1508431b727adacb48ea739ce6a13caf4a130",
+      "config": {}
+    },
+    "ParseNotebookSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false,
+        "parser": ""
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "parser": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "str",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "74d98b3b533aa90b1c1cbdb726262a1dae29f803973027c5254af0e0ea5867f2",
+      "serialization_schema_sha256": "74d98b3b533aa90b1c1cbdb726262a1dae29f803973027c5254af0e0ea5867f2",
+      "config": {}
+    },
+    "ParsePDFSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false,
+        "extract_source": [],
+        "extraction_model": "",
+        "extract_text_info": false,
+        "extract_graphics": false,
+        "percentiles": []
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "extract_source": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "extraction_model": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "''"
+        },
+        "extract_text_info": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "extract_graphics": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "percentiles": {
+          "annotation": "list[float]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "d4d1460c93b85746d17ab83d1d8fe62b6efbea90c0eaa673b9170242a47e1bee",
+      "serialization_schema_sha256": "d4d1460c93b85746d17ab83d1d8fe62b6efbea90c0eaa673b9170242a47e1bee",
+      "config": {}
+    },
+    "ParsePlainTextSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        }
+      },
+      "validation_schema_sha256": "5bde0e1e5671e763afbdf6f64010f9bbbb81095d4398b3ac75014eb0a74e537b",
+      "serialization_schema_sha256": "5bde0e1e5671e763afbdf6f64010f9bbbb81095d4398b3ac75014eb0a74e537b",
+      "config": {}
+    },
+    "ParseURLSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        }
+      },
+      "validation_schema_sha256": "d281fd41683bb301726d98434277e72d93b368af47cce99fe65f1cd939cd3583",
+      "serialization_schema_sha256": "d281fd41683bb301726d98434277e72d93b368af47cce99fe65f1cd939cd3583",
+      "config": {}
+    },
+    "ParseWikiSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false,
+        "query": null,
+        "query_time": null,
+        "query_param": "page_id",
+        "page_id": [],
+        "page_title": [],
+        "language": "en",
+        "max_retries": 3
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "query": {
+          "annotation": "str | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "query_time": {
+          "annotation": "str | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "query_param": {
+          "annotation": "typing.Literal['page_title', 'page_id']",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "'page_id'"
+        },
+        "page_id": {
+          "annotation": "list[int]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "page_title": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "language": {
+          "annotation": "typing.Literal['en', 'de']",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "'en'"
+        },
+        "max_retries": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "3"
+        }
+      },
+      "validation_schema_sha256": "0e3e285c500b837610b187f5de672b4899725b129ad571ca59dd73b25bcaad89",
+      "serialization_schema_sha256": "0e3e285c500b837610b187f5de672b4899725b129ad571ca59dd73b25bcaad89",
+      "config": {}
+    },
+    "GeneralFileSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "318972b4b1527ef962f421d0fcb7b4c0bb78e7c7f7bcb008c96b887e13135d9b",
+      "serialization_schema_sha256": "318972b4b1527ef962f421d0fcb7b4c0bb78e7c7f7bcb008c96b887e13135d9b",
+      "config": {}
+    },
+    "GenDOCXSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "ab4bab3e218ca068f3cfc43d44d4368bdb5552dd103e5cee60a5e062260e833f",
+      "serialization_schema_sha256": "ab4bab3e218ca068f3cfc43d44d4368bdb5552dd103e5cee60a5e062260e833f",
+      "config": {}
+    },
+    "GenHTMLSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "f5036eff0c297a84abd1d1cd9c55291f984762e361ca36483e98dfd613f23f3f",
+      "serialization_schema_sha256": "f5036eff0c297a84abd1d1cd9c55291f984762e361ca36483e98dfd613f23f3f",
+      "config": {}
+    },
+    "GenMDSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "fc68e051e368fc38ce1a247ac54362636e1de44c561e158eed453faf0ad29b5f",
+      "serialization_schema_sha256": "fc68e051e368fc38ce1a247ac54362636e1de44c561e158eed453faf0ad29b5f",
+      "config": {}
+    },
+    "GenNotebookSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "d99738d6eb1324386b0d6f1e1be5df8c2fb5425109276658d15c9bc9863fead7",
+      "serialization_schema_sha256": "d99738d6eb1324386b0d6f1e1be5df8c2fb5425109276658d15c9bc9863fead7",
+      "config": {}
+    },
+    "GenPDFSettings": {
+      "defaults": {
+        "extraction_tags": [],
+        "y_gap_words": 0,
+        "x_gap_words": 0,
+        "width_thresh": 0.0,
+        "y_gap_line": 0,
+        "up_down_thresh": 0.0,
+        "left_right_thresh": 0.0,
+        "heading_threshold": 0,
+        "foot_note_thresh": 0,
+        "start_tol": 0
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "y_gap_words": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "x_gap_words": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "width_thresh": {
+          "annotation": "<class 'float'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "float",
+          "default": null
+        },
+        "y_gap_line": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "up_down_thresh": {
+          "annotation": "<class 'float'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "float",
+          "default": null
+        },
+        "left_right_thresh": {
+          "annotation": "<class 'float'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "float",
+          "default": null
+        },
+        "heading_threshold": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "foot_note_thresh": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "start_tol": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "5afbbe4b4b630cd23fae9b4fe1ac1ee1f6486e7e95bb9db0600bfc6cd142481a",
+      "serialization_schema_sha256": "5afbbe4b4b630cd23fae9b4fe1ac1ee1f6486e7e95bb9db0600bfc6cd142481a",
+      "config": {}
+    },
+    "GenPlainTextSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "9048d6c4b7690d8408b1ac70c7cbcb9bc3eb5cd00ea31fea6dc68447fcaf0196",
+      "serialization_schema_sha256": "9048d6c4b7690d8408b1ac70c7cbcb9bc3eb5cd00ea31fea6dc68447fcaf0196",
+      "config": {}
+    },
+    "GenURLSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "3d47046893025babd086823bf65168426b12f1c3189b0ab344dfaf1a9f4efb0a",
+      "serialization_schema_sha256": "3d47046893025babd086823bf65168426b12f1c3189b0ab344dfaf1a9f4efb0a",
+      "config": {}
+    },
+    "GenWikiSettings": {
+      "defaults": {
+        "extraction_tags": [],
+        "header_referer": "",
+        "header_accept": ""
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "header_referer": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "''"
+        },
+        "header_accept": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "''"
+        }
+      },
+      "validation_schema_sha256": "ec62b62ef51abde471d413aa6de486b8a7410c8cb9ca0267f824d0bdb4ec458b",
+      "serialization_schema_sha256": "ec62b62ef51abde471d413aa6de486b8a7410c8cb9ca0267f824d0bdb4ec458b",
+      "config": {}
+    },
+    "ChunkSettings": {
+      "defaults": {
+        "container_types": [],
+        "spacy_language": null,
+        "max_tokens": 0,
+        "overlap_sentences": 0,
+        "batch_size": 0,
+        "transformer_model": null
+      },
+      "fields": {
+        "container_types": {
+          "annotation": "<class 'list'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "spacy_language": {
+          "annotation": "typing.Literal['de_core_news_sm', None]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "max_tokens": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "overlap_sentences": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "batch_size": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "transformer_model": {
+          "annotation": "typing.Literal['all-MiniLM-L6-v2', 'paraphrase-multilingual-MiniLM-L12-v2', 'intfloat/multilingual-e5-base', None]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        }
+      },
+      "validation_schema_sha256": "21e30a081fe8b22a386dc6a6d3196b68759de9c7c940d8017aaa410c18f03878",
+      "serialization_schema_sha256": "21e30a081fe8b22a386dc6a6d3196b68759de9c7c940d8017aaa410c18f03878",
+      "config": {
+        "extra": "forbid"
+      }
+    },
+    "GeneralSettings": {
+      "defaults": {
+        "txt_elements": [],
+        "md_elements": [],
+        "docx": {
+          "extraction_tags": []
+        },
+        "html": {
+          "extraction_tags": []
+        },
+        "json_nb": {
+          "extraction_tags": []
+        },
+        "md": {
+          "extraction_tags": []
+        },
+        "pdf": {
+          "extraction_tags": [],
+          "y_gap_words": 0,
+          "x_gap_words": 0,
+          "width_thresh": 0.0,
+          "y_gap_line": 0,
+          "up_down_thresh": 0.0,
+          "left_right_thresh": 0.0,
+          "heading_threshold": 0,
+          "foot_note_thresh": 0,
+          "start_tol": 0
+        },
+        "plain_text": {
+          "extraction_tags": []
+        },
+        "url": {
+          "extraction_tags": []
+        },
+        "wiki": {
+          "extraction_tags": [],
+          "header_referer": "",
+          "header_accept": ""
+        }
+      },
+      "fields": {
+        "txt_elements": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "md_elements": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "docx": {
+          "annotation": "<class 'src.core.config.GenDOCXSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenDOCXSettings",
+          "default": null
+        },
+        "html": {
+          "annotation": "<class 'src.core.config.GenHTMLSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenHTMLSettings",
+          "default": null
+        },
+        "json_nb": {
+          "annotation": "<class 'src.core.config.GenNotebookSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenNotebookSettings",
+          "default": null
+        },
+        "md": {
+          "annotation": "<class 'src.core.config.GenMDSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenMDSettings",
+          "default": null
+        },
+        "pdf": {
+          "annotation": "<class 'src.core.config.GenPDFSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenPDFSettings",
+          "default": null
+        },
+        "plain_text": {
+          "annotation": "<class 'src.core.config.GenPlainTextSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenPlainTextSettings",
+          "default": null
+        },
+        "url": {
+          "annotation": "<class 'src.core.config.GenURLSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenURLSettings",
+          "default": null
+        },
+        "wiki": {
+          "annotation": "<class 'src.core.config.GenWikiSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenWikiSettings",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "04a0a2fdcca754c765b0d127ac3d374dbef91d02025800df97b7498265f3abe6",
+      "serialization_schema_sha256": "04a0a2fdcca754c765b0d127ac3d374dbef91d02025800df97b7498265f3abe6",
+      "config": {
+        "extra": "forbid"
+      }
+    },
+    "ParseSettings": {
+      "defaults": {
+        "name_log": "",
+        "name_logfile": "",
+        "llm_model": "",
+        "url_path": null,
+        "file_name": null,
+        "file_id": 0,
+        "page_range": "all",
+        "docx": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false,
+          "tbl_text_mode": "brief"
+        },
+        "html": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false,
+          "apollo": false,
+          "parser": ""
+        },
+        "json_nb": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false,
+          "parser": ""
+        },
+        "md": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false
+        },
+        "pdf": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false,
+          "extract_source": [],
+          "extraction_model": "",
+          "extract_text_info": false,
+          "extract_graphics": false,
+          "percentiles": []
+        },
+        "plain_text": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false
+        },
+        "url": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false
+        },
+        "wiki": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false,
+          "query": null,
+          "query_time": null,
+          "query_param": "page_id",
+          "page_id": [],
+          "page_title": [],
+          "language": "en",
+          "max_retries": 3
+        }
+      },
+      "fields": {
+        "name_log": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "str",
+          "default": null
+        },
+        "name_logfile": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "str",
+          "default": null
+        },
+        "llm_model": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "str",
+          "default": null
+        },
+        "url_path": {
+          "annotation": "list[str] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "file_name": {
+          "annotation": "str | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "file_id": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "page_range": {
+          "annotation": "typing.Union[list[int], typing.Literal['all']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "'all'"
+        },
+        "docx": {
+          "annotation": "<class 'src.core.config.ParseDOCXSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseDOCXSettings",
+          "default": null
+        },
+        "html": {
+          "annotation": "<class 'src.core.config.ParseHTMLSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseHTMLSettings",
+          "default": null
+        },
+        "json_nb": {
+          "annotation": "<class 'src.core.config.ParseNotebookSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseNotebookSettings",
+          "default": null
+        },
+        "md": {
+          "annotation": "<class 'src.core.config.ParseMDSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseMDSettings",
+          "default": null
+        },
+        "pdf": {
+          "annotation": "<class 'src.core.config.ParsePDFSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParsePDFSettings",
+          "default": null
+        },
+        "plain_text": {
+          "annotation": "<class 'src.core.config.ParsePlainTextSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParsePlainTextSettings",
+          "default": null
+        },
+        "url": {
+          "annotation": "<class 'src.core.config.ParseURLSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseURLSettings",
+          "default": null
+        },
+        "wiki": {
+          "annotation": "<class 'src.core.config.ParseWikiSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseWikiSettings",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "ba39bf8b1536178250ebab89cedc1d5f2626c60abe62248116c66088c00cff5e",
+      "serialization_schema_sha256": "ba39bf8b1536178250ebab89cedc1d5f2626c60abe62248116c66088c00cff5e",
+      "config": {
+        "extra": "forbid"
+      }
+    }
+  },
+  "parsing": {
+    "ParseFileSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        }
+      },
+      "validation_schema_sha256": "31a491bef5837d40f424d13322f7a4ea017a4d343862052799d0908c1e81b449",
+      "serialization_schema_sha256": "31a491bef5837d40f424d13322f7a4ea017a4d343862052799d0908c1e81b449",
+      "config": {}
+    },
+    "ParseDOCXSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false,
+        "tbl_text_mode": "brief"
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "tbl_text_mode": {
+          "annotation": "typing.Literal['long', 'brief']",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "'brief'"
+        }
+      },
+      "validation_schema_sha256": "dcbc8387e3daaec6d7c3b789ff8cc2d1ef60391fe22cdea90381d6c3ca8e939d",
+      "serialization_schema_sha256": "dcbc8387e3daaec6d7c3b789ff8cc2d1ef60391fe22cdea90381d6c3ca8e939d",
+      "config": {}
+    },
+    "ParseHTMLSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false,
+        "apollo": false,
+        "parser": ""
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "apollo": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "bool",
+          "default": null
+        },
+        "parser": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "str",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "41409c814673f3f5def98f5c8f0d3c8ebad8afaa19ba4e1edc634b24e0b381b2",
+      "serialization_schema_sha256": "41409c814673f3f5def98f5c8f0d3c8ebad8afaa19ba4e1edc634b24e0b381b2",
+      "config": {}
+    },
+    "ParseMDSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        }
+      },
+      "validation_schema_sha256": "2b76bf05742b73dde94e152253f1508431b727adacb48ea739ce6a13caf4a130",
+      "serialization_schema_sha256": "2b76bf05742b73dde94e152253f1508431b727adacb48ea739ce6a13caf4a130",
+      "config": {}
+    },
+    "ParseNotebookSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false,
+        "parser": ""
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "parser": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "str",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "74d98b3b533aa90b1c1cbdb726262a1dae29f803973027c5254af0e0ea5867f2",
+      "serialization_schema_sha256": "74d98b3b533aa90b1c1cbdb726262a1dae29f803973027c5254af0e0ea5867f2",
+      "config": {}
+    },
+    "ParsePDFSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false,
+        "extract_source": [],
+        "extraction_model": "",
+        "extract_text_info": false,
+        "extract_graphics": false,
+        "percentiles": [],
+        "classify_header_footer": true,
+        "classify_foot_notes": true,
+        "classify_headings": true
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "extract_source": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "extraction_model": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "str",
+          "default": null
+        },
+        "extract_text_info": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "extract_graphics": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "percentiles": {
+          "annotation": "list[float]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "classify_header_footer": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "True"
+        },
+        "classify_foot_notes": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "True"
+        },
+        "classify_headings": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "True"
+        }
+      },
+      "validation_schema_sha256": "ed69568b3514bd211ccfbd9bc99448b46b2aebcf96a62ffb0891334d0d9512d5",
+      "serialization_schema_sha256": "ed69568b3514bd211ccfbd9bc99448b46b2aebcf96a62ffb0891334d0d9512d5",
+      "config": {}
+    },
+    "ParsePlainTextSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        }
+      },
+      "validation_schema_sha256": "5bde0e1e5671e763afbdf6f64010f9bbbb81095d4398b3ac75014eb0a74e537b",
+      "serialization_schema_sha256": "5bde0e1e5671e763afbdf6f64010f9bbbb81095d4398b3ac75014eb0a74e537b",
+      "config": {}
+    },
+    "ParseURLSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        }
+      },
+      "validation_schema_sha256": "d281fd41683bb301726d98434277e72d93b368af47cce99fe65f1cd939cd3583",
+      "serialization_schema_sha256": "d281fd41683bb301726d98434277e72d93b368af47cce99fe65f1cd939cd3583",
+      "config": {}
+    },
+    "ParseWikiSettings": {
+      "defaults": {
+        "save": [
+          false
+        ],
+        "assemble": null,
+        "scrape_images": false,
+        "query": null,
+        "query_time": null,
+        "query_param": "page_id",
+        "page_id": [],
+        "page_title": [],
+        "language": "en",
+        "max_retries": 3
+      },
+      "fields": {
+        "save": {
+          "annotation": "list[typing.Literal[False, 'html', 'info', 'md', True, 'txt']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "[False]"
+        },
+        "assemble": {
+          "annotation": "list[typing.Literal['md', 'txt']] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "scrape_images": {
+          "annotation": "<class 'bool'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "False"
+        },
+        "query": {
+          "annotation": "str | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "query_time": {
+          "annotation": "str | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "query_param": {
+          "annotation": "typing.Literal['page_title', 'page_id']",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "'page_id'"
+        },
+        "page_id": {
+          "annotation": "list[int]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "page_title": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "language": {
+          "annotation": "typing.Literal['en', 'de']",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "'en'"
+        },
+        "max_retries": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "3"
+        }
+      },
+      "validation_schema_sha256": "0e3e285c500b837610b187f5de672b4899725b129ad571ca59dd73b25bcaad89",
+      "serialization_schema_sha256": "0e3e285c500b837610b187f5de672b4899725b129ad571ca59dd73b25bcaad89",
+      "config": {}
+    },
+    "GeneralFileSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "318972b4b1527ef962f421d0fcb7b4c0bb78e7c7f7bcb008c96b887e13135d9b",
+      "serialization_schema_sha256": "318972b4b1527ef962f421d0fcb7b4c0bb78e7c7f7bcb008c96b887e13135d9b",
+      "config": {}
+    },
+    "GenDOCXSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "ab4bab3e218ca068f3cfc43d44d4368bdb5552dd103e5cee60a5e062260e833f",
+      "serialization_schema_sha256": "ab4bab3e218ca068f3cfc43d44d4368bdb5552dd103e5cee60a5e062260e833f",
+      "config": {}
+    },
+    "GenHTMLSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "f5036eff0c297a84abd1d1cd9c55291f984762e361ca36483e98dfd613f23f3f",
+      "serialization_schema_sha256": "f5036eff0c297a84abd1d1cd9c55291f984762e361ca36483e98dfd613f23f3f",
+      "config": {}
+    },
+    "GenMDSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "fc68e051e368fc38ce1a247ac54362636e1de44c561e158eed453faf0ad29b5f",
+      "serialization_schema_sha256": "fc68e051e368fc38ce1a247ac54362636e1de44c561e158eed453faf0ad29b5f",
+      "config": {}
+    },
+    "GenNotebookSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "d99738d6eb1324386b0d6f1e1be5df8c2fb5425109276658d15c9bc9863fead7",
+      "serialization_schema_sha256": "d99738d6eb1324386b0d6f1e1be5df8c2fb5425109276658d15c9bc9863fead7",
+      "config": {}
+    },
+    "GenPDFSettings": {
+      "defaults": {
+        "extraction_tags": [],
+        "y_gap_words": 0,
+        "x_gap_words": 0,
+        "width_thresh": 0.0,
+        "y_gap_line": 0,
+        "up_down_thresh": 0.0,
+        "left_right_thresh": 0.0,
+        "heading_threshold": 0,
+        "foot_note_thresh": 0,
+        "start_tol": 0
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "y_gap_words": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "x_gap_words": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "width_thresh": {
+          "annotation": "<class 'float'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "float",
+          "default": null
+        },
+        "y_gap_line": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "up_down_thresh": {
+          "annotation": "<class 'float'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "float",
+          "default": null
+        },
+        "left_right_thresh": {
+          "annotation": "<class 'float'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "float",
+          "default": null
+        },
+        "heading_threshold": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "foot_note_thresh": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "start_tol": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "5afbbe4b4b630cd23fae9b4fe1ac1ee1f6486e7e95bb9db0600bfc6cd142481a",
+      "serialization_schema_sha256": "5afbbe4b4b630cd23fae9b4fe1ac1ee1f6486e7e95bb9db0600bfc6cd142481a",
+      "config": {}
+    },
+    "GenPlainTextSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "9048d6c4b7690d8408b1ac70c7cbcb9bc3eb5cd00ea31fea6dc68447fcaf0196",
+      "serialization_schema_sha256": "9048d6c4b7690d8408b1ac70c7cbcb9bc3eb5cd00ea31fea6dc68447fcaf0196",
+      "config": {}
+    },
+    "GenURLSettings": {
+      "defaults": {
+        "extraction_tags": []
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "3d47046893025babd086823bf65168426b12f1c3189b0ab344dfaf1a9f4efb0a",
+      "serialization_schema_sha256": "3d47046893025babd086823bf65168426b12f1c3189b0ab344dfaf1a9f4efb0a",
+      "config": {}
+    },
+    "GenWikiSettings": {
+      "defaults": {
+        "extraction_tags": [],
+        "header_referer": "",
+        "header_accept": ""
+      },
+      "fields": {
+        "extraction_tags": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "header_referer": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "''"
+        },
+        "header_accept": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "''"
+        }
+      },
+      "validation_schema_sha256": "ec62b62ef51abde471d413aa6de486b8a7410c8cb9ca0267f824d0bdb4ec458b",
+      "serialization_schema_sha256": "ec62b62ef51abde471d413aa6de486b8a7410c8cb9ca0267f824d0bdb4ec458b",
+      "config": {}
+    },
+    "ChunkSettings": {
+      "defaults": {
+        "container_types": [],
+        "spacy_language": null,
+        "max_tokens": 0,
+        "overlap_sentences": 0,
+        "batch_size": 0,
+        "transformer_model": null
+      },
+      "fields": {
+        "container_types": {
+          "annotation": "<class 'list'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "spacy_language": {
+          "annotation": "typing.Literal['de_core_news_sm', None]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "max_tokens": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "overlap_sentences": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "batch_size": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "transformer_model": {
+          "annotation": "typing.Literal['all-MiniLM-L6-v2', 'paraphrase-multilingual-MiniLM-L12-v2', 'intfloat/multilingual-e5-base', None]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        }
+      },
+      "validation_schema_sha256": "21e30a081fe8b22a386dc6a6d3196b68759de9c7c940d8017aaa410c18f03878",
+      "serialization_schema_sha256": "21e30a081fe8b22a386dc6a6d3196b68759de9c7c940d8017aaa410c18f03878",
+      "config": {
+        "extra": "forbid"
+      }
+    },
+    "GeneralSettings": {
+      "defaults": {
+        "txt_elements": [],
+        "md_elements": [],
+        "docx": {
+          "extraction_tags": []
+        },
+        "html": {
+          "extraction_tags": []
+        },
+        "json_nb": {
+          "extraction_tags": []
+        },
+        "md": {
+          "extraction_tags": []
+        },
+        "pdf": {
+          "extraction_tags": [],
+          "y_gap_words": 0,
+          "x_gap_words": 0,
+          "width_thresh": 0.0,
+          "y_gap_line": 0,
+          "up_down_thresh": 0.0,
+          "left_right_thresh": 0.0,
+          "heading_threshold": 0,
+          "foot_note_thresh": 0,
+          "start_tol": 0
+        },
+        "plain_text": {
+          "extraction_tags": []
+        },
+        "url": {
+          "extraction_tags": []
+        },
+        "wiki": {
+          "extraction_tags": [],
+          "header_referer": "",
+          "header_accept": ""
+        }
+      },
+      "fields": {
+        "txt_elements": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "md_elements": {
+          "annotation": "list[str]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "list",
+          "default": null
+        },
+        "docx": {
+          "annotation": "<class 'src.core.config_parsing.GenDOCXSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenDOCXSettings",
+          "default": null
+        },
+        "html": {
+          "annotation": "<class 'src.core.config_parsing.GenHTMLSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenHTMLSettings",
+          "default": null
+        },
+        "json_nb": {
+          "annotation": "<class 'src.core.config_parsing.GenNotebookSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenNotebookSettings",
+          "default": null
+        },
+        "md": {
+          "annotation": "<class 'src.core.config_parsing.GenMDSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenMDSettings",
+          "default": null
+        },
+        "pdf": {
+          "annotation": "<class 'src.core.config_parsing.GenPDFSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenPDFSettings",
+          "default": null
+        },
+        "plain_text": {
+          "annotation": "<class 'src.core.config_parsing.GenPlainTextSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenPlainTextSettings",
+          "default": null
+        },
+        "url": {
+          "annotation": "<class 'src.core.config_parsing.GenURLSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenURLSettings",
+          "default": null
+        },
+        "wiki": {
+          "annotation": "<class 'src.core.config_parsing.GenWikiSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "GenWikiSettings",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "04a0a2fdcca754c765b0d127ac3d374dbef91d02025800df97b7498265f3abe6",
+      "serialization_schema_sha256": "04a0a2fdcca754c765b0d127ac3d374dbef91d02025800df97b7498265f3abe6",
+      "config": {
+        "extra": "forbid"
+      }
+    },
+    "ParseSettings": {
+      "defaults": {
+        "llm_model": "",
+        "url_path": null,
+        "file_name": null,
+        "file_id": 0,
+        "page_range": "all",
+        "docx": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false,
+          "tbl_text_mode": "brief"
+        },
+        "html": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false,
+          "apollo": false,
+          "parser": ""
+        },
+        "json_nb": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false,
+          "parser": ""
+        },
+        "md": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false
+        },
+        "pdf": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false,
+          "extract_source": [],
+          "extraction_model": "",
+          "extract_text_info": false,
+          "extract_graphics": false,
+          "percentiles": [],
+          "classify_header_footer": true,
+          "classify_foot_notes": true,
+          "classify_headings": true
+        },
+        "plain_text": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false
+        },
+        "url": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false
+        },
+        "wiki": {
+          "save": [
+            false
+          ],
+          "assemble": null,
+          "scrape_images": false,
+          "query": null,
+          "query_time": null,
+          "query_param": "page_id",
+          "page_id": [],
+          "page_title": [],
+          "language": "en",
+          "max_retries": 3
+        }
+      },
+      "fields": {
+        "llm_model": {
+          "annotation": "<class 'str'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "str",
+          "default": null
+        },
+        "url_path": {
+          "annotation": "list[str] | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "file_name": {
+          "annotation": "str | None",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "None"
+        },
+        "file_id": {
+          "annotation": "<class 'int'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "int",
+          "default": null
+        },
+        "page_range": {
+          "annotation": "typing.Union[list[int], typing.Literal['all']]",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": null,
+          "default": "'all'"
+        },
+        "docx": {
+          "annotation": "<class 'src.core.config_parsing.ParseDOCXSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseDOCXSettings",
+          "default": null
+        },
+        "html": {
+          "annotation": "<class 'src.core.config_parsing.ParseHTMLSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseHTMLSettings",
+          "default": null
+        },
+        "json_nb": {
+          "annotation": "<class 'src.core.config_parsing.ParseNotebookSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseNotebookSettings",
+          "default": null
+        },
+        "md": {
+          "annotation": "<class 'src.core.config_parsing.ParseMDSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseMDSettings",
+          "default": null
+        },
+        "pdf": {
+          "annotation": "<class 'src.core.config_parsing.ParsePDFSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParsePDFSettings",
+          "default": null
+        },
+        "plain_text": {
+          "annotation": "<class 'src.core.config_parsing.ParsePlainTextSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParsePlainTextSettings",
+          "default": null
+        },
+        "url": {
+          "annotation": "<class 'src.core.config_parsing.ParseURLSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseURLSettings",
+          "default": null
+        },
+        "wiki": {
+          "annotation": "<class 'src.core.config_parsing.ParseWikiSettings'>",
+          "required": false,
+          "alias": null,
+          "validation_alias": null,
+          "serialization_alias": null,
+          "factory": "ParseWikiSettings",
+          "default": null
+        }
+      },
+      "validation_schema_sha256": "93516ffb678bc21751d9b8a45737ed754865d008ac63cde59d85f9877dff1555",
+      "serialization_schema_sha256": "93516ffb678bc21751d9b8a45737ed754865d008ac63cde59d85f9877dff1555",
+      "config": {
+        "extra": "forbid"
+      }
+    }
+  }
+}

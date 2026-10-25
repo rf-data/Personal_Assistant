@@ -17,6 +17,8 @@ CORE = (
     "test_knowledge_transcript_provenance.py",
     "test_pipeline_metrics.py",
     "test_maint03b_profiles.py",
+    "test_parsing_configuration.py",
+    "test_parsing_configuration_integration.py",
 )
 
 
