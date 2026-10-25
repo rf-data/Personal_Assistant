@@ -285,10 +285,15 @@ def shorten_path(path, n=3):
 
 
 def move_file(src_path: Path, dst_path: Path):
+    """Move a local file, leaving an already existing destination untouched.
+
+    The existence check is intended for sequential legacy callers; it does not
+    provide an atomic no-replace operation against concurrent writers.
+    """
     from src.core.memory import app_session
 
-    dst_path = ensure_dir(dst_path)
-    src_path = ensure_dir(src_path)
+    src_path = Path(src_path)
+    dst_path = Path(dst_path)
 
     if dst_path.exists():
         try:
@@ -299,8 +304,9 @@ def move_file(src_path: Path, dst_path: Path):
             print(
                 "File already exists at destination path. Hence, file will not be moved."
             )
-            return
+        return
 
+    dst_path.parent.mkdir(parents=True, exist_ok=True)
     shutil.move(src_path, dst_path)
     app_session.logger.info(
         "File '%s' has been moved to '%s'",
@@ -327,7 +333,12 @@ def create_save_path(name_suffix, file_suffix):  # folder_name,
     return f_path
 
 
-def list_files(folder: str | Path | list, suffix: str):
+def list_files(folder: str | Path | list[str | Path], suffix: str) -> list[Path]:
+    """List matching files without creating missing input directories.
+
+    Accept one file, one directory, or a list of both. Matching remains case
+    sensitive and nonrecursive; input order and duplicate entries are retained.
+    """
     if isinstance(folder, (str, Path)):
         folder = [folder]
 
@@ -336,16 +347,18 @@ def list_files(folder: str | Path | list, suffix: str):
 
     files = []
     for fold in folder:
-        fold = ensure_dir(fold)
+        fold = Path(fold)
+
+        if fold.is_file() and fold.suffix == suffix:
+            files.append(fold)
+            continue
 
         if not fold.is_dir():
-            if fold.is_file() and fold.suffix == suffix:
-                files.append(fold)
-            else:
-                raise ValueError(
-                    f"Provided 'folder' argument is neither a folder not a file carrying the correct suffix:\n{folder} (dtype = {type(folder)})"
-                )
+            raise ValueError(
+                f"Provided 'folder' argument is neither a directory nor a file "
+                f"carrying the correct suffix: {fold}"
+            )
 
-        files.extend([f for f in Path(fold).iterdir() if f.suffix == suffix])
+        files.extend(f for f in fold.iterdir() if f.is_file() and f.suffix == suffix)
 
     return files
