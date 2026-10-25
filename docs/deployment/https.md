@@ -10,8 +10,19 @@ Rollout, DNS-/Firewall-/ACME-Eingriff oder Entfernen von Images/Volumes.
 
 ## Architektur und belegter Iststand
 
-Live abgeglichen am 22.10.: Backend `master` = `3b91d39195e0d13fe0442d4594b28e431b0f4236`,
-UI `main` = `49cf9ee172aa7f46357cf1fef53158fc9ba654e7`.
+Fortsetzung nach Integration von #147 und UI #19: Der
+[workerbewusste Gate-Kern](deployment_gate.md) ist separat offline vorbereitet.
+Er sperrt Annahme/Dispatch dauerhaft während des Wechsels und verlangt eine
+weitere Freigabe zum Wiederöffnen. Produktiver Coolify-Adapter, exklusiver
+Triggerpfad, Erstbootstrap und reale Hostabnahme bleiben blockiert; daraus folgt
+keine Freigabe für das neue UI-Image. Ergebnisse im
+[Gate-Abnahmebeleg](c26_gate_validation.md).
+
+Live abgeglichen am 22.10.: Backend `master` = `e581e201ef6b3d6c06aca14de845e0687d213b37`,
+UI `main` = `e4be7a2fbf5b20beda0db854462dd2d70c2c93ff`.
+Backend #147 wurde am 22.10. um 16:31:06 UTC mit `e581e20`, UI #19 um
+16:30:41 UTC mit `e4be7a2` gemergt. Der aktuelle Gate-Folgebeleg unterscheidet
+diese Integration von der weiterhin blockierten Produktion.
 [Backend #137](https://github.com/rf-data/Personal_Assistant/pull/137) wurde am
 20.10. um 20:14:42 UTC mit Mergecommit `59e8d6b` integriert;
 [UI #18](https://github.com/rf-data/personal-assistant-ui/pull/18) um 20:13:43 UTC
@@ -26,7 +37,7 @@ erweitert. Das belegt kein Update des laufenden Hosts.
 
 | Bereich | Status | Beleg / offene Grenze |
 | --- | --- | --- |
-| C26-B-Integration | `implemented`, `verified` | Beide Mergebelege und aktuelle Default-Commitobjekte geprüft |
+| C26-B-Integration | `implemented`, `verified` | #137/#147 und UI #18/#19 sowie aktuelle Default-Commitobjekte geprüft |
 | HTTPS/OIDC/C16, Cookies/WSS | `implemented`, `verified` | Erneute lokale synthetische Tests; siehe Abnahmebeleg |
 | Private Overlay-/Routingprüfung | `implemented`, `verified` | Explizites Profil, angehängte Allowlist, kein Hostport; nur offline |
 | Echtes VPN, Gerätefreigabe, Quell-IP-Erhalt | `not_tested`, `operator_action_required` | Kein bestätigter Hostzugriff oder VPN-Bestand |
@@ -233,8 +244,10 @@ Webhooks/API-/Registrytrigger und aktuelle/ausstehende Deployments prüfen. Eine
 leere Queue ist kein Drain und verhindert kein Rennen mit neuen Jobs. Prozessnamen
 allein beweisen keine inaktive C16-Queue. Aktuelle Jobzustände nur über die
 vorhandene autorisierte Statusoberfläche prüfen; keine Produktions-SQLite öffnen.
-[Issue #146](https://github.com/rf-data/Personal_Assistant/issues/146) ist offen,
-ein workerbewusstes atomisches Deploymentgate ist **nicht implementiert**.
+[Issue #146](https://github.com/rf-data/Personal_Assistant/issues/146) ist offen.
+Der [Gate-Kern](deployment_gate.md) ist offline implementiert; eine produktive
+Einbindung des atomischen Gates ist **nicht nachgewiesen**. Der konkrete
+Coolify-Driver und die Bootstrapfreigabe fehlen.
 Bis zu dessen Abnahme Auto-Deploy/Preview-/externe Trigger nur nach Betreiberfreigabe
 deaktivieren und den manuellen Release-/Idle-Zeitraum exklusiv sichern.
 [Coolify beschreibt auch externe Trigger](https://coolify.io/docs/applications/deployments/automatic-deployments);
@@ -560,8 +573,9 @@ API-/Workerrolle und Revision, existierender interner TLS-Endpunkt und Netzplan,
 UI-Ressourcen-ID/Buildtyp/Proxy-IP, Zertifikat/ACMEverfahren, Budget, redigierte
 Proxylogs, Alarmziel, Backup-/Rollbackbeleg sowie explizite Host-/Rolloutfreigabe.
 
-Die ursprünglichen #137/#18 sind integriert. Die Fortsetzung wird separat zur
-Review gestellt und nicht automatisch gemergt. Ihre Branches/Worktrees bleiben bis
+Die ursprünglichen #137/#18 und Korrekturen #147/#19 sind integriert. Das neue
+Deployment-Gate wird separat zur Review gestellt und nicht automatisch gemergt.
+Seine Branches/Worktrees bleiben bis
 zur regulären Integration erhalten; ältere Arbeitskopien enthalten teilweise
 wertvolle Venvs und fremde Änderungen und werden nicht bereinigt. Keine automatische
 Issue-/Produktivabnahme und keine zweite parallele Betriebsanleitung.

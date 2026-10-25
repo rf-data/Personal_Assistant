@@ -555,6 +555,11 @@
           "title": "Catalog",
           "type": "object"
         },
+        "deployment_gate_required": {
+          "default": false,
+          "title": "Deployment Gate Required",
+          "type": "boolean"
+        },
         "execution_enabled": {
           "default": false,
           "title": "Execution Enabled",
