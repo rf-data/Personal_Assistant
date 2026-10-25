@@ -13,8 +13,7 @@ from src.tools_materials.storage import artifact_root
 
 
 @pytest.fixture
-def mounted(tmp_path, monkeypatch):
-    os.umask(0o077)
+def mounted(tmp_path, monkeypatch, private_umask):
     repo = tmp_path / "app"
     repo.mkdir(mode=0o700)
     for name in ("src", "scripts", "data", "configuration"):

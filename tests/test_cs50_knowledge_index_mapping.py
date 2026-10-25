@@ -8,6 +8,7 @@ from src.tools_rag.cs50_knowledge_index import (
     KnowledgeMappingContext,
     map_knowledge_document,
 )
+from tests.qdrant_support import qdrant_client as qdrant_client
 
 
 def documents(case, context):

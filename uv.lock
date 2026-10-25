@@ -1680,6 +1680,21 @@ unclear = [
     { name = "markdown-it-py" },
 ]
 
+test-core = [
+    { name = "pytest" },
+]
+test-offline = [
+    { name = "beautifulsoup4" },
+    { name = "pymupdf" },
+    { name = "pytest" },
+]
+test-qdrant = [
+    { name = "beautifulsoup4" },
+    { name = "pymupdf" },
+    { name = "pytest" },
+    { name = "qdrant-client" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "bgutil-ytdlp-pot-provider", marker = "extra == 'lecture-worker'", specifier = ">=2.0.2" },
@@ -1742,6 +1757,19 @@ dev = [
     { name = "ruff", specifier = ">=0.15.14" },
 ]
 unclear = [{ name = "markdown-it-py", specifier = ">=4.0.0" }]
+
+test-core = [{ name = "pytest", specifier = ">=9.0.3" }]
+test-offline = [
+    { name = "beautifulsoup4", specifier = ">=4.15.0" },
+    { name = "pymupdf", specifier = ">=1.27.2.2" },
+    { name = "pytest", specifier = ">=9.0.3" },
+]
+test-qdrant = [
+    { name = "beautifulsoup4", specifier = ">=4.15.0" },
+    { name = "pymupdf", specifier = ">=1.27.2.2" },
+    { name = "pytest", specifier = ">=9.0.3" },
+    { name = "qdrant-client", specifier = ">=1.19.1" },
+]
 
 [[package]]
 name = "google-auth"

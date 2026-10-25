@@ -6,6 +6,7 @@ from test_cs50_knowledge_input import context as context
 
 from scripts.cs50_transcript_index_demo import demonstrate
 from src.tools_rag.cs50_ingestion import IngestionPlan
+from tests.qdrant_support import qdrant_client as qdrant_client
 
 
 @pytest.mark.parametrize(

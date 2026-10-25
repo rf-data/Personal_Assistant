@@ -30,7 +30,6 @@ def offline_settings(root):
 
 @pytest.fixture(scope="module")
 def context(tmp_path_factory):
-    before = set(sys.modules)
     directory = tmp_path_factory.mktemp("cs50_contracts")
 
     def forbidden(*args, **kwargs):
@@ -59,15 +58,6 @@ def context(tmp_path_factory):
             courses=tuple(adapter.build_cs50_course_plan(p) for p in previews)
         )
         yield adapter, previews, plan
-    # Remove only contracts imported by this fixture; keep legacy pure-selection
-    # tests independent of the pre-existing Settings coupling in Lecture models.
-    for name in (
-        "src.tools_lecture.adapt_cs50",
-        "src.model_lecture.data_resources",
-        "src.core.config",
-    ):
-        if name not in before:
-            sys.modules.pop(name, None)
 
 
 @pytest.mark.parametrize(

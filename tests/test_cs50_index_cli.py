@@ -10,6 +10,7 @@ from test_cs50_ingestion import index_case as index_case
 
 from scripts.cs50_transcript_index import client_for
 from src.tools_rag.cs50_orchestration import prepare_sources
+from tests.qdrant_support import qdrant_client as qdrant_client
 
 
 def cli(*args):

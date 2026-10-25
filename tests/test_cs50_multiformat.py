@@ -26,8 +26,7 @@ def offline(monkeypatch):
 
 
 @pytest.fixture
-def env(tmp_path, monkeypatch):
-    os.umask(0o077)
+def env(tmp_path, monkeypatch, private_umask):
     tmp_path.chmod(0o700)
     # Capacity is modeled, production's five-GiB reserve stays unchanged.
     monkeypatch.setattr(

@@ -2,7 +2,6 @@
 
 import io
 import json
-import os
 import socket
 import stat
 import struct
@@ -43,8 +42,7 @@ def offline(monkeypatch):
 
 
 @pytest.fixture
-def env(tmp_path, monkeypatch):
-    os.umask(0o077)
+def env(tmp_path, monkeypatch, private_umask):
     tmp_path.chmod(0o700)
     monkeypatch.setattr(
         "shutil.disk_usage", lambda _: SimpleNamespace(free=100 * 1024**3)

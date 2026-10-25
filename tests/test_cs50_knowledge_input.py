@@ -15,7 +15,6 @@ SRT = b"1\n00:00:01,000 --> 00:00:02,000\nValue\n\n2\n00:00:03,000 --> 00:00:04,
 
 @pytest.fixture(scope="module")
 def context(tmp_path_factory):
-    before = set(sys.modules)
     directory = tmp_path_factory.mktemp("knowledge-settings")
     with pytest.MonkeyPatch.context() as patch:
         patch.chdir(directory)
@@ -45,9 +44,6 @@ def context(tmp_path_factory):
         )
         yield module, executor, consolidation, plan
         assert "marvin" not in sys.modules
-    for name in list(sys.modules):
-        if name not in before and name.startswith("src."):
-            sys.modules.pop(name, None)
 
 
 def imported(context, tmp_path, course="cs50_python", body=SRT):

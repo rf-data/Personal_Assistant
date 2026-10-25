@@ -138,6 +138,8 @@ import runpy, sys
 from pathlib import Path
 class NoMarvin:
     def find_spec(self, fullname, path=None, target=None):
+        if fullname in {'src.core.memory', 'src.core.config'} or fullname.split('.')[0] in {'tiktoken', 'pydantic_settings'}:
+            raise AssertionError('Offline preparation imported optional session/settings dependencies')
         if fullname == 'marvin':
             raise RuntimeError('Controlled offline initialization failure')
 sys.meta_path.insert(0, NoMarvin())

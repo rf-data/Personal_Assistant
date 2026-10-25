@@ -115,7 +115,6 @@ def worker(plan_path):
     budget = RequestBudget(plan["max_chunks"])
     try:
         from src.core.config_knowledge import KnowledgeSettings
-        from src.core.memory import app_session
         from src.model_knowledge.data_knowledge import ChunkKnowledgeResult
         from src.model_transcribe.data_transcribe import TranscriptDocument
         from src.tools_knowledge.find_knowledge import (
@@ -128,7 +127,6 @@ def worker(plan_path):
             validate_extraction,
         )
 
-        app_session.logger = logging.getLogger("cs50-smoke")
         source = Path(plan["transcript"])
         raw = source.read_bytes()
         transcript = TranscriptDocument.model_validate_json(raw)
@@ -221,8 +219,10 @@ def worker(plan_path):
         from pydantic_ai.models.openai import OpenAIChatModel
         from pydantic_ai.providers.openai import OpenAIProvider
 
+        from src.core.memory import app_session
         from src.utils.llm_helper import configure_marvin
 
+        app_session.logger = logging.getLogger("cs50-smoke")
         configure_marvin(SimpleNamespace(llm_model=plan["model"], llm_context=None))
 
         class BoundedTransport(httpx.AsyncBaseTransport):
