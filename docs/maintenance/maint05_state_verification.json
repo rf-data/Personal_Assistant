@@ -1,0 +1,1612 @@
+{
+  "scope": "read-only before/after registered-worktree, refs, HEAD, index-byte and status-name fingerprints; ignored contents deliberately not read",
+  "initial_worktree_count": 84,
+  "worktree_registration_unchanged": true,
+  "refs_unchanged": true,
+  "before_worktrees_sha256": "36ac09b05ae7e0338ec1c9cc1493a19e323fa81285bccf55427d5f1c8a222035",
+  "after_worktrees_sha256": "36ac09b05ae7e0338ec1c9cc1493a19e323fa81285bccf55427d5f1c8a222035",
+  "before_refs_sha256": "976dd9e8aaee34bcf55b92af55225b420f3273025f64546cc7c4fd6a6d6ffb92",
+  "after_refs_sha256": "976dd9e8aaee34bcf55b92af55225b420f3273025f64546cc7c4fd6a6d6ffb92",
+  "foreign_worktrees_unchanged": true,
+  "all_heads_indexes_unchanged": true,
+  "records": [
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant",
+        "head_sha256": "6e3f39da8d863acb9f0a2dfbf616ed8181e90f639ae721f288f32dc2573f9228",
+        "status_sha256": "6dc423bb659f3991706b2cd61a1566145943ad0429fd836effc4ccf14085ff9f",
+        "index_path_sha256": "3ec3ee441793315aac0938cf81d9766ef0925d44ad5afd637d24845b30a2a52e",
+        "index_sha256": "e8997c145333549875bf6b845306109de84279ef2b120aa3bc31af75a9640ca7"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant",
+        "head_sha256": "6e3f39da8d863acb9f0a2dfbf616ed8181e90f639ae721f288f32dc2573f9228",
+        "status_sha256": "6dc423bb659f3991706b2cd61a1566145943ad0429fd836effc4ccf14085ff9f",
+        "index_path_sha256": "3ec3ee441793315aac0938cf81d9766ef0925d44ad5afd637d24845b30a2a52e",
+        "index_sha256": "e8997c145333549875bf6b845306109de84279ef2b120aa3bc31af75a9640ca7"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c21q",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c21q",
+        "head_sha256": "bc5deb8646b26622b3b0e17d37c246e40ce6c8e3c7690583d9a2a28e6b354cc0",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "60be664b899297eec5809af8636e7b3cbf3d43bfa0ca25fdc89fe7370edb4b7c",
+        "index_sha256": "f80d328d491637623857f7564cc83bf3e9176109d71b732fa71b811674617829"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c21q",
+        "head_sha256": "bc5deb8646b26622b3b0e17d37c246e40ce6c8e3c7690583d9a2a28e6b354cc0",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "60be664b899297eec5809af8636e7b3cbf3d43bfa0ca25fdc89fe7370edb4b7c",
+        "index_sha256": "f80d328d491637623857f7564cc83bf3e9176109d71b732fa71b811674617829"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c22",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c22",
+        "head_sha256": "0edac69b6e8c400d9bd49b62fbaa9812de6704b5e0a45e6166d8da94c3585244",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "d13f8368b288e83f0360a86ecfc8a96d8d6c635d3d3d1334936578e6d31154a0",
+        "index_sha256": "39838ca77d36f0376e8d1b826cfb69a5a341e0338a55cef31e23b3b93ba65e8e"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c22",
+        "head_sha256": "0edac69b6e8c400d9bd49b62fbaa9812de6704b5e0a45e6166d8da94c3585244",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "d13f8368b288e83f0360a86ecfc8a96d8d6c635d3d3d1334936578e6d31154a0",
+        "index_sha256": "39838ca77d36f0376e8d1b826cfb69a5a341e0338a55cef31e23b3b93ba65e8e"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c230",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c230",
+        "head_sha256": "f3116eaf840dd94f0e05b399062f760bef5d9af628021ac56d91c67831d92c14",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "cf5e072671603084a2cc1620a26f1b1ea4703e1270890f44f621f731124dc5c4",
+        "index_sha256": "3c3815c102c3120789c77130190a109cab119c0ea1385a0faf5c04884cb257cd"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c230",
+        "head_sha256": "f3116eaf840dd94f0e05b399062f760bef5d9af628021ac56d91c67831d92c14",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "cf5e072671603084a2cc1620a26f1b1ea4703e1270890f44f621f731124dc5c4",
+        "index_sha256": "3c3815c102c3120789c77130190a109cab119c0ea1385a0faf5c04884cb257cd"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2301",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2301",
+        "head_sha256": "2d4a14f8d8c29ad03644526c9fadf10b771d47b5c6e48aa4fd8e7eebc144059c",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "c191b3303ce4d9f71110e0c43735bdb78b29f190bebb559a97f54f6e97f5e8d9",
+        "index_sha256": "04b904e00990c1ea1cf6b30b435155f062564e8cb4db0f0d997eaacd254e6657"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2301",
+        "head_sha256": "2d4a14f8d8c29ad03644526c9fadf10b771d47b5c6e48aa4fd8e7eebc144059c",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "c191b3303ce4d9f71110e0c43735bdb78b29f190bebb559a97f54f6e97f5e8d9",
+        "index_sha256": "04b904e00990c1ea1cf6b30b435155f062564e8cb4db0f0d997eaacd254e6657"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2302a",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2302a",
+        "head_sha256": "bf830daa6c1ddc6cafed85ed7146b7d37262ac4704fc1bb5d4fe8d22665670a7",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "74850bb3517da0d1a7b856099b9eed9f5485ef8c3b0bc0cc3cf76a6719f23581",
+        "index_sha256": "b89184d3043cad496e060887a2fbb8cf8b6a69eeaefe528dab45f0cae6a1ed59"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2302a",
+        "head_sha256": "bf830daa6c1ddc6cafed85ed7146b7d37262ac4704fc1bb5d4fe8d22665670a7",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "74850bb3517da0d1a7b856099b9eed9f5485ef8c3b0bc0cc3cf76a6719f23581",
+        "index_sha256": "b89184d3043cad496e060887a2fbb8cf8b6a69eeaefe528dab45f0cae6a1ed59"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2302b",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2302b",
+        "head_sha256": "e36b96c27b677631d2d548e143d67a56da04b066a710567a7697ecda75c4e76c",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "1a5e7fad2174b82c741cb993348a7492a0b7ddcf7b0b8a52d9ebf6fe4e2aaab4",
+        "index_sha256": "8ffe7bdeeda8ec059aefa03d4566b8fe06b183519d13a8e57825ed78121d3d71"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2302b",
+        "head_sha256": "e36b96c27b677631d2d548e143d67a56da04b066a710567a7697ecda75c4e76c",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "1a5e7fad2174b82c741cb993348a7492a0b7ddcf7b0b8a52d9ebf6fe4e2aaab4",
+        "index_sha256": "8ffe7bdeeda8ec059aefa03d4566b8fe06b183519d13a8e57825ed78121d3d71"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2302c",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2302c",
+        "head_sha256": "9fed0fdedfaefa2da32ea054d3085a1e0be0119e6bf40f77a0da2fe2736e5621",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "d72763ff1b021fae40fead99e780ce64c80a4621c08b30cc30623117161fa6d8",
+        "index_sha256": "04cd7418bbdccac0098f9775697a1e508af11c3e854a0aa29ac8db22a7636ba8"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2302c",
+        "head_sha256": "9fed0fdedfaefa2da32ea054d3085a1e0be0119e6bf40f77a0da2fe2736e5621",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "d72763ff1b021fae40fead99e780ce64c80a4621c08b30cc30623117161fa6d8",
+        "index_sha256": "04cd7418bbdccac0098f9775697a1e508af11c3e854a0aa29ac8db22a7636ba8"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2303",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2303",
+        "head_sha256": "4bbb61df6945d763ae97e5af548144f54f964d70221555586dc49fa7f94c235c",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "5aeb33b2f6757042b29d103f069f95c3af4d72840473d1b8105594efcdb759f5",
+        "index_sha256": "7829d66944f9a64cfc073a17672ac617df3342468839a582f0e46b0a9c51ce2f"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2303",
+        "head_sha256": "4bbb61df6945d763ae97e5af548144f54f964d70221555586dc49fa7f94c235c",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "5aeb33b2f6757042b29d103f069f95c3af4d72840473d1b8105594efcdb759f5",
+        "index_sha256": "7829d66944f9a64cfc073a17672ac617df3342468839a582f0e46b0a9c51ce2f"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2304",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2304",
+        "head_sha256": "0f818a0e4326dbdd863bc4a774227fad61622b28f1fa6a9c9407338435a93f26",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "6a919af43f87688a33ef1146ef4d87a2d1649620b632efd7af8410851b8b0577",
+        "index_sha256": "82317fdd8331f5fe8feb89df2dde98c29e7bb5ab585b8d2b48b16ad9116bd0c0"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2304",
+        "head_sha256": "0f818a0e4326dbdd863bc4a774227fad61622b28f1fa6a9c9407338435a93f26",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "6a919af43f87688a33ef1146ef4d87a2d1649620b632efd7af8410851b8b0577",
+        "index_sha256": "82317fdd8331f5fe8feb89df2dde98c29e7bb5ab585b8d2b48b16ad9116bd0c0"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2305",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2305",
+        "head_sha256": "8c40fd097ac52d41bef33f322fc06844d369282ebbf320daaf2bef8fd8e3c191",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "a3fa3db5a9d617249e668620265a7cb197f8bfa60a1144c417d6759c354db5df",
+        "index_sha256": "f1b9ad8d0b30869fbfc63f880f2aa67ba154fb5ce767d92f7f170f498c38893d"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2305",
+        "head_sha256": "8c40fd097ac52d41bef33f322fc06844d369282ebbf320daaf2bef8fd8e3c191",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "a3fa3db5a9d617249e668620265a7cb197f8bfa60a1144c417d6759c354db5df",
+        "index_sha256": "f1b9ad8d0b30869fbfc63f880f2aa67ba154fb5ce767d92f7f170f498c38893d"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2306",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2306",
+        "head_sha256": "0909d7335f2cf98f1d4e2b75887adb859d5c519d416e13214dcad9ba4da6bf4d",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "796f69d08eed0020bee432fb5412f4951193990d76d505e44283ec17dc8d90dc",
+        "index_sha256": "a938d436140c5f10d1ef1a19497056c51d8b4b72f2a3700a58567356d777234a"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2306",
+        "head_sha256": "0909d7335f2cf98f1d4e2b75887adb859d5c519d416e13214dcad9ba4da6bf4d",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "796f69d08eed0020bee432fb5412f4951193990d76d505e44283ec17dc8d90dc",
+        "index_sha256": "a938d436140c5f10d1ef1a19497056c51d8b4b72f2a3700a58567356d777234a"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2401",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2401",
+        "head_sha256": "72313d0442e449249a3039f35cf0af8fde2e6492d812290a8b69d0bc97cfd3bf",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "8d5b9cdc9ef61be9934e65df5d1df7eba54389ac8ba5d511cca1498c7782ae63",
+        "index_sha256": "4847c62cc9249501ba8678d717b9ea7b4ddcee3dd2ff9ea543c6afabd3fa79ad"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2401",
+        "head_sha256": "72313d0442e449249a3039f35cf0af8fde2e6492d812290a8b69d0bc97cfd3bf",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "8d5b9cdc9ef61be9934e65df5d1df7eba54389ac8ba5d511cca1498c7782ae63",
+        "index_sha256": "4847c62cc9249501ba8678d717b9ea7b4ddcee3dd2ff9ea543c6afabd3fa79ad"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2402",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2402",
+        "head_sha256": "d3a0733ed6fbc70a55a65f90f98a567e7dcc69a9c9cdd6dbdfc8340705956e92",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "0fd90c6762329e7b6b9b0ffba182a1b648dd1aa8f1e9cd35c51a647d3d3d8ab2",
+        "index_sha256": "ec04699d4e7af56323dac01ea613cc218d5ad4bb6e2c320f7165eead135afbc9"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2402",
+        "head_sha256": "d3a0733ed6fbc70a55a65f90f98a567e7dcc69a9c9cdd6dbdfc8340705956e92",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "0fd90c6762329e7b6b9b0ffba182a1b648dd1aa8f1e9cd35c51a647d3d3d8ab2",
+        "index_sha256": "ec04699d4e7af56323dac01ea613cc218d5ad4bb6e2c320f7165eead135afbc9"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2403",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2403",
+        "head_sha256": "79f5ce8d7bb816958ae538232b77a22d475e90a7905d163b978cdc90d641ba03",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "a5b062cb9cc482003baf6fb0c47964628d674235a1b8f3b3ebae2d903e4be3fc",
+        "index_sha256": "87907e3dbc20ffe457e4bafd94cf3447865c4f59e6fe36e5fcd50d1af3bc9cef"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2403",
+        "head_sha256": "79f5ce8d7bb816958ae538232b77a22d475e90a7905d163b978cdc90d641ba03",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "a5b062cb9cc482003baf6fb0c47964628d674235a1b8f3b3ebae2d903e4be3fc",
+        "index_sha256": "87907e3dbc20ffe457e4bafd94cf3447865c4f59e6fe36e5fcd50d1af3bc9cef"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2404",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2404",
+        "head_sha256": "7db1677634c8dfde51fade4d27011a4ae9e0e29e5b256cfff5ecf2491fcae259",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "ebf3a384643de7a15ad9ecc28accc2b2d2c4913ff0cde83a2f5edbfdeebfbcfe",
+        "index_sha256": "29439d0eb26044a35941cde5a11c4c41367ecf15d2e7e18e97f2ce96bd9dc8de"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2404",
+        "head_sha256": "7db1677634c8dfde51fade4d27011a4ae9e0e29e5b256cfff5ecf2491fcae259",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "ebf3a384643de7a15ad9ecc28accc2b2d2c4913ff0cde83a2f5edbfdeebfbcfe",
+        "index_sha256": "29439d0eb26044a35941cde5a11c4c41367ecf15d2e7e18e97f2ce96bd9dc8de"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405a",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405a",
+        "head_sha256": "5b13aee571988885a86db0681d31a10083ba139bd4cf63c3a57056fddb1f9909",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "fbaf811ebf2c9134029ab115a72d712544d8b2b92a6b399c208277cfb1e38a60",
+        "index_sha256": "92316bb35bd8bb73881f1e7dd76515c477e366bf20a2bfc3098f69b93a6616c3"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405a",
+        "head_sha256": "5b13aee571988885a86db0681d31a10083ba139bd4cf63c3a57056fddb1f9909",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "fbaf811ebf2c9134029ab115a72d712544d8b2b92a6b399c208277cfb1e38a60",
+        "index_sha256": "92316bb35bd8bb73881f1e7dd76515c477e366bf20a2bfc3098f69b93a6616c3"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405b",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405b",
+        "head_sha256": "a6fd506b93075ea33bd791033e002812cee23c1ee5675eccbf2748f1f84aeb00",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "bc09dc6a871d5679be40d2b5b3cd93be56736c0ce68649a6f60dd73fffd7ad8d",
+        "index_sha256": "c8751984cef9b88a1916db5884147c60a6e4c36c42b1d9c2be8e59df0e5f0b99"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405b",
+        "head_sha256": "a6fd506b93075ea33bd791033e002812cee23c1ee5675eccbf2748f1f84aeb00",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "bc09dc6a871d5679be40d2b5b3cd93be56736c0ce68649a6f60dd73fffd7ad8d",
+        "index_sha256": "c8751984cef9b88a1916db5884147c60a6e4c36c42b1d9c2be8e59df0e5f0b99"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405b1",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405b1",
+        "head_sha256": "1c6886d41c304148c744d1ef03d452b8cc3f7cfca035551d361888f94029dae6",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "4a2eb7e50dc20aa16fd91f446a18958b9b854dd4f1a0a0034f36e1a2ffae0f94",
+        "index_sha256": "f9bbe91a8e7f99b4105e7ec0a7a0c836b0de073ff08d11ff6607af314e89ec04"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405b1",
+        "head_sha256": "1c6886d41c304148c744d1ef03d452b8cc3f7cfca035551d361888f94029dae6",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "4a2eb7e50dc20aa16fd91f446a18958b9b854dd4f1a0a0034f36e1a2ffae0f94",
+        "index_sha256": "f9bbe91a8e7f99b4105e7ec0a7a0c836b0de073ff08d11ff6607af314e89ec04"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405c",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405c",
+        "head_sha256": "ddcc317a205868dc26db784a3fc68f37c8e3bcd6f26313e9593cb2b4d912aeaf",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "660d40e28842887e1727a7918db7a73c4807c727f4cf00ac27cae74d306f6acf",
+        "index_sha256": "d8f39c2aba001a645de7ca5c41c0b17513fb5e9b53dfcecfd1cefe133b5c8ce1"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405c",
+        "head_sha256": "ddcc317a205868dc26db784a3fc68f37c8e3bcd6f26313e9593cb2b4d912aeaf",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "660d40e28842887e1727a7918db7a73c4807c727f4cf00ac27cae74d306f6acf",
+        "index_sha256": "d8f39c2aba001a645de7ca5c41c0b17513fb5e9b53dfcecfd1cefe133b5c8ce1"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405c2",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405c2",
+        "head_sha256": "b0af055d61d0c7e3e7c0cba0a4b2697ac3539d1a824a1748cf643281e7cbe938",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "a823a99351b824419424089dfced7f0a8e745b4eb396320c47f9db170517d354",
+        "index_sha256": "49363093897b7e3922c084f4ee4a6a70881854d4ed2ee1457a9639639be61626"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2405c2",
+        "head_sha256": "b0af055d61d0c7e3e7c0cba0a4b2697ac3539d1a824a1748cf643281e7cbe938",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "a823a99351b824419424089dfced7f0a8e745b4eb396320c47f9db170517d354",
+        "index_sha256": "49363093897b7e3922c084f4ee4a6a70881854d4ed2ee1457a9639639be61626"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2406a",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2406a",
+        "head_sha256": "fe2ba17b41aaf8ff91ffcf1b5a460e7eff7593628008dcf6824b82fcf9bdd614",
+        "status_sha256": "ae9629f85172d19aa3d3238fabe452cc01125dca6c8d78d45e448f94bffb97be",
+        "index_path_sha256": "7e7bf870c75faf18d81062b5b7fd8441d37b0596794fc470e871836c22d21015",
+        "index_sha256": "944d1a410cdf215e13eb4201b7ecfc6a976c0f30ed91835c2ddb2c6e64c40fa4"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c2406a",
+        "head_sha256": "fe2ba17b41aaf8ff91ffcf1b5a460e7eff7593628008dcf6824b82fcf9bdd614",
+        "status_sha256": "ae9629f85172d19aa3d3238fabe452cc01125dca6c8d78d45e448f94bffb97be",
+        "index_path_sha256": "7e7bf870c75faf18d81062b5b7fd8441d37b0596794fc470e871836c22d21015",
+        "index_sha256": "944d1a410cdf215e13eb4201b7ecfc6a976c0f30ed91835c2ddb2c6e64c40fa4"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r",
+        "head_sha256": "fe2ba17b41aaf8ff91ffcf1b5a460e7eff7593628008dcf6824b82fcf9bdd614",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "dd32879f41a5ec34691f50841db398fc0529bd0fbac05a57c4b4a14ba21daed5",
+        "index_sha256": "93e4aa72e03e16476fc521e50dd2bfa1075d7d8e69798a90e8681cdd8979e676"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r",
+        "head_sha256": "fe2ba17b41aaf8ff91ffcf1b5a460e7eff7593628008dcf6824b82fcf9bdd614",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "dd32879f41a5ec34691f50841db398fc0529bd0fbac05a57c4b4a14ba21daed5",
+        "index_sha256": "93e4aa72e03e16476fc521e50dd2bfa1075d7d8e69798a90e8681cdd8979e676"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-final-compat",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-final-compat",
+        "head_sha256": "8dd4dbd51f2a4a6580fe8f20c3230a74fdc749c3f839f8f7b5516914a9f40c54",
+        "status_sha256": "049939d45bf80406635bb2b7cc2ede62fdc9a37f9c7e668eb843aedac8174019",
+        "index_path_sha256": "a0c20d96716456505eb1a1170a32d7d6f9c1cd930da1dfe88205ef4bfdac71e1",
+        "index_sha256": "bd48dbc18a440ea6600684b84bd034ffa9a040483a6750e4ddbb1e253b3eae66"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-final-compat",
+        "head_sha256": "8dd4dbd51f2a4a6580fe8f20c3230a74fdc749c3f839f8f7b5516914a9f40c54",
+        "status_sha256": "049939d45bf80406635bb2b7cc2ede62fdc9a37f9c7e668eb843aedac8174019",
+        "index_path_sha256": "a0c20d96716456505eb1a1170a32d7d6f9c1cd930da1dfe88205ef4bfdac71e1",
+        "index_sha256": "bd48dbc18a440ea6600684b84bd034ffa9a040483a6750e4ddbb1e253b3eae66"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-final-pilot",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-final-pilot",
+        "head_sha256": "07bedd2db29840312eba7a8838d04e1b04327f3a301884de2cc6af02cc15b7e0",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "8cde4d4a25e86e184cddd072b2276a6f19720058ddece0c50ddbd95ca571bd0f",
+        "index_sha256": "27bd21f5aca22c91ae099aa04313954fd733e69f1822d2013b932bbc6f8089dd"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-final-pilot",
+        "head_sha256": "07bedd2db29840312eba7a8838d04e1b04327f3a301884de2cc6af02cc15b7e0",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "8cde4d4a25e86e184cddd072b2276a6f19720058ddece0c50ddbd95ca571bd0f",
+        "index_sha256": "27bd21f5aca22c91ae099aa04313954fd733e69f1822d2013b932bbc6f8089dd"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-gate",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-gate",
+        "head_sha256": "b3f82a10aad9d446cee7cb70cdede7d779c9335f88c8fa44a0c25d3605ac301c",
+        "status_sha256": "a789025f217cdbab31394518cd61198abd107bc44f4fc199201eb7de9e65ce63",
+        "index_path_sha256": "c435e714cd9f5f50ec32145a23b49fae82a1e3eaeb388a7eea272626c7440ffc",
+        "index_sha256": "8312c1d9d08097c31778070fa8bbf0aad696567742b460ddca11da3a9654d790"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-gate",
+        "head_sha256": "b3f82a10aad9d446cee7cb70cdede7d779c9335f88c8fa44a0c25d3605ac301c",
+        "status_sha256": "a789025f217cdbab31394518cd61198abd107bc44f4fc199201eb7de9e65ce63",
+        "index_path_sha256": "c435e714cd9f5f50ec32145a23b49fae82a1e3eaeb388a7eea272626c7440ffc",
+        "index_sha256": "8312c1d9d08097c31778070fa8bbf0aad696567742b460ddca11da3a9654d790"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-integration",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-integration",
+        "head_sha256": "cfacce2799ee3825f0f5c911e5e507299ae3eaed4294f21ede2d7264d1d51605",
+        "status_sha256": "d99778a40fdfa870ddf16e700f7a507158f9c0506f7a0001702cf0257a87351f",
+        "index_path_sha256": "239f34b441b95ae7a167941eeda86dc2ef2fcc18503018936fb1ce4e16a021f9",
+        "index_sha256": "a6da7926996c622448cdaa9ae39fd165a78aef0feb6712fbb5503ca4ae82d34b"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-integration",
+        "head_sha256": "cfacce2799ee3825f0f5c911e5e507299ae3eaed4294f21ede2d7264d1d51605",
+        "status_sha256": "d99778a40fdfa870ddf16e700f7a507158f9c0506f7a0001702cf0257a87351f",
+        "index_path_sha256": "239f34b441b95ae7a167941eeda86dc2ef2fcc18503018936fb1ce4e16a021f9",
+        "index_sha256": "a6da7926996c622448cdaa9ae39fd165a78aef0feb6712fbb5503ca4ae82d34b"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-integration-review",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-integration-review",
+        "head_sha256": "23d30cc018411d36988255f74890c5c71bf60928cbd271f39df369100e2aaf4b",
+        "status_sha256": "db3dcdcc406493a1ed4e07ee91d400385e35bde5cec5ead57f2432c5719c6472",
+        "index_path_sha256": "4361edc75e85209c1adf6a8cc88da2472336522185f1966e64214aa79883228a",
+        "index_sha256": "222b7b08d87797beef143098c9a5adbf25de6f1b4151da2cf830fa3661c738fd"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-integration-review",
+        "head_sha256": "23d30cc018411d36988255f74890c5c71bf60928cbd271f39df369100e2aaf4b",
+        "status_sha256": "db3dcdcc406493a1ed4e07ee91d400385e35bde5cec5ead57f2432c5719c6472",
+        "index_path_sha256": "4361edc75e85209c1adf6a8cc88da2472336522185f1966e64214aa79883228a",
+        "index_sha256": "222b7b08d87797beef143098c9a5adbf25de6f1b4151da2cf830fa3661c738fd"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-legacy-pr-audit",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-legacy-pr-audit",
+        "head_sha256": "45b5c2d11482a423497993901655abb0b440d27a074d062004ec1f42fae1a5e3",
+        "status_sha256": "39bb9fee1dc2d85da28401e9d01601e804fbd3cfe8e013e581f0ee776d9e332f",
+        "index_path_sha256": "cfd9e8f66d7003e7108c3a5ffe1e4ffe97c715cdf3b5428b91a9131bf4588c73",
+        "index_sha256": "6523ad33c79801dbe7d368de4cc865a1d42512658da0d2edb91ea3ee6a2792dd"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-legacy-pr-audit",
+        "head_sha256": "45b5c2d11482a423497993901655abb0b440d27a074d062004ec1f42fae1a5e3",
+        "status_sha256": "39bb9fee1dc2d85da28401e9d01601e804fbd3cfe8e013e581f0ee776d9e332f",
+        "index_path_sha256": "cfd9e8f66d7003e7108c3a5ffe1e4ffe97c715cdf3b5428b91a9131bf4588c73",
+        "index_sha256": "6523ad33c79801dbe7d368de4cc865a1d42512658da0d2edb91ea3ee6a2792dd"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-operations-preflight",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-operations-preflight",
+        "head_sha256": "e0786138a211a4f9417232164224d91e927daffcd2e7c95486f8230f79908cd8",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "b5ff5504becdad0131055721cf3d356d7d53b6888ca65160a0bbc84300c7c85d",
+        "index_sha256": "b04a3448187f511415aa2c08fa6b922c71e31816466e4277f340710611512a1a"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-operations-preflight",
+        "head_sha256": "e0786138a211a4f9417232164224d91e927daffcd2e7c95486f8230f79908cd8",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "b5ff5504becdad0131055721cf3d356d7d53b6888ca65160a0bbc84300c7c85d",
+        "index_sha256": "b04a3448187f511415aa2c08fa6b922c71e31816466e4277f340710611512a1a"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-release-readiness",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-release-readiness",
+        "head_sha256": "d3ee33984ae00badc7dc5266f582d0c39025167432fd1ec693f6388774313711",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "acf3fe68868d0500d9ca5dcc3dca6fbe759cd726b56df334fa28aca59c79a046",
+        "index_sha256": "f5b0a81897596ac9ef16e6bb0af0265c1fcadf2972e066fdc9e521de5fe06c9f"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-release-readiness",
+        "head_sha256": "d3ee33984ae00badc7dc5266f582d0c39025167432fd1ec693f6388774313711",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "acf3fe68868d0500d9ca5dcc3dca6fbe759cd726b56df334fa28aca59c79a046",
+        "index_sha256": "f5b0a81897596ac9ef16e6bb0af0265c1fcadf2972e066fdc9e521de5fe06c9f"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap",
+        "head_sha256": "b535feb4c53c9878824d7e014d5590ce5e2b0a743af93bf4a3a7166c6e7f17be",
+        "status_sha256": "8e3b33bb91b2f422935c71c73b3d947c3a1485e056eb690168961e44e058aa43",
+        "index_path_sha256": "f01f96da74609456a964b5b4a393c8b2e4758630cff75d116a652f2105519001",
+        "index_sha256": "6bbbf3a978cf1489fd748ad9334422d2c5a26a93a6dc147b575afff503d599ce"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap",
+        "head_sha256": "b535feb4c53c9878824d7e014d5590ce5e2b0a743af93bf4a3a7166c6e7f17be",
+        "status_sha256": "8e3b33bb91b2f422935c71c73b3d947c3a1485e056eb690168961e44e058aa43",
+        "index_path_sha256": "f01f96da74609456a964b5b4a393c8b2e4758630cff75d116a652f2105519001",
+        "index_sha256": "6bbbf3a978cf1489fd748ad9334422d2c5a26a93a6dc147b575afff503d599ce"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-compat",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-compat",
+        "head_sha256": "b535feb4c53c9878824d7e014d5590ce5e2b0a743af93bf4a3a7166c6e7f17be",
+        "status_sha256": "d8c42c39be87f5bde8a479be2c78913e80cccbb6357fc5211db3dda4dc48c5bd",
+        "index_path_sha256": "b1e4d51bbfc11f6de4411e80e13614a22804acb8c88b73c3b6ac68880ea5f758",
+        "index_sha256": "2bbe6406aa50507fc2f3dd8098bb3d90456239b6c1f6bf752a6696575fe2217d"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-compat",
+        "head_sha256": "b535feb4c53c9878824d7e014d5590ce5e2b0a743af93bf4a3a7166c6e7f17be",
+        "status_sha256": "d8c42c39be87f5bde8a479be2c78913e80cccbb6357fc5211db3dda4dc48c5bd",
+        "index_path_sha256": "b1e4d51bbfc11f6de4411e80e13614a22804acb8c88b73c3b6ac68880ea5f758",
+        "index_sha256": "2bbe6406aa50507fc2f3dd8098bb3d90456239b6c1f6bf752a6696575fe2217d"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-stabilization",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-stabilization",
+        "head_sha256": "d9aca0319a8895f97feeb667263707f7ad21507ac2638d0ca04d3bfe73b3b9f3",
+        "status_sha256": "38abea2be4878e5d827012c8ec7c34435ac00e5ec91d26bf8c07d0d489d84d8e",
+        "index_path_sha256": "4d2b4bff00d2bec77d4f71762f730c7f687761f1f7faa63a9b63b867df7f0b01",
+        "index_sha256": "e4347b49ba0a785520a5b93074211340a9d11357402deb53946796e4d3a2f95f"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-stabilization",
+        "head_sha256": "d9aca0319a8895f97feeb667263707f7ad21507ac2638d0ca04d3bfe73b3b9f3",
+        "status_sha256": "38abea2be4878e5d827012c8ec7c34435ac00e5ec91d26bf8c07d0d489d84d8e",
+        "index_path_sha256": "4d2b4bff00d2bec77d4f71762f730c7f687761f1f7faa63a9b63b867df7f0b01",
+        "index_sha256": "e4347b49ba0a785520a5b93074211340a9d11357402deb53946796e4d3a2f95f"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-stabilization-compat",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-stabilization-compat",
+        "head_sha256": "b535feb4c53c9878824d7e014d5590ce5e2b0a743af93bf4a3a7166c6e7f17be",
+        "status_sha256": "3e86c5a6db93a084cd0c2858fd6db689ff04d42ff66176b6c4ee236c4ac642d4",
+        "index_path_sha256": "0063b0a56e5844c8b688c9289a4edddf56d317794bf351f06e22af8c7073f770",
+        "index_sha256": "732ab6945d6e10cd61ec6ea4129006b1386a4c789cd792f076c74bf2bd3d8f07"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-stabilization-compat",
+        "head_sha256": "b535feb4c53c9878824d7e014d5590ce5e2b0a743af93bf4a3a7166c6e7f17be",
+        "status_sha256": "3e86c5a6db93a084cd0c2858fd6db689ff04d42ff66176b6c4ee236c4ac642d4",
+        "index_path_sha256": "0063b0a56e5844c8b688c9289a4edddf56d317794bf351f06e22af8c7073f770",
+        "index_sha256": "732ab6945d6e10cd61ec6ea4129006b1386a4c789cd792f076c74bf2bd3d8f07"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-week0-acceptance",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-week0-acceptance",
+        "head_sha256": "c42f0bb831decce82bcba226a58268794647b504397dfd6deede4c6be4ba0e08",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "56cb5a3cf929e853737a8d2ac25fef3ad500d1bdba9414808da7c255d13acbd8",
+        "index_sha256": "564bb43d7ba1cf9ea54df144d8e126a3b0fd39300bd09dc2cbbe9cd565f8a9bd"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-week0-acceptance",
+        "head_sha256": "c42f0bb831decce82bcba226a58268794647b504397dfd6deede4c6be4ba0e08",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "56cb5a3cf929e853737a8d2ac25fef3ad500d1bdba9414808da7c255d13acbd8",
+        "index_sha256": "564bb43d7ba1cf9ea54df144d8e126a3b0fd39300bd09dc2cbbe9cd565f8a9bd"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26a",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26a",
+        "head_sha256": "66355c5afc0553ba5bb0068bc8673c7476fe444b1661083cbc1c82c0e02fa32d",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "571f8d997d9b39fdc76477f007bdcf84b6782d9987ebf08745ccf2b1b403bd53",
+        "index_sha256": "310cc1e901f0be340d70e21edf28988bed22332501d8d31745e8dfcbde667075"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26a",
+        "head_sha256": "66355c5afc0553ba5bb0068bc8673c7476fe444b1661083cbc1c82c0e02fa32d",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "571f8d997d9b39fdc76477f007bdcf84b6782d9987ebf08745ccf2b1b403bd53",
+        "index_sha256": "310cc1e901f0be340d70e21edf28988bed22332501d8d31745e8dfcbde667075"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b",
+        "head_sha256": "a762f3bcb555ead19015ad5a0eac51b2eee41f70b38f8c50d0d9a490c66d31bc",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "4655b9a233cfc0a0b43fe784a1a0fc4d0ce773e33dfeeb310defeb13b395e9d7",
+        "index_sha256": "1f7256b3bcca42f9d645f4c60ada368043f5178f9a0fecf3442adabc35b11487"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b",
+        "head_sha256": "a762f3bcb555ead19015ad5a0eac51b2eee41f70b38f8c50d0d9a490c66d31bc",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "4655b9a233cfc0a0b43fe784a1a0fc4d0ce773e33dfeeb310defeb13b395e9d7",
+        "index_sha256": "1f7256b3bcca42f9d645f4c60ada368043f5178f9a0fecf3442adabc35b11487"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b-vpn",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b-vpn",
+        "head_sha256": "a7df2de6ebe587df877c23ff72334ce1ae884e4c744818008805c43afdd84333",
+        "status_sha256": "74efe6ba9096cf44fefa69c5176a07e11c34b3ff678074587d27e97e34fb345a",
+        "index_path_sha256": "a9acf20c98494fb057d9175a71bd6dac3253b71aaf449d022b83d66451c0b39f",
+        "index_sha256": "b04220543a7c10230d04e3637670453958f730b9d0a21cebdc1a55dca7019512"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b-vpn",
+        "head_sha256": "a7df2de6ebe587df877c23ff72334ce1ae884e4c744818008805c43afdd84333",
+        "status_sha256": "74efe6ba9096cf44fefa69c5176a07e11c34b3ff678074587d27e97e34fb345a",
+        "index_path_sha256": "a9acf20c98494fb057d9175a71bd6dac3253b71aaf449d022b83d66451c0b39f",
+        "index_sha256": "b04220543a7c10230d04e3637670453958f730b9d0a21cebdc1a55dca7019512"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b-vpn-final",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b-vpn-final",
+        "head_sha256": "11f8696304148aba3280b161e7501366115b205483664324e7a335d441f39db6",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "28112211d1f2a8e245a77f345fa2afbf8792c002ca3732643bf229021df08e2f",
+        "index_sha256": "b79ad0ed8a79f46136f15fa897ab21470d00ce872f6d23bfbac628d133aa33c5"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b-vpn-final",
+        "head_sha256": "11f8696304148aba3280b161e7501366115b205483664324e7a335d441f39db6",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "28112211d1f2a8e245a77f345fa2afbf8792c002ca3732643bf229021df08e2f",
+        "index_sha256": "b79ad0ed8a79f46136f15fa897ab21470d00ce872f6d23bfbac628d133aa33c5"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b-vpn-review",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b-vpn-review",
+        "head_sha256": "d38f181b551cdabce9740feb7a8a86e30a0ddb1471e429c6ac4d51df5dbd8ecd",
+        "status_sha256": "a09fb088bb2f79338e867935e28d24aa666c6ba662eee22902a38f72fff1e41c",
+        "index_path_sha256": "4d49d1d68d7ee04990b9eae06e50c1858121530eac732a5cb7be77469013a700",
+        "index_sha256": "92a192475b3305b8a9213dca6ae90551f5157eb7a0035b0aea3b91dcd614df73"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b-vpn-review",
+        "head_sha256": "d38f181b551cdabce9740feb7a8a86e30a0ddb1471e429c6ac4d51df5dbd8ecd",
+        "status_sha256": "a09fb088bb2f79338e867935e28d24aa666c6ba662eee22902a38f72fff1e41c",
+        "index_path_sha256": "4d49d1d68d7ee04990b9eae06e50c1858121530eac732a5cb7be77469013a700",
+        "index_sha256": "92a192475b3305b8a9213dca6ae90551f5157eb7a0035b0aea3b91dcd614df73"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b1",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b1",
+        "head_sha256": "677e7419fe5eb5ef252ace938e411b493bfc9982e47361f6b8f3094272f59e01",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "191990d05973625b5497a0d13c0b0456c1324a83ae7544f6bcf7d7f7d7b2953c",
+        "index_sha256": "08492b60055f4cb47b82dc6f2f5e7c5f5dcf82bd0b13b9aa6bba492d2a0b7333"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b1",
+        "head_sha256": "677e7419fe5eb5ef252ace938e411b493bfc9982e47361f6b8f3094272f59e01",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "191990d05973625b5497a0d13c0b0456c1324a83ae7544f6bcf7d7f7d7b2953c",
+        "index_sha256": "08492b60055f4cb47b82dc6f2f5e7c5f5dcf82bd0b13b9aa6bba492d2a0b7333"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b2",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b2",
+        "head_sha256": "45ebdb6ffc6edc5735c1f74c16ab1b35b847e1410d4fbef9d545d7b7a37773d0",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "82fe97f626c286507a09d4e320296caab8ebb71991cf186b13bc43dbb52a4209",
+        "index_sha256": "5090dddcded3dbd557fb53b690f290c91f10194c06cd67891aaea0260ed13c82"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b2",
+        "head_sha256": "45ebdb6ffc6edc5735c1f74c16ab1b35b847e1410d4fbef9d545d7b7a37773d0",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "82fe97f626c286507a09d4e320296caab8ebb71991cf186b13bc43dbb52a4209",
+        "index_sha256": "5090dddcded3dbd557fb53b690f290c91f10194c06cd67891aaea0260ed13c82"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b3",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b3",
+        "head_sha256": "b493ef71eef9eff1d516374a3ff66e2a21a136568d843a93d970029499c796e2",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "fe35b906248393fc4d3e0fa24b3e7bc5d573e28b67c88d3bb6a39ea27c4d463c",
+        "index_sha256": "a6705469590c22e2762c3767626b23f3a28d11a9294bd77e5f93094d61422c2f"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b3",
+        "head_sha256": "b493ef71eef9eff1d516374a3ff66e2a21a136568d843a93d970029499c796e2",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "fe35b906248393fc4d3e0fa24b3e7bc5d573e28b67c88d3bb6a39ea27c4d463c",
+        "index_sha256": "a6705469590c22e2762c3767626b23f3a28d11a9294bd77e5f93094d61422c2f"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b4",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b4",
+        "head_sha256": "29f2783549f2dd8cc06836c1ce568c57cc365d6a4ac7563f96c72094bf2e7b45",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "9a923ac1c84a0b38724b5111a1e34726953a201febf3760fba673bb65f99728f",
+        "index_sha256": "e69726ad39bccbd18a1660155fdb8ca2f1661a4d4b75fd650a2869ff6798ac3a"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b4",
+        "head_sha256": "29f2783549f2dd8cc06836c1ce568c57cc365d6a4ac7563f96c72094bf2e7b45",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "9a923ac1c84a0b38724b5111a1e34726953a201febf3760fba673bb65f99728f",
+        "index_sha256": "e69726ad39bccbd18a1660155fdb8ca2f1661a4d4b75fd650a2869ff6798ac3a"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b5",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b5",
+        "head_sha256": "48ef08a0a8125719681ff498138167fc215adc9a2ee2b11d59fa695bcbd93af8",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "002598c84c7f830abdb8f39ea5d62893961300dab8be2b945028b93748976ee1",
+        "index_sha256": "479a1d05e70fcce1787693a8e5bc1a6c2ce042fd227b770e8923b5e704c2f815"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b5",
+        "head_sha256": "48ef08a0a8125719681ff498138167fc215adc9a2ee2b11d59fa695bcbd93af8",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "002598c84c7f830abdb8f39ea5d62893961300dab8be2b945028b93748976ee1",
+        "index_sha256": "479a1d05e70fcce1787693a8e5bc1a6c2ce042fd227b770e8923b5e704c2f815"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b5-fix01",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b5-fix01",
+        "head_sha256": "40af38269f1a4f4f3ab71d3dcfca980accc8178dd4d4b8acf25d631abe836526",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "7e138244787b8e438ec81f6614da3404fbb1c4e2eb6f9fb719749117df6e4711",
+        "index_sha256": "2551c3d91ede4e71c8e249728c7dfeb97c1f1f6f9f4abda49068de85a4792b13"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b5-fix01",
+        "head_sha256": "40af38269f1a4f4f3ab71d3dcfca980accc8178dd4d4b8acf25d631abe836526",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "7e138244787b8e438ec81f6614da3404fbb1c4e2eb6f9fb719749117df6e4711",
+        "index_sha256": "2551c3d91ede4e71c8e249728c7dfeb97c1f1f6f9f4abda49068de85a4792b13"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6",
+        "head_sha256": "c6167303f425bdd4694c7fd34831c1e6610a5f45c5a74b3b538044823bd22f37",
+        "status_sha256": "1dcd9fff76f92bf388b7c605d57ce9a3ea00002fd668302a74267cfc1790fc0c",
+        "index_path_sha256": "8c11d9bbd726c953453d7a1b4e67096a0902d9bfa99b7c4ca5e1ea2046814996",
+        "index_sha256": "64577efe5991b6560d97556c9e12938ff01032de79ae11a70d87db840bc80217"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6",
+        "head_sha256": "c6167303f425bdd4694c7fd34831c1e6610a5f45c5a74b3b538044823bd22f37",
+        "status_sha256": "1dcd9fff76f92bf388b7c605d57ce9a3ea00002fd668302a74267cfc1790fc0c",
+        "index_path_sha256": "8c11d9bbd726c953453d7a1b4e67096a0902d9bfa99b7c4ca5e1ea2046814996",
+        "index_sha256": "64577efe5991b6560d97556c9e12938ff01032de79ae11a70d87db840bc80217"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-compat",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-compat",
+        "head_sha256": "84a55a0e9e247af5f5c234310bb404524d48c5c7ba89e5c1d7e8db366a70f949",
+        "status_sha256": "7e839b4435a2e41ffbddfa4e310e17574d498ccc1d4dc27c8ce06db5a698ff37",
+        "index_path_sha256": "5c6438b5a734b9a8bb97f8ab4bcfff261f99df0c1d1dee8ca7d329b73201652b",
+        "index_sha256": "3d3f7c4344856778992e0c469fe0f5ad03a1a4af4f3b245c0d25d6ef17ede8ef"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-compat",
+        "head_sha256": "84a55a0e9e247af5f5c234310bb404524d48c5c7ba89e5c1d7e8db366a70f949",
+        "status_sha256": "7e839b4435a2e41ffbddfa4e310e17574d498ccc1d4dc27c8ce06db5a698ff37",
+        "index_path_sha256": "5c6438b5a734b9a8bb97f8ab4bcfff261f99df0c1d1dee8ca7d329b73201652b",
+        "index_sha256": "3d3f7c4344856778992e0c469fe0f5ad03a1a4af4f3b245c0d25d6ef17ede8ef"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-planning",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-planning",
+        "head_sha256": "904967a19bb5e291722b6a0ee6e47c0f1aa8d2578bdddd3682e0f5e2868142d9",
+        "status_sha256": "910897d1f11aaa58bf99bf22266dc01a36a8483be459ad5803e113cd6c46fbc6",
+        "index_path_sha256": "516248f7d401f847311a052a6c739d79297ecb02a2566d51cc7c6ecaedeff4d4",
+        "index_sha256": "1f8902f08a69c6ea68278bdeea3cf4b6cadb2babbccb8b47764c7621213a2518"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-planning",
+        "head_sha256": "904967a19bb5e291722b6a0ee6e47c0f1aa8d2578bdddd3682e0f5e2868142d9",
+        "status_sha256": "910897d1f11aaa58bf99bf22266dc01a36a8483be459ad5803e113cd6c46fbc6",
+        "index_path_sha256": "516248f7d401f847311a052a6c739d79297ecb02a2566d51cc7c6ecaedeff4d4",
+        "index_sha256": "1f8902f08a69c6ea68278bdeea3cf4b6cadb2babbccb8b47764c7621213a2518"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-readiness",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-readiness",
+        "head_sha256": "f7435405e39ae044e84fd2a02b3224a20bed11c347a607d1bb8bfced09147d47",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "0352e7b8b393d95fd070792fe32020355a4306a4badd29bd1e24c6da6ea5e0a5",
+        "index_sha256": "0b9c3f25c196836eefc427ef302c80d0ac18f22c7e9256ba7be83d1772a78798"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-readiness",
+        "head_sha256": "f7435405e39ae044e84fd2a02b3224a20bed11c347a607d1bb8bfced09147d47",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "0352e7b8b393d95fd070792fe32020355a4306a4badd29bd1e24c6da6ea5e0a5",
+        "index_sha256": "0b9c3f25c196836eefc427ef302c80d0ac18f22c7e9256ba7be83d1772a78798"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-review",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-review",
+        "head_sha256": "13d27aaf127942fb95b0aef0b362ed0d8f81c3894b0018601cbf7611172389c2",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "b340fabee42692214dc8c959c3e59ee63561c2f0b30b6c157878a2b46e785058",
+        "index_sha256": "9d9f6ea8e20ce82f1cd2011fd612c6e099e951e600e264f1e46ae68f3b5ab666"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-review",
+        "head_sha256": "13d27aaf127942fb95b0aef0b362ed0d8f81c3894b0018601cbf7611172389c2",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "b340fabee42692214dc8c959c3e59ee63561c2f0b30b6c157878a2b46e785058",
+        "index_sha256": "9d9f6ea8e20ce82f1cd2011fd612c6e099e951e600e264f1e46ae68f3b5ab666"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b7",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b7",
+        "head_sha256": "c6167303f425bdd4694c7fd34831c1e6610a5f45c5a74b3b538044823bd22f37",
+        "status_sha256": "240ef75533e808cc032baf75bd001331567e3fa5deeb45403c43e02cfb4954cb",
+        "index_path_sha256": "d4672760257934f65a7e378d69b7694986941926f893682eb51e7867bcdb1cf9",
+        "index_sha256": "0d3f775859ff783cb58915f38e8848b7ff40a88e8c7566759f2f2b0a41e1336d"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b7",
+        "head_sha256": "c6167303f425bdd4694c7fd34831c1e6610a5f45c5a74b3b538044823bd22f37",
+        "status_sha256": "240ef75533e808cc032baf75bd001331567e3fa5deeb45403c43e02cfb4954cb",
+        "index_path_sha256": "d4672760257934f65a7e378d69b7694986941926f893682eb51e7867bcdb1cf9",
+        "index_sha256": "0d3f775859ff783cb58915f38e8848b7ff40a88e8c7566759f2f2b0a41e1336d"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b7-review",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b7-review",
+        "head_sha256": "cfacce2799ee3825f0f5c911e5e507299ae3eaed4294f21ede2d7264d1d51605",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "c43a77d402214bb866703c5a058339c1d170148b4ed709c4694446b5529763b0",
+        "index_sha256": "a60479e70465caa0c209f5ceae60e994388b10653eb9588d112352998b0aad80"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b7-review",
+        "head_sha256": "cfacce2799ee3825f0f5c911e5e507299ae3eaed4294f21ede2d7264d1d51605",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "c43a77d402214bb866703c5a058339c1d170148b4ed709c4694446b5529763b0",
+        "index_sha256": "a60479e70465caa0c209f5ceae60e994388b10653eb9588d112352998b0aad80"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26d",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26d",
+        "head_sha256": "579be230153d3664f6d863544bae61bd009bb6603ebadba6a2e5d175f4ae0948",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "2bc3a7b9c8e466f4bfc66c6d0b82a7fdee9ccd44a685783dcbb23b532305bf9b",
+        "index_sha256": "e7cf00a374e57e8ce551901ed58f858166b521621258ca20c941a21303b9614a"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26d",
+        "head_sha256": "579be230153d3664f6d863544bae61bd009bb6603ebadba6a2e5d175f4ae0948",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "2bc3a7b9c8e466f4bfc66c6d0b82a7fdee9ccd44a685783dcbb23b532305bf9b",
+        "index_sha256": "e7cf00a374e57e8ce551901ed58f858166b521621258ca20c941a21303b9614a"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26e",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26e",
+        "head_sha256": "886b6a156479e44b219be03d796a83b3c02938126fee391eb68a66ed347d1c6b",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "d0d22b832271f79713c5ccf9881d630c8ca7497b3510c92ffa06dc7544db900b",
+        "index_sha256": "cc8492cd5bafa99c3be59b4abf8cbd9186e6e17c8990639edb02f9e232919149"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26e",
+        "head_sha256": "886b6a156479e44b219be03d796a83b3c02938126fee391eb68a66ed347d1c6b",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "d0d22b832271f79713c5ccf9881d630c8ca7497b3510c92ffa06dc7544db900b",
+        "index_sha256": "cc8492cd5bafa99c3be59b4abf8cbd9186e6e17c8990639edb02f9e232919149"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26f",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26f",
+        "head_sha256": "c573ba9853ba7efe79bb68a88f263b346d84a957a990b2ebc8d41bb1bbe7f95c",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "6976e2c80b0ab9f0088637452048884ed4664f6acf2043aa9b3a54c80fe6e368",
+        "index_sha256": "d50a417114420bacec5f67567be691d56a518fd91563a0ca324f9958a5743256"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26f",
+        "head_sha256": "c573ba9853ba7efe79bb68a88f263b346d84a957a990b2ebc8d41bb1bbe7f95c",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "6976e2c80b0ab9f0088637452048884ed4664f6acf2043aa9b3a54c80fe6e368",
+        "index_sha256": "d50a417114420bacec5f67567be691d56a518fd91563a0ca324f9958a5743256"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26g",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26g",
+        "head_sha256": "ed1dd2fcec92de0504b28c7b82a729f5bb434a50c616d83f3af62a032088bafc",
+        "status_sha256": "9160f6c05d0ebab6c9dfc9da8724b2ef64e10fc34e91d570f259c17780aae977",
+        "index_path_sha256": "ede1d47c6c7ccfb77d08b5a0db37e2179c8877d3e4a02eb06ba8549fc3aa3311",
+        "index_sha256": "9b61a1e7d95aa286861bcde95f0236bfdf5cd97ffa7aa6b00e93bfff98a11fc6"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26g",
+        "head_sha256": "ed1dd2fcec92de0504b28c7b82a729f5bb434a50c616d83f3af62a032088bafc",
+        "status_sha256": "9160f6c05d0ebab6c9dfc9da8724b2ef64e10fc34e91d570f259c17780aae977",
+        "index_path_sha256": "ede1d47c6c7ccfb77d08b5a0db37e2179c8877d3e4a02eb06ba8549fc3aa3311",
+        "index_sha256": "9b61a1e7d95aa286861bcde95f0236bfdf5cd97ffa7aa6b00e93bfff98a11fc6"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26h",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26h",
+        "head_sha256": "ed1dd2fcec92de0504b28c7b82a729f5bb434a50c616d83f3af62a032088bafc",
+        "status_sha256": "e6b49141357764f1a68149aa1a613f349ea0507c4c95be95192f9e5dbab68eda",
+        "index_path_sha256": "1a97bd14c63a44180c8992120f23015d611cfe58b65880208b5617328c749499",
+        "index_sha256": "14e2ddca72241aa6361d6046cd9f5423c05e67fe033a1df5c80cabfdfdd85fed"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26h",
+        "head_sha256": "ed1dd2fcec92de0504b28c7b82a729f5bb434a50c616d83f3af62a032088bafc",
+        "status_sha256": "e6b49141357764f1a68149aa1a613f349ea0507c4c95be95192f9e5dbab68eda",
+        "index_path_sha256": "1a97bd14c63a44180c8992120f23015d611cfe58b65880208b5617328c749499",
+        "index_sha256": "14e2ddca72241aa6361d6046cd9f5423c05e67fe033a1df5c80cabfdfdd85fed"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27-review",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27-review",
+        "head_sha256": "bb3591a27caa8d1f4cf2ac9a57a5dbed0a083ad9ed0659e8700add39316df6b3",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "355336dfa9278cd53a98fa0d64aa3c0b8c7617331ff5203bf1dd8d4e428f2a07",
+        "index_sha256": "1e7a2f952da6235f7055208aab3487099477f0a2f1940ccd01c31921bab43b95"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27-review",
+        "head_sha256": "bb3591a27caa8d1f4cf2ac9a57a5dbed0a083ad9ed0659e8700add39316df6b3",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "355336dfa9278cd53a98fa0d64aa3c0b8c7617331ff5203bf1dd8d4e428f2a07",
+        "index_sha256": "1e7a2f952da6235f7055208aab3487099477f0a2f1940ccd01c31921bab43b95"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27b",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27b",
+        "head_sha256": "08581468f968ac0dcfaee0d2c45b3025f71d5034a099ad970b73231a9b6df9f7",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "073c5ed310f18b93d20f3ad14eb597d2732b1c83b36aa317b78098e06729c10b",
+        "index_sha256": "6e31f62bd27adbfb1f783521c4c60245bf76d40f3b630bd55f64d1ec81bffdb0"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27b",
+        "head_sha256": "08581468f968ac0dcfaee0d2c45b3025f71d5034a099ad970b73231a9b6df9f7",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "073c5ed310f18b93d20f3ad14eb597d2732b1c83b36aa317b78098e06729c10b",
+        "index_sha256": "6e31f62bd27adbfb1f783521c4c60245bf76d40f3b630bd55f64d1ec81bffdb0"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27c",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27c",
+        "head_sha256": "f40953e90de265421d5de6eb3d3297929a179cf23c6420560244733a94218877",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "1abe812e7a2cf09ca044138a1110db50272e53181890e3921b323f0ed44b3435",
+        "index_sha256": "e0052b6f5e5ba35f2cbf3bbf484517fbfd0bbec16110a6216ddee0a45c0f3b58"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c27c",
+        "head_sha256": "f40953e90de265421d5de6eb3d3297929a179cf23c6420560244733a94218877",
+        "status_sha256": "1340acae8a5e98037bc3c3a75d98ff640563c30c8dc4a4a401ede0bfb2e16adb",
+        "index_path_sha256": "1abe812e7a2cf09ca044138a1110db50272e53181890e3921b323f0ed44b3435",
+        "index_sha256": "e0052b6f5e5ba35f2cbf3bbf484517fbfd0bbec16110a6216ddee0a45c0f3b58"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-completion-audit",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-completion-audit",
+        "head_sha256": "b27f944a6a6e06c9d2205e3254c8a975f8e21f63f6220a9f1a9f9927eb6e163d",
+        "status_sha256": "50211dffd938a4f48d72f076328977e3228807887a9a14bde5a566349a1043dc",
+        "index_path_sha256": "7271b21eef89287e8eabc9670c7af54af6b437b2814354dcc0fb4e00156b7232",
+        "index_sha256": "bf79cd8a571358d1e62dd170c5b1e2f3d8664b0e2a6ff19fa595ff7baa898fd7"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-completion-audit",
+        "head_sha256": "b27f944a6a6e06c9d2205e3254c8a975f8e21f63f6220a9f1a9f9927eb6e163d",
+        "status_sha256": "50211dffd938a4f48d72f076328977e3228807887a9a14bde5a566349a1043dc",
+        "index_path_sha256": "7271b21eef89287e8eabc9670c7af54af6b437b2814354dcc0fb4e00156b7232",
+        "index_sha256": "bf79cd8a571358d1e62dd170c5b1e2f3d8664b0e2a6ff19fa595ff7baa898fd7"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-real01",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-real01",
+        "head_sha256": "ed1dd2fcec92de0504b28c7b82a729f5bb434a50c616d83f3af62a032088bafc",
+        "status_sha256": "13ce9c121547472a61d184320fdf6889b4eb28e9f08c6f26f3b6f141e7a745c1",
+        "index_path_sha256": "37628e5847d60241623aae11333571ff45dc3e18333e434ed4d86725387901a7",
+        "index_sha256": "d9e9099908fbd318211863360842e80d0a08b624c7085d2086c63a18f20970a0"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-real01",
+        "head_sha256": "ed1dd2fcec92de0504b28c7b82a729f5bb434a50c616d83f3af62a032088bafc",
+        "status_sha256": "13ce9c121547472a61d184320fdf6889b4eb28e9f08c6f26f3b6f141e7a745c1",
+        "index_path_sha256": "37628e5847d60241623aae11333571ff45dc3e18333e434ed4d86725387901a7",
+        "index_sha256": "d9e9099908fbd318211863360842e80d0a08b624c7085d2086c63a18f20970a0"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev01a",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev01a",
+        "head_sha256": "439fd59fdcb76eb150f3736d0ea97e7ef07b538189175f72a91c5a1cbaaf39b2",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "fb868e462a7bbc8c264051e3f77c498183471e7ddc60318312387bd6ddbb7e6a",
+        "index_sha256": "f8c18ee097b765df7aba5e23642d3caad7d8aea841924028b945c829cba86499"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev01a",
+        "head_sha256": "439fd59fdcb76eb150f3736d0ea97e7ef07b538189175f72a91c5a1cbaaf39b2",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "fb868e462a7bbc8c264051e3f77c498183471e7ddc60318312387bd6ddbb7e6a",
+        "index_sha256": "f8c18ee097b765df7aba5e23642d3caad7d8aea841924028b945c829cba86499"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev01b",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev01b",
+        "head_sha256": "27ab3d3d23361cbaf21182ee52a14f267caf33b291a4fb252d121e58a564544a",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "d8f4bbfefd83015db274ab00069f3fd40c689fced3b2f3dd3494653c5d701347",
+        "index_sha256": "c67a696d04bab1752b9fd0708c50b84696da605c6cf4f2823708e50172d7f3d3"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev01b",
+        "head_sha256": "27ab3d3d23361cbaf21182ee52a14f267caf33b291a4fb252d121e58a564544a",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "d8f4bbfefd83015db274ab00069f3fd40c689fced3b2f3dd3494653c5d701347",
+        "index_sha256": "c67a696d04bab1752b9fd0708c50b84696da605c6cf4f2823708e50172d7f3d3"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev02b",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev02b",
+        "head_sha256": "0ed8aed0f9f484baf0eee52fd7eaed0ca5d518b740cd63219ca0715adff27566",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "da213dfb57e7dad0f482e40f92d128d07c9839bb0e57acb98a4385df6aa93229",
+        "index_sha256": "fe03060d92c7753dde5c67384aed4b40f330eefb9ea2474678a5fc594c6a737a"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev02b",
+        "head_sha256": "0ed8aed0f9f484baf0eee52fd7eaed0ca5d518b740cd63219ca0715adff27566",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "da213dfb57e7dad0f482e40f92d128d07c9839bb0e57acb98a4385df6aa93229",
+        "index_sha256": "fe03060d92c7753dde5c67384aed4b40f330eefb9ea2474678a5fc594c6a737a"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03b",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03b",
+        "head_sha256": "5b9868994659db9818efa47063566cbca247bc6cb4b70500a471e0b3c8e9e1f7",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "a4d0a71ceb74d7d043150b4a1a660e4bece5a5a6b1748f4f68e74420645694d9",
+        "index_sha256": "260f8ab639c6629b5df0cb0eb64ff90463af3fa32bd734dd38899ef958292848"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03b",
+        "head_sha256": "5b9868994659db9818efa47063566cbca247bc6cb4b70500a471e0b3c8e9e1f7",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "a4d0a71ceb74d7d043150b4a1a660e4bece5a5a6b1748f4f68e74420645694d9",
+        "index_sha256": "260f8ab639c6629b5df0cb0eb64ff90463af3fa32bd734dd38899ef958292848"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03c",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03c",
+        "head_sha256": "f16d6e24ec450171690bdb06cc8492718134f630db70044096fd8980d1d61a5e",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "6428074bd4d104f061c0f1c9c9713eb14b769eaedaf79f1e12a950360f6f9f0a",
+        "index_sha256": "064a170c195ca602dbe1fa81f07d221d8bfbb9ce6e3185e8b23365f9c2accebf"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03c",
+        "head_sha256": "f16d6e24ec450171690bdb06cc8492718134f630db70044096fd8980d1d61a5e",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "6428074bd4d104f061c0f1c9c9713eb14b769eaedaf79f1e12a950360f6f9f0a",
+        "index_sha256": "064a170c195ca602dbe1fa81f07d221d8bfbb9ce6e3185e8b23365f9c2accebf"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03d",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03d",
+        "head_sha256": "06799ec7dda3bc3447f4a546c50af735e924605781728cf12b4137e7de3a4dfa",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "430ece0341ef6a672853c14ed818044721610ace3cf97ad1550facf71e52afdf",
+        "index_sha256": "2f73b69aaa298b18af23511f1e260253f52a77adf6946631f896953ed0c1f4a2"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03d",
+        "head_sha256": "06799ec7dda3bc3447f4a546c50af735e924605781728cf12b4137e7de3a4dfa",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "430ece0341ef6a672853c14ed818044721610ace3cf97ad1550facf71e52afdf",
+        "index_sha256": "2f73b69aaa298b18af23511f1e260253f52a77adf6946631f896953ed0c1f4a2"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03e",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03e",
+        "head_sha256": "d5b9408fcba50649181bdc6e68d7d77824b09c0f73f4c1a998bc992d02a85d39",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "f982c81ae0b58a2aa68fe685d0f8aab0e5d103fc2abfcf79e1b5f3d71bc3a1bf",
+        "index_sha256": "6f4ca49d3eac0ef55c9b11766fac1c24fd7c6c6ba554253a00ff4cba68b27342"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03e",
+        "head_sha256": "d5b9408fcba50649181bdc6e68d7d77824b09c0f73f4c1a998bc992d02a85d39",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "f982c81ae0b58a2aa68fe685d0f8aab0e5d103fc2abfcf79e1b5f3d71bc3a1bf",
+        "index_sha256": "6f4ca49d3eac0ef55c9b11766fac1c24fd7c6c6ba554253a00ff4cba68b27342"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03e-course",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03e-course",
+        "head_sha256": "ad63c795b0f5e2549c84a7467b9532fdd11adf44d1e427d1d9abc29161f9c24f",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "c14f733fde1a44abc4b75be5fb86d5de3e4336e19b0d624bf2d47c55decfec0e",
+        "index_sha256": "618fbe7d4b92471f5c8f8621798e90953d6d5f8dfdebd05d0b4e46d1ca13a66a"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03e-course",
+        "head_sha256": "ad63c795b0f5e2549c84a7467b9532fdd11adf44d1e427d1d9abc29161f9c24f",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "c14f733fde1a44abc4b75be5fb86d5de3e4336e19b0d624bf2d47c55decfec0e",
+        "index_sha256": "618fbe7d4b92471f5c8f8621798e90953d6d5f8dfdebd05d0b4e46d1ca13a66a"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03f",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03f",
+        "head_sha256": "5a7556120848b5d11bc536a974dcd0d56b023dc433292c9579f1ae1dea71e72d",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "0d0631d0af90c18bf4ec66b8e96288008e20c32223ed707154742bd442d0b369",
+        "index_sha256": "367ae3a0b0a2f3f2dfcc84d0caad5eb9268386e8e5441bb1722145ecabb46cfb"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-dev03f",
+        "head_sha256": "5a7556120848b5d11bc536a974dcd0d56b023dc433292c9579f1ae1dea71e72d",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "0d0631d0af90c18bf4ec66b8e96288008e20c32223ed707154742bd442d0b369",
+        "index_sha256": "367ae3a0b0a2f3f2dfcc84d0caad5eb9268386e8e5441bb1722145ecabb46cfb"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-html-parser",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-html-parser",
+        "head_sha256": "efc281cdfe6cee03d72da31ba4ed592e7e31d156e4e78f8c818fd64f040513cd",
+        "status_sha256": "4ae328d0f63f37778088a137dd05cf3d90e80f01500d45c4feb867076252f408",
+        "index_path_sha256": "12ec3729bfa8f63dcd794329aa178e2c28cda5ea4e5207c704d0a9063fd42cb9",
+        "index_sha256": "e91d9036fc6ab882b16b2a6fa764e22e9ced7d861915f5251411b4f857031ad4"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-html-parser",
+        "head_sha256": "efc281cdfe6cee03d72da31ba4ed592e7e31d156e4e78f8c818fd64f040513cd",
+        "status_sha256": "4ae328d0f63f37778088a137dd05cf3d90e80f01500d45c4feb867076252f408",
+        "index_path_sha256": "12ec3729bfa8f63dcd794329aa178e2c28cda5ea4e5207c704d0a9063fd42cb9",
+        "index_sha256": "e91d9036fc6ab882b16b2a6fa764e22e9ced7d861915f5251411b4f857031ad4"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint01",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint01",
+        "head_sha256": "6d06786e13a91abb9527926ef673d947f731f2993ab39a56607784effe648ff6",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "7ec89c6c35856130351fcbffad1e09d041237dca42bf3dbcb34d8c9a5f05eaf6",
+        "index_sha256": "2767f5dc0fa7626bbb79b2c54ef694641e8aa8e8ada4c165cd80fc8b4a3fff2c"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint01",
+        "head_sha256": "6d06786e13a91abb9527926ef673d947f731f2993ab39a56607784effe648ff6",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "7ec89c6c35856130351fcbffad1e09d041237dca42bf3dbcb34d8c9a5f05eaf6",
+        "index_sha256": "2767f5dc0fa7626bbb79b2c54ef694641e8aa8e8ada4c165cd80fc8b4a3fff2c"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint02",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint02",
+        "head_sha256": "fe255277a821edf2a5074ccdfd8bfc0a7a0812a27e46c9c42fa181584b76771c",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "13aa6163d04fe778edaa6077c79ad47e779c25edbc71dc7001b02b0c6f098596",
+        "index_sha256": "0bc53dba064868fe7ede751bf4daa2ad4e9571ce2f90c3b8828f105aa3eeeae6"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint02",
+        "head_sha256": "fe255277a821edf2a5074ccdfd8bfc0a7a0812a27e46c9c42fa181584b76771c",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "13aa6163d04fe778edaa6077c79ad47e779c25edbc71dc7001b02b0c6f098596",
+        "index_sha256": "0bc53dba064868fe7ede751bf4daa2ad4e9571ce2f90c3b8828f105aa3eeeae6"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint03",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint03",
+        "head_sha256": "d4f269096d55afd12482609c1fc1a779caadba834cf31ba40531a633634fc27c",
+        "status_sha256": "4cfbf3d6278deb1b28f8f0eb590f21932035e9036f10cb5a5f3a7e8e158a0ae8",
+        "index_path_sha256": "f26d69f8504479c5597590cd13175b6ffc226ce13ea669ce1575a2c4a368b5bd",
+        "index_sha256": "26c296582708c3f1e2e4dc2cc13dc55bfd1c9a783a4539e78fb0e15c4ab35e01"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint03",
+        "head_sha256": "d4f269096d55afd12482609c1fc1a779caadba834cf31ba40531a633634fc27c",
+        "status_sha256": "4cfbf3d6278deb1b28f8f0eb590f21932035e9036f10cb5a5f3a7e8e158a0ae8",
+        "index_path_sha256": "f26d69f8504479c5597590cd13175b6ffc226ce13ea669ce1575a2c4a368b5bd",
+        "index_sha256": "26c296582708c3f1e2e4dc2cc13dc55bfd1c9a783a4539e78fb0e15c4ab35e01"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint03b",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint03b",
+        "head_sha256": "3d04707972c70de3c9bd2c335fd52980dff6cd5595994ec3cc9d641b636d2580",
+        "status_sha256": "3b5cb27969b87224dd703428e949172ad1b6f47ab496587fc9b8b94ac50a06ae",
+        "index_path_sha256": "1b13799de9ad0a720e781f0a4e332f45e429a40e003f4d0ef64e4e4a6a3824ae",
+        "index_sha256": "73a22cc94202805217675dfd5d5fb25a45e308d056fde5bec055b6ef21d268ac"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint03b",
+        "head_sha256": "3d04707972c70de3c9bd2c335fd52980dff6cd5595994ec3cc9d641b636d2580",
+        "status_sha256": "3b5cb27969b87224dd703428e949172ad1b6f47ab496587fc9b8b94ac50a06ae",
+        "index_path_sha256": "1b13799de9ad0a720e781f0a4e332f45e429a40e003f4d0ef64e4e4a6a3824ae",
+        "index_sha256": "73a22cc94202805217675dfd5d5fb25a45e308d056fde5bec055b6ef21d268ac"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint04",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint04",
+        "head_sha256": "c87db42c6d1fabbbdad32cffc12d9d071462600806d5c7155cbdda52cda43341",
+        "status_sha256": "3b5cb27969b87224dd703428e949172ad1b6f47ab496587fc9b8b94ac50a06ae",
+        "index_path_sha256": "bfe427f49e0e5b209a926636e8df95ddaa035523d166efd9a06c12a17f804b24",
+        "index_sha256": "bac67162da3ccdd655a3f8a49355fe1b2bd9b40a7f9975f831e742e82e36224f"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint04",
+        "head_sha256": "c87db42c6d1fabbbdad32cffc12d9d071462600806d5c7155cbdda52cda43341",
+        "status_sha256": "3b5cb27969b87224dd703428e949172ad1b6f47ab496587fc9b8b94ac50a06ae",
+        "index_path_sha256": "bfe427f49e0e5b209a926636e8df95ddaa035523d166efd9a06c12a17f804b24",
+        "index_sha256": "bac67162da3ccdd655a3f8a49355fe1b2bd9b40a7f9975f831e742e82e36224f"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint04b",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint04b",
+        "head_sha256": "ed1dd2fcec92de0504b28c7b82a729f5bb434a50c616d83f3af62a032088bafc",
+        "status_sha256": "d6f53bab09598048d389b6df319b0930a54cf4a43c2a090bfee9e4960ff17f4f",
+        "index_path_sha256": "4b3731bfef9e0a9f169d095aaecb45e4b713289a843d7e313da3a77cea8a0d5d",
+        "index_sha256": "4f98b1befe1581f0751059f5302762bd057e68d21e1eceb71f76cf34feeb3db1"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint04b",
+        "head_sha256": "ed1dd2fcec92de0504b28c7b82a729f5bb434a50c616d83f3af62a032088bafc",
+        "status_sha256": "d6f53bab09598048d389b6df319b0930a54cf4a43c2a090bfee9e4960ff17f4f",
+        "index_path_sha256": "4b3731bfef9e0a9f169d095aaecb45e4b713289a843d7e313da3a77cea8a0d5d",
+        "index_sha256": "4f98b1befe1581f0751059f5302762bd057e68d21e1eceb71f76cf34feeb3db1"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint05",
+      "own_task": true,
+      "changes": [
+        "status_sha256"
+      ],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint05",
+        "head_sha256": "aa3744b50826afa14bbb52a67f7fd3964355616870e885be6a73ad6936dd54e0",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "5956baaa52a6387caf676f02df88221e92352c589920de7b00fe0045fb86ca8e",
+        "index_sha256": "3d49baffad1a37db5df0e7168f90475af71f10574a3603497b08f86276ef5576"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint05",
+        "head_sha256": "aa3744b50826afa14bbb52a67f7fd3964355616870e885be6a73ad6936dd54e0",
+        "status_sha256": "dc0b18ea3f52a1baf78062bdfa65776156798ce29bbe42c77df538f9ac3609a1",
+        "index_path_sha256": "5956baaa52a6387caf676f02df88221e92352c589920de7b00fe0045fb86ca8e",
+        "index_sha256": "3d49baffad1a37db5df0e7168f90475af71f10574a3603497b08f86276ef5576"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-pm01",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-pm01",
+        "head_sha256": "29540537df3c7b8f38adee2c15a77ce98d941f74ddc2cd4dc27648919a3ecc71",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "45e9c5cb82f8f63d522e4a97eab3c212f51f75b46afce73373758749f6c0e897",
+        "index_sha256": "025ea36335f9354d60af53ad0836bf31e2165fd586957be01396606b8d99aa2d"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-pm01",
+        "head_sha256": "29540537df3c7b8f38adee2c15a77ce98d941f74ddc2cd4dc27648919a3ecc71",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "45e9c5cb82f8f63d522e4a97eab3c212f51f75b46afce73373758749f6c0e897",
+        "index_sha256": "025ea36335f9354d60af53ad0836bf31e2165fd586957be01396606b8d99aa2d"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-pm02",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-pm02",
+        "head_sha256": "d801388450a1cd95fa43dae537ccb553e7d0cdb9eba78039b6085aeda94e05a9",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "0cd43d5d70426ce5a70bd178de96209d7978be1bc50b4a40bf403ef64a074d2c",
+        "index_sha256": "0236157a787d317cea0281959086cca0deb121df614dd2317e238550a135925c"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-pm02",
+        "head_sha256": "d801388450a1cd95fa43dae537ccb553e7d0cdb9eba78039b6085aeda94e05a9",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "0cd43d5d70426ce5a70bd178de96209d7978be1bc50b4a40bf403ef64a074d2c",
+        "index_sha256": "0236157a787d317cea0281959086cca0deb121df614dd2317e238550a135925c"
+      }
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant_C23_Test",
+      "own_task": false,
+      "changes": [],
+      "before": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant_C23_Test",
+        "head_sha256": "34295ce963f1bc29cadf0d150d5da5696315e03463a2a3f497fca6b64bff54bf",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "0f81ed0caa55fcafa7e11d16cecd93b4da79d4b3665cad21b51ca7b18759b1b2",
+        "index_sha256": "88d040290f702ec626980284cfce45990a4d03863dde72bb69979d558f0758c2"
+      },
+      "after": {
+        "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant_C23_Test",
+        "head_sha256": "34295ce963f1bc29cadf0d150d5da5696315e03463a2a3f497fca6b64bff54bf",
+        "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_path_sha256": "0f81ed0caa55fcafa7e11d16cecd93b4da79d4b3665cad21b51ca7b18759b1b2",
+        "index_sha256": "88d040290f702ec626980284cfce45990a4d03863dde72bb69979d558f0758c2"
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "observed_at": "2026-10-25",
+  "source": "GitHub connector fetch_commit and fetch_pr; not a substitute for git ls-remote",
+  "commit": {
+    "sha": "50699d331a769db3acd9e5e8507ad51b2de1760c",
+    "url": "https://github.com/rf-data/Personal_Assistant/commit/50699d331a769db3acd9e5e8507ad51b2de1760c",
+    "title": "docs: specify C23 parsed content persistence architecture"
+  },
+  "pull_request": {
+    "number": 75,
+    "state": "closed",
+    "merged": true,
+    "draft": false,
+    "head": "feat/c23-01-parsed-content-adr",
+    "head_sha": "50699d331a769db3acd9e5e8507ad51b2de1760c",
+    "base": "master",
+    "base_sha": "053209ad89fac828c7f47677056c44a624ac1af7",
+    "merge_commit_sha": "a2dc080ac5896c9c8032f42bf51ecb5fdb9a71c6",
+    "url": "https://github.com/rf-data/Personal_Assistant/pull/75",
+    "title": "C23-01: Parsed Content Persistence – Architektur und ADR"
+  }
+}
