@@ -1,7 +1,6 @@
 """Synthetic media-last integration, real B5/C10 evidence; no media processing."""
 
 import json
-import os
 import socket
 from pathlib import Path
 from types import SimpleNamespace
@@ -58,8 +57,7 @@ def grant(binding, raw=None, *, process=True, download=False):
 
 
 @pytest.fixture
-def env(tmp_path, monkeypatch):
-    os.umask(0o077)
+def env(tmp_path, monkeypatch, private_umask):
     tmp_path.chmod(0o700)
     monkeypatch.setattr(
         "shutil.disk_usage", lambda _: SimpleNamespace(free=100 * 1024**3)

@@ -31,8 +31,7 @@ def offline(monkeypatch):
 
 
 @pytest.fixture
-def environment(tmp_path, monkeypatch):
-    os.umask(0o077)
+def environment(tmp_path, monkeypatch, private_umask):
     code = tmp_path / "app"
     code.mkdir(mode=0o700)
     mounts = tuple(code / name for name in ("data", "logs", ".cache", "configuration"))

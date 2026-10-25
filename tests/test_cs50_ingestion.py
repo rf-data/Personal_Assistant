@@ -1,7 +1,6 @@
 from contextlib import closing
 
 import pytest
-from qdrant_client import QdrantClient
 from test_cs50_knowledge_input import context as context
 from test_cs50_knowledge_input import imported
 from test_cs50_lecture_runner import body
@@ -16,6 +15,7 @@ from src.tools_rag.cs50_ingestion import (
     selected_bindings,
     upsert_plan,
 )
+from tests.qdrant_support import QdrantClient
 
 
 @pytest.fixture

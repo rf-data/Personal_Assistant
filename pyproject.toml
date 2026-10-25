@@ -89,6 +89,17 @@ documents = [
 
 
 [dependency-groups]
+test-core = ["pytest>=9.0.3"]
+test-offline = [
+    {include-group = "test-core"},
+    "beautifulsoup4>=4.15.0",
+    "pymupdf>=1.27.2.2",
+]
+test-qdrant = [
+    {include-group = "test-offline"},
+    "qdrant-client>=1.19.1",
+]
+
 dev = [
     "mypy>=2.1.0",
     "ruff>=0.15.14",
@@ -153,7 +164,10 @@ exclude_dirs = [
 ]
 
 [tool.pytest.ini_options]
-markers = ["optional_sdk: requires explicitly enabled installed SDK profile; no API calls"]
+markers = [
+    "optional_sdk: requires explicitly enabled installed SDK profile; no API calls",
+    "external_integration: explicit services, native tools, installed SDKs or private artifacts",
+]
 testpaths = ["tests"]
 addopts = "-v --tb=short"
 pythonpath = ["."]

@@ -1,7 +1,6 @@
 """C26 synthetic archive -> C18 -> C16; no real source or host access."""
 
 import json
-import os
 import socket
 import subprocess
 import sys
@@ -38,8 +37,7 @@ def offline(monkeypatch):
 
 
 @pytest.fixture
-def scope(tmp_path):
-    os.umask(0o077)
+def scope(tmp_path, private_umask):
     inputs(tmp_path / "snapshots")
     overview = tmp_path / "snapshots/cs50_python/week0.html"
     overview.write_text(

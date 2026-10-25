@@ -2,8 +2,11 @@
 # import
 from pathlib import Path
 from typing import Annotated, Literal  # Dict,
+
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from src.core import _parsing_settings
 
 # from src.core.memory import session_state
 # from src.utils.general_helper import load_env_vars
@@ -198,27 +201,24 @@ def load_organizer_env_vars():
 # ------------------------------------
 # FILE_TYPE SPECIFIC PARSING SETTINGS
 # ------------------------------------
-class ParseFileSettings(BaseModel):
-    save: list[Literal[False, "html", "info", "md", True, "txt"]] = [False]
-    assemble: list[Literal["md", "txt"]] | None = None
-    scrape_images: bool = False
+class ParseFileSettings(_parsing_settings.FileFields):
+    pass
 
 
-class ParseDOCXSettings(ParseFileSettings):
-    tbl_text_mode: Literal["long", "brief"] = "brief"
+class ParseDOCXSettings(_parsing_settings.DOCXFields, ParseFileSettings):
+    pass
 
 
-class ParseHTMLSettings(ParseFileSettings):
-    apollo: bool = Field(default_factory=bool)
-    parser: str = Field(default_factory=str)
+class ParseHTMLSettings(_parsing_settings.HTMLFields, ParseFileSettings):
+    pass
 
 
 class ParseMDSettings(ParseFileSettings):
     pass
 
 
-class ParseNotebookSettings(ParseFileSettings):
-    parser: str = Field(default_factory=str)
+class ParseNotebookSettings(_parsing_settings.NotebookFields, ParseFileSettings):
+    pass
 
 
 class ParsePDFSettings(ParseFileSettings):
@@ -237,24 +237,15 @@ class ParseURLSettings(ParseFileSettings):
     pass
 
 
-class ParseWikiSettings(ParseFileSettings):
-    query: str | None = None
-    query_time: str | None = None
-    query_param: Literal["page_title", "page_id"] = Field(default="page_id")
-
-    page_id: list[int] = Field(default_factory=list)
-    page_title: list[str] = Field(default_factory=list)
-    # article_to_parse: List[int] = Field(default_factory=list)
-    language: Literal["en", "de"] = Field(default="en")  # Literal["en", "de"]
-    max_retries: int = Field(default=3)
+class ParseWikiSettings(_parsing_settings.WikiFields, ParseFileSettings):
+    pass
 
 
 # ------------------------------------
 # FILE_TYPE SPECIFIC GENERAL SETTINGS
 # ------------------------------------
-class GeneralFileSettings(BaseModel):
-    # parser: str = ""
-    extraction_tags: list[str] = Field(default_factory=list)
+class GeneralFileSettings(_parsing_settings.GeneralFileFields):
+    pass
     # assemble_as_md: bool = Field(default_factory=bool)
     # scrape_images: bool = Field(default_factory=bool)
 
@@ -275,17 +266,8 @@ class GenNotebookSettings(GeneralFileSettings):
     pass
 
 
-class GenPDFSettings(GeneralFileSettings):
-    y_gap_words: int = Field(default_factory=int)
-    x_gap_words: int = Field(default_factory=int)
-
-    width_thresh: float = Field(default_factory=float)
-    y_gap_line: int = Field(default_factory=int)
-    up_down_thresh: float = Field(default_factory=float)
-    left_right_thresh: float = Field(default_factory=float)
-    heading_threshold: int = Field(default_factory=int)
-    foot_note_thresh: int = Field(default_factory=int)
-    start_tol: int = Field(default_factory=int)
+class GenPDFSettings(_parsing_settings.PDFGeneralFields, GeneralFileSettings):
+    pass
 
 
 class GenPlainTextSettings(GeneralFileSettings):
@@ -296,10 +278,8 @@ class GenURLSettings(GeneralFileSettings):
     pass
 
 
-class GenWikiSettings(GeneralFileSettings):
-    # header_agent
-    header_referer: str = ""
-    header_accept: str = ""
+class GenWikiSettings(_parsing_settings.WikiGeneralFields, GeneralFileSettings):
+    pass
 
 
 #     query: str = Field(default_factory=str)
@@ -313,33 +293,11 @@ class GenWikiSettings(GeneralFileSettings):
 # ------------------------------------
 
 
-class ChunkSettings(BaseModel):
-    container_types: list = Field(default_factory=list)
-    # [
-    #                         "heading",
-    #                         "paragraph",
-    #                         "code",
-    #                         "bullet_list"
-    #                         ]
-    spacy_language: Literal["de_core_news_sm", None] = Field(default=None)
-    # "",
-    max_tokens: int = Field(default_factory=int)
-    overlap_sentences: int = Field(default_factory=int)
-    batch_size: int = Field(default_factory=int)
-    transformer_model: Literal[
-        "all-MiniLM-L6-v2",
-        "paraphrase-multilingual-MiniLM-L12-v2",
-        "intfloat/multilingual-e5-base",
-        None,
-    ] = Field(default=None)
-
-    model_config = ConfigDict(extra="forbid")
+class ChunkSettings(_parsing_settings.ChunkFields):
+    pass
 
 
-class GeneralSettings(BaseModel):
-    txt_elements: list[str] = Field(default_factory=list)
-    md_elements: list[str] = Field(default_factory=list)
-
+class GeneralSettings(_parsing_settings.GeneralFields):
     docx: GenDOCXSettings = Field(default_factory=GenDOCXSettings)
     html: GenHTMLSettings = Field(default_factory=GenHTMLSettings)
     json_nb: GenNotebookSettings = Field(default_factory=GenNotebookSettings)
@@ -348,8 +306,6 @@ class GeneralSettings(BaseModel):
     plain_text: GenPlainTextSettings = Field(default_factory=GenPlainTextSettings)
     url: GenURLSettings = Field(default_factory=GenURLSettings)
     wiki: GenWikiSettings = Field(default_factory=GenWikiSettings)
-
-    model_config = ConfigDict(extra="forbid")
 
     # env_name: str = Field(default_factory=str)
     # config_name: str = Field(default_factory=str)

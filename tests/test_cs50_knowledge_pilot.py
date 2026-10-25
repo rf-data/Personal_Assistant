@@ -293,7 +293,6 @@ def controlled_settings(tmp_path_factory):
     import socket
 
     directory = tmp_path_factory.mktemp("pilot-settings")
-    before = set(sys.modules)
     with pytest.MonkeyPatch.context() as patch:
         patch.chdir(directory)
         for key, value in {
@@ -314,9 +313,6 @@ def controlled_settings(tmp_path_factory):
         patch.setattr(socket, "getaddrinfo", forbidden)
         yield
         assert "marvin" not in sys.modules
-    for name in list(sys.modules):
-        if name not in before and name.startswith("src."):
-            sys.modules.pop(name, None)
 
 
 def test_fake_worker_two_chunks(tmp_path, monkeypatch):

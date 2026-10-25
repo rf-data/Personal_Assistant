@@ -1,7 +1,6 @@
 from contextlib import closing
 
 import pytest
-from qdrant_client import QdrantClient
 from test_cs50_ingestion import context as context
 from test_cs50_ingestion import index_case as index_case
 
@@ -9,6 +8,7 @@ from src.model_discovery.cs50_index import EmbeddingConfig
 from src.tools_rag.cs50_embeddings import FakeEmbedder
 from src.tools_rag.cs50_ingestion import upsert_plan
 from src.tools_rag.cs50_retrieval import TranscriptHit, search_cs50_transcripts
+from tests.qdrant_support import QdrantClient
 
 
 def test_real_local_retrieval_filters_and_original_validation(index_case, tmp_path):

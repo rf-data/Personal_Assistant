@@ -169,8 +169,9 @@ def test_retry_does_not_clear_quarantine(tmp_path):
     assert not store.verify_integrity(actor=OWNER).healthy
 
 
+@pytest.mark.parametrize("reverse", [False, True])
 @pytest.mark.parametrize("scope", ["raw", "binding"])
-def test_retry_is_recoverable_after_second_interruption(tmp_path, scope):
+def test_retry_is_recoverable_after_second_interruption(tmp_path, scope, reverse):
     store, bundle, original, old = abandoned(tmp_path, "prepared", scope)
     retry = RetryAttempt(rejected_run_id=original.run_id, request_key="new-attempt")
     options = {f"{scope}_retry": retry.model_dump(mode="json")}
@@ -186,7 +187,13 @@ def test_retry_is_recoverable_after_second_interruption(tmp_path, scope):
     )
     assert line(process) == {"phase": "prepared"}
     stop(process)
-    current = store.inspect_recovery(actor=OWNER)[0]
+    candidates = store.inspect_recovery(actor=OWNER)
+    assert len(candidates) == 2
+    if reverse:
+        candidates = list(reversed(candidates))
+    matching = [run for run in candidates if run.retry_of == original.run_id]
+    assert len(matching) == 1
+    current = matching[0]
     assert current.retry_of == original.run_id
     assert store.recover_run(current.run_id, actor=OWNER).outcome == "committed"
     assert import_(store, bundle, **{f"{scope}_retry": retry}).created

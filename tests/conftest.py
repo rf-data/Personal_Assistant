@@ -1,11 +1,30 @@
 """Portable pilot artifacts built exclusively through the real offline pipeline."""
 
 import json
+import os
 from pathlib import Path
 from types import SimpleNamespace
 
 import httpx
 import pytest
+
+pytest_plugins = ["tests.profile_policy"]
+
+
+@pytest.fixture(autouse=True)
+def preserve_process_umask(request):
+    """CLI entrypoints may set umask too; restore state across every test."""
+    # Read via a temporarily stricter mask, never via the permissive umask(0).
+    previous = os.umask(0o077)
+    os.umask(previous)
+    request.addfinalizer(lambda: os.umask(previous))
+
+
+@pytest.fixture
+def private_umask(request, preserve_process_umask):
+    """Restore even when a dependent fixture fails before reaching its yield."""
+    previous = os.umask(0o077)
+    request.addfinalizer(lambda: os.umask(previous))
 
 
 @pytest.fixture(autouse=True)

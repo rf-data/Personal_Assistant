@@ -1,6 +1,8 @@
 from test_cs50_ingestion import context as context
 from test_cs50_ingestion import index_case as index_case
 
+from tests.qdrant_support import qdrant_client as qdrant_client
+
 
 def test_actual_completed_checkpoint_metadata_and_artifacts(index_case, tmp_path):
     from test_cs50_lecture_runner import fake_factory

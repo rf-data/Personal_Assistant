@@ -38,15 +38,6 @@ def environment(tmp_path_factory):
             (ROOT / "docs/course_sources/cs50/cs50_lecture_plan.v1.json").read_bytes()
         )
         yield module, plan
-    import sys
-
-    for name in (
-        "src.tools_lecture.execute_cs50",
-        "src.tools_lecture.adapt_cs50",
-        "src.model_lecture.data_resources",
-        "src.core.config",
-    ):
-        sys.modules.pop(name, None)
 
 
 def setup_executor(environment, tmp_path, body=SRT, codes=(200,), **options):

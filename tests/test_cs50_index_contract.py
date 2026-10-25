@@ -5,7 +5,6 @@ from uuid import UUID
 
 import pytest
 from pydantic import ValidationError
-from qdrant_client import QdrantClient, models
 
 from src.model_discovery.cs50_index import (
     CollectionContract,
@@ -13,6 +12,7 @@ from src.model_discovery.cs50_index import (
     TranscriptPayload,
 )
 from src.tools_rag.cs50_collection import check_collection, ensure_collection
+from tests.qdrant_support import QdrantClient, models
 
 
 def payload():

@@ -11,12 +11,20 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 
+def publish_marker(path, value):
+    # Readers use existence as readiness; publish only complete JSON.
+    temporary = path.with_name(f".{path.name}.tmp")
+    temporary.write_text(json.dumps(value))
+    temporary.replace(path)
+
+
 def main():
     mode, directory, *args = sys.argv[1:]
     directory = Path(directory)
     if mode == "pdf":
-        (directory / "pdf-pid.json").write_text(
-            json.dumps(dict(pid=os.getpid(), group=os.getpgrp(), parent=os.getppid()))
+        publish_marker(
+            directory / "pdf-pid.json",
+            dict(pid=os.getpid(), group=os.getpgrp(), parent=os.getppid()),
         )
         # Simulate a stuck native parse, without changing the real PDF parser.
         time.sleep(60)
@@ -83,9 +91,7 @@ def main():
         worker = module.Executor(settings)
         job = next(j for j in controller.store.all() if j.status == "queued")
         worker.step()
-        (directory / "guardian-pid.json").write_text(
-            json.dumps(worker.children[job.job_id].pid)
-        )
+        publish_marker(directory / "guardian-pid.json", worker.children[job.job_id].pid)
         # No signal handler on purpose: parent death exercises the real chain.
         while True:
             worker.step()

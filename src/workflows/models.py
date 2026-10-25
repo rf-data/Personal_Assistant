@@ -5,7 +5,8 @@ from typing import Annotated, Literal
 
 from pydantic import Field, field_validator, model_validator
 
-from src.job_control.models import Contract, Course, Identifier, ScopeId, Sha
+from src.job_control.models import Contract, Identifier, ScopeId, Sha
+from src.model_discovery.cs50 import CourseId as Course
 from src.model_materials.assignments import AssignmentSnapshot
 
 Relative = Annotated[str, Field(min_length=1, max_length=400)]

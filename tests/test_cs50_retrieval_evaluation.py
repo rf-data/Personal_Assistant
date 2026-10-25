@@ -7,6 +7,7 @@ from src.tools_rag.cs50_retrieval_evaluation import (
     ranking_metrics,
     reviewed_metrics,
 )
+from tests.qdrant_support import qdrant_client as qdrant_client
 
 
 def test_source_windows_are_real_cues_not_invented_gold(index_case):

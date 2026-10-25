@@ -104,6 +104,9 @@ def test_private_explicit_root_and_limits(tmp_path):
         ContentStore.initialize(Path("relative"))
     root = tmp_path / "content"
     root.mkdir(mode=0o755)
+    root.chmod(0o755)  # mkdir's mode is filtered by the caller's umask.
+    assert root.stat().st_mode & 0o777 == 0o755
+    assert root.stat().st_uid == os.getuid()
     with pytest.raises(IntegrityError):
         ContentStore.initialize(root)
     with pytest.raises(ValidationError) as info:
