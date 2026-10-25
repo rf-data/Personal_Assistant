@@ -12,14 +12,6 @@ from tenacity import (
     wait_random_exponential,
 )
 
-RETRYABLE_STATUS_CODES = {
-    408,  # timeout
-    409,  # conflict
-    425,  # too early
-    429,  # rate limit
-}
-
-
 logger = logging.getLogger(__name__)
 
 
@@ -33,31 +25,26 @@ RETRYABLE_STATUS_CODES = {
 
 def is_retryable_exception(exc: BaseException) -> bool:
     """
-    Return True only for failures that are plausibly transient.
+    Classify transient failures, following cause before context without recursion.
+
+    Exception chains can contain cycles; visit each exception at most once.
     """
+    seen: set[int] = set()
+    current: BaseException | None = exc
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        if isinstance(current, (TimeoutError, ConnectionError)):
+            return True
 
-    if isinstance(
-        exc,
-        (
-            TimeoutError,
-            ConnectionError,
-        ),
-    ):
-        return True
+        status_code = getattr(current, "status_code", None)
+        if status_code in RETRYABLE_STATUS_CODES:
+            return True
 
-    status_code = getattr(exc, "status_code", None)
+        if isinstance(status_code, int) and status_code >= 500:
+            return True
 
-    if status_code in RETRYABLE_STATUS_CODES:
-        return True
-
-    if isinstance(status_code, int) and status_code >= 500:
-        return True
-
-    # Some libraries wrap the original exception.
-    cause = exc.__cause__ or exc.__context__
-
-    if cause is not None and cause is not exc:
-        return is_retryable_exception(cause)
+        # Preserve the existing explicit-cause precedence over implicit context.
+        current = current.__cause__ or current.__context__
 
     return False
 

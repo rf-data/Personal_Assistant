@@ -21,10 +21,11 @@ def preview_zip_content(src_path: str) -> None:
 def unpack_single_zipfile(
     src_path: str, f_name: str, dst_folder: str, password=None
 ) -> None:
+    """Extract one member beneath dst_folder using zipfile's path handling."""
     logger = app_session.logger
 
     with zipfile.ZipFile(src_path, "r") as zip_ref:
-        zip_ref.extract(f_name, pwd=password)
+        zip_ref.extract(f_name, path=dst_folder, pwd=password)
 
     logger.info(
         "Extracting file '%s' to folder '%s'",
