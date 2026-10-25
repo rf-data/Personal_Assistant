@@ -26,7 +26,14 @@ def checked_path(value):
     return path
 
 
-def mounts():
+def mounts(*, subtree=None):
+    """Inspect kernel mounts; output-policy callers retain the strict global view.
+
+    Read-only registered storage may limit inspection to its own subtree, so an
+    unrelated sandbox stack cannot disable reading an otherwise safe source.
+    Ambiguous mounts *inside* the requested subtree still fail closed.
+    """
+
     def decode(value):
         return re.sub(r"\\([0-7]{3})", lambda m: chr(int(m[1], 8)), value)
 
@@ -37,6 +44,8 @@ def mounts():
         point = Path(decode(fields[4]))
         if not point.is_absolute() or ".." in point.parts:
             raise ValueError("Invalid mountpoint")
+        if subtree is not None and not point.is_relative_to(subtree):
+            continue
         if point in result:
             raise ValueError("Ambiguous stacked mount")
         result[point] = dict(
