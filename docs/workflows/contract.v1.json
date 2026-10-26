@@ -1858,7 +1858,8 @@
                   "material_plan",
                   "quality_report",
                   "workflow_report",
-                  "material_receipt"
+                  "material_receipt",
+                  "index_build"
                 ],
                 "title": "Kind",
                 "type": "string"
@@ -2682,7 +2683,8 @@
                   "material_plan",
                   "quality_report",
                   "workflow_report",
-                  "material_receipt"
+                  "material_receipt",
+                  "index_build"
                 ],
                 "title": "Kind",
                 "type": "string"
@@ -3414,7 +3416,8 @@
                   "material_plan",
                   "quality_report",
                   "workflow_report",
-                  "material_receipt"
+                  "material_receipt",
+                  "index_build"
                 ],
                 "title": "Kind",
                 "type": "string"

@@ -30,7 +30,8 @@
             "material_plan",
             "quality_report",
             "workflow_report",
-            "material_receipt"
+            "material_receipt",
+            "index_build"
           ],
           "title": "Kind",
           "type": "string"
@@ -96,7 +97,8 @@
                 "material_plan",
                 "quality_report",
                 "workflow_report",
-                "material_receipt"
+                "material_receipt",
+                "index_build"
               ],
               "title": "Kind",
               "type": "string"
@@ -460,7 +462,8 @@
                 "manifest",
                 "material_bundle",
                 "workflow_bundle",
-                "pdf_bundle"
+                "pdf_bundle",
+                "index_bundle"
               ],
               "title": "Kind",
               "type": "string"
@@ -559,6 +562,11 @@
           },
           "title": "Identities",
           "type": "array"
+        },
+        "index_jobs_enabled": {
+          "default": false,
+          "title": "Index Jobs Enabled",
+          "type": "boolean"
         },
         "max_jobs": {
           "default": 100,
@@ -1259,7 +1267,8 @@
                   "material_plan",
                   "quality_report",
                   "workflow_report",
-                  "material_receipt"
+                  "material_receipt",
+                  "index_build"
                 ],
                 "title": "Kind",
                 "type": "string"
@@ -2083,7 +2092,8 @@
                   "material_plan",
                   "quality_report",
                   "workflow_report",
-                  "material_receipt"
+                  "material_receipt",
+                  "index_build"
                 ],
                 "title": "Kind",
                 "type": "string"
@@ -2815,7 +2825,8 @@
                   "material_plan",
                   "quality_report",
                   "workflow_report",
-                  "material_receipt"
+                  "material_receipt",
+                  "index_build"
                 ],
                 "title": "Kind",
                 "type": "string"

@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "schema_version": 1,
+      "index_record_id": "content_index_record_v1:0a4981564b4cd7b3ed9c7a42d13cb7fe2a02768d472a392ed116321cb58adcfc",
+      "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+      "source_version_id": "content_source_version_v1:aa841a021ad2087ea08233020b370746b23bd6f78584e5d983a65b970d7eb539",
+      "parsed_version_id": "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215",
+      "block_id": "material_block:9e9155a5846309e9cda878d8d6ec1527842ec33746232f416ec00cdbf9e583e2",
+      "content_type": "code",
+      "anchor": {
+        "parsed_version_id": "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215",
+        "block_id": "material_block:9e9155a5846309e9cda878d8d6ec1527842ec33746232f416ec00cdbf9e583e2",
+        "text_sha256": "f2dba8c8488abaeb6411745d7d600e283b1169e8fe56844efd9c5e30befb76b2",
+        "start": 0,
+        "end": 17,
+        "offset_unit": "unicode_codepoint"
+      },
+      "excerpt": {
+        "schema_version": 1,
+        "parsed_version_id": "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215",
+        "block_id": "material_block:9e9155a5846309e9cda878d8d6ec1527842ec33746232f416ec00cdbf9e583e2",
+        "start": 0,
+        "end": 17,
+        "text_length": 17,
+        "text_sha256": "f2dba8c8488abaeb6411745d7d600e283b1169e8fe56844efd9c5e30befb76b2",
+        "text": "answer = \"hello\"\n"
+      },
+      "locators": [
+        {
+          "raw_artifact_sha256": "5955c07a4ef750e62d3a762592343078ae182d9d3effcc1934b49bb4121b40da",
+          "origin_pointer": "/blocks/2",
+          "page": null,
+          "dom": null,
+          "line_start": 3,
+          "line_end": 3,
+          "bbox": null,
+          "coordinate_system": "unknown",
+          "chapter_path": [],
+          "original_segment_id": null,
+          "time_status": "not_applicable",
+          "start": null,
+          "end": null,
+          "raw_reference": {
+            "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+            "source_version_id": "content_source_version_v1:aa841a021ad2087ea08233020b370746b23bd6f78584e5d983a65b970d7eb539",
+            "role": "primary",
+            "ordinal": 0,
+            "sha256": "5955c07a4ef750e62d3a762592343078ae182d9d3effcc1934b49bb4121b40da",
+            "size_bytes": 52,
+            "download_route": "/v1/content/sources/resource%3A9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5/versions/content_source_version_v1%3Aaa841a021ad2087ea08233020b370746b23bd6f78584e5d983a65b970d7eb539/raw/primary/0"
+          }
+        }
+      ],
+      "locators_in_structure": false,
+      "structure_route": "/v1/content/parsed/content_version_v1%3Aafac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215/blocks/material_block%3A9e9155a5846309e9cda878d8d6ec1527842ec33746232f416ec00cdbf9e583e2/structure",
+      "text_route": "/v1/content/parsed/content_version_v1%3Aafac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215/blocks/material_block%3A9e9155a5846309e9cda878d8d6ec1527842ec33746232f416ec00cdbf9e583e2/text",
+      "method": "lexical",
+      "components": [
+        {
+          "backend": "sqlite_fts5",
+          "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+          "raw_score": -1e-06,
+          "score_schema": "sqlite_fts5_bm25_v1",
+          "direction": "lower_is_better"
+        }
+      ],
+      "ranking_score": 0.01639344262295082,
+      "ranking_schema": "source_rrf_v1",
+      "index_generation": "8b583f005771a99fbaadb7b68badda444e2b04bf04b0592ab4469712d7003515",
+      "projection_fingerprint": "01c55443978b826f738f3cd8b957e499680ab656cf791b8e3aee0b55dd937fdf"
+    },
+    {
+      "schema_version": 1,
+      "index_record_id": "content_index_record_v1:26349174ff9149c0193e6e0b4fa735e1370456d5c29bb21e17eb3de363925430",
+      "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+      "source_version_id": "content_source_version_v1:aa841a021ad2087ea08233020b370746b23bd6f78584e5d983a65b970d7eb539",
+      "parsed_version_id": "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215",
+      "block_id": "material_block:70cad74adbb1f9b8a40a7c6a758df3fb550d63068cf0daa4dcd7f988d33ec421",
+      "content_type": "code",
+      "anchor": {
+        "parsed_version_id": "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215",
+        "block_id": "material_block:70cad74adbb1f9b8a40a7c6a758df3fb550d63068cf0daa4dcd7f988d33ec421",
+        "text_sha256": "6d4cc0555b37a27f7f630a16b3eac80b3f08c8b657a9daf25df8b1b561c5dd47",
+        "start": 0,
+        "end": 14,
+        "offset_unit": "unicode_codepoint"
+      },
+      "excerpt": {
+        "schema_version": 1,
+        "parsed_version_id": "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215",
+        "block_id": "material_block:70cad74adbb1f9b8a40a7c6a758df3fb550d63068cf0daa4dcd7f988d33ec421",
+        "start": 0,
+        "end": 14,
+        "text_length": 14,
+        "text_sha256": "6d4cc0555b37a27f7f630a16b3eac80b3f08c8b657a9daf25df8b1b561c5dd47",
+        "text": "# 😀 é hello\r\n"
+      },
+      "locators": [
+        {
+          "raw_artifact_sha256": "5955c07a4ef750e62d3a762592343078ae182d9d3effcc1934b49bb4121b40da",
+          "origin_pointer": "/blocks/0",
+          "page": null,
+          "dom": null,
+          "line_start": 1,
+          "line_end": 1,
+          "bbox": null,
+          "coordinate_system": "unknown",
+          "chapter_path": [],
+          "original_segment_id": null,
+          "time_status": "not_applicable",
+          "start": null,
+          "end": null,
+          "raw_reference": {
+            "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+            "source_version_id": "content_source_version_v1:aa841a021ad2087ea08233020b370746b23bd6f78584e5d983a65b970d7eb539",
+            "role": "primary",
+            "ordinal": 0,
+            "sha256": "5955c07a4ef750e62d3a762592343078ae182d9d3effcc1934b49bb4121b40da",
+            "size_bytes": 52,
+            "download_route": "/v1/content/sources/resource%3A9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5/versions/content_source_version_v1%3Aaa841a021ad2087ea08233020b370746b23bd6f78584e5d983a65b970d7eb539/raw/primary/0"
+          }
+        }
+      ],
+      "locators_in_structure": false,
+      "structure_route": "/v1/content/parsed/content_version_v1%3Aafac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215/blocks/material_block%3A70cad74adbb1f9b8a40a7c6a758df3fb550d63068cf0daa4dcd7f988d33ec421/structure",
+      "text_route": "/v1/content/parsed/content_version_v1%3Aafac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215/blocks/material_block%3A70cad74adbb1f9b8a40a7c6a758df3fb550d63068cf0daa4dcd7f988d33ec421/text",
+      "method": "lexical",
+      "components": [
+        {
+          "backend": "sqlite_fts5",
+          "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+          "raw_score": -1e-06,
+          "score_schema": "sqlite_fts5_bm25_v1",
+          "direction": "lower_is_better"
+        }
+      ],
+      "ranking_score": 0.016129032258064516,
+      "ranking_schema": "source_rrf_v1",
+      "index_generation": "8b583f005771a99fbaadb7b68badda444e2b04bf04b0592ab4469712d7003515",
+      "projection_fingerprint": "01c55443978b826f738f3cd8b957e499680ab656cf791b8e3aee0b55dd937fdf"
+    },
+    {
+      "schema_version": 1,
+      "index_record_id": "content_index_record_v1:3091a191477ef6ebdda5e76ed0201626848e797b7d1cb649e2318631539d52bd",
+      "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+      "source_version_id": "content_source_version_v1:aa841a021ad2087ea08233020b370746b23bd6f78584e5d983a65b970d7eb539",
+      "parsed_version_id": "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215",
+      "block_id": "material_block:e13a484f3fdc0ac07dec0f0f0c7c049339897c4f5095752029c2022ed869a51a",
+      "content_type": "code",
+      "anchor": {
+        "parsed_version_id": "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215",
+        "block_id": "material_block:e13a484f3fdc0ac07dec0f0f0c7c049339897c4f5095752029c2022ed869a51a",
+        "text_sha256": "4eaf4f129193eb41a8967c5a960ad3260b03d1126523a3a086196e6548766938",
+        "start": 0,
+        "end": 17,
+        "offset_unit": "unicode_codepoint"
+      },
+      "excerpt": {
+        "schema_version": 1,
+        "parsed_version_id": "content_version_v1:afac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215",
+        "block_id": "material_block:e13a484f3fdc0ac07dec0f0f0c7c049339897c4f5095752029c2022ed869a51a",
+        "start": 0,
+        "end": 17,
+        "text_length": 17,
+        "text_sha256": "4eaf4f129193eb41a8967c5a960ad3260b03d1126523a3a086196e6548766938",
+        "text": "\tprint(\"hello\")\r\n"
+      },
+      "locators": [
+        {
+          "raw_artifact_sha256": "5955c07a4ef750e62d3a762592343078ae182d9d3effcc1934b49bb4121b40da",
+          "origin_pointer": "/blocks/1",
+          "page": null,
+          "dom": null,
+          "line_start": 2,
+          "line_end": 2,
+          "bbox": null,
+          "coordinate_system": "unknown",
+          "chapter_path": [],
+          "original_segment_id": null,
+          "time_status": "not_applicable",
+          "start": null,
+          "end": null,
+          "raw_reference": {
+            "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+            "source_version_id": "content_source_version_v1:aa841a021ad2087ea08233020b370746b23bd6f78584e5d983a65b970d7eb539",
+            "role": "primary",
+            "ordinal": 0,
+            "sha256": "5955c07a4ef750e62d3a762592343078ae182d9d3effcc1934b49bb4121b40da",
+            "size_bytes": 52,
+            "download_route": "/v1/content/sources/resource%3A9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5/versions/content_source_version_v1%3Aaa841a021ad2087ea08233020b370746b23bd6f78584e5d983a65b970d7eb539/raw/primary/0"
+          }
+        }
+      ],
+      "locators_in_structure": false,
+      "structure_route": "/v1/content/parsed/content_version_v1%3Aafac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215/blocks/material_block%3Ae13a484f3fdc0ac07dec0f0f0c7c049339897c4f5095752029c2022ed869a51a/structure",
+      "text_route": "/v1/content/parsed/content_version_v1%3Aafac6ea866cb7d4550492432762e26f99339e385a7c93e0f98b7dbfb1c1d0215/blocks/material_block%3Ae13a484f3fdc0ac07dec0f0f0c7c049339897c4f5095752029c2022ed869a51a/text",
+      "method": "lexical",
+      "components": [
+        {
+          "backend": "sqlite_fts5",
+          "source_id": "resource:9c1a3fdb83b37fcd777c541fbe419da999012738c9cd7721fc4d2a5c54caded5",
+          "raw_score": -1e-06,
+          "score_schema": "sqlite_fts5_bm25_v1",
+          "direction": "lower_is_better"
+        }
+      ],
+      "ranking_score": 0.015873015873015872,
+      "ranking_schema": "source_rrf_v1",
+      "index_generation": "8b583f005771a99fbaadb7b68badda444e2b04bf04b0592ab4469712d7003515",
+      "projection_fingerprint": "01c55443978b826f738f3cd8b957e499680ab656cf791b8e3aee0b55dd937fdf"
+    }
+  ],
+  "next_cursor": null,
+  "index_generation": "8b583f005771a99fbaadb7b68badda444e2b04bf04b0592ab4469712d7003515",
+  "ranking_schema": "source_rrf_v1",
+  "selection_scope": "explicit_active_selection"
+}

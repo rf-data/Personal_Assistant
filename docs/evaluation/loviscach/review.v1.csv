@@ -1,0 +1,1 @@
+question_id,question,expected_answer,source_id,source_version_id,course_identity,lecture_identity,original_file,sha256,locators_json,review_status,evaluability,needs_visual_context,question_type,difficulty,generation_method,ambiguity_note,formula_original_notation,revision,change_note,decision,reason,reviewer,review_date,review_reference

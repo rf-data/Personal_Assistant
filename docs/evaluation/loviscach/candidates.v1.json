@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "dataset_version": "loviscach-candidates-v1",
+  "origin": "real",
+  "sources": [],
+  "candidates": [],
+  "real_acceptance": "blocked"
+}

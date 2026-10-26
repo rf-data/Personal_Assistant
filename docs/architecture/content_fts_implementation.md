@@ -1,5 +1,20 @@
 # C24-03: SQLite FTS5 und autorisierte lokale Suche
 
+DEV-01B / C24-02-C bindet den vorhandenen Builder nun opt-in an die bestehende
+C16-Queue: [Indexjob-/Statusvertrag](../api/content_index_jobs_v1.md). Keine
+zweite Queue; explizite hashgebundene Katalogselektion, Sourceownership auch der
+ersetzten aktiven Generation, bestehende Prozessaufsicht und fail-closed Retry.
+Umfang und [tatsächliche Validierung](../api/content_index_jobs_validation.md)
+bleiben von noch ausstehender UI-/Real-/Produktivabnahme getrennt.
+
+DEV-01 A / C24-03-B ergänzt auf Basis `e478520` den opt-in
+[HTTP-Suchvertrag](../api/content_search_v1.md) am bestehenden C16-Gateway.
+Vorhandene FTS5-Fassade/DTOs, Live-ACLs und Cursor bleiben unverändert; der
+Retrieval-Guard umfasst nun auch die begrenzte HTTP-Auslieferung. Indexjobs und
+allgemeine Search UI bleiben Folgepakete. Die folgenden historischen
+HTTP-Offenstände behalten ihren damaligen Basisbezug. Aktuelle
+[Validierung](../api/content_search_validation.md); Integration erst nach PRreview.
+
 18.10.2026 · Basis `master` `fcb5da98ca94998e2a024c1a898ff20bdd9f79ab`,
 nach [C24-01/#83](https://github.com/rf-data/Personal_Assistant/pull/83) und
 [C24-02/#84](https://github.com/rf-data/Personal_Assistant/pull/84).

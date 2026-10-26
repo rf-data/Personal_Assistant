@@ -25,7 +25,14 @@ def encode(value):
 
 
 class Application:
-    def __init__(self, controller, *, content_settings=None, review_settings=None):
+    def __init__(
+        self,
+        controller,
+        *,
+        content_settings=None,
+        review_settings=None,
+        search_settings=None,
+    ):
         self.controller = controller
         from src.content_store.http import ContentHTTP
 
@@ -48,6 +55,32 @@ class Application:
             ):
                 raise ValueError("Review, Content and job roots must be separate")
         self.review = ReviewHTTP(review_settings)
+        from src.content_store.search_http import SearchHTTP
+
+        if search_settings is not None:
+            if content_settings is None:
+                raise ValueError("Search requires explicit content configuration")
+            index_root = search_settings.index_root
+            roots = [controller.settings.root, content_settings.root]
+            if review_settings is not None:
+                roots.append(review_settings.root)
+            if any(
+                index_root.is_relative_to(p) or p.is_relative_to(index_root)
+                for p in roots
+            ):
+                raise ValueError("Search index must be separate from managed data")
+            if content_settings.cursor_key_file.is_relative_to(index_root):
+                raise ValueError("Search cursor key must be outside index data")
+        self.search = SearchHTTP(self.content, search_settings)
+        from src.job_control.index_http import IndexHTTP
+
+        if controller.settings.index_jobs_enabled and (
+            content_settings is None or search_settings is None
+        ):
+            raise ValueError(
+                "Index jobs require the integrated content/search configuration"
+            )
+        self.index = IndexHTTP(controller, content_settings, search_settings)
 
     def request(self, method, target, headers, body=b""):
         try:
@@ -72,6 +105,14 @@ class Application:
                     or len(body) > 32768
                 ):
                     raise ValueError("Invalid route")
+                if parts.path == "/v1/content/search" or parts.path.startswith(
+                    "/v1/content/search/"
+                ):
+                    return self.search.request(method, parts, body, actor)
+                if parts.path == "/v1/content/index" or parts.path.startswith(
+                    "/v1/content/index/"
+                ):
+                    return self.index.request(method, parts, body, actor)
                 return self.content.request(method, parts, body, actor)
             if (
                 parts.scheme
@@ -94,6 +135,7 @@ class Application:
             if any(len(v) != 1 for v in query.values()):
                 raise ValueError("Duplicate query parameters")
             query = {k: v[0] for k, v in query.items()}
+            scoped_job = None
             if route[2:3] == ["workflows"]:
                 from src.workflows.http import WorkflowHTTP
 
@@ -178,6 +220,8 @@ class Application:
             elif len(route) in {4, 5} and route[2] == "jobs":
                 job_id = route[3]
                 job = self.controller.get(actor, job_id)
+                if job.process_id == "content_index_build":
+                    scoped_job = job
                 action = route[4] if len(route) == 5 else None
                 if method == "GET" and action is None:
                     result = job
@@ -216,6 +260,23 @@ class Application:
                 )
             else:
                 raise KeyError("Unknown method/route")
+            from src.content_store.errors import ContentStoreError, Forbidden, NotFound
+            from src.job_control.index_jobs import guarded_reply
+
+            try:
+                guarded = guarded_reply(
+                    self.controller,
+                    actor,
+                    result,
+                    202 if method == "POST" and "jobs" in route else 200,
+                    scoped_job=scoped_job,
+                )
+            except (Forbidden, NotFound):
+                raise KeyError("Index job unavailable") from None
+            except ContentStoreError:
+                raise Unavailable("Index status unavailable") from None
+            if guarded is not None:
+                return guarded
             return (
                 (202 if method == "POST" and "jobs" in route else 200),
                 encode(result),
@@ -288,9 +349,15 @@ def handler_for(application):
             except (ValueError, TimeoutError, OSError):
                 self.send_error(400)
                 return
+            from src.content_store.errors import ContentStoreError
             from src.content_store.reader import Download
 
             try:
+                deadline = getattr(response, "deadline", time.monotonic() + 15)
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise TimeoutError
+                self.connection.settimeout(min(3, remaining))
                 self.send_response(status)
                 self.send_header("Content-Type", mime)
                 self.send_header(
@@ -303,7 +370,6 @@ def handler_for(application):
                 for key, value in getattr(response, "headers", {}).items():
                     self.send_header(key, value)
                 self.end_headers()
-                deadline = time.monotonic() + 15
                 if isinstance(data, Download):
                     while chunk := data.stream.read(65536):
                         remaining = deadline - time.monotonic()
@@ -323,6 +389,12 @@ def handler_for(application):
             finally:
                 if isinstance(data, Download):
                     data.close()
+                close = getattr(response, "close", None)
+                if close is not None:
+                    try:
+                        close()
+                    except (ContentStoreError, OSError):
+                        self.close_connection = True
 
         do_GET = handle_request
         do_POST = handle_request
@@ -344,7 +416,14 @@ def handler_for(application):
     return Handler
 
 
-def serve(controller, port=8016, *, content_settings=None, review_settings=None):
+def serve(
+    controller,
+    port=8016,
+    *,
+    content_settings=None,
+    review_settings=None,
+    search_settings=None,
+):
     # Deliberately no configurable wildcard/public binding in this local transport.
     with HTTPServer(
         ("127.0.0.1", port),
@@ -353,6 +432,7 @@ def serve(controller, port=8016, *, content_settings=None, review_settings=None)
                 controller,
                 content_settings=content_settings,
                 review_settings=review_settings,
+                search_settings=search_settings,
             )
         ),
     ) as server:

@@ -1,0 +1,751 @@
+{
+  "$defs": {
+    "ContentLocator": {
+      "additionalProperties": false,
+      "properties": {
+        "raw_artifact_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Raw Artifact Sha256",
+          "type": "string"
+        },
+        "origin_pointer": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "^/",
+          "title": "Origin Pointer",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "dom": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dom"
+        },
+        "line_start": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line Start"
+        },
+        "line_end": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line End"
+        },
+        "bbox": {
+          "anyOf": [
+            {
+              "maxItems": 4,
+              "minItems": 4,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bbox"
+        },
+        "coordinate_system": {
+          "default": "unknown",
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Coordinate System",
+          "type": "string"
+        },
+        "chapter_path": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "pattern": "^[^\\x00-\\x1f]+$",
+            "type": "string"
+          },
+          "title": "Chapter Path",
+          "type": "array"
+        },
+        "original_segment_id": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Original Segment Id"
+        },
+        "time_status": {
+          "enum": [
+            "known",
+            "unknown",
+            "not_applicable"
+          ],
+          "title": "Time Status",
+          "type": "string"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        }
+      },
+      "required": [
+        "raw_artifact_sha256",
+        "origin_pointer",
+        "time_status"
+      ],
+      "title": "ContentLocator",
+      "type": "object"
+    },
+    "GoldCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "query": {
+          "$ref": "#/$defs/QuerySpec"
+        },
+        "entry_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Entry Id",
+          "type": "string"
+        },
+        "expected_answer": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected Answer"
+        },
+        "question_type": {
+          "enum": [
+            "fact",
+            "definition",
+            "relationship",
+            "rule",
+            "multipart",
+            "contrast",
+            "formula",
+            "unanswerable"
+          ],
+          "title": "Question Type",
+          "type": "string"
+        },
+        "difficulty": {
+          "enum": [
+            "easy",
+            "medium",
+            "hard"
+          ],
+          "title": "Difficulty",
+          "type": "string"
+        },
+        "generation_method": {
+          "enum": [
+            "independent_source_annotation",
+            "synthetic_reference"
+          ],
+          "title": "Generation Method",
+          "type": "string"
+        },
+        "review_status": {
+          "const": "pending_human_review",
+          "default": "pending_human_review",
+          "title": "Review Status",
+          "type": "string"
+        },
+        "references": {
+          "items": {
+            "$ref": "#/$defs/GoldReference"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "References",
+          "type": "array"
+        },
+        "needs_visual_context": {
+          "title": "Needs Visual Context",
+          "type": "boolean"
+        },
+        "visual_context_complete": {
+          "title": "Visual Context Complete",
+          "type": "boolean"
+        },
+        "ambiguity_note": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ambiguity Note"
+        },
+        "evaluability": {
+          "enum": [
+            "pending_review",
+            "not_evaluable"
+          ],
+          "title": "Evaluability",
+          "type": "string"
+        },
+        "unanswerable_scope_note": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unanswerable Scope Note"
+        },
+        "formula_original_notation": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Formula Original Notation"
+        },
+        "revision": {
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "change_note": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Change Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "query",
+        "entry_id",
+        "question_type",
+        "difficulty",
+        "generation_method",
+        "references",
+        "needs_visual_context",
+        "visual_context_complete",
+        "evaluability",
+        "revision",
+        "change_note"
+      ],
+      "title": "GoldCandidate",
+      "type": "object"
+    },
+    "GoldReference": {
+      "additionalProperties": false,
+      "properties": {
+        "gold_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Gold Id",
+          "type": "string"
+        },
+        "entry_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Entry Id",
+          "type": "string"
+        },
+        "source_id": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Id"
+        },
+        "source_version_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Version Id"
+        },
+        "original_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Original Sha256",
+          "type": "string"
+        },
+        "dimension": {
+          "enum": [
+            "text",
+            "structure",
+            "code",
+            "formula",
+            "image",
+            "table",
+            "transcript",
+            "locator"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "source_reference": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Source Reference",
+          "type": "string"
+        },
+        "created_date": {
+          "format": "date",
+          "title": "Created Date",
+          "type": "string"
+        },
+        "target_pointer": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "pattern": "^/",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Pointer"
+        },
+        "expected_content": {
+          "anyOf": [
+            {
+              "maxLength": 100000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected Content"
+        },
+        "expected_structure": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              },
+              "minProperties": 1,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected Structure"
+        },
+        "expected_locator": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ContentLocator"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "expected_occurrences": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected Occurrences"
+        },
+        "reference_status": {
+          "enum": [
+            "confirmed",
+            "pending_review",
+            "rejected"
+          ],
+          "title": "Reference Status",
+          "type": "string"
+        },
+        "method": {
+          "enum": [
+            "independent_source_annotation",
+            "parser_preannotation",
+            "synthetic_reference"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "reviewer": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewer"
+        },
+        "review_reference": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Review Reference"
+        },
+        "review_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Review Date"
+        },
+        "notes": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "gold_id",
+        "entry_id",
+        "original_sha256",
+        "dimension",
+        "source_reference",
+        "created_date",
+        "reference_status",
+        "method"
+      ],
+      "title": "GoldReference",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "OriginalSource": {
+      "additionalProperties": false,
+      "properties": {
+        "entry_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Entry Id",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_version_id": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f]+$",
+          "title": "Source Version Id",
+          "type": "string"
+        },
+        "course_identity": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Course Identity",
+          "type": "string"
+        },
+        "lecture_identity": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Lecture Identity",
+          "type": "string"
+        },
+        "root_key": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Root Key",
+          "type": "string"
+        },
+        "original_file": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Original File",
+          "type": "string"
+        },
+        "original_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Original Sha256",
+          "type": "string"
+        },
+        "document_type": {
+          "enum": [
+            "srt",
+            "vtt",
+            "transcript_json",
+            "pdf",
+            "html"
+          ],
+          "title": "Document Type",
+          "type": "string"
+        },
+        "language": {
+          "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})?$",
+          "title": "Language",
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "real",
+            "synthetic"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "permission_reference": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Permission Reference",
+          "type": "string"
+        },
+        "parsing_status": {
+          "enum": [
+            "not_checked",
+            "available",
+            "missing"
+          ],
+          "title": "Parsing Status",
+          "type": "string"
+        },
+        "alternative_representations": {
+          "default": [],
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Alternative Representations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "entry_id",
+        "source_id",
+        "source_version_id",
+        "course_identity",
+        "lecture_identity",
+        "root_key",
+        "original_file",
+        "original_sha256",
+        "document_type",
+        "language",
+        "origin",
+        "permission_reference",
+        "parsing_status"
+      ],
+      "title": "OriginalSource",
+      "type": "object"
+    },
+    "QuerySpec": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "query_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Query Id",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "query_id",
+        "text"
+      ],
+      "title": "QuerySpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "dataset_version": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Dataset Version",
+      "type": "string"
+    },
+    "origin": {
+      "enum": [
+        "real",
+        "synthetic"
+      ],
+      "title": "Origin",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/OriginalSource"
+      },
+      "maxItems": 30,
+      "title": "Sources",
+      "type": "array"
+    },
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/GoldCandidate"
+      },
+      "maxItems": 30,
+      "title": "Candidates",
+      "type": "array"
+    },
+    "real_acceptance": {
+      "const": "blocked",
+      "default": "blocked",
+      "title": "Real Acceptance",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "dataset_version",
+    "origin",
+    "sources",
+    "candidates"
+  ],
+  "title": "GoldCandidatePool",
+  "type": "object"
+}

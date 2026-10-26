@@ -275,3 +275,12 @@ src/prio_list.md
 # Reviewed C23.0 planning only; no private task or source payloads.
 !/docs/planning/issue_plan.v1.json
 !/docs/planning/c230_snapshot.v1.json
+
+# C24-R reviewed API schemas, synthetic examples and empty real candidate pool only.
+!/docs/api/examples/content_search_v1.schema.json
+!/docs/api/examples/content_search_v1.synthetic.json
+!/docs/api/examples/content_index_jobs_v1.schema.json
+!/docs/api/examples/content_index_jobs_v1.synthetic.json
+!/docs/evaluation/loviscach/candidate_schema.v1.json
+!/docs/evaluation/loviscach/candidates.v1.json
+!/docs/evaluation/loviscach/review.v1.csv

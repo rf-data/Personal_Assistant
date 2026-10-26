@@ -374,7 +374,7 @@ class ContentIndex:
             replace=True,
         )
 
-    def build(self, selection, *, actor):
+    def build(self, selection, *, actor, build_id=None):
         actor = checked_actor(actor)
         if actor.role != "operator":
             raise Forbidden("operator build required")
@@ -382,8 +382,17 @@ class ContentIndex:
             raise InvalidInput("typed index selection required")
         selection = snapshot(selection)
         started = time.monotonic()
-        bid = uuid.uuid4().hex
+        bid = uuid.uuid4().hex if build_id is None else build_id
+        if not isinstance(bid, str) or not re.fullmatch(r"[0-9a-f]{32}", bid):
+            raise InvalidInput("build identity")
         with self.files.lock(".content-index-build.lock", exclusive=True):
+            if (
+                self.files.read("attempts/" + bid + "/status.json", missing=True)
+                is not None
+            ):
+                raise InvalidInput(
+                    "build identity already used; explicit new request required"
+                )
             self._capacity()
             receipt = BuildReceipt(
                 build_id=bid,
@@ -396,8 +405,12 @@ class ContentIndex:
             self._receipt(receipt)
             try:
                 with self.files.lock(".content-index-catalog.lock"):
-                    original, _, _ = self._active()
+                    original, _, previous = self._active()
                     with self.store._maintenance(), self.store._connection() as db:
+                        if previous is not None:
+                            self._ownership(
+                                db, tuple(f.source_id for f in previous.files), actor
+                            )
                         before = _meta(db)
                         results, records, sources, acl = self._export(
                             db, selection, actor, owner=True
@@ -484,10 +497,14 @@ class ContentIndex:
                 receipt = receipt.model_copy(update={"state": "ready"})
                 self._receipt(receipt)
                 with self.files.lock(".content-index-catalog.lock", exclusive=True):
-                    current, _, _ = self._active()
+                    current, _, previous = self._active()
                     if current != original:
                         raise Unavailable("index activation conflict")
                     with self.store._maintenance(), self.store._connection() as db:
+                        if previous is not None:
+                            self._ownership(
+                                db, tuple(f.source_id for f in previous.files), actor
+                            )
                         if _meta(db) != before:
                             raise Unavailable("content snapshot changed during build")
                         _, fresh, _, _ = self._export(db, selection, actor, owner=True)
