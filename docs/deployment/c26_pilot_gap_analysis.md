@@ -1,3 +1,31 @@
+# C26-INT-02 – aktueller Lückenstand
+
+27.10.2026. **HOLD; C26-04 bleibt DEFERRED.** Der
+[Stabilisierungsbericht](c26_int_02_validation.md) ergänzt die folgenden
+historischen Inventare und ersetzt keine damaligen Testresultate.
+
+- Materialveröffentlichung nach hartem Cancel: tatsächliche Hardlinkursache
+  eingegrenzt; atomarer No-replace-Fix und deterministischer Gegenbeleg geliefert.
+- SQLite: zusätzliches BUSY bei `BEGIN IMMEDIATE` real erfasst und vor dem
+  Transaktionskörper begrenzt behandelt. Keine Körper-/Commitwiederholung,
+  keine Timeoutsteigerung, keine Quarantänebereinigung. Die drei ursprünglichen
+  Fehler werden nicht pauschal als kausal vollständig geschlossen erklärt.
+- Planlesung: abgeschlossene Ergebnisse werden auch bei während des Lesens
+  entstehender Quarantäne gesperrt. Sichere, authentifizierte Streamlit-Anzeige
+  liegt als vollständiger separater UI-Patch vor; tatsächliche Anwendung und
+  Tests im UI-Repository stehen wegen Sandboxgrenzen aus.
+- Zusätzlicher Such-Cursor-Testzeiteffekt auf unverändertem master und Kandidat
+  belegt. Keine Änderungen an C24-R; Nachweise bleiben separat rot dokumentiert.
+- Gemeinsame Backend-Gitmetadaten bleiben read-only. Eigener Liefercommit,
+  reguläres Review und Defaultbranchintegration stehen aus. Kein Push/Merge
+  wurde durch einen Connector oder eine zusätzliche Gitkopie umgangen.
+
+Die bestehenden technischen/live Blocker (produktive Trustkette, Build-/Runtime-
+closure, exklusive Trigger, Legacyrückweg, Host-/Netz-/OIDC-/Browserabnahme) bleiben
+offen. Kein Teil dieses Auftrags erteilt eine eingeschränkte Hetznerfreigabe.
+
+---
+
 # C26-PILOT-INTEGRATION – aktueller Integrationsbefund
 
 27.10.2026. **Reviewkandidat im Pilot-Workspace; Livebetrieb HOLD.** Die unten

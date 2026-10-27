@@ -186,3 +186,14 @@ konsistentem Restore, vollständige #109/#110/#146 und weitere offene
 Betriebs-/Monitoring-/Recoveryabnahmen, belastbare Last-/Fehler-/Restartnachweise,
 unabhängiger Review und ausdrückliche Produktionsfreigabe. Pilotabnahme schließt
 keines dieser Issues und erklärt C26 niemals GO.
+
+## C26-INT-02-Nachtrag zur Plananzeige
+
+Das zuvor fehlende Widget liegt jetzt in einem vollständigen separaten UI-Patch
+mit Client-, Streamlit- und synthetischen IPCtests vor. Anwendung und Tests im
+tatsächlichen UI-Repository stehen wegen der Schreibgrenze aus. Die Darstellung
+ist eine sichere JSONprojektion des empfangenen Plans, ohne freie Titel, URLs,
+Provenienz oder lokale Pfade. Kein direkter SQLitezugriff und keine Veränderung
+von Rollen-/Ownerrechten. Der Backendvertrag sperrt Quarantäne ausdrücklich.
+C26 bleibt HOLD, C26-04 bleibt DEFERRED; keine Produktionsfreigabe.
+[Stabilisierung und Übergabe](c26_int_02_validation.md).

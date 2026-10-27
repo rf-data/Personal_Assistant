@@ -193,3 +193,23 @@ SIGTERM schließt den managed Executor; nach hartem Verlust gelten Interrupted/
 Quarantäne und explizite Untersuchung. Kein SQLite-/Journal-/Locklöschen,
 automatischer Retry oder automatischer Resume. `sleep infinity` bleibt auf Hetzner
 bis einer später ausdrücklich genehmigten, rückwegfähigen Umstellung unverändert.
+
+## C26-INT-02-Nachtrag
+
+Der Planlesevertrag liefert bei vorhandener oder während der Lesung entstehender
+Workspacequarantäne 423 / `quarantined`, nach Auth-/Courseprüfung. Neue private
+Jobdiagnosen heißen `adapter-failure.v1.json` und `guardian-failure.v1.json`;
+sie enthalten feste Kategorien, numerischen SQLitecode und Transaktionsphase.
+Sie sind kein Erfolgs-/Cleanupbeweis und berechtigen zu keinem Retry/Resume.
+Originalmarker und alte Publikationsreste werden niemals automatisch entfernt.
+
+Die von `storage.publish_bytes` gespeicherten Plan-/Receipt-/JSON-Dateien werden
+auf Linux mit atomarem No-replace-Rename veröffentlicht.
+Der Zielkernel und das tatsächliche Volume müssen diese Operation unterstützen;
+fehlende Unterstützung bleibt ein Fehler. Der neue Quellenfix macht keine
+historischen nlink=2-Dateien zu vertrauenswürdigen Einzeldateien. Sicherheits-
+prüfungen und Backup-/Restoregrenzen bleiben bestehen; C26-04 bleibt DEFERRED.
+
+Die UI-Anzeige liegt als separat anwendbarer Patch vor. Sie wurde nur auf einer
+Testfixture geprüft, nicht im tatsächlichen UI-Repository angewendet oder getestet.
+[Alle neuen Nachweise und offenen Punkte](c26_int_02_validation.md).

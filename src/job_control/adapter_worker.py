@@ -144,7 +144,10 @@ def main(argv=None):
         return 4
     except (ValueError, OSError, KeyError, json.JSONDecodeError):
         return 2
-    except Exception:
+    except Exception as error:
+        from src.job_control.diagnostics import record_failure
+
+        record_failure(args.root, args.job_id, "adapter", error)
         # No exception payload/traceback may expose source bytes or credentials.
         return 3
 

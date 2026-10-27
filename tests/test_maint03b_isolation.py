@@ -173,12 +173,16 @@ storage.publish_bytes(Path(sys.argv[2]), b'synthetic receipt')
         target,
     )
     assert result.returncode == 73, result.stderr
-    (alias,) = tmp_path.glob(".material-*")
-    for path in (alias, target):
-        meta = path.stat()
-        assert meta.st_uid == os.getuid() and meta.st_mode & 0o777 == 0o600
-        assert meta.st_nlink == 2 and meta.st_ino == target.stat().st_ino
-        assert path.read_bytes() == b"synthetic receipt"
+    # C26-INT-02 removes the link/unlink crash window. Historical red evidence
+    # remains in MAINT-03B; an interrupted new publication has only one name.
+    assert not list(tmp_path.glob(".material-*"))
+    meta = target.stat()
+    assert meta.st_uid == os.getuid() and meta.st_mode & 0o777 == 0o600
+    assert meta.st_nlink == 1 and target.read_bytes() == b"synthetic receipt"
+    assert set(inventory(tmp_path)) == {target.name}
+    # Unknown/legacy hardlinks remain forbidden and are never auto-cleaned.
+    alias = tmp_path / "untrusted-alias"
+    os.link(target, alias)
     with pytest.raises(ValueError, match="Only unlinked regular files"):
         inventory(tmp_path)
     assert alias.exists() and target.exists()  # No implicit recovery or deletion.

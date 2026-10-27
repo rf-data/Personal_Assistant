@@ -23,6 +23,10 @@ class Unavailable(RuntimeError):
     pass
 
 
+class Quarantined(Unavailable):
+    pass
+
+
 class Store:
     def __init__(
         self,
@@ -129,21 +133,28 @@ class Store:
     @contextmanager
     def connection(self, write=False):
         safe_path(self.root, "jobs.sqlite3")
-        # A last-connection WAL cleanup can briefly return SQLITE_BUSY even to
-        # connection-local PRAGMAs, sometimes without invoking the busy handler.
-        # Reopen only before any transaction/body, within the existing 2s bound.
+        # WAL opening/recovery can return SQLITE_BUSY during connection setup
+        # or BEGIN, sometimes without invoking the busy handler. Reopen only
+        # while no transaction began, within the existing total 2s setup bound.
         # Never replay a transaction, commit or job after a locking error.
         deadline = time.monotonic() + 2
         while True:
             db = sqlite3.connect(self.path, timeout=max(0, deadline - time.monotonic()))
+            phase = "setup"
             try:
                 db.execute("PRAGMA foreign_keys=ON")
                 db.execute("PRAGMA synchronous=FULL")
+                phase = "begin"
+                if write:
+                    db.execute("BEGIN IMMEDIATE")
             except sqlite3.OperationalError as error:
+                error.job_db_phase = phase
+                transaction_began = db.in_transaction
                 db.close()
                 remaining = deadline - time.monotonic()
                 if (
                     getattr(error, "sqlite_errorcode", 0) & 0xFF != sqlite3.SQLITE_BUSY
+                    or transaction_began
                     or remaining <= 0
                 ):
                     raise
@@ -153,11 +164,15 @@ class Store:
                 raise
             else:
                 break
+        phase = "body"
         try:
-            if write:
-                db.execute("BEGIN IMMEDIATE")
             yield db
+            phase = "commit"
             db.commit()
+        except sqlite3.Error as error:
+            error.job_db_phase = phase
+            db.rollback()
+            raise
         except BaseException:
             db.rollback()
             raise

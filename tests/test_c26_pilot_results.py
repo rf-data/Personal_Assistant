@@ -117,3 +117,39 @@ def test_result_authentication_is_required_even_without_a_known_job(pilot):
         )[0]
         == 404
     )
+
+
+def test_quarantined_completed_plan_is_not_read_or_implicitly_released(
+    completed, monkeypatch
+):
+    env, job_id = completed
+    env.controller.store.quarantine(job_id)
+    marker = (env.settings.root / "quarantine").read_bytes()
+
+    def forbidden(*args):
+        pytest.fail("Quarantined result bytes were read")
+
+    monkeypatch.setattr("src.job_control.controller.read_file", forbidden)
+    code, body = api(env, "GET", f"/v1/jobs/{job_id}/result")
+    assert code == 423 and body["error"]["code"] == "quarantined"
+    assert (env.settings.root / "quarantine").read_bytes() == marker
+    assert env.controller.get(env.actor, job_id).status == "completed"
+
+
+def test_quarantine_appearing_during_result_read_blocks_the_response(
+    completed, monkeypatch
+):
+    env, job_id = completed
+    from src.job_control import controller
+
+    original = controller.read_file
+
+    def quarantined_read(*args):
+        data = original(*args)
+        env.controller.store.quarantine(job_id)
+        return data
+
+    monkeypatch.setattr(controller, "read_file", quarantined_read)
+    code, body = api(env, "GET", f"/v1/jobs/{job_id}/result")
+    assert code == 423 and body["error"]["code"] == "quarantined"
+    assert (env.settings.root / "quarantine").exists()

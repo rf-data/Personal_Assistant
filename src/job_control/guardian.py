@@ -236,6 +236,9 @@ def execute(root, job_id, parent):
             output_refs=tuple(a.artifact_id for a in artifacts),
         )
     except Exception as error:
+        from src.job_control.diagnostics import record_failure
+
+        record_failure(root, job_id, "guardian", error)
         # Cleanup was attempted; an exception is never proof of process end.
         store.quarantine(job_id)
         store.transition(

@@ -1,3 +1,20 @@
+# C26-INT-02 – aktueller Nachtrag
+
+27.10.2026. **HOLD; C26-04 DEFERRED.** Die neue Stabilisierung, Ursachenbelege,
+separate UI-Patchübergabe und tatsächlich neu ausgeführten Tests stehen im
+[C26-INT-02-Bericht](c26_int_02_validation.md). Der vorherige Integrationscode ist
+in `be03e83f3f09956e9b95b9652f860fa73af29c4a` gesichert; die dortige frühere
+Aussage „kein Liefercommit“ beschreibt den damaligen Lauf vor dieser Sicherung.
+
+Neu: atomare Materialveröffentlichung ohne Hardlink-Abbruchfenster, begrenzte
+BUSY-Behandlung vor Transaktionsbeginn, redigierte SQLite-/Adapterdiagnosen und
+Quarantänesperre am Planlesevertrag. Der UI-Patch wurde ausschließlich auf einer
+separaten Testfixture geprüft, **nicht im tatsächlichen UI-Repository angewendet
+oder getestet**. Keine alten Erfolge werden hinzuaddiert; die nachfolgenden
+früheren Belege und roten Befunde bleiben historische Aufzeichnungen.
+
+---
+
 # C26-PILOT-INTEGRATION – neue Offlinevalidierung
 
 27.10.2026. **HOLD. Kein vollständig grüner Gesamtabschluss.** Quellintegration,

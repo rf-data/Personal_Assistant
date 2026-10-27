@@ -9,7 +9,7 @@ from urllib.parse import parse_qs, urlsplit
 from pydantic import ValidationError
 
 from src.job_control.controller import AuthenticationError
-from src.job_control.store import Conflict, Unavailable
+from src.job_control.store import Conflict, Quarantined, Unavailable
 
 
 def encode(value):
@@ -301,6 +301,8 @@ class Application:
             code, status = "forbidden", 403
         except Conflict:
             code, status = "conflict", 409
+        except Quarantined:
+            code, status = "quarantined", 423
         except KeyError:
             code, status = "not_found", 404
         except (ValidationError, ValueError, TypeError):

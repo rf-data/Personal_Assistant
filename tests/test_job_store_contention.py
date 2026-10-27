@@ -116,3 +116,105 @@ def test_non_busy_setup_error_is_not_retried(tmp_path, monkeypatch):
             pytest.fail("Invalid connection was admitted")
     assert raised.value.sqlite_errorcode == sqlite3.SQLITE_ERROR
     assert opened == closed and len(opened) == 1
+
+
+def test_transient_begin_busy_reopens_only_before_any_transaction_body(
+    tmp_path, monkeypatch
+):
+    store = Store(tmp_path / "private")
+    connect = sqlite3.connect
+    holder = connect(store.path)
+    opened, busy, closed = [], [], []
+
+    class ObservedConnection(sqlite3.Connection):
+        failed_begin = False
+
+        def execute(self, sql, *args):
+            if sql == "BEGIN IMMEDIATE" and not busy:
+                # Acquire the real WAL writer only after this connection's
+                # PRAGMA setup. The injected zero busy-handler wait exposes
+                # SQLITE_BUSY immediately, as WAL recovery may do in practice.
+                holder.execute("BEGIN IMMEDIATE")
+            try:
+                return super().execute(sql, *args)
+            except sqlite3.OperationalError as error:
+                assert sql == "BEGIN IMMEDIATE"
+                assert error.sqlite_errorcode == sqlite3.SQLITE_BUSY
+                assert not self.in_transaction
+                self.failed_begin = True
+                busy.append(error.sqlite_errorcode)
+                raise
+
+        def close(self):
+            super().close()
+            closed.append(self)
+            if self.failed_begin:
+                holder.rollback()
+
+    def observed(*args, **kwargs):
+        kwargs.update(timeout=0, factory=ObservedConnection)
+        db = connect(*args, **kwargs)
+        opened.append(db)
+        return db
+
+    monkeypatch.setattr(sqlite3, "connect", observed)
+    entered = 0
+    try:
+        with store.connection(write=True) as db:
+            entered += 1
+            db.execute("INSERT INTO worker VALUES(1,42)")
+    finally:
+        holder.close()
+    assert entered == 1 and busy == [sqlite3.SQLITE_BUSY]
+    assert len(opened) == 2 and opened == closed
+    with connect(store.path) as db:
+        assert db.execute("SELECT heartbeat FROM worker").fetchone() == (42,)
+
+
+def test_persistent_reserved_writer_is_not_retried_after_setup_budget(tmp_path):
+    store = Store(tmp_path / "private")
+    holder = sqlite3.connect(store.path)
+    try:
+        holder.execute("BEGIN IMMEDIATE")
+        with pytest.raises(sqlite3.OperationalError) as raised:
+            with store.connection(write=True):
+                pytest.fail("Persistently busy writer entered a transaction body")
+        assert raised.value.sqlite_errorcode == sqlite3.SQLITE_BUSY
+        assert raised.value.job_db_phase == "begin"
+        assert holder.in_transaction
+    finally:
+        holder.rollback()
+        holder.close()
+
+
+def test_commit_failure_rolls_back_without_replaying_body_or_commit(
+    tmp_path, monkeypatch
+):
+    store = Store(tmp_path / "private")
+    connect = sqlite3.connect
+    opened = []
+
+    def observed(*args, **kwargs):
+        db = connect(*args, **kwargs)
+        opened.append(db)
+        return db
+
+    monkeypatch.setattr(sqlite3, "connect", observed)
+    entered = 0
+    with pytest.raises(sqlite3.IntegrityError) as raised:
+        with store.connection(write=True) as db:
+            entered += 1
+            db.execute("CREATE TABLE parent(id INTEGER PRIMARY KEY)")
+            db.execute(
+                "CREATE TABLE child(parent_id INTEGER REFERENCES parent(id) DEFERRABLE INITIALLY DEFERRED)"
+            )
+            db.execute("INSERT INTO child VALUES(42)")
+    assert raised.value.job_db_phase == "commit"
+    assert entered == 1 and len(opened) == 1
+    with store.connection() as db:
+        assert (
+            db.execute(
+                "SELECT name FROM sqlite_master WHERE name IN ('parent','child')"
+            ).fetchall()
+            == []
+        )

@@ -79,11 +79,10 @@ def test_actual_ui_client_reads_gated_single_job_and_verified_plan(
     second = client()
     assert second.get(job.job_id).status == "completed"
     assert second.artifacts(job.job_id)
-    # Existing generic client supports the additive route; the actual Streamlit
-    # result panel still needs a separate persistent UI workspace/branch change.
-    result = second.request("GET", second.job_path(job.job_id) + "/result", dict)
-    assert result["plan"]["materials"]
-    assert result["artifact"]["job_id"] == job.job_id
+    # C26-INT-02 checks the dedicated bounded reader from the separate UI patch.
+    result = second.material_plan(job.job_id)
+    assert result.plan.materials
+    assert result.artifact.job_id == job.job_id
     with pytest.raises(BackendError):
         second.create(preview, "reject_second_pilot_ui_job")
     gate.run(plan, __import__("test_deployment_gate_v2").approve(plan), driver)

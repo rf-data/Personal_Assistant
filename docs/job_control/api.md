@@ -180,3 +180,25 @@ bislang nur Artefaktmetadaten. Das neue Ergebniswidget erfordert einen
 separaten UI-Branch in einem persistenten UI-Arbeitsverzeichnis. Dieses ist in
 der aktuellen Sandbox nicht beschreibbar; **die vollständige Plananzeige in
 der UI bleibt HOLD**. Kein UI-Code ist im Backend dupliziert.
+
+## C26-INT-02-Nachtrag: Quarantäne und UI-Leser
+
+Der vorhandene Ergebnisvertrag prüft zusätzlich den Workspacequarantänemarker
+vor und nach der Dateilesung. Nach erfolgreicher Authentifizierung und
+Courseprüfung liefert eine Sperre **423 / `quarantined`**; es werden keine
+Planbytes ausgegeben, Marker oder Jobzustand werden nicht verändert. Auch ein
+zuvor abgeschlossener Job begründet keinen Zugriff auf einen gesperrten Plan.
+Alle bisherigen Auth-, Integritäts-, Datei- und Größenprüfungen bleiben erhalten.
+
+Die gesonderte UI-Patchübergabe enthält einen dedizierten `material_plan(job_id)`-
+Leser. Dieser liest den aktuellen autorisierten Job, prüft Abschluss und
+Artefaktlimit, liest die begrenzte Ergebnisroute und vergleicht die vollständige
+Artefaktreferenz einschließlich Hash/Größe/Inputidentität. Die `plan`-Antwort ist
+normalisiert; ihr erneutes Serialisieren ergibt nicht die ursprünglichen
+Artefaktbytes. Eine lokale Wiederberechnung dieses Dateihashes wird nicht behauptet.
+
+Die JSONansicht zeigt ausschließlich sichere Planfelder und keine ungefilterten
+Titel, URLs, Provenienz oder Dateipfade. Status- und Artefaktansichten bleiben
+erhalten. Der UI-Patch ist in der tatsächlichen UI-Sandbox **noch nicht angewendet
+oder getestet**; nur separat exportierte Testfixtures wurden ausgeführt.
+[Validierung, Grenzen und Übergabe](../deployment/c26_int_02_validation.md).

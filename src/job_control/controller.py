@@ -13,7 +13,7 @@ from src.job_control.catalog import (
 )
 from src.job_control.models import Job, PreviewRequest, StartRequest, fingerprint
 from src.job_control.registry import registry_document
-from src.job_control.store import Conflict, Store, Unavailable, now
+from src.job_control.store import Conflict, Quarantined, Store, Unavailable, now
 
 
 class AuthenticationError(PermissionError):
@@ -91,6 +91,8 @@ class Controller:
     def planning_result(self, actor, job_id):
         """Read one completed, hash-bound plan; never accepts filesystem paths."""
         job = self.get(actor, job_id)
+        if safe_path(self.settings.root, "quarantine").exists():
+            raise Quarantined("Workspace requires operator review")
         if (
             job.process_id != "material_planning"
             or job.status != "completed"
@@ -118,6 +120,8 @@ class Controller:
             plan = MaterialPlan.model_validate_json(data)
         except (ValueError, OSError):
             raise Unavailable("Planning result unavailable") from None
+        if safe_path(self.settings.root, "quarantine").exists():
+            raise Quarantined("Workspace requires operator review")
         return dict(
             schema_version=1,
             protocol="personal_assistant_material_plan_v1",
