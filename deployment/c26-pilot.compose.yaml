@@ -1,0 +1,125 @@
+# OFFLINE REVIEW ONLY. Existing backend resource, no UI, routes or host ports.
+# No profile selects any service. Control and worker activation are separate.
+name: personal-assistant-c26-pilot
+x-required-paths:
+  root: ${C26_PILOT_ROOT:?New private synthetic pilot root required}
+  catalog: ${C26_PILOT_CATALOG:?New read-only synthetic catalog required}
+  config: ${C26_PILOT_CONFIG:?Existing private controller file required}
+  limits: ${C26_PILOT_LIMITS:?Existing pilot capacity limits required}
+  caddy: ${C26_CADDYFILE:?Existing reviewed Caddyfile required}
+  tls: ${C26_TLS_DIRECTORY:?Existing private TLS directory required}
+x-role: &role
+  profiles: [c26-pilot-control]
+  pull_policy: never
+  user: '10001:10001'
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  labels: ['traefik.enable=false']
+  restart: 'no'
+  stop_grace_period: 30s
+  pids_limit: 64
+  tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=32m,mode=1777"]
+  logging:
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+x-backend: &backend
+  <<: *role
+  image: ${C26_RUNTIME_IMAGE:?Reviewed runtime registry digest required}
+  volumes:
+    - type: bind
+      source: ${C26_PILOT_ROOT}
+      target: /var/lib/personal-assistant/private
+      bind: {create_host_path: false}
+    - type: bind
+      source: ${C26_PILOT_CATALOG}
+      target: /var/lib/personal-assistant/catalog
+      read_only: true
+      bind: {create_host_path: false}
+    - type: bind
+      source: ${C26_PILOT_CONFIG}
+      target: /run/config/controller.json
+      read_only: true
+      bind: {create_host_path: false}
+x-health: &health
+  interval: 15s
+  timeout: 5s
+  retries: 3
+  start_period: 30s
+services:
+  api-gateway:
+    <<: *role
+    image: ${C26_GATEWAY_IMAGE:?Reviewed gateway registry digest required}
+    entrypoint: [caddy]
+    command: [run, --config, /etc/caddy/Caddyfile, --adapter, caddyfile]
+    cpus: 0.10
+    mem_limit: 256m
+    memswap_limit: 256m
+    environment: {API_DNS: '${C26_API_DNS:?Private API DNS matching certificate SAN required}'}
+    networks:
+      private-api:
+        aliases: ['${C26_API_DNS:?Private API DNS required}']
+    volumes:
+      - type: bind
+        source: ${C26_CADDYFILE}
+        target: /etc/caddy/Caddyfile
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C26_TLS_DIRECTORY}
+        target: /run/tls
+        read_only: true
+        bind: {create_host_path: false}
+    healthcheck:
+      <<: *health
+      test: [CMD, python, /opt/gateway_health.py]
+  api:
+    <<: *backend
+    cpus: 0.25
+    mem_limit: 512m
+    memswap_limit: 512m
+    network_mode: service:api-gateway
+    depends_on: {api-gateway: {condition: service_started}}
+    entrypoint: [python, -m, scripts.deployment]
+    command: [api, --config, /run/config/controller.json]
+    healthcheck:
+      <<: *health
+      test: [CMD, python, -m, scripts.deployment, health, --role, api, --config, /run/config/controller.json]
+  capacity-worker:
+    <<: *backend
+    profiles: [c26-pilot-worker]
+    network_mode: none
+    cpus: 1.0
+    mem_limit: 1024m
+    memswap_limit: 1024m
+    pids_limit: 128
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777"]
+    entrypoint: [python, -m, scripts.cs50_worker]
+    command: [--config, /run/config/controller.json, --limits, /run/config/limits.json]
+    volumes:
+      - type: bind
+        source: ${C26_PILOT_ROOT}
+        target: /var/lib/personal-assistant/private
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C26_PILOT_CATALOG}
+        target: /var/lib/personal-assistant/catalog
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C26_PILOT_CONFIG}
+        target: /run/config/controller.json
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${C26_PILOT_LIMITS}
+        target: /run/config/limits.json
+        read_only: true
+        bind: {create_host_path: false}
+    healthcheck:
+      <<: *health
+      test: [CMD, python, -m, scripts.deployment, health, --role, worker, --config, /run/config/controller.json]
+networks:
+  private-api:
+    external: true
+    name: ${C26_PRIVATE_API_NETWORK:?Dedicated existing internal API network required}

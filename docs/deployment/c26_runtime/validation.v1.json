@@ -1,0 +1,1001 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-23T18:41:38.917909+00:00",
+  "conclusion": {
+    "review": "GO",
+    "read_only_operator_inventory": "GO",
+    "merge": "NO-GO",
+    "runtime_activation": "NO-GO",
+    "production_pilot": "NO-GO",
+    "reason": "Current tmpfs regression and five local HTML export cases passed; earlier Btrfs errors retained and original SQLite code unknown. Real driver/adoption, pinned image/profile acceptance, live resource budget and operational evidence remain incomplete; explicit no-merge/no-deploy instruction remains in force."
+  },
+  "github": {
+    "schema_version": 1,
+    "checked_at_utc": "2026-10-23T18:40:13.330745+00:00",
+    "source": "live GitHub API, read only",
+    "default_branches": {
+      "backend": {
+        "repo": "rf-data/Personal_Assistant",
+        "default_branch": "master",
+        "sha": "e502aa915ad0e928dbe7e92eacd44fff0152912b"
+      },
+      "ui": {
+        "repo": "rf-data/personal-assistant-ui",
+        "default_branch": "main",
+        "sha": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff"
+      }
+    },
+    "pull_requests": [
+      {
+        "repo": "rf-data/Personal_Assistant",
+        "number": 148,
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/148",
+        "state": "open",
+        "draft": true,
+        "head": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+        "base_sha_reported_by_pr": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+        "mergeable": true,
+        "mergeable_state": "clean",
+        "auto_merge": null,
+        "reviews": [],
+        "inline_review_comment_count": 0,
+        "check_runs": [],
+        "commit_status": {
+          "state": "pending",
+          "total_count": 0,
+          "contexts": []
+        }
+      },
+      {
+        "repo": "rf-data/Personal_Assistant",
+        "number": 149,
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/149",
+        "state": "open",
+        "draft": true,
+        "head": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb",
+        "base_sha_reported_by_pr": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+        "mergeable": true,
+        "mergeable_state": "clean",
+        "auto_merge": null,
+        "reviews": [],
+        "inline_review_comment_count": 0,
+        "check_runs": [],
+        "commit_status": {
+          "state": "pending",
+          "total_count": 0,
+          "contexts": []
+        }
+      },
+      {
+        "repo": "rf-data/Personal_Assistant",
+        "number": 156,
+        "url": "https://github.com/rf-data/Personal_Assistant/pull/156",
+        "state": "open",
+        "draft": true,
+        "head": "c77128b14e60b78a546fd804507ff255d4833759",
+        "base_sha_reported_by_pr": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+        "mergeable": true,
+        "mergeable_state": "clean",
+        "auto_merge": null,
+        "reviews": [],
+        "inline_review_comment_count": 0,
+        "check_runs": [],
+        "commit_status": {
+          "state": "pending",
+          "total_count": 0,
+          "contexts": []
+        }
+      },
+      {
+        "repo": "rf-data/personal-assistant-ui",
+        "number": 20,
+        "url": "https://github.com/rf-data/personal-assistant-ui/pull/20",
+        "state": "open",
+        "draft": true,
+        "head": "6b84e3c09f877309a3fd1c6f9cbcf61bb9f46788",
+        "base_sha_reported_by_pr": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+        "mergeable": true,
+        "mergeable_state": "clean",
+        "auto_merge": null,
+        "reviews": [],
+        "inline_review_comment_count": 0,
+        "check_runs": [],
+        "commit_status": {
+          "state": "pending",
+          "total_count": 0,
+          "contexts": []
+        }
+      }
+    ],
+    "mutations_performed": []
+  },
+  "local_worktrees": [
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/gmp_compliance",
+      "exists": true,
+      "head": "65b3f09155263d447c4f4540f5b3bba9f78017c1",
+      "branch": "feat/c20b-workflow-http",
+      "status": [],
+      "role": "existing primary"
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/personal-assistant-ui",
+      "exists": true,
+      "head": "b2cf9ca9ba44ee770dab4d834a6ae8285f34776b",
+      "branch": "main",
+      "status": [],
+      "role": "existing primary"
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap",
+      "exists": true,
+      "head": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "branch": "feat/c26-runtime-bootstrap",
+      "status": [
+        "M tests/test_deployment_transport.py",
+        "?? deployment/c26-runtime.controller.json.example",
+        "?? deployment/coolify.runtime-bootstrap.compose.yaml",
+        "?? docs/deployment/c26_runtime/",
+        "?? tests/test_c26_runtime_bootstrap.py"
+      ],
+      "role": "owned by this task"
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-compat",
+      "exists": true,
+      "head": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "branch": "",
+      "status": [
+        "M deployment/Dockerfile",
+        " M deployment/Dockerfile.dockerignore",
+        " M docker/DockerFile.worker",
+        " M docker/DockerFile.worker.dockerignore",
+        " M docs/cs50/contracts/material_quality.md",
+        " M docs/deployment/architecture.md",
+        " M docs/deployment/c26b_validation.md",
+        " M docs/deployment/configuration.md",
+        " M docs/deployment/https.md",
+        " M docs/deployment/operations.md",
+        " M docs/job_control/contract.v1.json",
+        " M scripts/worker_image_smoke.py",
+        " M src/core/retry.py",
+        " M src/job_control/controller.py",
+        " M src/job_control/executor.py",
+        " M src/job_control/models.py",
+        " M src/job_control/operations.py",
+        " M src/job_control/store.py",
+        " M src/model_materials/quality.py",
+        " M src/tools_knowledge/find_knowledge.py",
+        " M src/tools_lecture/material_handoff.py",
+        " M src/tools_materials/mapping.py",
+        " M src/tools_materials/quality.py",
+        " M src/utils/general_helper.py",
+        " M src/utils/path_helper.py",
+        " M tests/test_cs50_knowledge_input.py",
+        " M tests/test_deployment_transport.py",
+        "?? deployment/c26-runtime.controller.json.example",
+        "?? deployment/coolify.runtime-bootstrap.compose.yaml",
+        "?? docs/cs50/contracts/html_aggregation_v2.md",
+        "?? docs/deployment/c26_gate_validation.md",
+        "?? docs/deployment/c26_stabilization/",
+        "?? docs/deployment/c26a/html_aggregation_validation.md",
+        "?? docs/deployment/deployment_gate.md",
+        "?? scripts/deployment_gate.py",
+        "?? src/job_control/deployment_gate.py",
+        "?? src/tools_materials/html_projection.py",
+        "?? src/tools_materials/quality_projection.py",
+        "?? tests/test_c26_runtime_bootstrap.py",
+        "?? tests/test_cs50_html_projection.py",
+        "?? tests/test_deployment_gate.py",
+        "?? tests/test_job_store_contention.py"
+      ],
+      "role": "owned by this task"
+    },
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/personal-assistant-ui-c26-runtime-check",
+      "exists": true,
+      "head": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "branch": "",
+      "status": [
+        "M docs/c26_https.md"
+      ],
+      "role": "owned by this task"
+    }
+  ],
+  "integration": {
+    "backend_base": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+    "unchanged_patch_order": [
+      156,
+      149,
+      148
+    ],
+    "ui_base": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+    "ui_patch": 20,
+    "patch_sha256": {
+      "pr156.patch": "3cdfb722d6b115986c230f74c7064304ecc046df1db0358d97e6bb3234d4537b",
+      "pr149.patch": "823bb383f806880521caaf13100f1be0fc3c9e5f1effb0cb5a8cd7fa7e718955",
+      "pr148.patch": "76aa75a421954e7589f55cda5df65cb6cb19caabd9b2dfa290232194660c9c74",
+      "ui20.patch": "6d6c99569e2a801370ea37c5d0d48f2d42d94c8e9414cd35fd63d027596a666f"
+    },
+    "draft_product_code_copied_into_own_branch": false,
+    "combined_deployment_commit": null,
+    "target_registry_digest": null
+  },
+  "candidate_input_sha256": {
+    "deployment/coolify.runtime-bootstrap.compose.yaml": "88d567b3ccf4218320ca77d5483963ffbaef720b5180190f31297ca52a5fbdb9",
+    "deployment/c26-runtime.controller.json.example": "30f7b35d0671ffa123f26e9ab9756264b1442d8a5706eccab47543c8ce5645ae",
+    "tests/test_c26_runtime_bootstrap.py": "b8288eca8c4349478ca5caf91e1c1a35e49866a1aa1da8d6eaf7be0c3a4f3208",
+    "tests/test_deployment_transport.py": "c5391b28d32a86d4c14bd9e69b5708d8a479a34ed41ad803e1a7627ed8f81afe"
+  },
+  "prior_product_equivalence": {
+    "files": 341,
+    "different_files": [],
+    "tree_manifest_sha256": "e4a11737aeab3e31760b758ce11d008b9801bd4e539d7a2ee0531344b27d8580",
+    "prior_scope": "Personal_Assistant-c26-stabilization-compat"
+  },
+  "environment": {
+    "python": "3.12.12",
+    "pytest": "9.1.1",
+    "sqlite": "3.50.4",
+    "backend_interpreter": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26b6-planning-results/test-env/bin/python",
+    "ui_extra_sitepackages": "/home/robfra/0_Portfolio_Projekte/personal-assistant-ui-c26b/.venv/lib/python3.12/site-packages",
+    "package_installation_performed": false,
+    "bytecode_disabled": true,
+    "pytest_plugin_autoload_disabled": true,
+    "pytest_cache_provider_disabled": true,
+    "test_scope": "Only new owned synthetic roots, local Python processes/loopback; no production data roots"
+  },
+  "runs": [
+    {
+      "id": "c18-diagnostics",
+      "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/c18-diagnostics.xml",
+      "junit_sha256": "7fefa4409b1af1918a2b47e2ab51666e917dca8cd230443c1d4ad7e66b6da92e",
+      "log_sha256": "e617e1399b7b57feba48562f30db33c12f3508e08f20fe92f6b5010cbd2168e3",
+      "counts": {
+        "tests": 24,
+        "failures": 8,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 16
+      },
+      "test_groups": {
+        "tests.test_cs50_workflows": 24
+      },
+      "failed_cases": [
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[config]"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_queued_cancel_and_explicit_resume"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_resume_after_interrupted_attempt_before_state_write"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_cancel_during_real_execution_and_resume"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_hard_worker_restart_reconciles_real_partial_workflow"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_metadata_permission_and_hash_tamper_are_rejected"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_new_process_metrics_and_opt_in_registry"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_c16_timeout_before_workflow_state_is_reported_and_resumable"
+        }
+      ],
+      "note": "Diagnostic repeat, instrumented owned guardian/Store; eight failures retained; not a passing fix verification."
+    },
+    {
+      "id": "c18-local-control",
+      "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/c18-local-control.xml",
+      "junit_sha256": "e15475c11f40fd14ebfe4151cccbe10f90d30c9ec71ccd24d9ad6fb804da9a94",
+      "log_sha256": "56c7718335dd94297e0e0c1db6712db15b7472a76f996d9062343f8bfa7ceaa3",
+      "counts": {
+        "tests": 3,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 0
+      },
+      "test_groups": {
+        "tests.test_cs50_workflows": 3
+      },
+      "failed_cases": [
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[parser]"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[config]"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_metadata_permission_and_hash_tamper_are_rejected"
+        }
+      ],
+      "note": "Uninstrumented control outside sandbox, fresh owned workspace root; all three failed."
+    },
+    {
+      "id": "c18-sqltrace-errno",
+      "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/c18-sqltrace-errno.xml",
+      "junit_sha256": "9f87de677414102f8403949ff618c612b323e6fba9331b3ca718290f6a1455ab",
+      "log_sha256": "0d133902e600ccd86727934bd5daf9ce8979c944aa88a763c17c258a2651dcff",
+      "counts": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 0
+      },
+      "test_groups": {
+        "tests.test_cs50_workflows": 1
+      },
+      "failed_cases": [
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[parser]"
+        }
+      ],
+      "note": "Adds errno capture: OSError ENOSPC at write_state os.replace, not a SQLite error code."
+    },
+    {
+      "id": "c18-sqltrace",
+      "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/c18-sqltrace.xml",
+      "junit_sha256": "5cca55d9a45ad926c4c7e185a57a375b435200a4932ffef487b5aa974b294b35",
+      "log_sha256": "edb1f54bd87946c114cf88824a34d38c29bc4f254f6f3883f6eefd535cc6d331",
+      "counts": {
+        "tests": 4,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 0
+      },
+      "test_groups": {
+        "tests.test_cs50_workflows": 4
+      },
+      "failed_cases": [
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[config]"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[parser]"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_metadata_permission_and_hash_tamper_are_rejected"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_new_process_metrics_and_opt_in_registry"
+        }
+      ],
+      "note": "Owned synthetic adapter/sqlite diagnostic wrapper, exception-class/frames capture only."
+    },
+    {
+      "id": "c18-tmp-control",
+      "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/c18-tmp-control.xml",
+      "junit_sha256": "799299bc318d4750860d7b370e02316decfaa70a8c42988c7d8cb4854f057a7f",
+      "log_sha256": "804b9ffa5e867e55a3901e482d788109e79d0d0d646e38875ac189f412c16bc0",
+      "counts": {
+        "tests": 3,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 0
+      },
+      "test_groups": {
+        "tests.test_cs50_workflows": 3
+      },
+      "failed_cases": [
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[parser]"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[config]"
+        },
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_metadata_permission_and_hash_tamper_are_rejected"
+        }
+      ],
+      "note": "Uninstrumented control with fresh /tmp roots; all three failed, no complete workaround."
+    },
+    {
+      "id": "c18-tmptrace",
+      "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/c18-tmptrace.xml",
+      "junit_sha256": "04df9d0ea206901ec57aceb5bb4f15964612ddb855d37999e6077a5a76e28774",
+      "log_sha256": "df2b80636f2c0251c1b1460fbdfe8a4ba2badffec7f868ed952da6fe0c228eb6",
+      "counts": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 0
+      },
+      "test_groups": {
+        "tests.test_cs50_workflows": 1
+      },
+      "failed_cases": [
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[parser]"
+        }
+      ],
+      "note": "Fresh /tmp instrumented adapter: errno 28 at write_state os.replace; failure retained."
+    },
+    {
+      "id": "definition",
+      "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/definition.xml",
+      "junit_sha256": "13434c8c3aa1633d0f8c4e4cd762b0fbda6dcd4aa8d3ea4028fa54a053e0e768",
+      "log_sha256": "db2c4f22a05574ebc25c3602280743d6a71e5eb8f32618d96aeba17ea21a312a",
+      "counts": {
+        "tests": 6,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 1,
+        "passed": 3
+      },
+      "test_groups": {
+        "tests.test_c26_runtime_bootstrap": 6
+      },
+      "failed_cases": [
+        {
+          "group": "tests.test_c26_runtime_bootstrap",
+          "name": "test_capacity_worker_refuses_before_creating_queue[disabled]"
+        },
+        {
+          "group": "tests.test_c26_runtime_bootstrap",
+          "name": "test_capacity_worker_refuses_before_creating_queue[parallel]"
+        }
+      ],
+      "note": "Initial master-only harness: two incorrect no-lock assertions; corrected to permit an empty private maintenance lock; pending #148 gate case skipped."
+    },
+    {
+      "id": "regression",
+      "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/regression.xml",
+      "junit_sha256": "c575fa27c58b626848f17b1a5cbd1344f8d3bd05c4c945afd3c2df35e3bef2d2",
+      "log_sha256": "1efa8650f3bfb60ea7be77419c58ce5b1ced6ab25e9e5a4f82e8bd96cef1791e",
+      "counts": {
+        "tests": 357,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 356
+      },
+      "test_groups": {
+        "tests.test_job_control": 36,
+        "tests.test_job_executor": 17,
+        "tests.test_deployment_gate": 66,
+        "tests.test_deployment_operations": 23,
+        "tests.test_cs50_workflows": 24,
+        "tests.test_cs50_assignment_integration": 15,
+        "tests.test_cs50_week_materials": 51,
+        "tests.test_cs50_course": 51,
+        "tests.test_cs50_html_projection": 34,
+        "tests.test_job_store_contention": 5,
+        "tests.test_runtime_paths": 34,
+        "tests.test_cs50_knowledge_input": 1
+      },
+      "failed_cases": [
+        {
+          "group": "tests.test_cs50_workflows",
+          "name": "test_stale_propagates_and_resume_preserves_existing_outputs[parser]"
+        }
+      ],
+      "note": "357 selected of 358; explicitly excluded Docker CLI profile rendering; one unclassified OperationalError/quarantine in C18 parser resume."
+    },
+    {
+      "id": "roles",
+      "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/roles.xml",
+      "junit_sha256": "42ef233650b07f4a55812fadea0901543aabfca6b6db84f118d6aa801196732b",
+      "log_sha256": "20ce43a818323cce9f812ec953bac8fdbcaad862e22e6afb04a348963b439775",
+      "counts": {
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 8
+      },
+      "test_groups": {
+        "tests.test_c26_runtime_bootstrap": 6,
+        "tests.test_deployment_transport": 2
+      },
+      "failed_cases": [],
+      "note": "Corrected candidate plus unmodified #156/#149/#148: six refusal/static tests and two actual local API/worker lifecycle tests; no Docker."
+    },
+    {
+      "id": "ui",
+      "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/ui.xml",
+      "junit_sha256": "388fe5047946f7c54b278338528c88cae7079050b683a90aff2bd4e4b86d57d5",
+      "log_sha256": "4cf49e1de7cfaa96735f7f357f5cc860fca9cd55e82d27259923a6ff4d4af37a",
+      "counts": {
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 33
+      },
+      "test_groups": {
+        "tests.test_https_security.HTTPSBoundaryTests": 9,
+        "tests.test_https_security.OIDCSessionTests": 2,
+        "tests.test_container_runtime.ContainerRuntimeTests": 9,
+        "tests.test_deployment.DeploymentTests": 4
+      },
+      "failed_cases": [],
+      "note": "Main plus unchanged #20: pytest reports 24 test functions and 9 passed subtests (JUnit records 33 cases)."
+    }
+  ],
+  "local_capacity": {
+    "scope": "development workspace, not Hetzner",
+    "filesystem": "/dev/vdc btrfs",
+    "free_bytes_at_recording": 3687714816,
+    "reported_inode_total": 0,
+    "inodes_interpretation": "0 from statvfs/df on this Btrfs is not proof of exhausted inodes",
+    "production_free_gib_operator_observed": 20,
+    "production_measurement_by_codex": false,
+    "cleanup_or_limit_change_performed": false
+  },
+  "diagnostics_record": "runtime_diagnostics.v1.json",
+  "limitations": [
+    "Docker CLI Compose rendering intentionally not run; test_compose_cli_resolves_only_explicit_profiles deselected.",
+    "No gateway binary/image, cgroup, installed Coolify 4.4.7 rendering, real private DNS/TLS/VPN/OIDC browser acceptance.",
+    "All diagnostic attempts retained, no passing repeat substituted for failed broad regression.",
+    "First OperationalError has no saved SQLite error code; ENOSPC in later adapter failures does not prove its cause.",
+    "Simple /tmp rename passes but C18 adapter status rename also fails under /tmp; no complete workaround proven.",
+    "Old image name/tag are operator observations, not verified code SHA/manifest digest or healthy gate-aware rollback.",
+    "Static candidate requires #148/#156 and separately confirmed runtime configuration, existing queue, mounts and private network."
+  ],
+  "authorized_operations_completed": {
+    "isolated_source_and_tests": true,
+    "read_only_github_audit": true,
+    "operator_inventory_prepared": true,
+    "host_ssh_docker_coolify_actions": false,
+    "new_course_downloads": false,
+    "zip_imports": false,
+    "production_jobs": false,
+    "production_database_changes": false,
+    "secret_reads_or_logs": false,
+    "merges": 0,
+    "ready_transitions": 0,
+    "auto_merge_enabled": false,
+    "cleanup": false
+  },
+  "retention": {
+    "reason": "Explicit no-merge/no-cleanup instruction: default-branch integration pending review; own branch, worktrees and results retained.",
+    "result_directory": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results"
+  },
+  "publication": {
+    "method": "GitHub Git Data API, only the eleven intended files on an own new review branch; no default-branch update",
+    "reason": "git add failed with Unable to write new index file, including on a copied index under /tmp",
+    "local_worktree_uncommitted": true,
+    "locks_manually_changed": false,
+    "regular_pre_commit_checks": "passed on all eleven intended files",
+    "index_failure_errno": "not captured; do not infer equality with adapter errno 28",
+    "publication_receipt": "local results/github-publication.v1.json after actual creation"
+  },
+  "operator_supplement": {
+    "recorded_at_utc": "2026-10-23T18:50:23.851946+00:00",
+    "scope": "Documentation/inventory only; same PR #157, no compose/example/test/product modifications",
+    "source_record": "technical_sources.v1.json",
+    "assessment": "source_assessment.md",
+    "operator_observations": "operator_inventory.v1.json",
+    "live_github_at_start": {
+      "backend_master": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "ui_main": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "pr157_head": "3e5a1326fbf3642509ea4d3aabe09aae5067688f",
+      "pr157_draft": true,
+      "pr157_auto_merge": null
+    },
+    "new_runtime_test_runs": false,
+    "prior_failed_regression_still_open": true,
+    "label_values_are_not_build_or_trigger_proof": true,
+    "actual_startup_cause": "unverified",
+    "blocked_definition_unchanged": true,
+    "publication_method": "regular pre-commit checks, GitHub Git Data API fast-forward of own review branch; no force, no default branch update",
+    "document_checks": {
+      "json_parse": "passed",
+      "relative_links_checked": 12,
+      "shell_syntax_blocks": 6,
+      "shell_execution": false,
+      "regular_pre_commit": "passed before final documentation additions; repeated on final files",
+      "ui_service_key_mismatch_documented": true
+    }
+  },
+  "final_integration": {
+    "recorded_at_utc": "2026-10-23T19:37:14.884463+00:00",
+    "base_review_head": "40b6aab02ba6a2bcc5c84477bbd150e537525131",
+    "github": {
+      "schema_version": 1,
+      "checked_at_utc": "2026-10-23T19:29:39.669Z",
+      "pull_requests": [
+        {
+          "repo": "rf-data/Personal_Assistant",
+          "number": 156,
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "mergeable": true,
+          "head": "c77128b14e60b78a546fd804507ff255d4833759",
+          "base": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+          "head_ref": "fix/c26-stabilization",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/156"
+        },
+        {
+          "repo": "rf-data/Personal_Assistant",
+          "number": 149,
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "mergeable": true,
+          "head": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb",
+          "base": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+          "head_ref": "feat/c26a-html-projection",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/149"
+        },
+        {
+          "repo": "rf-data/Personal_Assistant",
+          "number": 148,
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "mergeable": true,
+          "head": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+          "base": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+          "head_ref": "feat/c26-worker-deployment-gate",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/148"
+        },
+        {
+          "repo": "rf-data/Personal_Assistant",
+          "number": 157,
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "mergeable": true,
+          "head": "40b6aab02ba6a2bcc5c84477bbd150e537525131",
+          "base": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+          "head_ref": "feat/c26-runtime-bootstrap",
+          "url": "https://github.com/rf-data/Personal_Assistant/pull/157"
+        },
+        {
+          "repo": "rf-data/personal-assistant-ui",
+          "number": 20,
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "mergeable": true,
+          "head": "6b84e3c09f877309a3fd1c6f9cbcf61bb9f46788",
+          "base": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+          "head_ref": "feat/c26-worker-deployment-gate",
+          "url": "https://github.com/rf-data/personal-assistant-ui/pull/20"
+        }
+      ],
+      "initial_cli_audit": {
+        "reviews": "none on all five PRs",
+        "statusCheckRollup": "empty on all five PRs"
+      },
+      "inline_comments": "zero on all five PRs, separately saved read-only REST results"
+    },
+    "runs": [
+      {
+        "id": "c18-tmpfs-critical",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/c18-tmpfs-critical.xml",
+        "junit_sha256": "3e69d1bee9eacd0a1061c48a798e2628e2e6601a2228a602fd92243d6d4a1c97",
+        "log_sha256": "55ffa3a49752212e749f630c3398f35442761c1792663d8784e106a1a4893825",
+        "counts": {
+          "tests": 3,
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "passed": 3
+        },
+        "groups": {
+          "tests.test_cs50_workflows": 3
+        },
+        "skipped_cases": []
+      },
+      {
+        "id": "final-definition",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/final-definition.xml",
+        "junit_sha256": "6c77155a299596fc5b3470b7221b11a42a2efe2bdccab964b4894a7005dc1470",
+        "log_sha256": "b29277ecfd7c8e834ad14a5e7632a13046107e1dc83b5fe60c8862f351428dbd",
+        "counts": {
+          "tests": 6,
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "passed": 6
+        },
+        "groups": {
+          "tests.test_c26_runtime_bootstrap": 6
+        },
+        "skipped_cases": []
+      },
+      {
+        "id": "tmpfs-broad",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/tmpfs-broad.xml",
+        "junit_sha256": "783a371d0043f5f27087c09aee35588e46973917477322a21fef9e2f07a049d6",
+        "log_sha256": "9949e49f91cdfe5a2a1019c7ca2b5c9252f391cb8e77e3767f357ccd76b6f0a2",
+        "counts": {
+          "tests": 392,
+          "errors": 0,
+          "failures": 0,
+          "skipped": 6,
+          "passed": 386
+        },
+        "groups": {
+          "tests.test_job_control": 36,
+          "tests.test_job_executor": 17,
+          "tests.test_deployment_gate": 66,
+          "tests.test_deployment_operations": 23,
+          "tests.test_cs50_workflows": 24,
+          "tests.test_cs50_assignment_integration": 15,
+          "tests.test_cs50_week_materials": 51,
+          "tests.test_cs50_course": 51,
+          "tests.test_cs50_html_projection": 34,
+          "tests.test_job_store_contention": 5,
+          "tests.test_runtime_paths": 34,
+          "tests.test_cs50_knowledge_input": 28,
+          "tests.test_c26_runtime_bootstrap": 6,
+          "tests.test_deployment_transport": 2
+        },
+        "skipped_cases": [
+          {
+            "name": "test_real_export_five_ids_provenance_and_worker_admission",
+            "reason": "Explicit operator original required"
+          },
+          {
+            "name": "test_real_operator_exports_read_only",
+            "reason": "Explicit local real-pilot export root not supplied"
+          },
+          {
+            "name": "test_real_export_child_ids_still_explicitly_blocked",
+            "reason": "Operator originals not explicitly supplied"
+          },
+          {
+            "name": "test_optional_exact_week0_export[material_01-237-34-171-None]",
+            "reason": "Real pilot exports are remote; user prohibits SSH/downloads. Await local copies."
+          },
+          {
+            "name": "test_optional_exact_week0_export[material_02-28-0-16-10]",
+            "reason": "Real pilot exports are remote; user prohibits SSH/downloads. Await local copies."
+          },
+          {
+            "name": "test_real_local_pilot",
+            "reason": "Imported original pilot unavailable"
+          }
+        ]
+      },
+      {
+        "id": "tmpfs-regression",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/tmpfs-regression.xml",
+        "junit_sha256": "d5fc57e911168cc9cdf1602ef4ecbdaa9609e044770aeb21c2fc34674c6807fd",
+        "log_sha256": "8b81356ee0dd897f118bfe0d91d732393268517ff42f01c726112771cbcfc3bd",
+        "counts": {
+          "tests": 54,
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "passed": 54
+        },
+        "groups": {
+          "tests.test_cs50_workflows": 24,
+          "tests.test_job_store_contention": 5,
+          "tests.test_job_executor": 17,
+          "tests.test_c26_runtime_bootstrap": 6,
+          "tests.test_deployment_transport": 2
+        },
+        "skipped_cases": []
+      },
+      {
+        "id": "ui-final",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/ui-final.xml",
+        "junit_sha256": "d2ea61a8506a8919657d750c1ae03002548190faa490f9c8d0a07a72b9fccf4e",
+        "log_sha256": "96392c9b3738778af6dc4dd1651a4214367ecb4ed2b94faf0ddc186d255eae7c",
+        "counts": {
+          "tests": 33,
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "passed": 33
+        },
+        "groups": {
+          "tests.test_https_security.HTTPSBoundaryTests": 9,
+          "tests.test_https_security.OIDCSessionTests": 2,
+          "tests.test_container_runtime.ContainerRuntimeTests": 9,
+          "tests.test_deployment.DeploymentTests": 4
+        },
+        "skipped_cases": []
+      },
+      {
+        "id": "real-exports",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/real-exports.xml",
+        "junit_sha256": "a217ca17a6e42216dc7fd8c6d63d8fc653975143b07bfd214c001f81f26a9103",
+        "log_sha256": "d2e972f2379cde08822e3c653e93b649f8bf4beed0973ad7c6aa1737dc91e78d",
+        "counts": {
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": 5
+        },
+        "groups": {
+          "tests.test_cs50_assignment_integration": 1,
+          "tests.test_cs50_week_materials": 1,
+          "tests.test_cs50_course": 1,
+          "tests.test_cs50_html_projection": 2
+        },
+        "skipped_cases": []
+      }
+    ],
+    "run_binding": {
+      "c18-tmpfs-critical": "Unmodified previous combined source, three originally affected cases",
+      "tmpfs-regression": "Unmodified product, 54 cases including previous static definition",
+      "tmpfs-broad": "Final product unchanged, label-list candidate before last bind-source adjustment; 386 passed + 6 optional skipped, one previous Docker CLI case deselected",
+      "final-definition": "All six tests on final label-list and required-path extension candidate",
+      "ui-final": "UI main + unchanged #20; 24 functions and 9 subtests passed",
+      "real-exports": "Five previously skipped cases now passed with explicit user-provided local exports, read-only byte assertions; no task-content downloads or worker jobs."
+    },
+    "candidate_input_sha256": {
+      "deployment/coolify.runtime-bootstrap.compose.yaml": "9c9c03f0b00b0eb86309c6ef9fbc169d3bccc021d9f46262b4436fa84c8866ae",
+      "deployment/c26-runtime.controller.json.example": "30f7b35d0671ffa123f26e9ab9756264b1442d8a5706eccab47543c8ce5645ae",
+      "tests/test_c26_runtime_bootstrap.py": "c5b460fa62d4aaf35dea48ffe4562980e4625f04505f75bae0cce34e53e69067",
+      "tests/test_deployment_transport.py": "c5391b28d32a86d4c14bd9e69b5708d8a479a34ed41ad803e1a7627ed8f81afe"
+    },
+    "compose_config": {
+      "schema_version": 1,
+      "compose_version": "5.0.2 local CLI, not the target host version",
+      "daemon_endpoint": "deliberately nonexistent local socket",
+      "docker_config": "new empty owned directory",
+      "commands": "docker compose config only, no daemon operations",
+      "all_values": "synthetic example.invalid and /tmp/c26-review-not-mounted; no real mounted files",
+      "empty_configuration_refused": true,
+      "inactive_profile_services": 0,
+      "approved_profile_services": 3,
+      "required_path_checks": [
+        {
+          "variable": "C26_CADDYFILE",
+          "empty_refused": true
+        },
+        {
+          "variable": "C26_HOST_CACHE",
+          "empty_refused": true
+        },
+        {
+          "variable": "C26_HOST_CONFIGURATION",
+          "empty_refused": true
+        },
+        {
+          "variable": "C26_HOST_DATA",
+          "empty_refused": true
+        },
+        {
+          "variable": "C26_HOST_LOGS",
+          "empty_refused": true
+        },
+        {
+          "variable": "C26_TLS_DIRECTORY",
+          "empty_refused": true
+        }
+      ],
+      "namespace_worker_ports_labels_mount_checks": "passed",
+      "coolify_render_or_host_test": false
+    },
+    "product_equivalence": {
+      "files": 341,
+      "different_files": [],
+      "manifest_sha256": "7a17d932a94e96224cc2da23f6ef8bff934457d5775daae762cf93915589ad1e",
+      "scope": "Product src/scripts, same unmodified #156/#149/#148 combination on #155; cache files excluded"
+    },
+    "production_actions": false,
+    "runtime_dependencies_installed_or_images_pulled": false,
+    "source_approval_created": false,
+    "memory_budget": "resources.md; 2304MiB roles, 768MiB for remaining services after assumed OS/emergency reserves; live host fit unverified",
+    "technical_review": "GO, with bounded unresolved original error and target-image/rendering/driver acceptance",
+    "merge_runtime_pilot": "NO-GO; user forbids merges/deployments; live operational prerequisites absent",
+    "publication": "Regular hooks then same own PR branch, fast-forward GitHub Git Data API; local index failure retained",
+    "retention": "All existing and owned worktrees, bundles and diagnostic artifacts retained; no default-branch integration or cleanup authorized",
+    "dependency_profile_comparison": {
+      "pydantic": {
+        "pinned_runtime": "2.13.4",
+        "existing_test_environment_metadata": "2.14.1",
+        "matches": false
+      },
+      "pydantic-settings": {
+        "pinned_runtime": "2.15.0",
+        "existing_test_environment_metadata": null,
+        "matches": null
+      },
+      "httpx": {
+        "pinned_runtime": "0.28.1",
+        "existing_test_environment_metadata": "0.28.1",
+        "matches": true
+      },
+      "beautifulsoup4": {
+        "pinned_runtime": "4.15.0",
+        "existing_test_environment_metadata": "4.15.0",
+        "matches": true
+      },
+      "typer": {
+        "pinned_runtime": "0.26.8",
+        "existing_test_environment_metadata": "0.27.3",
+        "matches": false
+      },
+      "python-dotenv": {
+        "pinned_runtime": "1.2.3",
+        "existing_test_environment_metadata": "1.2.4",
+        "matches": false
+      },
+      "pyyaml": {
+        "pinned_runtime": "6.0.3",
+        "existing_test_environment_metadata": "6.0.3",
+        "matches": true
+      },
+      "returns": {
+        "pinned_runtime": "0.29.0",
+        "existing_test_environment_metadata": null,
+        "matches": null
+      },
+      "tenacity": {
+        "pinned_runtime": "9.1.4",
+        "existing_test_environment_metadata": "9.2.1",
+        "matches": false
+      },
+      "pymupdf": {
+        "pinned_runtime": "1.28.2",
+        "existing_test_environment_metadata": "1.27.2.2",
+        "matches": false
+      }
+    },
+    "image_profile_verified": false,
+    "optional_skips_interpretation": "Five HTML export tests and one unavailable original transcript pilot; not six SDK tests.",
+    "real_export_evidence": {
+      "source": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review",
+      "tests_passed": 5,
+      "test_before_after_byte_assertions_passed": true,
+      "source_sha256_after": {
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_01/original.html": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_01/normalized.v1.json": "4b2b15552da1e800b9ff4aa46b3abe5dc7632ad904d326d3f5042586f256ced4",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_01/quality.v1.json": "86205436b5e260488ff497e31aa68f969e7c7d9ee1b6e1eb27d0b202f2b07e8e",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_02/original.html": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_02/normalized.v1.json": "5628de2b8f1ed009a66902d81808768e9f50b805c0541265181802a8424e1ae8",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_02/quality.v1.json": "939da64f9b81b27c725be58f59e1811ba2ea5cafd85e6da15bd2ea9a38e67df7"
+      },
+      "only_test_outputs_written": "new own tmpfs catalog roots, not original files",
+      "missing_original_transcript_pilot": "still skipped; no substituted invented raw data"
+    },
+    "regular_pre_commit_checks": "passed on all 13 changed files; JSON checks repeated after updating current conclusion"
+  },
+  "historical_initial_conclusion": {
+    "review": "GO",
+    "read_only_operator_inventory": "GO",
+    "merge": "NO-GO",
+    "runtime_activation": "NO-GO",
+    "production_pilot": "NO-GO",
+    "reason": "Live resource/trigger/config/queue/network/driver approvals absent; fresh C18 regression red, local atomic replace ENOSPC with unresolved original OperationalError."
+  },
+  "updated_at_utc": "2026-10-23T19:50:24.909753+00:00",
+  "candidate_input_sha256_scope": "Historical first preparation; final_integration.candidate_input_sha256 identifies the current candidate.",
+  "authorized_operations_completed_scope": "Historical first preparation; current daemon-free local Compose CLI use is recorded in final_integration.compose_config, with no production or daemon operations.",
+  "runtime_configuration_finalization": {
+    "report": "runtime_configuration_validation.v1.json",
+    "conclusion": "GO review/read-only inventory; NO-GO production/merge/activation/pilot",
+    "historical_evidence_retained": true
+  }
+}

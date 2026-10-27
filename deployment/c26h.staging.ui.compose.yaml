@@ -1,0 +1,8 @@
+# OFFLINE REVIEW INPUT ONLY. Apply over coolify.ui.compose.yaml.
+# Dedicated staging project. No profile selected means zero services.
+name: personal-assistant-c26h-ui-staging
+services:
+  ui:
+    profiles: [c26-ui-staging-approved]
+    pull_policy: never
+    restart: 'no'

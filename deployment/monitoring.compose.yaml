@@ -13,7 +13,7 @@ services:
     cpus: 1.0
     mem_limit: 512m
     pids_limit: 128
-    tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=32m]
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=32m"]
     networks: [private]
     logging: {driver: json-file, options: {max-size: 10m, max-file: '3'}}
     command: [--config.file=/etc/prometheus/prometheus.yaml, --storage.tsdb.path=/prometheus, --storage.tsdb.retention.time=7d, --storage.tsdb.retention.size=1GB]
@@ -60,7 +60,7 @@ services:
     cpus: 1.0
     mem_limit: 512m
     pids_limit: 128
-    tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=32m]
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=32m"]
     networks: [private]
     logging: {driver: json-file, options: {max-size: 10m, max-file: '3'}}
     environment:

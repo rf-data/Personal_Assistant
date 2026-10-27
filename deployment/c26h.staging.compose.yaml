@@ -1,0 +1,10 @@
+# OFFLINE REVIEW INPUT ONLY. Apply over coolify.runtime-bootstrap.compose.yaml.
+# No container start authorized. Inactive profiles, restart=no, execution=false.
+# /app/runtime-state contains separate c16, content, reviews and index roots.
+# /app/configuration is existing/read-only; cursor key is an external file reference.
+name: personal-assistant-c26h-staging
+services:
+  api:
+    command: [api, --config, /app/configuration/c26-runtime/controller.json, --port, '8016', --content-config, /app/configuration/c26-runtime/content.json, --review-config, /app/configuration/c26-runtime/review.json, --search-config, /app/configuration/c26-runtime/search.json]
+    healthcheck:
+      test: [CMD, python, -m, scripts.deployment, health, --role, api, --config, /app/configuration/c26-runtime/controller.json, --content-config, /app/configuration/c26-runtime/content.json, --review-config, /app/configuration/c26-runtime/review.json, --search-config, /app/configuration/c26-runtime/search.json]

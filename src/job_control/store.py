@@ -24,7 +24,19 @@ class Unavailable(RuntimeError):
 
 
 class Store:
-    def __init__(self, root):
+    def __init__(
+        self,
+        root,
+        *,
+        deployment_gate_required=False,
+        deployment_gate_protocol="c26-gate-v1",
+        coordinator_test_required=False,
+        gate_settings_sha256=None,
+    ):
+        self.gate_settings_sha256 = gate_settings_sha256
+        self.coordinator_test_required = coordinator_test_required
+        self.deployment_gate_required = deployment_gate_required
+        self.deployment_gate_protocol = deployment_gate_protocol
         self.root = safe_path(root)
         self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
         if self.root.stat().st_mode & 0o077:
@@ -181,6 +193,14 @@ class Store:
         )
 
     def transition(self, job_id, status, phase, message, **updates):
+        if status == "queued":
+            from src.job_control.deployment_gate import admission
+
+            with admission(self):
+                return self._transition(job_id, status, phase, message, **updates)
+        return self._transition(job_id, status, phase, message, **updates)
+
+    def _transition(self, job_id, status, phase, message, **updates):
         with self.connection(write=True) as db:
             old = self.get_db(db, job_id)
             if old.status in TERMINAL:

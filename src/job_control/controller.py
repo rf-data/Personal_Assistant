@@ -5,7 +5,12 @@ import hmac
 import re
 import uuid
 
-from src.job_control.catalog import prepare_indexes, resolve_preview
+from src.job_control.catalog import (
+    prepare_indexes,
+    read_file,
+    resolve_preview,
+    safe_path,
+)
 from src.job_control.models import Job, PreviewRequest, StartRequest, fingerprint
 from src.job_control.registry import registry_document
 from src.job_control.store import Conflict, Store, Unavailable, now
@@ -33,7 +38,19 @@ def authenticate(settings, authorization):
 class Controller:
     def __init__(self, settings):
         self.settings = settings
-        self.store = Store(settings.root)
+        from src.job_control.deployment_gate import settings_digest
+
+        if settings.deployment_gate_required:
+            from src.job_control.deployment_gate import require_existing_queue
+
+            require_existing_queue(settings)
+        self.store = Store(
+            settings.root,
+            deployment_gate_required=settings.deployment_gate_required,
+            deployment_gate_protocol=settings.deployment_gate_protocol,
+            coordinator_test_required=settings.coordinator_test_required,
+            gate_settings_sha256=settings_digest(settings),
+        )
         self.indexes = prepare_indexes(settings)
 
     def authenticate(self, authorization):
@@ -70,6 +87,43 @@ class Controller:
         job = self.store.get(job_id)
         self.allowed(actor, job)
         return job
+
+    def planning_result(self, actor, job_id):
+        """Read one completed, hash-bound plan; never accepts filesystem paths."""
+        job = self.get(actor, job_id)
+        if (
+            job.process_id != "material_planning"
+            or job.status != "completed"
+            or len(job.artifact_refs) != 1
+            or job.artifact_refs[0].kind != "material_plan"
+        ):
+            raise Conflict("Completed material plan required")
+        artifact = job.artifact_refs[0]
+        limit = 256 * 1024
+        if artifact.size_bytes > limit:
+            raise Unavailable("Planning result response limit")
+        try:
+            path = safe_path(
+                self.store.directory(job_id),
+                "results/" + job.parameters["output_name"] + ".json",
+            )
+            data = read_file(path, limit)
+            if (
+                len(data) != artifact.size_bytes
+                or hashlib.sha256(data).hexdigest() != artifact.sha256
+            ):
+                raise ValueError("Planning result integrity")
+            from src.tools_materials.processing import MaterialPlan
+
+            plan = MaterialPlan.model_validate_json(data)
+        except (ValueError, OSError):
+            raise Unavailable("Planning result unavailable") from None
+        return dict(
+            schema_version=1,
+            protocol="personal_assistant_material_plan_v1",
+            artifact=artifact.model_dump(mode="json"),
+            plan=plan.model_dump(mode="json"),
+        )
 
     def create(self, actor, value, key):
         self.operator(actor)
@@ -115,7 +169,9 @@ class Controller:
             raise Conflict("Preview changed or no longer valid")
         if request.start and not self.store.worker_available(self.settings.worker_ttl):
             raise Unavailable("Worker unavailable")
-        with self.store.connection(write=True) as db:
+        from src.job_control.deployment_gate import admission
+
+        with admission(self.settings), self.store.connection(write=True) as db:
             old = existing(db)
             if old:
                 return old

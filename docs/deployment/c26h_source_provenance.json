@@ -1,0 +1,739 @@
+{
+  "base": "778367396cd52526eca59edd41c2367f5e43b897",
+  "ancestor": "e68275205fefb7a5f6db42bc45060e505bfcefb5",
+  "refs": {
+    "feat/c26d-operation-gate-v2": "8b0ba2d4ab5d0cd6fc8dfa69783276efd929666f",
+    "feat/c26e-authenticated-runtime-collector": "28e9a608d74270278cf037e35957d0bae08d50b2",
+    "feat/c26f-independent-coordinator": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+    "feat/c26g-deployment-readiness": "778367396cd52526eca59edd41c2367f5e43b897",
+    "master": "c1007efdbac3c1544020f328a3a1347e481797ba",
+    "origin/master": "e68275205fefb7a5f6db42bc45060e505bfcefb5"
+  },
+  "kind": "working_tree_source_integration_not_commit_chain",
+  "d_is_ancestor_of_e": true,
+  "e_is_ancestor_of_f": true,
+  "f_cumulative_paths": 91,
+  "g_local_new_paths": 10,
+  "g_files_absent_from_g_head": true,
+  "production_release": "HOLD",
+  "files": [
+    {
+      "path": "deployment/Dockerfile",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "8fd1ea25ce743e0b6a754e572ae374721e6bbbcd38b061259e693e384caa6c25",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "8fd1ea25ce743e0b6a754e572ae374721e6bbbcd38b061259e693e384caa6c25"
+    },
+    {
+      "path": "deployment/Dockerfile.dockerignore",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "e114b2c66ed2e3d3f272b38427d0dfb05b2fd92daff6fd371e5bc20e9d6d4a5f",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "e114b2c66ed2e3d3f272b38427d0dfb05b2fd92daff6fd371e5bc20e9d6d4a5f"
+    },
+    {
+      "path": "deployment/c26-runtime.controller.json.example",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "84fcda017c828a578341166312d7410e6b7398217cd696cc4b5cc2a292699a29",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "84fcda017c828a578341166312d7410e6b7398217cd696cc4b5cc2a292699a29"
+    },
+    {
+      "path": "deployment/c26-runtime.limits.json.example",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "7ce62de8951096cbf8924b00df8dbb8d4d595e160ea217436264eb07972f117d",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "7ce62de8951096cbf8924b00df8dbb8d4d595e160ea217436264eb07972f117d"
+    },
+    {
+      "path": "deployment/coolify.runtime-bootstrap.compose.yaml",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "de24a57f16e8bd0fd13f5e7253f08d173f68a152d64e23593a7991bfd3d01b1b",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "de24a57f16e8bd0fd13f5e7253f08d173f68a152d64e23593a7991bfd3d01b1b"
+    },
+    {
+      "path": "docker/DockerFile.worker",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "884e7ff082c424583d548fb8732a4cddacc95e8a70da978b2e44956ba2421740",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "884e7ff082c424583d548fb8732a4cddacc95e8a70da978b2e44956ba2421740"
+    },
+    {
+      "path": "docker/DockerFile.worker.dockerignore",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "344b91fe4c1245aa5368d372fe125800c0e15a75721c4dad1df1848364abebee",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "344b91fe4c1245aa5368d372fe125800c0e15a75721c4dad1df1848364abebee"
+    },
+    {
+      "path": "docs/deployment/architecture.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "d3a2327be6bdac77fe833666fbefd2bcfbefa061487d45290177ff7bc006dcc8",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "d3a2327be6bdac77fe833666fbefd2bcfbefa061487d45290177ff7bc006dcc8"
+    },
+    {
+      "path": "docs/deployment/c26_gate_validation.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "ad84d21aa6de2d36c8a23a91e8ea9a4a5b03e49405cbcc3b83dc94f3b9aa5eb4",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "ad84d21aa6de2d36c8a23a91e8ea9a4a5b03e49405cbcc3b83dc94f3b9aa5eb4"
+    },
+    {
+      "path": "docs/deployment/c26_gate_validation.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "da13a0079633aadc32bcc6b85b9ea25a0264548ef05ac507038e2aef06bd1ae5",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "da13a0079633aadc32bcc6b85b9ea25a0264548ef05ac507038e2aef06bd1ae5"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/README.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "0df74b54a1a1e61ebab9b01af48c4a7c174d88ead52c13308041ca5574e50cfa",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "0df74b54a1a1e61ebab9b01af48c4a7c174d88ead52c13308041ca5574e50cfa"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/collector_build_receipt.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "15291d8b4ff0490f2bdba0f272271daf8df7cd7d9f62ad452bd7b433a8911bfb",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "15291d8b4ff0490f2bdba0f272271daf8df7cd7d9f62ad452bd7b433a8911bfb"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/collector_capture.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "82368c0c6eae1fbae711a787ca2d158cb19ecbf16c00f72e092b1b298498f7af",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "82368c0c6eae1fbae711a787ca2d158cb19ecbf16c00f72e092b1b298498f7af"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/collector_envelope.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "e1d02bf286945bb9b49752b1e552b715805379de79a2e599cae3e132adec42e0",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "e1d02bf286945bb9b49752b1e552b715805379de79a2e599cae3e132adec42e0"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/collector_target.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "4ad3f78bd87a6dc3deeb1ca3010e3990264f7d5776c8ae9483cc292a697ba0b8",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "4ad3f78bd87a6dc3deeb1ca3010e3990264f7d5776c8ae9483cc292a697ba0b8"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/coolify_compatibility.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "a81bbca15f30317c1bec15ce70bd10227e87ef54142c73f2cfd5282e7575c0d2",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "a81bbca15f30317c1bec15ce70bd10227e87ef54142c73f2cfd5282e7575c0d2"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/coolify_driver_plan.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "a016cc8347577a44907807fb5b74e1a796973de4074d05ce4a30c9eb5203a5c6",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "a016cc8347577a44907807fb5b74e1a796973de4074d05ce4a30c9eb5203a5c6"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/coolify_resource_binding.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "8dab6735a9f6ab07ef3bd9fcedfa671bc65828b871b928fc41fbfb8c3d20fbbb",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "8dab6735a9f6ab07ef3bd9fcedfa671bc65828b871b928fc41fbfb8c3d20fbbb"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/coordinator_anchor.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "ba09a464c702815ac1ba243213d87d14b248269eb611e082e1af58903997bfeb",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "ba09a464c702815ac1ba243213d87d14b248269eb611e082e1af58903997bfeb"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/coordinator_challenge.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "f541ca7b5d3851f7f4e550656020f0096c855beeef2914e1b4599688028b409b",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "f541ca7b5d3851f7f4e550656020f0096c855beeef2914e1b4599688028b409b"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/coordinator_driver_receipt.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "f83404e3ff2e3ec4669fac2136ae4346651d7795e97606854ba3f6d166608821",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "f83404e3ff2e3ec4669fac2136ae4346651d7795e97606854ba3f6d166608821"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/coordinator_enrollment.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "cd005419a63e753bca054e1aedf8930c56d740d112d578e6c12469ee2022336e",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "cd005419a63e753bca054e1aedf8930c56d740d112d578e6c12469ee2022336e"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/coordinator_grant.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "d3a633db2cb07bb3221e74777c271de2e878cc2ee6f03b3e0275e8a628516688",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "d3a633db2cb07bb3221e74777c271de2e878cc2ee6f03b3e0275e8a628516688"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/coordinator_integration.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "76d72048e116a946c4d761c3620a2f63e7dcb42743c2f3996a7619b9cbe4ca49",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "76d72048e116a946c4d761c3620a2f63e7dcb42743c2f3996a7619b9cbe4ca49"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/deployment_trigger_audit.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "0b0661c32c554d9b40994a8fbaa83a247e15b6c3867d010109ee508564b14dd7",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "0b0661c32c554d9b40994a8fbaa83a247e15b6c3867d010109ee508564b14dd7"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/deployment_trigger_audit.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "5432afe1f6a3d9406dd497470301d2327b06506e264ee4af0fd6a9bd06464bed",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "5432afe1f6a3d9406dd497470301d2327b06506e264ee4af0fd6a9bd06464bed"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/diagnostics.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "3ca6c6c16067284ba97dbf80c4d242bedf5bcc4d4dfd0225b90a47c4840a19b3",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "3ca6c6c16067284ba97dbf80c4d242bedf5bcc4d4dfd0225b90a47c4840a19b3"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/draft_consolidation_report.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "475d9cdffceea4a9fc7d4a0f99f42f8adcb2026e4a3c8b9a5680219e381ca50d",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "475d9cdffceea4a9fc7d4a0f99f42f8adcb2026e4a3c8b9a5680219e381ca50d"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/driver_contract.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "f5343e09a68eecd2037c636f732ebecbed104d783f86fa97ecec6583a4c600fd",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "f5343e09a68eecd2037c636f732ebecbed104d783f86fa97ecec6583a4c600fd"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/gate_approval.v2.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "784622693d9804767375d036ce16f59972ffb4f4b2c1bf8a24d19d4567a90fca",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "784622693d9804767375d036ce16f59972ffb4f4b2c1bf8a24d19d4567a90fca"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/gate_journal_event.v2.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "201bfc03db744e714def0901b6113003e626ac5bdf5d102f78b6a9a9fec89265",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "201bfc03db744e714def0901b6113003e626ac5bdf5d102f78b6a9a9fec89265"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/gate_observation.v2.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "9596638ce3a9779fa7bac9c765ca1e04cb746c028b37952beae421990fb38226",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "9596638ce3a9779fa7bac9c765ca1e04cb746c028b37952beae421990fb38226"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/gate_plan.v2.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "e85e1b879d621bab7d1d0e5bc9b61e93269a6fa04e27ff3187c92ec8add4ec75",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "e85e1b879d621bab7d1d0e5bc9b61e93269a6fa04e27ff3187c92ec8add4ec75"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/host_metadata.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "90935a406d48f36da9f1ebf45097c542a489be58953bcd06ec448e98141ea404",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "90935a406d48f36da9f1ebf45097c542a489be58953bcd06ec448e98141ea404"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/integration_matrix.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "db0a438e01816161a18d512b7d5f59a3c3b56deb9f7ef2e7e2b92c91ad4aee04",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "db0a438e01816161a18d512b7d5f59a3c3b56deb9f7ef2e7e2b92c91ad4aee04"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/observer_consolidation_validation.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "6836bac5cf6f702f6c834da30f2fd86fb8c971cbc6ab435949ed0168681d085d",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "6836bac5cf6f702f6c834da30f2fd86fb8c971cbc6ab435949ed0168681d085d"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/operator_binding_check.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "0f3137d7d492aaf25f1cd8b0b8e5169055d3fabc8910044b9f2eb87c28668824",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "0f3137d7d492aaf25f1cd8b0b8e5169055d3fabc8910044b9f2eb87c28668824"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/operator_checks.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "7449e1825c695188ab6e59edde0d3e650b0cc70bf242c0d4c455d83b00efa1df",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "7449e1825c695188ab6e59edde0d3e650b0cc70bf242c0d4c455d83b00efa1df"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/operator_inventory.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "34f28fe277f292befb5bbe119c2214075944aff7ee53fff089a3d4aca2a0c414",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "34f28fe277f292befb5bbe119c2214075944aff7ee53fff089a3d4aca2a0c414"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/resource_binding_validation.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "a238adf1d8a5c2f14e32122037d6b41156583db685eb9a132c37292cb884bb11",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "a238adf1d8a5c2f14e32122037d6b41156583db685eb9a132c37292cb884bb11"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/resource_matrix.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "ccaef5baf472d78dc28e026775b8af6be37023bb8bc060b12c6fd50fa4131a95",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "ccaef5baf472d78dc28e026775b8af6be37023bb8bc060b12c6fd50fa4131a95"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/resources.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "cfbe0ba4021904574104b3fc27a83a4b7facdce4bce9d99e5c98900e8c28d41d",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "cfbe0ba4021904574104b3fc27a83a4b7facdce4bce9d99e5c98900e8c28d41d"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/rollout.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "ef57e148157b1260854c32ea4f198ded5f20b64f017108e7a5fb8ad897f1ddf5",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "ef57e148157b1260854c32ea4f198ded5f20b64f017108e7a5fb8ad897f1ddf5"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/runtime_configuration.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "042227e9f1009773683cf6567bcd5aa80146098c65af025865659642353759a0",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "042227e9f1009773683cf6567bcd5aa80146098c65af025865659642353759a0"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/runtime_configuration_validation.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "0df93d3b6a70dc2b27c6f1a42006749ff5a84645c0adb7576854c80fb944117c",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "0df93d3b6a70dc2b27c6f1a42006749ff5a84645c0adb7576854c80fb944117c"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/runtime_diagnostics.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "97c4fb54ec0f812e9ea402a5997d8fec5172d0896fbe6348ba2f4456fd698fc8",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "97c4fb54ec0f812e9ea402a5997d8fec5172d0896fbe6348ba2f4456fd698fc8"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/runtime_observer_report.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "e10bfa2fc609c6a02d421588003a6945c7736c7fd2582a93d0820401c40efd67",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "e10bfa2fc609c6a02d421588003a6945c7736c7fd2582a93d0820401c40efd67"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/runtime_operation.v2.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "c25d8aaa0f045b3e0a7b7d417c0413b53645e56cd1f5596ee91e3de6fad6c204",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "c25d8aaa0f045b3e0a7b7d417c0413b53645e56cd1f5596ee91e3de6fad6c204"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/runtime_scope.v1.schema.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "410180758d4eac8ecf3fc8f194860f85b5c367d51f47e126917e41e1b0f9fa6c",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "410180758d4eac8ecf3fc8f194860f85b5c367d51f47e126917e41e1b0f9fa6c"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/source_assessment.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "1281e5a267feff5a20ecb442584b2b3c547a4799de179faab24686a22e9e04e7",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "1281e5a267feff5a20ecb442584b2b3c547a4799de179faab24686a22e9e04e7"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/technical_sources.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "6f2dee03f1771ac473d0ff705fb70693df90b39252c750a0a4bcf6920c3f94ec",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "6f2dee03f1771ac473d0ff705fb70693df90b39252c750a0a4bcf6920c3f94ec"
+    },
+    {
+      "path": "docs/deployment/c26_runtime/validation.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "f00008a02c99076db99264b60294c5667b18da1473b0e126144ff84cb84bf823",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "f00008a02c99076db99264b60294c5667b18da1473b0e126144ff84cb84bf823"
+    },
+    {
+      "path": "docs/deployment/c26b_validation.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "021bceae8d284ef95272b0a1ab2c4065941c234daf04df5c222ad5eb88510376",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "021bceae8d284ef95272b0a1ab2c4065941c234daf04df5c222ad5eb88510376"
+    },
+    {
+      "path": "docs/deployment/c26d_gate_v2.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "9ce7598abe0c957a02b4892dc4c3c2f83dca3e34f0163c9da4aeb2fa2a3333cf",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "9ce7598abe0c957a02b4892dc4c3c2f83dca3e34f0163c9da4aeb2fa2a3333cf"
+    },
+    {
+      "path": "docs/deployment/c26d_validation.v2.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "fa5d77b6be2d6edf7b90f976a88c3eb668f7cbe48b29580264e305e875f6143f",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "fa5d77b6be2d6edf7b90f976a88c3eb668f7cbe48b29580264e305e875f6143f"
+    },
+    {
+      "path": "docs/deployment/c26e_runtime_collector.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "d84903c83d15fd5c84b6e49414b14522abf543c7cd931a2207f88d2e9354d9a5",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "d84903c83d15fd5c84b6e49414b14522abf543c7cd931a2207f88d2e9354d9a5"
+    },
+    {
+      "path": "docs/deployment/c26e_validation.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "e53bab5bc2bc0fb9510cdaf54409fa16ebcdb1d3244acd705c4ce1b46c594b8d",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "e53bab5bc2bc0fb9510cdaf54409fa16ebcdb1d3244acd705c4ce1b46c594b8d"
+    },
+    {
+      "path": "docs/deployment/c26f_deployment_coordinator.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "fdc51b7178b14afa2b33487547e6d603e1e0a65e522d975ed41d9e74dfe3041f",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "fdc51b7178b14afa2b33487547e6d603e1e0a65e522d975ed41d9e74dfe3041f"
+    },
+    {
+      "path": "docs/deployment/c26f_validation.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "4b2251e7e96d76d489c741b21d306b9226dab7efcc12346bd355ae1dd2ba12d8",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "4b2251e7e96d76d489c741b21d306b9226dab7efcc12346bd355ae1dd2ba12d8"
+    },
+    {
+      "path": "docs/deployment/configuration.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "98249a9c28ad9a3c182aed8d68abd986515732489e132aca5a5672c0c1a0b0e4",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "98249a9c28ad9a3c182aed8d68abd986515732489e132aca5a5672c0c1a0b0e4"
+    },
+    {
+      "path": "docs/deployment/deployment_gate.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "0f23ab327630e4bafa3c87a8f87a3e16fec54a3c1ed7862ad50cbebf2cd32c4d",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "0f23ab327630e4bafa3c87a8f87a3e16fec54a3c1ed7862ad50cbebf2cd32c4d"
+    },
+    {
+      "path": "docs/deployment/https.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "42c39291fea38433792998b58366394789fdabeeaf9a2dd06d8214e51d4d9702",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "42c39291fea38433792998b58366394789fdabeeaf9a2dd06d8214e51d4d9702"
+    },
+    {
+      "path": "docs/deployment/operations.md",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "b310726ffbaddd336ecdbf28d05ddc28608ecfb079fceea4e6087bf0aad3b10a",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "b310726ffbaddd336ecdbf28d05ddc28608ecfb079fceea4e6087bf0aad3b10a"
+    },
+    {
+      "path": "docs/job_control/contract.v1.json",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "861a4fc6664a5df6a323341e53c5bcff1eb851712df763f3e48b95910eea0b20",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "861a4fc6664a5df6a323341e53c5bcff1eb851712df763f3e48b95910eea0b20"
+    },
+    {
+      "path": "scripts/c26_runtime_preflight.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "19587d03535af3fa0d0f4ed90b9eb0e9545c5fd335e4bb07bf4e15fb6aeefca8",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "19587d03535af3fa0d0f4ed90b9eb0e9545c5fd335e4bb07bf4e15fb6aeefca8"
+    },
+    {
+      "path": "scripts/deployment_gate.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "1fc554feb1edc10f622767384b03c2d5f9bdd49517812002a22e870d72dbbff5",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "1fc554feb1edc10f622767384b03c2d5f9bdd49517812002a22e870d72dbbff5"
+    },
+    {
+      "path": "scripts/worker_image_smoke.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "28140ec17542d520791a990c7f759b7f861595c962189c66546d55ccef1a6b6a",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "28140ec17542d520791a990c7f759b7f861595c962189c66546d55ccef1a6b6a"
+    },
+    {
+      "path": "src/job_control/controller.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "d45204007b8194adf90e346e85200b7cf6dee48c2c900d5e72c1d7e43d736303",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "d45204007b8194adf90e346e85200b7cf6dee48c2c900d5e72c1d7e43d736303"
+    },
+    {
+      "path": "src/job_control/coolify_observer.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "5c884951fd183d666c9958c62b340dac90e155cac9508b0d4d98ae58e6c5059a",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "5c884951fd183d666c9958c62b340dac90e155cac9508b0d4d98ae58e6c5059a"
+    },
+    {
+      "path": "src/job_control/coolify_readiness.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "f675227c28ce491528d384df0f830cb75393a620f3532297b67f4dabe91e5c8e",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "f675227c28ce491528d384df0f830cb75393a620f3532297b67f4dabe91e5c8e"
+    },
+    {
+      "path": "src/job_control/coordinator_contracts.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "2c07a7588d358f0de3b0d8fb42ce0370079ff5e211d7a2c5a841640871a26454",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "2c07a7588d358f0de3b0d8fb42ce0370079ff5e211d7a2c5a841640871a26454"
+    },
+    {
+      "path": "src/job_control/coordinator_state.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "28477ecd109e455aad2d1d746ecf7c76f475e14616388f8ab5e08308b51dbb49",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "28477ecd109e455aad2d1d746ecf7c76f475e14616388f8ab5e08308b51dbb49"
+    },
+    {
+      "path": "src/job_control/deployment_coordinator.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "426e41481813bd9975705b0499b8e639a1b168ddde41976251bb0b1a7e8a9c78",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "426e41481813bd9975705b0499b8e639a1b168ddde41976251bb0b1a7e8a9c78"
+    },
+    {
+      "path": "src/job_control/deployment_gate.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "c05d08886870151bb90f6570744978e79d6209ebeeab34c008e073c07ce65b80",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "c05d08886870151bb90f6570744978e79d6209ebeeab34c008e073c07ce65b80"
+    },
+    {
+      "path": "src/job_control/deployment_scope.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "be1ad30a42f7864760087be1018b004c1201c5b7d589fb210c38b4ba258d788c",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "be1ad30a42f7864760087be1018b004c1201c5b7d589fb210c38b4ba258d788c"
+    },
+    {
+      "path": "src/job_control/executor.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "19387c6873ed5a0748eb4f07d755f5d3cd95598f3d1c99c34c7c5953202f554f",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "19387c6873ed5a0748eb4f07d755f5d3cd95598f3d1c99c34c7c5953202f554f"
+    },
+    {
+      "path": "src/job_control/models.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "96b994580c1d1ec97c3b8274b450c821941c0d2ba6b45d7e9bbef559bf4442f1",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "96b994580c1d1ec97c3b8274b450c821941c0d2ba6b45d7e9bbef559bf4442f1"
+    },
+    {
+      "path": "src/job_control/operations.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "8603d5d125965d90f3897a40a54cece548fda271150031f715b5e2735bd8b5c8",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "8603d5d125965d90f3897a40a54cece548fda271150031f715b5e2735bd8b5c8"
+    },
+    {
+      "path": "src/job_control/runtime_collector.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "1268ab56cf24e55058259fbb202bba03fe9a13d8a1acc3e3a4a5946514b1bb80",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "1268ab56cf24e55058259fbb202bba03fe9a13d8a1acc3e3a4a5946514b1bb80"
+    },
+    {
+      "path": "src/job_control/store.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "dc9adbb6f51234584f5cd95bd05420396406ddee367ca185c686428cb0e6059e",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "dc9adbb6f51234584f5cd95bd05420396406ddee367ca185c686428cb0e6059e"
+    },
+    {
+      "path": "tests/fixtures/c26e/public-test-leaf.pem",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "61c450adac37340e9f4e3cd0ab887a115974e8e82440c03752b10b726302ace3",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "61c450adac37340e9f4e3cd0ab887a115974e8e82440c03752b10b726302ace3"
+    },
+    {
+      "path": "tests/test_c26_runtime_bootstrap.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "45e8adcd7fc9fb54474424bdb82d0382c2be59fbd9c0929d7a6842f41b34b420",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "ce32e6db29d118ddf69f48900ab8991b9505930e4ae08a89fe8f8244570c7f6c",
+      "h_followup": "Ruff I001: reorder existing function-local imports only"
+    },
+    {
+      "path": "tests/test_c26_runtime_preflight.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "60f779a3d583507efa5529281c72963f21073e3299ae1a68a3ddcbc1dfb0f632",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "60f779a3d583507efa5529281c72963f21073e3299ae1a68a3ddcbc1dfb0f632"
+    },
+    {
+      "path": "tests/test_coolify_observer.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "ab993b4be9befb59df6a268001cda844f57b354121482a3d55bf860f83a55aae",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "ab993b4be9befb59df6a268001cda844f57b354121482a3d55bf860f83a55aae"
+    },
+    {
+      "path": "tests/test_coolify_readiness.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "712d496cadd2aac7df4d8999b3dba362fb0b83f105f3c9e7ede7524215a3caa0",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "712d496cadd2aac7df4d8999b3dba362fb0b83f105f3c9e7ede7524215a3caa0"
+    },
+    {
+      "path": "tests/test_coordinator_contracts.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "059b25176c9d4d0dc35317a967895fe3c878f8833046f635725a42703b00e789",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "059b25176c9d4d0dc35317a967895fe3c878f8833046f635725a42703b00e789"
+    },
+    {
+      "path": "tests/test_deployment_coordinator.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "3ac778bcdd02c548cba4b2b97cbe312c7329fb072aeb5d0e599b600c50a6394d",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "3ac778bcdd02c548cba4b2b97cbe312c7329fb072aeb5d0e599b600c50a6394d"
+    },
+    {
+      "path": "tests/test_deployment_gate.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "bd5dd9f00e973d165e7c8a2908e4f002aaf30043d57ba013ba95226832edbdcc",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "bd5dd9f00e973d165e7c8a2908e4f002aaf30043d57ba013ba95226832edbdcc"
+    },
+    {
+      "path": "tests/test_deployment_gate_v2.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "146f9c90583f7f2279a8231aaa229a0b2f0f02d4cf40cabddf84278904f3543b",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "146f9c90583f7f2279a8231aaa229a0b2f0f02d4cf40cabddf84278904f3543b"
+    },
+    {
+      "path": "tests/test_deployment_transport.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "c5391b28d32a86d4c14bd9e69b5708d8a479a34ed41ad803e1a7627ed8f81afe",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "c5391b28d32a86d4c14bd9e69b5708d8a479a34ed41ad803e1a7627ed8f81afe"
+    },
+    {
+      "path": "tests/test_runtime_collector.py",
+      "source_commit": "7ffb4ed6fd4d8433edf36fb4851a382b9b9c595d",
+      "source_sha256": "0af268a289cbb6e77a43d67277b51b203f636c853a3721263607fabc4af9b506",
+      "method": "cumulative_diff",
+      "integrated_working_sha256": "0af268a289cbb6e77a43d67277b51b203f636c853a3721263607fabc4af9b506"
+    },
+    {
+      "path": "deployment/c26g.staging.controller.json.example",
+      "source_commit": null,
+      "source_base": "778367396cd52526eca59edd41c2367f5e43b897",
+      "source_sha256": "62bd45021cef11f0c3daa8496fc810fe0f2fccb615d89ca8945b3311206c7f4e",
+      "method": "G_index_equal_worktree_new_file",
+      "integrated_working_sha256": "62bd45021cef11f0c3daa8496fc810fe0f2fccb615d89ca8945b3311206c7f4e"
+    },
+    {
+      "path": "docs/deployment/c26g_go_no_go.md",
+      "source_commit": null,
+      "source_base": "778367396cd52526eca59edd41c2367f5e43b897",
+      "source_sha256": "10b0a144c3f52088f8a2900c2d0c093628468b0b4ab0846b48f1aa66614b3c03",
+      "method": "G_index_equal_worktree_new_file",
+      "integrated_working_sha256": "10b0a144c3f52088f8a2900c2d0c093628468b0b4ab0846b48f1aa66614b3c03"
+    },
+    {
+      "path": "docs/deployment/c26g_integration_validation.md",
+      "source_commit": null,
+      "source_base": "778367396cd52526eca59edd41c2367f5e43b897",
+      "source_sha256": "523fee61960836244dca8979041d4a007de8977fc404f2cf92d927e61bfa995c",
+      "method": "G_index_equal_worktree_new_file",
+      "integrated_working_sha256": "523fee61960836244dca8979041d4a007de8977fc404f2cf92d927e61bfa995c"
+    },
+    {
+      "path": "docs/deployment/c26g_operator_decisions.md",
+      "source_commit": null,
+      "source_base": "778367396cd52526eca59edd41c2367f5e43b897",
+      "source_sha256": "53b7e3378898ad03932f6418b9084b5dd308d29fe8b360b5601d8ab67a1a7c16",
+      "method": "G_index_equal_worktree_new_file",
+      "integrated_working_sha256": "53b7e3378898ad03932f6418b9084b5dd308d29fe8b360b5601d8ab67a1a7c16"
+    },
+    {
+      "path": "docs/deployment/c26g_readiness_matrix.md",
+      "source_commit": null,
+      "source_base": "778367396cd52526eca59edd41c2367f5e43b897",
+      "source_sha256": "991da768b28f984c6a3ae22e19ce6f54b0935820db6005c992b9c8e53b39ce7b",
+      "method": "G_index_equal_worktree_new_file",
+      "integrated_working_sha256": "991da768b28f984c6a3ae22e19ce6f54b0935820db6005c992b9c8e53b39ce7b"
+    },
+    {
+      "path": "docs/deployment/c26g_runbook.md",
+      "source_commit": null,
+      "source_base": "778367396cd52526eca59edd41c2367f5e43b897",
+      "source_sha256": "b225a77ad40d1e7fca1dc6394b7cbd6be6b5a2b7974e4361a6533b5da69fa8fd",
+      "method": "G_index_equal_worktree_new_file",
+      "integrated_working_sha256": "b225a77ad40d1e7fca1dc6394b7cbd6be6b5a2b7974e4361a6533b5da69fa8fd"
+    },
+    {
+      "path": "scripts/c26g_offline_validation.py",
+      "source_commit": null,
+      "source_base": "778367396cd52526eca59edd41c2367f5e43b897",
+      "source_sha256": "c06169d990a7e8f8f14428755499116fd07d8b30dda746e3451d184cdd163b2d",
+      "method": "G_index_equal_worktree_new_file",
+      "integrated_working_sha256": "c06169d990a7e8f8f14428755499116fd07d8b30dda746e3451d184cdd163b2d"
+    },
+    {
+      "path": "scripts/c26g_preflight.py",
+      "source_commit": null,
+      "source_base": "778367396cd52526eca59edd41c2367f5e43b897",
+      "source_sha256": "f508fad6b6972ddaaa1db96d948e3571b3cf0e0d45d65c8c792c668e60ecad52",
+      "method": "G_index_equal_worktree_new_file",
+      "integrated_working_sha256": "f508fad6b6972ddaaa1db96d948e3571b3cf0e0d45d65c8c792c668e60ecad52"
+    },
+    {
+      "path": "tests/test_c26g_readiness.py",
+      "source_commit": null,
+      "source_base": "778367396cd52526eca59edd41c2367f5e43b897",
+      "source_sha256": "c7b901383de38351d13145ca7b9ab438a7e05c83c56be53cf1580466329590b3",
+      "method": "G_index_equal_worktree_new_file",
+      "integrated_working_sha256": "c7b901383de38351d13145ca7b9ab438a7e05c83c56be53cf1580466329590b3"
+    },
+    {
+      "path": "tests/test_c26g_restore.py",
+      "source_commit": null,
+      "source_base": "778367396cd52526eca59edd41c2367f5e43b897",
+      "source_sha256": "25fa9bb1a0aa66a8df9d8ba88a179689b62fa6cd27f61c209922197a3545f034",
+      "method": "G_index_equal_worktree_new_file",
+      "integrated_working_sha256": "25fa9bb1a0aa66a8df9d8ba88a179689b62fa6cd27f61c209922197a3545f034"
+    }
+  ]
+}

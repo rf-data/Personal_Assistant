@@ -236,6 +236,10 @@ class Application:
                     result = job
                 elif method == "GET" and action == "artifacts":
                     result = job.artifact_refs
+                elif method == "GET" and action == "result":
+                    if query or value:
+                        raise ValueError("Planning result takes no parameters")
+                    result = self.controller.planning_result(actor, job_id)
                 elif method == "GET" and action == "logs":
                     if set(query) - {"cursor", "limit", "query"}:
                         raise ValueError("Unknown log filter")

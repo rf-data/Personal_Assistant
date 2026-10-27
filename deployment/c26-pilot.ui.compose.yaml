@@ -1,0 +1,10 @@
+# Overlay the existing UI and private HTTPS contracts; no domain assignment.
+# This file contains no UI source and does not introduce another UI resource.
+name: personal-assistant-c26-pilot-ui
+services:
+  ui:
+    profiles: [c26-pilot-ui]
+    pull_policy: never
+    restart: 'no'
+    cpus: 0.50
+    memswap_limit: 768m

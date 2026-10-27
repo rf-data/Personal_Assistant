@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "root": "/app/runtime-state/content",
+  "cursor_key_file": "/app/configuration/c26-runtime/secrets/content-cursor.key"
+}

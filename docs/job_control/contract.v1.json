@@ -555,6 +555,25 @@
           "title": "Catalog",
           "type": "object"
         },
+        "coordinator_test_required": {
+          "default": false,
+          "title": "Coordinator Test Required",
+          "type": "boolean"
+        },
+        "deployment_gate_protocol": {
+          "default": "c26-gate-v1",
+          "enum": [
+            "c26-gate-v1",
+            "c26-gate-v2"
+          ],
+          "title": "Deployment Gate Protocol",
+          "type": "string"
+        },
+        "deployment_gate_required": {
+          "default": false,
+          "title": "Deployment Gate Required",
+          "type": "boolean"
+        },
         "execution_enabled": {
           "default": false,
           "title": "Execution Enabled",

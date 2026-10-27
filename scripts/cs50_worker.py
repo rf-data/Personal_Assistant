@@ -6,6 +6,7 @@ import sqlite3
 import time
 from pathlib import Path
 
+from src.job_control.catalog import verified_files
 from src.job_control.executor import Executor
 from src.job_control.operations import fence, preflight
 from src.tools_materials.capacity import check_capacity, free_space, load_limits
@@ -17,6 +18,11 @@ class CapacityExecutor(Executor):
             raise ValueError("C26 requires a single active processing job")
         self.limits, self.next_budget_check = limits, 0.0
         check_capacity(settings.root, limits.job_bytes, limits.reserve_bytes)
+        catalog_bytes = 0
+        for entry in settings.catalog.values():
+            catalog_bytes += sum(len(data) for data in verified_files(entry).values())
+            if catalog_bytes > limits.catalog_bytes:
+                raise ValueError("Capacity catalog byte budget exceeded")
         super().__init__(settings)
 
     def step(self):

@@ -8,11 +8,13 @@
 !src/**
 !scripts/
 !scripts/deployment.py
+!scripts/deployment_gate.py
 !scripts/cs50_material_quality.py
 !scripts/cs50_materials.py
 !scripts/cs50_workflow.py
 !scripts/cs50_batch.py
 !scripts/cs50_worker.py
+!scripts/c26_runtime_preflight.py
 **/__pycache__
 **/*.pyc
 **/.env*

@@ -111,7 +111,21 @@ def main():
         if os.getppid() != expected:
             stopped["value"] = True
     # Both root and child deliberately ignore TERM; group cleanup must escalate.
-    body = "import os,signal,subprocess,sys,time; from pathlib import Path; signal.signal(signal.SIGTERM,signal.SIG_IGN); child=subprocess.Popen([sys.executable,'-c','import signal,time;signal.signal(signal.SIGTERM,signal.SIG_IGN);time.sleep(60)']);Path('pids.json').write_text(__import__('json').dumps([os.getpid(),child.pid]));time.sleep(60)"
+    body = """
+import json, os, signal, subprocess, sys, time
+from pathlib import Path
+signal.signal(signal.SIGTERM, signal.SIG_IGN)
+child = subprocess.Popen([sys.executable, '-c',
+    "import signal,time; from pathlib import Path; "
+    "signal.signal(signal.SIGTERM,signal.SIG_IGN); "
+    "Path('child-ready').touch(); time.sleep(60)"])
+while not Path('child-ready').exists():
+    time.sleep(0.005)
+temporary = Path('.pids.json.tmp')
+temporary.write_text(json.dumps([os.getpid(), child.pid]))
+temporary.replace('pids.json')
+time.sleep(60)
+"""
     if args.mode == "exit":
         body = "raise SystemExit(7)"
     if args.mode == "orphan_exit":
@@ -125,11 +139,21 @@ def main():
             return "cancelled"
         return None
 
+    def wait_for_ready_group():
+        if args.mode == "exit":
+            return
+        deadline = time.monotonic() + 3
+        while not (args.directory / "pids.json").exists():
+            if time.monotonic() >= deadline:
+                raise RuntimeError("Probe process group readiness not confirmed")
+            time.sleep(0.005)
+
     result = supervise(
         [sys.executable, "-c", body],
         directory=args.directory,
         timeout=0.3 if args.mode == "timeout" else 10,
         should_stop=should_stop,
+        on_started=wait_for_ready_group,
     )
     (args.directory / "probe-result.json").write_text(json.dumps(result))
 

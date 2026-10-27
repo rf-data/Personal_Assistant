@@ -1,0 +1,52 @@
+{
+  "additionalProperties": false,
+  "description": "Canonical receipt whose hash was independently approved in RoleScope.\n\nIts assertion needs a separate trusted registry/build verifier. A host label\nor its self-declared 'verified_build_receipt' flag cannot satisfy this check.",
+  "properties": {
+    "authority_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Authority Id",
+      "type": "string"
+    },
+    "image_id": {
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "title": "Image Id",
+      "type": "string"
+    },
+    "repo_digest": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(/[A-Za-z0-9][A-Za-z0-9._:-]*)*@sha256:[a-f0-9]{64}$",
+      "title": "Repo Digest",
+      "type": "string"
+    },
+    "repository": {
+      "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+      "title": "Repository",
+      "type": "string"
+    },
+    "revision": {
+      "pattern": "^[a-f0-9]{40}$",
+      "title": "Revision",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "verification": {
+      "const": "registry_digest_and_build_attestation_verified",
+      "title": "Verification",
+      "type": "string"
+    }
+  },
+  "required": [
+    "authority_id",
+    "repository",
+    "revision",
+    "image_id",
+    "repo_digest",
+    "verification"
+  ],
+  "title": "BuildReceipt",
+  "type": "object"
+}

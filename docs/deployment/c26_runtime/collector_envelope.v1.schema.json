@@ -1,0 +1,101 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "adapter_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Adapter Id"
+    },
+    "batch_id": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Batch Id",
+      "type": "string"
+    },
+    "binding_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Binding Sha256",
+      "type": "string"
+    },
+    "capture_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Capture Id",
+      "type": "string"
+    },
+    "expires_at": {
+      "title": "Expires At",
+      "type": "number"
+    },
+    "mode": {
+      "enum": [
+        "simulated",
+        "authenticated_read_only"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "observed_at": {
+      "title": "Observed At",
+      "type": "number"
+    },
+    "payload": {
+      "additionalProperties": true,
+      "title": "Payload",
+      "type": "object"
+    },
+    "request_id": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Request Id",
+      "type": "string"
+    },
+    "request_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Request Sha256",
+      "type": "string"
+    },
+    "runtime_scope_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Runtime Scope Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "subject_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Subject Id",
+      "type": "string"
+    },
+    "target_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Target Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "mode",
+    "target_id",
+    "subject_id",
+    "adapter_id",
+    "batch_id",
+    "request_id",
+    "request_sha256",
+    "binding_sha256",
+    "runtime_scope_sha256",
+    "capture_id",
+    "observed_at",
+    "expires_at",
+    "payload"
+  ],
+  "title": "Envelope",
+  "type": "object"
+}

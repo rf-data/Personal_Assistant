@@ -282,3 +282,12 @@ src/prio_list.md
 
 # Reviewed PM-02 planning reconciliation only; no runtime or private Project payloads.
 !/docs/planning/pm02_reconciliation.v1.json
+
+# Reviewed C26 contracts and synthetic evidence; runtime secrets remain external.
+!/docs/deployment/c26*.json
+!/docs/deployment/c26_runtime/*.json
+!/artifacts/c26_pilot/*.json
+!/artifacts/c26_pilot/*.log
+!/artifacts/c26_pilot_integration/*.json
+!/artifacts/c26_pilot_integration/*.log
+/artifacts/c26_pilot_integration/handoff/

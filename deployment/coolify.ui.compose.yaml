@@ -14,7 +14,7 @@ services:
     pids_limit: 128
     cpus: 0.75
     mem_limit: 768m
-    tmpfs: [/tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777]
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777"]
     logging:
       driver: json-file
       options: {max-size: 10m, max-file: '3'}

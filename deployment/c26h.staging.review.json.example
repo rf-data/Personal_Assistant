@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "root": "/app/runtime-state/reviews",
+  "content": {
+    "schema_version": 1,
+    "root": "/app/runtime-state/content",
+    "cursor_key_file": "/app/configuration/c26-runtime/secrets/content-cursor.key"
+  },
+  "writes_enabled": false,
+  "real_reviews_enabled": false,
+  "owner_authorization_reference": null,
+  "grants": []
+}

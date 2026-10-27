@@ -152,3 +152,31 @@ Der C17-Client prüft Registry/Schemas und bietet diese beiden Defaultadapter an
 Der optionale C18-Prozess `cs50_offline_workflow` benötigt eine gesonderte
 UI-Vertragserweiterung; [Backend-Workflowvertrag](../workflows/README.md).
 Dieses Dokumentationsaudit ändert keinen UI-Code.
+# C26-PILOT: begrenzter Materialplan-Lesevertrag (Reviewkandidat)
+
+`GET /v1/jobs/{job_id}/result` ist eine additive authentifizierte Leseroute für
+einen bereits abgeschlossenen `material_planning`-Job. Sie verwendet die
+bestehende individuelle C16-Authentifizierung und Courseberechtigung; Owner
+bleibt für mutierende Jobaktionen maßgeblich. Kein Body, Queryparameter,
+Dateipfad, Downloadauftrag oder neuer Job wird angenommen.
+
+Antwort: `schema_version=1`, `protocol=personal_assistant_material_plan_v1`,
+`artifact` mit der bestehenden C16-Artefaktmetadatenstruktur und `plan` gemäß
+dem vorhandenen `MaterialPlan`-Modell. Nur genau ein bestätigtes `material_plan`
+wird gelesen. Bytezahl und SHA-256 müssen der gespeicherten, vom Guardian
+publizierten Referenz entsprechen; die Datei ist auf 256 KiB begrenzt und wird
+über bestehende Symlink-/Regularfileprüfungen geöffnet. Keine beliebige
+Dateiauslieferung, kein Mount-/Hostpfad in Antworten.
+
+Fehler: 401 bei fehlender/ungültiger C16-Identität; 403 bei fremdem Course;
+404 bei unbekanntem Job; 409 bei anderem Prozess oder noch nicht bestätigtem
+Abschluss; 422 bei zusätzlichen Parametern; 503 bei fehlendem, verändertem,
+zu großem oder ungültigem Ergebnis. Kein automatischer Retry oder Reparatur-
+schreibzugriff. Die Route verändert weder Job noch Gatezustand.
+
+Der unveränderte UI-C16-Client kann diesen additiven Vertrag über seine
+vorhandene request-Methode lesen; die bestehende Streamlitoberfläche zeigt
+bislang nur Artefaktmetadaten. Das neue Ergebniswidget erfordert einen
+separaten UI-Branch in einem persistenten UI-Arbeitsverzeichnis. Dieses ist in
+der aktuellen Sandbox nicht beschreibbar; **die vollständige Plananzeige in
+der UI bleibt HOLD**. Kein UI-Code ist im Backend dupliziert.
