@@ -139,6 +139,9 @@ class Controller:
             and request.preview.parameters.get("request_key") != key
         ):
             raise ValueError("Import request key differs from confirmed plan")
+        from src.job_control.native_admission import create_guard
+
+        create_guard(self.settings, actor, request, key)
         intent = fingerprint(request.model_dump(mode="json"))
 
         def existing(db):
@@ -221,6 +224,9 @@ class Controller:
         job = self.get(actor, job_id)
         if job.initiated_by != actor.subject:
             raise PermissionError("Only the owner may start this job")
+        from src.job_control.native_admission import start_guard
+
+        start_guard(self.settings, job)
         if job.status != "created":
             return job
         if not self.settings.execution_enabled or not self.store.worker_available(

@@ -144,9 +144,21 @@ class Executor:
                 or job.process_id in active_processes
             ):
                 continue
-            identity = next(
-                (i for i in self.settings.identities if i.subject == job.initiated_by),
-                None,
+            from src.job_control.native_admission import actor, job_guard, native_root
+
+            if native_root(self.settings):
+                job_guard(self.settings, job)
+            identity = (
+                actor(self.settings)
+                if native_root(self.settings)
+                else next(
+                    (
+                        i
+                        for i in self.settings.identities
+                        if i.subject == job.initiated_by
+                    ),
+                    None,
+                )
             )
             entry = self.settings.catalog.get(job.input_refs[0])
             if (

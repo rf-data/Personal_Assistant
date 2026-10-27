@@ -140,6 +140,9 @@ def execute(root, job_id, parent):
     try:
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
         job = store.get(job_id)
+        from src.job_control.native_admission import child_guard
+
+        child_guard(root, job_id, parent)
         process = process_for(job.process_id)
 
         def should_stop():

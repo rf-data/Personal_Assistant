@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "root": "/var/lib/cs50p-mvp/jobs",
+  "catalog": {},
+  "identities": [],
+  "execution_enabled": true,
+  "deployment_gate_required": true,
+  "deployment_gate_protocol": "c26-native-v1",
+  "coordinator_test_required": false,
+  "workflows_enabled": true,
+  "pdf_enabled": false,
+  "index_jobs_enabled": false,
+  "import_jobs_enabled": false,
+  "max_jobs": 3,
+  "max_queued": 1,
+  "max_parallel": 1,
+  "worker_ttl": 10,
+  "native_uid": 1000,
+  "native_mode": "ssh-runtime"
+}

@@ -1,0 +1,105 @@
+{
+  "$defs": {
+    "Preview": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "preview_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Preview Id",
+          "type": "string"
+        },
+        "process_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Process Id",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        },
+        "input_refs": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Input Refs",
+          "type": "array"
+        },
+        "expected_artifacts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Expected Artifacts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "preview_id",
+        "process_id",
+        "parameters",
+        "input_refs",
+        "expected_artifacts"
+      ],
+      "title": "Preview",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "protocol": {
+      "const": "c26-native-v1",
+      "title": "Protocol",
+      "type": "string"
+    },
+    "nonce": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Nonce",
+      "type": "string"
+    },
+    "job_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+      "title": "Job Id",
+      "type": "string"
+    },
+    "preview": {
+      "$ref": "#/$defs/Preview"
+    },
+    "binding": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Binding",
+      "type": "string"
+    },
+    "approved_uid": {
+      "minimum": 1,
+      "title": "Approved Uid",
+      "type": "integer"
+    },
+    "approved_at": {
+      "title": "Approved At",
+      "type": "integer"
+    },
+    "expires_at": {
+      "title": "Expires At",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "protocol",
+    "nonce",
+    "job_id",
+    "preview",
+    "binding",
+    "approved_uid",
+    "approved_at",
+    "expires_at"
+  ],
+  "title": "Grant",
+  "type": "object"
+}

@@ -1,0 +1,297 @@
+{
+  "$defs": {
+    "CatalogEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "manifest",
+            "material_bundle",
+            "workflow_bundle",
+            "pdf_bundle",
+            "index_bundle",
+            "content_import_bundle"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "root": {
+          "format": "path",
+          "title": "Root",
+          "type": "string"
+        },
+        "files": {
+          "additionalProperties": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "maxProperties": 128,
+          "minProperties": 1,
+          "title": "Files",
+          "type": "object"
+        },
+        "roles": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Roles",
+          "type": "object"
+        },
+        "course_ids": {
+          "items": {
+            "enum": [
+              "cs50x",
+              "cs50_python",
+              "cs50_sql",
+              "cs50_ai",
+              "cs50_web",
+              "cs50_cybersecurity",
+              "loviscach_mathe_1"
+            ],
+            "type": "string"
+          },
+          "title": "Course Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "root",
+        "files",
+        "roles",
+        "course_ids"
+      ],
+      "title": "CatalogEntry",
+      "type": "object"
+    },
+    "Identity": {
+      "additionalProperties": false,
+      "properties": {
+        "subject": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Subject",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "viewer",
+            "operator"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "courses": {
+          "items": {
+            "enum": [
+              "cs50x",
+              "cs50_python",
+              "cs50_sql",
+              "cs50_ai",
+              "cs50_web",
+              "cs50_cybersecurity",
+              "loviscach_mathe_1"
+            ],
+            "type": "string"
+          },
+          "title": "Courses",
+          "type": "array"
+        },
+        "token_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Token Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject",
+        "role",
+        "courses",
+        "token_sha256"
+      ],
+      "title": "Identity",
+      "type": "object"
+    },
+    "Settings": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "root": {
+          "format": "path",
+          "title": "Root",
+          "type": "string"
+        },
+        "catalog": {
+          "maxProperties": 32,
+          "patternProperties": {
+            "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$": {
+              "$ref": "#/$defs/CatalogEntry"
+            }
+          },
+          "title": "Catalog",
+          "type": "object"
+        },
+        "identities": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Identity"
+          },
+          "title": "Identities",
+          "type": "array"
+        },
+        "execution_enabled": {
+          "default": false,
+          "title": "Execution Enabled",
+          "type": "boolean"
+        },
+        "deployment_gate_required": {
+          "default": false,
+          "title": "Deployment Gate Required",
+          "type": "boolean"
+        },
+        "coordinator_test_required": {
+          "default": false,
+          "title": "Coordinator Test Required",
+          "type": "boolean"
+        },
+        "deployment_gate_protocol": {
+          "default": "c26-gate-v1",
+          "enum": [
+            "c26-gate-v1",
+            "c26-gate-v2",
+            "c26-native-v1"
+          ],
+          "title": "Deployment Gate Protocol",
+          "type": "string"
+        },
+        "native_uid": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Native Uid"
+        },
+        "native_mode": {
+          "anyOf": [
+            {
+              "enum": [
+                "ssh-runtime",
+                "offline-test"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Native Mode"
+        },
+        "workflows_enabled": {
+          "default": false,
+          "title": "Workflows Enabled",
+          "type": "boolean"
+        },
+        "pdf_enabled": {
+          "default": false,
+          "title": "Pdf Enabled",
+          "type": "boolean"
+        },
+        "index_jobs_enabled": {
+          "default": false,
+          "title": "Index Jobs Enabled",
+          "type": "boolean"
+        },
+        "import_jobs_enabled": {
+          "default": false,
+          "title": "Import Jobs Enabled",
+          "type": "boolean"
+        },
+        "max_jobs": {
+          "default": 100,
+          "maximum": 1000,
+          "minimum": 1,
+          "title": "Max Jobs",
+          "type": "integer"
+        },
+        "max_queued": {
+          "default": 8,
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Max Queued",
+          "type": "integer"
+        },
+        "max_parallel": {
+          "default": 1,
+          "maximum": 2,
+          "minimum": 1,
+          "title": "Max Parallel",
+          "type": "integer"
+        },
+        "worker_ttl": {
+          "default": 5,
+          "maximum": 30,
+          "minimum": 1,
+          "title": "Worker Ttl",
+          "type": "number"
+        }
+      },
+      "required": [
+        "root"
+      ],
+      "title": "Settings",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "protocol": {
+      "const": "c26-native-v1",
+      "title": "Protocol",
+      "type": "string"
+    },
+    "settings": {
+      "$ref": "#/$defs/Settings"
+    },
+    "config": {
+      "format": "path",
+      "title": "Config",
+      "type": "string"
+    },
+    "limits": {
+      "format": "path",
+      "title": "Limits",
+      "type": "string"
+    },
+    "config_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Config Sha256",
+      "type": "string"
+    },
+    "limits_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Limits Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "protocol",
+    "settings",
+    "config",
+    "limits",
+    "config_sha256",
+    "limits_sha256"
+  ],
+  "title": "Enrollment",
+  "type": "object"
+}

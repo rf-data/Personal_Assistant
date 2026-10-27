@@ -564,7 +564,8 @@
           "default": "c26-gate-v1",
           "enum": [
             "c26-gate-v1",
-            "c26-gate-v2"
+            "c26-gate-v2",
+            "c26-native-v1"
           ],
           "title": "Deployment Gate Protocol",
           "type": "string"
@@ -617,6 +618,35 @@
           "minimum": 1,
           "title": "Max Queued",
           "type": "integer"
+        },
+        "native_mode": {
+          "anyOf": [
+            {
+              "enum": [
+                "ssh-runtime",
+                "offline-test"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Native Mode"
+        },
+        "native_uid": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Native Uid"
         },
         "pdf_enabled": {
           "default": false,

@@ -115,6 +115,9 @@ def settings_digest(settings):
     data = settings.model_dump(mode="json")
     if data.get("coordinator_test_required") is False:
         data.pop("coordinator_test_required")
+    for field in ("native_uid", "native_mode"):
+        if data.get(field) is None:
+            data.pop(field, None)
     # Preserve byte-for-byte v1 hash semantics for pre-C26-D configurations.
     if data.get("deployment_gate_protocol") == "c26-gate-v1":
         data.pop("deployment_gate_protocol")
@@ -148,6 +151,11 @@ def journal_name(root, version=None):
 
 def require_existing_queue(settings):
     """An enabled gate must never bootstrap a replacement queue on a wrong mount."""
+    from src.job_control.native_admission import enrolled, native_root
+
+    if native_root(settings):
+        enrolled(settings)
+        return
     if settings.deployment_gate_required:
         try:
             root = private(settings.root, directory=True)
@@ -339,6 +347,13 @@ def _settings_bound(settings, rows):
 
 @contextmanager
 def admission(settings):
+    from src.job_control.native_admission import admission as native_admit
+    from src.job_control.native_admission import native_root
+
+    if native_root(settings):
+        with native_admit(settings):
+            yield
+        return
     root = settings.root
     if (
         not settings.deployment_gate_required
@@ -378,6 +393,13 @@ def admission(settings):
 @contextmanager
 def dispatch(settings):
     """A damaged gate pauses dispatch; existing children keep running/being reaped."""
+    from src.job_control.native_admission import dispatch as native_dispatch
+    from src.job_control.native_admission import native_root
+
+    if native_root(settings):
+        with native_dispatch(settings) as permitted:
+            yield permitted
+        return
     root = settings.root
     if (
         not settings.deployment_gate_required
@@ -417,6 +439,11 @@ def dispatch(settings):
 
 
 def register_worker(settings):
+    from src.job_control.native_admission import native_root, worker_guard
+
+    if native_root(settings):
+        worker_guard(settings)
+        return None
     if not settings.deployment_gate_required:
         if journal_present(settings.root):
             _read(settings.root, version=selected_version(settings))

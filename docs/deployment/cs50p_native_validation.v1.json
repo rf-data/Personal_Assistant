@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "task": "C26-CS50P-NATIVE-ADMISSION",
+  "status": "HOLD",
+  "offline_native_candidate_validated": true,
+  "production_release": false,
+  "integration_complete": false,
+  "default_branch": "master",
+  "tests": [
+    {
+      "name": "regression",
+      "phase": "development-before-contract-fix",
+      "tests": 300,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 317.975,
+      "files": {
+        "regression.xml": "fb848d61c2a49dc766e6d99037a5ea2330142166b14e24b59e7c8e1ddf4cf635",
+        "regression.log": "4d05adb5351f0a208d69b15ddc516bd066d8b0ea5b58c941df200243c12371af"
+      }
+    },
+    {
+      "name": "contracts",
+      "phase": "targeted-contract-fixes",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 3.587,
+      "files": {
+        "contracts.xml": "281f60102cfae873a7b1184de4cdc3ecde1937b9df1ffb85693a97b60065a13c",
+        "contracts.log": "8ff81d2f2aca026e18e90beb83ed96cb147579633e0fe9654574e1c18acf0823"
+      }
+    },
+    {
+      "name": "final",
+      "phase": "contract-fixed-native-mvp-v2-controller",
+      "tests": 167,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 105.371,
+      "files": {
+        "final.xml": "9fe5b779536977e746f72f8bf4371773d5b5c599b9d5d91e42c56b4d260efbf6",
+        "final.log": "c0061fd284fafbf0b6c39999516551fd4595c911963a73e187b670923ba114fc"
+      }
+    },
+    {
+      "name": "final-regression",
+      "phase": "additional-c16-workflow-regression",
+      "tests": 136,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 222.55,
+      "files": {
+        "final-regression.xml": "bc6b6e53d80b667f34960d641253f7bca1260bcafd2b6179ecec1d3441bf8a1b",
+        "final-regression.log": "0a6154ef159104f8fb98a6921ee664d361a60dfcca901f5239b5febf4a5f3b7d"
+      }
+    },
+    {
+      "name": "resume-recheck",
+      "phase": "isolated-recheck-of-quarantined-resume",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 13.327,
+      "files": {
+        "resume-recheck.xml": "28f7bc0a0e6ab398cb2189edb6877e84d7009eabd812935b45a640a757fd8668",
+        "resume-recheck.log": "f8caf22564947538e9f948df484f3f015e04ae36d220619c5dc550ed274bb408"
+      }
+    },
+    {
+      "name": "runtime-final",
+      "phase": "final-runtime-separation-native-mvp-contracts",
+      "tests": 73,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 67.833,
+      "files": {
+        "runtime-final.xml": "e8ebce30cd0300c40f0420dd61f05d78c1be09fc709c38d2013536b6ec63c5e9",
+        "runtime-final.log": "49238fe64aa524128c23586f3887aab0cd19f113fdb487b1303bbef544b26108"
+      }
+    }
+  ],
+  "no_aggregation_of_overlapping_runs": true,
+  "final_runtime_tests": {
+    "native": 23,
+    "mvp": 48,
+    "compatibility": 2,
+    "passed": 73
+  },
+  "intermittent_regression": {
+    "test": "test_resume_after_interrupted_attempt_before_state_write",
+    "failure": "guardian SQLITE_BUSY code=5 phase=begin; dispatch quarantined",
+    "isolated_recheck": "passed",
+    "cause_resolved": false,
+    "gate_weakening": false
+  },
+  "code_fingerprint": "32267acc6d252cae4b2d7ee25ffb13c201ed9e9609d0f7ed67d9a103b075c7c1",
+  "environment": {
+    "python": "3.12.12 (main, Oct 31 2025, 23:02:31) [Clang 21.1.4 ]",
+    "executable": "/tmp/cs50p-native-test-venv/bin/python",
+    "packages": {
+      "pydantic": "2.13.4",
+      "pydantic-settings": "not installed",
+      "returns": "not installed",
+      "httpx": "0.28.1",
+      "httpcore": "1.0.9",
+      "beautifulsoup4": "4.15.0",
+      "pymupdf": "1.28.2",
+      "pytest": "9.1.1",
+      "ruff": "0.16.3",
+      "typer": "0.26.8",
+      "python-dotenv": "1.2.3",
+      "pyyaml": "6.0.3",
+      "tenacity": "9.1.4"
+    },
+    "offline_cache_paths": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-pilot/.venv/lib/python3.12/site-packages",
+      "/home/robfra/.cache/uv/archive-v0/F1ry8sq-ITBGul8ngAtRR",
+      "/home/robfra/.cache/uv/archive-v0/MhB9vnChb2Hf7fqu1R7hs",
+      "/home/robfra/.cache/uv/archive-v0/WMikt9vtvi4e2S5G8I0T3",
+      "/home/robfra/.cache/uv/archive-v0/i-cTwNTYX7mKQX5j3RlWE",
+      "/home/robfra/.cache/uv/archive-v0/yCFUIq1s0rhEre7Uanmx_"
+    ],
+    "positive_frozen_runtime_install": false,
+    "network_install": false,
+    "capacity_probes_mocked_in_tests": true
+  },
+  "systemd": {
+    "fixture_exit": 0,
+    "original_exit": 1,
+    "fixture_change": "ExecStart=/usr/bin/true only",
+    "not_host_or_cgroup_validation": true
+  },
+  "identity": {
+    "protocol": "c26-native-v1",
+    "subject": "uid_<actual OS UID>",
+    "runtime_mode": "ssh-runtime",
+    "default_runtime_rejects_offline_test": true,
+    "explicit_test_flag": "--offline-test",
+    "api_identities": [],
+    "courses": [
+      "cs50_python"
+    ],
+    "trust_boundary": "single SSH operator via OS account/sudo; installed code/private specs/workspace"
+  },
+  "blockers": [
+    "Feature files and shared Git index are read-only; no new commit, PR or master document integration",
+    "No positive frozen wheelclosure installation evidence",
+    "No actual source/rights/robots/catalog review",
+    "VPN/SSH/key/UID/sudo and host cgroup/quota/filesystem/network checks outstanding",
+    "Intermittent C16 SQLITE_BUSY quarantine cause unresolved"
+  ],
+  "lifecycle": {
+    "created_git_artifacts": [],
+    "removed_git_artifacts": [],
+    "other_worktrees_modified": false,
+    "retained": [
+      "existing feature branch/worktree and preexisting README change",
+      "pilot branch/worktree",
+      "old MVP export",
+      "native candidate export",
+      "task test venv and disposable test evidence"
+    ],
+    "retention_reason": "Review/integration pending; preserving sole uncommitted candidate and evidence"
+  },
+  "no_real_download": true,
+  "no_deployment": true,
+  "no_host_change": true
+}

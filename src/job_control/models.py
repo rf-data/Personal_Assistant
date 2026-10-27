@@ -95,7 +95,15 @@ class Settings(Contract):
     execution_enabled: bool = Field(default=False, strict=True)
     deployment_gate_required: bool = Field(default=False, strict=True)
     coordinator_test_required: bool = Field(default=False, strict=True)
-    deployment_gate_protocol: Literal["c26-gate-v1", "c26-gate-v2"] = "c26-gate-v1"
+    deployment_gate_protocol: Literal["c26-gate-v1", "c26-gate-v2", "c26-native-v1"] = (
+        "c26-gate-v1"
+    )
+    native_uid: int | None = Field(
+        default=None, ge=1, strict=True, exclude_if=lambda value: value is None
+    )
+    native_mode: Literal["ssh-runtime", "offline-test"] | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
     workflows_enabled: bool = Field(default=False, strict=True)
     pdf_enabled: bool = Field(default=False, strict=True)
     index_jobs_enabled: bool = Field(default=False, strict=True)
@@ -121,6 +129,30 @@ class Settings(Contract):
             raise ValueError(
                 "Coordinator test profile requires explicit mandatory v2 gate"
             )
+        native = self.deployment_gate_protocol == "c26-native-v1"
+        if native:
+            if (
+                not self.deployment_gate_required
+                or self.coordinator_test_required
+                or self.native_uid is None
+                or self.native_mode is None
+                or self.identities
+                or not self.execution_enabled
+                or not self.workflows_enabled
+                or self.pdf_enabled
+                or self.index_jobs_enabled
+                or self.import_jobs_enabled
+                or self.max_parallel != 1
+                or self.max_queued != 1
+                or not 1 <= len(self.catalog) <= 3
+                or any(
+                    e.kind != "workflow_bundle" or e.course_ids != ("cs50_python",)
+                    for e in self.catalog.values()
+                )
+            ):
+                raise ValueError("Explicit restricted native SSH scope required")
+        elif self.native_uid is not None or self.native_mode is not None:
+            raise ValueError("Native policy requires native gate")
         root = self.root
         output_path(root, "job_workspace")
         subjects = [i.subject for i in self.identities]
