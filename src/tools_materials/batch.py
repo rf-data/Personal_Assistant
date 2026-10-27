@@ -20,6 +20,7 @@ from src.tools_materials.capacity import (
     estimate,
 )
 from src.tools_materials.download import MaterialDownloader
+from src.tools_materials.https_transport import PublicHTTPSTransport
 from src.tools_materials.processing import make_plan, parser_for
 from src.tools_materials.quality import _json
 from src.tools_materials.storage import artifact_root, publish_bytes
@@ -271,8 +272,9 @@ def obtain(
     transport=None,
     sleep=time.sleep,
     limits=None,
+    retries=0,
 ):
-    """Serial existing downloader; no automatic retries or second job store."""
+    """Serial existing downloader; explicit retry bounds and no second job store."""
     archive = artifact_root(Path(archive))
     limits = limits or CapacityLimits()
     limits.batch_size(batch)
@@ -322,12 +324,17 @@ def obtain(
                 guarded = MaterialDownloader(
                     archive,
                     max_bytes=batch.max_bytes,
-                    retries=0,
+                    retries=retries,
                     transport=CapacityTransport(
-                        transport or httpx.HTTPTransport(retries=0), archive, limits
+                        transport or PublicHTTPSTransport(), archive, limits
                     ),
                 )
-                receipt = guarded.obtain(b, execute=True, license_reviewed=True)
+                receipt = guarded.obtain(
+                    b,
+                    execute=True,
+                    license_reviewed=True,
+                    expected_sha256=grant.expected_sha256,
+                )
                 if (
                     grant.expected_sha256
                     and receipt.raw_sha256 != grant.expected_sha256

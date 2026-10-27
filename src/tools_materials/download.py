@@ -19,6 +19,7 @@ from src.tools_lecture.execute_cs50 import (
     digest,
     write_state,
 )
+from src.tools_materials.https_transport import PublicHTTPSTransport
 from src.tools_materials.inventory import capability, official
 from src.tools_materials.storage import artifact_root, locate, locked
 
@@ -40,6 +41,24 @@ MIMES = {
     "txt": {"text/plain"},
     "md": {"text/plain", "text/markdown"},
 }
+
+
+class LengthCheckedStream(httpx.SyncByteStream):
+    def __init__(self, inner, expected, maximum):
+        self.inner, self.expected, self.maximum = inner, expected, maximum
+
+    def __iter__(self):
+        size = 0
+        for chunk in self.inner:
+            size += len(chunk)
+            if size > self.maximum:
+                raise ValueError("Download exceeds size limit")
+            yield chunk
+        if self.expected is not None and size != self.expected:
+            raise ValueError("Incomplete Content-Length")
+
+    def close(self):
+        self.inner.close()
 
 
 class CheckedTransport(httpx.BaseTransport):
@@ -71,6 +90,16 @@ class CheckedTransport(httpx.BaseTransport):
                     "",
                 ):
                     raise ExecutionConflict("Compressed transfer not supported")
+                response = httpx.Response(
+                    response.status_code,
+                    headers=response.headers,
+                    stream=LengthCheckedStream(
+                        response.stream,
+                        int(length) if length is not None else None,
+                        self.max_bytes,
+                    ),
+                    extensions=response.extensions,
+                )
             except Exception:
                 response.close()
                 raise
@@ -145,7 +174,13 @@ class MaterialDownloader:
         return receipt
 
     def obtain(
-        self, binding, *, execute=False, license_reviewed=False, local_file=None
+        self,
+        binding,
+        *,
+        execute=False,
+        license_reviewed=False,
+        local_file=None,
+        expected_sha256=None,
     ):
         binding = MaterialResource.model_validate_json(binding.model_dump_json())
         support, reason = capability(binding.original_url, binding.format)
@@ -207,7 +242,10 @@ class MaterialDownloader:
                 binding=binding, status="selected", origin=origin, history=("selected",)
             )
             write_state(receipt_path, receipt.model_dump(mode="json"))
-            fd, name = tempfile.mkstemp(prefix=".download-", dir=raw.parent)
+            incoming = raw.parent / ".incoming"
+            locate(self.workspace, incoming.relative_to(self.workspace))
+            incoming.mkdir(mode=0o700, exist_ok=True)
+            fd, name = tempfile.mkstemp(prefix=".download-", dir=incoming)
             os.close(fd)
             temporary = Path(name)
             try:
@@ -232,7 +270,7 @@ class MaterialDownloader:
                     mime = None  # Local bytes have no authoritative HTTP Content-Type.
                 else:
                     guard = CheckedTransport(
-                        self.transport or httpx.HTTPTransport(retries=0),
+                        self.transport or PublicHTTPSTransport(),
                         binding,
                         self.max_bytes,
                     )
@@ -253,19 +291,25 @@ class MaterialDownloader:
                     mime = guard.mime
                 if temporary.stat().st_size == 0:
                     raise ValueError("Empty material download/import")
+                checksum = digest(temporary)
+                if expected_sha256 is not None and checksum != expected_sha256:
+                    raise ValueError("Expected raw hash mismatch")
+                if binding.format == "pdf":
+                    with temporary.open("rb") as stream:
+                        if not stream.read(5) == b"%PDF-":
+                            raise ValueError("Invalid PDF signature")
                 receipt = receipt.model_copy(
                     update={
-                        "raw_sha256": digest(temporary),
+                        "raw_sha256": checksum,
                         "mime_type": mime,
                         "status": "downloaded",
                         "history": receipt.history + ("downloaded",),
                     }
                 )
                 write_state(receipt_path, receipt.model_dump(mode="json"))
-                os.link(temporary, raw)
-                from src.tools_lecture.execute_cs50 import sync_directory
+                from src.tools_materials.storage import publish_file
 
-                sync_directory(raw.parent)
+                publish_file(temporary, raw)
                 receipt = receipt.model_copy(
                     update={
                         "status": "verified",
@@ -280,7 +324,7 @@ class MaterialDownloader:
                     receipt = receipt.model_copy(
                         update={
                             "status": "failed",
-                            "error": f"{type(exc).__name__}: {exc}",
+                            "error": type(exc).__name__,
                             "history": receipt.history + ("failed",),
                         }
                     )

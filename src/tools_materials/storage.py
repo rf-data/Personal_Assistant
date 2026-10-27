@@ -56,27 +56,37 @@ def publish_bytes(path, contents):
             stream.write(contents)
             stream.flush()
             os.fsync(stream.fileno())
-        # One atomic namespace operation: cancellation after link() previously
-        # left two names for the published inode until the finally block ran.
-        # SIGKILL cannot run finally; stopped-workspace inspection then correctly
-        # rejected that hardlink. Linux C16 requires no-replace rename semantics.
-        rename = getattr(ctypes.CDLL(None, use_errno=True), "renameat2", None)
-        if rename is None:
-            raise OSError(errno.ENOSYS, "Atomic no-replace publication unavailable")
-        rename.argtypes = [
-            ctypes.c_int,
-            ctypes.c_char_p,
-            ctypes.c_int,
-            ctypes.c_char_p,
-            ctypes.c_uint,
-        ]
-        rename.restype = ctypes.c_int
-        if rename(-100, os.fsencode(name), -100, destination, 1) != 0:
-            code = ctypes.get_errno()
-            raise OSError(code, "Atomic no-replace publication failed")
-        sync_directory(path.parent)
+        publish_file(Path(name), path)
     finally:
         Path(name).unlink(missing_ok=True)
+
+
+def publish_file(temporary, path):
+    """Same-filesystem atomic no-replace move; never adopt unknown leftovers."""
+    destination = os.fsencode(path)
+    if b"\0" in destination or b"\0" in os.fsencode(temporary):
+        raise ValueError("Invalid publication path")
+    # One atomic namespace operation: cancellation after link() previously
+    # left two names for the published inode until the finally block ran.
+    # SIGKILL cannot run finally; stopped-workspace inspection then correctly
+    # rejected that hardlink. Linux C16 requires no-replace rename semantics.
+    rename = getattr(ctypes.CDLL(None, use_errno=True), "renameat2", None)
+    if rename is None:
+        raise OSError(errno.ENOSYS, "Atomic no-replace publication unavailable")
+    rename.argtypes = [
+        ctypes.c_int,
+        ctypes.c_char_p,
+        ctypes.c_int,
+        ctypes.c_char_p,
+        ctypes.c_uint,
+    ]
+    rename.restype = ctypes.c_int
+    if rename(-100, os.fsencode(temporary), -100, destination, 1) != 0:
+        code = ctypes.get_errno()
+        raise OSError(code, "Atomic no-replace publication failed")
+    sync_directory(path.parent)
+    if temporary.parent != path.parent:
+        sync_directory(temporary.parent)
 
 
 def save_model(path, model):

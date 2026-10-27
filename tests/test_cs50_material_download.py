@@ -171,7 +171,6 @@ def test_interrupted_stream_then_resume(tmp_path):
 
 
 def test_resume_after_raw_publication_acknowledgement_loss(tmp_path, monkeypatch):
-    import src.tools_materials.download as module
 
     b = binding()
     w = worker(
@@ -180,17 +179,19 @@ def test_resume_after_raw_publication_acknowledgement_loss(tmp_path, monkeypatch
             200, content=b"<main>ok</main>", headers={"content-type": "text/html"}
         ),
     )
-    link = module.os.link
+    import src.tools_materials.storage as storage
+
+    publish = storage.publish_file
 
     def lose_ack(*args):
-        link(*args)
+        publish(*args)
         raise RuntimeError("published; acknowledgement lost")
 
-    monkeypatch.setattr(module.os, "link", lose_ack)
+    monkeypatch.setattr(storage, "publish_file", lose_ack)
     with pytest.raises(RuntimeError):
         w.obtain(b, execute=True, license_reviewed=True)
     assert w.paths(b)[0].exists()
-    monkeypatch.setattr(module.os, "link", link)
+    monkeypatch.setattr(storage, "publish_file", publish)
     w.transport = httpx.MockTransport(
         lambda _: pytest.fail("resume must not contact HTTP")
     )

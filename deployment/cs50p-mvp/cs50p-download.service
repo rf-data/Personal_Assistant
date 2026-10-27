@@ -1,0 +1,48 @@
+[Unit]
+Description=Manual bounded CS50P HTTPS download
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=cs50p
+Group=cs50p
+WorkingDirectory=/opt/cs50p/app
+ExecStart=/opt/cs50p/venv/bin/python -m scripts.cs50p_mvp download --batch /var/lib/cs50p-mvp/specs/batch.json --archive /var/lib/cs50p-mvp/archive --approvals /var/lib/cs50p-mvp/specs/approvals.json --limits /var/lib/cs50p-mvp/specs/limits.json --reports /var/lib/cs50p-mvp/reports --confirm
+Environment=PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 HOME=/var/cache/cs50p-mvp HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+UnsetEnvironment=OPENAI_API_KEY HF_API_KEY ANTHROPIC_API_KEY HTTP_PROXY HTTPS_PROXY ALL_PROXY SSL_CERT_FILE SSL_CERT_DIR PYTHONPATH PYTHONHOME
+UMask=0077
+CPUQuota=50%
+MemoryMax=256M
+MemorySwapMax=0
+TasksMax=32
+LimitNOFILE=128
+LimitCORE=0
+LimitFSIZE=64M
+TimeoutStartSec=600
+TimeoutStopSec=30
+KillMode=control-group
+KillSignal=SIGTERM
+SendSIGKILL=yes
+Restart=no
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+TemporaryFileSystem=/tmp:rw,nosuid,nodev,noexec,size=32M
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+LockPersonality=yes
+RestrictNamespaces=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+ReadWritePaths=/var/lib/cs50p-mvp/archive /var/lib/cs50p-mvp/reports /var/cache/cs50p-mvp
+InaccessiblePaths=-/run/docker.sock -/var/run/docker.sock
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cs50p-download
