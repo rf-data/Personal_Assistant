@@ -1,0 +1,222 @@
+{
+  "task": "C26-CS50P-03",
+  "status": "HOLD",
+  "sqlite_reproduced": true,
+  "sqlite_cause_resolved": false,
+  "product_fix": false,
+  "no_production_source_changes": true,
+  "no_live_actions": true,
+  "no_merge": true,
+  "overlapping_runs_not_added": true,
+  "runs": [
+    {
+      "name": "baseline",
+      "tests": 82,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 81,
+      "seconds": 86.485
+    },
+    {
+      "name": "native-01",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 7.091
+    },
+    {
+      "name": "native-02",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 6.92
+    },
+    {
+      "name": "native-03",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 7.806
+    },
+    {
+      "name": "native-04",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 7.901
+    },
+    {
+      "name": "native-05",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 10.905
+    },
+    {
+      "name": "regression",
+      "tests": 284,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 284,
+      "seconds": 378.856
+    },
+    {
+      "name": "resume-01",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 6.954
+    },
+    {
+      "name": "resume-02",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 10.457
+    },
+    {
+      "name": "resume-03",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 14.119
+    },
+    {
+      "name": "resume-04",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 12.66
+    },
+    {
+      "name": "resume-05",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 9.456
+    },
+    {
+      "name": "resume-06",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 9.752
+    },
+    {
+      "name": "resume-07",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 9.317
+    },
+    {
+      "name": "resume-08",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 9.396
+    },
+    {
+      "name": "resume-09",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 9.286
+    },
+    {
+      "name": "resume-10",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 9.406
+    },
+    {
+      "name": "sqlite-diagnostic",
+      "tests": 4,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3,
+      "seconds": 18.736
+    },
+    {
+      "name": "sqlite-final",
+      "tests": 6,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5,
+      "seconds": 39.707
+    },
+    {
+      "name": "sqlite-process",
+      "tests": 4,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 27.926
+    }
+  ],
+  "systemd": {
+    "systemd-fixture": {
+      "exit": 0,
+      "command": [
+        "systemd-analyze",
+        "verify",
+        "artifacts/c26_cs50p_03/systemd-fixture/cs50p-download.service",
+        "artifacts/c26_cs50p_03/systemd-fixture/cs50p-worker.service",
+        "artifacts/c26_cs50p_03/systemd-fixture/cs50p-native@.service"
+      ]
+    },
+    "systemd-security": {
+      "exit": 0,
+      "command": [
+        "systemd-analyze",
+        "security",
+        "--offline=yes",
+        "--no-pager",
+        "artifacts/c26_cs50p_03/systemd-fixture/cs50p-download.service",
+        "artifacts/c26_cs50p_03/systemd-fixture/cs50p-worker.service",
+        "artifacts/c26_cs50p_03/systemd-fixture/cs50p-native@.service"
+      ]
+    }
+  },
+  "runtime_install_verified": false,
+  "host_verified": false,
+  "git_commit_created": false,
+  "integration": "pending",
+  "readme_untouched": true
+}

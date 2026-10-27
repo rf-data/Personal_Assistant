@@ -81,6 +81,27 @@ def test_full_download_review_admission_worker_status_processing_result(native):
         stage["process_id"] == "material_parsing" and stage["status"] == "completed"
         for stage in value["report"]["stages"]
     )
+    # A new client process can retrieve persisted, revalidated results after
+    # the worker returned. No in-memory controller/session state is available.
+    reconnected = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "scripts.cs50p_native",
+            "result",
+            "--config",
+            str(native["config"]),
+            "--limits",
+            str(native["limits"]),
+            "--job-id",
+            grant["job_id"],
+        ],
+        capture_output=True,
+        text=True,
+        timeout=20,
+        check=True,
+    )
+    assert json.loads(reconnected.stdout) == value
     assert (settings.root / "native-grants" / (grant["job_id"] + ".used.json")).exists()
     with pytest.raises((PermissionError, FileExistsError)):
         cli.run(settings, native["limits"], grant["job_id"], offline_test=True)

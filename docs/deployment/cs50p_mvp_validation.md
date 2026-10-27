@@ -1,5 +1,13 @@
 # CS50P-MVP: Offlinevalidierung und Abschluss
 
+## C26-CS50P-03: neuer Validierungsstand
+
+Die folgenden ursprünglichen MVP-Nachweise bleiben unverändert historisch.
+Aktuelle Läufe, neue rote SQLite-Stresstests und offene Hostnachweise stehen in
+[Release Readiness](cs50p_mvp_release_readiness.md) und
+[SQLite-Stabilität](cs50p_sqlite_stability.md). Native Admission ist inzwischen
+als Featurecommit 2f2b410 auf GitHub gesichert. C26 bleibt HOLD.
+
 Stand 27.10.2026, **HOLD**. Reine Paketvorbereitung. Kein Hetzner-SSH, keine
 Coolify-/Firewall-/VPNänderung, keine realen Kursdownloads, keine produktiven
 Daten/Jobs, keine Live-LLMs, kein Merge/Push oder C26-Go-live. C24-R und DEP-01

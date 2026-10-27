@@ -1,5 +1,12 @@
 # C26-CS50P-NATIVE-ADMISSION: Validierung und Übergabe
 
+## C26-CS50P-03: Nachtrag
+
+Der Native-Stand ist inzwischen als Commit 2f2b410 lokal und auf GitHub gesichert.
+Die folgenden früheren Sicherungsblocker bleiben historische Evidenz. Neuer
+Validierungs-/Gitstand: [Release Readiness](cs50p_mvp_release_readiness.md);
+neue SQLitefehler: [Stabilitätsbefund](cs50p_sqlite_stability.md). Gesamtstatus HOLD.
+
 Gesamtstatus **HOLD** für Integration/Hostbetrieb; offline validierter Reviewkandidat.
 Keine realen Downloads, produktiven Jobs, Hetzner-/Coolifyänderungen oder Deployment.
 [Vertrag](cs50p_native_architecture.md), [Betriebsplan](cs50p_native_operator_guide.md).

@@ -1,0 +1,24 @@
+{
+  "systemd-fixture": {
+    "exit": 0,
+    "command": [
+      "systemd-analyze",
+      "verify",
+      "artifacts/c26_cs50p_03/systemd-fixture/cs50p-download.service",
+      "artifacts/c26_cs50p_03/systemd-fixture/cs50p-worker.service",
+      "artifacts/c26_cs50p_03/systemd-fixture/cs50p-native@.service"
+    ]
+  },
+  "systemd-security": {
+    "exit": 0,
+    "command": [
+      "systemd-analyze",
+      "security",
+      "--offline=yes",
+      "--no-pager",
+      "artifacts/c26_cs50p_03/systemd-fixture/cs50p-download.service",
+      "artifacts/c26_cs50p_03/systemd-fixture/cs50p-worker.service",
+      "artifacts/c26_cs50p_03/systemd-fixture/cs50p-native@.service"
+    ]
+  }
+}

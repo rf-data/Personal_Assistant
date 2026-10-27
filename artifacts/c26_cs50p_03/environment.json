@@ -1,0 +1,18 @@
+{
+  "python": "3.12.12 (main, Oct 31 2025, 23:02:31) [Clang 21.1.4 ]",
+  "executable": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+  "sqlite": "3.50.4",
+  "packages": {
+    "pytest": "9.1.1",
+    "ruff": "0.16.3",
+    "pydantic": "2.13.4",
+    "pydantic-settings": "absent",
+    "returns": "absent",
+    "httpx": "0.28.1",
+    "beautifulsoup4": "4.15.0",
+    "pymupdf": "1.28.2",
+    "typer": "0.26.8"
+  },
+  "installs_performed": false,
+  "positive_frozen_install": false
+}

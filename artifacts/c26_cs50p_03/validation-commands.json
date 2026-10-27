@@ -1,0 +1,57 @@
+{
+  "interpreter": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1"
+  },
+  "baseline_argv": [
+    "-m",
+    "pytest",
+    "-q",
+    "-o",
+    "addopts=",
+    "-p",
+    "no:cacheprovider",
+    "-p",
+    "tests.offline_guard",
+    "tests/test_job_store_contention.py",
+    "tests/test_c26_int_02_sqlite.py",
+    "tests/test_cs50p_native_admission.py",
+    "tests/test_cs50p_mvp.py",
+    "--junitxml=artifacts/c26_cs50p_03/baseline.xml"
+  ],
+  "regression_argv": [
+    "-m",
+    "pytest",
+    "-q",
+    "-o",
+    "addopts=",
+    "-p",
+    "no:cacheprovider",
+    "-p",
+    "tests.offline_guard",
+    "-m",
+    "not external_integration",
+    "tests/test_cs50_workflows.py",
+    "tests/test_cs50_batch_worker.py",
+    "tests/test_cs50p_native_admission.py",
+    "tests/test_cs50p_mvp.py",
+    "tests/test_job_store_contention.py",
+    "tests/test_c26_int_02_sqlite.py",
+    "tests/test_job_failure_diagnostics.py",
+    "tests/test_c26_pilot_capacity.py",
+    "tests/test_c26_pilot_workflow.py",
+    "tests/test_c26_pilot_results.py",
+    "tests/test_c26_pilot_settings_binding.py",
+    "tests/test_deployment_gate.py",
+    "tests/test_deployment_gate_v2.py",
+    "--junitxml=artifacts/c26_cs50p_03/regression.xml"
+  ],
+  "initial_stress_modules": [
+    "tests/test_cs50p_sqlite_stability.py"
+  ],
+  "followup": "run-followup.py; followup-commands.json records actual invocations",
+  "doc_static_checks": "local links, balanced code fences and no trailing whitespace passed"
+}

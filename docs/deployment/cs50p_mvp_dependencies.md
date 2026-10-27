@@ -1,5 +1,13 @@
 # CS50P-MVP: Abhängigkeiten
 
+## C26-CS50P-03: Runtime-Nachtrag
+
+Aktuelle Basis: Featurecommit 2f2b410; Installations-/Closuregrenzen und
+versionierte Runtimepfade im [Installationsplan](cs50p_hetzner_installation.md).
+Der native ssh-runtime benötigt keine C16-Bearertoken; der folgende ältere
+Tokenhinweis betrifft den früheren MVP-/v2-Pfad. Das Lockprofil bleibt unverändert.
+Eine positive Neuinstallation des vollständigen Runtimeprofils ist weiterhin offen.
+
 Basis: `6e2fb1c74d9aba338b5e09cec6c8d591a3e0474d` plus gesicherter MVP-Patch;
 Dateiintegrität über Übergabemanifest. Kein neuer freigegebener Liefercommit vorhanden.
 

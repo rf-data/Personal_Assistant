@@ -1,0 +1,17 @@
+{
+  "base": "2f2b410f41cd4db4e26075b891a03c6cb1ff0cd6",
+  "payload_files": 28,
+  "forward_apply": true,
+  "reverse_check": true,
+  "payload_bytes_equal": true,
+  "whitespace_error_all": true,
+  "existing_readme_unchanged": true,
+  "fixture_readme_equals_base": true,
+  "production_sources_unchanged": true,
+  "fixture": "/tmp/cs50p03-package-twn7n3xe",
+  "fixture_is_git_worktree": false,
+  "fixture_commit_created": false,
+  "metadata_envelope_not_applied_by_own_patches": true,
+  "raw_archive_members": 61,
+  "raw_archive_bytes_verified": true
+}

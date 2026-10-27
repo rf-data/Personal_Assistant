@@ -1,5 +1,14 @@
 # CS50P: minimaler nativer Hetzner-Betriebsplan
 
+## C26-CS50P-03: Betreiberpaket
+
+Zusammenhängender [Erstlauf](cs50p_first_run.md),
+[VPN-/SSH-Preflight](cs50p_hetzner_preflight.md),
+[versionierte Installation/Rückfall](cs50p_hetzner_installation.md) und
+[aktueller SQLite-/Releasebefund](cs50p_mvp_release_readiness.md).
+Die folgenden nativen Quellen-/Katalogbefehle bleiben die Detailreferenz.
+Kein Hostbetrieb freigegeben; frühere Testerfolge sind kein SQLite-Stabilitätsbeweis.
+
 **HOLD für Hostbetrieb.** Diese Befehle sind ein späterer Betreiberplan. In diesem
 Auftrag wurden kein Server, VPN, SSH, systemd-Dienst oder Produktionsjob geändert.
 Die bisherige MVP-Anleitung bleibt historische Evidenz; ihre v2-/Token-

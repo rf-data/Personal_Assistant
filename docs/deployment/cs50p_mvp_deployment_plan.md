@@ -1,5 +1,14 @@
 # CS50P-MVP: Manueller Deploymentplan
 
+## C26-CS50P-03: aktueller nativer Installationsplan
+
+Für die Erstinstallation gilt [Hetzner-Installation](cs50p_hetzner_installation.md)
+mit [VPN-/SSH-Preflight](cs50p_hetzner_preflight.md) und
+[Erstlauf](cs50p_first_run.md). Nur Downloadunit und native Einzeljobinstanz
+installieren; früheres generisches Workerprofil gehört nicht zu diesem Startweg.
+Nachfolgende ursprüngliche MVP-Planung bleibt als historische Evidenz erhalten.
+C26 HOLD; keine Liveänderung durch diesen Auftrag.
+
 **HOLD. Kein Deployment/Go-live durch Codex. Bestehender Coolifyworker bleibt unverändert.**
 Exakte Quellbasis INT-02 `6e2fb1c74d9aba338b5e09cec6c8d591a3e0474d` plus vollständiger
 MVP-Patch und `candidate-files.sha256` in der Übergabe. SHA-256 bindet die tatsächlichen

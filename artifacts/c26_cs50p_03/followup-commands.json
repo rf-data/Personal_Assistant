@@ -1,0 +1,290 @@
+[
+  {
+    "name": "sqlite-final",
+    "exit": 1,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50p_sqlite_stability.py",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/sqlite-final.xml"
+    ]
+  },
+  {
+    "name": "resume-01",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50_workflows.py::test_resume_after_interrupted_attempt_before_state_write",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/resume-01.xml"
+    ]
+  },
+  {
+    "name": "resume-02",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50_workflows.py::test_resume_after_interrupted_attempt_before_state_write",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/resume-02.xml"
+    ]
+  },
+  {
+    "name": "resume-03",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50_workflows.py::test_resume_after_interrupted_attempt_before_state_write",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/resume-03.xml"
+    ]
+  },
+  {
+    "name": "resume-04",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50_workflows.py::test_resume_after_interrupted_attempt_before_state_write",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/resume-04.xml"
+    ]
+  },
+  {
+    "name": "resume-05",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50_workflows.py::test_resume_after_interrupted_attempt_before_state_write",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/resume-05.xml"
+    ]
+  },
+  {
+    "name": "resume-06",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50_workflows.py::test_resume_after_interrupted_attempt_before_state_write",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/resume-06.xml"
+    ]
+  },
+  {
+    "name": "resume-07",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50_workflows.py::test_resume_after_interrupted_attempt_before_state_write",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/resume-07.xml"
+    ]
+  },
+  {
+    "name": "resume-08",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50_workflows.py::test_resume_after_interrupted_attempt_before_state_write",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/resume-08.xml"
+    ]
+  },
+  {
+    "name": "resume-09",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50_workflows.py::test_resume_after_interrupted_attempt_before_state_write",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/resume-09.xml"
+    ]
+  },
+  {
+    "name": "resume-10",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50_workflows.py::test_resume_after_interrupted_attempt_before_state_write",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/resume-10.xml"
+    ]
+  },
+  {
+    "name": "native-01",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50p_native_admission.py::test_exact_cli_review_approve_run_result_and_recover_parser",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/native-01.xml"
+    ]
+  },
+  {
+    "name": "native-02",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50p_native_admission.py::test_exact_cli_review_approve_run_result_and_recover_parser",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/native-02.xml"
+    ]
+  },
+  {
+    "name": "native-03",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50p_native_admission.py::test_exact_cli_review_approve_run_result_and_recover_parser",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/native-03.xml"
+    ]
+  },
+  {
+    "name": "native-04",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50p_native_admission.py::test_exact_cli_review_approve_run_result_and_recover_parser",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/native-04.xml"
+    ]
+  },
+  {
+    "name": "native-05",
+    "exit": 0,
+    "command": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "tests.offline_guard",
+      "tests/test_cs50p_native_admission.py::test_exact_cli_review_approve_run_result_and_recover_parser",
+      "--junitxml=/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-mvp/artifacts/c26_cs50p_03/native-05.xml"
+    ]
+  }
+]

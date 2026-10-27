@@ -1,5 +1,14 @@
 # CS50P-MVP: Privater Betreiberablauf
 
+## C26-CS50P-03: aktueller Einstieg
+
+Für den nativen Einzelbetreiberbetrieb gilt jetzt der zusammenhängende
+[Erstlauf](cs50p_first_run.md) mit [VPN-Preflight](cs50p_hetzner_preflight.md)
+und [Installation](cs50p_hetzner_installation.md). Der nachfolgende frühere
+MVP-/v2-Ablauf bleibt historische Evidenz; keine Token-/Testkoordinatorbefehle
+als native Freigabe verwenden. Gesamtstatus weiterhin HOLD, siehe
+[aktuellen Befund](cs50p_mvp_release_readiness.md).
+
 **HOLD. Alle CHANGE-Beispiele sind spätere manuelle Betreiberaktionen nach Review
 und gesonderter Freigabe. Codex hat keinen Hostzugriff durchgeführt.**
 Voraussetzungen und Installation: [Deploymentplan](cs50p_mvp_deployment_plan.md).
