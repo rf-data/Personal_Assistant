@@ -40,6 +40,9 @@ def main(argv=None):
         help="Explicit JSON: course_id, week_id, source_origin, pages[{url,path,sha256}]",
     )
     discovery.add_argument("--output", type=Path, required=True)
+    discovery.add_argument(
+        "--completion", action="store_true", help="C08 v2 automatic source files"
+    )
     discovery.add_argument("--previous-inventory", type=Path)
     discovery.add_argument("--archive", type=Path)
     for name in (
@@ -51,6 +54,8 @@ def main(argv=None):
         "report",
         "acquire",
         "import-code",
+        "processing-plan",
+        "mark-manual",
     ):
         p = sub.add_parser(name)
         p.add_argument("--inventory", type=Path, required=True)
@@ -58,6 +63,8 @@ def main(argv=None):
             p.add_argument("--output", type=Path)
         if name in {"report", "acquire", "import-code"}:
             p.add_argument("--archive", type=Path, required=True)
+        if name == "report":
+            p.add_argument("--processing-root", type=Path)
         if name == "approve":
             p.add_argument(
                 "--selection",
@@ -83,6 +90,11 @@ def main(argv=None):
                 "--purpose", choices=("download", "discovery"), default="download"
             )
             p.add_argument("--checkpoints", type=Path, required=True)
+        if name == "mark-manual":
+            p.add_argument("--material-id", required=True)
+            p.add_argument("--source-format", required=True)
+            p.add_argument("--filename", required=True)
+            p.add_argument("--provenance", required=True)
         if name == "import-code":
             p.add_argument("--material-id", required=True)
             p.add_argument("--file", type=Path, required=True)
@@ -144,12 +156,18 @@ def main(argv=None):
                             ),
                             1024**2,
                         )
-            result = api.discover(
+            discovered = api.discover(
                 pages,
                 course_id=config["course_id"],
                 week_id=config["week_id"],
                 source_origin=config["source_origin"],
-            ).model_dump(mode="json")
+                completion=args.completion,
+            )
+            if args.previous_inventory:
+                discovered = api.resume_discovery(
+                    discovered, previous_inventory, args.archive.absolute()
+                )
+            result = discovered.model_dump(mode="json")
         else:
             inventory = load_inventory(args.inventory)
             if args.command == "show":
@@ -195,7 +213,23 @@ def main(argv=None):
                     if r.material_type == "source_code"
                 ]
             elif args.command == "report":
-                result = api.completeness(inventory, args.archive.absolute())
+                result = api.completeness(
+                    inventory, args.archive.absolute(), args.processing_root
+                )
+            elif args.command == "processing-plan":
+                from src.tools_materials.week_processing import plan
+
+                result = plan(inventory)
+            elif args.command == "mark-manual":
+                if args.output is None:
+                    raise ValueError("New --output inventory required")
+                result = api.manual_fallback(
+                    inventory,
+                    args.material_id,
+                    source_format=args.source_format,
+                    filename=args.filename,
+                    provenance=args.provenance,
+                ).model_dump(mode="json")
             elif args.command == "import-code":
                 if args.output is None:
                     raise ValueError("New --output inventory required")

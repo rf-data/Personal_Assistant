@@ -25,6 +25,12 @@ Status = Literal[
 
 
 class AcquisitionLimits(Contract):
+    code_bytes: int = Field(
+        default=MIB, strict=True, gt=0, le=MIB, exclude_if=lambda v: v == MIB
+    )
+    zip_bytes: int = Field(
+        default=MIB, strict=True, gt=0, le=MIB, exclude_if=lambda v: v == MIB
+    )
     html_bytes: int = Field(default=MIB, strict=True, gt=0, le=MIB)
     text_bytes: int = Field(default=MIB, strict=True, gt=0, le=MIB)
     subtitle_bytes: int = Field(default=2 * MIB, strict=True, gt=0, le=2 * MIB)
@@ -40,7 +46,11 @@ class AcquisitionLimits(Contract):
 
     def ceiling(self, material):
         if material.material_type == "source_code":
-            return self.manual_bytes
+            if material.manual_action_required:
+                return self.manual_bytes
+            return (
+                self.zip_bytes if material.source_format == "zip" else self.code_bytes
+            )
         if material.source_format == "pdf":
             return self.pdf_bytes
         if material.material_type == "subtitles":
@@ -98,7 +108,7 @@ class WeekMaterial(Contract):
 
 
 class WeekInventory(Contract):
-    schema_version: Literal[1] = 1
+    schema_version: Literal[1, 2] = 1
     kind: Literal["c26-week-acquisition"] = "c26-week-acquisition"
     course_id: CourseId = "cs50_python"
     week_id: str = Field(default="0", pattern=r"^[A-Za-z0-9_-]{1,40}$")

@@ -1,0 +1,68 @@
+{
+  "status": "HOLD",
+  "c26_status": "HOLD",
+  "base_commit": "1584a2807c8f9d75604ab17a4ea239d8f4a0882b",
+  "observed_on": "2026-10-28",
+  "python": "3.12.12",
+  "test_environment": "Temporary isolated interpreter using pre-existing cached dependencies via read-only .pth references; no wheelhouse installation gate claimed",
+  "regression": {
+    "tests": 388,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 3,
+    "skips": [
+      {
+        "test": "tests.test_cs50_week_materials.test_real_operator_exports_read_only",
+        "reason": "External integration requires --run-external"
+      },
+      {
+        "test": "tests.test_cs50_material_pdf_v2.test_optional_original_pdf_preserves_text_and_all_misclassifications[CS50_LECTURE_PDF_ARTIFACTS-32]",
+        "reason": "External integration requires --run-external"
+      },
+      {
+        "test": "tests.test_cs50_material_pdf_v2.test_optional_original_pdf_preserves_text_and_all_misclassifications[CS50_SOURCE_PDF_ARTIFACTS-24]",
+        "reason": "External integration requires --run-external"
+      }
+    ]
+  },
+  "additional_fresh_runtime_tests": {
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "skips": []
+  },
+  "unique_tests_passed": 387,
+  "unique_tests_skipped": 3,
+  "c08_tests": 30,
+  "lint": "PASS",
+  "compile": "PASS",
+  "git_diff_check": "PASS",
+  "legacy_inventory_serialization": "unchanged",
+  "synthetic_e2e": "PASS: FULLY_COMPLETE only after validated local processing; C26 HOLD",
+  "download_only_smokes": "PASS: legacy and C08 source ZIP path, second run without transfer",
+  "real_course_downloads": false,
+  "real_processing": false,
+  "positive_frozen_wheelhouse_install": false,
+  "real_hetzner_acceptance": false,
+  "c16_activated": false,
+  "push": false,
+  "merge": false,
+  "blockers": [
+    "30 offered Short asset hrefs need bounded operator HTML exports; no inferred URLs",
+    "Official detail exports and source/type/size/rights grants required before real acquisition",
+    "Four Short source indexes inaccessible via browser tool; source availability is unproven",
+    "Production processing deliberately blocked pending reviewed host network/resource isolation",
+    "Positive frozen-wheelhouse installation and real Hetzner acceptance remain separate gates",
+    "Default-branch integration pending; automatic pushes/merges prohibited"
+  ],
+  "validation_records": [
+    "regression.xml",
+    "runtime-tests.xml",
+    "source-runtime-smoke.json",
+    "c07-runtime-smoke.json",
+    "synthetic-e2e.json",
+    "git-basis.json",
+    "handoff-validation.json"
+  ]
+}

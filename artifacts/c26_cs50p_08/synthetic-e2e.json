@@ -1,0 +1,999 @@
+{
+  "kind": "synthetic-offline-e2e",
+  "production_evidence": false,
+  "positive_frozen_install": false,
+  "real_hetzner_acceptance": false,
+  "first_transfers": 14,
+  "second_transfers": 0,
+  "processing": {
+    "version": "c26-cs50p-08-v1",
+    "materials": [
+      {
+        "material_id": "week_material:7d5a01e27450d699572dfa0556ea56ac32dc7e213fa3fefa61d099e544111121",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:a55abf73819c7a8bf61134de82ea43bdcb7b07a93b35205f77290540aacda404",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:2defedaaa8cfac1ac3e1c1c31f048eae731a02bd0b35aeaa6c68a8daf850d439",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:83670220c93b26ff7f82f0cd697ef5f95850441f2df5cb1cca9e0a425b8bb0e3",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:10a8f73e9379ce4c99133c31bc67e3c93f15b876bf54785c908a0f1e5015e438",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:ce643f2e49726a2549d2ae4b9d80a86885f9c470d8b79e858fe781c3452a0c7a",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:668e087e6173dd12d0ca4887dbb079d5ef089bcf3dc7c339939372093b326ab5",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:fe02ca1c44c6679de1c62706709cc772eb73bcfae9de34c432c346d2ed653fb9",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:a6fcdb27e4316d014ced17049bb6d2b7f2c761bfc8230df912209044b2386dca",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:5ae75dd88bca347e92e7dbb5d5516c8f4578133178cccb7a86f55706795db266",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:0661348787db554161471ca3549f7d69b46c2b163a239d9b99e266dbcecf354d",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      },
+      {
+        "material_id": "week_material:693ebc1ae2028fcdbe5aa15401aa619e00ef16734cde2713cbb4337aee0cbe24",
+        "status": "COMPLETED",
+        "reason": null,
+        "reused": false
+      }
+    ],
+    "c26_status": "HOLD",
+    "c16_enabled": false
+  },
+  "processing_reused": true,
+  "downloadreceipts_unchanged": true,
+  "report": {
+    "schema_version": 1,
+    "course_id": "cs50_python",
+    "week_id": "0",
+    "status": "FULLY_COMPLETE",
+    "c26_status": "HOLD",
+    "processing_enabled": false,
+    "integrity_failures": [],
+    "materials": [
+      {
+        "material_id": "week_material:5c62238df1483a6d68342ce364d16eefb4849746a2915295698c3376f52b5970",
+        "parent_material_id": null,
+        "title": "cs50_python",
+        "material_type": "course",
+        "source_url": null,
+        "acquisition_status": "DISCOVERED",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": "Resolve official href/export",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:3cad993ac8b21c953604b4196598d6bcfede7ed439b21ccf6a278745b3538f85",
+        "parent_material_id": "week_material:5c62238df1483a6d68342ce364d16eefb4849746a2915295698c3376f52b5970",
+        "title": "Week 0",
+        "material_type": "week",
+        "source_url": "https://cs50.harvard.edu/python/weeks/0/",
+        "acquisition_status": "DISCOVERED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:7d5a01e27450d699572dfa0556ea56ac32dc7e213fa3fefa61d099e544111121",
+        "parent_material_id": "week_material:3cad993ac8b21c953604b4196598d6bcfede7ed439b21ccf6a278745b3538f85",
+        "title": "Week 0 Functions",
+        "material_type": "page",
+        "source_url": "https://cs50.harvard.edu/python/weeks/0/",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+        "parent_material_id": "week_material:3cad993ac8b21c953604b4196598d6bcfede7ed439b21ccf6a278745b3538f85",
+        "title": "Lecture 0",
+        "material_type": "lecture",
+        "source_url": "https://cs50.harvard.edu/python/weeks/0/",
+        "acquisition_status": "DISCOVERED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:c3536f82e7ca1f27ff21757937b443952a7fa52c5292f029d4c2a66505f39b59",
+        "parent_material_id": "week_material:3cad993ac8b21c953604b4196598d6bcfede7ed439b21ccf6a278745b3538f85",
+        "title": "Shorts",
+        "material_type": "shorts",
+        "source_url": null,
+        "acquisition_status": "DISCOVERED",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": "Resolve official href/export",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:a55abf73819c7a8bf61134de82ea43bdcb7b07a93b35205f77290540aacda404",
+        "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+        "title": "Week 0 Functions",
+        "material_type": "page",
+        "source_url": "https://cs50.harvard.edu/python/weeks/0/",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:e5d2fd85e6925c6e9f304a3c6a060ddfeb9dd5881625dd88b1b73f090f5783b7",
+        "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+        "title": "Week 0 Functions",
+        "material_type": "video",
+        "source_url": "https://cdn.cs50.net/python/synthetic/lecture.mp4",
+        "acquisition_status": "REFERENCED_ONLY",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:b91055e8b042732e89662b090c88b09a2301bad14e8edb8f1b33d18b501180b6",
+        "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+        "title": "MP3",
+        "material_type": "audio",
+        "source_url": "https://cdn.cs50.net/python/synthetic/lecture.mp3",
+        "acquisition_status": "REFERENCED_ONLY",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd",
+        "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+        "title": "Transcript",
+        "material_type": "transcript",
+        "source_url": "https://cdn.cs50.net/python/synthetic/lecture.txt",
+        "acquisition_status": "VERIFIED",
+        "required": false,
+        "selected": true,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:a09af24be0f84339ccb94bb367e19737d7a4aee804672c7cd816fed3e0ad9d37",
+        "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+        "title": "Subtitles",
+        "material_type": "subtitles",
+        "source_url": "https://cdn.cs50.net/python/synthetic/lecture.srt",
+        "acquisition_status": "REFERENCED_ONLY",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:2defedaaa8cfac1ac3e1c1c31f048eae731a02bd0b35aeaa6c68a8daf850d439",
+        "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+        "title": "Zip",
+        "material_type": "source_code",
+        "source_url": "https://cdn.cs50.net/python/synthetic/lecture.zip",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": true,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:1fb1d5a9f2a16493725dc0230c7d1650fbb9039d18de02bad4ee062da1f1f4c2",
+        "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+        "title": "PDF",
+        "material_type": "source_code",
+        "source_url": "https://cdn.cs50.net/python/synthetic/lecture-code.pdf",
+        "acquisition_status": "REFERENCED_ONLY",
+        "required": false,
+        "selected": false,
+        "reason": "No supported official direct source file; select indexed files or supply reviewed manual export",
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:83670220c93b26ff7f82f0cd697ef5f95850441f2df5cb1cca9e0a425b8bb0e3",
+        "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+        "title": "Notes",
+        "material_type": "notes",
+        "source_url": "https://cs50.harvard.edu/python/notes/0/",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:10a8f73e9379ce4c99133c31bc67e3c93f15b876bf54785c908a0f1e5015e438",
+        "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+        "title": "PDF",
+        "material_type": "slides",
+        "source_url": "https://cdn.cs50.net/python/synthetic/slides.pdf",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+        "parent_material_id": "week_material:c3536f82e7ca1f27ff21757937b443952a7fa52c5292f029d4c2a66505f39b59",
+        "title": "Alpha",
+        "material_type": "short",
+        "source_url": "https://cs50.harvard.edu/python/shorts/alpha/",
+        "acquisition_status": "DISCOVERED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:ce643f2e49726a2549d2ae4b9d80a86885f9c470d8b79e858fe781c3452a0c7a",
+        "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+        "title": "Alpha",
+        "material_type": "page",
+        "source_url": "https://cs50.harvard.edu/python/shorts/alpha/",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:0cb58ab826f352ffdc235e3d69b0b5f572b2336c1b70a398b760e66a100f0a6a",
+        "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+        "title": "Week 0",
+        "material_type": "video",
+        "source_url": "https://cdn.cs50.net/python/synthetic/alpha.mp4",
+        "acquisition_status": "REFERENCED_ONLY",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:783e135261f1680e78257ff9693180da51100e3b828990b11d3ce10f28c82ca6",
+        "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+        "title": "MP3",
+        "material_type": "audio",
+        "source_url": "https://cdn.cs50.net/python/synthetic/alpha.mp3",
+        "acquisition_status": "REFERENCED_ONLY",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497",
+        "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+        "title": "Subtitles",
+        "material_type": "subtitles",
+        "source_url": "https://cdn.cs50.net/python/synthetic/alpha.srt",
+        "acquisition_status": "VERIFIED",
+        "required": false,
+        "selected": true,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:668e087e6173dd12d0ca4887dbb079d5ef089bcf3dc7c339939372093b326ab5",
+        "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+        "title": "Zip",
+        "material_type": "source_code",
+        "source_url": "https://cdn.cs50.net/python/synthetic/alpha.zip",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": true,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:fae6db707e421465fe25c53d029c2c5d320c7cdfdb6ff7fc30d425d5ba7e25c7",
+        "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+        "title": "PDF",
+        "material_type": "source_code",
+        "source_url": "https://cdn.cs50.net/python/synthetic/alpha-code.pdf",
+        "acquisition_status": "REFERENCED_ONLY",
+        "required": false,
+        "selected": false,
+        "reason": "No supported official direct source file; select indexed files or supply reviewed manual export",
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:b42df6e94ba05a861ddc2540dcd67f564a4b3f4dedf45e579b70b123a304544d",
+        "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+        "title": "transcript: not offered",
+        "material_type": "transcript",
+        "source_url": null,
+        "acquisition_status": "NOT_APPLICABLE",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:e9ed931fa1f0790a96d3ca421b85f43abc9eaca2d5802019e531f1ae0b3ebbfd",
+        "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+        "title": "notes: not offered",
+        "material_type": "notes",
+        "source_url": null,
+        "acquisition_status": "NOT_APPLICABLE",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:a14993a089a76d716d9fd8f6cb3adb7d22310d7fd12ede8096510f8d852eaf4b",
+        "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+        "title": "slides: not offered",
+        "material_type": "slides",
+        "source_url": null,
+        "acquisition_status": "NOT_APPLICABLE",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+        "parent_material_id": "week_material:c3536f82e7ca1f27ff21757937b443952a7fa52c5292f029d4c2a66505f39b59",
+        "title": "Beta",
+        "material_type": "short",
+        "source_url": "https://cs50.harvard.edu/python/shorts/beta/",
+        "acquisition_status": "DISCOVERED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:fe02ca1c44c6679de1c62706709cc772eb73bcfae9de34c432c346d2ed653fb9",
+        "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+        "title": "Beta",
+        "material_type": "page",
+        "source_url": "https://cs50.harvard.edu/python/shorts/beta/",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:297276088602a83648e84b1c536325efc1f2022d6332c1c6c0768b53ec4275ca",
+        "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+        "title": "Week 0",
+        "material_type": "video",
+        "source_url": "https://cdn.cs50.net/python/synthetic/beta.mp4",
+        "acquisition_status": "REFERENCED_ONLY",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:26ba9e5faa8beb4edb440ecc5c016b3c159ed15a50ac5b83ebb3db8e004e2830",
+        "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+        "title": "MP3",
+        "material_type": "audio",
+        "source_url": "https://cdn.cs50.net/python/synthetic/beta.mp3",
+        "acquisition_status": "REFERENCED_ONLY",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f",
+        "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+        "title": "Transcript",
+        "material_type": "transcript",
+        "source_url": "https://cdn.cs50.net/python/synthetic/beta.txt",
+        "acquisition_status": "VERIFIED",
+        "required": false,
+        "selected": true,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:e39e71d1515c8d8571798a5f7825646d0cc2b16b2e0b2fc18fd0db638f3d9760",
+        "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+        "title": "subtitles: not offered",
+        "material_type": "subtitles",
+        "source_url": null,
+        "acquisition_status": "NOT_APPLICABLE",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:170ad11cb1a7383b94185cf54bc1f117caa841f9ba1fcad0f70b3563cc522469",
+        "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+        "title": "notes: not offered",
+        "material_type": "notes",
+        "source_url": null,
+        "acquisition_status": "NOT_APPLICABLE",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:55cf735e24784eedcafa0c3ffbadddc08089d6726829365d0925c4afcede510b",
+        "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+        "title": "slides: not offered",
+        "material_type": "slides",
+        "source_url": null,
+        "acquisition_status": "NOT_APPLICABLE",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:1c979da392675fd08b625e1267d3c8f7c19d18b1179b8977bcbaf7fa04cf0259",
+        "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+        "title": "Source Code: not offered",
+        "material_type": "source_code",
+        "source_url": null,
+        "acquisition_status": "NOT_APPLICABLE",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:a6e36e96e51955c65758fb006a40db577c1d4ea976e4d145afffa672b398f082",
+        "parent_material_id": "week_material:3cad993ac8b21c953604b4196598d6bcfede7ed439b21ccf6a278745b3538f85",
+        "title": "Problem Set 0",
+        "material_type": "problem_set",
+        "source_url": "https://cs50.harvard.edu/python/psets/0/",
+        "acquisition_status": "DISCOVERED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:a6fcdb27e4316d014ced17049bb6d2b7f2c761bfc8230df912209044b2386dca",
+        "parent_material_id": "week_material:a6e36e96e51955c65758fb006a40db577c1d4ea976e4d145afffa672b398f082",
+        "title": "Problem Set 0",
+        "material_type": "page",
+        "source_url": "https://cs50.harvard.edu/python/psets/0/",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:0e77427550b4f3f96a72fbd7ffd750f8dff65c9f319df24df5da51bd425dd711",
+        "parent_material_id": "week_material:a6e36e96e51955c65758fb006a40db577c1d4ea976e4d145afffa672b398f082",
+        "title": "One",
+        "material_type": "task",
+        "source_url": "https://cs50.harvard.edu/python/psets/0/one/",
+        "acquisition_status": "DISCOVERED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:5ae75dd88bca347e92e7dbb5d5516c8f4578133178cccb7a86f55706795db266",
+        "parent_material_id": "week_material:0e77427550b4f3f96a72fbd7ffd750f8dff65c9f319df24df5da51bd425dd711",
+        "title": "One",
+        "material_type": "page",
+        "source_url": "https://cs50.harvard.edu/python/psets/0/one/",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:373fe63328edcdfd1fed73758dfb6ca92b63854bc06bd9a783a2153d55c8e28b",
+        "parent_material_id": "week_material:0e77427550b4f3f96a72fbd7ffd750f8dff65c9f319df24df5da51bd425dd711",
+        "title": "Reference",
+        "material_type": "reference",
+        "source_url": "https://docs.python.org/",
+        "acquisition_status": "REFERENCED_ONLY",
+        "required": false,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:9c8a907b2bf80f7f8629c261c6f66674842e635afec6044c97c1b6505f19bb10",
+        "parent_material_id": "week_material:a6e36e96e51955c65758fb006a40db577c1d4ea976e4d145afffa672b398f082",
+        "title": "Two",
+        "material_type": "task",
+        "source_url": "https://cs50.harvard.edu/python/psets/0/two/",
+        "acquisition_status": "DISCOVERED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": "Review exact source/type/size grant and acquire",
+        "processing": {
+          "status": "NOT_REQUIRED"
+        }
+      },
+      {
+        "material_id": "week_material:0661348787db554161471ca3549f7d69b46c2b163a239d9b99e266dbcecf354d",
+        "parent_material_id": "week_material:9c8a907b2bf80f7f8629c261c6f66674842e635afec6044c97c1b6505f19bb10",
+        "title": "Two",
+        "material_type": "page",
+        "source_url": "https://cs50.harvard.edu/python/psets/0/two/",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      },
+      {
+        "material_id": "week_material:693ebc1ae2028fcdbe5aa15401aa619e00ef16734cde2713cbb4337aee0cbe24",
+        "parent_material_id": "week_material:9c8a907b2bf80f7f8629c261c6f66674842e635afec6044c97c1b6505f19bb10",
+        "title": "Dataset",
+        "material_type": "attachment",
+        "source_url": "https://cdn.cs50.net/python/synthetic/input.txt",
+        "acquisition_status": "VERIFIED",
+        "required": true,
+        "selected": false,
+        "reason": null,
+        "next_action": null,
+        "processing": {
+          "status": "COMPLETED",
+          "reason": null,
+          "next_action": null
+        }
+      }
+    ],
+    "counts": {
+      "lecture": 1,
+      "short": 2,
+      "task": 2
+    },
+    "overall": {
+      "processing_complete": true,
+      "processing_missing": [],
+      "discovery_complete": true,
+      "missing_expected_ids": [],
+      "acquisition_complete": true,
+      "manual_complete": true,
+      "discovery_missing": [],
+      "acquisition_missing": [],
+      "manual_pending": [],
+      "content_groups": [
+        {
+          "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+          "fulfilled": true,
+          "processed": true,
+          "selected": [
+            "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd"
+          ],
+          "reason": null
+        },
+        {
+          "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+          "fulfilled": true,
+          "processed": true,
+          "selected": [
+            "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+          ],
+          "reason": null
+        },
+        {
+          "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+          "fulfilled": true,
+          "processed": true,
+          "selected": [
+            "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+          ],
+          "reason": null
+        }
+      ]
+    },
+    "sections": {
+      "week_material:3cad993ac8b21c953604b4196598d6bcfede7ed439b21ccf6a278745b3538f85": {
+        "title": "Week 0",
+        "material_type": "week",
+        "processing_complete": true,
+        "processing_missing": [],
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+            "fulfilled": true,
+            "processed": true,
+            "selected": [
+              "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd"
+            ],
+            "reason": null
+          },
+          {
+            "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+            "fulfilled": true,
+            "processed": true,
+            "selected": [
+              "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+            ],
+            "reason": null
+          },
+          {
+            "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+            "fulfilled": true,
+            "processed": true,
+            "selected": [
+              "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841": {
+        "title": "Lecture 0",
+        "material_type": "lecture",
+        "processing_complete": true,
+        "processing_missing": [],
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+            "fulfilled": true,
+            "processed": true,
+            "selected": [
+              "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:c3536f82e7ca1f27ff21757937b443952a7fa52c5292f029d4c2a66505f39b59": {
+        "title": "Shorts",
+        "material_type": "shorts",
+        "processing_complete": true,
+        "processing_missing": [],
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+            "fulfilled": true,
+            "processed": true,
+            "selected": [
+              "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+            ],
+            "reason": null
+          },
+          {
+            "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+            "fulfilled": true,
+            "processed": true,
+            "selected": [
+              "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e": {
+        "title": "Alpha",
+        "material_type": "short",
+        "processing_complete": true,
+        "processing_missing": [],
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+            "fulfilled": true,
+            "processed": true,
+            "selected": [
+              "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118": {
+        "title": "Beta",
+        "material_type": "short",
+        "processing_complete": true,
+        "processing_missing": [],
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+            "fulfilled": true,
+            "processed": true,
+            "selected": [
+              "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:a6e36e96e51955c65758fb006a40db577c1d4ea976e4d145afffa672b398f082": {
+        "title": "Problem Set 0",
+        "material_type": "problem_set",
+        "processing_complete": true,
+        "processing_missing": [],
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": []
+      },
+      "week_material:0e77427550b4f3f96a72fbd7ffd750f8dff65c9f319df24df5da51bd425dd711": {
+        "title": "One",
+        "material_type": "task",
+        "processing_complete": true,
+        "processing_missing": [],
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": []
+      },
+      "week_material:9c8a907b2bf80f7f8629c261c6f66674842e635afec6044c97c1b6505f19bb10": {
+        "title": "Two",
+        "material_type": "task",
+        "processing_complete": true,
+        "processing_missing": [],
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": []
+      }
+    }
+  }
+}

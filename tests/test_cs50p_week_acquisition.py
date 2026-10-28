@@ -212,7 +212,8 @@ def test_full_week_receipts_manual_import_reuse_and_reports(tmp_path):
                 provenance="Operator obtained synthetic test package",
             )
     report = api.completeness(done, root)
-    assert report["status"] == "FULLY_COMPLETE", report
+    assert report["status"] == "HOLD", report
+    assert not report["overall"]["processing_complete"]
     assert report["c26_status"] == "HOLD"
     assert all(s["acquisition_complete"] for s in report["sections"].values())
     manual = next(r for r in done.materials if r.manual_action_required)

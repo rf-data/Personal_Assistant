@@ -1,0 +1,140 @@
+{
+  "version": "c26-cs50p-08-v1",
+  "parser_revision": "00bd3336424cb0aeabe4f72a95e15c5b1bdf45682cb1aeb271f7fa1c1461ecd8",
+  "c16_enabled": false,
+  "production_execution": "BLOCKED: host network/resource isolation and installation gates require review",
+  "materials": [
+    {
+      "material_id": "week_material:7d5a01e27450d699572dfa0556ea56ac32dc7e213fa3fefa61d099e544111121",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:a55abf73819c7a8bf61134de82ea43bdcb7b07a93b35205f77290540aacda404",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:83670220c93b26ff7f82f0cd697ef5f95850441f2df5cb1cca9e0a425b8bb0e3",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:f1bc072212c39354f8d6fa47599d2f8a5006dab65c937eb6fbf5b9f3ac8319ba",
+      "route": "pdf",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:73962813895f5ecf9b1ba06f5fb2e5f39261f0697435f7af7cf25e7a247b738f",
+      "route": "static_zip",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:4da8347658fc786d8ca50746e846f7d5bdfb905fbd5bbb4b610a9dd890e49554",
+      "route": "transcript",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:4195099c2e0b61ef4d1b259b7538c8f4098cb6c1d4a22d52c2667e36a4d46c96",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:56ca6f3473ab9fa193a6a88a6d97e80f026d4254065b481829f2174eabc6613a",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:18b0038568209a17d09d4a8c5c80188794fdaebc555a3bed79a98e484cbdf423",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:bd14cb1fd85f7f3bd560233a1e7751bffca9618de5d10a8d8e67f9a56eddf131",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:b96eda1c6d9ae3bf6c1316bb8d4c86427a710d8c09ee72ab1fe41ae6204544e5",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:a6fcdb27e4316d014ced17049bb6d2b7f2c761bfc8230df912209044b2386dca",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:75c4e7ffc40fb02a4d529aa2f500e9a3c85f79baf0c02d109107fc321d2eeb4a",
+      "route": "pdf",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:f75bfd874b64309bcd5259a5b7520a727c2c5bbff90f15240178efa57d24ed0c",
+      "route": "static_zip",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:3804050aab84ef803dfb86d09adc248464bf64510a8fa243a49827941b44d8f7",
+      "route": "static_zip",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:a47a178eed3f80fd4fef9b4e82b352cb05caed0bcfdef56d8f2732d36a2a8525",
+      "route": "static_zip",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:2ac882fad3170728f76a1bac8f3be3af3c0fb7f682fc2c228db5fadd87ab055f",
+      "route": "static_zip",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:b48f834ce3b2eda178985ecc51990a423ac6fb129c9582b6a6535dfd26ffebd0",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:583fba8692b99ab4b7ac451cfa55b7624c0f22a233bc3cff08dbc4279c46fc36",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:750dc06304f6b0f2cd9676ba1ee833a8e56a8ac183245e8ae25f46b52b74e16b",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:69802c347b9f6c554a4d188515e5c7be2a4637daa76f1e10c31ea1b941f8f440",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    },
+    {
+      "material_id": "week_material:7a19a4f62abde6febf9024d1d637cf955e189fb3cf9d49b40460ea2b04792c0c",
+      "route": "html",
+      "status": "BLOCKED",
+      "next_action": "Review isolated local processing"
+    }
+  ]
+}

@@ -24,6 +24,11 @@ from src.tools_materials.inventory import capability, official
 from src.tools_materials.storage import artifact_root, locate, locked
 
 MIMES = {
+    "zip": {
+        "application/zip",
+        "application/x-zip-compressed",
+        "application/octet-stream",
+    },
     "html": {"text/html", "application/xhtml+xml"},
     "pdf": {"application/pdf"},
     "png": {"image/png"},
@@ -127,6 +132,7 @@ class MaterialDownloader:
         text_tracks=False,
         manual_archive=False,
         approved_attachments=False,
+        approved_source_code=False,
     ):
         self.workspace = artifact_root(workspace)
         self.transport = transport
@@ -145,6 +151,7 @@ class MaterialDownloader:
         self.retries, self.sleep = retries, sleep
         self.text_tracks, self.manual_archive = text_tracks, manual_archive
         self.approved_attachments = approved_attachments
+        self.approved_source_code = approved_source_code
 
     def paths(self, binding):
         directory = binding.material_id.split(":")[1]
@@ -211,6 +218,14 @@ class MaterialDownloader:
             and official(binding.original_url)
             and binding.role == "starter_files"
             and binding.format in {"csv", "json"}
+        ):
+            support = "supported"
+        if (
+            self.approved_source_code
+            and official(binding.original_url)
+            and binding.role == "source_code"
+            and binding.format
+            in {"zip", "py", "txt", "md", "c", "h", "sql", "js", "css"}
         ):
             support = "supported"
         if support != "supported":
@@ -340,6 +355,10 @@ class MaterialDownloader:
 
                     if not zipfile.is_zipfile(temporary):
                         raise ValueError("Invalid manual ZIP archive")
+                if self.approved_source_code and binding.role == "source_code":
+                    from src.tools_materials.source_acquisition import validate_source
+
+                    validate_source(temporary.read_bytes(), binding.format)
                 receipt = receipt.model_copy(
                     update={
                         "raw_sha256": checksum,

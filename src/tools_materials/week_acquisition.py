@@ -63,7 +63,9 @@ def binding(row, inventory):
         course_id=row.course_id,
         role=role,
         original_url=row.source_url,
-        title=row.title,
+        title=Path(urlsplit(row.source_url).path).name
+        if inventory.schema_version == 2 and row.material_type == "source_code"
+        else row.title,
         section_keys=(row.week_id,),
         language="en" if row.material_type in {"transcript", "subtitles"} else None,
     )
@@ -112,8 +114,12 @@ def discover(
     week_id="0",
     source_origin="official",
     limits=None,
+    completion=False,
 ):
-    """pages: URL -> bytes, already exported by the operator, never fetched here."""
+    """pages: URL -> bytes, already exported by the operator, never fetched here.
+
+    completion=True opts into C08 automatic source files and index inspection.
+    """
     from src.model_materials.acquisition import AcquisitionLimits
 
     limits = limits or AcquisitionLimits()
@@ -323,7 +329,7 @@ def discover(
             and r.material_type == "source_code"
         ]
         # One canonical manual package; all other official formats remain visible.
-        if code:
+        if code and not completion:
             canonical = min(
                 code,
                 key=lambda r: (
@@ -349,7 +355,7 @@ def discover(
                     error_reason="Source index needs explicit file selection",
                 )
                 expected.append(canonical.material_id)
-        else:
+        elif not code:
             add(
                 "source_code",
                 "Source Code: not offered",
@@ -359,6 +365,108 @@ def discover(
                 review_status="NOT_REQUIRED",
                 acquisition_strategy="manual_only",
             )
+        if completion:
+            from src.tools_materials.source_acquisition import SOURCE_FORMATS, links
+
+            main = BeautifulSoup(pages[container.source_url], "html.parser").find(
+                "main"
+            )
+            for url, fmt, title in links(main, container.source_url):
+                # Explicit source suffixes augment the existing role parser.
+                if fmt == "txt" and any(r.source_url == url for r in rows.values()):
+                    continue
+                add(
+                    "source_code",
+                    title,
+                    container.material_id,
+                    url,
+                    source_format=fmt,
+                    discovered_from=(container.source_url,),
+                )
+            code = [
+                r
+                for r in rows.values()
+                if r.parent_material_id == container.material_id
+                and r.material_type == "source_code"
+                and r.source_url
+            ]
+            for index in [r for r in code if r.source_format == "html"]:
+                raw = pages.get(index.source_url)
+                if raw is None:
+                    update(
+                        index,
+                        error_reason="Source index not exported; package alternatives retained",
+                    )
+                    continue
+                snapshots.append(
+                    dict(url=index.source_url, sha256=sha(raw), bytes=len(raw))
+                )
+                for url, fmt, title in links(
+                    BeautifulSoup(raw, "html.parser"), index.source_url
+                ):
+                    # Reject parent-directory/navigation links and all recursive index traversal.
+                    if not url.startswith(index.source_url.rstrip("/") + "/"):
+                        continue
+                    add(
+                        "source_code",
+                        title,
+                        container.material_id,
+                        url,
+                        source_format=fmt,
+                        discovered_from=(index.source_url,),
+                    )
+            code = [
+                r
+                for r in rows.values()
+                if r.parent_material_id == container.material_id
+                and r.material_type == "source_code"
+                and r.source_url
+            ]
+            supported = [
+                r
+                for r in code
+                if official(r.source_url) and r.source_format in SOURCE_FORMATS
+            ]
+            packages = [r for r in supported if r.source_format == "zip"]
+            required_code = (
+                [min(packages, key=lambda r: r.source_url)] if packages else supported
+            )
+            for row in code:
+                needed = row in required_code or (not supported and row == code[0])
+                update(
+                    row,
+                    required=needed,
+                    selected=needed,
+                    manual_action_required=needed and not supported,
+                    acquisition_strategy="approved_source_code"
+                    if row in supported
+                    else "manual_only",
+                    acquisition_status="APPROVAL_PENDING"
+                    if row in supported
+                    else "MANUAL_PENDING"
+                    if needed
+                    else "REFERENCED_ONLY",
+                    error_reason=None
+                    if row in supported
+                    else "No supported official direct source file; select indexed files or supply reviewed manual export",
+                )
+                if needed:
+                    expected.append(row.material_id)
+            # A source heading with no href is unresolved, not 'not offered'.
+            if not code and "source code" in main.get_text(" ", strip=True).lower():
+                absent = next(
+                    r
+                    for r in rows.values()
+                    if r.parent_material_id == container.material_id
+                    and r.material_type == "source_code"
+                )
+                update(
+                    absent,
+                    required=True,
+                    acquisition_status="MISSING",
+                    error_reason="Source Code advertised without a download href",
+                )
+                expected.append(absent.material_id)
         if not any(counts.get(k) for k in CONTENT):
             add(
                 "transcript",
@@ -455,8 +563,15 @@ def discover(
                     continue
                 fmt = format_of(url)
                 attachment = fmt not in {"html", "unknown"}
+                from src.tools_materials.source_acquisition import SOURCE_FORMATS
+
+                source = completion and fmt in SOURCE_FORMATS - {"txt"}
                 add(
-                    "attachment" if attachment else "reference",
+                    "source_code"
+                    if source
+                    else "attachment"
+                    if attachment
+                    else "reference",
                     a.get_text(" ", strip=True) or url,
                     task.material_id,
                     url,
@@ -469,7 +584,13 @@ def discover(
                     acquisition_strategy="explicit_type_size_source_review"
                     if attachment
                     else "reference",
-                    metadata={"availability": "LINKED_UNPROBED"},
+                    metadata={
+                        "availability": "LINKED_UNPROBED",
+                        "original_href": urljoin(task.source_url, a["href"]),
+                        "reason": "Provided file requires individual grant"
+                        if attachment
+                        else "Reference retained; no recursive acquisition or repository clone",
+                    },
                 )
     if not any(r.material_type == "problem_set" for r in rows.values()):
         add(
@@ -481,6 +602,7 @@ def discover(
             error_reason="No problem set linked by overview",
         )
     inventory = WeekInventory(
+        schema_version=2 if completion else 1,
         course_id=course_id,
         week_id=week_id,
         source_origin=source_origin,
@@ -572,7 +694,8 @@ def plan(inventory):
     for r in candidates:
         allowed = (
             not r.manual_action_required
-            and r.material_type not in {"audio", "video", "source_code", "reference"}
+            and r.material_type not in {"audio", "video", "reference"}
+            and (r.material_type != "source_code" or inventory.schema_version == 2)
             and r.source_url is not None
             and official(r.source_url)
             and r.source_format
@@ -588,6 +711,11 @@ def plan(inventory):
                 "jpg",
                 "jpeg",
                 "py",
+                *(
+                    {"zip", "c", "h", "sql", "js", "css", "md"}
+                    if inventory.schema_version == 2
+                    else set()
+                ),
             }
         )
         rows.append(
@@ -612,6 +740,14 @@ def plan(inventory):
         review_reference="",
         transfer_bytes=inventory.limits.transfer_bytes,
         grants=rows,
+        source_limits=dict(
+            code_bytes=inventory.limits.code_bytes,
+            zip_bytes=inventory.limits.zip_bytes,
+            zip_unpacked_bytes=8 * 1024**2,
+            zip_members=64,
+            zip_member_bytes=1024**2,
+            zip_max_ratio=100,
+        ),
         automatic_media_supported=False,
         processing_enabled=False,
         upper_bytes=sum(r["max_bytes"] for r in rows if r["eligible"]),
@@ -620,7 +756,7 @@ def plan(inventory):
         manual_upper_bytes=sum(
             inventory.limits.ceiling(r)
             for r in inventory.materials
-            if r.manual_action_required and r.acquisition_status != "MANUAL_VERIFIED"
+            if r.manual_action_required and r.acquisition_status not in SUCCESS
         ),
         unresolved_hrefs=[
             r.material_id
@@ -643,6 +779,7 @@ def _downloader(root, inventory, maximum, transport=None):
         text_tracks=True,
         manual_archive=True,
         approved_attachments=True,
+        approved_source_code=inventory.schema_version == 2,
     )
 
 
@@ -653,6 +790,12 @@ def verify_row(row, inventory, root):
     size = raw.stat().st_size
     if size > inventory.limits.ceiling(row):
         raise ValueError("Existing file exceeds material budget")
+    if inventory.schema_version == 2 and row.material_type == "source_code":
+        from src.tools_materials.source_acquisition import validate_source
+
+        validate_source(
+            read_file(raw, inventory.limits.ceiling(row)), row.source_format
+        )
     if row.material_type in {"transcript", "subtitles"}:
         validate_text_source(raw, binding(row, inventory))
     elif row.source_format == "html":
@@ -922,7 +1065,7 @@ def import_manual(inventory, material_id, source, expected_sha256, root, *, prov
         os.close(fd)
 
 
-def completeness(inventory, root=None):
+def completeness(inventory, root=None, processing_root=None):
     """Reports never trust success labels without checking receipts and raw bytes."""
     rows, integrity = list(inventory.materials), []
     for row in list(rows):
@@ -954,8 +1097,52 @@ def completeness(inventory, root=None):
                 update={"acquisition_status": "FAILED", "error_reason": str(error)}
             )
             integrity.append(row.material_id)
+    processing = {}
+    for row in rows:
+        if row.material_type in CONTAINERS or not (
+            row.required
+            or row.material_id in inventory.expected_ids
+            or (row.selected and row.alternative_group)
+        ):
+            continue
+        state = dict(
+            status="PENDING",
+            reason="Validated processing result required",
+            next_action="Run isolated processing after acquisition",
+        )
+        if row.acquisition_status not in SUCCESS:
+            state.update(
+                status="BLOCKED",
+                reason="Verified acquisition missing",
+                next_action="Review source grant and acquire material",
+            )
+        elif processing_root is not None and root is not None:
+            try:
+                from src.tools_materials.week_processing import inspect
+
+                inspect(row, inventory, root, processing_root)
+                state.update(status="COMPLETED", reason=None, next_action=None)
+            except (ValueError, OSError, RuntimeError, KeyError) as error:
+                state.update(
+                    status="FAILED",
+                    reason=str(error),
+                    next_action="Inspect parser failure/artifact integrity; reprocess in a new versioned output",
+                )
+        processing[row.material_id] = state
     by_id = {r.material_id: r for r in rows}
-    missing_ids = sorted(set(inventory.expected_ids) - by_id.keys())
+    missing_ids = sorted(
+        mid
+        for mid in inventory.expected_ids
+        if mid not in by_id
+        or (
+            mid in inventory.expected_parents
+            and by_id[mid].parent_material_id != inventory.expected_parents[mid]
+        )
+        or (
+            mid in inventory.expected_types
+            and by_id[mid].material_type != inventory.expected_types[mid]
+        )
+    )
 
     def assess(scope):
         scope_ids = {r.material_id for r in scope}
@@ -967,7 +1154,7 @@ def completeness(inventory, root=None):
         discovery_missing = [
             r.material_id
             for r in scope
-            if r.required
+            if (r.required or r.material_id in inventory.expected_ids)
             and (
                 r.acquisition_status in {"MISSING", "BLOCKED"}
                 or (r.material_type not in CONTAINERS and r.source_url is None)
@@ -978,10 +1165,10 @@ def completeness(inventory, root=None):
         acquisition_missing = [
             r.material_id
             for r in scope
-            if r.required
+            if (r.required or r.material_id in inventory.expected_ids)
             and r.material_type not in CONTAINERS
-            and not r.manual_action_required
-            and r.acquisition_status != "VERIFIED"
+            and (not r.manual_action_required or inventory.schema_version == 2)
+            and r.acquisition_status not in SUCCESS
         ]
         groups = []
         for container in [r for r in scope if r.material_type in {"lecture", "short"}]:
@@ -997,20 +1184,36 @@ def completeness(inventory, root=None):
                 dict(
                     parent_material_id=container.material_id,
                     fulfilled=satisfied,
+                    processed=any(
+                        r.acquisition_status in SUCCESS
+                        and processing.get(r.material_id, {}).get("status")
+                        == "COMPLETED"
+                        for r in alternatives
+                    ),
                     selected=[r.material_id for r in alternatives if r.selected],
                     reason=None
                     if satisfied
                     else "Validated text missing; media needs separate review and later transcription",
                 )
             )
-            if not alternatives:
+            if not alternatives or not any(r.source_url for r in alternatives):
                 discovery_missing.append(container.material_id)
         manual_pending = [
             r.material_id
             for r in scope
-            if r.manual_action_required and r.acquisition_status != "MANUAL_VERIFIED"
+            if r.manual_action_required and r.acquisition_status not in SUCCESS
+        ]
+        processing_missing = [
+            r.material_id
+            for r in scope
+            if r.material_id in processing
+            and processing[r.material_id]["status"] != "COMPLETED"
         ]
         return dict(
+            processing_complete=not processing_missing
+            and not absent
+            and all(g["processed"] for g in groups),
+            processing_missing=processing_missing,
             discovery_complete=not discovery_missing and not absent,
             missing_expected_ids=absent,
             acquisition_complete=not acquisition_missing
@@ -1038,7 +1241,9 @@ def completeness(inventory, root=None):
 
     overall = assess(rows)
     if missing_ids:
-        overall["discovery_complete"] = overall["acquisition_complete"] = False
+        overall["discovery_complete"] = overall["acquisition_complete"] = overall[
+            "processing_complete"
+        ] = False
     overall["missing_expected_ids"] = missing_ids
     sections = {
         r.material_id: {
@@ -1057,17 +1262,163 @@ def completeness(inventory, root=None):
         status="FULLY_COMPLETE"
         if all(
             overall[k]
-            for k in ("discovery_complete", "acquisition_complete", "manual_complete")
+            for k in (
+                "discovery_complete",
+                "acquisition_complete",
+                "processing_complete",
+                "manual_complete",
+            )
         )
         and not integrity
         else "HOLD",
         c26_status="HOLD",
         processing_enabled=False,
         integrity_failures=integrity,
+        materials=[
+            dict(
+                material_id=r.material_id,
+                parent_material_id=r.parent_material_id,
+                title=r.title,
+                material_type=r.material_type,
+                source_url=r.source_url,
+                acquisition_status=r.acquisition_status,
+                required=r.required,
+                selected=r.selected,
+                reason=r.error_reason,
+                next_action=(
+                    "Resolve official href/export"
+                    if not r.source_url
+                    else "Review exact source/type/size grant and acquire"
+                )
+                if r.acquisition_status not in SUCCESS | {"NOT_APPLICABLE"}
+                else None,
+                processing=processing.get(r.material_id, {"status": "NOT_REQUIRED"}),
+            )
+            for r in rows
+        ],
         counts={
             kind: sum(r.material_type == kind for r in rows)
             for kind in ("lecture", "short", "task")
         },
         overall=overall,
         sections=sections,
+    )
+
+
+def resume_discovery(current, previous, root):
+    """Carry only revalidated immutable acquisition evidence across rediscovery.
+
+    Removed rows with evidence require operator reconciliation, never silent loss.
+    New inventories always need fresh hash-bound source grants.
+    """
+    if (current.course_id, current.week_id, current.source_origin) != (
+        previous.course_id,
+        previous.week_id,
+        previous.source_origin,
+    ):
+        raise ValueError("Rediscovery scope mismatch")
+    old = {
+        r.material_id: r for r in previous.materials if r.acquisition_status in SUCCESS
+    }
+    if set(old) - {r.material_id for r in current.materials}:
+        raise ValueError(
+            "Rediscovery removed acquired rows; retain previous inventory and reconcile explicitly"
+        )
+    rows = []
+    for row in current.materials:
+        prior = old.get(row.material_id)
+        if prior:
+            if (prior.source_url, prior.source_format, prior.parent_material_id) != (
+                row.source_url,
+                row.source_format,
+                row.parent_material_id,
+            ):
+                raise ValueError("Rediscovery changes acquired identity")
+            verified = verify_row(prior, previous, Path(root))
+            row = row.model_copy(
+                update=dict(
+                    acquisition_status=verified.acquisition_status,
+                    file_size=verified.file_size,
+                    sha256=verified.sha256,
+                    receipt_id=verified.receipt_id,
+                    review_status=prior.review_status,
+                    metadata={**row.metadata, **prior.metadata},
+                    error_reason=None,
+                )
+            )
+        rows.append(row)
+    return select_fallbacks(current.model_copy(update={"materials": tuple(rows)}))
+
+
+def manual_fallback(inventory, material_id, *, source_format, filename, provenance):
+    """Operator records a reviewed local export against an actual context page.
+
+    Context URLs are never represented as downloadable file hrefs or granted HTTP
+    permission. The original unresolved offer and reason remain in metadata.
+    """
+    from src.tools_materials.source_acquisition import SOURCE_FORMATS
+
+    row = next(r for r in inventory.materials if r.material_id == material_id)
+    if (
+        inventory.schema_version != 2
+        or row.material_type != "source_code"
+        or row.acquisition_status
+        not in {"MISSING", "FAILED", "BLOCKED", "MANUAL_PENDING"}
+        or source_format not in SOURCE_FORMATS
+        or not provenance.strip()
+        or Path(filename).name != filename
+        or filename in {"", ".", ".."}
+        or "\\" in filename
+        or Path(filename).suffix.lower() != "." + source_format
+    ):
+        raise ValueError(
+            "Explicit failed/unresolved source, supported filename/format and provenance required"
+        )
+    parent = next(
+        r for r in inventory.materials if r.material_id == row.parent_material_id
+    )
+    context = next(
+        (
+            url
+            for url in (*row.discovered_from, parent.source_url)
+            if url and official(url)
+        ),
+        None,
+    )
+    if context is None:
+        raise ValueError("Actual official context page required for manual provenance")
+    replacement = row.model_copy(
+        update=dict(
+            source_url=context,
+            source_format=source_format,
+            acquisition_strategy="manual_only",
+            manual_action_required=True,
+            selected=True,
+            required=True,
+            acquisition_status="MANUAL_PENDING",
+            review_status="PENDING",
+            sha256=None,
+            file_size=None,
+            receipt_id=None,
+            metadata={
+                **row.metadata,
+                "original_offer_url": row.source_url,
+                "original_offer_format": row.source_format,
+                "original_error": row.error_reason,
+                "source_url_is_context": True,
+                "manual_filename": filename,
+                "manual_fallback_reason": provenance,
+            },
+        )
+    )
+    replacement = replacement.model_copy(
+        update={"expected_local_path": archive_path(replacement, inventory)}
+    )
+    return inventory.model_copy(
+        update={
+            "materials": tuple(
+                replacement if r.material_id == material_id else r
+                for r in inventory.materials
+            )
+        }
     )

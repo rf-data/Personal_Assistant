@@ -129,7 +129,9 @@ def main():
                 offline_test=True,
             )
             report = api.completeness(reused, archive)
-            assert report["status"] == "FULLY_COMPLETE", report
+            assert report["status"] == "HOLD", report
+            assert report["overall"]["acquisition_complete"]
+            assert not report["overall"]["processing_complete"]
             assert len(requests) == count
             print(
                 json.dumps(

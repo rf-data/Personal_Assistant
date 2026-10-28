@@ -1,0 +1,53 @@
+{
+  "base_commit": "1584a2807c8f9d75604ab17a4ea239d8f4a0882b",
+  "patch_sha256": "7b660196b565a0b9c6eff6b289ee36960e7c25cd59d8a210a314e5f11f7f45c4",
+  "checked_files": 32,
+  "forward_check": true,
+  "forward_apply": true,
+  "byte_equality": true,
+  "reverse_check": true,
+  "reverse_apply": true,
+  "base_restored": true,
+  "git_metadata_modified": false,
+  "new_git_artifacts": [],
+  "default_branch_integration_pending": true,
+  "steps": [
+    {
+      "operation": [
+        "git",
+        "apply",
+        "--check",
+        "c26-cs50p-08-implementation.patch"
+      ],
+      "exit_code": 0
+    },
+    {
+      "operation": [
+        "git",
+        "apply",
+        "c26-cs50p-08-implementation.patch"
+      ],
+      "exit_code": 0
+    },
+    {
+      "operation": [
+        "git",
+        "apply",
+        "--reverse",
+        "--check",
+        "c26-cs50p-08-implementation.patch"
+      ],
+      "exit_code": 0
+    },
+    {
+      "operation": [
+        "git",
+        "apply",
+        "--reverse",
+        "c26-cs50p-08-implementation.patch"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "scope": "Implementation and records excluding this self-referential handoff validation; final package has independent validation"
+}

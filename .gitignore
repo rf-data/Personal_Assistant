@@ -303,3 +303,7 @@ src/prio_list.md
 !artifacts/c26_cs50p_07/synthetic-completeness-example.json
 !artifacts/c26_cs50p_07/handoff-validation.json
 !artifacts/c26_cs50p_07/handoff/package-validation.json
+
+# C26-CS50P-08 durable review metadata and offline validation only.
+!docs/course_sources/cs50p_week0_completion/*.json
+!artifacts/c26_cs50p_08/*.json

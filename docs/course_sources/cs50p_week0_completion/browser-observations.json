@@ -1,0 +1,55 @@
+{
+  "observed_on": "2026-10-28",
+  "kind": "read-only-browser-observations",
+  "material_downloads": false,
+  "control_counts": {
+    "lecture": 1,
+    "short": 5,
+    "task": 5
+  },
+  "week": "https://cs50.harvard.edu/python/weeks/0/",
+  "problem_set": "https://cs50.harvard.edu/python/psets/0/",
+  "detail_pages": [
+    "https://cs50.harvard.edu/python/shorts/visual_studio_code_for_cs50/",
+    "https://cs50.harvard.edu/python/shorts/functions/",
+    "https://cs50.harvard.edu/python/shorts/variables/",
+    "https://cs50.harvard.edu/python/shorts/return_values/",
+    "https://cs50.harvard.edu/python/shorts/side_effects/",
+    "https://cs50.harvard.edu/python/psets/0/indoor/",
+    "https://cs50.harvard.edu/python/psets/0/playback/",
+    "https://cs50.harvard.edu/python/psets/0/faces/",
+    "https://cs50.harvard.edu/python/psets/0/einstein/",
+    "https://cs50.harvard.edu/python/psets/0/tip/"
+  ],
+  "lecture_source_index": {
+    "url": "https://cdn.cs50.net/python/2022/x/lectures/0/src0/",
+    "status": "HTML listing inspected; file bytes not fetched"
+  },
+  "short_source_indexes": [
+    {
+      "url": "https://cdn.cs50.net/python/2023/x/shorts/functions/src/",
+      "status": "INACCESSIBLE_VIA_BROWSER_TOOL",
+      "reason": "Known URL retained from C07 official link evidence; browser retrieval unavailable, not proof of HTTP source failure; operator export required"
+    },
+    {
+      "url": "https://cdn.cs50.net/python/2023/x/shorts/variables/src/",
+      "status": "INACCESSIBLE_VIA_BROWSER_TOOL",
+      "reason": "Known URL retained from C07 official link evidence; browser retrieval unavailable, not proof of HTTP source failure; operator export required"
+    },
+    {
+      "url": "https://cdn.cs50.net/python/2023/x/shorts/return_values/src/",
+      "status": "INACCESSIBLE_VIA_BROWSER_TOOL",
+      "reason": "Known URL retained from C07 official link evidence; browser retrieval unavailable, not proof of HTTP source failure; operator export required"
+    },
+    {
+      "url": "https://cdn.cs50.net/python/2024/x/shorts/side_effects/src/",
+      "status": "INACCESSIBLE_VIA_BROWSER_TOOL",
+      "reason": "Known URL retained from C07 official link evidence; browser retrieval unavailable, not proof of HTTP source failure; operator export required"
+    }
+  ],
+  "limitations": [
+    "Exact binary/track target hrefs are not exposed by browser representation without target retrieval; 30 offered hrefs remain null",
+    "No native-network retrieval is available in this sandbox",
+    "Historical hashed snapshots and current observations remain distinct; neither grants acquisition"
+  ]
+}
