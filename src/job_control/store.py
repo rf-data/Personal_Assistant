@@ -1,14 +1,18 @@
 """Private SQLite v1 state. Atomic requests and bounded durable structured events."""
 
 import fcntl
+import logging
 import os
 import sqlite3
+import threading
 import time
 from contextlib import contextmanager
 from datetime import UTC, datetime
 
 from src.job_control.catalog import safe_path
 from src.job_control.models import TERMINAL, Job, canonical
+
+SQLITE_DIAGNOSTICS = logging.getLogger("job_control.sqlite")
 
 
 def now():
@@ -133,24 +137,59 @@ class Store:
     @contextmanager
     def connection(self, write=False):
         safe_path(self.root, "jobs.sqlite3")
+        observed = SQLITE_DIAGNOSTICS.isEnabledFor(logging.DEBUG)
+        started_ns = time.monotonic_ns() if observed else 0
+        attempt = 0
+
+        def observe(stage, error=None, *, closed=False):
+            if not observed:
+                return
+            try:
+                SQLITE_DIAGNOSTICS.debug(
+                    "SQLite connection boundary",
+                    extra={
+                        "sqlite_boundary": {
+                            "pid": os.getpid(),
+                            "tid": threading.get_native_id(),
+                            "started_ns": started_ns,
+                            "at_ns": time.monotonic_ns(),
+                            "cpu_ns": time.thread_time_ns(),
+                            "attempt": attempt,
+                            "write": write,
+                            "stage": stage,
+                            "in_transaction": False if closed else db.in_transaction,
+                            "sqlite_code": getattr(error, "sqlite_errorcode", None),
+                        }
+                    },
+                )
+            except Exception:
+                # Diagnostics must never change transaction/cleanup decisions.
+                pass
+
         # WAL opening/recovery can return SQLITE_BUSY during connection setup
         # or BEGIN, sometimes without invoking the busy handler. Reopen only
         # while no transaction began, within the existing total 2s setup bound.
         # Never replay a transaction, commit or job after a locking error.
         deadline = time.monotonic() + 2
         while True:
+            attempt += 1
             db = sqlite3.connect(self.path, timeout=max(0, deadline - time.monotonic()))
+            observe("opened")
             phase = "setup"
             try:
                 db.execute("PRAGMA foreign_keys=ON")
                 db.execute("PRAGMA synchronous=FULL")
                 phase = "begin"
                 if write:
+                    observe("begin_wait")
                     db.execute("BEGIN IMMEDIATE")
+                    observe("begin_ok")
             except sqlite3.OperationalError as error:
                 error.job_db_phase = phase
+                observe(phase + "_error", error)
                 transaction_began = db.in_transaction
                 db.close()
+                observe("closed", closed=True)
                 remaining = deadline - time.monotonic()
                 if (
                     getattr(error, "sqlite_errorcode", 0) & 0xFF != sqlite3.SQLITE_BUSY
@@ -161,23 +200,32 @@ class Store:
                 time.sleep(min(0.01, remaining))
             except BaseException:
                 db.close()
+                observe("closed", closed=True)
                 raise
             else:
                 break
         phase = "body"
         try:
+            observe("body")
             yield db
             phase = "commit"
+            observe("commit_wait")
             db.commit()
+            observe("commit_ok")
         except sqlite3.Error as error:
             error.job_db_phase = phase
+            observe(phase + "_error", error)
             db.rollback()
+            observe("rollback_ok")
             raise
         except BaseException:
             db.rollback()
+            observe("rollback_ok")
             raise
         finally:
+            observe("close_wait")
             db.close()
+            observe("closed", closed=True)
 
     @staticmethod
     def get_db(db, job_id):
