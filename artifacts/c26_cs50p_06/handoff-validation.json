@@ -1,0 +1,122 @@
+{
+  "base": "6351d443afe18f806d37d64010e7050b4b5fcd73",
+  "implementation_commit": "2b4ab3f8b0b9154c376a813cc52500418236adee",
+  "implementation_tree": "fbb6c1b756bed2a6f297ed0f154c082252f11e01",
+  "patch_sha256": "e482b0a3a36c334fe31383bee74087d369ad915fddc24c6f5a9c188195256bde",
+  "forward_check": true,
+  "forward_apply": true,
+  "changed_files_byte_equal": true,
+  "reverse_check": true,
+  "reverse_apply": true,
+  "base_tree_restored": true,
+  "changed_files": {
+    "artifacts/c26_cs50p_06/baseline-audit.json": "3150d553810c2851e6ca131f83517b393fdd3ac8a1e60a23b0a7aa3c0e7668ae",
+    "artifacts/c26_cs50p_06/denied-example.json": "ebd902d133c9208089fc0ec58aa6c6f5a5de26f27a9d06ce63fb85731fd914ca",
+    "artifacts/c26_cs50p_06/example-validation.json": "c4062636467febf703e1fbb48a92054a1d68088d5f63f07578bd46fc3281537b",
+    "artifacts/c26_cs50p_06/lock-provenance.json": "402f6a8784c026d8b112fcb7250f7534ad9337a88ea5dff47bb917102fd64cdd",
+    "artifacts/c26_cs50p_06/negative-fresh-venv.json": "3860c4495be0d3df325354b393d06e93fa5e2915cb1bf649179d4cf8d476c91d",
+    "artifacts/c26_cs50p_06/network-blocker.json": "cb2d7ed57950f64c822ef3798bb947d69a1a833ce4d73a3a88fee5d20f6de47e",
+    "artifacts/c26_cs50p_06/offline-tests.xml": "c1c847766ed7010949d204ed456e661d2a9f8ef6b9a05a95b0206c68fb4f6eb6",
+    "artifacts/c26_cs50p_06/remote-basis.json": "a1f51bf3b68d46a469ef78ed88fded63c4a8d361ea3de7f20ffbccbf3b041d8b",
+    "artifacts/c26_cs50p_06/runtime-smoke.json": "12bdb85f4415d047cd9e511150c9c13b0c1f47821486e976958719c19ed84d45",
+    "artifacts/c26_cs50p_06/systemd.json": "8401e81d79b3595598c25648a19fd745676519b6c0bd368b7d76e5e0bf4b98e0",
+    "artifacts/c26_cs50p_06/validation.json": "65eb2b6ffeab292aaf8e7966ec28c2d0e48c8363d35b8ef07774e7f8700e44d2",
+    "artifacts/c26_cs50p_06/wheelhouse-fetch.json": "566b37f5d718c1040ff183040da4678c0ed6b6bde11728ac830e9f4398645a57",
+    "artifacts/c26_cs50p_06/wheelhouse-verify.json": "8eeb6741bb2a82a24f1b089dd9c6d8cafa72f3dc9f139fac30075a839ba0d9e1",
+    "deployment/cs50p-download-only/host_preflight.py": "8ed4728e4d445d840fd503dc9913bf2d244119173a44797e57777f92c9922192",
+    "deployment/cs50p-download-only/install.py": "6cb10cc80019b73b3305387f1df9f3a9b24ecb266bf3b51087d2b7b471cfa106",
+    "deployment/cs50p-download-only/prepare_example.py": "b0b04b8cf544678d476d6d66343a94b9764542c970a00be8eb38918a20803ebf",
+    "deployment/cs50p-download-only/runtime/pyproject.toml": "526915bfa4c9ba441e8552f5d4d092176481eb90f09d732e8421bf828fa25eea",
+    "deployment/cs50p-download-only/runtime/requirements.txt": "41943e587840b0fc45f990f777941f978e2f60701b63c27c0454d93e13ef06d0",
+    "deployment/cs50p-download-only/runtime/uv.lock": "8161a715f9b8d582101da01add69cd086a216cfdc3e54e4aabfefd693c1f39a2",
+    "deployment/cs50p-download-only/runtime_smoke.py": "73c606e4ddb15362f9f050974224b5266eced71d823914452e8c46ac085b5fbd",
+    "deployment/cs50p-download-only/wheelhouse.py": "856b1ba3e2798bd21c81d4771d61f03a624316b0e4b6df1056454c4cc04a58bd",
+    "docs/deployment/cs50p_reproducible_runtime_operator_guide.md": "ae8649133a35bfc64ee4a3b4421e8da746a7566983c278b656414d547ef5e2d5",
+    "docs/deployment/cs50p_reproducible_runtime_validation.md": "7ac5d51a45bd1d62029a84b6ecfd3dd47a331e316921a24105024ba239b564a6",
+    "tests/test_cs50p_download_only_install.py": "899210aee249289d00573b993d1849078c217f04dfaa9e7d30e70e2166dd16d3",
+    "tests/test_cs50p_frozen_runtime.py": "fe70661b3b0dbb1af45aa7c9564fba469f43f990977263e6d99bf393a0e1a6ff"
+  },
+  "validation_checkout": "/tmp/cs50p06-apply-4s599dgy/checkout",
+  "results": [
+    {
+      "argv": [
+        "read-tree",
+        "6351d443afe18f806d37d64010e7050b4b5fcd73"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "checkout-index",
+        "--all",
+        "--index"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "apply",
+        "--index",
+        "--check",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-04/.c26-cs50p-06/handoff/c26-cs50p-06-implementation.patch"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "apply",
+        "--index",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-04/.c26-cs50p-06/handoff/c26-cs50p-06-implementation.patch"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "write-tree"
+      ],
+      "exit": 0,
+      "stdout": "fbb6c1b756bed2a6f297ed0f154c082252f11e01\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "apply",
+        "--index",
+        "--reverse",
+        "--check",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-04/.c26-cs50p-06/handoff/c26-cs50p-06-implementation.patch"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "apply",
+        "--index",
+        "--reverse",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-04/.c26-cs50p-06/handoff/c26-cs50p-06-implementation.patch"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "write-tree"
+      ],
+      "exit": 0,
+      "stdout": "98245684c5c49bef117488e24d634e58104b5f9d\n",
+      "stderr": ""
+    }
+  ],
+  "default_branch_integration_pending": true
+}
