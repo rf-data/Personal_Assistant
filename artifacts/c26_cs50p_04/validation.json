@@ -1,0 +1,29 @@
+{
+  "status": "HOLD",
+  "base": "81db9ed3f5fc7e0c3d6952b438f015ae6521af3c",
+  "tests": {
+    "passed": 102,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0,
+    "network_namespace": true,
+    "offline_guard": true,
+    "seconds": 10.272,
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 unshare --user --map-current-user --net /home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python -m pytest -q -o addopts= -p no:cacheprovider -p tests.offline_guard tests/test_cs50p_download_only_install.py tests/test_cs50p_mvp.py tests/test_cs50_material_download.py tests/test_cs50_capacity.py --junitxml=artifacts/c26_cs50p_04/final-tests.xml"
+  },
+  "positive_frozen_install": false,
+  "actual_ubuntu_systemd255_install": false,
+  "real_hetzner_connection": false,
+  "real_course_downloads": false,
+  "c16_activated": false,
+  "git_metadata_read_only": true,
+  "default_branch_integration_pending": true,
+  "patch_validation": "handoff/package-validation.json",
+  "limits_and_download_admission_unchanged": true,
+  "lint": {
+    "ruff_check": true,
+    "ruff_format": true,
+    "python_ast": true,
+    "example_json": true
+  }
+}

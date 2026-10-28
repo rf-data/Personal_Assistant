@@ -1,0 +1,15 @@
+{
+  "material_id": "REPLACE_FROM_REVIEWED_BATCH",
+  "source_id": "REPLACE_FROM_REVIEWED_BATCH",
+  "course_id": "cs50_python",
+  "original_url": "https://cs50.harvard.edu/python/notes/0/",
+  "approval_reference": "REPLACE_WITH_OPERATOR_REVIEW_REFERENCE",
+  "usage_reference": "REPLACE_WITH_PURPOSE_REFERENCE",
+  "license_review_reference": "REPLACE_WITH_MATERIAL_LICENSE_REVIEW",
+  "robots_review_reference": "REPLACE_WITH_ROBOTS_REVIEW",
+  "retention_reference": "REPLACE_WITH_RETENTION_DECISION",
+  "revocation_reference": "REPLACE_WITH_REVOCATION_PROCEDURE",
+  "download": false,
+  "process": false,
+  "expected_sha256": null
+}

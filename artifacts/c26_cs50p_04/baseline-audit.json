@@ -1,0 +1,16 @@
+{
+  "base": "81db9ed3f5fc7e0c3d6952b438f015ae6521af3c",
+  "live_feature_sha": "81db9ed3f5fc7e0c3d6952b438f015ae6521af3c",
+  "live_verification": "read-only GitHub connector, feat/c26-cs50p-mvp, 2026-10-28",
+  "initial_worktree_clean": true,
+  "head_detached": true,
+  "task_worktree_preexisting": true,
+  "git_metadata_read_only": true,
+  "checksums_verified": 33,
+  "raw_archive_members_verified": 61,
+  "delivery_files_tracked": 28,
+  "production_downloader_unchanged": true,
+  "previous_artifacts_unchanged": true,
+  "git_artifacts_created": [],
+  "integration_pending": true
+}
