@@ -262,7 +262,7 @@ class Installer:
                 ):
                     payload["app/" + directory + "/" + name] = data
         payload["requirements.txt"] = regular(
-            source / "deployment/cs50p-mvp/requirements.txt"
+            source / "deployment/cs50p-download-only/runtime/requirements.txt"
         )
         payload["app/scripts/cs50p_download_only.py"] = regular(PACKAGE / "pilot.py")
         wheel_files, spec_files = tree(wheels), tree(specs)
@@ -278,6 +278,18 @@ class Installer:
             name for name in spec_files if name.startswith("snapshots/")
         }:
             raise ValueError("Only specs and snapshots accepted")
+        # Verify the complete reviewed artifact set before creating users or releases.
+        self.run(
+            [
+                sys.executable,
+                PACKAGE / "wheelhouse.py",
+                "check",
+                "--wheels",
+                wheels,
+                "--requirements",
+                source / "deployment/cs50p-download-only/runtime/requirements.txt",
+            ]
+        )
         old = json.loads(spec_files["batch.json"])
         if digest(canonical(old["batch"])) != old["sha256"]:
             raise ValueError("Input batch digest mismatch")
@@ -356,6 +368,9 @@ class Installer:
                     python,
                     "-m",
                     "pip",
+                    "--isolated",
+                    "--disable-pip-version-check",
+                    "--no-cache-dir",
                     "install",
                     "--no-index",
                     "--only-binary=:all:",

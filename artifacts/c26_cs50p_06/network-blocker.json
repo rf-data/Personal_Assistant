@@ -1,0 +1,17 @@
+{
+  "pypi.org": {
+    "error_class": "gaierror",
+    "errno": -3,
+    "reason": "[Errno -3] Temporary failure in name resolution"
+  },
+  "files.pythonhosted.org": {
+    "error_class": "gaierror",
+    "errno": -3,
+    "reason": "[Errno -3] Temporary failure in name resolution"
+  },
+  "github.com": {
+    "error_class": "gaierror",
+    "errno": -3,
+    "reason": "[Errno -3] Temporary failure in name resolution"
+  }
+}

@@ -47,13 +47,13 @@ def sandbox(tmp_path):
         return ""
 
     source = tmp_path / "source"
-    for folder in ("src", "scripts", "deployment/cs50p-mvp"):
+    for folder in ("src", "scripts", "deployment/cs50p-download-only/runtime"):
         (source / folder).mkdir(parents=True)
     (source / "src/__init__.py").write_text("")
     (source / "scripts/__init__.py").write_text("")
     (source / "scripts/cs50p_native.py").write_text("raise AssertionError('excluded')")
     (source / "scripts/cs50_worker.py").write_text("raise AssertionError('excluded')")
-    (source / "deployment/cs50p-mvp/requirements.txt").write_text(
+    (source / "deployment/cs50p-download-only/runtime/requirements.txt").write_text(
         "# synthetic closure\n"
     )
     wheels = tmp_path / "wheels"
@@ -338,3 +338,33 @@ def test_installed_entrypoint_with_seal_and_real_lifecycle_lock(
     )
     assert len(scope["calls"]) == int(scenario == "download")
     assert not (root / "jobs").exists()
+
+
+@pytest.mark.parametrize("case", ["missing", "corrupt"])
+def test_real_artifact_guard_blocks_before_release_mutation(sandbox, case):
+    api, source, wheels, specs, calls = sandbox
+    guard = module("wheelhouse_guard", "wheelhouse.py")
+    wheel = next(wheels.iterdir())
+    requirement = source / "deployment/cs50p-download-only/runtime/requirements.txt"
+    requirement.write_text(
+        "synthetic==1.0 --hash=sha256:" + installer.digest(wheel.read_bytes()) + "\n"
+    )
+    previous = api.run
+
+    def run(argv, **kwargs):
+        if str(installer.PACKAGE / "wheelhouse.py") in list(map(str, argv)):
+            guard.check(wheels, requirement)
+        return previous(argv, **kwargs)
+
+    api.run = run
+    install(sandbox)
+    if case == "missing":
+        wheel.unlink()
+        # Keep the directory nonempty to reach the complete artifact guard.
+        (wheels / "unreviewed-1.0-py3-none-any.whl").write_bytes(b"unreviewed")
+    else:
+        wheel.write_bytes(b"corrupt")
+    with pytest.raises(ValueError):
+        install(sandbox, "r2")
+    assert os.readlink(api.base / "current") == "releases/r1"
+    assert not (api.base / "releases/r2").exists()

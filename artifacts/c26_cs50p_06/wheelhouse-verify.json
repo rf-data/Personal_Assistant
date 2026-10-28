@@ -1,0 +1,7 @@
+{
+  "action": "verify",
+  "positive_frozen_install": false,
+  "status": "blocked",
+  "error_class": "ValueError",
+  "reason": "Missing wheels: annotated-types, anyio, beautifulsoup4, certifi, h11, httpcore, httpx, idna, pydantic, pydantic-core, soupsieve, typing-extensions, typing-inspection"
+}

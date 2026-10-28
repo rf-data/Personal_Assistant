@@ -1,0 +1,71 @@
+{
+  "root": "/tmp/cs50p06-negative-mby9b1w2",
+  "results": [
+    {
+      "argv": [
+        "unshare",
+        "--user",
+        "--map-current-user",
+        "--net",
+        "/home/robfra/.local/share/uv/python/cpython-3.12.12-linux-x86_64-gnu/bin/python3.12",
+        "-m",
+        "venv",
+        "/tmp/cs50p06-negative-mby9b1w2/venv"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "unshare",
+        "--user",
+        "--map-current-user",
+        "--net",
+        "/tmp/cs50p06-negative-mby9b1w2/venv/bin/python",
+        "-m",
+        "pip",
+        "--isolated",
+        "--disable-pip-version-check",
+        "--no-cache-dir",
+        "install",
+        "--no-index",
+        "--only-binary=:all:",
+        "--require-hashes",
+        "--find-links=/tmp/cs50p06-negative-mby9b1w2/wheels",
+        "-r",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-04/.c26-cs50p-06/worktree/deployment/cs50p-download-only/runtime/requirements.txt"
+      ],
+      "exit": 1,
+      "stdout": "Looking in links: /tmp/cs50p06-negative-mby9b1w2/wheels\n",
+      "stderr": "ERROR: Could not find a version that satisfies the requirement annotated-types==0.8.0 (from versions: none)\nERROR: No matching distribution found for annotated-types==0.8.0\n"
+    },
+    {
+      "argv": [
+        "unshare",
+        "--user",
+        "--map-current-user",
+        "--net",
+        "/tmp/cs50p06-negative-mby9b1w2/venv/bin/python",
+        "-m",
+        "pip",
+        "--isolated",
+        "--disable-pip-version-check",
+        "--no-cache-dir",
+        "install",
+        "--no-index",
+        "--only-binary=:all:",
+        "--require-hashes",
+        "--find-links=/tmp/cs50p06-negative-mby9b1w2/wheels",
+        "-r",
+        "/tmp/cs50p06-negative-mby9b1w2/synthetic.txt"
+      ],
+      "exit": 1,
+      "stdout": "Looking in links: /tmp/cs50p06-negative-mby9b1w2/wheels\nProcessing /tmp/cs50p06-negative-mby9b1w2/wheels/synthetic-1.0-py3-none-any.whl (from -r /tmp/cs50p06-negative-mby9b1w2/synthetic.txt (line 1))\n",
+      "stderr": "ERROR: THESE PACKAGES DO NOT MATCH THE HASHES FROM THE REQUIREMENTS FILE. If you have updated the package versions, please update the hashes. Otherwise, examine the package contents carefully; someone may have tampered with them.\n    synthetic==1.0 from file:///tmp/cs50p06-negative-mby9b1w2/wheels/synthetic-1.0-py3-none-any.whl (from -r /tmp/cs50p06-negative-mby9b1w2/synthetic.txt (line 1)):\n        Expected sha256 1a47ffd9021f037a72e1584a502f4fda6d50a91cb250a7b7b20348ed138036b2\n             Got        3dbb3963d11aa418de8b61f846c3dbd5af43b40d252842adb823f90936fe6920\n\n"
+    }
+  ],
+  "positive_frozen_install": false,
+  "network_namespace": true,
+  "synthetic_corruption_only": true
+}

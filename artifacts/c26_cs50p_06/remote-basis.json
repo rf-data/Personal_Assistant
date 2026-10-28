@@ -1,0 +1,17 @@
+{
+  "method": "read-only GitHub connector",
+  "repository": "rf-data/Personal_Assistant",
+  "basis": "6351d443afe18f806d37d64010e7050b4b5fcd73",
+  "automatic_push_or_merge": false,
+  "live_branch": {
+    "ref": "refs/heads/feat/c26-cs50p-04-download-only",
+    "node_id": "REF_kwDOSakf_toAKnJlZnMvaGVhZHMvZmVhdC9jMjYtY3M1MHAtMDQtZG93bmxvYWQtb25seQ",
+    "url": "https://api.github.com/repos/rf-data/Personal_Assistant/git/refs/heads/feat/c26-cs50p-04-download-only",
+    "object": {
+      "sha": "6351d443afe18f806d37d64010e7050b4b5fcd73",
+      "type": "commit",
+      "url": "https://api.github.com/repos/rf-data/Personal_Assistant/git/commits/6351d443afe18f806d37d64010e7050b4b5fcd73"
+    }
+  },
+  "default_branch": "master"
+}

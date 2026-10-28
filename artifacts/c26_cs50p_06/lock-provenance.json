@@ -1,0 +1,58 @@
+{
+  "base": "6351d443afe18f806d37d64010e7050b4b5fcd73",
+  "source": "deployment/runtime/uv.lock",
+  "production": {
+    "annotated-types": {
+      "version": "0.8.0",
+      "inherited_artifacts_unchanged": true
+    },
+    "anyio": {
+      "version": "4.14.2",
+      "inherited_artifacts_unchanged": true
+    },
+    "beautifulsoup4": {
+      "version": "4.15.0",
+      "inherited_artifacts_unchanged": true
+    },
+    "certifi": {
+      "version": "2026.7.22",
+      "inherited_artifacts_unchanged": true
+    },
+    "h11": {
+      "version": "0.16.0",
+      "inherited_artifacts_unchanged": true
+    },
+    "httpcore": {
+      "version": "1.0.9",
+      "inherited_artifacts_unchanged": true
+    },
+    "httpx": {
+      "version": "0.28.1",
+      "inherited_artifacts_unchanged": true
+    },
+    "idna": {
+      "version": "3.19",
+      "inherited_artifacts_unchanged": true
+    },
+    "pydantic": {
+      "version": "2.13.4",
+      "inherited_artifacts_unchanged": true
+    },
+    "pydantic-core": {
+      "version": "2.46.4",
+      "inherited_artifacts_unchanged": true
+    },
+    "soupsieve": {
+      "version": "2.9.2",
+      "inherited_artifacts_unchanged": true
+    },
+    "typing-extensions": {
+      "version": "4.16.0",
+      "inherited_artifacts_unchanged": true
+    },
+    "typing-inspection": {
+      "version": "0.4.4",
+      "inherited_artifacts_unchanged": true
+    }
+  }
+}

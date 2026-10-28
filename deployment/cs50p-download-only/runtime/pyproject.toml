@@ -1,0 +1,15 @@
+[project]
+name = "cs50p-download-runtime"
+version = "1.0.0"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "pydantic==2.13.4",
+  "httpx==0.28.1",
+  "beautifulsoup4==4.15.0",
+]
+
+[dependency-groups]
+dev = ["pytest==9.1.1", "ruff==0.16.3"]
+
+[tool.uv]
+package = false

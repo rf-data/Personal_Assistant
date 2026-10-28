@@ -1,0 +1,59 @@
+{
+  "status": "HOLD",
+  "c26_status": "HOLD",
+  "base": "6351d443afe18f806d37d64010e7050b4b5fcd73",
+  "tests": {
+    "tests": 115,
+    "passed": 114,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0,
+    "seconds": "44.602",
+    "network_namespace": true,
+    "offline_guard": true,
+    "interpreter": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c24r/.venv/bin/python"
+  },
+  "python": "3.12.12 (main, Oct 31 2025, 23:02:31) [Clang 21.1.4 ]",
+  "os": {
+    "NAME": "Debian GNU/Linux",
+    "ID": "debian",
+    "PRETTY_NAME": "Debian GNU/Linux 12 (bookworm)",
+    "VERSION_ID": "12",
+    "VERSION": "12 (bookworm)",
+    "VERSION_CODENAME": "bookworm",
+    "HOME_URL": "https://www.debian.org/",
+    "SUPPORT_URL": "https://www.debian.org/support",
+    "BUG_REPORT_URL": "https://bugs.debian.org/"
+  },
+  "machine": "x86_64",
+  "libc": [
+    "glibc",
+    "2.36"
+  ],
+  "production_direct": [
+    "httpx==0.28.1",
+    "pydantic==2.13.4",
+    "beautifulsoup4==4.15.0"
+  ],
+  "production_packages": 13,
+  "positive_frozen_install": false,
+  "frozen_blocker": "No wheels obtained; pip no matching distribution, separate PyPI/files.pythonhosted.org DNS gaierror errno -3",
+  "actual_ubuntu_systemd255_install": false,
+  "real_hetzner_connection": false,
+  "real_course_download": false,
+  "c16_activated": false,
+  "coolify_changes": false,
+  "automatic_push_or_merge": false,
+  "default_branch_integration_pending": true,
+  "task_artifacts_retained": true,
+  "checks": {
+    "ruff_check": true,
+    "ruff_format": true,
+    "ast": true,
+    "json": true,
+    "uv_locked_export_exact": true
+  },
+  "unit_sha256": "48adb65ac7d068077d15141e40938de5563302a79fc4653ecfb5f7151531d858",
+  "requirements_sha256": "41943e587840b0fc45f990f777941f978e2f60701b63c27c0454d93e13ef06d0",
+  "preflight_sha256": "8ed4728e4d445d840fd503dc9913bf2d244119173a44797e57777f92c9922192"
+}
