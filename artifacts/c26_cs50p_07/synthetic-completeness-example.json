@@ -1,0 +1,450 @@
+{
+  "synthetic": true,
+  "archive_retained": false,
+  "evidence": "Reports captured while all raw hashes, receipts and manual provenance were revalidated in an isolated temporary archive",
+  "pending_manual": {
+    "schema_version": 1,
+    "course_id": "cs50_python",
+    "week_id": "0",
+    "status": "HOLD",
+    "c26_status": "HOLD",
+    "processing_enabled": false,
+    "integrity_failures": [],
+    "counts": {
+      "lecture": 1,
+      "short": 2,
+      "task": 2
+    },
+    "overall": {
+      "discovery_complete": true,
+      "missing_expected_ids": [],
+      "acquisition_complete": true,
+      "manual_complete": false,
+      "discovery_missing": [],
+      "acquisition_missing": [],
+      "manual_pending": [
+        "week_material:2defedaaa8cfac1ac3e1c1c31f048eae731a02bd0b35aeaa6c68a8daf850d439",
+        "week_material:668e087e6173dd12d0ca4887dbb079d5ef089bcf3dc7c339939372093b326ab5"
+      ],
+      "content_groups": [
+        {
+          "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+          "fulfilled": true,
+          "selected": [
+            "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd"
+          ],
+          "reason": null
+        },
+        {
+          "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+          "fulfilled": true,
+          "selected": [
+            "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+          ],
+          "reason": null
+        },
+        {
+          "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+          "fulfilled": true,
+          "selected": [
+            "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+          ],
+          "reason": null
+        }
+      ]
+    },
+    "sections": {
+      "week_material:3cad993ac8b21c953604b4196598d6bcfede7ed439b21ccf6a278745b3538f85": {
+        "title": "Week 0",
+        "material_type": "week",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": false,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [
+          "week_material:2defedaaa8cfac1ac3e1c1c31f048eae731a02bd0b35aeaa6c68a8daf850d439",
+          "week_material:668e087e6173dd12d0ca4887dbb079d5ef089bcf3dc7c339939372093b326ab5"
+        ],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+            "fulfilled": true,
+            "selected": [
+              "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd"
+            ],
+            "reason": null
+          },
+          {
+            "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+            "fulfilled": true,
+            "selected": [
+              "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+            ],
+            "reason": null
+          },
+          {
+            "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+            "fulfilled": true,
+            "selected": [
+              "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841": {
+        "title": "Lecture 0",
+        "material_type": "lecture",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": false,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [
+          "week_material:2defedaaa8cfac1ac3e1c1c31f048eae731a02bd0b35aeaa6c68a8daf850d439"
+        ],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+            "fulfilled": true,
+            "selected": [
+              "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:c3536f82e7ca1f27ff21757937b443952a7fa52c5292f029d4c2a66505f39b59": {
+        "title": "Shorts",
+        "material_type": "shorts",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": false,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [
+          "week_material:668e087e6173dd12d0ca4887dbb079d5ef089bcf3dc7c339939372093b326ab5"
+        ],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+            "fulfilled": true,
+            "selected": [
+              "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+            ],
+            "reason": null
+          },
+          {
+            "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+            "fulfilled": true,
+            "selected": [
+              "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e": {
+        "title": "Alpha",
+        "material_type": "short",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": false,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [
+          "week_material:668e087e6173dd12d0ca4887dbb079d5ef089bcf3dc7c339939372093b326ab5"
+        ],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+            "fulfilled": true,
+            "selected": [
+              "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118": {
+        "title": "Beta",
+        "material_type": "short",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+            "fulfilled": true,
+            "selected": [
+              "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:a6e36e96e51955c65758fb006a40db577c1d4ea976e4d145afffa672b398f082": {
+        "title": "Problem Set 0",
+        "material_type": "problem_set",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": []
+      },
+      "week_material:0e77427550b4f3f96a72fbd7ffd750f8dff65c9f319df24df5da51bd425dd711": {
+        "title": "One",
+        "material_type": "task",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": []
+      },
+      "week_material:9c8a907b2bf80f7f8629c261c6f66674842e635afec6044c97c1b6505f19bb10": {
+        "title": "Two",
+        "material_type": "task",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": []
+      }
+    }
+  },
+  "after_manual_import": {
+    "schema_version": 1,
+    "course_id": "cs50_python",
+    "week_id": "0",
+    "status": "FULLY_COMPLETE",
+    "c26_status": "HOLD",
+    "processing_enabled": false,
+    "integrity_failures": [],
+    "counts": {
+      "lecture": 1,
+      "short": 2,
+      "task": 2
+    },
+    "overall": {
+      "discovery_complete": true,
+      "missing_expected_ids": [],
+      "acquisition_complete": true,
+      "manual_complete": true,
+      "discovery_missing": [],
+      "acquisition_missing": [],
+      "manual_pending": [],
+      "content_groups": [
+        {
+          "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+          "fulfilled": true,
+          "selected": [
+            "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd"
+          ],
+          "reason": null
+        },
+        {
+          "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+          "fulfilled": true,
+          "selected": [
+            "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+          ],
+          "reason": null
+        },
+        {
+          "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+          "fulfilled": true,
+          "selected": [
+            "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+          ],
+          "reason": null
+        }
+      ]
+    },
+    "sections": {
+      "week_material:3cad993ac8b21c953604b4196598d6bcfede7ed439b21ccf6a278745b3538f85": {
+        "title": "Week 0",
+        "material_type": "week",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+            "fulfilled": true,
+            "selected": [
+              "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd"
+            ],
+            "reason": null
+          },
+          {
+            "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+            "fulfilled": true,
+            "selected": [
+              "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+            ],
+            "reason": null
+          },
+          {
+            "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+            "fulfilled": true,
+            "selected": [
+              "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841": {
+        "title": "Lecture 0",
+        "material_type": "lecture",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841",
+            "fulfilled": true,
+            "selected": [
+              "week_material:c66ec8ea207e3a9cc141d8e838f3c5b818a99e20a8479a26c145976f771cafdd"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:c3536f82e7ca1f27ff21757937b443952a7fa52c5292f029d4c2a66505f39b59": {
+        "title": "Shorts",
+        "material_type": "shorts",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+            "fulfilled": true,
+            "selected": [
+              "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+            ],
+            "reason": null
+          },
+          {
+            "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+            "fulfilled": true,
+            "selected": [
+              "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e": {
+        "title": "Alpha",
+        "material_type": "short",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:df167a271403c688a97662659906d47b8ea16bf85a20399bc2fb0e6063e1c69e",
+            "fulfilled": true,
+            "selected": [
+              "week_material:abc8c6d5f1350e0e53384c265cd7533fe8df259803b65c3700e46b91fdb12497"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118": {
+        "title": "Beta",
+        "material_type": "short",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": [
+          {
+            "parent_material_id": "week_material:c68f48bae87dd60b16f6e8e8b0b0c7b81fe5cb18ade101addf02dd3982cb2118",
+            "fulfilled": true,
+            "selected": [
+              "week_material:d3f1b398479e2a3b998f0e8b278e771165630121f63a7c37234320520f7f7a5f"
+            ],
+            "reason": null
+          }
+        ]
+      },
+      "week_material:a6e36e96e51955c65758fb006a40db577c1d4ea976e4d145afffa672b398f082": {
+        "title": "Problem Set 0",
+        "material_type": "problem_set",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": []
+      },
+      "week_material:0e77427550b4f3f96a72fbd7ffd750f8dff65c9f319df24df5da51bd425dd711": {
+        "title": "One",
+        "material_type": "task",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": []
+      },
+      "week_material:9c8a907b2bf80f7f8629c261c6f66674842e635afec6044c97c1b6505f19bb10": {
+        "title": "Two",
+        "material_type": "task",
+        "discovery_complete": true,
+        "missing_expected_ids": [],
+        "acquisition_complete": true,
+        "manual_complete": true,
+        "discovery_missing": [],
+        "acquisition_missing": [],
+        "manual_pending": [],
+        "content_groups": []
+      }
+    }
+  },
+  "c26_status": "HOLD"
+}

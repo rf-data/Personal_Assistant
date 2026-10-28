@@ -40,6 +40,10 @@ MIMES = {
     "h": {"text/plain", "text/x-c"},
     "txt": {"text/plain"},
     "md": {"text/plain", "text/markdown"},
+    "srt": {"text/plain", "application/x-subrip", "text/srt"},
+    "vtt": {"text/vtt", "text/plain"},
+    "csv": {"text/csv", "text/plain"},
+    "json": {"application/json", "text/plain"},
 }
 
 
@@ -120,6 +124,9 @@ class MaterialDownloader:
         total_timeout=45.0,
         retries=1,
         sleep=time.sleep,
+        text_tracks=False,
+        manual_archive=False,
+        approved_attachments=False,
     ):
         self.workspace = artifact_root(workspace)
         self.transport = transport
@@ -136,6 +143,8 @@ class MaterialDownloader:
             total_timeout,
         )
         self.retries, self.sleep = retries, sleep
+        self.text_tracks, self.manual_archive = text_tracks, manual_archive
+        self.approved_attachments = approved_attachments
 
     def paths(self, binding):
         directory = binding.material_id.split(":")[1]
@@ -184,6 +193,26 @@ class MaterialDownloader:
     ):
         binding = MaterialResource.model_validate_json(binding.model_dump_json())
         support, reason = capability(binding.original_url, binding.format)
+        if (
+            self.text_tracks
+            and official(binding.original_url)
+            and (binding.role, binding.format)
+            in {("subtitles", "srt"), ("subtitles", "vtt")}
+        ):
+            support = "supported"
+        if (
+            self.manual_archive
+            and local_file is not None
+            and (binding.role, binding.format) == ("source_code", "zip")
+        ):
+            support = "supported"
+        if (
+            self.approved_attachments
+            and official(binding.original_url)
+            and binding.role == "starter_files"
+            and binding.format in {"csv", "json"}
+        ):
+            support = "supported"
         if support != "supported":
             raise ValueError(reason)
         if not execute:
@@ -298,6 +327,19 @@ class MaterialDownloader:
                     with temporary.open("rb") as stream:
                         if not stream.read(5) == b"%PDF-":
                             raise ValueError("Invalid PDF signature")
+                if self.text_tracks and binding.role in {"transcript", "subtitles"}:
+                    from src.tools_materials.text_validation import validate_text_source
+
+                    validate_text_source(temporary, binding)
+                elif self.text_tracks and binding.format == "html":
+                    from src.tools_materials.text_validation import validate_html_page
+
+                    validate_html_page(temporary)
+                if binding.format == "zip":
+                    import zipfile
+
+                    if not zipfile.is_zipfile(temporary):
+                        raise ValueError("Invalid manual ZIP archive")
                 receipt = receipt.model_copy(
                     update={
                         "raw_sha256": checksum,

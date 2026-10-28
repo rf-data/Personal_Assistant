@@ -1,0 +1,58 @@
+{
+  "status": "HOLD",
+  "c26_status": "HOLD",
+  "head": "f273b718c4e4c8fc8a000625eb471a68abcf24b5",
+  "python": "3.12.12",
+  "platform": "Linux-6.6.119-09283-g9c138e0af8c3-x86_64-with-glibc2.36",
+  "regression": {
+    "tests": "234",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "2",
+    "time": "40.140"
+  },
+  "final_week_tests": {
+    "tests": "38",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "5.921"
+  },
+  "ast": true,
+  "json": true,
+  "manifest_contract": true,
+  "ruff_check": true,
+  "ruff_format": true,
+  "git_diff_check": true,
+  "real_downloads": false,
+  "hetzner_changes": false,
+  "coolify_changes": false,
+  "c16_activated": false,
+  "positive_frozen_install": false,
+  "runtime_smoke": {
+    "status": "CHECKED",
+    "synthetic": true,
+    "transfers": 4,
+    "reused": true,
+    "processing_enabled": false,
+    "c26_status": "HOLD",
+    "frozen_install_proven": false
+  },
+  "systemd": {
+    "version": 252,
+    "verify_exit": 1,
+    "reason": "Host /opt frozen interpreter absent; no installed unit or systemd255 acceptance"
+  },
+  "git_metadata_mutations": false,
+  "git_artifacts_created": [],
+  "integration_pending": true,
+  "artifacts_retained": true,
+  "blockers": [
+    "Positive C06 frozen-wheelhouse installation missing",
+    "Exact Short asset hrefs and task references require actual operator HTML exports",
+    "All real source/media grants and acquisitions pending",
+    "5 required manual packages pending",
+    "Actual host disk reserve, reviewed C07 staging and Ubuntu/systemd255 acceptance pending",
+    "Master PR/review integration prohibited in this task"
+  ]
+}

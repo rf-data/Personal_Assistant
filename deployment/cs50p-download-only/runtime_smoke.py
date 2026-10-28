@@ -6,6 +6,7 @@ import hashlib
 import importlib.abc
 import json
 import os
+import shutil
 import socket
 import sys
 import tempfile
@@ -31,7 +32,14 @@ class RuntimeOnly(importlib.abc.MetaPathFinder):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
+    parser.add_argument(
+        "--synthetic-host",
+        action="store_true",
+        help="Explicit offline capacity model; never installation evidence",
+    )
     args = parser.parse_args()
+    if args.synthetic_host:
+        shutil.disk_usage = lambda _: SimpleNamespace(free=20 * 1024**3)
     sys.path.insert(0, str(args.source))
     sys.meta_path.insert(0, RuntimeOnly())
 
@@ -141,6 +149,7 @@ def main():
                 transfers=1,
                 reused=True,
                 processing_enabled=False,
+                synthetic_host=args.synthetic_host,
             )
         )
     )

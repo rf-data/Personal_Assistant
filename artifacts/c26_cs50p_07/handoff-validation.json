@@ -1,0 +1,56 @@
+{
+  "base": "f273b718c4e4c8fc8a000625eb471a68abcf24b5",
+  "patch_sha256": "6aa7d319c6c2bb7bce0714cfe4800e7460df70ab5d47fee32308fe6e29a3c1b3",
+  "forward_check": true,
+  "forward_apply": true,
+  "file_contents_equal": true,
+  "reverse_check": true,
+  "reverse_apply": true,
+  "base_contents_restored": true,
+  "checked_files": 29,
+  "steps": [
+    {
+      "args": [
+        "git",
+        "apply",
+        "--check",
+        "c26-cs50p-07-implementation.patch"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "args": [
+        "git",
+        "apply",
+        "c26-cs50p-07-implementation.patch"
+      ],
+      "exit": 0,
+      "stderr": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-07/artifacts/c26_cs50p_07/handoff/c26-cs50p-07-implementation.patch:552: trailing whitespace.\nE     \nwarning: 1 line adds whitespace errors.\n"
+    },
+    {
+      "args": [
+        "git",
+        "apply",
+        "--reverse",
+        "--check",
+        "c26-cs50p-07-implementation.patch"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "args": [
+        "git",
+        "apply",
+        "--reverse",
+        "c26-cs50p-07-implementation.patch"
+      ],
+      "exit": 0,
+      "stderr": ""
+    }
+  ],
+  "default_branch_integration_pending": true,
+  "git_metadata_modified": false,
+  "scope": "Implementation patch excluding this validation record; final package validation is supplied separately"
+}

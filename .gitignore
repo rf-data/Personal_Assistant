@@ -291,3 +291,15 @@ src/prio_list.md
 !/artifacts/c26_pilot_integration/*.json
 !/artifacts/c26_pilot_integration/*.log
 /artifacts/c26_pilot_integration/handoff/
+
+# C26-CS50P-07 durable review manifests and validation records.
+!docs/course_sources/cs50p_week0_review/evidence.json
+!docs/course_sources/cs50p_week0_review/manifest.json
+!docs/course_sources/cs50p_week0_review/download-plan.json
+!docs/course_sources/cs50p_week0_review/completeness.json
+!artifacts/c26_cs50p_07/git-basis.json
+!artifacts/c26_cs50p_07/runtime-smoke.json
+!artifacts/c26_cs50p_07/validation.json
+!artifacts/c26_cs50p_07/synthetic-completeness-example.json
+!artifacts/c26_cs50p_07/handoff-validation.json
+!artifacts/c26_cs50p_07/handoff/package-validation.json

@@ -144,6 +144,7 @@ def test_synthetic_smoke_without_worker_dependencies():
             str(PACKAGE / "runtime_smoke.py"),
             "--source",
             str(ROOT),
+            "--synthetic-host",
         ],
         capture_output=True,
         text=True,
@@ -156,4 +157,5 @@ def test_synthetic_smoke_without_worker_dependencies():
         transfers=1,
         reused=True,
         processing_enabled=False,
+        synthetic_host=True,
     )

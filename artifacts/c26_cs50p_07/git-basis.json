@@ -1,0 +1,53 @@
+{
+  "status": "HOLD",
+  "workspace": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50p-07",
+  "head": "f273b718c4e4c8fc8a000625eb471a68abcf24b5",
+  "branch": "feat/c26-cs50p-07-week-materials",
+  "c04_head": "6351d443afe18f806d37d64010e7050b4b5fcd73",
+  "separate_c06_head": "f273b718c4e4c8fc8a000625eb471a68abcf24b5",
+  "c04_is_ancestor": true,
+  "c06_commit_matches_prepared_head": true,
+  "c06_handoff_checksums": {
+    "c26-cs50p-06-implementation.patch": {
+      "sha256": "e482b0a3a36c334fe31383bee74087d369ad915fddc24c6f5a9c188195256bde",
+      "expected_sha256": "e482b0a3a36c334fe31383bee74087d369ad915fddc24c6f5a9c188195256bde",
+      "matches": true
+    },
+    "c26-cs50p-06.bundle": {
+      "sha256": "4770b3e7aeac6356700d59de03aab4770301d090ec738e78a9cac50394b01210",
+      "expected_sha256": "4770b3e7aeac6356700d59de03aab4770301d090ec738e78a9cac50394b01210",
+      "matches": true
+    },
+    "c26-cs50p-06.patch": {
+      "sha256": "12e7dd97d9642f47be5761094d79716d6090ca446aaf86a321c963ec8413628e",
+      "expected_sha256": "12e7dd97d9642f47be5761094d79716d6090ca446aaf86a321c963ec8413628e",
+      "matches": true
+    },
+    "implementation-source-checksums.sha256": {
+      "sha256": "cbde2bbeaefae5abf3e679537b0144f690fb3bbd4b18c5bb10173dc57ba060c1",
+      "expected_sha256": "cbde2bbeaefae5abf3e679537b0144f690fb3bbd4b18c5bb10173dc57ba060c1",
+      "matches": true
+    },
+    "package-validation.json": {
+      "sha256": "a365a412bc82ed65f84906ef9a6f766d776f8064c6c9e59d018a44e7d0553488",
+      "expected_sha256": "a365a412bc82ed65f84906ef9a6f766d776f8064c6c9e59d018a44e7d0553488",
+      "matches": true
+    },
+    "source-checksums.sha256": {
+      "sha256": "5bb5e11e51ae198df6fd32fad31d1724f645569f6ce2013a45b4c57c64febcd5",
+      "expected_sha256": "5bb5e11e51ae198df6fd32fad31d1724f645569f6ce2013a45b4c57c64febcd5",
+      "matches": true
+    }
+  },
+  "metadata_policy": "read-only; no write attempt",
+  "git_artifacts_created": [],
+  "initial_worktree_clean": true,
+  "default_branch_integration": "PENDING: merging prohibited by task; local master does not contain C06 HEAD",
+  "live_remote_state": "not queried in C07; no claim of remote C06/default integration",
+  "cleanup": "Retain all pre-existing operator-prepared branches/worktrees; no task-owned Git artifacts created",
+  "local_master_contains_c06_head": false,
+  "c06_documents_unchanged": {
+    "docs/deployment/cs50p_reproducible_runtime_validation.md": true,
+    "docs/deployment/cs50p_reproducible_runtime_operator_guide.md": true
+  }
+}

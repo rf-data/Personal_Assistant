@@ -1,0 +1,51 @@
+[Unit]
+Description=Manually approved C07 week download-only review run (C26 HOLD)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=cs50p-download
+Group=cs50p-download
+WorkingDirectory=/opt/cs50p-week-review/app
+# Root-owned reviewed code + C06 frozen venv must be staged separately first.
+ExecStart=/opt/cs50p-download-only/current/venv/bin/python -m scripts.cs50p_week acquire --inventory /etc/cs50p-week-review/%i/inventory.json --approval /etc/cs50p-week-review/%i/approval.json --archive /var/lib/cs50p-download-only/archive --checkpoints /var/lib/cs50p-download-only/reports/week-%i-checkpoints --output /var/lib/cs50p-download-only/reports/week-%i-final.json --purpose ${CS50P_WEEK_PURPOSE} $CS50P_WEEK_RETRY --confirm
+Environment=CS50P_WEEK_PURPOSE=download CS50P_WEEK_RETRY=
+EnvironmentFile=-/etc/cs50p-week-review/%i/run.env
+Environment=PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 HOME=/var/cache/cs50p-download-only HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+UnsetEnvironment=OPENAI_API_KEY HF_API_KEY ANTHROPIC_API_KEY HTTP_PROXY HTTPS_PROXY ALL_PROXY http_proxy https_proxy all_proxy SSL_CERT_FILE SSL_CERT_DIR PYTHONPATH PYTHONHOME
+UMask=0077
+CPUQuota=50%
+MemoryMax=256M
+MemorySwapMax=0
+TasksMax=32
+LimitNOFILE=128
+LimitCORE=0
+LimitFSIZE=64M
+TimeoutStartSec=600
+TimeoutStopSec=30
+KillMode=control-group
+KillSignal=SIGTERM
+SendSIGKILL=yes
+Restart=no
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+TemporaryFileSystem=/tmp:rw,nosuid,nodev,noexec,size=32M
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+LockPersonality=yes
+RestrictNamespaces=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+ReadWritePaths=/var/lib/cs50p-download-only/archive /var/lib/cs50p-download-only/reports /var/cache/cs50p-download-only
+InaccessiblePaths=-/run/docker.sock -/var/run/docker.sock -/var/lib/cs50p-mvp -/opt/cs50p
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cs50p-week-download

@@ -138,3 +138,37 @@ class CapacityTransport(httpx.BaseTransport):
 
     def close(self):
         self.inner.close()
+
+
+class TransferBudget(httpx.BaseTransport):
+    """Payload budget across all attempts, including failed attempts."""
+
+    def __init__(self, inner, maximum=6 * 1024**2):
+        self.inner, self.remaining = inner, maximum
+
+    def handle_request(self, request):
+        response = self.inner.handle_request(request)
+        owner, stream = self, response.stream
+
+        class Bounded(httpx.SyncByteStream):
+            def __iter__(self):
+                for block in stream:
+                    owner.remaining -= len(block)
+                    if owner.remaining < 0:
+                        raise ValueError("Per-run transfer budget exceeded")
+                    yield block
+
+            def close(self):
+                stream.close()
+
+        return httpx.Response(
+            response.status_code,
+            headers=response.headers,
+            stream=Bounded(),
+            extensions=response.extensions,
+        )
+
+    # batch.obtain owns each short-lived HTTP client, but this shared budget
+    # outlives those clients. HTTPTransport pools can be reopened after close.
+    def close(self):
+        self.inner.close()

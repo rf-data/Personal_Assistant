@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "observed_on": "2026-10-28",
+  "evidence_kind": "official_browser_link_observations",
+  "limitations": [
+    "No course material files were downloaded or archived.",
+    "The browser renders asset link labels but does not expose all exact hrefs without fetching the target. Unresolved hrefs remain null, never inferred from CDN naming patterns.",
+    "Availability and sizes were not probed. These observations are not operator exports or source grants. Host HTML exports must replace unresolved link observations before claiming complete discovery."
+  ],
+  "week_url": "https://cs50.harvard.edu/python/weeks/0/",
+  "notes_url": "https://cs50.harvard.edu/python/notes/0/",
+  "problem_set_url": "https://cs50.harvard.edu/python/psets/0/",
+  "shorts": [
+    {
+      "id": "visual_studio_code_for_cs50",
+      "title": "Visual Studio Code for CS50",
+      "source_url": "https://cs50.harvard.edu/python/shorts/visual_studio_code_for_cs50/",
+      "offered": [
+        "audio",
+        "slides",
+        "subtitles",
+        "transcript",
+        "video"
+      ],
+      "source_code_offered": false,
+      "source_index_url": null,
+      "observed_video_variants": [
+        "CS50 Video Player",
+        "YouTube",
+        "MP4 360p",
+        "MP4 720p",
+        "MP4 1080p",
+        "MP4 SDR 4K",
+        "MP4 HDR 4K"
+      ]
+    },
+    {
+      "id": "functions",
+      "title": "Functions",
+      "source_url": "https://cs50.harvard.edu/python/shorts/functions/",
+      "offered": [
+        "audio",
+        "source_code",
+        "subtitles",
+        "transcript",
+        "video"
+      ],
+      "source_code_offered": true,
+      "source_index_url": "https://cdn.cs50.net/python/2023/x/shorts/functions/src/",
+      "index_observed_files": [
+        "hello0.py",
+        "hello1.py",
+        "hello2.py"
+      ],
+      "observed_video_variants": [
+        "CS50 Video Player",
+        "YouTube",
+        "MP4 360p",
+        "MP4 720p",
+        "MP4 1080p"
+      ]
+    },
+    {
+      "id": "variables",
+      "title": "Variables",
+      "source_url": "https://cs50.harvard.edu/python/shorts/variables/",
+      "offered": [
+        "audio",
+        "source_code",
+        "subtitles",
+        "transcript",
+        "video"
+      ],
+      "source_code_offered": true,
+      "source_index_url": "https://cdn.cs50.net/python/2023/x/shorts/variables/src/",
+      "index_observed_files": [
+        "clock0.py",
+        "clock1.py",
+        "clock2.py",
+        "clock3.py",
+        "clock4.py",
+        "clock5.py"
+      ],
+      "observed_video_variants": [
+        "CS50 Video Player",
+        "YouTube",
+        "MP4 360p",
+        "MP4 720p",
+        "MP4 1080p"
+      ]
+    },
+    {
+      "id": "return_values",
+      "title": "Return Values",
+      "source_url": "https://cs50.harvard.edu/python/shorts/return_values/",
+      "offered": [
+        "audio",
+        "source_code",
+        "subtitles",
+        "transcript",
+        "video"
+      ],
+      "source_code_offered": true,
+      "source_index_url": "https://cdn.cs50.net/python/2023/x/shorts/return_values/src/",
+      "index_observed_files": [
+        "area0.py",
+        "area1.py",
+        "area2.py",
+        "area3.py"
+      ],
+      "observed_video_variants": [
+        "CS50 Video Player",
+        "YouTube",
+        "MP4 360p",
+        "MP4 720p",
+        "MP4 1080p"
+      ]
+    },
+    {
+      "id": "side_effects",
+      "title": "Side Effects",
+      "source_url": "https://cs50.harvard.edu/python/shorts/side_effects/",
+      "offered": [
+        "audio",
+        "source_code",
+        "subtitles",
+        "transcript",
+        "video"
+      ],
+      "source_code_offered": true,
+      "source_index_url": "https://cdn.cs50.net/python/2024/x/shorts/side_effects/src/",
+      "index_error": "Browser cache miss; index URL resolved from official page, file listing unavailable",
+      "observed_video_variants": [
+        "CS50 Video Player",
+        "YouTube",
+        "MP4 360p",
+        "MP4 720p",
+        "MP4 1080p",
+        "MP4 4K"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "indoor",
+      "title": "Indoor Voice",
+      "description": "Eingabe als Kleinbuchstaben ausgeben; die Beschreibung und Python-Dokumentationslinks liegen auf der eigenen Aufgabenseite.",
+      "source_url": "https://cs50.harvard.edu/python/psets/0/indoor/",
+      "attachments_offered": false
+    },
+    {
+      "id": "playback",
+      "title": "Playback Speed",
+      "description": "Leerzeichen in einer Eingabe durch jeweils drei Punkte ersetzen. Keine bereitgestellte Datei auf der untersuchten Seite.",
+      "source_url": "https://cs50.harvard.edu/python/psets/0/playback/",
+      "attachments_offered": false
+    },
+    {
+      "id": "faces",
+      "title": "Making Faces",
+      "description": "Eine Konvertierungsfunktion ersetzt die beschriebenen Emoticons durch Emoji; weitere Referenzlinks stehen in der Aufgabenbeschreibung.",
+      "source_url": "https://cs50.harvard.edu/python/psets/0/faces/",
+      "attachments_offered": false
+    },
+    {
+      "id": "einstein",
+      "title": "Einstein",
+      "description": "Eine ganzzahlige Masse anhand der angegebenen Formel in Energie umrechnen. Keine bereitgestellte Datensatzdatei beobachtet.",
+      "source_url": "https://cs50.harvard.edu/python/psets/0/einstein/",
+      "attachments_offered": false
+    },
+    {
+      "id": "tip",
+      "title": "Tip Calculator",
+      "description": "Zwei Konvertierungsfunktionen in einem auf der HTML-Seite eingebetteten Starterprogramm ergänzen. Kein separater Starterdateilink beobachtet.",
+      "source_url": "https://cs50.harvard.edu/python/psets/0/tip/",
+      "attachments_offered": false,
+      "inline_starter_code": true
+    }
+  ]
+}
