@@ -1,0 +1,10 @@
+# Exact CI metadata exceptions; root R16 input .gitignore stays byte-identical.
+!support/r16_manifest.json
+!support/dependency_resolution.json
+!acceptance-overlay/src/lecture_summary/__init__.py
+**/.env
+**/.env.*
+**/secrets.toml
+**/*.pyc
+**/__pycache__/
+**/.venv/

@@ -1,0 +1,83 @@
+name: C27 R18 isolated validation
+
+on:
+  push:
+    branches:
+      - ci/c27-validation
+  workflow_dispatch:
+    inputs:
+      python_image:
+        description: 'Reviewed docker.io/library/python:3.12-slim-bookworm@sha256:<64 hex> digest'
+        required: true
+        type: string
+        default: docker.io/library/python:3.12-slim-bookworm@sha256:623674a14ef93d052bb9b0de4dbf5f28eb578a35263838941cc8aa43213c1487
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c27-r18-validation
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: ${{ github.repository == 'rf-data/Personal_Assistant' && github.ref == 'refs/heads/ci/c27-validation' }}
+    name: ${{ matrix.profile }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        profile: [PDF_PROFILE, UI_PROFILE, NAMESPACE_INTEGRATION]
+    env:
+      PROFILE: ${{ matrix.profile }}
+      # Reviewed linux/amd64 pin; manual input intentionally overrides this push fallback.
+      PYTHON_IMAGE: ${{ inputs.python_image || 'docker.io/library/python:3.12-slim-bookworm@sha256:623674a14ef93d052bb9b0de4dbf5f28eb578a35263838941cc8aa43213c1487' }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PIP_NO_CACHE_DIR: '1'
+      UV_NO_CACHE: '1'
+    steps:
+      - name: Checkout selected immutable run revision
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2; official pinned action.yml read during R18
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+
+      - name: Prepare and run isolated profile
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          python3 -B ci/c27-r18/support/ci_job.py \
+            --profile "$PROFILE" --python-image "$PYTHON_IMAGE" \
+            --checkout "$GITHUB_WORKSPACE" \
+            --scratch "$RUNNER_TEMP/c27-r18-$PROFILE" \
+            --reports "$RUNNER_TEMP/c27-r18-reports/$PROFILE"
+
+      - name: Publish readable summary including actual execution counts
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          report="$RUNNER_TEMP/c27-r18-reports/$PROFILE/job-report.md"
+          if [[ -f "$report" ]]; then
+            cat "$report" >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '%s\n' "$PROFILE: INCOMPLETE; no complete execution report." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+      - name: Upload JUnit and evidence even after failure
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2; official pinned action.yml read during R18
+        with:
+          name: c27-r18-${{ matrix.profile }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/c27-r18-reports/${{ matrix.profile }}/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 6
+          include-hidden-files: false

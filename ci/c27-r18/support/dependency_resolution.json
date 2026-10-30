@@ -1,0 +1,1584 @@
+{
+  "lock_sha256": "63e72cbcf0df19c6f06e8088f1406e7404c2e0fe4b094a9f91f7fce5276cc19c",
+  "target_environment": {
+    "implementation_name": "cpython",
+    "implementation_version": "3.12.0",
+    "os_name": "posix",
+    "platform_machine": "x86_64",
+    "platform_release": "6.6.119-09283-g9c138e0af8c3",
+    "platform_system": "Linux",
+    "platform_version": "#1 SMP PREEMPT_DYNAMIC Sat, 30 May 2026 01:16:16 -0700",
+    "python_full_version": "3.12.0",
+    "platform_python_implementation": "CPython",
+    "python_version": "3.12",
+    "sys_platform": "linux",
+    "extra": ""
+  },
+  "method": "Static uv.lock graph traversal, PEP 508 markers, PEP 425 wheel tags; no metadata downloads/resolution/install",
+  "profiles": {
+    "PDF_PROFILE": {
+      "roots": [
+        "httpx",
+        "pydantic",
+        "python-dotenv",
+        "pyyaml",
+        "tenacity",
+        "typer",
+        "pytest",
+        "beautifulsoup4",
+        "pymupdf"
+      ],
+      "count": 28,
+      "wheel_bytes": 32275486,
+      "packages": [
+        {
+          "name": "annotated-doc",
+          "version": "0.0.5",
+          "filename": "annotated_doc-0.0.5-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/3e/30/e900b21425a860e195f32e37657aa1f7c7f2b1bfb26f03ca209b90933c06/annotated_doc-0.0.5-py3-none-any.whl",
+          "hash": "sha256:117bac03a25ede5df5440e855b32d556049ca169ead221505badf432fed4b101",
+          "size": 5302,
+          "upload-time": "2026-07-28T13:50:57.239Z"
+        },
+        {
+          "name": "annotated-types",
+          "version": "0.8.0",
+          "filename": "annotated_types-0.8.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/99/91/8acff4f5e50511b911bbccb72b8628a49c68ce14148cd9f6431094859a90/annotated_types-0.8.0-py3-none-any.whl",
+          "hash": "sha256:f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+          "size": 13427,
+          "upload-time": "2026-07-23T20:16:12.938Z"
+        },
+        {
+          "name": "anyio",
+          "version": "4.14.2",
+          "filename": "anyio-4.14.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/da/35/f2287558c17e29fafc8ef3daf819bb9834061cfa43bff8014f7df7f63bdc/anyio-4.14.2-py3-none-any.whl",
+          "hash": "sha256:9f505dda5ac9f0c8309b5e8bd445a8c2bf7246f3ce950121e45ea15bc41d1494",
+          "size": 125813,
+          "upload-time": "2026-07-12T20:29:05.763Z"
+        },
+        {
+          "name": "beautifulsoup4",
+          "version": "4.15.0",
+          "filename": "beautifulsoup4-4.15.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/88/c6/92fcd42f1ba33e1184263f25bfabf3d27c383410470f169e4b8163bf9c17/beautifulsoup4-4.15.0-py3-none-any.whl",
+          "hash": "sha256:d6f88de62e1d4e38ecb1077eb9724cd0eff29d2a08ca16a401e9b9e93f117cf9",
+          "size": 109924,
+          "upload-time": "2026-06-07T16:44:21.566Z"
+        },
+        {
+          "name": "certifi",
+          "version": "2026.7.22",
+          "filename": "certifi-2026.7.22-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/0b/a7/71ac2cff56fec219ed242bb11b8efb69fcc4bec75db06fb7bfe35de520e6/certifi-2026.7.22-py3-none-any.whl",
+          "hash": "sha256:62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
+          "size": 136983,
+          "upload-time": "2026-07-22T03:35:11.276Z"
+        },
+        {
+          "name": "h11",
+          "version": "0.16.0",
+          "filename": "h11-0.16.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl",
+          "hash": "sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86",
+          "size": 37515,
+          "upload-time": "2025-04-24T03:35:24.344Z"
+        },
+        {
+          "name": "httpcore",
+          "version": "1.0.9",
+          "filename": "httpcore-1.0.9-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl",
+          "hash": "sha256:2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55",
+          "size": 78784,
+          "upload-time": "2025-04-24T22:06:20.566Z"
+        },
+        {
+          "name": "httpx",
+          "version": "0.28.1",
+          "filename": "httpx-0.28.1-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl",
+          "hash": "sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad",
+          "size": 73517,
+          "upload-time": "2024-12-06T15:37:21.509Z"
+        },
+        {
+          "name": "idna",
+          "version": "3.19",
+          "filename": "idna-3.19-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/57/b0/0e52c878c53f245edd3a11020f20979b3f490f245af532c7cae3027754b5/idna-3.19-py3-none-any.whl",
+          "hash": "sha256:815e7be7a7806d54abb586dc943addc79e8b2ee16915059658cbeff4b1b43bf4",
+          "size": 68550,
+          "upload-time": "2026-08-18T05:14:22.343Z"
+        },
+        {
+          "name": "iniconfig",
+          "version": "2.3.0",
+          "filename": "iniconfig-2.3.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl",
+          "hash": "sha256:f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
+          "size": 7484,
+          "upload-time": "2025-10-18T21:55:41.639Z"
+        },
+        {
+          "name": "markdown-it-py",
+          "version": "4.2.0",
+          "filename": "markdown_it_py-4.2.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/b3/81/4da04ced5a082363ecfa159c010d200ecbd959ae410c10c0264a38cac0f5/markdown_it_py-4.2.0-py3-none-any.whl",
+          "hash": "sha256:9f7ebbcd14fe59494226453aed97c1070d83f8d24b6fc3a3bcf9a38092641c4a",
+          "size": 91687,
+          "upload-time": "2026-05-07T12:08:27.182Z"
+        },
+        {
+          "name": "mdurl",
+          "version": "0.1.2",
+          "filename": "mdurl-0.1.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl",
+          "hash": "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8",
+          "size": 9979,
+          "upload-time": "2022-08-14T12:40:09.779Z"
+        },
+        {
+          "name": "packaging",
+          "version": "26.3",
+          "filename": "packaging-26.3-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+          "hash": "sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+          "size": 129956,
+          "upload-time": "2026-08-04T18:15:27.159Z"
+        },
+        {
+          "name": "pluggy",
+          "version": "1.6.0",
+          "filename": "pluggy-1.6.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/54/20/4d324d65cc6d9205fabedc306948156824eb9f0ee1633355a8f7ec5c66bf/pluggy-1.6.0-py3-none-any.whl",
+          "hash": "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
+          "size": 20538,
+          "upload-time": "2025-05-15T12:30:06.134Z"
+        },
+        {
+          "name": "pydantic",
+          "version": "2.13.4",
+          "filename": "pydantic-2.13.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/fd/7b/122376b1fd3c62c1ed9dc80c931ace4844b3c55407b6fb2d199377c9736f/pydantic-2.13.4-py3-none-any.whl",
+          "hash": "sha256:45a282cde31d808236fd7ea9d919b128653c8b38b393d1c4ab335c62924d9aba",
+          "size": 472262,
+          "upload-time": "2026-05-06T13:43:02.641Z"
+        },
+        {
+          "name": "pydantic-core",
+          "version": "2.46.4",
+          "filename": "pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/5f/97/2aab507d3d00ca626e8e57c1eac6a79e4e5fbcc63eb99733ff55d1717f65/pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "hash": "sha256:926c9541b14b12b1681dca8a0b75feb510b06c6341b70a8e500c2fdcff837cce",
+          "size": 2094516,
+          "upload-time": "2026-05-06T13:39:10.577Z"
+        },
+        {
+          "name": "pygments",
+          "version": "2.21.0",
+          "filename": "pygments-2.21.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl",
+          "hash": "sha256:2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+          "size": 1250147,
+          "upload-time": "2026-08-17T08:02:44.912Z"
+        },
+        {
+          "name": "pymupdf",
+          "version": "1.28.2",
+          "filename": "pymupdf-1.28.2-cp310-abi3-manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/c7/06/dace3e27af26690cb20bead80dbac42941b0841eb689b8aabbd67dde16f0/pymupdf-1.28.2-cp310-abi3-manylinux_2_28_x86_64.whl",
+          "hash": "sha256:397d6715c1f0df7548a92d0afd8ce370fc48fa47aeefac16be2bc04a16a8227f",
+          "size": 25762500,
+          "upload-time": "2026-08-06T21:38:17.438Z"
+        },
+        {
+          "name": "pytest",
+          "version": "9.1.1",
+          "filename": "pytest-9.1.1-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/24/25/1de2678b631f5a49215c6c96fff41ba892b0a34df68d6d80292b1b48aa7f/pytest-9.1.1-py3-none-any.whl",
+          "hash": "sha256:37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+          "size": 386536,
+          "upload-time": "2026-06-19T10:58:31.347Z"
+        },
+        {
+          "name": "python-dotenv",
+          "version": "1.2.3",
+          "filename": "python_dotenv-1.2.3-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/0d/17/c5c6b53ddc18f297992099b3d9ec16c855c0ccc83263a21fe4d1c625ec6c/python_dotenv-1.2.3-py3-none-any.whl",
+          "hash": "sha256:904552145e8bfed22162c09dab1c2b9b54fefa7b23ba780f4f26ca0316b0f0d9",
+          "size": 22780,
+          "upload-time": "2026-08-16T16:54:52.473Z"
+        },
+        {
+          "name": "pyyaml",
+          "version": "6.0.3",
+          "filename": "pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/8b/9d/b3589d3877982d4f2329302ef98a8026e7f4443c765c46cfecc8858c6b4b/pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+          "hash": "sha256:ba1cc08a7ccde2d2ec775841541641e4548226580ab850948cbfda66a1befcdc",
+          "size": 807870,
+          "upload-time": "2025-09-25T21:32:16.431Z"
+        },
+        {
+          "name": "rich",
+          "version": "14.3.4",
+          "filename": "rich-14.3.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/b3/76/6d163cfac87b632216f71879e6b2cf17163f773ff59c00b5ff4900a80fa3/rich-14.3.4-py3-none-any.whl",
+          "hash": "sha256:07e7adb4690f68864777b1450859253bed81a99a31ac321ac1817b2313558952",
+          "size": 310480,
+          "upload-time": "2026-04-11T02:57:47.484Z"
+        },
+        {
+          "name": "shellingham",
+          "version": "1.5.4",
+          "filename": "shellingham-1.5.4-py2.py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl",
+          "hash": "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686",
+          "size": 9755,
+          "upload-time": "2023-10-24T04:13:38.866Z"
+        },
+        {
+          "name": "soupsieve",
+          "version": "2.9.2",
+          "filename": "soupsieve-2.9.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/eb/dc/ad025c1ee131eba60c69f4dd5779b18fcf1e6b21a343e2162a84d5d133c7/soupsieve-2.9.2-py3-none-any.whl",
+          "hash": "sha256:8089a26fd974ca7a1f30276d3d8492ab266ab15af581642dfe8aa162e0c1c823",
+          "size": 37370,
+          "upload-time": "2026-08-07T00:57:23.524Z"
+        },
+        {
+          "name": "tenacity",
+          "version": "9.1.4",
+          "filename": "tenacity-9.1.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/d7/c1/eb8f9debc45d3b7918a32ab756658a0904732f75e555402972246b0b8e71/tenacity-9.1.4-py3-none-any.whl",
+          "hash": "sha256:6095a360c919085f28c6527de529e76a06ad89b23659fa881ae0649b867a9d55",
+          "size": 28926,
+          "upload-time": "2026-02-07T10:45:32.24Z"
+        },
+        {
+          "name": "typer",
+          "version": "0.26.8",
+          "filename": "typer-0.26.8-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/80/87/b9fd69c92c6102a066e1b86a35243f53e70bd4c709f2a26d9f4fee4f4dc0/typer-0.26.8-py3-none-any.whl",
+          "hash": "sha256:3512ca79ac5c11113414b36e80281b872884477722440691c89d1112e321a49c",
+          "size": 122564,
+          "upload-time": "2026-06-26T09:22:44.72Z"
+        },
+        {
+          "name": "typing-extensions",
+          "version": "4.16.0",
+          "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+          "hash": "sha256:481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+          "size": 45571,
+          "upload-time": "2026-07-02T08:40:04.659Z"
+        },
+        {
+          "name": "typing-inspection",
+          "version": "0.4.4",
+          "filename": "typing_inspection-0.4.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/67/81/4add07e5172b7ac40d8ed5ff580409a7801a4fe26d529bdd915401dabfbe/typing_inspection-0.4.4-py3-none-any.whl",
+          "hash": "sha256:65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+          "size": 14750,
+          "upload-time": "2026-08-12T12:37:24.648Z"
+        }
+      ],
+      "active_edges": [
+        {
+          "name": "pymupdf"
+        },
+        {
+          "name": "beautifulsoup4"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "soupsieve"
+        },
+        {
+          "name": "pytest"
+        },
+        {
+          "name": "pygments"
+        },
+        {
+          "name": "pluggy"
+        },
+        {
+          "name": "packaging"
+        },
+        {
+          "name": "iniconfig"
+        },
+        {
+          "name": "typer"
+        },
+        {
+          "name": "shellingham"
+        },
+        {
+          "name": "rich"
+        },
+        {
+          "name": "pygments"
+        },
+        {
+          "name": "markdown-it-py"
+        },
+        {
+          "name": "mdurl"
+        },
+        {
+          "name": "annotated-doc"
+        },
+        {
+          "name": "tenacity"
+        },
+        {
+          "name": "pyyaml"
+        },
+        {
+          "name": "python-dotenv"
+        },
+        {
+          "name": "pydantic"
+        },
+        {
+          "name": "typing-inspection"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "pydantic-core"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "annotated-types"
+        },
+        {
+          "name": "httpx"
+        },
+        {
+          "name": "idna"
+        },
+        {
+          "name": "httpcore"
+        },
+        {
+          "name": "h11"
+        },
+        {
+          "name": "certifi"
+        },
+        {
+          "name": "certifi"
+        },
+        {
+          "name": "anyio"
+        },
+        {
+          "name": "typing-extensions",
+          "marker": "python_full_version < '3.13'"
+        },
+        {
+          "name": "idna"
+        }
+      ]
+    },
+    "UI_PROFILE": {
+      "roots": [
+        "httpx",
+        "pydantic",
+        "python-dotenv",
+        "pyyaml",
+        "tenacity",
+        "typer",
+        "pytest",
+        "beautifulsoup4",
+        "pymupdf",
+        "streamlit"
+      ],
+      "count": 59,
+      "wheel_bytes": 141878277,
+      "packages": [
+        {
+          "name": "altair",
+          "version": "6.2.2",
+          "filename": "altair-6.2.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/e3/99/d6031f4f146298951c46b1bf1cc160c2a63f6e44b3c13a30054add100d5f/altair-6.2.2-py3-none-any.whl",
+          "hash": "sha256:94014f8ad8617c3cb163d1137359cd6db5ba134b9b46d93cfd8b609fd245a583",
+          "size": 797613,
+          "upload-time": "2026-06-23T12:47:11.451Z"
+        },
+        {
+          "name": "annotated-doc",
+          "version": "0.0.5",
+          "filename": "annotated_doc-0.0.5-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/3e/30/e900b21425a860e195f32e37657aa1f7c7f2b1bfb26f03ca209b90933c06/annotated_doc-0.0.5-py3-none-any.whl",
+          "hash": "sha256:117bac03a25ede5df5440e855b32d556049ca169ead221505badf432fed4b101",
+          "size": 5302,
+          "upload-time": "2026-07-28T13:50:57.239Z"
+        },
+        {
+          "name": "annotated-types",
+          "version": "0.8.0",
+          "filename": "annotated_types-0.8.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/99/91/8acff4f5e50511b911bbccb72b8628a49c68ce14148cd9f6431094859a90/annotated_types-0.8.0-py3-none-any.whl",
+          "hash": "sha256:f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+          "size": 13427,
+          "upload-time": "2026-07-23T20:16:12.938Z"
+        },
+        {
+          "name": "anyio",
+          "version": "4.14.2",
+          "filename": "anyio-4.14.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/da/35/f2287558c17e29fafc8ef3daf819bb9834061cfa43bff8014f7df7f63bdc/anyio-4.14.2-py3-none-any.whl",
+          "hash": "sha256:9f505dda5ac9f0c8309b5e8bd445a8c2bf7246f3ce950121e45ea15bc41d1494",
+          "size": 125813,
+          "upload-time": "2026-07-12T20:29:05.763Z"
+        },
+        {
+          "name": "attrs",
+          "version": "26.1.0",
+          "filename": "attrs-26.1.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl",
+          "hash": "sha256:c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+          "size": 67548,
+          "upload-time": "2026-03-19T14:22:23.645Z"
+        },
+        {
+          "name": "beautifulsoup4",
+          "version": "4.15.0",
+          "filename": "beautifulsoup4-4.15.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/88/c6/92fcd42f1ba33e1184263f25bfabf3d27c383410470f169e4b8163bf9c17/beautifulsoup4-4.15.0-py3-none-any.whl",
+          "hash": "sha256:d6f88de62e1d4e38ecb1077eb9724cd0eff29d2a08ca16a401e9b9e93f117cf9",
+          "size": 109924,
+          "upload-time": "2026-06-07T16:44:21.566Z"
+        },
+        {
+          "name": "blinker",
+          "version": "1.9.0",
+          "filename": "blinker-1.9.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/10/cb/f2ad4230dc2eb1a74edf38f1a38b9b52277f75bef262d8908e60d957e13c/blinker-1.9.0-py3-none-any.whl",
+          "hash": "sha256:ba0efaa9080b619ff2f3459d1d500c57bddea4a6b424b60a91141db6fd2f08bc",
+          "size": 8458,
+          "upload-time": "2024-11-08T17:25:46.184Z"
+        },
+        {
+          "name": "certifi",
+          "version": "2026.7.22",
+          "filename": "certifi-2026.7.22-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/0b/a7/71ac2cff56fec219ed242bb11b8efb69fcc4bec75db06fb7bfe35de520e6/certifi-2026.7.22-py3-none-any.whl",
+          "hash": "sha256:62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
+          "size": 136983,
+          "upload-time": "2026-07-22T03:35:11.276Z"
+        },
+        {
+          "name": "charset-normalizer",
+          "version": "3.5.1",
+          "filename": "charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/6f/89/bb5108dc6c3651dca963f2b0a3ba19bbcb370c94e1b6d3e0e844a58e6dca/charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+          "hash": "sha256:b9af956078716df40d985fb0dfeb2c2120c5ca92ba4ff4b388acfd01cdc14d08",
+          "size": 248801,
+          "upload-time": "2026-08-15T08:17:17.683Z"
+        },
+        {
+          "name": "click",
+          "version": "8.4.2",
+          "filename": "click-8.4.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/fb/e2/79c688af8b210d232694e31e59da9f6ec747bae31c3f5946e4e9b98860d5/click-8.4.2-py3-none-any.whl",
+          "hash": "sha256:e6f9f66136c816745b9d65817da91d61d957fb16e02e4dcd0552553c5a197b76",
+          "size": 119243,
+          "upload-time": "2026-06-24T17:45:13.73Z"
+        },
+        {
+          "name": "h11",
+          "version": "0.16.0",
+          "filename": "h11-0.16.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl",
+          "hash": "sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86",
+          "size": 37515,
+          "upload-time": "2025-04-24T03:35:24.344Z"
+        },
+        {
+          "name": "httpcore",
+          "version": "1.0.9",
+          "filename": "httpcore-1.0.9-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl",
+          "hash": "sha256:2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55",
+          "size": 78784,
+          "upload-time": "2025-04-24T22:06:20.566Z"
+        },
+        {
+          "name": "httptools",
+          "version": "0.8.0",
+          "filename": "httptools-0.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/e3/a6/febbb8b8db0f58b38e44ad6cb946e6a255ae49b55f2e8543408fb7501ccd/httptools-0.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+          "hash": "sha256:b15fc622b0f869d19207c4089a501d9bcc63ca5e071ffdd2f03f922df882dcb2",
+          "size": 523851,
+          "upload-time": "2026-05-25T22:17:10.106Z"
+        },
+        {
+          "name": "httpx",
+          "version": "0.28.1",
+          "filename": "httpx-0.28.1-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl",
+          "hash": "sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad",
+          "size": 73517,
+          "upload-time": "2024-12-06T15:37:21.509Z"
+        },
+        {
+          "name": "idna",
+          "version": "3.19",
+          "filename": "idna-3.19-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/57/b0/0e52c878c53f245edd3a11020f20979b3f490f245af532c7cae3027754b5/idna-3.19-py3-none-any.whl",
+          "hash": "sha256:815e7be7a7806d54abb586dc943addc79e8b2ee16915059658cbeff4b1b43bf4",
+          "size": 68550,
+          "upload-time": "2026-08-18T05:14:22.343Z"
+        },
+        {
+          "name": "iniconfig",
+          "version": "2.3.0",
+          "filename": "iniconfig-2.3.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl",
+          "hash": "sha256:f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
+          "size": 7484,
+          "upload-time": "2025-10-18T21:55:41.639Z"
+        },
+        {
+          "name": "itsdangerous",
+          "version": "2.2.0",
+          "filename": "itsdangerous-2.2.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/04/96/92447566d16df59b2a776c0fb82dbc4d9e07cd95062562af01e408583fc4/itsdangerous-2.2.0-py3-none-any.whl",
+          "hash": "sha256:c6242fc49e35958c8b15141343aa660db5fc54d4f13a1db01a3f5891b98700ef",
+          "size": 16234,
+          "upload-time": "2024-04-16T21:28:14.499Z"
+        },
+        {
+          "name": "jinja2",
+          "version": "3.1.6",
+          "filename": "jinja2-3.1.6-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl",
+          "hash": "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67",
+          "size": 134899,
+          "upload-time": "2025-03-05T20:05:00.369Z"
+        },
+        {
+          "name": "jsonschema",
+          "version": "4.26.0",
+          "filename": "jsonschema-4.26.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl",
+          "hash": "sha256:d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+          "size": 90630,
+          "upload-time": "2026-01-07T13:41:05.306Z"
+        },
+        {
+          "name": "jsonschema-specifications",
+          "version": "2025.9.1",
+          "filename": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+          "hash": "sha256:98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+          "size": 18437,
+          "upload-time": "2025-09-08T01:34:57.871Z"
+        },
+        {
+          "name": "markdown-it-py",
+          "version": "4.2.0",
+          "filename": "markdown_it_py-4.2.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/b3/81/4da04ced5a082363ecfa159c010d200ecbd959ae410c10c0264a38cac0f5/markdown_it_py-4.2.0-py3-none-any.whl",
+          "hash": "sha256:9f7ebbcd14fe59494226453aed97c1070d83f8d24b6fc3a3bcf9a38092641c4a",
+          "size": 91687,
+          "upload-time": "2026-05-07T12:08:27.182Z"
+        },
+        {
+          "name": "markupsafe",
+          "version": "3.0.3",
+          "filename": "markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/3c/2e/8d0c2ab90a8c1d9a24f0399058ab8519a3279d1bd4289511d74e909f060e/markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+          "hash": "sha256:d6dd0be5b5b189d31db7cda48b91d7e0a9795f31430b7f271219ab30f1d3ac9d",
+          "size": 22947,
+          "upload-time": "2025-09-27T18:36:33.86Z"
+        },
+        {
+          "name": "mdurl",
+          "version": "0.1.2",
+          "filename": "mdurl-0.1.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl",
+          "hash": "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8",
+          "size": 9979,
+          "upload-time": "2022-08-14T12:40:09.779Z"
+        },
+        {
+          "name": "narwhals",
+          "version": "2.24.0",
+          "filename": "narwhals-2.24.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/7e/85/a5bfaebfd305ac18b57b0854d74e37e586809061a91fda62f0bd50c8518e/narwhals-2.24.0-py3-none-any.whl",
+          "hash": "sha256:42fdedf44e5b2ca7505630d45b4ac3058f38d8485cba9fe1652ca23152df7489",
+          "size": 461030,
+          "upload-time": "2026-07-13T10:49:17.571Z"
+        },
+        {
+          "name": "numpy",
+          "version": "2.5.2",
+          "filename": "numpy-2.5.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/3a/5f/62d28cf019460c7f1394105b4d49d9911a9c444cb77ab0bd95a204c5a6de/numpy-2.5.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "hash": "sha256:3cdec01fa790a186d430433fdd4d4ffb70eed6f0eeb4bf05c8dbe2dce0a9bcb8",
+          "size": 16722264,
+          "upload-time": "2026-08-09T13:45:07.714Z"
+        },
+        {
+          "name": "packaging",
+          "version": "26.3",
+          "filename": "packaging-26.3-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+          "hash": "sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+          "size": 129956,
+          "upload-time": "2026-08-04T18:15:27.159Z"
+        },
+        {
+          "name": "pandas",
+          "version": "3.0.5",
+          "filename": "pandas-3.0.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/12/98/e976540c1addf70442be7842a18cf70884a964abbf69442504f4d2939989/pandas-3.0.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+          "hash": "sha256:d373ce03ffd84010ed9839fa73672a9c8256990532e158440c0085db7d914b34",
+          "size": 10998091,
+          "upload-time": "2026-07-22T22:18:15.209Z"
+        },
+        {
+          "name": "pillow",
+          "version": "12.3.0",
+          "filename": "pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/84/21/a35af28dcc61f37ed850a2d64c65c701321dfbf25085e469d5559360cbbf/pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "hash": "sha256:78cb2c6865a35ab8ff8b75fd122f6033b92a62c82801110e48ddd6c936a45d91",
+          "size": 6940830,
+          "upload-time": "2026-07-01T11:54:13.732Z"
+        },
+        {
+          "name": "pluggy",
+          "version": "1.6.0",
+          "filename": "pluggy-1.6.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/54/20/4d324d65cc6d9205fabedc306948156824eb9f0ee1633355a8f7ec5c66bf/pluggy-1.6.0-py3-none-any.whl",
+          "hash": "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
+          "size": 20538,
+          "upload-time": "2025-05-15T12:30:06.134Z"
+        },
+        {
+          "name": "protobuf",
+          "version": "6.33.6",
+          "filename": "protobuf-6.33.6-cp39-abi3-manylinux2014_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/16/92/d1e32e3e0d894fe00b15ce28ad4944ab692713f2e7f0a99787405e43533a/protobuf-6.33.6-cp39-abi3-manylinux2014_x86_64.whl",
+          "hash": "sha256:e9db7e292e0ab79dd108d7f1a94fe31601ce1ee3f7b79e0692043423020b0593",
+          "size": 323436,
+          "upload-time": "2026-03-18T19:04:55.768Z"
+        },
+        {
+          "name": "pyarrow",
+          "version": "24.0.0",
+          "filename": "pyarrow-24.0.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/b3/7a/829f7d9dfd37c207206081d6dad474d81dde29952401f07f2ba507814818/pyarrow-24.0.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+          "hash": "sha256:6165461f55ef6314f026de6638d661188e3455d3ec49834556a0ebbdbace18bb",
+          "size": 48863122,
+          "upload-time": "2026-04-21T10:47:42.056Z"
+        },
+        {
+          "name": "pydantic",
+          "version": "2.13.4",
+          "filename": "pydantic-2.13.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/fd/7b/122376b1fd3c62c1ed9dc80c931ace4844b3c55407b6fb2d199377c9736f/pydantic-2.13.4-py3-none-any.whl",
+          "hash": "sha256:45a282cde31d808236fd7ea9d919b128653c8b38b393d1c4ab335c62924d9aba",
+          "size": 472262,
+          "upload-time": "2026-05-06T13:43:02.641Z"
+        },
+        {
+          "name": "pydantic-core",
+          "version": "2.46.4",
+          "filename": "pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/5f/97/2aab507d3d00ca626e8e57c1eac6a79e4e5fbcc63eb99733ff55d1717f65/pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "hash": "sha256:926c9541b14b12b1681dca8a0b75feb510b06c6341b70a8e500c2fdcff837cce",
+          "size": 2094516,
+          "upload-time": "2026-05-06T13:39:10.577Z"
+        },
+        {
+          "name": "pydeck",
+          "version": "0.9.3",
+          "filename": "pydeck-0.9.3-py2.py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/6f/34/3998411437aff304a9ed4fa37a6fe1ef3132bcd2b5eac59851b80c86123c/pydeck-0.9.3-py2.py3-none-any.whl",
+          "hash": "sha256:d8a47c11c81fb12d51b1feb42427ff4f0e13cb599e48931021b2cba98b6849a6",
+          "size": 11428091,
+          "upload-time": "2026-07-02T23:27:06.399Z"
+        },
+        {
+          "name": "pygments",
+          "version": "2.21.0",
+          "filename": "pygments-2.21.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl",
+          "hash": "sha256:2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+          "size": 1250147,
+          "upload-time": "2026-08-17T08:02:44.912Z"
+        },
+        {
+          "name": "pymupdf",
+          "version": "1.28.2",
+          "filename": "pymupdf-1.28.2-cp310-abi3-manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/c7/06/dace3e27af26690cb20bead80dbac42941b0841eb689b8aabbd67dde16f0/pymupdf-1.28.2-cp310-abi3-manylinux_2_28_x86_64.whl",
+          "hash": "sha256:397d6715c1f0df7548a92d0afd8ce370fc48fa47aeefac16be2bc04a16a8227f",
+          "size": 25762500,
+          "upload-time": "2026-08-06T21:38:17.438Z"
+        },
+        {
+          "name": "pytest",
+          "version": "9.1.1",
+          "filename": "pytest-9.1.1-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/24/25/1de2678b631f5a49215c6c96fff41ba892b0a34df68d6d80292b1b48aa7f/pytest-9.1.1-py3-none-any.whl",
+          "hash": "sha256:37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+          "size": 386536,
+          "upload-time": "2026-06-19T10:58:31.347Z"
+        },
+        {
+          "name": "python-dateutil",
+          "version": "2.9.0.post0",
+          "filename": "python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+          "hash": "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
+          "size": 229892,
+          "upload-time": "2024-03-01T18:36:18.57Z"
+        },
+        {
+          "name": "python-dotenv",
+          "version": "1.2.3",
+          "filename": "python_dotenv-1.2.3-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/0d/17/c5c6b53ddc18f297992099b3d9ec16c855c0ccc83263a21fe4d1c625ec6c/python_dotenv-1.2.3-py3-none-any.whl",
+          "hash": "sha256:904552145e8bfed22162c09dab1c2b9b54fefa7b23ba780f4f26ca0316b0f0d9",
+          "size": 22780,
+          "upload-time": "2026-08-16T16:54:52.473Z"
+        },
+        {
+          "name": "python-multipart",
+          "version": "0.0.32",
+          "filename": "python_multipart-0.0.32-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/e1/04/e8135ebd1ad02c56ec633277529b2602ff99ff634be76cdba5744cf554fd/python_multipart-0.0.32-py3-none-any.whl",
+          "hash": "sha256:ff6d3f776f16878c894e52e107296ffc890e913c611b1a4ec6c44e2821fe2e23",
+          "size": 30042,
+          "upload-time": "2026-06-04T16:18:57.319Z"
+        },
+        {
+          "name": "pyyaml",
+          "version": "6.0.3",
+          "filename": "pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/8b/9d/b3589d3877982d4f2329302ef98a8026e7f4443c765c46cfecc8858c6b4b/pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+          "hash": "sha256:ba1cc08a7ccde2d2ec775841541641e4548226580ab850948cbfda66a1befcdc",
+          "size": 807870,
+          "upload-time": "2025-09-25T21:32:16.431Z"
+        },
+        {
+          "name": "referencing",
+          "version": "0.37.0",
+          "filename": "referencing-0.37.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/2c/58/ca301544e1fa93ed4f80d724bf5b194f6e4b945841c5bfd555878eea9fcb/referencing-0.37.0-py3-none-any.whl",
+          "hash": "sha256:381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+          "size": 26766,
+          "upload-time": "2025-10-13T15:30:47.625Z"
+        },
+        {
+          "name": "requests",
+          "version": "2.34.2",
+          "filename": "requests-2.34.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl",
+          "hash": "sha256:2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
+          "size": 73075,
+          "upload-time": "2026-05-14T19:25:26.443Z"
+        },
+        {
+          "name": "rich",
+          "version": "14.3.4",
+          "filename": "rich-14.3.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/b3/76/6d163cfac87b632216f71879e6b2cf17163f773ff59c00b5ff4900a80fa3/rich-14.3.4-py3-none-any.whl",
+          "hash": "sha256:07e7adb4690f68864777b1450859253bed81a99a31ac321ac1817b2313558952",
+          "size": 310480,
+          "upload-time": "2026-04-11T02:57:47.484Z"
+        },
+        {
+          "name": "rpds-py",
+          "version": "2026.6.3",
+          "filename": "rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/04/8f/d2f3f532616be4d06c316ef119683e832bd3d41e112bf3a88f4151c95b17/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "hash": "sha256:ecabd69db66de867690f9797f2f8fa27ba501bbc24540cbdbdc649cd15888ba6",
+          "size": 366189,
+          "upload-time": "2026-06-30T07:15:23.371Z"
+        },
+        {
+          "name": "shellingham",
+          "version": "1.5.4",
+          "filename": "shellingham-1.5.4-py2.py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl",
+          "hash": "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686",
+          "size": 9755,
+          "upload-time": "2023-10-24T04:13:38.866Z"
+        },
+        {
+          "name": "six",
+          "version": "1.17.0",
+          "filename": "six-1.17.0-py2.py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+          "hash": "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+          "size": 11050,
+          "upload-time": "2024-12-04T17:35:26.475Z"
+        },
+        {
+          "name": "soupsieve",
+          "version": "2.9.2",
+          "filename": "soupsieve-2.9.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/eb/dc/ad025c1ee131eba60c69f4dd5779b18fcf1e6b21a343e2162a84d5d133c7/soupsieve-2.9.2-py3-none-any.whl",
+          "hash": "sha256:8089a26fd974ca7a1f30276d3d8492ab266ab15af581642dfe8aa162e0c1c823",
+          "size": 37370,
+          "upload-time": "2026-08-07T00:57:23.524Z"
+        },
+        {
+          "name": "starlette",
+          "version": "1.3.1",
+          "filename": "starlette-1.3.1-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/ec/bb/2799cc2ede3ed41131f8975621e7213dfc7ef4acbbaadfa440f32500c370/starlette-1.3.1-py3-none-any.whl",
+          "hash": "sha256:c7372aae11c3c3f26a42df7bd626cec2f47d03483d261d369516a615a53714c6",
+          "size": 73632,
+          "upload-time": "2026-06-12T09:23:10.017Z"
+        },
+        {
+          "name": "streamlit",
+          "version": "1.61.1",
+          "filename": "streamlit-1.61.1-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/4f/e3/deeea39117e1ffbce29755b45bceb214692e0a0aa496a17ce742b98ef3e1/streamlit-1.61.1-py3-none-any.whl",
+          "hash": "sha256:3f0ebf6764c3f938f8107414c9533942fa85a84b57affdaa7727d562210d8ece",
+          "size": 10512871,
+          "upload-time": "2026-08-05T14:50:59.246Z"
+        },
+        {
+          "name": "tenacity",
+          "version": "9.1.4",
+          "filename": "tenacity-9.1.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/d7/c1/eb8f9debc45d3b7918a32ab756658a0904732f75e555402972246b0b8e71/tenacity-9.1.4-py3-none-any.whl",
+          "hash": "sha256:6095a360c919085f28c6527de529e76a06ad89b23659fa881ae0649b867a9d55",
+          "size": 28926,
+          "upload-time": "2026-02-07T10:45:32.24Z"
+        },
+        {
+          "name": "toml",
+          "version": "0.10.2",
+          "filename": "toml-0.10.2-py2.py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/44/6f/7120676b6d73228c96e17f1f794d8ab046fc910d781c8d151120c3f1569e/toml-0.10.2-py2.py3-none-any.whl",
+          "hash": "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b",
+          "size": 16588,
+          "upload-time": "2020-11-01T01:40:20.672Z"
+        },
+        {
+          "name": "typer",
+          "version": "0.26.8",
+          "filename": "typer-0.26.8-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/80/87/b9fd69c92c6102a066e1b86a35243f53e70bd4c709f2a26d9f4fee4f4dc0/typer-0.26.8-py3-none-any.whl",
+          "hash": "sha256:3512ca79ac5c11113414b36e80281b872884477722440691c89d1112e321a49c",
+          "size": 122564,
+          "upload-time": "2026-06-26T09:22:44.72Z"
+        },
+        {
+          "name": "typing-extensions",
+          "version": "4.16.0",
+          "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+          "hash": "sha256:481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+          "size": 45571,
+          "upload-time": "2026-07-02T08:40:04.659Z"
+        },
+        {
+          "name": "typing-inspection",
+          "version": "0.4.4",
+          "filename": "typing_inspection-0.4.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/67/81/4add07e5172b7ac40d8ed5ff580409a7801a4fe26d529bdd915401dabfbe/typing_inspection-0.4.4-py3-none-any.whl",
+          "hash": "sha256:65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+          "size": 14750,
+          "upload-time": "2026-08-12T12:37:24.648Z"
+        },
+        {
+          "name": "urllib3",
+          "version": "2.7.0",
+          "filename": "urllib3-2.7.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl",
+          "hash": "sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897",
+          "size": 131087,
+          "upload-time": "2026-05-07T16:13:17.151Z"
+        },
+        {
+          "name": "uvicorn",
+          "version": "0.52.3",
+          "filename": "uvicorn-0.52.3-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/dc/2b/ebd108734a8204c6b4b93c681c9a38c5273b3ccd5d129fee4ffc1d97772c/uvicorn-0.52.3-py3-none-any.whl",
+          "hash": "sha256:116af2710dbf47c80f463cd20ee4884b6662f4c9f227d797ddc7279d2fcc2c7c",
+          "size": 79859,
+          "upload-time": "2026-08-13T16:50:01.323Z"
+        },
+        {
+          "name": "watchdog",
+          "version": "6.0.0",
+          "filename": "watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/b5/e8/dbf020b4d98251a9860752a094d09a65e1b436ad181faf929983f697048f/watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl",
+          "hash": "sha256:20ffe5b202af80ab4266dcd3e91aae72bf2da48c0d33bdb15c66658e685e94e2",
+          "size": 79078,
+          "upload-time": "2024-11-01T14:07:07.547Z"
+        },
+        {
+          "name": "websockets",
+          "version": "16.1.1",
+          "filename": "websockets-16.1.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/fe/ed/f1831681fce0e3242346e5458486003c5f124ed69e5e0b847fd029db4973/websockets-16.1.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+          "hash": "sha256:0f62863e8a00a6d33c3d6566ec0b89f23787b747ffe0c3bc71ec0e76b82c94b1",
+          "size": 187137,
+          "upload-time": "2026-07-17T22:49:18.323Z"
+        }
+      ],
+      "active_edges": [
+        {
+          "name": "streamlit"
+        },
+        {
+          "name": "websockets"
+        },
+        {
+          "name": "watchdog",
+          "marker": "sys_platform != 'darwin'"
+        },
+        {
+          "name": "uvicorn"
+        },
+        {
+          "name": "h11"
+        },
+        {
+          "name": "click"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "toml"
+        },
+        {
+          "name": "tenacity"
+        },
+        {
+          "name": "starlette"
+        },
+        {
+          "name": "typing-extensions",
+          "marker": "python_full_version < '3.13'"
+        },
+        {
+          "name": "anyio"
+        },
+        {
+          "name": "typing-extensions",
+          "marker": "python_full_version < '3.13'"
+        },
+        {
+          "name": "idna"
+        },
+        {
+          "name": "requests"
+        },
+        {
+          "name": "urllib3"
+        },
+        {
+          "name": "idna"
+        },
+        {
+          "name": "charset-normalizer"
+        },
+        {
+          "name": "certifi"
+        },
+        {
+          "name": "python-multipart"
+        },
+        {
+          "name": "pydeck"
+        },
+        {
+          "name": "numpy"
+        },
+        {
+          "name": "jinja2"
+        },
+        {
+          "name": "markupsafe"
+        },
+        {
+          "name": "pyarrow"
+        },
+        {
+          "name": "protobuf"
+        },
+        {
+          "name": "pillow"
+        },
+        {
+          "name": "pandas"
+        },
+        {
+          "name": "python-dateutil"
+        },
+        {
+          "name": "six"
+        },
+        {
+          "name": "numpy"
+        },
+        {
+          "name": "packaging"
+        },
+        {
+          "name": "numpy"
+        },
+        {
+          "name": "itsdangerous"
+        },
+        {
+          "name": "httptools"
+        },
+        {
+          "name": "click"
+        },
+        {
+          "name": "blinker"
+        },
+        {
+          "name": "anyio"
+        },
+        {
+          "name": "altair"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "packaging"
+        },
+        {
+          "name": "narwhals"
+        },
+        {
+          "name": "jsonschema"
+        },
+        {
+          "name": "rpds-py"
+        },
+        {
+          "name": "referencing"
+        },
+        {
+          "name": "typing-extensions",
+          "marker": "python_full_version < '3.13'"
+        },
+        {
+          "name": "rpds-py"
+        },
+        {
+          "name": "attrs"
+        },
+        {
+          "name": "jsonschema-specifications"
+        },
+        {
+          "name": "referencing"
+        },
+        {
+          "name": "attrs"
+        },
+        {
+          "name": "jinja2"
+        },
+        {
+          "name": "pymupdf"
+        },
+        {
+          "name": "beautifulsoup4"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "soupsieve"
+        },
+        {
+          "name": "pytest"
+        },
+        {
+          "name": "pygments"
+        },
+        {
+          "name": "pluggy"
+        },
+        {
+          "name": "packaging"
+        },
+        {
+          "name": "iniconfig"
+        },
+        {
+          "name": "typer"
+        },
+        {
+          "name": "shellingham"
+        },
+        {
+          "name": "rich"
+        },
+        {
+          "name": "pygments"
+        },
+        {
+          "name": "markdown-it-py"
+        },
+        {
+          "name": "mdurl"
+        },
+        {
+          "name": "annotated-doc"
+        },
+        {
+          "name": "tenacity"
+        },
+        {
+          "name": "pyyaml"
+        },
+        {
+          "name": "python-dotenv"
+        },
+        {
+          "name": "pydantic"
+        },
+        {
+          "name": "typing-inspection"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "pydantic-core"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "annotated-types"
+        },
+        {
+          "name": "httpx"
+        },
+        {
+          "name": "idna"
+        },
+        {
+          "name": "httpcore"
+        },
+        {
+          "name": "h11"
+        },
+        {
+          "name": "certifi"
+        },
+        {
+          "name": "certifi"
+        },
+        {
+          "name": "anyio"
+        }
+      ]
+    },
+    "NAMESPACE_INTEGRATION": {
+      "roots": [
+        "httpx",
+        "pydantic",
+        "python-dotenv",
+        "pyyaml",
+        "tenacity",
+        "typer",
+        "pytest",
+        "beautifulsoup4",
+        "pymupdf"
+      ],
+      "count": 28,
+      "wheel_bytes": 32275486,
+      "packages": [
+        {
+          "name": "annotated-doc",
+          "version": "0.0.5",
+          "filename": "annotated_doc-0.0.5-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/3e/30/e900b21425a860e195f32e37657aa1f7c7f2b1bfb26f03ca209b90933c06/annotated_doc-0.0.5-py3-none-any.whl",
+          "hash": "sha256:117bac03a25ede5df5440e855b32d556049ca169ead221505badf432fed4b101",
+          "size": 5302,
+          "upload-time": "2026-07-28T13:50:57.239Z"
+        },
+        {
+          "name": "annotated-types",
+          "version": "0.8.0",
+          "filename": "annotated_types-0.8.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/99/91/8acff4f5e50511b911bbccb72b8628a49c68ce14148cd9f6431094859a90/annotated_types-0.8.0-py3-none-any.whl",
+          "hash": "sha256:f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+          "size": 13427,
+          "upload-time": "2026-07-23T20:16:12.938Z"
+        },
+        {
+          "name": "anyio",
+          "version": "4.14.2",
+          "filename": "anyio-4.14.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/da/35/f2287558c17e29fafc8ef3daf819bb9834061cfa43bff8014f7df7f63bdc/anyio-4.14.2-py3-none-any.whl",
+          "hash": "sha256:9f505dda5ac9f0c8309b5e8bd445a8c2bf7246f3ce950121e45ea15bc41d1494",
+          "size": 125813,
+          "upload-time": "2026-07-12T20:29:05.763Z"
+        },
+        {
+          "name": "beautifulsoup4",
+          "version": "4.15.0",
+          "filename": "beautifulsoup4-4.15.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/88/c6/92fcd42f1ba33e1184263f25bfabf3d27c383410470f169e4b8163bf9c17/beautifulsoup4-4.15.0-py3-none-any.whl",
+          "hash": "sha256:d6f88de62e1d4e38ecb1077eb9724cd0eff29d2a08ca16a401e9b9e93f117cf9",
+          "size": 109924,
+          "upload-time": "2026-06-07T16:44:21.566Z"
+        },
+        {
+          "name": "certifi",
+          "version": "2026.7.22",
+          "filename": "certifi-2026.7.22-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/0b/a7/71ac2cff56fec219ed242bb11b8efb69fcc4bec75db06fb7bfe35de520e6/certifi-2026.7.22-py3-none-any.whl",
+          "hash": "sha256:62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
+          "size": 136983,
+          "upload-time": "2026-07-22T03:35:11.276Z"
+        },
+        {
+          "name": "h11",
+          "version": "0.16.0",
+          "filename": "h11-0.16.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl",
+          "hash": "sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86",
+          "size": 37515,
+          "upload-time": "2025-04-24T03:35:24.344Z"
+        },
+        {
+          "name": "httpcore",
+          "version": "1.0.9",
+          "filename": "httpcore-1.0.9-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl",
+          "hash": "sha256:2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55",
+          "size": 78784,
+          "upload-time": "2025-04-24T22:06:20.566Z"
+        },
+        {
+          "name": "httpx",
+          "version": "0.28.1",
+          "filename": "httpx-0.28.1-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl",
+          "hash": "sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad",
+          "size": 73517,
+          "upload-time": "2024-12-06T15:37:21.509Z"
+        },
+        {
+          "name": "idna",
+          "version": "3.19",
+          "filename": "idna-3.19-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/57/b0/0e52c878c53f245edd3a11020f20979b3f490f245af532c7cae3027754b5/idna-3.19-py3-none-any.whl",
+          "hash": "sha256:815e7be7a7806d54abb586dc943addc79e8b2ee16915059658cbeff4b1b43bf4",
+          "size": 68550,
+          "upload-time": "2026-08-18T05:14:22.343Z"
+        },
+        {
+          "name": "iniconfig",
+          "version": "2.3.0",
+          "filename": "iniconfig-2.3.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl",
+          "hash": "sha256:f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
+          "size": 7484,
+          "upload-time": "2025-10-18T21:55:41.639Z"
+        },
+        {
+          "name": "markdown-it-py",
+          "version": "4.2.0",
+          "filename": "markdown_it_py-4.2.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/b3/81/4da04ced5a082363ecfa159c010d200ecbd959ae410c10c0264a38cac0f5/markdown_it_py-4.2.0-py3-none-any.whl",
+          "hash": "sha256:9f7ebbcd14fe59494226453aed97c1070d83f8d24b6fc3a3bcf9a38092641c4a",
+          "size": 91687,
+          "upload-time": "2026-05-07T12:08:27.182Z"
+        },
+        {
+          "name": "mdurl",
+          "version": "0.1.2",
+          "filename": "mdurl-0.1.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl",
+          "hash": "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8",
+          "size": 9979,
+          "upload-time": "2022-08-14T12:40:09.779Z"
+        },
+        {
+          "name": "packaging",
+          "version": "26.3",
+          "filename": "packaging-26.3-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+          "hash": "sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+          "size": 129956,
+          "upload-time": "2026-08-04T18:15:27.159Z"
+        },
+        {
+          "name": "pluggy",
+          "version": "1.6.0",
+          "filename": "pluggy-1.6.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/54/20/4d324d65cc6d9205fabedc306948156824eb9f0ee1633355a8f7ec5c66bf/pluggy-1.6.0-py3-none-any.whl",
+          "hash": "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
+          "size": 20538,
+          "upload-time": "2025-05-15T12:30:06.134Z"
+        },
+        {
+          "name": "pydantic",
+          "version": "2.13.4",
+          "filename": "pydantic-2.13.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/fd/7b/122376b1fd3c62c1ed9dc80c931ace4844b3c55407b6fb2d199377c9736f/pydantic-2.13.4-py3-none-any.whl",
+          "hash": "sha256:45a282cde31d808236fd7ea9d919b128653c8b38b393d1c4ab335c62924d9aba",
+          "size": 472262,
+          "upload-time": "2026-05-06T13:43:02.641Z"
+        },
+        {
+          "name": "pydantic-core",
+          "version": "2.46.4",
+          "filename": "pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/5f/97/2aab507d3d00ca626e8e57c1eac6a79e4e5fbcc63eb99733ff55d1717f65/pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "hash": "sha256:926c9541b14b12b1681dca8a0b75feb510b06c6341b70a8e500c2fdcff837cce",
+          "size": 2094516,
+          "upload-time": "2026-05-06T13:39:10.577Z"
+        },
+        {
+          "name": "pygments",
+          "version": "2.21.0",
+          "filename": "pygments-2.21.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl",
+          "hash": "sha256:2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+          "size": 1250147,
+          "upload-time": "2026-08-17T08:02:44.912Z"
+        },
+        {
+          "name": "pymupdf",
+          "version": "1.28.2",
+          "filename": "pymupdf-1.28.2-cp310-abi3-manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/c7/06/dace3e27af26690cb20bead80dbac42941b0841eb689b8aabbd67dde16f0/pymupdf-1.28.2-cp310-abi3-manylinux_2_28_x86_64.whl",
+          "hash": "sha256:397d6715c1f0df7548a92d0afd8ce370fc48fa47aeefac16be2bc04a16a8227f",
+          "size": 25762500,
+          "upload-time": "2026-08-06T21:38:17.438Z"
+        },
+        {
+          "name": "pytest",
+          "version": "9.1.1",
+          "filename": "pytest-9.1.1-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/24/25/1de2678b631f5a49215c6c96fff41ba892b0a34df68d6d80292b1b48aa7f/pytest-9.1.1-py3-none-any.whl",
+          "hash": "sha256:37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+          "size": 386536,
+          "upload-time": "2026-06-19T10:58:31.347Z"
+        },
+        {
+          "name": "python-dotenv",
+          "version": "1.2.3",
+          "filename": "python_dotenv-1.2.3-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/0d/17/c5c6b53ddc18f297992099b3d9ec16c855c0ccc83263a21fe4d1c625ec6c/python_dotenv-1.2.3-py3-none-any.whl",
+          "hash": "sha256:904552145e8bfed22162c09dab1c2b9b54fefa7b23ba780f4f26ca0316b0f0d9",
+          "size": 22780,
+          "upload-time": "2026-08-16T16:54:52.473Z"
+        },
+        {
+          "name": "pyyaml",
+          "version": "6.0.3",
+          "filename": "pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/8b/9d/b3589d3877982d4f2329302ef98a8026e7f4443c765c46cfecc8858c6b4b/pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+          "hash": "sha256:ba1cc08a7ccde2d2ec775841541641e4548226580ab850948cbfda66a1befcdc",
+          "size": 807870,
+          "upload-time": "2025-09-25T21:32:16.431Z"
+        },
+        {
+          "name": "rich",
+          "version": "14.3.4",
+          "filename": "rich-14.3.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/b3/76/6d163cfac87b632216f71879e6b2cf17163f773ff59c00b5ff4900a80fa3/rich-14.3.4-py3-none-any.whl",
+          "hash": "sha256:07e7adb4690f68864777b1450859253bed81a99a31ac321ac1817b2313558952",
+          "size": 310480,
+          "upload-time": "2026-04-11T02:57:47.484Z"
+        },
+        {
+          "name": "shellingham",
+          "version": "1.5.4",
+          "filename": "shellingham-1.5.4-py2.py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl",
+          "hash": "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686",
+          "size": 9755,
+          "upload-time": "2023-10-24T04:13:38.866Z"
+        },
+        {
+          "name": "soupsieve",
+          "version": "2.9.2",
+          "filename": "soupsieve-2.9.2-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/eb/dc/ad025c1ee131eba60c69f4dd5779b18fcf1e6b21a343e2162a84d5d133c7/soupsieve-2.9.2-py3-none-any.whl",
+          "hash": "sha256:8089a26fd974ca7a1f30276d3d8492ab266ab15af581642dfe8aa162e0c1c823",
+          "size": 37370,
+          "upload-time": "2026-08-07T00:57:23.524Z"
+        },
+        {
+          "name": "tenacity",
+          "version": "9.1.4",
+          "filename": "tenacity-9.1.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/d7/c1/eb8f9debc45d3b7918a32ab756658a0904732f75e555402972246b0b8e71/tenacity-9.1.4-py3-none-any.whl",
+          "hash": "sha256:6095a360c919085f28c6527de529e76a06ad89b23659fa881ae0649b867a9d55",
+          "size": 28926,
+          "upload-time": "2026-02-07T10:45:32.24Z"
+        },
+        {
+          "name": "typer",
+          "version": "0.26.8",
+          "filename": "typer-0.26.8-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/80/87/b9fd69c92c6102a066e1b86a35243f53e70bd4c709f2a26d9f4fee4f4dc0/typer-0.26.8-py3-none-any.whl",
+          "hash": "sha256:3512ca79ac5c11113414b36e80281b872884477722440691c89d1112e321a49c",
+          "size": 122564,
+          "upload-time": "2026-06-26T09:22:44.72Z"
+        },
+        {
+          "name": "typing-extensions",
+          "version": "4.16.0",
+          "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+          "hash": "sha256:481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+          "size": 45571,
+          "upload-time": "2026-07-02T08:40:04.659Z"
+        },
+        {
+          "name": "typing-inspection",
+          "version": "0.4.4",
+          "filename": "typing_inspection-0.4.4-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/67/81/4add07e5172b7ac40d8ed5ff580409a7801a4fe26d529bdd915401dabfbe/typing_inspection-0.4.4-py3-none-any.whl",
+          "hash": "sha256:65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+          "size": 14750,
+          "upload-time": "2026-08-12T12:37:24.648Z"
+        }
+      ],
+      "active_edges": [
+        {
+          "name": "pymupdf"
+        },
+        {
+          "name": "beautifulsoup4"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "soupsieve"
+        },
+        {
+          "name": "pytest"
+        },
+        {
+          "name": "pygments"
+        },
+        {
+          "name": "pluggy"
+        },
+        {
+          "name": "packaging"
+        },
+        {
+          "name": "iniconfig"
+        },
+        {
+          "name": "typer"
+        },
+        {
+          "name": "shellingham"
+        },
+        {
+          "name": "rich"
+        },
+        {
+          "name": "pygments"
+        },
+        {
+          "name": "markdown-it-py"
+        },
+        {
+          "name": "mdurl"
+        },
+        {
+          "name": "annotated-doc"
+        },
+        {
+          "name": "tenacity"
+        },
+        {
+          "name": "pyyaml"
+        },
+        {
+          "name": "python-dotenv"
+        },
+        {
+          "name": "pydantic"
+        },
+        {
+          "name": "typing-inspection"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "pydantic-core"
+        },
+        {
+          "name": "typing-extensions"
+        },
+        {
+          "name": "annotated-types"
+        },
+        {
+          "name": "httpx"
+        },
+        {
+          "name": "idna"
+        },
+        {
+          "name": "httpcore"
+        },
+        {
+          "name": "h11"
+        },
+        {
+          "name": "certifi"
+        },
+        {
+          "name": "certifi"
+        },
+        {
+          "name": "anyio"
+        },
+        {
+          "name": "typing-extensions",
+          "marker": "python_full_version < '3.13'"
+        },
+        {
+          "name": "idna"
+        }
+      ]
+    }
+  }
+}
