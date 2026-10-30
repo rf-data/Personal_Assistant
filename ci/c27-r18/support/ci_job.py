@@ -74,7 +74,7 @@ def run_phase(image, source, scope, profile, collect, destination, scratch):
             '--cpus','2','--memory','4g','--memory-swap','4g','--pids-limit','256',
             '--shm-size','64m','--ulimit','nofile=1024:1024',
             '--ulimit','fsize=134217728:134217728',
-            '--log-driver','local','--log-opt','max-size=10m','--log-opt','max-file=1',
+            '--log-driver','local','--log-opt','max-size=10m','--log-opt','max-file=1','--log-opt','compress=false',
             '--tmpfs','/work:rw,nosuid,nodev,size=2g,mode=1777',
             '--tmpfs','/tmp:rw,nosuid,nodev,size=512m,mode=1777',
             '--mount',f'type=bind,src={persistent},dst=/results',
