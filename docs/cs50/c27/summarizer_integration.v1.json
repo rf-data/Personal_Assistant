@@ -1,0 +1,53 @@
+{
+  "base_commit": "a8af1d9372eb435d3e1331c33b047d21120d57c2",
+  "patch_sha256": "dd11706ba7575e31ae786e5df860fc51f7c34ddbf50c9f3c35a5e644f4aa3f57",
+  "isolated_apply": "passed_except_documented_ignore_context",
+  "isolated_fake_e2e": "passed",
+  "manifest_checks": {
+    "docs/lecture_summary/README.md": true,
+    "docs/lecture_summary/architecture.md": true,
+    "docs/lecture_summary/example-summary.json": true,
+    "docs/lecture_summary/example-summary.md": true,
+    "docs/lecture_summary/offline-report.json": true,
+    "docs/lecture_summary/operations.md": true,
+    "docs/lecture_summary/test-results.txt": true,
+    "docs/lecture_summary/validation.json": true,
+    "docs/lecture_summary/validation.md": true,
+    "frontend/pages/G_p0_lecture_summarizer.py": true,
+    "lecture_summarizer_app.py": true,
+    "scripts/lecture_summary_offline.py": true,
+    "src/lecture_summary/__init__.py": true,
+    "src/lecture_summary/adapter.py": true,
+    "src/lecture_summary/engine.py": true,
+    "src/lecture_summary/export.py": true,
+    "src/lecture_summary/llm.py": true,
+    "src/lecture_summary/models.py": true,
+    "src/lecture_summary/store.py": true,
+    "src/llm/model_litellm.py": true,
+    "tests/fixtures/lecture_summary/catalog.json": true,
+    "tests/fixtures/lecture_summary/sources/hello.py": true,
+    "tests/fixtures/lecture_summary/sources/notes.txt": true,
+    "tests/fixtures/lecture_summary/sources/transcript.json": true,
+    "tests/test_lecture_summary.py": true,
+    "tests/test_lecture_summary_ui.py": true
+  },
+  "gitignore_resolution": "retain entire C27 prefix, append only C26-LS-01 block",
+  "source_worktree_modified": false,
+  "original_patch_full_apply_check": "failed only .gitignore:303; documented context mismatch",
+  "source_manifest_file_sha256": "f0426a8f8ca0eb8dc4638b485a3e8b3225b37caef790bdbca1343a51e0da0223",
+  "source_manifest_unchanged": true,
+  "post_integration_deviations": {
+    ".gitignore": {
+      "original_handoff_sha256": "3298d8f40cd122a5652ae33ed739408388cff38e611a087101f721fa84aa067f",
+      "c27_sha256": "03428d5bbbfd113ad11d85e3ca9ceadf838cda532c61577d15c53e7dcb59bec0",
+      "reason": "preserve C27 ignore prefix and add exact evidence exceptions"
+    },
+    "src/lecture_summary/llm.py": {
+      "original_handoff_sha256": "d038bda522d4cb541e575c9505bf0d182f83c9985cd452610bf97a1ad12e4d2b",
+      "c27_sha256": "59db71b61c999a0b3fb6f8e9448eda3029d0acbe048717130d3e2bfb305f34ec",
+      "reason": "bound fake topic to existing 200-character contract; preserve complete claim text; real-TXT regression passed"
+    }
+  },
+  "existing_c27_ignore_rules_preserved_byte_for_byte": true,
+  "final_other_manifest_files_unchanged": true
+}

@@ -1,0 +1,114 @@
+{
+  "base_commit": "1584a2807c8f9d75604ab17a4ea239d8f4a0882b",
+  "files": {
+    ".gitignore": {
+      "sha256": "3298d8f40cd122a5652ae33ed739408388cff38e611a087101f721fa84aa067f",
+      "bytes": 11084
+    },
+    "docs/lecture_summary/README.md": {
+      "sha256": "928b9b40aaa82c33d585990de506d0d75f6745f0f411f88962a42900d5e0ce7f",
+      "bytes": 4432
+    },
+    "docs/lecture_summary/architecture.md": {
+      "sha256": "e2e686ea5a73122fd2bc16f1ec3d6827c219183f8b6a80d928a68feedd1e0c08",
+      "bytes": 4069
+    },
+    "docs/lecture_summary/example-summary.json": {
+      "sha256": "b77f08130026107b1de8e0397adeb7711dda068da0e93c3dca6f336a3c8f14e4",
+      "bytes": 18141
+    },
+    "docs/lecture_summary/example-summary.md": {
+      "sha256": "2e3f2f6ce4c288a8540b47e464ba6f557dde43da75501b5094b789aaf500a7cf",
+      "bytes": 5262
+    },
+    "docs/lecture_summary/offline-report.json": {
+      "sha256": "6beccc505491474328e119e0cdc61ffa318ae8ebcad90c7eee1f90f2dbba2784",
+      "bytes": 210
+    },
+    "docs/lecture_summary/operations.md": {
+      "sha256": "edc6052ce27cedd43c12baf305046a6b31cfe1fa8817e510169e82247921f4df",
+      "bytes": 7411
+    },
+    "docs/lecture_summary/test-results.txt": {
+      "sha256": "66dd16bbfc6382f7b67c1c673ed0e9e053b738aef88456efac56eb661e7b5e88",
+      "bytes": 1175
+    },
+    "docs/lecture_summary/validation.json": {
+      "sha256": "a1d263205bcc319fb4a3e76dc9542c11516f308f339c874ef476429b3d692d00",
+      "bytes": 989
+    },
+    "docs/lecture_summary/validation.md": {
+      "sha256": "cefbd3853cbd24d105020de1c4a3e1efea32b82d02033a296396c6fd71d3dd65",
+      "bytes": 7303
+    },
+    "frontend/pages/G_p0_lecture_summarizer.py": {
+      "sha256": "89cc66ed73f185c5b814495a20f2bc038b09f66d29d74eefa73ce0a174f2d6f8",
+      "bytes": 14813
+    },
+    "lecture_summarizer_app.py": {
+      "sha256": "026d2bedd4f23a43eafa5a3272eee5eaaa42b967871971f442fa2be36856891e",
+      "bytes": 249
+    },
+    "scripts/lecture_summary_offline.py": {
+      "sha256": "c06baf37b20c91af6fadc6e8a3d95abfebf7da0009c8ecbf428c44047162fc74",
+      "bytes": 2626
+    },
+    "src/lecture_summary/__init__.py": {
+      "sha256": "aea48f3095160bb712f432786bab3a41a38bdd6b9e824c842f7e729e867f2905",
+      "bytes": 81
+    },
+    "src/lecture_summary/adapter.py": {
+      "sha256": "2f0b96920d3a96c1f2063106fdc035000761a692f61eb6fd37a82ae4468756be",
+      "bytes": 6483
+    },
+    "src/lecture_summary/engine.py": {
+      "sha256": "770370a63aea0296ba9db4ff83ff406a201b835fc8eb326463855d954b83a8fa",
+      "bytes": 11327
+    },
+    "src/lecture_summary/export.py": {
+      "sha256": "82e9cdcb494387230d983ca85dd58112d38febd1dab7e51f79c43436348eb800",
+      "bytes": 3487
+    },
+    "src/lecture_summary/llm.py": {
+      "sha256": "d038bda522d4cb541e575c9505bf0d182f83c9985cd452610bf97a1ad12e4d2b",
+      "bytes": 2886
+    },
+    "src/lecture_summary/models.py": {
+      "sha256": "c64b3e0156b31c29c43811bbacf62bc836fd8cca1922fa37778c30216d51be4d",
+      "bytes": 8215
+    },
+    "src/lecture_summary/store.py": {
+      "sha256": "97130d28b0032111246c3363d454af66d0ce06d76041d25f6be83219ccac8d93",
+      "bytes": 6335
+    },
+    "src/llm/model_litellm.py": {
+      "sha256": "a0f7031214c1b64ad8ae9d4e03abd18d0411bede7b679ff2c69a7c72a989e678",
+      "bytes": 5361
+    },
+    "tests/fixtures/lecture_summary/catalog.json": {
+      "sha256": "43f28d94713e8f4c04c0b58f5e22436babe4ee61765d29cc4a9e7e2d708b6f12",
+      "bytes": 21088
+    },
+    "tests/fixtures/lecture_summary/sources/hello.py": {
+      "sha256": "11f21b6d8c7fa99aa907921007a3455f4f8313b45981709a4321e67fd13ffb01",
+      "bytes": 24
+    },
+    "tests/fixtures/lecture_summary/sources/notes.txt": {
+      "sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+      "bytes": 149
+    },
+    "tests/fixtures/lecture_summary/sources/transcript.json": {
+      "sha256": "f6cffe10a8cd507602ca33196dc005ad0c86559ab10422da3ae1b6099096887f",
+      "bytes": 666
+    },
+    "tests/test_lecture_summary.py": {
+      "sha256": "8812ee63ec7ded393db00500b9b3246bd5bbebde43e562830092d62e1b276388",
+      "bytes": 21164
+    },
+    "tests/test_lecture_summary_ui.py": {
+      "sha256": "bbd8170eb06e6fe07111f651c1b0720abeaad0212dde13588d231ea533a0129f",
+      "bytes": 5572
+    }
+  },
+  "note": "Manifest excludes itself; patch SHA binds the entire handoff."
+}

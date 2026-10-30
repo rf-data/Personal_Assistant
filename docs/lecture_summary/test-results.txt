@@ -1,0 +1,19 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-9.1.1, pluggy-1.6.0
+rootdir: /home/OPERATOR/0_Portfolio_Projekte/Personal_Assistant-lecture-summarizer
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collected 281 items
+
+tests/test_lecture_summary.py .......................................... [ 14%]
+...........                                                              [ 18%]
+tests/test_lecture_summary_ui.py ........                                [ 21%]
+tests/test_content_store_adapters.py ................................... [ 34%]
+..............                                                           [ 39%]
+tests/test_cs50_material_quality.py .................................... [ 51%]
+..........................................................               [ 72%]
+tests/test_transcript_unknown_time.py ..........................         [ 81%]
+tests/test_cs50_week_materials.py ...................................... [ 95%]
+.......s.....                                                            [100%]
+
+================== 280 passed, 1 skipped in 129.18s (0:02:09) ==================

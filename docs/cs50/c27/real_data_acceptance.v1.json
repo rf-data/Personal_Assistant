@@ -1,0 +1,149 @@
+{
+  "course_id": "cs50_python",
+  "downloads": 0,
+  "evidence_kind": "real_local_raw",
+  "full_week_acceptance": false,
+  "inputs": {
+    "download-batch-01/download-report.json": "fa7b7bdc39180439f82b91a103566881945e1e076451c6d4de21796d12d378f5",
+    "download-batch-01/functions.html": "75987b31f486b1f6ac0524d8cd8b588eb5fbf48286d43b8fb9a883ea3c5fdcdf",
+    "download-batch-01/functions.txt": "a74bfbc79d573aa69e966603b3ef8a073153fc0f54337160af5c4203dbb03dbf",
+    "download-batch-01/functions.zip": "35007441e3bfe74716b04d06676252e8b2b3e2505048f58599b4fb8c06646ab4",
+    "download-batch-01/week0.html": "fee8c724c47b193a04bdf16358fe35bf7e1f831ea3a33ccc7a27ad50753e9de1",
+    "inventory-01.json": "5fd94c2d1d170b7bc963ca44e0fa790b3bf6669605ed7c3fe571818811ad4c4f",
+    "inventory-02.json": "5fd94c2d1d170b7bc963ca44e0fa790b3bf6669605ed7c3fe571818811ad4c4f",
+    "page-01.html": "fee8c724c47b193a04bdf16358fe35bf7e1f831ea3a33ccc7a27ad50753e9de1",
+    "page-02.html": "b0541985ed6f600ec1da1fa41458f3ca9caaf43ec3e816ab591e912b1bd16158",
+    "page-03.html": "75987b31f486b1f6ac0524d8cd8b588eb5fbf48286d43b8fb9a883ea3c5fdcdf",
+    "page-04.html": "15e867da466f38f7f7c0542eca04b6379e02067643d2da075bc537123ac5abd1",
+    "page-05.html": "734e64b9863c8e4bcdcd9ce3707c6c4e594686644d3f1099c09be64d7cae0e4f",
+    "page-06.html": "d1d898ad8a81eae666aa541e012d707df57be4e2b75ca9358a7d2ec11b2e813c",
+    "plan-01.json": "97d32a4f5d744da12026bcb44555c689da471b05e85d2bf029f259934260e516",
+    "plan-02.json": "97d32a4f5d744da12026bcb44555c689da471b05e85d2bf029f259934260e516",
+    "snapshots.json": "52a0c31d052d5644dafd11f79c58c11a6bb48b24a953b569ded48bcf454cfa38"
+  },
+  "license_approval": "not_granted_by_this_adapter",
+  "llm_calls": 0,
+  "materials": [
+    {
+      "blocks": 65,
+      "filename": "week0.html",
+      "material_id": "week_material:a55abf73819c7a8bf61134de82ea43bdcb7b07a93b35205f77290540aacda404",
+      "raw_sha256": "fee8c724c47b193a04bdf16358fe35bf7e1f831ea3a33ccc7a27ad50753e9de1",
+      "source_url": "https://cs50.harvard.edu/python/weeks/0/",
+      "status": "handoff_ready",
+      "unit_id": "week_material:49af0cec53e90ce909b26c6127924ccdbdd5090a8f994eb3501ea987e129c841"
+    },
+    {
+      "blocks": 34,
+      "filename": "functions.html",
+      "material_id": "week_material:56ca6f3473ab9fa193a6a88a6d97e80f026d4254065b481829f2174eabc6613a",
+      "raw_sha256": "75987b31f486b1f6ac0524d8cd8b588eb5fbf48286d43b8fb9a883ea3c5fdcdf",
+      "source_url": "https://cs50.harvard.edu/python/shorts/functions/",
+      "status": "handoff_ready",
+      "unit_id": "week_material:abacc17e0547f53d6a68e2df84a236f1a4fbda6b8dc7b86fa731fcdc62a6c408"
+    },
+    {
+      "filename": "functions.zip",
+      "material_id": "week_material:9c1d80db0cc3c27524db04c2c891d4021573afe7daa5a8a4c8b5d59ef966a352",
+      "members": [
+        {
+          "name": "src/",
+          "status": "excluded_directory"
+        },
+        {
+          "bytes": 67,
+          "name": "src/hello1.py",
+          "sha256": "c2555a96595aa503eaa9c09e4857f2190ee07cbdbb198a1f33ff16483569d98a",
+          "status": "candidate_python"
+        },
+        {
+          "bytes": 47,
+          "name": "src/hello0.py",
+          "sha256": "f14ecaebf3b0ff45b6c6bbbf6334a4b33cd5b44aaf2fefaa47338cf36fc8a0e7",
+          "status": "candidate_python"
+        },
+        {
+          "bytes": 76,
+          "name": "src/hello2.py",
+          "sha256": "f3f1221d725627070a21b6b1b4eab8bc29293ca2329b5099a526b82731005af9",
+          "status": "candidate_python"
+        }
+      ],
+      "raw_sha256": "35007441e3bfe74716b04d06676252e8b2b3e2505048f58599b4fb8c06646ab4",
+      "source_url": "https://cdn.cs50.net/python/2023/x/shorts/functions/src.zip",
+      "status": "verified_archive_only",
+      "summary_status": "BLOCKED: explicit member-to-source mapping required",
+      "unit_id": "week_material:abacc17e0547f53d6a68e2df84a236f1a4fbda6b8dc7b86fa731fcdc62a6c408"
+    },
+    {
+      "blocks": 18,
+      "filename": "functions.txt",
+      "material_id": "week_material:191f887faf9bf853e27e6e3bbdeedf2744f0629150c757b7f617589ed82ee0ab",
+      "raw_sha256": "a74bfbc79d573aa69e966603b3ef8a073153fc0f54337160af5c4203dbb03dbf",
+      "source_url": "https://cdn.cs50.net/python/2023/x/shorts/functions/lang/en/functions.txt",
+      "status": "handoff_ready",
+      "unit_id": "week_material:abacc17e0547f53d6a68e2df84a236f1a4fbda6b8dc7b86fa731fcdc62a6c408"
+    }
+  ],
+  "processing_reused": false,
+  "summaries": [
+    {
+      "cache_verified": true,
+      "claims": 18,
+      "fake_calls": 18,
+      "run_id": "de8306536a234cceb4c616afe699078d",
+      "sections": 18,
+      "selected_material_ids": [
+        "week_material:191f887faf9bf853e27e6e3bbdeedf2744f0629150c757b7f617589ed82ee0ab"
+      ],
+      "state": "ready_for_review",
+      "unit_id": "week_material:abacc17e0547f53d6a68e2df84a236f1a4fbda6b8dc7b86fa731fcdc62a6c408"
+    }
+  ],
+  "summary_selection": [
+    "week_material:191f887faf9bf853e27e6e3bbdeedf2744f0629150c757b7f617589ed82ee0ab"
+  ],
+  "version": "c27-local-review-v1",
+  "week_id": "0",
+  "review_root": "/home/OPERATOR/cs50p-week0-review-RbZ8OQqe",
+  "acceptance": "PARTIAL_REAL_DATA_TECHNICAL_ACCEPTANCE",
+  "inventory_material_count": 106,
+  "inventory_expected_ids": 24,
+  "inventory_pair_byte_equal": true,
+  "plan_pair_byte_equal": true,
+  "inventory_canonical_sha256": "9216a610a7b5842451a063387c775bd0875407e111914365c047eff9b825a5df",
+  "snapshot_files_verified": 6,
+  "inventory_snapshot_observations": 7,
+  "download_bytes": 39845,
+  "download_files": [
+    {
+      "filename": "week0.html",
+      "bytes": 17537,
+      "sha256": "fee8c724c47b193a04bdf16358fe35bf7e1f831ea3a33ccc7a27ad50753e9de1",
+      "source_url": "https://cs50.harvard.edu/python/weeks/0/"
+    },
+    {
+      "filename": "functions.html",
+      "bytes": 15683,
+      "sha256": "75987b31f486b1f6ac0524d8cd8b588eb5fbf48286d43b8fb9a883ea3c5fdcdf",
+      "source_url": "https://cs50.harvard.edu/python/shorts/functions/"
+    },
+    {
+      "filename": "functions.zip",
+      "bytes": 777,
+      "sha256": "35007441e3bfe74716b04d06676252e8b2b3e2505048f58599b4fb8c06646ab4",
+      "source_url": "https://cdn.cs50.net/python/2023/x/shorts/functions/src.zip"
+    },
+    {
+      "filename": "functions.txt",
+      "bytes": 5848,
+      "sha256": "a74bfbc79d573aa69e966603b3ef8a073153fc0f54337160af5c4203dbb03dbf",
+      "source_url": "https://cdn.cs50.net/python/2023/x/shorts/functions/lang/en/functions.txt"
+    }
+  ],
+  "input_unchanged_test": "test_real_penguin_week0_read_only: all review-directory file hashes identical before/after",
+  "full_week_acceptance_status": "OPEN: completeness, member mapping, bounded full HTML aggregation, subject review and independent grants outstanding",
+  "semantic_review": "not performed",
+  "provider_calls": 0,
+  "full_html_summary_selection": "BLOCKED: existing chunk limit; explicit transcript-only selection used for successful fake smoke"
+}

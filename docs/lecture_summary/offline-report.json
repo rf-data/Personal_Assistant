@@ -1,0 +1,12 @@
+{
+  "run_id": "d563cd8cdf9543bdb90ce49ea41d9a33",
+  "sections": 7,
+  "claims": 6,
+  "cache_reused": true,
+  "review": "approved",
+  "exports": [
+    "summary.md",
+    "summary.json"
+  ],
+  "network_calls": 0
+}

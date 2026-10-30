@@ -1,0 +1,30 @@
+[
+  {
+    "path": "src/model_materials/acquisition.py",
+    "source_commit": "143d3412c668bb652eba7929742a3a886031c372",
+    "sha256": "95246044e885f078dbb962a9fe30e86641c7f1adc86ac22998280cdc931bc7cf",
+    "integration": "exact selected file",
+    "c27_exact_match": true
+  },
+  {
+    "path": "src/tools_materials/source_acquisition.py",
+    "source_commit": "143d3412c668bb652eba7929742a3a886031c372",
+    "sha256": "37418da2de05fd8922ecc3854b2124abef4374dc1f94b5ad9d8ee8f9c38fe91a",
+    "integration": "exact selected file",
+    "c27_exact_match": true
+  },
+  {
+    "path": "src/tools_materials/text_validation.py",
+    "source_commit": "143d3412c668bb652eba7929742a3a886031c372",
+    "sha256": "3e06c87c120e2ece9f2c24f3793fdff07f53011113a5a9c963b4dd77d5bd5bb6",
+    "integration": "exact selected file",
+    "c27_exact_match": true
+  },
+  {
+    "path": "src/tools_materials/code_zip.py",
+    "source_commit": "143d3412c668bb652eba7929742a3a886031c372",
+    "sha256": "43e388265b44d6ceaa467312bc9a906fbc6f4a9e5d368c59c77b155c4e4c31ad",
+    "integration": "exact selected file",
+    "c27_exact_match": true
+  }
+]

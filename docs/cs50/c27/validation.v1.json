@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-29",
+  "base_commit": "a8af1d9372eb435d3e1331c33b047d21120d57c2",
+  "branch": "feat/c27-cs50-learning-pipeline",
+  "gates": {
+    "A": "COMPATIBLE_LOCAL_CONTRACTS",
+    "B": "PASSED_LOCAL_OFFLINE_AND_FIXTURES",
+    "C": "PARTIAL_REAL_DATA_TECHNICAL_ACCEPTANCE_FULL_WEEK_OPEN"
+  },
+  "packages": {
+    "pydantic": "2.13.4",
+    "pytest": "9.1.1",
+    "beautifulsoup4": "4.15.0",
+    "pymupdf": "1.28.2",
+    "streamlit": "1.65.0"
+  },
+  "test_suites": {
+    "initial_integration": {
+      "tests": 281,
+      "passed": 280,
+      "skipped": 1,
+      "failures": 0,
+      "log": "test-results/initial-integration.txt",
+      "log_sha256": "2880cc5e8e00fd32a64402bc707889c8089daf0dd190d25daa5ba47a3cc1697a"
+    },
+    "summarizer_final": {
+      "tests": 61,
+      "passed": 61,
+      "skipped": 0,
+      "failures": 0,
+      "log": "test-results/summarizer-final.txt",
+      "log_sha256": "81e29f16ae19acb7ebda8ba9f67450c61e4b0f7e14cbdf9bebab6277229ba0d7"
+    },
+    "review_final_including_real_local": {
+      "tests": 36,
+      "passed": 36,
+      "skipped": 0,
+      "failures": 0,
+      "log": "test-results/review-final.txt",
+      "log_sha256": "735829d3294a4e681f53bfec0cb0781bd2e41fe6e6b26082bd55710fce2670d1"
+    },
+    "pipeline_regression": {
+      "tests": 160,
+      "passed": 159,
+      "skipped": 1,
+      "failures": 0,
+      "log": "test-results/pipeline-regression.txt",
+      "log_sha256": "4cb80267d186e2e0c5dc69773ff17624270d68afdeedd8873a5d24b017756716"
+    }
+  },
+  "counts_must_not_be_summed_across_overlapping_suites": true,
+  "final_review_test_classification": {
+    "fixture_and_unit": 35,
+    "real_local_read_only": 1
+  },
+  "central_contract_files_unchanged": {
+    "src/content_store/models.py": true,
+    "src/model_materials/materials.py": true,
+    "src/model_materials/quality.py": true,
+    "src/model_transcribe/data_transcribe.py": true,
+    "src/tools_lecture/material_handoff.py": true,
+    "src/model_lecture/data_resources.py": true
+  },
+  "ruff": "passed",
+  "git_diff_check": "passed",
+  "safety": {
+    "external_llm_calls": 0,
+    "new_course_downloads": 0,
+    "pushes": 0,
+    "merges": 0,
+    "production_changes": 0,
+    "foreign_worktree_writes": 0,
+    "new_git_branches": 0,
+    "new_git_worktrees": 0,
+    "removed_git_artifacts": 0
+  },
+  "lifecycle": {
+    "default_branch": "master",
+    "integration": "PENDING: explicit task push/merge prohibition",
+    "live_git_and_pr_state": "not queried",
+    "retained": "pre-existing C27 branch and worktree; all foreign artifacts",
+    "temporary_files": "task test environment, isolated file export and outputs under /tmp retained for review; no temporary Git artifacts"
+  },
+  "limitations": [
+    "full real Week-0 acceptance open",
+    "real Week-1 and later-course acceptance not run",
+    "ZIP member source mapping open",
+    "full real HTML summary selection exceeds current chunk bounds",
+    "manual browser and provider smoke not run",
+    "hard cumulative provider money/token enforcement not implemented",
+    "section-level paid-call resume not implemented"
+  ]
+}
