@@ -5,16 +5,13 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any
 
-import instructor
-import litellm
-
-from src.core.logger import create_logger
-from src.core.memory import LLMContext
-from src.utils.general_helper import load_from_cache, make_cache_key
-
 
 class LLMClient:
-    def __init__(self, llm_context: LLMContext):
+    def __init__(self, llm_context: Any):
+        import instructor
+
+        from src.core.logger import create_logger
+
         self.context = llm_context
         self.model = llm_context.model  # "gpt-5",
         self.temperature = llm_context.temperature
@@ -31,10 +28,25 @@ class LLMClient:
         self._configure_callbacks()
         return
 
+    @classmethod
+    def bounded(cls, *, model: str, temperature: float = 0):
+        """Explicit local caller owns caching, retries, usage and timeout limits.
+
+        Avoid legacy application settings, callbacks and the message-only file
+        cache. Optional SDKs are imported only at dispatch, never at page load.
+        """
+        client = cls.__new__(cls)
+        client.context = None
+        client.model = model
+        client.temperature = temperature
+        return client
+
     def _configure_callbacks(self) -> None:
         """
         Konfiguriert optionale LiteLLM-Callbacks.
         """
+
+        import litellm
 
         callbacks = getattr(
             self.context,
@@ -49,7 +61,9 @@ class LLMClient:
         """
         Gibt das vollständige LiteLLM-Response-Objekt zurück.
         """
-        cached = self._cache_available(messages)
+        import litellm
+
+        cached = self._cache_available(messages) if self.context is not None else None
 
         if cached is not None:
             return cached
@@ -107,6 +121,8 @@ class LLMClient:
         return response.choices[0].message.content
 
     def _cache_available(self, message):
+        from src.utils.general_helper import load_from_cache, make_cache_key
+
         key = make_cache_key(message=message, model=self.model)
         cached = load_from_cache(key=key, folder=self.model)
 

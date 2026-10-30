@@ -1,0 +1,487 @@
+{
+  "schema_version": 1,
+  "origin": "synthetic",
+  "courses": [
+    {
+      "course_id": "synthetic_cs50p",
+      "course_title": "CS50P-style synthetic learning course (not official material)",
+      "provider": "synthetic",
+      "source_url": null,
+      "lecture_blocks": [],
+      "resources": [],
+      "unassigned_resources": [],
+      "examen": [],
+      "weeks": [
+        {
+          "section_id": "0",
+          "title": "Week 0",
+          "resources": [],
+          "units": [
+            {
+              "section_id": "lecture-0",
+              "title": "Functions and variables – synthetic example",
+              "resources": [],
+              "kind": "lecture",
+              "materials": [
+                {
+                  "material_id": "transcript",
+                  "source_id": "synthetic:transcript",
+                  "source_path": "tests/fixtures/lecture_summary/sources/transcript.json",
+                  "resource": {
+                    "title": "Transcript",
+                    "source_url": null,
+                    "lecture_no": null,
+                    "topic": null,
+                    "resource_kind": "foundation",
+                    "resource_type": "document",
+                    "lecture_blocks": [],
+                    "file_type": null,
+                    "local_path": "tests/fixtures/lecture_summary/sources/transcript.json",
+                    "downloaded": true,
+                    "content_hash": "f6cffe10a8cd507602ca33196dc005ad0c86559ab10422da3ae1b6099096887f",
+                    "license": null
+                  },
+                  "available": true,
+                  "verification": "synthetic_test_only",
+                  "processing_status": "completed",
+                  "artifact": {
+                    "artifact_id": "processed:transcript:1",
+                    "parser_version": "synthetic-1",
+                    "payload_sha256": "5d5d8b91f02e4dc5a9a33c4a8fd6fe7e1a42bee8e510f08804a5ed6eb408c5a0",
+                    "last_run": "fixture-1"
+                  },
+                  "blocks": [
+                    {
+                      "block_id": "cue:0",
+                      "order": 0,
+                      "type": "paragraph",
+                      "original_type": "transcript_segment",
+                      "payload_pointer": "/segments/0",
+                      "text": "The print function displays a message.",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "f6cffe10a8cd507602ca33196dc005ad0c86559ab10422da3ae1b6099096887f",
+                          "origin_pointer": "/segments/0",
+                          "page": null,
+                          "dom": null,
+                          "line_start": null,
+                          "line_end": null,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": 0,
+                          "time_status": "known",
+                          "start": 0.0,
+                          "end": 5.0
+                        }
+                      ]
+                    },
+                    {
+                      "block_id": "cue:1",
+                      "order": 1,
+                      "type": "paragraph",
+                      "original_type": "transcript_segment",
+                      "payload_pointer": "/segments/1",
+                      "text": "A variable is a name referring to a value.",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "f6cffe10a8cd507602ca33196dc005ad0c86559ab10422da3ae1b6099096887f",
+                          "origin_pointer": "/segments/1",
+                          "page": null,
+                          "dom": null,
+                          "line_start": null,
+                          "line_end": null,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": 1,
+                          "time_status": "known",
+                          "start": 5.0,
+                          "end": 10.0
+                        }
+                      ]
+                    }
+                  ],
+                  "error": null
+                },
+                {
+                  "material_id": "notes",
+                  "source_id": "synthetic:notes",
+                  "source_path": "tests/fixtures/lecture_summary/sources/notes.txt",
+                  "resource": {
+                    "title": "Notes",
+                    "source_url": null,
+                    "lecture_no": null,
+                    "topic": null,
+                    "resource_kind": "foundation",
+                    "resource_type": "document",
+                    "lecture_blocks": [],
+                    "file_type": null,
+                    "local_path": "tests/fixtures/lecture_summary/sources/notes.txt",
+                    "downloaded": true,
+                    "content_hash": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+                    "license": null
+                  },
+                  "available": true,
+                  "verification": "synthetic_test_only",
+                  "processing_status": "completed",
+                  "artifact": {
+                    "artifact_id": "processed:notes:1",
+                    "parser_version": "synthetic-1",
+                    "payload_sha256": "65dd7f414fa51f52b37aab029fb257966705ee1aac66f796c0702e77c916ea4d",
+                    "last_run": "fixture-1"
+                  },
+                  "blocks": [
+                    {
+                      "block_id": "notes:0",
+                      "order": 0,
+                      "type": "paragraph",
+                      "original_type": "text",
+                      "payload_pointer": "/sections/0",
+                      "text": "Learning objective: display a message using print.",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+                          "origin_pointer": "/sections/0",
+                          "page": 1,
+                          "dom": "#section-0",
+                          "line_start": null,
+                          "line_end": null,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": null,
+                          "time_status": "not_applicable",
+                          "start": null,
+                          "end": null
+                        }
+                      ]
+                    },
+                    {
+                      "block_id": "notes:1",
+                      "order": 1,
+                      "type": "paragraph",
+                      "original_type": "text",
+                      "payload_pointer": "/sections/1",
+                      "text": "A variable is a name referring to a value.",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+                          "origin_pointer": "/sections/1",
+                          "page": 1,
+                          "dom": "#section-1",
+                          "line_start": null,
+                          "line_end": null,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": null,
+                          "time_status": "not_applicable",
+                          "start": null,
+                          "end": null
+                        }
+                      ]
+                    },
+                    {
+                      "block_id": "notes:2",
+                      "order": 2,
+                      "type": "paragraph",
+                      "original_type": "text",
+                      "payload_pointer": "/sections/2",
+                      "text": "Explanation: print displays its argument.",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+                          "origin_pointer": "/sections/2",
+                          "page": 1,
+                          "dom": "#section-2",
+                          "line_start": null,
+                          "line_end": null,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": null,
+                          "time_status": "not_applicable",
+                          "start": null,
+                          "end": null
+                        }
+                      ]
+                    },
+                    {
+                      "block_id": "notes:3",
+                      "order": 3,
+                      "type": "formula",
+                      "original_type": "text",
+                      "payload_pointer": "/sections/3",
+                      "text": "2 + 2 = 4",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+                          "origin_pointer": "/sections/3",
+                          "page": 1,
+                          "dom": "#section-3",
+                          "line_start": null,
+                          "line_end": null,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": null,
+                          "time_status": "not_applicable",
+                          "start": null,
+                          "end": null
+                        }
+                      ]
+                    }
+                  ],
+                  "error": null
+                },
+                {
+                  "material_id": "code",
+                  "source_id": "synthetic:code",
+                  "source_path": "tests/fixtures/lecture_summary/sources/hello.py",
+                  "resource": {
+                    "title": "Code",
+                    "source_url": null,
+                    "lecture_no": null,
+                    "topic": null,
+                    "resource_kind": "foundation",
+                    "resource_type": "script",
+                    "lecture_blocks": [],
+                    "file_type": null,
+                    "local_path": "tests/fixtures/lecture_summary/sources/hello.py",
+                    "downloaded": true,
+                    "content_hash": "11f21b6d8c7fa99aa907921007a3455f4f8313b45981709a4321e67fd13ffb01",
+                    "license": null
+                  },
+                  "available": true,
+                  "verification": "synthetic_test_only",
+                  "processing_status": "completed",
+                  "artifact": {
+                    "artifact_id": "processed:code:1",
+                    "parser_version": "synthetic-1",
+                    "payload_sha256": "164ed7caec6c086ed92841770c072863deb61d1a47faa258dcf38fb5afe3aeba",
+                    "last_run": "fixture-1"
+                  },
+                  "blocks": [
+                    {
+                      "block_id": "code:0",
+                      "order": 0,
+                      "type": "code",
+                      "original_type": "python",
+                      "payload_pointer": "/lines/1",
+                      "text": "print(\"Hello, learner\")",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "11f21b6d8c7fa99aa907921007a3455f4f8313b45981709a4321e67fd13ffb01",
+                          "origin_pointer": "/lines/1",
+                          "page": null,
+                          "dom": null,
+                          "line_start": 1,
+                          "line_end": 1,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": null,
+                          "time_status": "not_applicable",
+                          "start": null,
+                          "end": null
+                        }
+                      ]
+                    }
+                  ],
+                  "error": null
+                },
+                {
+                  "material_id": "slides",
+                  "source_id": "synthetic:slides",
+                  "source_path": "missing/slides.pdf",
+                  "resource": {
+                    "title": "Missing slides",
+                    "source_url": null,
+                    "lecture_no": null,
+                    "topic": null,
+                    "resource_kind": "foundation",
+                    "resource_type": "document",
+                    "lecture_blocks": [],
+                    "file_type": null,
+                    "local_path": null,
+                    "downloaded": false,
+                    "content_hash": null,
+                    "license": null
+                  },
+                  "available": false,
+                  "verification": "unverified",
+                  "processing_status": "missing",
+                  "artifact": null,
+                  "blocks": [],
+                  "error": null
+                }
+              ]
+            },
+            {
+              "section_id": "short-variables",
+              "title": "Variables (synthetic short)",
+              "resources": [],
+              "kind": "short",
+              "materials": [
+                {
+                  "material_id": "notes",
+                  "source_id": "synthetic:notes",
+                  "source_path": "tests/fixtures/lecture_summary/sources/notes.txt",
+                  "resource": {
+                    "title": "Notes",
+                    "source_url": null,
+                    "lecture_no": null,
+                    "topic": null,
+                    "resource_kind": "foundation",
+                    "resource_type": "document",
+                    "lecture_blocks": [],
+                    "file_type": null,
+                    "local_path": "tests/fixtures/lecture_summary/sources/notes.txt",
+                    "downloaded": true,
+                    "content_hash": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+                    "license": null
+                  },
+                  "available": true,
+                  "verification": "synthetic_test_only",
+                  "processing_status": "completed",
+                  "artifact": {
+                    "artifact_id": "processed:notes:1",
+                    "parser_version": "synthetic-1",
+                    "payload_sha256": "65dd7f414fa51f52b37aab029fb257966705ee1aac66f796c0702e77c916ea4d",
+                    "last_run": "fixture-1"
+                  },
+                  "blocks": [
+                    {
+                      "block_id": "notes:0",
+                      "order": 0,
+                      "type": "paragraph",
+                      "original_type": "text",
+                      "payload_pointer": "/sections/0",
+                      "text": "Learning objective: display a message using print.",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+                          "origin_pointer": "/sections/0",
+                          "page": 1,
+                          "dom": "#section-0",
+                          "line_start": null,
+                          "line_end": null,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": null,
+                          "time_status": "not_applicable",
+                          "start": null,
+                          "end": null
+                        }
+                      ]
+                    },
+                    {
+                      "block_id": "notes:1",
+                      "order": 1,
+                      "type": "paragraph",
+                      "original_type": "text",
+                      "payload_pointer": "/sections/1",
+                      "text": "A variable is a name referring to a value.",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+                          "origin_pointer": "/sections/1",
+                          "page": 1,
+                          "dom": "#section-1",
+                          "line_start": null,
+                          "line_end": null,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": null,
+                          "time_status": "not_applicable",
+                          "start": null,
+                          "end": null
+                        }
+                      ]
+                    },
+                    {
+                      "block_id": "notes:2",
+                      "order": 2,
+                      "type": "paragraph",
+                      "original_type": "text",
+                      "payload_pointer": "/sections/2",
+                      "text": "Explanation: print displays its argument.",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+                          "origin_pointer": "/sections/2",
+                          "page": 1,
+                          "dom": "#section-2",
+                          "line_start": null,
+                          "line_end": null,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": null,
+                          "time_status": "not_applicable",
+                          "start": null,
+                          "end": null
+                        }
+                      ]
+                    },
+                    {
+                      "block_id": "notes:3",
+                      "order": 3,
+                      "type": "formula",
+                      "original_type": "text",
+                      "payload_pointer": "/sections/3",
+                      "text": "2 + 2 = 4",
+                      "data": {},
+                      "aggregation_role": "primary",
+                      "locators": [
+                        {
+                          "raw_artifact_sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+                          "origin_pointer": "/sections/3",
+                          "page": 1,
+                          "dom": "#section-3",
+                          "line_start": null,
+                          "line_end": null,
+                          "bbox": null,
+                          "coordinate_system": "unknown",
+                          "chapter_path": [],
+                          "original_segment_id": null,
+                          "time_status": "not_applicable",
+                          "start": null,
+                          "end": null
+                        }
+                      ]
+                    }
+                  ],
+                  "error": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

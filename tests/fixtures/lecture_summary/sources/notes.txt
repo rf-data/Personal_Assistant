@@ -1,0 +1,7 @@
+Learning objective: display a message using print.
+
+A variable is a name referring to a value.
+
+Explanation: print displays its argument.
+
+2 + 2 = 4

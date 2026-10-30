@@ -16,6 +16,7 @@ repos:
         stages: [pre-commit]
 
       - id: end-of-file-fixer
+        exclude: '^(docs/lecture_summary/example-summary\.json|docs/lecture_summary/example-summary\.md|tests/fixtures/lecture_summary/sources/transcript\.json)$'
         stages: [pre-commit]
 
       - id: check-yaml

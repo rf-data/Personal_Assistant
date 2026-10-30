@@ -282,3 +282,32 @@ src/prio_list.md
 
 # Reviewed PM-02 planning reconciliation only; no runtime or private Project payloads.
 !/docs/planning/pm02_reconciliation.v1.json
+
+# C26-LS-01: synthetic inputs and durable local-review evidence only.
+!src/lecture_summary/__init__.py
+!tests/fixtures/lecture_summary/catalog.json
+!tests/fixtures/lecture_summary/sources/transcript.json
+!docs/lecture_summary/example-summary.json
+!docs/lecture_summary/offline-report.json
+!docs/lecture_summary/validation.json
+!docs/lecture_summary/handoff-files.json
+/artifacts/c26_ls_01/
+
+# C27: reviewed integration metadata only; raw course data stays external.
+!docs/cs50/c27/summarizer_integration.v1.json
+!docs/cs50/c27/cs50p_component_provenance.v1.json
+!docs/cs50/c27/validation.v1.json
+!docs/cs50/c27/real_data_acceptance.v1.json
+!docs/cs50/c27/handoff-files.v1.json
+
+# C27-R06: explicit reviewed public export approval configuration.
+!src/lecture_summary/public_sources.v1.json
+!tests/fixtures/lecture_summary/r08-approved-urls.json
+
+# C27-R12: isolated Learning namespace and exact reviewed status artifacts.
+!src/c27_learning_summary/__init__.py
+!src/c27_learning_summary/public_sources.v1.json
+!/docs/cs50/c27/integration_manifest.v2.json
+!/docs/cs50/c27/reviews/r09/c27_r09_historical_cases.json
+!/docs/cs50/c27/reviews/r10/c27_r10_commit_inventory.json
+!/docs/cs50/c27/reviews/r11/c27_r11_file_decisions.json

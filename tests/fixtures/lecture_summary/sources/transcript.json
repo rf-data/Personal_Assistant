@@ -1,0 +1,29 @@
+{
+  "source": "synthetic",
+  "language": null,
+  "language_probability": null,
+  "duration": null,
+  "duration_after_vad": null,
+  "runtime": null,
+  "realtime_factor": null,
+  "segments": [
+    {
+      "seg_id": 0,
+      "start": 0.0,
+      "end": 5.0,
+      "text": "The print function displays a message.",
+      "speaker": null,
+      "confidence": null
+    },
+    {
+      "seg_id": 1,
+      "start": 5.0,
+      "end": 10.0,
+      "text": "A variable is a name referring to a value.",
+      "speaker": null,
+      "confidence": null
+    }
+  ],
+  "text": "The print function displays a message.\nA variable is a name referring to a value.",
+  "provenance": null
+}
