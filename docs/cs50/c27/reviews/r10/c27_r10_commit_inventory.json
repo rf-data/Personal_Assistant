@@ -1,0 +1,2433 @@
+{
+  "schema_version": 1,
+  "task": "C27-R10-RECOVERY",
+  "worktree": "/home/OPERATOR/0_Portfolio_Projekte/Personal_Assistant-c27-cs50-learning",
+  "branch": "feat/c27-cs50-learning-pipeline",
+  "head": "a8af1d9372eb435d3e1331c33b047d21120d57c2",
+  "scope": "Exactly 3 modified + 59 untracked original candidates. New recovery reports and R09 copies are separately planned additions, not members of the 62.",
+  "inventory_status": "COMPLETE",
+  "counts": {
+    "total": 62,
+    "modified": 3,
+    "untracked": 59,
+    "by_decision": {
+      "INCLUDE": 43,
+      "EXCLUDE": 0,
+      "REVIEW_REQUIRED": 19
+    },
+    "by_category": {
+      "Konfiguration": 2,
+      "Dokumentation": 30,
+      "Produktionscode": 18,
+      "Fixture": 5,
+      "Test": 7
+    }
+  },
+  "index": {
+    "staged_paths": [],
+    "sha256": "f5d9dac5f0a538c15b0f76fc466d3d660be745d744650291c54a48c15c294c3c"
+  },
+  "files": [
+    {
+      "path": ".gitignore",
+      "git_state": "modified_unstaged",
+      "file_type": "regular text",
+      "size_bytes": 10634,
+      "sha256": "95ce3326a0656061e2b1d0391b6eba175c397fb5a8a82dc3a57696edbf536308",
+      "mode": "0o644",
+      "category": "Konfiguration",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/README.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 3782,
+      "sha256": "eb9c8879c1c7981268a9681dfe7189821b659570b703fe596e6375a84fc34297",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/architecture_and_components.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 6976,
+      "sha256": "afe4dfce3f9bcf2c40d21526310e34355146402ceaf2606e154c9037f6d1ea5e",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/cs50p_component_provenance.v1.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 1115,
+      "sha256": "d0108174a4749b6fce6bb670f24b0a621fae7766704c14ba0a8ca42ce1d51543",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/handoff-files.v1.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 7995,
+      "sha256": "950f4100953d0c7efa506e99bef235223ca994e9e520e2481c09269f6e1561f0",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/handoff.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 5264,
+      "sha256": "6b7d341b3c6bfbc445fb4b4b86ea67cf7223dfad18730a30e3a5ef3e52e2b780",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        25,
+        32,
+        42,
+        43,
+        51,
+        52,
+        53,
+        74,
+        76,
+        79,
+        98
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          25,
+          32,
+          42,
+          43,
+          51,
+          52,
+          53,
+          74,
+          76,
+          79,
+          98
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "docs/cs50/c27/handoff.md",
+            "line": 42,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          },
+          {
+            "path": "docs/cs50/c27/handoff.md",
+            "line": 52,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          }
+        ]
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/integration_plan.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 2265,
+      "sha256": "c104912e488ab2e3bbf90f3625d2f03073c5a1706d227663dda95c0322e585e5",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/real_data_acceptance.v1.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 6942,
+      "sha256": "aa2e11473f14750dbc0ba1fb1f12ef31d9315de812ca15ed14d08aa4aadbd635",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        108
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          108
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "docs/cs50/c27/real_data_acceptance.v1.json",
+            "line": 108,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          }
+        ]
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/remediation_r02.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 22996,
+      "sha256": "e96809f58c4b3042587b5bc5e3c9082fdf9e2a1d4663959ef19eaf941527625b",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        4,
+        79,
+        80,
+        84,
+        85,
+        231,
+        288
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          4,
+          79,
+          80,
+          84,
+          85,
+          231,
+          288
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "docs/cs50/c27/remediation_r02.md",
+            "line": 4,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          },
+          {
+            "path": "docs/cs50/c27/remediation_r02.md",
+            "line": 79,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          },
+          {
+            "path": "docs/cs50/c27/remediation_r02.md",
+            "line": 84,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          }
+        ]
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/remediation_r04.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 16683,
+      "sha256": "ea6bcfc16d6b4c29178874237579cffdc350d1cfbdb0d13f05e5cbc1a8f80832",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        19,
+        34,
+        35,
+        36,
+        149,
+        225
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          19,
+          34,
+          35,
+          36,
+          149,
+          225
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "docs/cs50/c27/remediation_r04.md",
+            "line": 19,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          },
+          {
+            "path": "docs/cs50/c27/remediation_r04.md",
+            "line": 34,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          },
+          {
+            "path": "docs/cs50/c27/remediation_r04.md",
+            "line": 35,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          }
+        ]
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/remediation_r06.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 17378,
+      "sha256": "ede11b1914bc99c4d9a1f47ef326a93926f4450ce250b6dee9ef385e7d0452aa",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        15,
+        216
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          15,
+          216
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/remediation_r08.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 14968,
+      "sha256": "f9deb2f2d02b878dbfbbfcf68eb29a0b07d19c1547f4b96aba1a0ba40e722dd7",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        48,
+        213,
+        227
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          48,
+          213,
+          227
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/rollout_plan.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 9269,
+      "sha256": "85502582f73279f41734822ffc87b632fc642b092cfd150f6d8a9a3f3d3d0d48",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/summarizer_integration.v1.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 2700,
+      "sha256": "676c0d66e48ed8f699783aa4307728514ec5ad9d08a7297d5b05be1b18100491",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/test-results/initial-integration.txt",
+      "git_state": "untracked",
+      "file_type": "regular .txt",
+      "size_bytes": 1255,
+      "sha256": "2880cc5e8e00fd32a64402bc707889c8089daf0dd190d25daa5ba47a3cc1697a",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        3,
+        19
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          3,
+          19
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "docs/cs50/c27/test-results/initial-integration.txt",
+            "line": 3,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          }
+        ]
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/test-results/pipeline-regression.txt",
+      "git_state": "untracked",
+      "file_type": "regular .txt",
+      "size_bytes": 1625,
+      "sha256": "4cb80267d186e2e0c5dc69773ff17624270d68afdeedd8873a5d24b017756716",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        3,
+        20,
+        24
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          3,
+          20,
+          24
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "docs/cs50/c27/test-results/pipeline-regression.txt",
+            "line": 3,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          },
+          {
+            "path": "docs/cs50/c27/test-results/pipeline-regression.txt",
+            "line": 20,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          }
+        ]
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/test-results/review-final.txt",
+      "git_state": "untracked",
+      "file_type": "regular .txt",
+      "size_bytes": 534,
+      "sha256": "735829d3294a4e681f53bfec0cb0781bd2e41fe6e6b26082bd55710fce2670d1",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        3,
+        10
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          3,
+          10
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "docs/cs50/c27/test-results/review-final.txt",
+            "line": 3,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          }
+        ]
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/test-results/summarizer-final.txt",
+      "git_state": "untracked",
+      "file_type": "regular .txt",
+      "size_bytes": 694,
+      "sha256": "81e29f16ae19acb7ebda8ba9f67450c61e4b0f7e14cbdf9bebab6277229ba0d7",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        3,
+        12
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          3,
+          12
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "docs/cs50/c27/test-results/summarizer-final.txt",
+            "line": 3,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          }
+        ]
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/test_matrix.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 3729,
+      "sha256": "3977f9867310608320718985f018651913e28ead89a66c5d6eac985b64c31454",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/validation.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 5654,
+      "sha256": "269d9e9483fc75c08b9379baeeb3a267c159163bcd3356fd804d0ea833fce721",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [
+        30,
+        44,
+        55
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          30,
+          44,
+          55
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "docs/cs50/c27/validation.md",
+            "line": 44,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          }
+        ]
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/cs50/c27/validation.v1.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 3099,
+      "sha256": "34393ae5691ccd5fa13b2926c277619697c60105f62c03ec008aeb5fb809e1fe",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/lecture_summary/README.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 4432,
+      "sha256": "928b9b40aaa82c33d585990de506d0d75f6745f0f411f88962a42900d5e0ce7f",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/lecture_summary/architecture.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 4069,
+      "sha256": "e2e686ea5a73122fd2bc16f1ec3d6827c219183f8b6a80d928a68feedd1e0c08",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/lecture_summary/example-summary.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 18141,
+      "sha256": "b77f08130026107b1de8e0397adeb7711dda068da0e93c3dca6f336a3c8f14e4",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "S01: repositoryrelative Fixturepfade im historischen Exportbeispiel; zulässigen Publikationsvertrag entscheiden",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "S01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [
+          "tests/fixtures/lecture_summary/sources/hello.py",
+          "tests/fixtures/lecture_summary/sources/notes.txt",
+          "tests/fixtures/lecture_summary/sources/transcript.json"
+        ],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/lecture_summary/example-summary.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 5262,
+      "sha256": "2e3f2f6ce4c288a8540b47e464ba6f557dde43da75501b5094b789aaf500a7cf",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "S01: repositoryrelative Fixturepfade im historischen Exportbeispiel; zulässigen Publikationsvertrag entscheiden; W01: historische nachgestellte Leerzeichen in Zeilen 159–164; unveränderte Archivierung oder getrennte publizierbare Fassung entscheiden",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "S01",
+        "W01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [
+          "tests/fixtures/lecture_summary/sources/hello.py",
+          "tests/fixtures/lecture_summary/sources/notes.txt",
+          "tests/fixtures/lecture_summary/sources/transcript.json"
+        ],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/lecture_summary/handoff-files.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 4336,
+      "sha256": "f0426a8f8ca0eb8dc4638b485a3e8b3225b37caef790bdbca1343a51e0da0223",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/lecture_summary/offline-report.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 210,
+      "sha256": "6beccc505491474328e119e0cdc61ffa318ae8ebcad90c7eee1f90f2dbba2784",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/lecture_summary/operations.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 7411,
+      "sha256": "edc6052ce27cedd43c12baf305046a6b31cfe1fa8817e510169e82247921f4df",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [
+        111,
+        124
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          111,
+          124
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/lecture_summary/test-results.txt",
+      "git_state": "untracked",
+      "file_type": "regular .txt",
+      "size_bytes": 1175,
+      "sha256": "66dd16bbfc6382f7b67c1c673ed0e9e053b738aef88456efac56eb661e7b5e88",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [
+        3
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          3
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "docs/lecture_summary/test-results.txt",
+            "line": 3,
+            "kind": "absolute_local_path",
+            "assessment": "Dokumentations-/Nachweisprüfung erforderlich"
+          }
+        ]
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/lecture_summary/validation.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 989,
+      "sha256": "a1d263205bcc319fb4a3e76dc9542c11516f308f339c874ef476429b3d692d00",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "docs/lecture_summary/validation.md",
+      "git_state": "untracked",
+      "file_type": "regular .md",
+      "size_bytes": 7303,
+      "sha256": "cefbd3853cbd24d105020de1c4a3e1efea32b82d02033a296396c6fd71d3dd65",
+      "mode": "0o644",
+      "category": "Dokumentation",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [
+        23,
+        58,
+        59
+      ],
+      "credential_pattern_lines": [],
+      "review_ids": [
+        "P01"
+      ],
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [
+          23,
+          58,
+          59
+        ],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C2-historical-documents",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "frontend/pages/G_p0_lecture_summarizer.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 14771,
+      "sha256": "21dff0e4a102aa404b106dcfcdd312af72a7b0698e633c0aea200b5e1a72171c",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "_material_view",
+        "_review",
+        "show"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "lecture_summarizer_app.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 249,
+      "sha256": "026d2bedd4f23a43eafa5a3272eee5eaaa42b967871971f442fa2be36856891e",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "scripts/c27_reviewed_week.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 5155,
+      "sha256": "36995e25eb8e4e81d5adc9e5f311e3cfd471581841280b89e33d56b6814cca6d",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "run",
+        "main"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "scripts/lecture_summary_offline.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 2626,
+      "sha256": "c06baf37b20c91af6fadc6e8a3d95abfebf7da0009c8ecbf428c44047162fc74",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "run"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/lecture_summary/__init__.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 81,
+      "sha256": "aea48f3095160bb712f432786bab3a41a38bdd6b9e824c842f7e729e867f2905",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "I01: konkurrierender add/add-Pfad und inkompatible API auf fix/c27-acceptance-exports; Architektur-/Integrationsentscheidung offen",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [],
+      "review_ids": [
+        "I01"
+      ],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/lecture_summary/adapter.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 7075,
+      "sha256": "b3bbc208f5ee63125b232585cc149b876e81c8d83d3c390c64063b7fd97de28f",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "load_catalog",
+        "artifact",
+        "transcript_blocks",
+        "material_handoff_blocks",
+        "validate_input",
+        "source_slices"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/lecture_summary/engine.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 12355,
+      "sha256": "3e3883f15ec4a1b13e8b2148b818f7a5124019278b06bc5b741f6b2d919c0e7f",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [
+        "Outcome",
+        "SummaryRunError"
+      ],
+      "functions": [
+        "messages_for",
+        "bind_section",
+        "consolidate",
+        "input_snapshot",
+        "generate"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/lecture_summary/export.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 9603,
+      "sha256": "501458b8bea2b0de7b9f4c54926a56cf83a1f63de86b982b4e3b067d19cca071",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "public_result",
+        "public_reviews",
+        "public_processing_report",
+        "visible_claims",
+        "source_label",
+        "markdown"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/lecture_summary/export_policy.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 10791,
+      "sha256": "93703bc6680ee4538e879a9e1f9c0623fec8775c3afd6714ecbeae623bcefb8f",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [
+        "ExportPolicy"
+      ],
+      "functions": [
+        "_credential_marker",
+        "_public_host",
+        "source_url_key",
+        "_load_policy",
+        "_approved_metadata_uris",
+        "exportable_source_url",
+        "metadata_text",
+        "metadata"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/lecture_summary/llm.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 3128,
+      "sha256": "53b47df2fbe24a98e074f7f87df24f8b51c38b1d1ad5a134d2e6cf902e0ea5c8",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [
+        "Reply",
+        "SummaryModel",
+        "FakeLLM",
+        "LiteLLMSummaryModel"
+      ],
+      "functions": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/lecture_summary/models.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 12978,
+      "sha256": "208969dd207a5e94653bd97fcda6474e28bc4bb7433417c39d90a12ca526ff16",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "I01: konkurrierender add/add-Pfad und inkompatible API auf fix/c27-acceptance-exports; Architektur-/Integrationsentscheidung offen",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [
+        "SourceProvenance",
+        "ProcessingArtifact",
+        "Material",
+        "Unit",
+        "Week",
+        "Course",
+        "Catalog",
+        "SummaryConfig",
+        "SourceRef",
+        "Candidate",
+        "SectionResponse",
+        "Claim",
+        "SectionResult",
+        "SummaryResult",
+        "ClaimReview",
+        "Review"
+      ],
+      "functions": [
+        "upgrade_v1"
+      ],
+      "review_ids": [
+        "I01"
+      ],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/lecture_summary/public_sources.v1.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 6255,
+      "sha256": "ad8d97b29fbacb2d2e2d2e393deccb766a013743e207e69baefdbf7b0cb31c1d",
+      "mode": "0o644",
+      "category": "Konfiguration",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/lecture_summary/reviewed_week.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 20714,
+      "sha256": "a7b873f8748a6ce8ea31cb1e2a4be047027c81aa078c6a91b8ad602d169cbb98",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "sha",
+        "read",
+        "_source_owner",
+        "verify_review",
+        "revision",
+        "binding_for",
+        "publish_same",
+        "material_blocks",
+        "process_review"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/lecture_summary/store.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 12306,
+      "sha256": "647add6cb4afc68ad5aaa8183cb600c469aafe1182fbdc2eafd2d56199e3ac1e",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [
+        "SummaryStore"
+      ],
+      "functions": [
+        "_read_at",
+        "_write_at",
+        "_json_at"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/llm/model_litellm.py",
+      "git_state": "modified_unstaged",
+      "file_type": "regular .py",
+      "size_bytes": 5361,
+      "sha256": "a0f7031214c1b64ad8ae9d4e03abd18d0411bede7b679ff2c69a7c72a989e678",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [
+        "LLMClient"
+      ],
+      "functions": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "src/llm/model_litellm.py",
+            "line": 199,
+            "kind": "credential_assignment",
+            "assessment": "manuell geprüftes Code-/Policyfeld"
+          }
+        ]
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/model_materials/acquisition.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 6639,
+      "sha256": "95246044e885f078dbb962a9fe30e86641c7f1adc86ac22998280cdc931bc7cf",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "CS50P-07/08 selektive Übernahme; Herkunft docs/cs50/c27/cs50p_component_provenance.v1.json",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [
+        "AcquisitionLimits",
+        "WeekMaterial",
+        "WeekInventory",
+        "SourceGrant",
+        "WeekApproval"
+      ],
+      "functions": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/tools_materials/code_zip.py",
+      "git_state": "modified_unstaged",
+      "file_type": "regular .py",
+      "size_bytes": 8757,
+      "sha256": "43e388265b44d6ceaa467312bc9a906fbc6f4a9e5d368c59c77b155c4e4c31ad",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "CS50P-07/08 selektive Übernahme; Herkunft docs/cs50/c27/cs50p_component_provenance.v1.json",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "sha",
+        "_within",
+        "_open_checked",
+        "inventory_zip",
+        "inspect_zip"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/tools_materials/source_acquisition.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 1911,
+      "sha256": "37418da2de05fd8922ecc3854b2124abef4374dc1f94b5ad9d8ee8f9c38fe91a",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "CS50P-07/08 selektive Übernahme; Herkunft docs/cs50/c27/cs50p_component_provenance.v1.json",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "links",
+        "validate_source",
+        "automatic"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "src/tools_materials/text_validation.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 1831,
+      "sha256": "3e06c87c120e2ece9f2c24f3793fdff07f53011113a5a9c963b4dd77d5bd5bb6",
+      "mode": "0o644",
+      "category": "Produktionscode",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "CS50P-07/08 selektive Übernahme; Herkunft docs/cs50/c27/cs50p_component_provenance.v1.json",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "validate_html_page",
+        "validate_text_source"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/fixtures/lecture_summary/catalog.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 21088,
+      "sha256": "43f28d94713e8f4c04c0b58f5e22436babe4ee61765d29cc4a9e7e2d708b6f12",
+      "mode": "0o644",
+      "category": "Fixture",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/fixtures/lecture_summary/r08-approved-urls.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 5362,
+      "sha256": "d93d787032f101d6e2fa6333cee02f1111cb5ea1a4dab0b2015c19e43590f6eb",
+      "mode": "0o644",
+      "category": "Fixture",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/fixtures/lecture_summary/sources/hello.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 24,
+      "sha256": "11f21b6d8c7fa99aa907921007a3455f4f8313b45981709a4321e67fd13ffb01",
+      "mode": "0o644",
+      "category": "Fixture",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/fixtures/lecture_summary/sources/notes.txt",
+      "git_state": "untracked",
+      "file_type": "regular .txt",
+      "size_bytes": 149,
+      "sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+      "mode": "0o644",
+      "category": "Fixture",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/fixtures/lecture_summary/sources/transcript.json",
+      "git_state": "untracked",
+      "file_type": "regular .json",
+      "size_bytes": 666,
+      "sha256": "f6cffe10a8cd507602ca33196dc005ad0c86559ab10422da3ae1b6099096887f",
+      "mode": "0o644",
+      "category": "Fixture",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/test_c27_remediation_r02.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 24177,
+      "sha256": "d31525a9ed83490197950ced32c30b031a4ebb996b72caae9e02490900ace513",
+      "mode": "0o644",
+      "category": "Test",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [
+        405
+      ],
+      "classes": [],
+      "functions": [
+        "test_store_rejects_links_without_touching_external_data",
+        "test_store_rejects_existing_public_permissions",
+        "test_store_rejects_foreign_owner",
+        "test_store_rejects_existing_runs_link_during_initialization",
+        "test_store_rejects_hardlinked_files",
+        "test_store_rechecks_root_and_runs_identity",
+        "test_store_write_stays_on_open_directory_during_path_swap",
+        "test_safe_store_recovery_and_new_run",
+        "test_consolidation_preserves_every_reference_and_order",
+        "test_different_claims_keep_first_occurrence_order",
+        "test_repeated_claim_generates_once_per_chunk",
+        "review_input",
+        "test_cli_regular_states_export_and_repeat",
+        "test_cli_invalid_input_is_explicit",
+        "test_cli_cache_miss_does_not_generate_again",
+        "test_standalone_exports_preserve_available_provenance",
+        "test_sensitive_source_urls_are_withheld_in_both_exports",
+        "test_actual_legacy_result_is_read_without_rewriting_or_inventing_metadata",
+        "test_reviewed_material_attribution_reaches_export",
+        "test_cli_repeat_exports_current_review_without_overwriting_earlier_export",
+        "test_provider_usage_is_known_only_for_valid_integer_fields",
+        "test_usage_becomes_unknown_after_a_later_partial_reply"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "synthetic_negative_test_values",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "tests/test_c27_remediation_r02.py",
+            "line": 405,
+            "kind": "credential_query",
+            "assessment": "synthetische Negativprobe"
+          },
+          {
+            "path": "tests/test_c27_remediation_r02.py",
+            "line": 414,
+            "kind": "absolute_local_path",
+            "assessment": "synthetische Negativprobe"
+          }
+        ]
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/test_c27_remediation_r04.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 14150,
+      "sha256": "7f64a99d56d25b05f697211a6423647eeebe59cfd1c569fae77637a0a0fef182",
+      "mode": "0o644",
+      "category": "Test",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [
+        51
+      ],
+      "classes": [],
+      "functions": [
+        "test_url_policy_through_generation_roundtrip_and_both_exports",
+        "test_unclassifiable_url_is_safe_and_missing_is_explicit",
+        "rewrite_inventory",
+        "fixture_root",
+        "test_schema_valid_downloaded_root_fails_controlled_before_output",
+        "test_valid_inventory_roots_and_multilevel_graph_keep_identity",
+        "test_invalid_parent_bindings_fail_controlled",
+        "test_ambiguous_valid_and_root_source_is_not_silently_filtered",
+        "test_scope_page_and_lecture_page_may_share_url_without_losing_inventory",
+        "test_historical_v2_result_reexport_uses_policy_without_rewriting_stored_bytes"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "synthetic_negative_test_values",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "tests/test_c27_remediation_r04.py",
+            "line": 51,
+            "kind": "credential_query",
+            "assessment": "synthetische Negativprobe"
+          },
+          {
+            "path": "tests/test_c27_remediation_r04.py",
+            "line": 127,
+            "kind": "absolute_local_path",
+            "assessment": "synthetische Negativprobe"
+          }
+        ]
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/test_c27_remediation_r06.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 17880,
+      "sha256": "8655e040beb3fa8e59dbecaf735ba22494225d79b9177b1dedae5910508590b4",
+      "mode": "0o644",
+      "category": "Test",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "fixture_data",
+        "outcome",
+        "test_markers_rejected_even_under_reviewed_host",
+        "test_reviewed_base_cannot_approve_added_components",
+        "test_local_and_ambiguous_hosts",
+        "test_aliases_persist_cache_reviews_json_markdown_and_canary",
+        "test_unknown_nested_resource_metadata_never_forwarded",
+        "test_bounded_dynamic_metadata_unknown_types_keys_cycles_and_depth",
+        "test_unreviewed_public_sources_and_separately_reviewed_future_course",
+        "test_configuration_cannot_override_syntax_security",
+        "test_all_75_reviewed_urls_survive_all_export_paths",
+        "test_final_boundary_rechecks_mutated_and_historical_models",
+        "test_unknown_summary_metadata_fails_without_sensitive_exception",
+        "test_learning_text_is_preserved_while_structured_metadata_is_withheld",
+        "test_cli_report_selects_schema_and_sanitizes_nested_fields",
+        "test_regular_cli_public_files_and_repeat_are_canary_free",
+        "test_exact_16_r05_reproductions",
+        "test_policy_revocation_applies_to_existing_cache_without_rewriting",
+        "test_metadata_never_unwraps_unapproved_encoded_url",
+        "test_dynamic_metadata_node_budget_is_bounded",
+        "test_final_boundary_rechecks_review_model_instances",
+        "test_malformed_constructed_model_never_emits_original_in_warning_or_error"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": [
+          {
+            "path": "tests/test_c27_remediation_r06.py",
+            "line": 104,
+            "kind": "credential_assignment",
+            "assessment": "synthetische Negativprobe"
+          }
+        ]
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/test_c27_remediation_r08.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 13943,
+      "sha256": "eb517710c6a733950c9684d2ba9b19ff971ca525d0e2310afdb4a3f6899ae2f5",
+      "mode": "0o644",
+      "category": "Test",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "seed",
+        "generate_once",
+        "set_alias",
+        "test_r07_rejected_absolute_uri_alias",
+        "test_r07_historical_cache_review_and_report",
+        "test_r07_actual_ui_downloads",
+        "test_r07_actual_cli_exports",
+        "test_uri_shapes_at_final_mutated_model_boundary",
+        "test_encoded_uri_views_fail_closed",
+        "test_all_aliases_and_learning_prose_are_separate",
+        "test_approved_urls_and_legitimate_metadata_identity",
+        "test_identity_grammar_is_field_scoped",
+        "test_original_catalog_identities_and_locators_survive",
+        "test_direct_labels_and_review_snapshots_apply_field_policy"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/test_c27_reviewed_week.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 11542,
+      "sha256": "02fa762979fc9583cdff47fa9eabb7d4bec72992387f698db88550a9d7fdf6fa",
+      "mode": "0o644",
+      "category": "Test",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C27/R02–R08",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "review",
+        "input_hashes",
+        "test_acquisition_parser_quality_summary_and_cache",
+        "test_reject_invalid_review_before_processing",
+        "test_reject_symlink",
+        "test_no_output_inside_inputs",
+        "test_reuse_rejects_tampered_output",
+        "test_resume_after_interrupted_publication",
+        "test_revision_invalidates_processing",
+        "test_real_penguin_week0_read_only",
+        "test_explicit_summary_selection",
+        "test_fake_long_definition_preserves_excerpt_with_bounded_topic"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/test_lecture_summary.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 21164,
+      "sha256": "8812ee63ec7ded393db00500b9b3246bd5bbebde43e562830092d62e1b276388",
+      "mode": "0o644",
+      "category": "Test",
+      "r08_manifest_match": true,
+      "recommendation": "REVIEW_REQUIRED",
+      "rationale": "I01: konkurrierender add/add-Pfad und inkompatible API auf fix/c27-acceptance-exports; Architektur-/Integrationsentscheidung offen",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [
+        "BrokenLLM"
+      ],
+      "functions": [
+        "catalog",
+        "store",
+        "generate_demo",
+        "mutate",
+        "test_navigation_missing_and_provenance",
+        "test_invalid_selection",
+        "test_unverified_and_unprocessed_blocked",
+        "test_integrity_rejects_hash_locator_and_duplicate",
+        "test_duplicate_course_and_unit",
+        "test_transcript_unknown_time_and_duplicate_ids",
+        "test_multiple_sections_dedup_cache_and_force",
+        "test_material_cache_invalidation",
+        "test_config_cache_invalidation",
+        "test_selection_and_transcript_cache_invalidation",
+        "ref_for",
+        "test_reject_unsupported_formula_code_foreign_refs",
+        "test_missing_references_schema",
+        "test_conflicts_preserved",
+        "test_failure_partial_and_secret_redaction",
+        "test_interruption_and_crash_recovery",
+        "test_duplicate_start_locked",
+        "test_limits_before_dispatch",
+        "test_timeout",
+        "test_retry_bounded_and_usage",
+        "test_review_append_only_integrity_and_export",
+        "test_output_formats",
+        "test_existing_llm_abstraction_without_sdk_network",
+        "test_offline_end_to_end",
+        "test_existing_processed_material_handoff",
+        "test_invalid_output_never_approved_or_reused",
+        "test_serialized_input_byte_limit",
+        "test_nonprimary_blocks_and_chunk_offsets",
+        "test_questionable_false_and_recheck_prevent_approval",
+        "test_failed_schema_keeps_raw_and_retries_are_bounded",
+        "test_missing_usage_never_claims_full_cost",
+        "test_model_configuration_invalidates_cache",
+        "test_absent_scope_is_validation_error"
+      ],
+      "review_ids": [
+        "I01"
+      ],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    },
+    {
+      "path": "tests/test_lecture_summary_ui.py",
+      "git_state": "untracked",
+      "file_type": "regular .py",
+      "size_bytes": 5572,
+      "sha256": "bbd8170eb06e6fe07111f651c1b0720abeaad0212dde13588d231ea533a0129f",
+      "mode": "0o644",
+      "category": "Test",
+      "r08_manifest_match": true,
+      "recommendation": "INCLUDE",
+      "rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "origin": "C26-LS-01 selektiv integriert; C27-Remediation gemäß R08-Manifest",
+      "absolute_path_lines": [],
+      "credential_pattern_lines": [],
+      "classes": [],
+      "functions": [
+        "app",
+        "element",
+        "test_import_navigation_and_no_automatic_run",
+        "test_empty_and_invalid_catalog",
+        "test_empty_materials_and_unprocessed",
+        "test_generate_source_review_cache_and_exports",
+        "test_review_reject_unreviewed_approval",
+        "test_unconfigured_llm",
+        "test_generation_error_state",
+        "test_changed_material_marks_historical_summary"
+      ],
+      "review_ids": [],
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "security": {
+        "credential_assessment": "no_actual_credential_identified_in_recovered_scan",
+        "raw_data": "no_candidate_hash_matches_known_raw_input; synthetic fixtures are deliberate source examples",
+        "temporary_artifact": false,
+        "absolute_local_path_lines_including_tmp": [],
+        "relative_fixture_paths_in_export": [],
+        "scan_matches": []
+      },
+      "planned_commit": "C1-implementation-and-tests",
+      "recovered_recommendation_superseded": "INCLUDE (preliminary, before final gate assessment)"
+    }
+  ],
+  "outside_candidate_set_exclusions": [
+    {
+      "path": ".ruff_cache/.gitignore",
+      "size_bytes": 35,
+      "sha256": "9e3a60f1e6ec4ae60215c11d54b171392745ec25e9dded433d5bd921363af316",
+      "recommendation": "EXCLUDE",
+      "reason": "Vorhandener generierter Ruff-Cache; kein Commitinhalt"
+    },
+    {
+      "path": ".ruff_cache/0.16.3/14392489710586582593",
+      "size_bytes": 572,
+      "sha256": "7d92eec8cf7a6f4c90ed76faa7308f4ea2e05bed431b33b17aebc07dca1307ec",
+      "recommendation": "EXCLUDE",
+      "reason": "Vorhandener generierter Ruff-Cache; kein Commitinhalt"
+    },
+    {
+      "path": ".ruff_cache/0.16.3/17688539607854952212",
+      "size_bytes": 212,
+      "sha256": "32ee60a97844944143a2f0cb24c9965a86a231025983adad8096bd461a65a624",
+      "recommendation": "EXCLUDE",
+      "reason": "Vorhandener generierter Ruff-Cache; kein Commitinhalt"
+    },
+    {
+      "path": ".ruff_cache/0.16.3/238446461390248762",
+      "size_bytes": 212,
+      "sha256": "1025751df9ec149cd1832d6a031e8e0ac423d28c8c57a17c81f40f9c2449ee35",
+      "recommendation": "EXCLUDE",
+      "reason": "Vorhandener generierter Ruff-Cache; kein Commitinhalt"
+    },
+    {
+      "path": ".ruff_cache/0.16.3/2582520910028759232",
+      "size_bytes": 276,
+      "sha256": "d81303a5864e7971d03f52e58720a26d872f3dfd016448b1cd0184d72cc460d7",
+      "recommendation": "EXCLUDE",
+      "reason": "Vorhandener generierter Ruff-Cache; kein Commitinhalt"
+    },
+    {
+      "path": ".ruff_cache/0.16.3/2615147935293565000",
+      "size_bytes": 228,
+      "sha256": "b87b81ac5b80fbd2ea15c7065b4debf696d42870b51869b6a5ef93583010cf50",
+      "recommendation": "EXCLUDE",
+      "reason": "Vorhandener generierter Ruff-Cache; kein Commitinhalt"
+    },
+    {
+      "path": ".ruff_cache/0.16.3/3306832361351920961",
+      "size_bytes": 548,
+      "sha256": "5ba44333f43c521c21131da699636d6c8c319dcb66f237b150e25b37e29e82ae",
+      "recommendation": "EXCLUDE",
+      "reason": "Vorhandener generierter Ruff-Cache; kein Commitinhalt"
+    },
+    {
+      "path": ".ruff_cache/0.16.3/5456288279222267804",
+      "size_bytes": 220,
+      "sha256": "629a9cddb1095374f74583de8c7deeaaac064d566265a0601f8509a9e82e9129",
+      "recommendation": "EXCLUDE",
+      "reason": "Vorhandener generierter Ruff-Cache; kein Commitinhalt"
+    },
+    {
+      "path": ".ruff_cache/0.16.3/6921677250368324301",
+      "size_bytes": 324,
+      "sha256": "0a6624ea2097da01a71cd908055f0dd4f9533b5ce8efec6fafc696ed3a76026f",
+      "recommendation": "EXCLUDE",
+      "reason": "Vorhandener generierter Ruff-Cache; kein Commitinhalt"
+    },
+    {
+      "path": ".ruff_cache/CACHEDIR.TAG",
+      "size_bytes": 43,
+      "sha256": "5953156d7e0c564a427251316eaf26f8870e6483ae2197f916b630e4f93e31ae",
+      "recommendation": "EXCLUDE",
+      "reason": "Vorhandener generierter Ruff-Cache; kein Commitinhalt"
+    }
+  ],
+  "additional_exclusion_policy": [
+    "known original raw review directory",
+    "private stores/raw model outputs",
+    ".env and credentials",
+    "venvs/caches",
+    "patch reconstructions and temporary probes",
+    "full private audit snapshots and recovery helpers"
+  ],
+  "current_documentation_separate_from_62": [
+    {
+      "source": "r09-current/c27_r09_summary.md",
+      "proposed_repository_path": "docs/cs50/c27/reviews/r09/c27_r09_summary.md",
+      "decision": "REVIEW_REQUIRED",
+      "reason": "Unmodified R09 documentation, current technical outcome; publication of local paths and retained external evidence references requires review."
+    },
+    {
+      "source": "r09-current/c27_r09_historical_cases.json",
+      "proposed_repository_path": "docs/cs50/c27/reviews/r09/c27_r09_historical_cases.json",
+      "decision": "REVIEW_REQUIRED",
+      "reason": "Unmodified R09 documentation, current technical outcome; publication of local paths and retained external evidence references requires review."
+    },
+    {
+      "source": "r09-current/c27_r09_test_evidence.md",
+      "proposed_repository_path": "docs/cs50/c27/reviews/r09/c27_r09_test_evidence.md",
+      "decision": "REVIEW_REQUIRED",
+      "reason": "Unmodified R09 documentation, current technical outcome; publication of local paths and retained external evidence references requires review."
+    },
+    {
+      "source": "r09-current/c27_r09_gate_decisions.md",
+      "proposed_repository_path": "docs/cs50/c27/reviews/r09/c27_r09_gate_decisions.md",
+      "decision": "REVIEW_REQUIRED",
+      "reason": "Unmodified R09 documentation, current technical outcome; publication of local paths and retained external evidence references requires review."
+    }
+  ],
+  "scan_limit": "Pattern/content audit of these text files, no universal secret detector; no claim about arbitrary claim text. Recovered results reused after targeted 62-file continuity check.",
+  "decisions": {
+    "commit_inventory": "COMPLETE",
+    "commit_scope": "NEEDS_REVIEW",
+    "integration": "INTEGRATION_REQUIRED",
+    "pr_preparation": "READY_FOR_USER_APPROVAL",
+    "production": "NOT_APPROVED"
+  }
+}

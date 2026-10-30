@@ -1,0 +1,1746 @@
+{
+  "schema_version": 1,
+  "task": "C27-R11",
+  "authority": "recommendations only; implementation, publication and Git mutations not authorized",
+  "review_required_total": 19,
+  "review_decisions": {
+    "KEEP_AS_HISTORICAL_EVIDENCE": 15,
+    "INCLUDE_AFTER_CHANGE": 4,
+    "INCLUDE_AS_IS": 0,
+    "EXCLUDE": 0
+  },
+  "all_candidate_total": 62,
+  "all_candidates_retained_as_content": true,
+  "files": [
+    {
+      "path": ".gitignore",
+      "target_path": ".gitignore",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "95ce3326a0656061e2b1d0391b6eba175c397fb5a8a82dc3a57696edbf536308",
+      "source_bytes": 10634,
+      "category": "Konfiguration",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Konfiguration; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/README.md",
+      "target_path": "docs/cs50/c27/README.md",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "eb9c8879c1c7981268a9681dfe7189821b659570b703fe596e6375a84fc34297",
+      "source_bytes": 3782,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/architecture_and_components.md",
+      "target_path": "docs/cs50/c27/architecture_and_components.md",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "afe4dfce3f9bcf2c40d21526310e34355146402ceaf2606e154c9037f6d1ea5e",
+      "source_bytes": 6976,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/cs50p_component_provenance.v1.json",
+      "target_path": "docs/cs50/c27/cs50p_component_provenance.v1.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "d0108174a4749b6fce6bb670f24b0a621fae7766704c14ba0a8ca42ce1d51543",
+      "source_bytes": 1115,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/handoff-files.v1.json",
+      "target_path": "docs/cs50/c27/handoff-files.v1.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "950f4100953d0c7efa506e99bef235223ca994e9e520e2481c09269f6e1561f0",
+      "source_bytes": 7995,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/handoff.md",
+      "target_path": "docs/cs50/c27/handoff.md",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "6b7d341b3c6bfbc445fb4b4b86ea67cf7223dfad18730a30e3a5ef3e52e2b780",
+      "source_bytes": 5264,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Ursprüngliche C27-Reproduktion und Retention",
+      "evidence_sections": "22–65: konkrete Test-/CLI-Aufrufe und begrenzte TXT-Auswahl; 71–100: Ausgaben, Integrationspending und Patchreferenz.",
+      "rationale": "Lokale Umgebungs-, Reviewroot- und tmp-Pfade (25,32,42–53,74–79,98) bezeichnen historische Infrastruktur, keine Zugangsdaten. Alte auftragsbezogene Ausführungsautorisierung in 37–44 gilt nicht heute.",
+      "required_change": "Originalbytes erhalten; Historienindex verweist auf aktuelle Bedienung und erklärt, dass Pfadexistenz und alte Ausführungserlaubnis nicht fortgelten.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 25,
+          "text": "AppTests zusätzlich Streamlit. In dieser Sandbox verwendet `/tmp/c27-test-env`"
+        },
+        {
+          "line": 32,
+          "text": "PYTHONDONTWRITEBYTECODE=1 /tmp/c27-test-env/bin/python -m pytest \\"
+        },
+        {
+          "line": 42,
+          "text": "C27_WEEK0_REVIEW_ROOT=/home/OPERATOR/cs50p-week0-review-RbZ8OQqe \\"
+        },
+        {
+          "line": 43,
+          "text": "/tmp/c27-test-env/bin/python -m pytest -p tests.offline_guard \\"
+        },
+        {
+          "line": 51,
+          "text": "PYTHONDONTWRITEBYTECODE=1 /tmp/c27-test-env/bin/python -m scripts.c27_reviewed_week \\"
+        },
+        {
+          "line": 52,
+          "text": "  --review-root /home/OPERATOR/cs50p-week0-review-RbZ8OQqe \\"
+        },
+        {
+          "line": 53,
+          "text": "  --output /tmp/c27-real-week0-acceptance \\"
+        },
+        {
+          "line": 74,
+          "text": "`/tmp/c27-real-week0-acceptance/processing/<input-und-revision-hash>/`."
+        },
+        {
+          "line": 76,
+          "text": "`/tmp/c27-real-week0-acceptance/summaries/runs/<run-id>/`."
+        },
+        {
+          "line": 79,
+          "text": "Die Integrationstestkopie unter `/tmp/c27-summary-isolation-*` ist ein Datei-"
+        },
+        {
+          "line": 98,
+          "text": "`/tmp/c27-learning-handoff.patch` bereitgestellt, mit benachbarter `.sha256`-"
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/integration_plan.md",
+      "target_path": "docs/cs50/c27/integration_plan.md",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "c104912e488ab2e3bbf90f3625d2f03073c5a1706d227663dda95c0322e585e5",
+      "source_bytes": 2265,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/real_data_acceptance.v1.json",
+      "target_path": "docs/cs50/c27/real_data_acceptance.v1.json",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "aa2e11473f14750dbc0ba1fb1f12ef31d9315de812ca15ed14d08aa4aadbd635",
+      "source_bytes": 6942,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Hashgebundener lokaler Week-0-Teilnachweis",
+      "evidence_sections": "2–25: Kurs, null Downloads/LLM und Eingangshashes; 26–100: Materialstatus und TXT-Fakelauf; 108–148: Reviewroot, PARTIAL und offene HTML-Abdeckung.",
+      "rationale": "review_root (108) ist Ortsprovenienz ohne Credentials. Öffentliche offizielle URLs, Artefakthashes und synthetischer Run sind Nachweise; kein Rohkursinhalt. ready_for_review bedeutet keine Fachfreigabe.",
+      "required_change": "Nicht zu einer aktuellen v2-Abnahme umschreiben. Zeitliche Rolle im Index und current-status kenntlich machen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 108,
+          "text": "  \"review_root\": \"/home/OPERATOR/cs50p-week0-review-RbZ8OQqe\","
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/remediation_r02.md",
+      "target_path": "docs/cs50/c27/remediation_r02.md",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "e96809f58c4b3042587b5bc5e3c9082fdf9e2a1d4663959ef19eaf941527625b",
+      "source_bytes": 22996,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "F01–F05-Implementierungsentscheidungen und Rekonstruktionsbeweis",
+      "evidence_sections": "100–227: Storeisolation, 16 Belege, needs_attention, Provenienz/v1-Migration und unbekannte Usage; 229–282: damalige Läufe/Mypy; 285–355: Sicherung, Manifesthistorie und offene Gates.",
+      "rationale": "Pfade 4,79–85,231,288 sind Herkunft. FIXED/READY_FOR_INDEPENDENT_REVIEW (6–9,346–347) sind damalige Implementierungsbewertung. URLregel aus 200–208 ist durch R06/R08 verschärft; keine heutige Policyanleitung.",
+      "required_change": "Unverändert archivieren; Statusindex benennt ersetzte R02-URLregel und R09 als spätere unabhängige Evidenz.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 4,
+          "text": "`/home/OPERATOR/0_Portfolio_Projekte/Personal_Assistant-c27-cs50-learning`."
+        },
+        {
+          "line": 79,
+          "text": "`/home/OPERATOR/codex-logs/c27rollout/handoff/review-r01/` gelesen und gegen die"
+        },
+        {
+          "line": 80,
+          "text": "ursprünglichen `/tmp/c27-r01-audit-gx04l36x/`-Dateien gehasht: alle vier bytegleich."
+        },
+        {
+          "line": 84,
+          "text": "`/home/OPERATOR/codex-logs/c27rollout/handoff/implementation/` ist bytegleich zum"
+        },
+        {
+          "line": 85,
+          "text": "ursprünglichen `/tmp/c27-learning-handoff.patch`, SHA-256"
+        },
+        {
+          "line": 231,
+          "text": "Bestehende zusammengesetzte Offlineumgebung `/tmp/c27-test-env/bin/python`,"
+        },
+        {
+          "line": 288,
+          "text": "`/tmp/c27-r02-handoff-jssou_yj/`. Er liegt außerhalb des Repositorys und innerhalb"
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/remediation_r04.md",
+      "target_path": "docs/cs50/c27/remediation_r04.md",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "ea6bcfc16d6b4c29178874237579cffdc350d1cfbdb0d13f05e5cbc1a8f80832",
+      "source_bytes": 16683,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "URL-/Parent-Fix, Regression und Typvergleich",
+      "evidence_sections": "38–50: synthetische URL-Defektproben; 54–113: damaliger HTTP(S)-Vertrag; 115–145: direkte Unit-Parentbindung; 158–220: Tests und Typgrenzen; 222–272: Paket/Retention.",
+      "rationale": "CANARY_ABC123 ist ausdrücklich synthetisch (50), kein Secret. Home/tmp-Pfade 19,34–36,149,225 sind Nachweisorte. 700 damalige Erfolge ersetzen R09 nicht; HTTP ist später durch HTTPS/Freigabeliste ersetzt.",
+      "required_change": "Bytes behalten; aktuelle Dokumentation verweist für Exporte auf R08, für Evidenzschluss auf CAP/R09.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 19,
+          "text": "Worktree: `/home/OPERATOR/0_Portfolio_Projekte/Personal_Assistant-c27-cs50-learning`."
+        },
+        {
+          "line": 34,
+          "text": "- `/home/OPERATOR/codex-logs/c27rollout/handoff/review-r03/`"
+        },
+        {
+          "line": 35,
+          "text": "- `/home/OPERATOR/codex-logs/c27rollout/handoff/remediation-r02/`"
+        },
+        {
+          "line": 36,
+          "text": "- ergänzende Originale: `/tmp/c27-review-r03-FWjzNNOk/`"
+        },
+        {
+          "line": 149,
+          "text": "Vorhandene lokale Umgebung: `/tmp/c27-test-env/bin/python`, Python 3.12.12."
+        },
+        {
+          "line": 225,
+          "text": "`/tmp/c27-remediation-r04-0mmhb6fz/handoff/`."
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/remediation_r06.md",
+      "target_path": "docs/cs50/c27/remediation_r06.md",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "ede11b1914bc99c4d9a1f47ef326a93926f4450ce250b6dee9ef385e7d0452aa",
+      "source_bytes": 17378,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Zentrale Quellenfreigabe, Metadaten- und Cachegrenzen",
+      "evidence_sections": "29–52: Datenfluss; 70–143: explizite Quellenliste, öffentliche Metadaten und private Originalbytes; 145–200: damalige Regression/Typvergleich; 214–255: Übergabe/Retention.",
+      "rationale": "tmp-Pfade 15,216 sind historische Orte. Credential-/Token-Begriffe beschreiben Negativtests. R06s Metadata-Scanner wurde durch R08 vervollständigt; 936 historische Erfolge sind keine neue R11-Regressionszahl.",
+      "required_change": "Als historischen Architektur-/Remediationbeleg erhalten; R08 als geltenden Feldvertrag verlinken.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 15,
+          "text": "Logs liegen im neuen Verzeichnis `/tmp/c27-remediation-r06-y9ygvamb`."
+        },
+        {
+          "line": 216,
+          "text": "Neue eindeutige Ablage: `/tmp/c27-remediation-r06-y9ygvamb`. Sie enthält den"
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/remediation_r08.md",
+      "target_path": "docs/cs50/c27/remediation_r08.md",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "f9deb2f2d02b878dbfbbfcf68eb29a0b07d19c1547f4b96aba1a0ba40e722dd7",
+      "source_bytes": 14968,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "R08-Feldprojektion und damalige kapazitätsbedingte Validierungslücke",
+      "evidence_sections": "50–115: gültige R08-Feldpolicy, relative Pfadidentitäten, URI-Sichten und Historienintegrität; 117–134: neue Exportnamen; 159–209: alte Fehl-/BLOCKED-Zahlen; 211–230: Sicherung.",
+      "rationale": "Pfade 48,213,227 sind damalige tmp-Orte, nicht der heutige gesicherte Home-Handoff. BLOCKED in 201 ist historisch durch CAP und R09 abgelöst, keine aktuelle Produktbewertung. Keine echte vertrauliche Nutzlast erkannt.",
+      "required_change": "Original nicht nachträglich auf PASS setzen. Index nennt Alias zwischen ursprünglichem tmp-Handoff und bereitgestellter Home-Sicherung, übernimmt keine unbestätigte heutige Existenz des tmp-Pfads.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 48,
+          "text": "in diesem Dokument ergänzt. Evidenzablage: `/tmp/c27-remediation-r08.xqBDn5MQ`."
+        },
+        {
+          "line": 213,
+          "text": "Handoff: `/tmp/c27-remediation-r08.xqBDn5MQ`, außerhalb des Worktrees; der bevorzugte"
+        },
+        {
+          "line": 227,
+          "text": "unverändert. Die Sicherung erfolgt mit `bash /tmp/c27-remediation-r08.xqBDn5MQ/backup.sh`"
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/rollout_plan.md",
+      "target_path": "docs/cs50/c27/rollout_plan.md",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "85502582f73279f41734822ffc87b632fc642b092cfd150f6d8a9a3f3d3d0d48",
+      "source_bytes": 9269,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/summarizer_integration.v1.json",
+      "target_path": "docs/cs50/c27/summarizer_integration.v1.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "676c0d66e48ed8f699783aa4307728514ec5ad9d08a7297d5b05be1b18100491",
+      "source_bytes": 2700,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/test-results/initial-integration.txt",
+      "target_path": "docs/cs50/c27/test-results/initial-integration.txt",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "2880cc5e8e00fd32a64402bc707889c8089daf0dd190d25daa5ba47a3cc1697a",
+      "source_bytes": 1255,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Unveränderte ursprüngliche Integrations-Testausgabe",
+      "evidence_sections": "1–6: Umgebung, rootdir und 281 gesammelte Fälle; 8–17: Suiten; 19–20: tmp-JUnit und 280 PASS/1 SKIP.",
+      "rationale": "rootdir (3) und JUnitort (19) sind nicht vertrauliche Prozessprovenienz. Der Lauf liegt vor Fake-Label-/R02–R08-Änderungen.",
+      "required_change": "Bytegleich behalten; im Index als initialer Lauf markieren; keine heutige Wiederholungs- oder Vollregressionsbehauptung.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 3,
+          "text": "rootdir: /home/OPERATOR/0_Portfolio_Projekte/Personal_Assistant-c27-cs50-learning"
+        },
+        {
+          "line": 19,
+          "text": "---------------- generated xml file: /tmp/c27-summary-tests.xml ----------------"
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/test-results/pipeline-regression.txt",
+      "target_path": "docs/cs50/c27/test-results/pipeline-regression.txt",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "4cb80267d186e2e0c5dc69773ff17624270d68afdeedd8873a5d24b017756716",
+      "source_bytes": 1625,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Ursprüngliche Material-/ZIP-/HTML-Pipelineausgabe",
+      "evidence_sections": "6–16: 160 Fälle und konkrete Suiten; 18–25: absichtliche ZIP-Duplikatwarnung und 159 PASS/1 SKIP.",
+      "rationale": "Homepfade 3,20 und tmp-JUnit 24 sind Lauf-/Interpreterorte. Die Warnung zu same.py ist ein Negativfixture, kein privater Dateiname oder neuer Produktfehler.",
+      "required_change": "Unverändert behalten; ausschließlich als datierter ursprünglicher Pipelinebeleg zitieren.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 3,
+          "text": "rootdir: /home/OPERATOR/0_Portfolio_Projekte/Personal_Assistant-c27-cs50-learning"
+        },
+        {
+          "line": 20,
+          "text": "  /home/OPERATOR/.local/share/uv/python/cpython-3.12.12-linux-x86_64-gnu/lib/python3.12/zipfile/__init__.py:1624: UserWarning: Duplicate name: 'same.py'"
+        },
+        {
+          "line": 24,
+          "text": "------------- generated xml file: /tmp/c27-pipeline-regression.xml -------------"
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/test-results/review-final.txt",
+      "target_path": "docs/cs50/c27/test-results/review-final.txt",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "735829d3294a4e681f53bfec0cb0781bd2e41fe6e6b26082bd55710fce2670d1",
+      "source_bytes": 534,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Ursprünglicher Reviewbrücken-/Echtdatenlauf",
+      "evidence_sections": "3: historischer rootdir; 6–11: 36 Fälle und erfolgreiches Ergebnis mit tmp-JUnit.",
+      "rationale": "Keine Rohtexte/Secrets; der alte externe Test ist im zugehörigen Validierungsbericht begrenzt erklärt. final ist ein damaliger Laufname, nicht R11-Abschluss.",
+      "required_change": "Keine Umbenennung/Retusche des Logs; zeitliche Einordnung im Index.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 3,
+          "text": "rootdir: /home/OPERATOR/0_Portfolio_Projekte/Personal_Assistant-c27-cs50-learning"
+        },
+        {
+          "line": 10,
+          "text": "---------------- generated xml file: /tmp/c27-review-final.xml -----------------"
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/test-results/summarizer-final.txt",
+      "target_path": "docs/cs50/c27/test-results/summarizer-final.txt",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "81e29f16ae19acb7ebda8ba9f67450c61e4b0f7e14cbdf9bebab6277229ba0d7",
+      "source_bytes": 694,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Ursprünglicher Summarizer-/UI-Lauf nach Fake-Label-Fix",
+      "evidence_sections": "3: rootdir; 6–13: Backend/UI, 61 PASS und tmp-JUnit.",
+      "rationale": "Nur Laufprovenienz. Kein Nachweis für die noch geplante Namespaceänderung oder die Acceptance-Implementierung.",
+      "required_change": "Originalbytes erhalten und als historischen Lauf nach Label-Fix ausweisen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 3,
+          "text": "rootdir: /home/OPERATOR/0_Portfolio_Projekte/Personal_Assistant-c27-cs50-learning"
+        },
+        {
+          "line": 12,
+          "text": "---------------- generated xml file: /tmp/c27-summary-final.xml ----------------"
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/test_matrix.md",
+      "target_path": "docs/cs50/c27/test_matrix.md",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "3977f9867310608320718985f018651913e28ead89a66c5d6eac985b64c31454",
+      "source_bytes": 3729,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/validation.md",
+      "target_path": "docs/cs50/c27/validation.md",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "269d9e9483fc75c08b9379baeeb3a267c159163bcd3356fd804d0ea833fce721",
+      "source_bytes": 5654,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Ursprünglicher C27-Abnahmebericht vom 29.10.2026",
+      "evidence_sections": "3–25: Basis, zeitliche Testmatrix und keine Addition; 27–58: alte Befehle/Patchsmoke; 60–87: TXT vs HTML; 89–101: Integrationpending und Whitespace.",
+      "rationale": "Lokale Pfade 30,44,55 sind nachweisbezogen. Abschließende Ergebnisse bezeichnet die ursprüngliche Phase; spätere Remediations fehlen hier absichtlich.",
+      "required_change": "Historisch erhalten; current-status beschreibt R09 und den noch ungetesteten Integrationsentwurf. Keine alten Testzahlen aktualisieren.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 30,
+          "text": "`/tmp/c27-test-env/bin/python -m pytest -p tests.offline_guard`."
+        },
+        {
+          "line": 44,
+          "text": " C27_WEEK0_REVIEW_ROOT=/home/OPERATOR/cs50p-week0-review-RbZ8OQqe"
+        },
+        {
+          "line": 55,
+          "text": "`python -m scripts.lecture_summary_offline --output /tmp/c27-isolated-smoke`."
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/cs50/c27/validation.v1.json",
+      "target_path": "docs/cs50/c27/validation.v1.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "34393ae5691ccd5fa13b2926c277619697c60105f62c03ec008aeb5fb809e1fe",
+      "source_bytes": 3099,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/lecture_summary/README.md",
+      "target_path": "docs/lecture_summary/README.md",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "928b9b40aaa82c33d585990de506d0d75f6745f0f411f88962a42900d5e0ce7f",
+      "source_bytes": 4432,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/lecture_summary/architecture.md",
+      "target_path": "docs/lecture_summary/architecture.md",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "e2e686ea5a73122fd2bc16f1ec3d6827c219183f8b6a80d928a68feedd1e0c08",
+      "source_bytes": 4069,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/lecture_summary/example-summary.json",
+      "target_path": "docs/lecture_summary/example-summary.json",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "S01"
+      ],
+      "r10_rationale": "S01: repositoryrelative Fixturepfade im historischen Exportbeispiel; zulässigen Publikationsvertrag entscheiden",
+      "source_sha256": "b77f08130026107b1de8e0397adeb7711dda068da0e93c3dca6f336a3c8f14e4",
+      "source_bytes": 18141,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Synthetischer v1-Export und echte v1-Kompatibilitätsfixture",
+      "evidence_sections": "3: Resultschema 1; 35,68,101,134,167,200,233: sieben relative Fixturequellen; 459–461: approved mit synthetic-offline-check und expliziter Warnung.",
+      "rationale": "Nur drei öffentlich mitgelieferte synthetische Quelldateien, sieben Ref-Einträge; keine Home-/tmp-Pfade oder realen Credentials. Relative source_path-Werte sind nach R08 §Feldvertrag zulässig und für Locator-/Migrationsbeweis relevant. Envelope ohne export_schema_version ist historisch, kein aktuelles Exportmuster.",
+      "required_change": "Byteidentisch erhalten, ausdrücklich v1/synthetisch im Historienindex; keine Neugenerierung oder Ref-/Reviewhashänderung.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "synthetic historical export"
+    },
+    {
+      "path": "docs/lecture_summary/example-summary.md",
+      "target_path": "docs/lecture_summary/example-summary.md",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "S01",
+        "W01"
+      ],
+      "r10_rationale": "S01: repositoryrelative Fixturepfade im historischen Exportbeispiel; zulässigen Publikationsvertrag entscheiden; W01: historische nachgestellte Leerzeichen in Zeilen 159–164; unveränderte Archivierung oder getrennte publizierbare Fassung entscheiden",
+      "source_sha256": "2e3f2f6ce4c288a8540b47e464ba6f557dde43da75501b5094b789aaf500a7cf",
+      "source_bytes": 5262,
+      "category": "Dokumentation",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Menschenlesbare historische Ansicht desselben synthetischen v1-Exports",
+      "evidence_sections": "1–15: synthetischer Titel und fehlende Folien; 57–147: erlaubte relative Fixtureidentitäten/Locators; 153–164: synthetisches approved und sechs trailing spaces.",
+      "rationale": "S01 gelöst durch bewusste Zulassung dieser relativen Fixturepfade. W01 wird durch eine offen deklarierte Normalisierung nur der sechs Zeilen 159–164 gelöst; ungeänderte Originalbytes bleiben in bestehenden externen Handoffs. Kein aktueller R08-Exporterfolg behauptet.",
+      "required_change": "Nur je ein finales ASCII-Leerzeichen in Originalzeilen 159–164 entfernen. Keine Header-/Inhaltsänderung in dieser Datei. Vorher-/Nachherhash und Transformation im neuen Historienindex/Manifest dokumentieren; nicht als bytegleiches Original bezeichnen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "synthetic historical export"
+    },
+    {
+      "path": "docs/lecture_summary/handoff-files.json",
+      "target_path": "docs/lecture_summary/handoff-files.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "f0426a8f8ca0eb8dc4638b485a3e8b3225b37caef790bdbca1343a51e0da0223",
+      "source_bytes": 4336,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/lecture_summary/offline-report.json",
+      "target_path": "docs/lecture_summary/offline-report.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "6beccc505491474328e119e0cdc61ffa318ae8ebcad90c7eee1f90f2dbba2784",
+      "source_bytes": 210,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/lecture_summary/operations.md",
+      "target_path": "docs/lecture_summary/operations.md",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "edc6052ce27cedd43c12baf305046a6b31cfe1fa8817e510169e82247921f4df",
+      "source_bytes": 7411,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "C26-LS-01-Betriebs- und Entwicklungsanleitung als Herkunft",
+      "evidence_sections": "27–66: Konfiguration/Materialadapter; 68–105: historischer Store-/Cachevertrag; 107–125: alte Offlineumgebung/Befehle.",
+      "rationale": "tmp-Pfade 111,124 sind Beispiel-/Umgebungsorte, keine Zugangsdaten. Die Anleitung verwendet alten Namespace/Tests und erwähnt R08 noch nicht. Als aktuelle Bedienung wäre sie nach der geplanten Trennung irreführend.",
+      "required_change": "Bytes als C26-Historie erhalten; neue operations_current.md erhält gültige Imports, offline Befehle und Exportgrenzen. Einstieg über aktuellen Reviewindex.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 111,
+          "text": "python -m scripts.lecture_summary_offline --output /tmp/lecture-summary-demo"
+        },
+        {
+          "line": 124,
+          "text": "Streamlit über `/tmp/c26-ls-01-venv`; Details und Resultate in `validation.md`."
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/lecture_summary/test-results.txt",
+      "target_path": "docs/lecture_summary/test-results.txt",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "66dd16bbfc6382f7b67c1c673ed0e9e053b738aef88456efac56eb661e7b5e88",
+      "source_bytes": 1175,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Ursprünglicher C26-Testlog",
+      "evidence_sections": "3: alter C26-Worktree; 6–19: 281 gesammelte Fälle, 280 PASS/1 SKIP.",
+      "rationale": "Nur nicht geheime Laufprovenienz; keine neue C27-Testfreigabe und kein Nachweis einer heutigen Umgebung.",
+      "required_change": "Unverändert erhalten, im Index getrennt von C27/R09 führen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 3,
+          "text": "rootdir: /home/OPERATOR/0_Portfolio_Projekte/Personal_Assistant-lecture-summarizer"
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/lecture_summary/validation.json",
+      "target_path": "docs/lecture_summary/validation.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "a1d263205bcc319fb4a3e76dc9542c11516f308f339c874ef476429b3d692d00",
+      "source_bytes": 989,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Dokumentation; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "docs/lecture_summary/validation.md",
+      "target_path": "docs/lecture_summary/validation.md",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "P01"
+      ],
+      "r10_rationale": "P01: historische lokale Home-/tmp-Pfade; explizite Publikationsentscheidung erforderlich, Originalbeleg unverändert erhalten",
+      "source_sha256": "cefbd3853cbd24d105020de1c4a3e1efea32b82d02033a296396c6fd71d3dd65",
+      "source_bytes": 7303,
+      "category": "Dokumentation",
+      "decision": "KEEP_AS_HISTORICAL_EVIDENCE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "C26-LS-01-Basis, Test- und Integrationshistorie",
+      "evidence_sections": "3–18: 28.10.2026/Basis 1584a280 und alter Worktree; 20–68: 280/1 und synthetischer Export; 70–84: Browser-/Providergrenzen; 101–120: historische Patch-/Lifecyclebelege.",
+      "rationale": "tmp-Pfade 23,58–59 sind historische Orte. READY FOR LOCAL REVIEW ist ausdrücklich kein Integrationsabschluss. Alte Patch-Existenz und Laufumgebung werden nicht erneut zugesichert.",
+      "required_change": "Historisch bytegleich behalten; im aktuellen Index Basis und aktuelle Autorisierungsgrenze unterscheiden.",
+      "temporal_role": "historical_inherited_record_not_current_acceptance",
+      "local_path_lines": [
+        {
+          "line": 23,
+          "text": "PYTHONDONTWRITEBYTECODE=1 /tmp/c26-ls-01-venv/bin/python -m pytest -p tests.offline_guard \\"
+        },
+        {
+          "line": 58,
+          "text": "PYTHONDONTWRITEBYTECODE=1 /tmp/c26-ls-01-venv/bin/python -m scripts.lecture_summary_offline \\"
+        },
+        {
+          "line": 59,
+          "text": "  --output /tmp/c26-ls-01-e2e"
+        }
+      ],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "frontend/pages/G_p0_lecture_summarizer.py",
+      "target_path": "frontend/pages/G_p0_lecture_summarizer.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "21dff0e4a102aa404b106dcfcdd312af72a7b0698e633c0aea200b5e1a72171c",
+      "source_bytes": 14771,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "lecture_summarizer_app.py",
+      "target_path": "lecture_summarizer_app.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "026d2bedd4f23a43eafa5a3272eee5eaaa42b967871971f442fa2be36856891e",
+      "source_bytes": 249,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "scripts/c27_reviewed_week.py",
+      "target_path": "scripts/c27_reviewed_week.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "36995e25eb8e4e81d5adc9e5f311e3cfd471581841280b89e33d56b6814cca6d",
+      "source_bytes": 5155,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "scripts/lecture_summary_offline.py",
+      "target_path": "scripts/lecture_summary_offline.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "c06baf37b20c91af6fadc6e8a3d95abfebf7da0009c8ecbf428c44047162fc74",
+      "source_bytes": 2626,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/lecture_summary/__init__.py",
+      "target_path": "src/c27_learning_summary/__init__.py",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "I01"
+      ],
+      "r10_rationale": "I01: konkurrierender add/add-Pfad und inkompatible API auf fix/c27-acceptance-exports; Architektur-/Integrationsentscheidung offen",
+      "source_sha256": "aea48f3095160bb712f432786bab3a41a38bdd6b9e824c842f7e729e867f2905",
+      "source_bytes": 81,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Nebenwirkungsfreier Paketeinstieg",
+      "evidence_sections": "1: ausschließlich Docstring; Gegenlinie ebenfalls ausschließlich Docstring, anderer Text.",
+      "rationale": "Textkollision ohne Laufzeit-API-Export, aber gemeinsame Paketidentität verschleiert inkompatible Modelle. Keine lokalen Pfade, Secrets oder generierten Daten.",
+      "required_change": "Als src/c27_learning_summary/__init__.py übernehmen; Docstring darf bytegleich bleiben. Keine Alias-Reexports oder sys.modules-Umschaltung; Acceptance-Paket unverändert.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/lecture_summary/adapter.py",
+      "target_path": "src/c27_learning_summary/adapter.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "b3bbc208f5ee63125b232585cc149b876e81c8d83d3c390c64063b7fd97de28f",
+      "source_bytes": 7075,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/lecture_summary/engine.py",
+      "target_path": "src/c27_learning_summary/engine.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "3e3883f15ec4a1b13e8b2148b818f7a5124019278b06bc5b741f6b2d919c0e7f",
+      "source_bytes": 12355,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/lecture_summary/export.py",
+      "target_path": "src/c27_learning_summary/export.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "501458b8bea2b0de7b9f4c54926a56cf83a1f63de86b982b4e3b067d19cca071",
+      "source_bytes": 9603,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/lecture_summary/export_policy.py",
+      "target_path": "src/c27_learning_summary/export_policy.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "93703bc6680ee4538e879a9e1f9c0623fec8775c3afd6714ecbeae623bcefb8f",
+      "source_bytes": 10791,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/lecture_summary/llm.py",
+      "target_path": "src/c27_learning_summary/llm.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "53b47df2fbe24a98e074f7f87df24f8b51c38b1d1ad5a134d2e6cf902e0ea5c8",
+      "source_bytes": 3128,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/lecture_summary/models.py",
+      "target_path": "src/c27_learning_summary/models.py",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "I01"
+      ],
+      "r10_rationale": "I01: konkurrierender add/add-Pfad und inkompatible API auf fix/c27-acceptance-exports; Architektur-/Integrationsentscheidung offen",
+      "source_sha256": "208969dd207a5e94653bd97fcda6474e28bc4bb7433417c39d90a12ca526ff16",
+      "source_bytes": 12978,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Learning-Pipeline-Verträge mit v1/v2-Migration und Review",
+      "evidence_sections": "36–69: upgrade_v1/SourceProvenance; 72–165: Material/Course/Week/Catalog; 178–203: Limits; 206–325: SourceRef/Claim/Result; 328–359: Reviews.",
+      "rationale": "Catalog.courses und Claim.refs sind strukturell inkompatibel zu Catalog.lectures und Claim.source_ids/quality der Gegenlinie. Gleichnamiges schema_version=1 bedeutet keine Schemafamilienkompatibilität. Kein echter Credentialinhalt.",
+      "required_change": "Nach src/c27_learning_summary/models.py verschieben, nur zwei Exportpolicy-Importpfade anpassen; Felder, Validatoren, Limits und Serialisierung unverändert. Keine Konvertierung von Acceptance-Catalog v1 über upgrade_v1.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/lecture_summary/public_sources.v1.json",
+      "target_path": "src/c27_learning_summary/public_sources.v1.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "ad8d97b29fbacb2d2e2d2e393deccb766a013743e207e69baefdbf7b0cb31c1d",
+      "source_bytes": 6255,
+      "category": "Konfiguration",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Konfiguration; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/lecture_summary/reviewed_week.py",
+      "target_path": "src/c27_learning_summary/reviewed_week.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "a7b873f8748a6ce8ea31cb1e2a4be047027c81aa078c6a91b8ad602d169cbb98",
+      "source_bytes": 20714,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/lecture_summary/store.py",
+      "target_path": "src/c27_learning_summary/store.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "647add6cb4afc68ad5aaa8183cb600c469aafe1182fbdc2eafd2d56199e3ac1e",
+      "source_bytes": 12306,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/llm/model_litellm.py",
+      "target_path": "src/llm/model_litellm.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "a0f7031214c1b64ad8ae9d4e03abd18d0411bede7b679ff2c69a7c72a989e678",
+      "source_bytes": 5361,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/model_materials/acquisition.py",
+      "target_path": "src/model_materials/acquisition.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "95246044e885f078dbb962a9fe30e86641c7f1adc86ac22998280cdc931bc7cf",
+      "source_bytes": 6639,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/tools_materials/code_zip.py",
+      "target_path": "src/tools_materials/code_zip.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "43e388265b44d6ceaa467312bc9a906fbc6f4a9e5d368c59c77b155c4e4c31ad",
+      "source_bytes": 8757,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/tools_materials/source_acquisition.py",
+      "target_path": "src/tools_materials/source_acquisition.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "37418da2de05fd8922ecc3854b2124abef4374dc1f94b5ad9d8ee8f9c38fe91a",
+      "source_bytes": 1911,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "src/tools_materials/text_validation.py",
+      "target_path": "src/tools_materials/text_validation.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "3e06c87c120e2ece9f2c24f3793fdff07f53011113a5a9c963b4dd77d5bd5bb6",
+      "source_bytes": 1831,
+      "category": "Produktionscode",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Produktionscode; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/fixtures/lecture_summary/catalog.json",
+      "target_path": "tests/fixtures/lecture_summary/catalog.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "43f28d94713e8f4c04c0b58f5e22436babe4ee61765d29cc4a9e7e2d708b6f12",
+      "source_bytes": 21088,
+      "category": "Fixture",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Fixture; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/fixtures/lecture_summary/r08-approved-urls.json",
+      "target_path": "tests/fixtures/lecture_summary/r08-approved-urls.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "d93d787032f101d6e2fa6333cee02f1111cb5ea1a4dab0b2015c19e43590f6eb",
+      "source_bytes": 5362,
+      "category": "Fixture",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Fixture; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/fixtures/lecture_summary/sources/hello.py",
+      "target_path": "tests/fixtures/lecture_summary/sources/hello.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "11f21b6d8c7fa99aa907921007a3455f4f8313b45981709a4321e67fd13ffb01",
+      "source_bytes": 24,
+      "category": "Fixture",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Fixture; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/fixtures/lecture_summary/sources/notes.txt",
+      "target_path": "tests/fixtures/lecture_summary/sources/notes.txt",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "2b809c8aa6aa2f18891902ccf59c344c07aeaae4f9c2a9cb2b30fed23beeafdb",
+      "source_bytes": 149,
+      "category": "Fixture",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Fixture; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/fixtures/lecture_summary/sources/transcript.json",
+      "target_path": "tests/fixtures/lecture_summary/sources/transcript.json",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "f6cffe10a8cd507602ca33196dc005ad0c86559ab10422da3ae1b6099096887f",
+      "source_bytes": 666,
+      "category": "Fixture",
+      "decision": "INCLUDE_AS_IS",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Fixture; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Keine Inhaltsanpassung vorgesehen.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/test_c27_remediation_r02.py",
+      "target_path": "tests/test_c27_remediation_r02.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "d31525a9ed83490197950ced32c30b031a4ebb996b72caae9e02490900ace513",
+      "source_bytes": 24177,
+      "category": "Test",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Test; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/test_c27_remediation_r04.py",
+      "target_path": "tests/test_c27_remediation_r04.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "7f64a99d56d25b05f697211a6423647eeebe59cfd1c569fae77637a0a0fef182",
+      "source_bytes": 14150,
+      "category": "Test",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Test; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/test_c27_remediation_r06.py",
+      "target_path": "tests/test_c27_remediation_r06.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "8655e040beb3fa8e59dbecaf735ba22494225d79b9177b1dedae5910508590b4",
+      "source_bytes": 17880,
+      "category": "Test",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Test; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/test_c27_remediation_r08.py",
+      "target_path": "tests/test_c27_remediation_r08.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "eb517710c6a733950c9684d2ba9b19ff971ca525d0e2310afdb4a3f6899ae2f5",
+      "source_bytes": 13943,
+      "category": "Test",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Test; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/test_c27_reviewed_week.py",
+      "target_path": "tests/test_c27_reviewed_week.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "02fa762979fc9583cdff47fa9eabb7d4bec72992387f698db88550a9d7fdf6fa",
+      "source_bytes": 11542,
+      "category": "Test",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Test; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    },
+    {
+      "path": "tests/test_lecture_summary.py",
+      "target_path": "tests/test_c27_learning_summary.py",
+      "r10_recommendation": "REVIEW_REQUIRED",
+      "r10_review_ids": [
+        "I01"
+      ],
+      "r10_rationale": "I01: konkurrierender add/add-Pfad und inkompatible API auf fix/c27-acceptance-exports; Architektur-/Integrationsentscheidung offen",
+      "source_sha256": "8812ee63ec7ded393db00500b9b3246bd5bbebde43e562830092d62e1b276388",
+      "source_bytes": 21164,
+      "category": "Test",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "RESOLVED_AS_RECOMMENDATION",
+      "purpose": "Learning-Pipeline-Backend- und Offline-E2E-Verträge",
+      "evidence_sections": "11–35: Imports/Fixture; 135–190: Cache; 199–255: exakte Claims/Konflikte; 257–305: Fehler/Recovery/Locks/Limits; 343–451: Reviews/Exports/Materialadapter; 547–574: Retries/Usage.",
+      "rationale": "Die andere gleichnamige Suite prüft SummaryService, RegisteredStorage und Markdown/LaTeX; keine Suite deckt beide Implementierungen ab. SECRET_MUST_NOT_BE_SAVED (261,276) ist deterministischer Negativ-Canary. Keine echten Zugangsdaten.",
+      "required_change": "Als tests/test_c27_learning_summary.py aufnehmen, alle direkten und dynamischen Namespace-Referenzen (einschließlich 313/426) umstellen. Assertions behalten; Acceptance-Suite am bisherigen Pfad erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "Kein tatsächlicher Credentialinhalt im gezielten Review identifiziert; keine Garantie allgemeiner Secretfreiheit.",
+      "generated_example": "synthetic test canaries"
+    },
+    {
+      "path": "tests/test_lecture_summary_ui.py",
+      "target_path": "tests/test_lecture_summary_ui.py",
+      "r10_recommendation": "INCLUDE",
+      "r10_review_ids": [],
+      "r10_rationale": "Expliziter C27-Kandidat, R08-gebunden und unverändert; für den Vorschlag vorgesehen.",
+      "source_sha256": "bbd8170eb06e6fe07111f651c1b0720abeaad0212dde13588d231ea533a0129f",
+      "source_bytes": 5572,
+      "category": "Test",
+      "decision": "INCLUDE_AFTER_CHANGE",
+      "decision_status": "R10_SCOPE_CARRIED_FORWARD",
+      "purpose": "Test; R10-INCLUDE unverändert als Ausgangsentscheidung übernommen",
+      "evidence_sections": "R10-Inventar: vollständiger Dateieintrag; außerhalb der 19 kein neuer allgemeiner Inhaltsaudit.",
+      "rationale": "R10-Auswahl übernommen, Hashkontinuität erneut bestätigt.",
+      "required_change": "Namespace-/Import-/Monkeypatchumstellung gemäß Integrationsdesign; bei .gitignore exakte Zielausnahmen ergänzen und fremde Regeln erhalten.",
+      "temporal_role": "current_candidate_bound_to_R08_and_R09",
+      "local_path_lines": [],
+      "confidentiality": "R10-Bewertung übernommen",
+      "generated_example": "not a generated export example"
+    }
+  ],
+  "supplemental_planned_files": [
+    {
+      "source": "/home/OPERATOR/codex-logs/c27rollout/handoff/review-r09/c27_r09_summary.md",
+      "target_path": "docs/cs50/c27/reviews/r09/c27_r09_summary.md",
+      "action": "copy immutable historical report; explain external references in reviews/README.md"
+    },
+    {
+      "source": "/home/OPERATOR/codex-logs/c27rollout/handoff/review-r09/c27_r09_historical_cases.json",
+      "target_path": "docs/cs50/c27/reviews/r09/c27_r09_historical_cases.json",
+      "action": "copy immutable historical report; explain external references in reviews/README.md"
+    },
+    {
+      "source": "/home/OPERATOR/codex-logs/c27rollout/handoff/review-r09/c27_r09_test_evidence.md",
+      "target_path": "docs/cs50/c27/reviews/r09/c27_r09_test_evidence.md",
+      "action": "copy immutable historical report; explain external references in reviews/README.md"
+    },
+    {
+      "source": "/home/OPERATOR/codex-logs/c27rollout/handoff/review-r09/c27_r09_gate_decisions.md",
+      "target_path": "docs/cs50/c27/reviews/r09/c27_r09_gate_decisions.md",
+      "action": "copy immutable historical report; explain external references in reviews/README.md"
+    },
+    {
+      "source": "/home/OPERATOR/codex-logs/c27rollout/handoff/review-r10/c27_r10_summary.md",
+      "target_path": "docs/cs50/c27/reviews/r10/c27_r10_summary.md",
+      "action": "copy immutable R10 record; R11 plan supersedes execution proposal"
+    },
+    {
+      "source": "/home/OPERATOR/codex-logs/c27rollout/handoff/review-r10/c27_r10_commit_inventory.json",
+      "target_path": "docs/cs50/c27/reviews/r10/c27_r10_commit_inventory.json",
+      "action": "copy immutable R10 record; R11 plan supersedes execution proposal"
+    },
+    {
+      "source": "/home/OPERATOR/codex-logs/c27rollout/handoff/review-r10/c27_r10_integration_assessment.md",
+      "target_path": "docs/cs50/c27/reviews/r10/c27_r10_integration_assessment.md",
+      "action": "copy immutable R10 record; R11 plan supersedes execution proposal"
+    },
+    {
+      "source": "/home/OPERATOR/codex-logs/c27rollout/handoff/review-r10/c27_r10_commit_plan.md",
+      "target_path": "docs/cs50/c27/reviews/r10/c27_r10_commit_plan.md",
+      "action": "copy immutable R10 record; R11 plan supersedes execution proposal"
+    },
+    {
+      "source": "/home/OPERATOR/codex-logs/c27rollout/handoff/review-r10/c27_r10_pr_draft.md",
+      "target_path": "docs/cs50/c27/reviews/r10/c27_r10_pr_draft.md",
+      "action": "copy immutable R10 record; R11 plan supersedes execution proposal"
+    },
+    {
+      "source": "/home/OPERATOR/codex-logs/c27rollout/handoff/review-r10/c27_r10_gate_decisions.md",
+      "target_path": "docs/cs50/c27/reviews/r10/c27_r10_gate_decisions.md",
+      "action": "copy immutable R10 record; R11 plan supersedes execution proposal"
+    },
+    {
+      "source": "/tmp/c27-r11-cjxf689_/c27_r11_summary.md",
+      "target_path": "docs/cs50/c27/reviews/r11/c27_r11_summary.md",
+      "action": "copy this design record after its final checksum validation; archive, not live status"
+    },
+    {
+      "source": "/tmp/c27-r11-cjxf689_/c27_r11_file_decisions.json",
+      "target_path": "docs/cs50/c27/reviews/r11/c27_r11_file_decisions.json",
+      "action": "copy this design record after its final checksum validation; archive, not live status"
+    },
+    {
+      "source": "/tmp/c27-r11-cjxf689_/c27_r11_conflict_analysis.md",
+      "target_path": "docs/cs50/c27/reviews/r11/c27_r11_conflict_analysis.md",
+      "action": "copy this design record after its final checksum validation; archive, not live status"
+    },
+    {
+      "source": "/tmp/c27-r11-cjxf689_/c27_r11_integration_design.md",
+      "target_path": "docs/cs50/c27/reviews/r11/c27_r11_integration_design.md",
+      "action": "copy this design record after its final checksum validation; archive, not live status"
+    },
+    {
+      "source": "/tmp/c27-r11-cjxf689_/c27_r11_commit_plan.md",
+      "target_path": "docs/cs50/c27/reviews/r11/c27_r11_commit_plan.md",
+      "action": "copy this design record after its final checksum validation; archive, not live status"
+    },
+    {
+      "source": "/tmp/c27-r11-cjxf689_/c27_r11_gate_decisions.md",
+      "target_path": "docs/cs50/c27/reviews/r11/c27_r11_gate_decisions.md",
+      "action": "copy this design record after its final checksum validation; archive, not live status"
+    },
+    {
+      "source": null,
+      "target_path": "docs/cs50/c27/reviews/README.md",
+      "action": "create current status, historical index, publication decisions, path mapping and normalization provenance"
+    },
+    {
+      "source": null,
+      "target_path": "docs/cs50/c27/operations_current.md",
+      "action": "create current offline operating instructions for isolated namespace"
+    },
+    {
+      "source": null,
+      "target_path": "docs/cs50/c27/integration_manifest.v2.json",
+      "action": "generate exact final 82 other planned paths with hashes/sizes/actions; omit self, bind externally"
+    },
+    {
+      "source": null,
+      "target_path": "tests/test_c27_summary_coexistence.py",
+      "action": "add only meaningful namespace/schema-family isolation and cold-import regressions"
+    },
+    {
+      "source": "/home/OPERATOR/0_Portfolio_Projekte/Personal_Assistant-c27-cs50-learning/.pre-commit-config.yaml",
+      "source_sha256": "6350b5b7974b67167f721263d9d319648dfaa4153ddbdef44653d3e454be8c9b",
+      "target_path": ".pre-commit-config.yaml",
+      "action": "reviewed change only to end-of-file-fixer: anchored exclusion for exactly the historical JSON/MD exports and hash-bound transcript fixture; all other hooks remain active"
+    }
+  ],
+  "exact_planned_target_paths": [
+    ".gitignore",
+    ".pre-commit-config.yaml",
+    "docs/cs50/c27/README.md",
+    "docs/cs50/c27/architecture_and_components.md",
+    "docs/cs50/c27/cs50p_component_provenance.v1.json",
+    "docs/cs50/c27/handoff-files.v1.json",
+    "docs/cs50/c27/handoff.md",
+    "docs/cs50/c27/integration_manifest.v2.json",
+    "docs/cs50/c27/integration_plan.md",
+    "docs/cs50/c27/operations_current.md",
+    "docs/cs50/c27/real_data_acceptance.v1.json",
+    "docs/cs50/c27/remediation_r02.md",
+    "docs/cs50/c27/remediation_r04.md",
+    "docs/cs50/c27/remediation_r06.md",
+    "docs/cs50/c27/remediation_r08.md",
+    "docs/cs50/c27/reviews/README.md",
+    "docs/cs50/c27/reviews/r09/c27_r09_gate_decisions.md",
+    "docs/cs50/c27/reviews/r09/c27_r09_historical_cases.json",
+    "docs/cs50/c27/reviews/r09/c27_r09_summary.md",
+    "docs/cs50/c27/reviews/r09/c27_r09_test_evidence.md",
+    "docs/cs50/c27/reviews/r10/c27_r10_commit_inventory.json",
+    "docs/cs50/c27/reviews/r10/c27_r10_commit_plan.md",
+    "docs/cs50/c27/reviews/r10/c27_r10_gate_decisions.md",
+    "docs/cs50/c27/reviews/r10/c27_r10_integration_assessment.md",
+    "docs/cs50/c27/reviews/r10/c27_r10_pr_draft.md",
+    "docs/cs50/c27/reviews/r10/c27_r10_summary.md",
+    "docs/cs50/c27/reviews/r11/c27_r11_commit_plan.md",
+    "docs/cs50/c27/reviews/r11/c27_r11_conflict_analysis.md",
+    "docs/cs50/c27/reviews/r11/c27_r11_file_decisions.json",
+    "docs/cs50/c27/reviews/r11/c27_r11_gate_decisions.md",
+    "docs/cs50/c27/reviews/r11/c27_r11_integration_design.md",
+    "docs/cs50/c27/reviews/r11/c27_r11_summary.md",
+    "docs/cs50/c27/rollout_plan.md",
+    "docs/cs50/c27/summarizer_integration.v1.json",
+    "docs/cs50/c27/test-results/initial-integration.txt",
+    "docs/cs50/c27/test-results/pipeline-regression.txt",
+    "docs/cs50/c27/test-results/review-final.txt",
+    "docs/cs50/c27/test-results/summarizer-final.txt",
+    "docs/cs50/c27/test_matrix.md",
+    "docs/cs50/c27/validation.md",
+    "docs/cs50/c27/validation.v1.json",
+    "docs/lecture_summary/README.md",
+    "docs/lecture_summary/architecture.md",
+    "docs/lecture_summary/example-summary.json",
+    "docs/lecture_summary/example-summary.md",
+    "docs/lecture_summary/handoff-files.json",
+    "docs/lecture_summary/offline-report.json",
+    "docs/lecture_summary/operations.md",
+    "docs/lecture_summary/test-results.txt",
+    "docs/lecture_summary/validation.json",
+    "docs/lecture_summary/validation.md",
+    "frontend/pages/G_p0_lecture_summarizer.py",
+    "lecture_summarizer_app.py",
+    "scripts/c27_reviewed_week.py",
+    "scripts/lecture_summary_offline.py",
+    "src/c27_learning_summary/__init__.py",
+    "src/c27_learning_summary/adapter.py",
+    "src/c27_learning_summary/engine.py",
+    "src/c27_learning_summary/export.py",
+    "src/c27_learning_summary/export_policy.py",
+    "src/c27_learning_summary/llm.py",
+    "src/c27_learning_summary/models.py",
+    "src/c27_learning_summary/public_sources.v1.json",
+    "src/c27_learning_summary/reviewed_week.py",
+    "src/c27_learning_summary/store.py",
+    "src/llm/model_litellm.py",
+    "src/model_materials/acquisition.py",
+    "src/tools_materials/code_zip.py",
+    "src/tools_materials/source_acquisition.py",
+    "src/tools_materials/text_validation.py",
+    "tests/fixtures/lecture_summary/catalog.json",
+    "tests/fixtures/lecture_summary/r08-approved-urls.json",
+    "tests/fixtures/lecture_summary/sources/hello.py",
+    "tests/fixtures/lecture_summary/sources/notes.txt",
+    "tests/fixtures/lecture_summary/sources/transcript.json",
+    "tests/test_c27_learning_summary.py",
+    "tests/test_c27_remediation_r02.py",
+    "tests/test_c27_remediation_r04.py",
+    "tests/test_c27_remediation_r06.py",
+    "tests/test_c27_remediation_r08.py",
+    "tests/test_c27_reviewed_week.py",
+    "tests/test_c27_summary_coexistence.py",
+    "tests/test_lecture_summary_ui.py"
+  ],
+  "excluded_target_paths": [
+    ".ruff_cache/.gitignore",
+    ".ruff_cache/0.16.3/14392489710586582593",
+    ".ruff_cache/0.16.3/17688539607854952212",
+    ".ruff_cache/0.16.3/238446461390248762",
+    ".ruff_cache/0.16.3/2582520910028759232",
+    ".ruff_cache/0.16.3/2615147935293565000",
+    ".ruff_cache/0.16.3/3306832361351920961",
+    ".ruff_cache/0.16.3/5456288279222267804",
+    ".ruff_cache/0.16.3/6921677250368324301",
+    ".ruff_cache/CACHEDIR.TAG",
+    "src/lecture_summary/__init__.py",
+    "src/lecture_summary/adapter.py",
+    "src/lecture_summary/engine.py",
+    "src/lecture_summary/export.py",
+    "src/lecture_summary/export_policy.py",
+    "src/lecture_summary/llm.py",
+    "src/lecture_summary/models.py",
+    "src/lecture_summary/public_sources.v1.json",
+    "src/lecture_summary/reviewed_week.py",
+    "src/lecture_summary/store.py",
+    "tests/test_lecture_summary.py"
+  ],
+  "excluded_byte_versions": [
+    "docs/lecture_summary/example-summary.md at R10 source hash: retain externally; publish only declared whitespace-normalized derivative"
+  ],
+  "outside_scope_exclusions": [
+    "known original raw review directory",
+    "private stores/raw model outputs",
+    ".env and credentials",
+    "venvs/caches",
+    "patch reconstructions and temporary probes",
+    "full private audit snapshots and recovery helpers"
+  ],
+  "gates": {
+    "review_required_files": "RESOLVED",
+    "conflict_design": "COMPLETE",
+    "commit_scope": "DEFINED",
+    "integration_preparation": "READY_FOR_IMPLEMENTATION_APPROVAL",
+    "production": "NOT_APPROVED"
+  },
+  "hook_normalization_decision": {
+    "hook": "end-of-file-fixer",
+    "scope": "three exact paths, only this hook",
+    "excluded_paths": [
+      "docs/lecture_summary/example-summary.json",
+      "docs/lecture_summary/example-summary.md",
+      "tests/fixtures/lecture_summary/sources/transcript.json"
+    ],
+    "reason": "Preserve historical v1 evidence and source bytes bound by fixture hashes; preserve existing absent final LF. Declared MD six-space normalization still required and trailing-whitespace hook remains active.",
+    "configuration_status": "PLANNED_REVIEW_REQUIRED_AS_IMPLEMENTATION_CONTENT; no unresolved design alternative"
+  }
+}
