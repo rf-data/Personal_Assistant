@@ -1,5 +1,6 @@
 """Bounded ZIP inspection in memory. Never extract member paths to disk."""
 
+import hashlib
 import io
 import stat
 import struct
@@ -9,8 +10,12 @@ import zipfile
 import zlib
 from pathlib import PurePosixPath
 
-from src.tools_materials.batch import sha
 from src.tools_materials.capacity import MIB
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
 
 MAX_MEMBERS = 64
 MAX_TOTAL = 8 * MIB
