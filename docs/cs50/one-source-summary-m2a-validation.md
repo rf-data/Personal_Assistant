@@ -871,3 +871,252 @@ bewahrten temporären Exceptionbeobachter verwenden; nicht den alten Root
 fortsetzen. Erst ein dabei tatsächlich aufgetretener Stacktrace erlaubt die
 Zuordnung zu Deadline, FTS, Store oder Reader. Der Beobachter ist eine lokale
 Diagnosehilfe, kein automatischer Retry oder freigegebener Produktpatch.
+
+
+## PR #174 – Targeted Release Fix (2026-11-07)
+
+Dieser Abschnitt ergänzt die historischen Nachweise oben. Er ersetzt oder
+korrigiert keine alten Messwerte oder Approvals. Ausgangspunkt ist der saubere
+Zielworktree `Personal_Assistant-cs50-m2a`, Branch
+`feat/cs50p-summary-batching-m2a`, HEAD
+`74545e8c30ccfa5da029309b6500155193ee5dc5`.
+
+### Auftrag, Arbeitsgrenze und Findings
+
+Das unabhängige Review meldete HOLD mit zwei bestätigten Findings:
+
+- MEDIUM: Eine während der letzten Section, Konsolidierung oder finalen
+  Speicherung ablaufende Deadline konnte zu Engine-`completed` beziehungsweise
+  globalem `ready` samt gültigem Manifest und erfolgreicher Rückgabe führen.
+- LOW: Die beiden negativen Budgetfälle `evidence_bytes` und
+  `stored_output_bytes` änderten Limits und `plan.limits`, behielten aber die
+  von diesen Limits abhängigen Batch-IDs. Ihr allgemeines HOLD konnte deshalb
+  bereits von der Approvalbindung stammen.
+
+Der Zielworktree liegt außerhalb der in dieser Sitzung beschreibbaren Pfade.
+Wie ausdrücklich beauftragt erfolgt die Bearbeitung ausschließlich in
+`/tmp/pr174-release-fix-eqjkabuq/work`, einer aus dem angegebenen HEAD exportierten
+Kopie. Ihre `.git`-Verweisdatei dient nur der vorhandenen lesenden
+Implementierungsidentität; kein neuer registrierter Gitworktree oder Branch.
+Keine Übernahme in den Zielworktree, kein Commit, Push, PR-Update oder Merge,
+keine Änderung an master oder PR #171. Die auftragsspezifische Integrationssperre
+hat Vorrang vor der allgemeinen Lifecycle-Regel; Integration einschließlich
+dieses Berichts bleibt pending. Keine Netzzugriffe, Provideraufrufe, Installation
+oder echten CS50P-Daten. Die vorhandene Ziel-venv dient nur als Toolquelle.
+Alle neuen Approvals betreffen neu erzeugte synthetische Testquellen; bestehende
+historische Approvals wurden nicht verändert.
+
+### Root Cause und exakte Änderungen
+
+`generate_refs()` prüfte die lokale monotone Uhr im Requestpfad, aber nicht nach
+Section-Bindung/-Speicherung, abschließender Konsolidierung, Result-I/O und
+`SummaryStore.finish(..., "completed")`. Die Antwortprüfung verwendete zudem
+`>` statt einer konsistenten ausgeschöpften Grenze `>=`. Der Orchestrator prüfte
+vor dem globalen Abschluss, aber nicht nach dessen einzelnen Dateischreibschritten.
+Ein während der letzten synchronen Schreiboperation verbrauchtes Zeitbudget
+konnte daher unbemerkt bleiben.
+
+`src/c27_learning_summary/engine.py` prüft jetzt nach Bindung, Section-I/O,
+Section-/Progresscallbacks, Konsolidierung, Result-I/O und abgeschlossenem
+Status-I/O die lokale sowie optional die vom Orchestrator übergebene Deadline.
+`RunDeadlineExceeded`, eine `TimeoutError`-Unterklasse, unterscheidet die lokale
+Wall-Deadline vom Timeout eines einzelnen Adapterrequests. Sie wird nicht
+wiederholt. Der vorhandene Fehlerpfad setzt den Engine-Status auf `failed`;
+Raw-/Section-/Resultdateien bleiben erhalten. Auch wenn die vorangegangene
+`completed`-Schreiboperation bereits fertig war, sind Result und Cache durch den
+anschließend gespeicherten Fehlerstatus ungültig.
+
+`src/cs50_summary_batch.py` übergibt die Gesamtuhrprüfung an die Engine und prüft
+zusätzlich nach Enginerückgabe, Batchvalidierung/-I/O, globaler Konsolidierung
+(auch im Cache-Lesepfad) sowie nach Summary-, Ready- und Manifest-I/O. Ein gesetzter
+Deadline-Fehler bleibt über die gekapselte Engineexception hinweg erkennbar;
+der globale Status speichert einen konkreten sicheren `reason`, und die CLI
+liefert `total wall deadline exceeded` oder `engine wall deadline exceeded`.
+Andere Adapterfehler werden dadurch nicht zu behaupteten Wall-Deadlinefehlern.
+
+Wird die Deadline erst beim letzten Manifest-I/O verbraucht, bleibt die
+Manifestdatei als Evidence liegen. Der danach geschriebene globale HOLD-Status
+stimmt nicht mehr mit ihrem Inventar überein: kein gültiger `ready`+Manifest-
+Abschluss. Ein erneuter Aufruf gegen diesen partiellen Root wird abgelehnt,
+auch mit frischem Zeitbudget und ohne weitere FakeLLM-Aufrufe.
+
+`SummaryStore` wurde vollständig auf `write`, `finish`, `result`, `cached` und
+`exclusive` geprüft; seine bestehende Status-/Hashprüfung genügt. Storeformat,
+Cacheidentität, Konsolidierungsalgorithmus, Standardbudgets, Requesttimeouts und
+Retrykonfiguration bleiben unverändert. Kein Storepatch und keine
+Architekturänderung erforderlich.
+
+In `tests/test_cs50_summary_batch.py` erzeugen die beiden Budgetfälle den Plan
+mit dem produktiven `make_plan()` neu, einschließlich limitgebundener Batch-IDs
+und erneut berechneter Requesthashes. Die synthetische Approval bindet diesen
+vollständigen Plan. Ein beobachtender Wrapper zählt nur tatsächlich bestandene
+produktive Approvalprüfungen; jeder FakeLLM-Request ist in diesen Fällen verboten.
+Verlangt werden die konkreten Gründe `source evidence output limit exceeded`
+beziehungsweise `initial stored output budget exceeded`, ohne Outputroot und
+Abschluss. Die vier anderen Parameter dieser Negativtestgruppe scheitern bereits
+an ihren konkreten Plannergrenzen und verlangen diese Gründe ausdrücklich.
+Die weiteren Limits-/Planänderungen wurden durchsucht: Der vorhandene
+Laufzeit-Stored-Output-Test plante bereits neu; er prüft jetzt zusätzlich
+Approvalerfolg, exakten Budgetgrund, Aufrufzahl, Evidence und fehlendes Manifest.
+Die absichtlich inkonsistenten Approval-Negativtests bleiben solche Tests.
+
+### Deterministische Reproduktion und neue Tests
+
+Neun Schritte werden jeweils mit kontrollierter lokaler und Gesamtzeit geprüft:
+letzte Section-Bindung, letzte Section-Speicherung, Engine-/Batchkonsolidierung,
+Engine-Result-I/O, Engine-Abschlussstatus, globale Konsolidierung, Summary-I/O,
+Ready-I/O und letztes Manifest-I/O. In den vier globalen Fällen ist allein die
+Gesamtdeadline noch aktiv. Die Uhr wird erst nach dem echten Schritt auf die
+exakte verbrauchte Grenze gesetzt; Reader-/Store-Uhren und das synthetische
+MVP-Setup werden nicht verstellt. Keine Sleeps oder Timeout-Erhöhungen.
+
+Alle 18 Parameterfälle verlangen CLI-HOLD mit konkretem Grund, gespeicherten
+HOLD-Status, die erwartete Anzahl Raw-/Sectiondateien und FakeLLM-Aufrufe,
+unveränderte Sourceevidence sowie fehlendes oder nachweislich ungültiges Manifest.
+Enginefehler müssen `failed` und cacheunfähig sein; gespeicherte Resultdateien
+bleiben erhalten, können aber nicht als abgeschlossen gelesen werden. Danach
+wird die Uhr zurückgesetzt und derselbe Root nochmals aufgerufen: weiterhin
+HOLD, bytegleiches Inventar, keine weiteren Requests.
+
+Ein positiver Grenzfall setzt die Uhr nach dem letzten Manifestschreiben auf
+`wall_seconds - 0.001`: completed/ready, gültiges Manifest und unveränderter
+Batchcache ohne neue Requests. Ein weiterer Test unterscheidet einen einzelnen
+synthetischen Request-Timeout ausdrücklich vom Wall-Deadlinefehler. Zusammen
+sind dies 20 neue Fälle; die bisherigen M1-/Enginecache- und Prozessrestarttests
+bleiben aktiv.
+
+Der Vorher-Lauf `red` hat 18 fehlgeschlagene Uhrfälle. Die Fehlerarten sind
+getrennt zu bewerten: **11 Fälle gaben tatsächlich Exit 0 zurück und hinterließen
+ready mit gültigem Manifest**. In sieben Fällen verhinderte die spätere
+Gesamtprüfung bereits den globalen Erfolg; dort fehlte der jetzt ausdrücklich
+geprüfte gespeicherte HOLD-Grund. Der zusätzliche rein lesende Abgleich der
+frisch erzeugten Vorher-Roots bestätigt genau 11 gültige Ready-Manifeste und
+sieben HOLD-Zustände ohne `reason`
+(`red-persisted-state-analysis.json`). Die Zahl 18 bedeutet deshalb nicht
+18 unabhängige erfolgreiche Fehlabschlüsse.
+
+Die separate temporäre Diagnose `diagnostic_budget.py` reproduziert beide alten
+Budgetmutationen und verlangt ihren tatsächlich falschen Grund
+`current approval does not bind the complete batch plan`. Sie gehört nur zur
+Evidence und nicht zum ausgelieferten Testbestand.
+
+
+### Tatsächliche neue Läufe und historische Evidence
+
+Nur die folgende Tabelle enthält Ausführungen dieser Sitzung. Logs, JUnit und
+separat gespeicherte pytest-Exitcodes liegen unter
+`/tmp/pr174-release-fix-eqjkabuq/<Evidencepräfix>.{log,xml,exit}`. Die neuen
+synthetischen Roots heißen jeweils `<Evidencepräfix>-roots` und werden erhalten.
+
+| Neue Ausführung | Evidencepräfix | Ergebnis | pytest-Exit |
+| --- | --- | --- | --- |
+| Diagnose der beiden ursprünglichen inkonsistenten Budgetpläne | `original-budget` | 2 passed; ursprünglicher falscher Approval-HOLD nachgewiesen; 17.585 s (JUnit) | 0 |
+| Neue Uhrfälle gegen unveränderten Produktcode, plus korrigierte Budgettests und Grenzfall | `red` | 18 failed, 7 passed, 45 deselected; 127.925 s (JUnit) | 1 |
+| Erster Produktfix, gezielte Fälle | `targeted` | 25 passed, 45 deselected; 123.182 s (JUnit) | 0 |
+| Zwischenlauf mit Fehler im zusätzlich verschärften Laufzeit-Budgettest | `final-targeted` | 1 failed, 26 passed, 44 deselected; 131.096 s (JUnit) | 1 |
+| Korrigierter finaler Stand, gezielte Fälle | `corrected-targeted` | 27 passed, 44 deselected; 129.125 s (JUnit) | 0 |
+| Gesamte Batchsuite, finaler Stand | `batch` | 71 passed; 378.564 s (JUnit) | 0 |
+| Gesamte Stresssuite, finaler Stand | `stress` | 6 passed; 139.748 s (JUnit) | 0 |
+| Bestehende Schnittstellenregressionen, finaler Stand | `regression` | 438 passed, 1 deselected; 586.647 s (JUnit) | 0 |
+
+Der Fehler im Zwischenlauf `final-targeted` war ein von dieser Bearbeitung
+verursachtes `UnboundLocalError` für `blocks`: Beim Entfernen eines doppelten
+Source-Reads war der noch für die Budgetgrößenberechnung benötigte Read entfernt
+worden. Wiederhergestellt wurde der erste Read; der tatsächlich redundante zweite
+Read entfiel. Die Imports wurden sortiert. Das ist ein Testkorrekturfehler,
+kein beobachteter Deadline-/MVP-Produktfehler. Der Fehlversuch und seine Evidence
+bleiben erhalten. Der korrigierte gezielte Lauf und alle anschließenden Suiten
+prüfen den finalen Stand. Nach deren Beginn wurden keine Pythondateien mehr
+verändert; `final-python-sha256.json` und `final-verification.json` sichern dies.
+
+**Finale Suiten: 515 passed** (71 Batch + 6 Stress + 438 Regressionen), jeweils
+Exit 0. Die 27 gezielten Erfolge überlappen diese Suiten und werden nicht noch
+einmal addiert. Keine Skips oder Xfails in diesen erfolgreichen Läufen. Der eine
+abgewählte Regressionstest ist
+`test_optional_original_python_notes_read_only`; er verlangt Originalmaterial,
+das dieser Auftrag ausdrücklich ausschließt. Die gezielten Deselectzahlen sind
+jeweils allein die Auswahl über `-k`.
+
+Die Regressionsauswahl umfasst `test_cs50_summary_mvp.py`,
+`test_cs50_summary_c27_regression.py`, `test_cs50_learning_mvp.py`,
+`test_content_store_adapters.py`, `test_content_store_integrity.py`,
+`test_content_read_contracts.py`, `test_content_fts.py`,
+`test_content_retrieval_integration.py`, `test_content_index_projection.py`,
+`test_cs50_material_processing.py`, `test_cs50_material_html.py`,
+`test_cs50_material_html_semantics.py` und `test_cs50_material_quality.py`.
+Damit sind die relevanten M1-Engine-/Store-/Cache-, MVP-, Reader- und
+Parserpfade nach der letzten Produktcodeänderung erneut ausgeführt.
+
+Ruff check: Exit 0 (`ruff-check.log/exit`). Ruff format --check: Exit 0,
+zwölf Dateien bereits formatiert (`ruff-format.log/exit`). Umfang:
+`src/c27_learning_summary/`, `src/cs50_summary_batch.py` und die vier Summary-
+Testmodule für Batch, Stress, C27 und M1. `git diff --check`: Exit 0
+(`diff-check.log/exit`), einschließlich dieses ergänzten Berichts.
+
+Reproduktion: `validate.py` enthält die genauen sequenziellen Befehle;
+`*-command.json` enthält jeweils die tatsächlich verwendeten Argumente.
+Ein frisches Evidenceverzeichnis beziehungsweise neue Log-/Rootnamen verwenden,
+keinen vorhandenen Testroot wiederverwenden. Gemeinsame Parameter:
+
+```bash
+cd /tmp/pr174-release-fix-eqjkabuq/work
+PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+  /home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/bin/python -B \
+  -m pytest tests/test_cs50_summary_batch.py \
+  -k 'late_deadline or final_io_just or total_limits or request_timeout or runtime_stored' \
+  -q -p no:cacheprovider -p tests.offline_guard \
+  --basetemp=/tmp/NEUER-PR174-ROOT --junitxml=/tmp/NEUES-PR174-ERGEBNIS.xml
+```
+
+Für die ganze Batchsuite `-k` weglassen; für Stress die Testdatei durch
+`tests/test_cs50_summary_batch_stress.py` ersetzen. Für die oben genannte
+Regressionsauswahl zusätzlich `-m 'not external_integration'` verwenden.
+Interpreter: Python 3.12.12; pytest 9.1.1; Ruff 0.16.3. Keine Installation,
+keine geänderten Sicherheitsbudgets, keine Timeout- oder Last-Workarounds.
+
+**Historisch vom Auftrag gemeldet, hier nicht als neue Ausführung ausgegeben:**
+57 bestandene Batch-/Stressfälle; Post-Commit-Suite 494 passed, 1 failed,
+1 deselected mit einem 20-s-Subprozess-Timeout; isolierte Wiederholung PASS in
+3,96 s. Diese Zahlen, die früheren Nachweise oben und das historische
+MVP-`Unavailable` bleiben eigenständige Evidence. Die neuen grünen Läufe beweisen
+weder die damalige konkrete Ursache noch deren Behebung. Der finale
+Regressionslauf dieser Sitzung ersetzt keinen historischen fehlgeschlagenen Lauf.
+
+### Restrisiken, Patch und Releaseentscheidung
+
+Die Grenze bleibt kooperativ. Eine lange Operation wird erst nach ihrer Rückkehr
+geprüft; kein präemptiver Prozessabbruch, kein hartes CPU-/I/O-Zeitlimit und kein
+zeitlich atomarer Commit. Auch die Sicherung des Fehlerstatus benötigt I/O.
+Prozessabbruch oder weiterer I/O-Ausfall vor dieser Sicherung bleibt außerhalb
+dieses Deadlinefixes. Es gibt keine automatische Fortsetzung oder stillen Retries.
+Das historische MVP-`Unavailable` und dessen konkrete Ursache bleiben ungeklärt.
+FakeLLM prüft mechanische Sourcebindung; Realmaterial, LiveLLM und fachliche
+Abnahme bleiben unvalidiert.
+
+**Technische Validierung des gelieferten Fixes: PASS für beide bestätigten
+Findings und die genannten synthetischen Regressionen. Release PR #174: HOLD.**
+Der Zielstand ist ausdrücklich unverändert; die Korrektur liegt nur als geprüfter
+Patch vor. Eine technische Mergefreigabe des tatsächlich unveränderten PR-Stands
+wird deshalb nicht erteilt. Anwendung, Review sowie spätere Integration liegen
+außerhalb dieses Auftrags. Die historischen Restrisiken werden nicht als behoben
+ausgegeben.
+
+Lieferartefakt:
+`/tmp/pr174-release-fix-eqjkabuq/pr174-targeted-release-fix.patch`.
+Es enthält ausschließlich `src/c27_learning_summary/engine.py`,
+`src/cs50_summary_batch.py`, `tests/test_cs50_summary_batch.py` und die Ergänzung
+von `docs/cs50/one-source-summary-m2a-validation.md`.
+`git apply --check` gegen den Zielworktree besteht mit Exit 0, ebenso die
+zusätzliche Prüfung mit `--whitespace=error-all` (`apply-check.log/exit`,
+`apply-strict-check.log/exit`). Keine Anwendung des Patches.
+
+Der finale Abgleich bestätigt unveränderte Zielhashes, HEAD, Branch und sauberen
+Gitstatus sowie während der Abschlusskontrolle unveränderte registrierte
+Worktrees und Branchrefs. Der historische Dokumentinhalt bleibt bytegleich als
+Präfix erhalten. `final-verification.json` und `evidence-sha256.json` sichern
+Checks, Ergebnisse und Artefakthashes. Es wurden keine task-eigenen Gitbranches
+oder registrierten Worktrees erzeugt oder entfernt. Die gewöhnliche `/tmp`-
+Kopie, Patch, Diagnosehelfer, Logs und synthetischen Testroots bleiben zur
+Nachprüfung und notwendigen späteren Anwendung erhalten. Bestehende Branches,
+Worktrees, Approvals und andere Tasks bleiben unberührt; Defaultbranch-
+Integration bleibt wegen der ausdrücklichen Auftragssperre pending.

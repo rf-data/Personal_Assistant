@@ -15,7 +15,11 @@ from pydantic import Field
 from scripts import cs50_learning_mvp as mvp
 from src import cs50_summary_mvp as m1
 from src.c27_learning_summary.adapter import iter_source_slices
-from src.c27_learning_summary.engine import generate_refs, messages_for
+from src.c27_learning_summary.engine import (
+    SummaryRunError,
+    generate_refs,
+    messages_for,
+)
 from src.c27_learning_summary.llm import FakeLLM
 from src.c27_learning_summary.models import SourceRef, SummaryConfig, SummaryResult
 from src.c27_learning_summary.store import SummaryStore
@@ -299,9 +303,12 @@ def run(args):
         ):
             raise Hold("initial stored output budget exceeded")
         calls, output_bytes = 0, 0
+        total_deadline_exceeded = False
 
         def deadline():
+            nonlocal total_deadline_exceeded
             if time.monotonic() - started >= plan.limits.wall_seconds:
+                total_deadline_exceeded = True
                 raise Hold("total wall deadline exceeded")
 
         def before_call():
@@ -365,6 +372,7 @@ def run(args):
                         raise Hold("cached batch not checked")
                     records.append(dict(record, status="checked"))
                 report = consolidate_batches(plan, records)
+                deadline()
                 if (
                     report != mvp.load(target, "summary.json")
                     or mvp.load(target, "state.json")["phase"] != "ready"
@@ -400,7 +408,9 @@ def run(args):
                         before_call=before_call,
                         after_reply=after_reply,
                         after_section=after_section,
+                        check_deadline=deadline,
                     ).result
+                    deadline()
                     record = dict(
                         batch_id=batch.batch_id,
                         status="checked",
@@ -425,9 +435,11 @@ def run(args):
                     # Candidate bytes are immutable; validation state lives separately.
                     if stored_bytes() > plan.limits.stored_output_bytes:
                         raise Hold("total stored output budget exceeded")
+                    deadline()
                     records.append(record)
                     active = None
                 report = consolidate_batches(plan, records)
+                deadline()
                 if len(canonical(report)) > plan.limits.evidence_bytes:
                     raise Hold("consolidated output byte limit exceeded")
                 # Reserve the final report, manifest and bounded state growth
@@ -442,6 +454,7 @@ def run(args):
                 unchanged()
                 # Cache consumes immutable candidates plus checked state, never an unchecked result.
                 publish_bytes(target / "summary.json", canonical(report))
+                deadline()
                 write_state(
                     target / "state.json",
                     dict(
@@ -452,11 +465,28 @@ def run(args):
                         raw_output_bytes=output_bytes,
                     ),
                 )
+                deadline()
                 publish_bytes(
                     target / "manifest.json", canonical(mvp.inventory(target))
                 )
+                # A deadline crossed by the last write invalidates ready via HOLD.
+                # Keep the manifest as evidence; the changed state breaks its binding.
+                deadline()
                 return report
             except BaseException as error:
+                engine_timeout = (
+                    isinstance(error, SummaryRunError)
+                    and error.code == "RunDeadlineExceeded"
+                )
+                # Engine errors retain only safe exception codes, never provider text.
+                if engine_timeout:
+                    reason = "engine wall deadline exceeded"
+                elif total_deadline_exceeded:
+                    reason = "total wall deadline exceeded"
+                else:
+                    reason = (
+                        str(error) if isinstance(error, Hold) else type(error).__name__
+                    )
                 if active:
                     write_state(
                         target / f"batch-{active.ordinal:03}-state.json",
@@ -474,8 +504,11 @@ def run(args):
                         completed_batches=len(records),
                         requests=calls,
                         error=type(error).__name__,
+                        reason=reason,
                     ),
                 )
+                if engine_timeout or total_deadline_exceeded:
+                    raise Hold(reason) from None
                 raise
 
 

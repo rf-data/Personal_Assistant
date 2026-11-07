@@ -13,8 +13,10 @@ import pytest
 from scripts import cs50_learning_mvp as mvp
 from src import cs50_summary_batch as batch
 from src import cs50_summary_mvp as m1
+from src.c27_learning_summary import engine
 from src.c27_learning_summary.llm import Reply
 from src.c27_learning_summary.models import SummaryConfig
+from src.c27_learning_summary.store import SummaryStore
 from src.content_store.models import canonical
 from tests.test_cs50_learning_mvp import HTML, make_case
 
@@ -395,13 +397,58 @@ def test_processing_chain_and_original_tampering(tmp_path, capsys, kind):
         ("stored_output_bytes", 1),
     ],
 )
-def test_total_limits_hold_without_truncation(tmp_path, capsys, limit, value):
+def test_total_limits_hold_without_truncation(
+    tmp_path, capsys, monkeypatch, limit, value
+):
     test = prepare(tmp_path, capsys, config=SummaryConfig(max_chunks=2))
-    data = json.loads(test.approval.read_bytes())
-    data["limits"][limit] = value
-    data["plan"]["limits"][limit] = value
-    test.approval.write_bytes(canonical(data))
-    assert invoke(test.argv, capsys, 2)["status"] == "HOLD"
+    approved = []
+    original = batch.check_approval
+
+    def checked(*args):
+        original(*args)
+        approved.append(True)
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("budget HOLD must precede dispatch")
+
+    monkeypatch.setattr(batch, "check_approval", checked)
+    monkeypatch.setattr(batch.FakeLLM, "complete", forbidden)
+    limits = test.plan.limits.model_copy(update={limit: value})
+    reasons = {
+        "total_slices": "total slice/request limit exceeded; no truncation",
+        "requests": "total slice/request limit exceeded; no truncation",
+        "batches": "total batch limit exceeded",
+        "raw_output_bytes": "planned worst-case raw output exceeds total budget",
+        "evidence_bytes": "source evidence output limit exceeded",
+        "stored_output_bytes": "initial stored output budget exceeded",
+    }
+    if limit in {"evidence_bytes", "stored_output_bytes"}:
+        identity, blocks, doc = m1.read_source(
+            test.case.root,
+            test.plan.source["source_id"],
+            test.plan.source["parsed_version_id"],
+            "synthetic-operator",
+        )
+        plan = batch.make_plan(identity, blocks, doc, test.plan.config, limits)
+        assert plan.batches[0].batch_id != test.plan.batches[0].batch_id
+        assert all(
+            b.request_sha256
+            == tuple(batch.sha256(batch.request_bytes(r, plan.config)) for r in b.refs)
+            for b in plan.batches
+        )
+        change(
+            test,
+            limits=limits.model_dump(mode="json"),
+            plan=plan.model_dump(mode="json"),
+        )
+    else:
+        # These invalid plans must fail in planning, before approval validation.
+        change(test, limits=limits.model_dump(mode="json"))
+    result = invoke(test.argv, capsys, 2)
+    assert result["status"] == "HOLD" and result["reason"] == reasons[limit]
+    assert approved == (
+        [True] if limit in {"evidence_bytes", "stored_output_bytes"} else []
+    )
     assert not test.target.exists()
 
 
@@ -588,7 +635,9 @@ def test_approval_chain_expiry_between_requests(tmp_path, capsys, monkeypatch, w
     assert mvp.load(test.target, "state.json")["phase"] == "HOLD"
 
 
-def test_runtime_stored_output_quota_holds_before_global_publication(tmp_path, capsys):
+def test_runtime_stored_output_quota_holds_before_global_publication(
+    tmp_path, capsys, monkeypatch
+):
     test = prepare(tmp_path, capsys)
     data = json.loads(test.approval.read_bytes())
     # Enough for initial immutable evidence; intentionally too small for all
@@ -614,17 +663,224 @@ def test_runtime_stored_output_quota_holds_before_global_publication(tmp_path, c
     data["limits"]["stored_output_bytes"] = size
     data["plan"]["limits"]["stored_output_bytes"] = size
     # IDs also bind limits, so a genuine new plan is required.
-    identity, blocks, doc = m1.read_source(
-        test.case.root,
-        test.plan.source["source_id"],
-        test.plan.source["parsed_version_id"],
-        "synthetic-operator",
-    )
     limits = batch.BatchLimits.model_validate(data["limits"])
     plan = batch.make_plan(identity, blocks, doc, test.plan.config, limits)
     data["plan"] = plan.model_dump(mode="json")
     test.approval.write_bytes(canonical(data))
-    assert invoke(test.argv, capsys, 2)["status"] == "HOLD"
+    approved, calls = [], []
+    original_check, original_complete = batch.check_approval, batch.FakeLLM.complete
+
+    def checked(*args):
+        original_check(*args)
+        approved.append(True)
+
+    def complete(self, *args, **kwargs):
+        calls.append(1)
+        return original_complete(self, *args, **kwargs)
+
+    monkeypatch.setattr(batch, "check_approval", checked)
+    monkeypatch.setattr(batch.FakeLLM, "complete", complete)
+    result = invoke(test.argv, capsys, 2)
+    assert result["status"] == "HOLD"
+    assert result["reason"] == "total stored output budget exceeded"
+    assert approved == [True] and len(calls) == plan.total_requests
     assert test.target.exists()
     assert not (test.target / "summary.json").exists()
-    assert mvp.load(test.target, "state.json")["phase"] == "HOLD"
+    assert not (test.target / "manifest.json").exists()
+    assert list(test.target.glob("engine-*/runs/*/raw/*.json"))
+    state = mvp.load(test.target, "state.json")
+    assert state["phase"] == "HOLD" and state["reason"] == result["reason"]
+
+
+@pytest.mark.parametrize(
+    "stage",
+    [
+        "section_bind",
+        "section_save",
+        "batch_consolidate",
+        "engine_result",
+        "engine_finish",
+        "global_consolidate",
+        "summary",
+        "ready",
+        "manifest",
+    ],
+)
+@pytest.mark.parametrize("clock_scope", ["engine", "total"])
+def test_late_deadline_holds_and_cannot_resume(
+    tmp_path, capsys, monkeypatch, stage, clock_scope
+):
+    test = prepare(tmp_path, capsys)
+    source_before = mvp.inventory(test.case.root)
+    now = [0.0]
+    # Separate module clocks leave Reader/Store deadlines and fixture setup real.
+    monkeypatch.setattr(batch, "time", SimpleNamespace(monotonic=lambda: now[0]))
+    monkeypatch.setattr(
+        engine,
+        "time",
+        SimpleNamespace(
+            monotonic=(lambda: now[0]) if clock_scope == "engine" else (lambda: 0.0)
+        ),
+    )
+    bound = (
+        test.plan.config.wall_seconds
+        if clock_scope == "engine"
+        else test.plan.limits.wall_seconds
+    )
+    # Global stages run after the engine has finished; only total time applies.
+    if stage in {"global_consolidate", "summary", "ready", "manifest"}:
+        bound = test.plan.limits.wall_seconds
+    calls = []
+    original_complete = batch.FakeLLM.complete
+
+    def complete(self, *args, **kwargs):
+        calls.append(1)
+        return original_complete(self, *args, **kwargs)
+
+    monkeypatch.setattr(batch.FakeLLM, "complete", complete)
+
+    def wrap(obj, name, predicate):
+        original = getattr(obj, name)
+
+        def operation(*args, **kwargs):
+            value = original(*args, **kwargs)
+            if predicate(args, kwargs, value):
+                now[0] = bound  # Exact boundary must HOLD too.
+            return value
+
+        monkeypatch.setattr(obj, name, operation)
+
+    last_ref = test.plan.batches[-1].refs[-1].ref_id
+    if stage == "section_bind":
+        wrap(engine, "bind_section", lambda a, k, v: v.ref_id == last_ref)
+    elif stage == "section_save":
+        wrap(
+            SummaryStore,
+            "write",
+            lambda a, k, v: a[2] == f"sections/{test.plan.total_slices - 1:03}.json",
+        )
+    elif stage == "batch_consolidate":
+        wrap(engine, "consolidate", lambda a, k, v: True)
+    elif stage == "engine_result":
+        wrap(SummaryStore, "write", lambda a, k, v: a[2] == "result.json")
+    elif stage == "engine_finish":
+        wrap(SummaryStore, "finish", lambda a, k, v: a[2] == "completed")
+    elif stage == "global_consolidate":
+        wrap(batch, "consolidate_batches", lambda a, k, v: True)
+    elif stage == "ready":
+        wrap(
+            batch,
+            "write_state",
+            lambda a, k, v: a[0].name == "state.json" and a[1]["phase"] == "ready",
+        )
+    else:
+        wrap(batch, "publish_bytes", lambda a, k, v: a[0].name == f"{stage}.json")
+
+    report = invoke(test.argv, capsys, 2)
+    expected = (
+        "engine wall deadline exceeded"
+        if clock_scope == "engine"
+        and stage
+        in {
+            "section_bind",
+            "section_save",
+            "batch_consolidate",
+            "engine_result",
+            "engine_finish",
+        }
+        else "total wall deadline exceeded"
+    )
+    assert report["status"] == "HOLD" and report["reason"] == expected
+    state = mvp.load(test.target, "state.json")
+    assert state["phase"] == "HOLD" and state["reason"] == expected
+    assert len(calls) == test.plan.total_requests
+    assert len(list(test.target.glob("engine-*/runs/*/raw/[0-9]*-0.json"))) == len(
+        calls
+    )
+    assert (test.target / "evidence.json").exists()
+    if (test.target / "manifest.json").exists():
+        inventory = mvp.inventory(test.target)
+        inventory.pop("manifest.json")
+        assert inventory != mvp.load(test.target, "manifest.json")
+    if stage in {
+        "section_bind",
+        "section_save",
+        "batch_consolidate",
+        "engine_result",
+        "engine_finish",
+    }:
+        store = SummaryStore(test.target / "engine-000")
+        saved = store.history()[0]
+        assert saved["status"] == "failed"
+        assert saved["error"] == (
+            "RunDeadlineExceeded" if clock_scope == "engine" else "Hold"
+        )
+        assert store.cached(saved["cache_key"]) is None
+        if stage in {"engine_result", "engine_finish"}:
+            assert (store.run_path(saved["run_id"]) / "result.json").exists()
+            with pytest.raises(ValueError, match="Result not complete"):
+                store.result(saved["run_id"])
+    section_files = list(test.target.glob("engine-*/runs/*/sections/*.json"))
+    assert len(section_files) == test.plan.total_slices - (stage == "section_bind")
+    if stage in {"summary", "ready", "manifest"}:
+        assert (test.target / "summary.json").exists()
+    assert mvp.inventory(test.case.root) == source_before
+    saved_inventory = mvp.inventory(test.target)
+    now[0] = (
+        0.0  # A fresh invocation gets a new budget, but cannot adopt partial evidence.
+    )
+    assert invoke(test.argv, capsys, 2)["status"] == "HOLD"
+    assert mvp.inventory(test.target) == saved_inventory
+    assert len(calls) == test.plan.total_requests
+
+
+def test_final_io_just_inside_deadline_keeps_valid_cache(tmp_path, capsys, monkeypatch):
+    test = prepare(tmp_path, capsys)
+    now = [0.0]
+    monkeypatch.setattr(batch, "time", SimpleNamespace(monotonic=lambda: now[0]))
+    original = batch.publish_bytes
+    calls = []
+    original_complete = batch.FakeLLM.complete
+
+    def complete(self, *args, **kwargs):
+        calls.append(1)
+        return original_complete(self, *args, **kwargs)
+
+    def publish(path, data):
+        original(path, data)
+        if path.name == "manifest.json":
+            now[0] = test.plan.limits.wall_seconds - 0.001
+
+    monkeypatch.setattr(batch.FakeLLM, "complete", complete)
+    monkeypatch.setattr(batch, "publish_bytes", publish)
+    report = invoke(test.argv, capsys)
+    assert report["status"] == "completed"
+    assert mvp.load(test.target, "state.json")["phase"] == "ready"
+    saved = mvp.inventory(test.target)
+    observed = dict(saved)
+    observed.pop("manifest.json")
+    assert observed == mvp.load(test.target, "manifest.json")
+    assert len(calls) == test.plan.total_requests
+    assert invoke(test.argv, capsys) == report
+    assert (
+        len(calls) == test.plan.total_requests and mvp.inventory(test.target) == saved
+    )
+
+
+def test_request_timeout_does_not_claim_wall_deadline(tmp_path, capsys, monkeypatch):
+    test = prepare(tmp_path, capsys)
+    calls = []
+
+    def timeout(*args, **kwargs):
+        calls.append(1)
+        raise TimeoutError("synthetic request timeout")
+
+    monkeypatch.setattr(batch.FakeLLM, "complete", timeout)
+    result = invoke(test.argv, capsys, 2)
+    assert result["reason"] == "SummaryRunError"
+    assert len(calls) == 1
+    state = mvp.load(test.target, "state.json")
+    assert state["phase"] == "HOLD" and state["reason"] == "SummaryRunError"
+    assert not (test.target / "manifest.json").exists()
+    store = SummaryStore(test.target / "engine-000")
+    assert store.history()[0]["error"] == "TimeoutError"

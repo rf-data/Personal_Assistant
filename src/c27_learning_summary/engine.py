@@ -35,6 +35,10 @@ class SummaryRunError(RuntimeError):
         )
 
 
+class RunDeadlineExceeded(TimeoutError):
+    """Cooperative wall deadline, distinct from an adapter request timeout."""
+
+
 def messages_for(ref, config):
     return [
         {"role": "system", "content": config.prompt},
@@ -193,6 +197,7 @@ def generate_refs(
     before_call=None,
     after_reply=None,
     after_section=None,
+    check_deadline=None,
 ):
     """Execute one bounded envelope using the same M1 claim/store machinery.
 
@@ -223,6 +228,14 @@ def generate_refs(
                 return Outcome(cached, True)
         run_id = store.begin(key, inputs)
         started = time.monotonic()
+
+        def deadline():
+            # Cooperative checks include processing and the final durable write.
+            if check_deadline:
+                check_deadline()
+            if time.monotonic() - started >= config.wall_seconds:
+                raise RunDeadlineExceeded("Local run deadline exceeded")
+
         sections = []
         usage = {
             "input_tokens": 0,
@@ -240,7 +253,7 @@ def generate_refs(
                 for attempt in range(config.retries + 1):
                     remaining = config.wall_seconds - (time.monotonic() - started)
                     if remaining <= 0:
-                        raise TimeoutError("Local run deadline exceeded")
+                        raise RunDeadlineExceeded("Local run deadline exceeded")
                     usage["calls"] += 1
                     usage["usage_missing_calls"] += 1
                     for direction in ("input", "output"):
@@ -293,8 +306,7 @@ def generate_refs(
                         if after_reply:
                             after_reply(reply.raw)
                         response = SectionResponse.model_validate_json(reply.raw)
-                        if time.monotonic() - started > config.wall_seconds:
-                            raise TimeoutError("Local run deadline exceeded")
+                        deadline()
                         break
                     except Exception as exc:
                         # Exception strings can contain provider headers/keys; persist only class.
@@ -307,16 +319,20 @@ def generate_refs(
                             raise
                 section = bind_section(response, ref)
                 sections.append(section)
+                deadline()
                 store.write(
                     run_id,
                     f"sections/{index:03}.json",
                     section.model_dump(mode="json"),
                 )
+                deadline()
                 if after_section:
                     after_section(section)
                 if progress:
                     progress(index + 1, len(refs))
+                deadline()
             claims, issues = consolidate(sections)
+            deadline()
             if not claims:
                 issues.append("No validated claims; output is incomplete")
             cost = None
@@ -343,12 +359,14 @@ def generate_refs(
                 estimated_cost_usd=cost,
             )
             store.write(run_id, "result.json", result.model_dump(mode="json"))
+            deadline()
             store.finish(
                 run_id,
                 "completed",
                 result_sha256=sha256(store.read(run_id, "result.json")),
                 result_state=result.state,
             )
+            deadline()
             return Outcome(result, False)
         except BaseException as exc:
             store.finish(
