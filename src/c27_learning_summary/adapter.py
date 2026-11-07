@@ -134,15 +134,17 @@ def validate_input(catalog, course_id, week_id, lecture_id, selected):
     return catalog, course, week, unit, tuple(materials), warnings
 
 
-def source_slices(course_id, week_id, lecture_id, materials, config):
-    refs = []
+def iter_source_slices(
+    course_id, week_id, lecture_id, materials, config, *, include_whitespace=False
+):
+    """Shared deterministic slicer; callers enforce their own bounded envelopes."""
     for material in sorted(materials, key=lambda m: m.material_id):
         for block in sorted(material.blocks, key=lambda b: b.order):
             if block.aggregation_role != "primary" or not block.text.strip():
                 continue
             for offset in range(0, len(block.text), config.chunk_chars):
                 text = block.text[offset : offset + config.chunk_chars]
-                if not text.strip():
+                if not include_whitespace and not text.strip():
                     continue
                 data = dict(
                     course_id=course_id,
@@ -166,9 +168,15 @@ def source_slices(course_id, week_id, lecture_id, materials, config):
                     locators=[loc.model_dump(mode="json") for loc in block.locators],
                     text=text,
                 )
-                refs.append(SourceRef(ref_id=fingerprint(data), **data))
-                if len(refs) > config.max_chunks:
-                    raise ValueError(
-                        "Chunk limit exceeded; narrow source selection or increase chunk size"
-                    )
+                yield SourceRef(ref_id=fingerprint(data), **data)
+
+
+def source_slices(course_id, week_id, lecture_id, materials, config):
+    refs = []
+    for ref in iter_source_slices(course_id, week_id, lecture_id, materials, config):
+        refs.append(ref)
+        if len(refs) > config.max_chunks:
+            raise ValueError(
+                "Chunk limit exceeded; narrow source selection or increase chunk size"
+            )
     return tuple(refs)
