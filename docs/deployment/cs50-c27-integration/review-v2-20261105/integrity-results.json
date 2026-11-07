@@ -1,0 +1,1734 @@
+{
+  "audit_artifacts_retained": [
+    "/tmp/c27-review-v2-20261105-ap_c1jer",
+    "/tmp/c27-review-v2-20261105-mo4t2ux4",
+    "/tmp/c27_review_v2_prepare.py",
+    "/tmp/c27_review_v2_finish.py"
+  ],
+  "base": "a8af1d9372eb435d3e1331c33b047d21120d57c2",
+  "bindings": {
+    "independent_test_sha256": "1ffcf90b9af73013ee22f51ea57093856c3a285363127ab3dfdc8694bf1f94b2",
+    "manifest_sha256": "c56a5258c9ec750fa6a56b123c0bc83ded655eef8d2b4ca4dca8f2e1697f7450",
+    "patch_bytes": 19193,
+    "patch_sha256": "1118f91decd6531a91986ef3cf1dbacf596a88a3f6d5fad6e4b8369a864b0c13",
+    "v1_manifest": {
+      "path": "docs/deployment/cs50-c27-integration/validation-resolution-20261105/candidate-manifest.json",
+      "sha256": "3b0fdf04072c193f25858b8299ac397a1acef8e643c98189fcdda2b5e60e40bb",
+      "unchanged": true
+    },
+    "v1_patch": {
+      "path": "docs/deployment/cs50-c27-integration/stage0-20261105/stage0.patch",
+      "sha256": "cf8b48eb84658f075aba3fab54e85cb4c936b79fd9bda1c89a19d55c382992ca",
+      "unchanged": true
+    }
+  },
+  "byte_comparison": {
+    "files": {
+      "deployment/cs50p-download-only/runtime/requirements.txt": {
+        "base_sha256": null,
+        "bytes": 5677,
+        "change": "A",
+        "comparison": "v2 == v1 byte-for-byte",
+        "decision": "REQUIRED_UNCHANGED",
+        "mode": "100644",
+        "removed_final_lf_count": 0,
+        "sha256": "41943e587840b0fc45f990f777941f978e2f60701b63c27c0454d93e13ef06d0",
+        "source_sha256": "41943e587840b0fc45f990f777941f978e2f60701b63c27c0454d93e13ef06d0",
+        "v1_bytes": 5677,
+        "v1_sha256": "41943e587840b0fc45f990f777941f978e2f60701b63c27c0454d93e13ef06d0"
+      },
+      "src/model_materials/acquisition.py": {
+        "base_sha256": null,
+        "bytes": 5792,
+        "change": "A",
+        "comparison": "v2 == v1[:-1]; removed exactly one final LF (0a)",
+        "decision": "REQUIRED_PARTIAL",
+        "mode": "100644",
+        "removed_final_lf_count": 1,
+        "sha256": "0e333b8f2d29a320e991b50ba363cf4d88372d18f6f55529cbc73fd96f1120c5",
+        "source_sha256": "95246044e885f078dbb962a9fe30e86641c7f1adc86ac22998280cdc931bc7cf",
+        "v1_bytes": 5793,
+        "v1_sha256": "d5ddc7b3345c9f1581bfe7f5e45b31b6de442cf170133ceccc19911c8d8dd716"
+      },
+      "src/tools_materials/code_zip.py": {
+        "base_sha256": "530be98f9eec5bce8369433db6cc37a0abe43587aede683f092d81a3474602c8",
+        "bytes": 8757,
+        "change": "M",
+        "comparison": "v2 == v1 byte-for-byte",
+        "decision": "REQUIRED_UNCHANGED",
+        "mode": "100644",
+        "removed_final_lf_count": 0,
+        "sha256": "43e388265b44d6ceaa467312bc9a906fbc6f4a9e5d368c59c77b155c4e4c31ad",
+        "source_sha256": "43e388265b44d6ceaa467312bc9a906fbc6f4a9e5d368c59c77b155c4e4c31ad",
+        "v1_bytes": 8757,
+        "v1_sha256": "43e388265b44d6ceaa467312bc9a906fbc6f4a9e5d368c59c77b155c4e4c31ad"
+      },
+      "src/tools_materials/source_acquisition.py": {
+        "base_sha256": null,
+        "bytes": 1202,
+        "change": "A",
+        "comparison": "v2 == v1[:-1]; removed exactly one final LF (0a)",
+        "decision": "REQUIRED_PARTIAL",
+        "mode": "100644",
+        "removed_final_lf_count": 1,
+        "sha256": "439024312a82bb944c5be81190adfe54b7f835acdf49812fe11ce16fce451ec1",
+        "source_sha256": "37418da2de05fd8922ecc3854b2124abef4374dc1f94b5ad9d8ee8f9c38fe91a",
+        "v1_bytes": 1203,
+        "v1_sha256": "6325d0c0a7202edafe09ba7d894d7250ac63adf572839eb05065599182ee2b25"
+      },
+      "src/tools_materials/storage.py": {
+        "base_sha256": "c15464ba9bbacbdfe1d155bf4d7d30ad78bf27751bb214862c77c6ff9e6ad40f",
+        "bytes": 3028,
+        "change": "M",
+        "comparison": "v2 == v1 byte-for-byte",
+        "decision": "REQUIRED_UNCHANGED",
+        "mode": "100644",
+        "removed_final_lf_count": 0,
+        "sha256": "317595f986579cc13d2e04e8c4574ece7118b9c98161080ffc03aabc502ac9a0",
+        "source_sha256": "317595f986579cc13d2e04e8c4574ece7118b9c98161080ffc03aabc502ac9a0",
+        "v1_bytes": 3028,
+        "v1_sha256": "317595f986579cc13d2e04e8c4574ece7118b9c98161080ffc03aabc502ac9a0"
+      },
+      "src/tools_materials/text_validation.py": {
+        "base_sha256": null,
+        "bytes": 1831,
+        "change": "A",
+        "comparison": "v2 == v1 byte-for-byte",
+        "decision": "REQUIRED_UNCHANGED",
+        "mode": "100644",
+        "removed_final_lf_count": 0,
+        "sha256": "3e06c87c120e2ece9f2c24f3793fdff07f53011113a5a9c963b4dd77d5bd5bb6",
+        "source_sha256": "3e06c87c120e2ece9f2c24f3793fdff07f53011113a5a9c963b4dd77d5bd5bb6",
+        "v1_bytes": 1831,
+        "v1_sha256": "3e06c87c120e2ece9f2c24f3793fdff07f53011113a5a9c963b4dd77d5bd5bb6"
+      }
+    },
+    "method": "Reconstruct V1 by applying its hash-pinned patch to base; compare to actual index blobs and V1 matrix/manifest.",
+    "status": "PASS"
+  },
+  "decision": "GO_FOR_COMMIT_REVIEW",
+  "decision_scope": "Review artifact integrity only; no B1 resolution, integration, host or semantic acceptance.",
+  "executed_integrity_tests": {
+    "cases": [
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_01_structure_and_patch_binding"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_02_positive_stage0_without_stage1"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_03_exact_six_endhashes"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_04_eof_only_comparison"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_05_missing_product_files_rejected"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_06_manipulated_product_files_rejected"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_07_file_and_parent_symlinks_rejected"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_08_manifest_drift_rejected"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_09_deferred_profiles_rejected"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_10_three_compatible_master_files"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_11_positive_stage1_only_in_combined_candidate"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_12_all_stage1_drift_rejected"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_13_stage1_missing_and_symlink_rejected"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_14_frozen_history_and_v1_relationship"
+      },
+      {
+        "status": "PASS",
+        "test": "__main__.ContractTests.test_15_unmodified_v1_verifier_accepts_v1_rejects_v2"
+      }
+    ],
+    "errors": [],
+    "failures": [],
+    "skipped": [],
+    "status": "PASS",
+    "subcases": [
+      {
+        "status": "PASS",
+        "test": "test_03_exact_six_endhashes (__main__.ContractTests.test_03_exact_six_endhashes) (path='deployment/cs50p-download-only/runtime/requirements.txt')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_03_exact_six_endhashes (__main__.ContractTests.test_03_exact_six_endhashes) (path='src/model_materials/acquisition.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_03_exact_six_endhashes (__main__.ContractTests.test_03_exact_six_endhashes) (path='src/tools_materials/code_zip.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_03_exact_six_endhashes (__main__.ContractTests.test_03_exact_six_endhashes) (path='src/tools_materials/source_acquisition.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_03_exact_six_endhashes (__main__.ContractTests.test_03_exact_six_endhashes) (path='src/tools_materials/storage.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_03_exact_six_endhashes (__main__.ContractTests.test_03_exact_six_endhashes) (path='src/tools_materials/text_validation.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_04_eof_only_comparison (__main__.ContractTests.test_04_eof_only_comparison) (path='deployment/cs50p-download-only/runtime/requirements.txt')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_04_eof_only_comparison (__main__.ContractTests.test_04_eof_only_comparison) (path='src/model_materials/acquisition.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_04_eof_only_comparison (__main__.ContractTests.test_04_eof_only_comparison) (path='src/tools_materials/code_zip.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_04_eof_only_comparison (__main__.ContractTests.test_04_eof_only_comparison) (path='src/tools_materials/source_acquisition.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_04_eof_only_comparison (__main__.ContractTests.test_04_eof_only_comparison) (path='src/tools_materials/storage.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_04_eof_only_comparison (__main__.ContractTests.test_04_eof_only_comparison) (path='src/tools_materials/text_validation.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_05_missing_product_files_rejected (__main__.ContractTests.test_05_missing_product_files_rejected) (path='deployment/cs50p-download-only/runtime/requirements.txt')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_05_missing_product_files_rejected (__main__.ContractTests.test_05_missing_product_files_rejected) (path='src/model_materials/acquisition.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_05_missing_product_files_rejected (__main__.ContractTests.test_05_missing_product_files_rejected) (path='src/tools_materials/code_zip.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_05_missing_product_files_rejected (__main__.ContractTests.test_05_missing_product_files_rejected) (path='src/tools_materials/source_acquisition.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_05_missing_product_files_rejected (__main__.ContractTests.test_05_missing_product_files_rejected) (path='src/tools_materials/storage.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_05_missing_product_files_rejected (__main__.ContractTests.test_05_missing_product_files_rejected) (path='src/tools_materials/text_validation.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_06_manipulated_product_files_rejected (__main__.ContractTests.test_06_manipulated_product_files_rejected) (path='deployment/cs50p-download-only/runtime/requirements.txt')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_06_manipulated_product_files_rejected (__main__.ContractTests.test_06_manipulated_product_files_rejected) (path='src/model_materials/acquisition.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_06_manipulated_product_files_rejected (__main__.ContractTests.test_06_manipulated_product_files_rejected) (path='src/tools_materials/code_zip.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_06_manipulated_product_files_rejected (__main__.ContractTests.test_06_manipulated_product_files_rejected) (path='src/tools_materials/source_acquisition.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_06_manipulated_product_files_rejected (__main__.ContractTests.test_06_manipulated_product_files_rejected) (path='src/tools_materials/storage.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_06_manipulated_product_files_rejected (__main__.ContractTests.test_06_manipulated_product_files_rejected) (path='src/tools_materials/text_validation.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_08_manifest_drift_rejected (__main__.ContractTests.test_08_manifest_drift_rejected) (digest='f37e4dabade42777bfcca981e433f14947accb346cfe3382f95dfee507c63c3f')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_08_manifest_drift_rejected (__main__.ContractTests.test_08_manifest_drift_rejected) (digest='39877a1053ef970ad5f95af4a45779e29da379e97f75076744f4330b7cda9dd5')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_09_deferred_profiles_rejected (__main__.ContractTests.test_09_deferred_profiles_rejected) (path='deployment/cs50p-download-only/runtime/pyproject.toml')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_09_deferred_profiles_rejected (__main__.ContractTests.test_09_deferred_profiles_rejected) (path='deployment/cs50p-download-only/runtime/uv.lock')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_10_three_compatible_master_files (__main__.ContractTests.test_10_three_compatible_master_files) (path='src/job_control/models.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_10_three_compatible_master_files (__main__.ContractTests.test_10_three_compatible_master_files) (path='src/job_control/operations.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_10_three_compatible_master_files (__main__.ContractTests.test_10_three_compatible_master_files) (path='src/tools_materials/capacity.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='artifacts/cs50_c27_mvp/host-preflight-v2/SHA256SUMS')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='artifacts/cs50_c27_mvp/host-preflight-v2/build-primary.json')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='artifacts/cs50_c27_mvp/host-preflight-v2/build-repeat.json')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='artifacts/cs50_c27_mvp/host-preflight-v2/file-manifest.json')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='artifacts/cs50_c27_mvp/host-preflight-v2/package-validation.json')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='artifacts/cs50_c27_mvp/host-preflight-v2/tests.xml')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='artifacts/cs50_c27_mvp/host-preflight-v2/validation.json')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-c27-integration/package.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-c27-mvp/authorization.json.example')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-c27-mvp/entry.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-c27-mvp/package.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-c27-mvp/run_once.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-c27-smoke/docker_command.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-c27-smoke/entry.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-c27-smoke/inspect_review.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-server-runtime/c27_probe.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-server-runtime/offline_smoke.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-server-runtime/preflight.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-server-runtime/requirements.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='deployment/cs50-server-runtime/runtime/requirements.txt')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-integration/blockers-20261105/SHA256SUMS')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-integration/blockers-20261105/candidate-manifest.json')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-integration/blockers-20261105/integration-file-matrix.md')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-integration/blockers-20261105/integration-readiness.md')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-integration/blockers-20261105/integration-runbook.md')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-mvp/assessment.md')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-mvp/host-acceptance-20261105/final-acceptance-20261105.md')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-mvp/host-acceptance-20261105/plan.md')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-mvp/host-acceptance-20261105/preflight.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-mvp/host-acceptance-20261105/test_preflight.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-mvp/host-acceptance-20261105/validation.json')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-mvp/operator.md')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-smoke/assessment.md')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='docs/deployment/cs50-c27-smoke/operator.md')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='scripts/c27_reviewed_week.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='src/c27_learning_summary/__init__.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='src/c27_learning_summary/adapter.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='src/c27_learning_summary/engine.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='src/c27_learning_summary/export.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='src/c27_learning_summary/export_policy.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='src/c27_learning_summary/llm.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='src/c27_learning_summary/models.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='src/c27_learning_summary/public_sources.v1.json')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='src/c27_learning_summary/reviewed_week.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='src/c27_learning_summary/store.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='tests/c27_mvp_fake_docker.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='tests/cs50_c27_smoke_support.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='tests/test_c27_reviewed_week.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='tests/test_cs50_c27_candidate.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='tests/test_cs50_c27_historical_provenance.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='tests/test_cs50_c27_mvp.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='tests/test_cs50_c27_mvp_preflight.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='tests/test_cs50_c27_release.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='tests/test_cs50_c27_smoke.py')"
+      },
+      {
+        "status": "PASS",
+        "test": "test_12_all_stage1_drift_rejected (__main__.ContractTests.test_12_all_stage1_drift_rejected) (path='tests/test_cs50_server_runtime.py')"
+      }
+    ],
+    "tests_run": 15
+  },
+  "format_and_syntax": {
+    "new_helper_first_format_check": "FAIL (line wrapping only); corrected manually; final PASS. No automatic formatting.",
+    "python": "Python 3.12.12",
+    "python_executable": "/home/robfra/.cache/pre-commit/repokzno83cn/py_env-python3.12/bin/python",
+    "ruff": "ruff 0.16.0",
+    "ruff_executable": "/home/robfra/.cache/pre-commit/repokzno83cn/py_env-python3.12/bin/ruff",
+    "ruff_final_command": "ruff format --check --no-cache [five product files and new test]",
+    "ruff_output": "6 files already formatted",
+    "status": "PASS",
+    "syntax_method": "Python 3.12 compile(bytes, filename, exec), in memory; no product imports or pyc files.",
+    "syntax_output": [
+      "src/model_materials/acquisition.py: PASS",
+      "src/tools_materials/code_zip.py: PASS",
+      "src/tools_materials/source_acquisition.py: PASS",
+      "src/tools_materials/storage.py: PASS",
+      "src/tools_materials/text_validation.py: PASS",
+      "docs/deployment/cs50-c27-integration/review-v2-20261105/tests/review_integrity_v2.py: PASS"
+    ]
+  },
+  "generated_at_utc": "2026-11-05T20:12:51.156081+00:00",
+  "git_lifecycle": {
+    "default_branch_document_integration": "PENDING: explicit task prohibition; no lifecycle completion claimed.",
+    "evidence": "Four new product paths and new review directory absent in local master tree. No live claim.",
+    "local_master_observed": "c1007efdbac3c1544020f328a3a1347e481797ba",
+    "new_git_branches_or_registered_worktrees": [],
+    "new_repository_files_staged": false,
+    "removed_git_artifacts": [],
+    "retained_review_worktree_and_branch": "Preexisting artifacts; review uncommitted, integration prohibited by task.",
+    "stage0_integrated": false
+  },
+  "historical_evidence_only": {
+    "newly_executed_here": false,
+    "reported_previous_combined_passes": 285,
+    "reported_previous_stage0_passes": 289,
+    "source_assessment": "docs/deployment/cs50-c27-integration/validation-resolution-20261105/assessment.md"
+  },
+  "initial_state": {
+    "branch_and_head": "EXACT_MATCH",
+    "cached_check": "PASS",
+    "deletions": 3,
+    "initial_unignored_untracked_files": [],
+    "insertions": 362,
+    "modified_files": 2,
+    "name_status": "A\tdeployment/cs50p-download-only/runtime/requirements.txt\nA\tsrc/model_materials/acquisition.py\nM\tsrc/tools_materials/code_zip.py\nA\tsrc/tools_materials/source_acquisition.py\nM\tsrc/tools_materials/storage.py\nA\tsrc/tools_materials/text_validation.py\n",
+    "new_files": 4,
+    "numstat": "94\t0\tdeployment/cs50p-download-only/runtime/requirements.txt\n152\t0\tsrc/model_materials/acquisition.py\n6\t1\tsrc/tools_materials/code_zip.py\n33\t0\tsrc/tools_materials/source_acquisition.py\n34\t2\tsrc/tools_materials/storage.py\n43\t0\tsrc/tools_materials/text_validation.py\n",
+    "ruff_product_format": "5 files already formatted",
+    "ruff_version": "ruff 0.16.0",
+    "staged_count": 6,
+    "status": "PASS",
+    "unstaged_tracked_diff": "EMPTY"
+  },
+  "limitations": {
+    "B1": "OPEN residual risk: sporadic SQLite lock; no new diagnosis or product fix.",
+    "B2": "Separate candidate contract accounts for minimal Stage 0 and V2 EOF deltas; historical contracts remain unchanged.",
+    "host_acceptance": "NOT_CLAIMED",
+    "semantic_acceptance": "NOT_CLAIMED",
+    "stage0_master_integration": "NOT_INTEGRATED",
+    "stage1_integration": "SEPARATE_PENDING"
+  },
+  "not_run": [
+    {
+      "check": "Full C27 and Stage-0 functional suites",
+      "reason": "Not required by task; earlier 289/285 counts are historical only."
+    },
+    {
+      "check": "B1 diagnostic rerun",
+      "reason": "Outside this integrity review; B1 remains open."
+    },
+    {
+      "check": "Historical optional harnesses",
+      "missing_source_paths": [
+        "tests/test_stage0_boundaries.py",
+        "tests/test_b1_sqlite_diagnostics.py"
+      ],
+      "reason": "Not locally present in SOURCE; initial preparation stopped before creating review files, then inventory scope corrected to existing inputs. No download."
+    },
+    {
+      "check": "Host, deployment and semantic acceptance",
+      "reason": "Outside task scope; not claimed."
+    },
+    {
+      "check": "Live/default remote state verification",
+      "reason": "No network Git operations authorized; local master only was inspected."
+    }
+  ],
+  "patch_application": {
+    "actual_application": "PASS",
+    "all_other_base_files_unchanged": true,
+    "applied_file_count": 1136,
+    "base_file_count": 1132,
+    "check_command": "git apply --check --whitespace=error stage0-v2.patch",
+    "differences": {
+      "deployment/cs50p-download-only/runtime/requirements.txt": {
+        "applied": {
+          "bytes": 5677,
+          "mode": 420,
+          "sha256": "41943e587840b0fc45f990f777941f978e2f60701b63c27c0454d93e13ef06d0"
+        },
+        "base": null
+      },
+      "src/model_materials/acquisition.py": {
+        "applied": {
+          "bytes": 5792,
+          "mode": 420,
+          "sha256": "0e333b8f2d29a320e991b50ba363cf4d88372d18f6f55529cbc73fd96f1120c5"
+        },
+        "base": null
+      },
+      "src/tools_materials/code_zip.py": {
+        "applied": {
+          "bytes": 8757,
+          "mode": 420,
+          "sha256": "43e388265b44d6ceaa467312bc9a906fbc6f4a9e5d368c59c77b155c4e4c31ad"
+        },
+        "base": {
+          "bytes": 8724,
+          "mode": 436,
+          "sha256": "530be98f9eec5bce8369433db6cc37a0abe43587aede683f092d81a3474602c8"
+        }
+      },
+      "src/tools_materials/source_acquisition.py": {
+        "applied": {
+          "bytes": 1202,
+          "mode": 420,
+          "sha256": "439024312a82bb944c5be81190adfe54b7f835acdf49812fe11ce16fce451ec1"
+        },
+        "base": null
+      },
+      "src/tools_materials/storage.py": {
+        "applied": {
+          "bytes": 3028,
+          "mode": 420,
+          "sha256": "317595f986579cc13d2e04e8c4574ece7118b9c98161080ffc03aabc502ac9a0"
+        },
+        "base": {
+          "bytes": 1685,
+          "mode": 436,
+          "sha256": "c15464ba9bbacbdfe1d155bf4d7d30ad78bf27751bb214862c77c6ff9e6ad40f"
+        }
+      },
+      "src/tools_materials/text_validation.py": {
+        "applied": {
+          "bytes": 1831,
+          "mode": 420,
+          "sha256": "3e06c87c120e2ece9f2c24f3793fdff07f53011113a5a9c963b4dd77d5bd5bb6"
+        },
+        "base": null
+      }
+    },
+    "isolated_base": "a8af1d9372eb435d3e1331c33b047d21120d57c2",
+    "patch_metadata_note": "V2 has full Git object IDs; V1 abbreviated IDs. Product delta remains exactly two final LF bytes.",
+    "six_final_hashes": "PASS",
+    "status": "PASS"
+  },
+  "preservation": {
+    "historical_file_drift": [],
+    "historical_files_checked": 190,
+    "historical_inventory_before_and_after": {
+      "artifacts/cs50_c27_mvp/host-preflight-v2/SHA256SUMS": {
+        "bytes": 1264,
+        "mode": 420,
+        "sha256": "866b34bc046288ae2aa59cb80d5b19b79306d342b5a76ee4c7c08c82d6641afc"
+      },
+      "artifacts/cs50_c27_mvp/host-preflight-v2/build-primary.json": {
+        "bytes": 206,
+        "mode": 384,
+        "sha256": "5d70ebfaf67947b93b265514fc7b8c6c09e780506d824868ec31c23d3a7a6973"
+      },
+      "artifacts/cs50_c27_mvp/host-preflight-v2/build-repeat.json": {
+        "bytes": 206,
+        "mode": 416,
+        "sha256": "5d70ebfaf67947b93b265514fc7b8c6c09e780506d824868ec31c23d3a7a6973"
+      },
+      "artifacts/cs50_c27_mvp/host-preflight-v2/file-manifest.json": {
+        "bytes": 74918,
+        "mode": 420,
+        "sha256": "cd6cb8a22a9d4a2fc6a46222adc67c308534c055571e8d9170e981d69680e3d9"
+      },
+      "artifacts/cs50_c27_mvp/host-preflight-v2/handoff.tar.gz": {
+        "bytes": 1804624,
+        "mode": 384,
+        "sha256": "746a31350b43f9d36e08fa278e55a28bbeec73e8fcd32b7178a024cd531efcc8"
+      },
+      "artifacts/cs50_c27_mvp/host-preflight-v2/package-validation.json": {
+        "bytes": 1366,
+        "mode": 420,
+        "sha256": "72ba79f7a87043a760ad0c023d9c84662ac24e4c826d3df3131f91fc514f8f4c"
+      },
+      "artifacts/cs50_c27_mvp/host-preflight-v2/tests.xml": {
+        "bytes": 1100414,
+        "mode": 420,
+        "sha256": "addd2471807cb957f49e82c2c230563d79e01a31f620fed5d0e237dfcc501800"
+      },
+      "artifacts/cs50_c27_mvp/host-preflight-v2/validation.json": {
+        "bytes": 3088,
+        "mode": 420,
+        "sha256": "4f8816fe36093dbda301ed9ac7467c8ca5ec059a7b6643b89747ead7dcb7b056"
+      },
+      "artifacts/cs50_c27_mvp/release-v1/handoff.tar.gz": {
+        "bytes": 1786535,
+        "mode": 420,
+        "sha256": "fc1df95cb553742da745fd2593f9cdbe560233974b0c96beb3344b4819cb75e7"
+      },
+      "artifacts/cs50_c27_smoke/handoff.tar.gz": {
+        "bytes": 1721401,
+        "mode": 420,
+        "sha256": "a3d3947edb4e2d6e0172d33ff313bdb814e91f6a8c45650adaa84481c8502f4a"
+      },
+      "deployment/cs50-c27-integration/package.py": {
+        "bytes": 8938,
+        "mode": 420,
+        "sha256": "f380842f1d985fc2570daa9a0ac36c51d494f6ff4c731a22022e802033b789d0"
+      },
+      "deployment/cs50-c27-mvp/authorization.json.example": {
+        "bytes": 1195,
+        "mode": 420,
+        "sha256": "ed4b7664e319088de1a2d4211a2d10f0d66122a2734b297277b33bb82fc17254"
+      },
+      "deployment/cs50-c27-mvp/entry.py": {
+        "bytes": 1833,
+        "mode": 420,
+        "sha256": "e0d5243ea695ad07b45bf1b01d5e51d8fb5c90966ad60da6c8cfe82cd48dcb0a"
+      },
+      "deployment/cs50-c27-mvp/package.py": {
+        "bytes": 4217,
+        "mode": 420,
+        "sha256": "93f2abddef6bf777f6287296d7b93f3cf37e3d6fd907d44780ba8c42c8281018"
+      },
+      "deployment/cs50-c27-mvp/run_once.py": {
+        "bytes": 37398,
+        "mode": 420,
+        "sha256": "fd8f3c9b78fd34b81dce8bc62204bcbc96f6358f1c99ea6c1cb14012e2e52f57"
+      },
+      "deployment/cs50-c27-smoke/docker_command.py": {
+        "bytes": 2679,
+        "mode": 420,
+        "sha256": "e30a52073e680d8357c825db2d502ccdce0222b51fd41f92aa93606883767cdb"
+      },
+      "deployment/cs50-c27-smoke/entry.py": {
+        "bytes": 4045,
+        "mode": 420,
+        "sha256": "736327f907863114cb6ec90bce55b2aade930bf3bea742fb9f99fffe2a00e6ef"
+      },
+      "deployment/cs50-c27-smoke/inspect_review.py": {
+        "bytes": 4965,
+        "mode": 420,
+        "sha256": "78d90e04456d1feec90216b1c938929fac618b2ceb3699928d58fe8a599bacb3"
+      },
+      "deployment/cs50-server-runtime/c27_probe.py": {
+        "bytes": 9601,
+        "mode": 420,
+        "sha256": "73f3c349d6eee6c0c3f16b62eff87070e80d23f9a5cb929b5d58e00617af0445"
+      },
+      "deployment/cs50-server-runtime/offline_smoke.py": {
+        "bytes": 8056,
+        "mode": 420,
+        "sha256": "86187280da6b119206ebcd85c731a9141201b456d503646d44f24968a2fb635f"
+      },
+      "deployment/cs50-server-runtime/preflight.py": {
+        "bytes": 11605,
+        "mode": 420,
+        "sha256": "a82ed4d9b22f5f6651b824e076525a7c653437ee74f207099932aa2a176b8d25"
+      },
+      "deployment/cs50-server-runtime/requirements.py": {
+        "bytes": 1295,
+        "mode": 420,
+        "sha256": "d788586a2788d13e5c0f7b401fa4df3744b81d41dd9a5d4a0174e4dd4afa9ea4"
+      },
+      "deployment/cs50-server-runtime/runtime/requirements.txt": {
+        "bytes": 6459,
+        "mode": 420,
+        "sha256": "fa9ecead78d61a2491eb210873c9b1d5b4089e30426c9be3e96184457458b0b1"
+      },
+      "deployment/cs50p-download-only/runtime/requirements.txt": {
+        "bytes": 5677,
+        "mode": 420,
+        "sha256": "41943e587840b0fc45f990f777941f978e2f60701b63c27c0454d93e13ef06d0"
+      },
+      "deployment/runtime/pyproject.toml": {
+        "bytes": 421,
+        "mode": 420,
+        "sha256": "7b5a938b4dae4544fd3ca14bbf4cc8c7fadd04ece094e56013816924b97e30e9"
+      },
+      "deployment/runtime/uv.lock": {
+        "bytes": 50531,
+        "mode": 420,
+        "sha256": "fedbe3619188ce39fffbc0d727752b1389eb4e4b1c9552641437859db424ca3f"
+      },
+      "docs/deployment/cs50-c27-integration/assessment.md": {
+        "bytes": 15359,
+        "mode": 420,
+        "sha256": "191142b22b49aff90208d39406be988f11fc910f0b827293f68288b68d45330c"
+      },
+      "docs/deployment/cs50-c27-integration/blockers-20261105/SHA256SUMS": {
+        "bytes": 583,
+        "mode": 420,
+        "sha256": "325d8fde20263934756e8fa12fc8c8e149d3cdc00e2451ff7dfd502331525f65"
+      },
+      "docs/deployment/cs50-c27-integration/blockers-20261105/candidate-manifest.json": {
+        "bytes": 78149,
+        "mode": 420,
+        "sha256": "d8da539ac757a1f068142761d04b70de41a3bebe376256219c4627282e056ef4"
+      },
+      "docs/deployment/cs50-c27-integration/blockers-20261105/integration-file-matrix.md": {
+        "bytes": 18531,
+        "mode": 420,
+        "sha256": "7f438e074eabd52cc5baa2c13cde0c838f566696726f638bea2bc923f6004df4"
+      },
+      "docs/deployment/cs50-c27-integration/blockers-20261105/integration-readiness.md": {
+        "bytes": 8176,
+        "mode": 420,
+        "sha256": "69ca8de2a8668c960242997a8919fde0aa90e83d79ed2800e0459d7e164ab7d4"
+      },
+      "docs/deployment/cs50-c27-integration/blockers-20261105/integration-runbook.md": {
+        "bytes": 10141,
+        "mode": 420,
+        "sha256": "3d4ba2c35b8e30ee68701f2457a6fa02b80cc70ca32c5efcf68e3aee747ee150"
+      },
+      "docs/deployment/cs50-c27-integration/launch-contract.md": {
+        "bytes": 8417,
+        "mode": 420,
+        "sha256": "7f76c63065546c4954c993f51ffc02e255e9e187ac81d493e12b954d31abc157"
+      },
+      "docs/deployment/cs50-c27-integration/readiness-20261105/integration-file-matrix.md": {
+        "bytes": 52983,
+        "mode": 420,
+        "sha256": "31cbb77ccb11685aaa5a1aeaac62211af2fb72a66c9c462f49b54288031d73f1"
+      },
+      "docs/deployment/cs50-c27-integration/readiness-20261105/integration-readiness.md": {
+        "bytes": 24462,
+        "mode": 420,
+        "sha256": "34a4103584f00e37322875dee5a5227578f576413839bcbdbc30bf061e48075a"
+      },
+      "docs/deployment/cs50-c27-integration/readiness-20261105/integration-runbook.md": {
+        "bytes": 26199,
+        "mode": 420,
+        "sha256": "bdc84a386e02f45f56b2ae687a1e848cd0bb034787a31560f387ad7e3d54a94d"
+      },
+      "docs/deployment/cs50-c27-integration/release.md": {
+        "bytes": 6094,
+        "mode": 420,
+        "sha256": "c21f6b17923feb015bd31700259f6fc8121a750badbcfced079a62fe37c81c65"
+      },
+      "docs/deployment/cs50-c27-integration/stage0-20261105/SHA256SUMS": {
+        "bytes": 550,
+        "mode": 420,
+        "sha256": "1710b53ecee6e26863bb5d037c6f84b5dc91f25a97576639a4d696ef6e759c03"
+      },
+      "docs/deployment/cs50-c27-integration/stage0-20261105/stage0-assessment.md": {
+        "bytes": 20853,
+        "mode": 420,
+        "sha256": "282088fd4a5f560789c7c6ca34cbf129ea6b703bd8da6efc54d0a519cb65d5bb"
+      },
+      "docs/deployment/cs50-c27-integration/stage0-20261105/stage0-file-matrix.md": {
+        "bytes": 12803,
+        "mode": 420,
+        "sha256": "035748c3db66a721b49aca67174ea2364448bce789375acadf5974ec168ef84f"
+      },
+      "docs/deployment/cs50-c27-integration/stage0-20261105/stage0-runbook.md": {
+        "bytes": 20184,
+        "mode": 420,
+        "sha256": "3199d09022a93e3b10966d8735629c2edec78195abb964752c37b50ff4c42e0e"
+      },
+      "docs/deployment/cs50-c27-integration/stage0-20261105/stage0.patch": {
+        "bytes": 18801,
+        "mode": 420,
+        "sha256": "cf8b48eb84658f075aba3fab54e85cb4c936b79fd9bda1c89a19d55c382992ca"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/.gitignore": {
+        "bytes": 146,
+        "mode": 420,
+        "sha256": "894688171b213190c3572064b6c5cc650a8ce8e2c4563655415f812b6f492b57"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/SHA256SUMS": {
+        "bytes": 10242,
+        "mode": 420,
+        "sha256": "ecb40b55168985cac0dc6cfdcad2539e0570bc160085a10c05ad8d77e6a3d0c3"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/assessment.md": {
+        "bytes": 10219,
+        "mode": 420,
+        "sha256": "4e5dc8c672757bcd0f5ab8d5a823004d1fbba565cc191047e548b0c71b14ca9a"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/b1_sqlite_diagnostics.py": {
+        "bytes": 3578,
+        "mode": 420,
+        "sha256": "b9674edabbf9b4e7902468fef81f685662efa1aeb1c1df150235e6c36a2b65cb"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/candidate-manifest.json": {
+        "bytes": 24744,
+        "mode": 420,
+        "sha256": "3b0fdf04072c193f25858b8299ac397a1acef8e643c98189fcdda2b5e60e40bb"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/b1-protocol.json": {
+        "bytes": 558,
+        "mode": 420,
+        "sha256": "6cdac8fe87fb1f59f6d0434f05eb77de04826be31b54d59d07a8a88fb95a404c"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/bounded_runner.py": {
+        "bytes": 1648,
+        "mode": 420,
+        "sha256": "e0d0e5edcfda3937b957dc25a2066828b32891d3dcc35ca82641784659ff1f5f"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/compare_b1.py": {
+        "bytes": 2144,
+        "mode": 420,
+        "sha256": "4e3c1552879e8327abef6abda07dc035105a5cd12dbdd9ab3df100c87466d6ac"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/diff.before": {
+        "bytes": 306,
+        "mode": 420,
+        "sha256": "453624977f14e8a179897ae0ea456dfccebd8e698ee58f5b11afa25e80d8f529"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/final-source-status.json": {
+        "bytes": 7240,
+        "mode": 420,
+        "sha256": "937f4b8d794e9e27238654b302482646308eb49301e992a2a84f90e32ba1b5b6"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/final_validation.py": {
+        "bytes": 2309,
+        "mode": 420,
+        "sha256": "b71e454e6ab18d0fa907cd60b6be491ba65355048780fade05370a9175348aec"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/index.before": {
+        "bytes": 0,
+        "mode": 420,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/install_candidate_harness.py": {
+        "bytes": 1188,
+        "mode": 420,
+        "sha256": "1eefbd104d0f6a519f8481b5cacdf231da6884d164bbd55e5ee3a894f2a40d21"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/integrity-current.json": {
+        "bytes": 8241,
+        "mode": 420,
+        "sha256": "4a831e044d7edccf5d7b4e38fb2752516155eabee74415dca0eccb30928511e2"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/integrity_check.py": {
+        "bytes": 2886,
+        "mode": 420,
+        "sha256": "9ecc07487cc5a3fd001bc929bcfb3e681025f8362ac3f5ccaa8d62efd9d0255f"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/manifest-build.json": {
+        "bytes": 1895,
+        "mode": 420,
+        "sha256": "d5d8c2cc300b0977de7fcce298bf55086f82e915aac3532642562e708a08262a"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/original-freeze.json": {
+        "bytes": 14220,
+        "mode": 420,
+        "sha256": "708be0cb33e7aaa281164e792d6b850de946da725f7d148b75a6bb2845d311dc"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/pinned-environment.json": {
+        "bytes": 2837,
+        "mode": 420,
+        "sha256": "f55254e287c0092d5bbad536f7e8bfd91b6328cd0624b621adc6703dedce55d2"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/profile-check.json": {
+        "bytes": 498,
+        "mode": 420,
+        "sha256": "bd05ed0a958df6279341742a71764346118d32a8735bdcb1fe891c2d54fac8b0"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/profile_check.py": {
+        "bytes": 1160,
+        "mode": 420,
+        "sha256": "dfb6f7f7503b2dc36e20e0423b48f2a10813bdb942b5f3472d126e4784c37b11"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/refs.before": {
+        "bytes": 34233,
+        "mode": 420,
+        "sha256": "55b1c3f71c43438cb38439a2b7b912317508f06b2ce58ed0d184a56ddea77938"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/results.json": {
+        "bytes": 2821,
+        "mode": 420,
+        "sha256": "268cae638cc5cc49ab215d1b0e560f0e5bfa779f30e4c08e46f441716d0a2014"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/setup.json": {
+        "bytes": 2641,
+        "mode": 420,
+        "sha256": "972498b6c86899602efbb1edc6c49a5b4b7eac0dfa4f2cbde73af88ebe2117f4"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/setup_validation.py": {
+        "bytes": 3827,
+        "mode": 420,
+        "sha256": "14d363fd32ce2c0f007a0c3d2994a0a767b65e34e95654942ca0cce3804413ed"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/status.before": {
+        "bytes": 461741,
+        "mode": 420,
+        "sha256": "81e3597f6822261b84573654c02a027160284a29343f173e767c0b59994a1440"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-1-baseline/execution.json": {
+        "bytes": 1076,
+        "mode": 420,
+        "sha256": "049f4408f386554fd8709c81c9fecf7a67e6a1d136d158df347f1fe6c2fbbfea"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-1-baseline/tests.log": {
+        "bytes": 506,
+        "mode": 420,
+        "sha256": "33358bd23699c2f3efd2d8218d92e63ad3498ec011ef75b2e47996ce68b78b63"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-1-baseline/tests.xml": {
+        "bytes": 692,
+        "mode": 420,
+        "sha256": "e0fad95bb8878819eb18dee223406c5d41cc9728b78909d3a8694d447616783c"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-2-stage0/execution.json": {
+        "bytes": 1066,
+        "mode": 420,
+        "sha256": "d98fca198e7dd5f1d38a9dfaaebec9640ef525d5bb53bba5097d3e2c70f14e9c"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-2-stage0/tests.log": {
+        "bytes": 502,
+        "mode": 420,
+        "sha256": "4d42d21f541f94b5273dafe01d261d41a280fd9fb83aabcdfa609999aa85c009"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-2-stage0/tests.xml": {
+        "bytes": 692,
+        "mode": 420,
+        "sha256": "a353401d4f250bbc26801e74253e1ff08325ef15fee32798df1550f33ac3e197"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-3-stage0/execution.json": {
+        "bytes": 1066,
+        "mode": 420,
+        "sha256": "0b7fa7f443646a1a811eb388c105a3346fb09b08bee3a7a06e7f0b79796bb4eb"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-3-stage0/tests.log": {
+        "bytes": 502,
+        "mode": 420,
+        "sha256": "0d6940c631615b53cb1eef6cd486207adeaf554507cc8ef97e5bed16a3037056"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-3-stage0/tests.xml": {
+        "bytes": 692,
+        "mode": 420,
+        "sha256": "6f2dcb893d806bb1fb98705915327edac8cee92c2bc0b7a988a8b0258852771e"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-4-baseline/execution.json": {
+        "bytes": 1075,
+        "mode": 420,
+        "sha256": "89f3b9ce592e629fd168cd2f99337a8d8680d63c76b711ff58a9349d4722ca4e"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-4-baseline/tests.log": {
+        "bytes": 506,
+        "mode": 420,
+        "sha256": "e91c207d011dd9d637be4fe778c7392673dd01a5ea722bcb01fe6f03c9139f29"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-4-baseline/tests.xml": {
+        "bytes": 692,
+        "mode": 420,
+        "sha256": "4bfbd36bd449a5074e7f930843b26b94f6bb7cb459ccc2e81b7b3ab3ddb30b15"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-5-baseline/execution.json": {
+        "bytes": 1076,
+        "mode": 420,
+        "sha256": "91b49ed3cb859e8c8f9c6f37b098c0e601e3af294cba5a7094d2f378a3d52bac"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-5-baseline/tests.log": {
+        "bytes": 506,
+        "mode": 420,
+        "sha256": "45e11a5765db26068460d52966f7858b6fbef346a9cdd2788225c1f518c3d931"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-5-baseline/tests.xml": {
+        "bytes": 692,
+        "mode": 420,
+        "sha256": "e9c7fc5331fc9b7bf5b8d60b60818fcac30d52fe69557ae80b2ed6c7215e23b9"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-6-stage0/execution.json": {
+        "bytes": 1066,
+        "mode": 420,
+        "sha256": "854b9a5196b4ad9c62ceb590ac57e32283c733a6d51336274666ecc2063904ab"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-6-stage0/tests.log": {
+        "bytes": 502,
+        "mode": 420,
+        "sha256": "8c2bf7cb1bd64c946c372e109b80cf978fcb0a4c66fe16d41c7eca124234834c"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-6-stage0/tests.xml": {
+        "bytes": 693,
+        "mode": 420,
+        "sha256": "4170ce086029d80d6026cbf692444bbb50f2e6bcc6416381791c96b6293bfffe"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-locks-baseline/execution.json": {
+        "bytes": 1023,
+        "mode": 420,
+        "sha256": "7dcf1b913539a141d6aeb81fa9d5137ed80eea0c77e4c36ec1b1bef1b78c2c91"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-locks-baseline/lock-observation-0.json": {
+        "bytes": 98,
+        "mode": 420,
+        "sha256": "bc958337644bf526d5b33b5d14b449f1d75e35a90064f517be4df47ed434b20e"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-locks-baseline/lock-observation-1.json": {
+        "bytes": 204,
+        "mode": 420,
+        "sha256": "27ec6efa1d34abeac129c9f6d46ca9330aaf5258694f1ca5abebb25d39857569"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-locks-baseline/tests.log": {
+        "bytes": 510,
+        "mode": 420,
+        "sha256": "40d276279858b90eb25b353388b4f9ea593eb983cc950159ea2a0f8b41405ecc"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-locks-baseline/tests.xml": {
+        "bytes": 488,
+        "mode": 420,
+        "sha256": "2cdea41d379960349c10b34852fa1e33e17ae8552148503413d3e1f20cacf526"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-locks-stage0/execution.json": {
+        "bytes": 1014,
+        "mode": 420,
+        "sha256": "51515f65876746b04770d012bb993553176dbf18f72d8edd9a17245df577a73e"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-locks-stage0/lock-observation-0.json": {
+        "bytes": 98,
+        "mode": 420,
+        "sha256": "8d439c1586173c21145633c6f34c71169b99ec3cc778f05ec5b5e519e2d0cc34"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-locks-stage0/lock-observation-1.json": {
+        "bytes": 204,
+        "mode": 420,
+        "sha256": "5ac25f3719df350d9cf7b202bed56ee620ff9168587f96dfe38d3bf3a56bd9a7"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-locks-stage0/tests.log": {
+        "bytes": 506,
+        "mode": 420,
+        "sha256": "0470898a7e269bbb17d8e8faed656b960d74a39fc99033fdfacb26c03c8eefb0"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-b1-locks-stage0/tests.xml": {
+        "bytes": 488,
+        "mode": 420,
+        "sha256": "e7cbae3da5edcb0316d25afaf020a3aef90b5b45f0e906d073afde6cbd88dfcd"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-combined-final/execution.json": {
+        "bytes": 1426,
+        "mode": 420,
+        "sha256": "a4c95fae28f555b982a3b7d06757bdba4cb472a388ac32d90497303a659de0d9"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-combined-final/tests.log": {
+        "bytes": 1339,
+        "mode": 420,
+        "sha256": "c9cd0491420237fb8dec11b6d3ee7c2a5b4ace1ebf601bf16c48e83e3c9e2c80"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-combined-final/tests.xml": {
+        "bytes": 1083098,
+        "mode": 420,
+        "sha256": "d64426e5ad0082df5a7e71340e227ac92fa2ef08b7433477c57d6620256e1672"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-stage0-final/execution.json": {
+        "bytes": 2103,
+        "mode": 420,
+        "sha256": "0e6b3223263992d56cb6f605aece73372b1472aac50594108240dd7a59fe63ec"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-stage0-final/tests.log": {
+        "bytes": 1945,
+        "mode": 420,
+        "sha256": "03bef6e452bc7e26f66bbc984e8cd8ed86978a2108fc6377323fed6b4e3eec11"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/tests-stage0-final/tests.xml": {
+        "bytes": 2134284,
+        "mode": 420,
+        "sha256": "1d6f3c2ee86aa2c82cc6d7795c9ddd5f2dd8ea911397af1b82c52def65dbb157"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/evidence/worktrees.before": {
+        "bytes": 17211,
+        "mode": 420,
+        "sha256": "05b607619a86008a7f4af836e8e431af2b846f22b6a84a045a7a40a8c519af2e"
+      },
+      "docs/deployment/cs50-c27-integration/validation-resolution-20261105/runbook.md": {
+        "bytes": 5851,
+        "mode": 420,
+        "sha256": "589dfa296c21a3d0b46f3feab5413cf8f992f79773c470c74ba1944514ecfb06"
+      },
+      "docs/deployment/cs50-c27-mvp/assessment.md": {
+        "bytes": 11276,
+        "mode": 420,
+        "sha256": "0aa6403d1a0ef6b9b0678ad8bd0d595c86cbc2c9f6585d23d18ae10ad6380417"
+      },
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/candidate.json.example": {
+        "bytes": 1332,
+        "mode": 420,
+        "sha256": "ed48d27b67b6910a090e17c556b80d096bfee603036efffd936ece1f373baf06"
+      },
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/final-acceptance-20261105.md": {
+        "bytes": 13532,
+        "mode": 420,
+        "sha256": "0fa34aa347b028cc4012747775ad4e6a09191e7fa01fe334e7c01c731a2b42ed"
+      },
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/plan.md": {
+        "bytes": 33800,
+        "mode": 420,
+        "sha256": "0dba1009bfd7271afe50957e870ca8360d725203e0352fb2aee34280a5077d83"
+      },
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/preflight.py": {
+        "bytes": 10536,
+        "mode": 420,
+        "sha256": "35e73ca5a84d8440de3d48f2a023af232ebf4e0da6a19d39c2e202d00e12c6b6"
+      },
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/test_preflight.py": {
+        "bytes": 11127,
+        "mode": 420,
+        "sha256": "c2631df7f939973802f03291f4dad51710b4ae01f6c2be4a4f736480ba73d4d0"
+      },
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/validation.json": {
+        "bytes": 8699,
+        "mode": 420,
+        "sha256": "e5ae0228ab2a979bbb5ea209e846bcd17a0b1c76f8019f2ce0283c990b9eebe3"
+      },
+      "docs/deployment/cs50-c27-mvp/operator.md": {
+        "bytes": 17320,
+        "mode": 420,
+        "sha256": "7134a36c8bb39a17e25a5e222e287f1a66e88305ef64c575917a85687bdeba12"
+      },
+      "docs/deployment/cs50-c27-smoke/.gitignore": {
+        "bytes": 8,
+        "mode": 420,
+        "sha256": "1f261524950c8b889a468a75d0808a2222f0191339c62ecb862ed37e9c9e9011"
+      },
+      "docs/deployment/cs50-c27-smoke/SHA256SUMS": {
+        "bytes": 3493,
+        "mode": 420,
+        "sha256": "72bf800032e1ea636149391f50ea590d7f6d73832f7896c0c380f3cfe8c8f920"
+      },
+      "docs/deployment/cs50-c27-smoke/assessment.md": {
+        "bytes": 9539,
+        "mode": 420,
+        "sha256": "3bdd26b7da6f02a840c47da81093a9985fc07df7c585a3f94a91edc5f5bd1f34"
+      },
+      "docs/deployment/cs50-c27-smoke/bundle-provenance.json": {
+        "bytes": 111048,
+        "mode": 384,
+        "sha256": "a2e5d93b7b07317d48c93bd150fe075de932d21e0e032064a0a05632c54ecea1"
+      },
+      "docs/deployment/cs50-c27-smoke/c27-source-manifest.json": {
+        "bytes": 2069,
+        "mode": 420,
+        "sha256": "26a260a4e0819388f4fed8b15d8c01db8c978671f4573bd4f90759d667b8b2f1"
+      },
+      "docs/deployment/cs50-c27-smoke/delivery.md": {
+        "bytes": 4268,
+        "mode": 420,
+        "sha256": "8863e9a28f80d8907decbe795a807876f7afd4180c749041d007af445d1fa40a"
+      },
+      "docs/deployment/cs50-c27-smoke/operator.md": {
+        "bytes": 9909,
+        "mode": 420,
+        "sha256": "6f77ecd0fa1d234ee40cb5a1f88d61bc1dd79c9397ca6ee05ab09e5718a5729d"
+      },
+      "docs/deployment/cs50-c27-smoke/snapshot-fix-v1.md": {
+        "bytes": 6104,
+        "mode": 420,
+        "sha256": "917f257e6a77deec2565ae6e67bcbc32bf0ffe9e895baea28caa064d32380519"
+      },
+      "pyproject.toml": {
+        "bytes": 3531,
+        "mode": 420,
+        "sha256": "3fa29b58a52c8b044554940f8d81256089bc5455649d1e296569bc2b790e3000"
+      },
+      "scripts/c27_reviewed_week.py": {
+        "bytes": 5185,
+        "mode": 420,
+        "sha256": "8839c7bcc04309b752c320a32953d7a0e1e0d16d63833eeff82ee521d66dfacf"
+      },
+      "src/c27_learning_summary/__init__.py": {
+        "bytes": 81,
+        "mode": 420,
+        "sha256": "aea48f3095160bb712f432786bab3a41a38bdd6b9e824c842f7e729e867f2905"
+      },
+      "src/c27_learning_summary/adapter.py": {
+        "bytes": 7085,
+        "mode": 420,
+        "sha256": "74b4ef683942245cef113becb3aba95df0bece5a792675a3c2b87c4558a8ea58"
+      },
+      "src/c27_learning_summary/engine.py": {
+        "bytes": 12365,
+        "mode": 420,
+        "sha256": "71ac1e9c01672c3f44f207189f28d38f7761086ef10841419b70b642a57cdd73"
+      },
+      "src/c27_learning_summary/export.py": {
+        "bytes": 9613,
+        "mode": 420,
+        "sha256": "928c6d4a258a61d3c1c0e608c6105b35fc8aff68dcd766f2edf1c134eb9796da"
+      },
+      "src/c27_learning_summary/export_policy.py": {
+        "bytes": 10791,
+        "mode": 420,
+        "sha256": "93703bc6680ee4538e879a9e1f9c0623fec8775c3afd6714ecbeae623bcefb8f"
+      },
+      "src/c27_learning_summary/llm.py": {
+        "bytes": 3133,
+        "mode": 420,
+        "sha256": "32a26c3421a5573dc4662262407ccbe6432d05bc0cd5506805d08338c7f21463"
+      },
+      "src/c27_learning_summary/models.py": {
+        "bytes": 12988,
+        "mode": 420,
+        "sha256": "1cf4b1c4e62fd37667cd871b585b002aec0a1bb4acf797a4b8275f002cef6230"
+      },
+      "src/c27_learning_summary/public_sources.v1.json": {
+        "bytes": 6255,
+        "mode": 420,
+        "sha256": "ad8d97b29fbacb2d2e2d2e393deccb766a013743e207e69baefdbf7b0cb31c1d"
+      },
+      "src/c27_learning_summary/reviewed_week.py": {
+        "bytes": 20729,
+        "mode": 420,
+        "sha256": "1d6289c0fb1064093ec392c0930480de2a80c1903b6cd50da9514ed892033d76"
+      },
+      "src/c27_learning_summary/store.py": {
+        "bytes": 12316,
+        "mode": 420,
+        "sha256": "7dc1e40ebe9acf9cb01fb39a5bcc51f9e896889baf74863790fc5314270b45e2"
+      },
+      "src/content_store/__init__.py": {
+        "bytes": 165,
+        "mode": 420,
+        "sha256": "178a8cf78b0be4af5c5e42104aa0d7dc309c619c8ee60ea7d9572e0e50df4aee"
+      },
+      "src/content_store/artifacts.py": {
+        "bytes": 9773,
+        "mode": 420,
+        "sha256": "2b1b0e3a7e859dbbbf1ca79630cd9e7eb33532f609a60a1a75e2ddb666d63460"
+      },
+      "src/content_store/errors.py": {
+        "bytes": 862,
+        "mode": 420,
+        "sha256": "963e4e16c4b42393e50e384426848a2957996c803f3a17ddfd5cb45924d1abfa"
+      },
+      "src/content_store/models.py": {
+        "bytes": 12229,
+        "mode": 420,
+        "sha256": "c53a7e21a58b67e8589383f82eb47c7f8483937e9d4902ef5c73e020807ee66f"
+      },
+      "src/content_store/schema.py": {
+        "bytes": 8527,
+        "mode": 420,
+        "sha256": "c9d31468fc3f9eedefc2cf84d4a41f08e280b4320f5a8b4d0c5c9763d36f09d1"
+      },
+      "src/content_store/store.py": {
+        "bytes": 35463,
+        "mode": 420,
+        "sha256": "a5b3de5fd99e984518fe54f60ddfa226d9e3285d004e243a597b033d8a1f9b9f"
+      },
+      "src/job_control/__init__.py": {
+        "bytes": 72,
+        "mode": 420,
+        "sha256": "d6c04882bd52e633c1abf60673e276083ff93e2851c0a9b2e2bd4332465624fe"
+      },
+      "src/job_control/catalog.py": {
+        "bytes": 7634,
+        "mode": 420,
+        "sha256": "9ab9d41319151138401e4223577117380048fcfa6518c0834395612289b15226"
+      },
+      "src/job_control/models.py": {
+        "bytes": 11222,
+        "mode": 420,
+        "sha256": "9df19e39085d3435e984a73b78cbeb8f46d044e974110c54370fa9ae1eacaee6"
+      },
+      "src/job_control/operations.py": {
+        "bytes": 13700,
+        "mode": 420,
+        "sha256": "8603d5d125965d90f3897a40a54cece548fda271150031f715b5e2735bd8b5c8"
+      },
+      "src/job_control/registry.py": {
+        "bytes": 4155,
+        "mode": 420,
+        "sha256": "b709c331f083a4ab762e0693e3e5ecd61334bdf52b0a9ef2573d204a9d065da4"
+      },
+      "src/model_course.py": {
+        "bytes": 215,
+        "mode": 420,
+        "sha256": "a0961281f6c64438f77df7251e3d6446291b4cc814de4658af1f8126def57847"
+      },
+      "src/model_discovery/cs50.py": {
+        "bytes": 6432,
+        "mode": 420,
+        "sha256": "745c01f2481a835425e2e34f0b2f868b9aea06fac5e8db25cf3b8a946f69dc0e"
+      },
+      "src/model_discovery/cs50_selection.py": {
+        "bytes": 1978,
+        "mode": 420,
+        "sha256": "4d223b05d330df75d46693070cb19e4669fe83b41110030f2fc2e6e8e6dd24c9"
+      },
+      "src/model_lecture/data_resources.py": {
+        "bytes": 7861,
+        "mode": 420,
+        "sha256": "5c1b0a85a3dfcd789bd60080dbc8904af4bc3792312d28d61c1c3cf2a76342c3"
+      },
+      "src/model_materials/acquisition.py": {
+        "bytes": 6639,
+        "mode": 420,
+        "sha256": "95246044e885f078dbb962a9fe30e86641c7f1adc86ac22998280cdc931bc7cf"
+      },
+      "src/model_materials/materials.py": {
+        "bytes": 8890,
+        "mode": 420,
+        "sha256": "18d9424d27ebab5f390dc85d4feef51d1c64e5b412e38daed63525cd7689fc3e"
+      },
+      "src/model_materials/quality.py": {
+        "bytes": 1979,
+        "mode": 420,
+        "sha256": "0c79ee3def9d8c749ecde2b5c92d68f8bc1f26c78a7780e7cc96088bfd3a751b"
+      },
+      "src/model_transcribe/data_transcribe.py": {
+        "bytes": 4291,
+        "mode": 420,
+        "sha256": "b05bdc6513368f219c002a8aeb030574a20faa8a72d822bef1312ebc9495bc95"
+      },
+      "src/tools_evaluation/math_syntax.py": {
+        "bytes": 11305,
+        "mode": 420,
+        "sha256": "7204d3af36dd2accd77bbaebdeedef720b480f6fad6647535877fb494aad39b0"
+      },
+      "src/tools_lecture/cs50_manifest.py": {
+        "bytes": 6868,
+        "mode": 420,
+        "sha256": "b910bc38b0f0b193b7f783ab99c92692f9f557476b793fc6d79a44307eea0a40"
+      },
+      "src/tools_lecture/execute_cs50.py": {
+        "bytes": 16286,
+        "mode": 420,
+        "sha256": "53949075ea2dfa152930a08c23fe1ff71e37ccd6ee45d5f95cba89f46f4a1cd4"
+      },
+      "src/tools_lecture/material_handoff.py": {
+        "bytes": 6728,
+        "mode": 420,
+        "sha256": "116293fd1720c80a954b57dcdd84bd3bd26243e87e9201e407feb49d0dfc41e2"
+      },
+      "src/tools_lecture/prepare_cs50.py": {
+        "bytes": 23446,
+        "mode": 420,
+        "sha256": "765347bd11d410086931dba9a30af9b46af3b21ce324254ffa2686553f7e90a6"
+      },
+      "src/tools_lecture/select_cs50.py": {
+        "bytes": 16594,
+        "mode": 420,
+        "sha256": "9b1c3e38fbd751bbc84f0fca19e3e6ee0b4f6e10a7c956953e30b60e9a80ce7c"
+      },
+      "src/tools_materials/capacity.py": {
+        "bytes": 5808,
+        "mode": 420,
+        "sha256": "c5db178daf92d4af505a4b1c1184eae0533e8dc0094abc2d80eb6443b0d2581f"
+      },
+      "src/tools_materials/code_zip.py": {
+        "bytes": 8757,
+        "mode": 420,
+        "sha256": "43e388265b44d6ceaa467312bc9a906fbc6f4a9e5d368c59c77b155c4e4c31ad"
+      },
+      "src/tools_materials/html_projection.py": {
+        "bytes": 5544,
+        "mode": 420,
+        "sha256": "ad35cee25cdef2483b3d9cdd74a359e7d0034bfcf31122e50544368cbad88686"
+      },
+      "src/tools_materials/inventory.py": {
+        "bytes": 9042,
+        "mode": 420,
+        "sha256": "e5e3f2d71d3fef50e706e6300b689cdd665590868f844b7ee9af17b256c55f85"
+      },
+      "src/tools_materials/mapping.py": {
+        "bytes": 6274,
+        "mode": 420,
+        "sha256": "b7f47ad4b6494a0abac7c83cb539e4e4321173173a84df4c1867c6d8cecff93c"
+      },
+      "src/tools_materials/parse_code.py": {
+        "bytes": 1807,
+        "mode": 420,
+        "sha256": "ac4804ef9f9ed1397b2baef21b0ce422ef17520baee578c93d1ee9815f7a2f6f"
+      },
+      "src/tools_materials/parse_html.py": {
+        "bytes": 15096,
+        "mode": 420,
+        "sha256": "58797de060e328fa4a1ef9503ba1fa344f6cc565b7d751a3ceea65c1c9912bfb"
+      },
+      "src/tools_materials/quality.py": {
+        "bytes": 30656,
+        "mode": 420,
+        "sha256": "df63fd8511b245e095084b4f7879b310b09242244be129ed8e460d5cf822083a"
+      },
+      "src/tools_materials/quality_projection.py": {
+        "bytes": 8734,
+        "mode": 420,
+        "sha256": "4548ffd5be1e3431e651a706886c5fb4f0ba489de972dec7ebe8ac1b79cbdd0c"
+      },
+      "src/tools_materials/source_acquisition.py": {
+        "bytes": 1911,
+        "mode": 420,
+        "sha256": "37418da2de05fd8922ecc3854b2124abef4374dc1f94b5ad9d8ee8f9c38fe91a"
+      },
+      "src/tools_materials/storage.py": {
+        "bytes": 3028,
+        "mode": 420,
+        "sha256": "317595f986579cc13d2e04e8c4574ece7118b9c98161080ffc03aabc502ac9a0"
+      },
+      "src/tools_materials/text_validation.py": {
+        "bytes": 1831,
+        "mode": 420,
+        "sha256": "3e06c87c120e2ece9f2c24f3793fdff07f53011113a5a9c963b4dd77d5bd5bb6"
+      },
+      "src/tools_transcribe/import_transcript.py": {
+        "bytes": 7062,
+        "mode": 420,
+        "sha256": "5f33a0738ea617c2848513e5f298f78e46607386ec8db71824d4302ed8b0b378"
+      },
+      "tests/c27_mvp_fake_docker.py": {
+        "bytes": 5067,
+        "mode": 420,
+        "sha256": "228dd3a4e1163720e9f751faaa33966ff07c39240132fe192afd8b66537f9a15"
+      },
+      "tests/conftest.py": {
+        "bytes": 3597,
+        "mode": 420,
+        "sha256": "47162ee1916fa3013e076e953bc228ef503d9cf4120c4b36629ab6be77826ab1"
+      },
+      "tests/cs50_c27_smoke_support.py": {
+        "bytes": 673,
+        "mode": 420,
+        "sha256": "f4b5792d1d03dd04e3ba65d9cf91d98a76f0e9763dfe36e287781a18070a41c5"
+      },
+      "tests/offline_guard.py": {
+        "bytes": 1628,
+        "mode": 420,
+        "sha256": "3637b5fd6c396566bd52fe7664db10d4f1869de726d1ea881d6f482fb4158ddc"
+      },
+      "tests/profile_policy.py": {
+        "bytes": 2133,
+        "mode": 420,
+        "sha256": "bc75af1ba2796240a6f6bf7871cd2635d9947b472f3da7c1159933b249711885"
+      },
+      "tests/test_c27_reviewed_week.py": {
+        "bytes": 13106,
+        "mode": 420,
+        "sha256": "53bb9ac855f26dacdec773b95b6db4301a3148bdf70c19fd97cf520eee99bc0b"
+      },
+      "tests/test_cs50_c27_candidate.py": {
+        "bytes": 2397,
+        "mode": 420,
+        "sha256": "5b415e8e99408caf18addf0b06e1a95675b50b71818c2ee9f58bef538414b363"
+      },
+      "tests/test_cs50_c27_historical_provenance.py": {
+        "bytes": 7124,
+        "mode": 420,
+        "sha256": "e73faa8a75af8ed1aebd7852955a106c8e11987553e33fab877fbbd0c9446a32"
+      },
+      "tests/test_cs50_c27_mvp.py": {
+        "bytes": 23733,
+        "mode": 420,
+        "sha256": "9fca9ab11330e7f56a8c404c4271303ec80681974b3806820b7505009170cb44"
+      },
+      "tests/test_cs50_c27_mvp_preflight.py": {
+        "bytes": 22344,
+        "mode": 420,
+        "sha256": "c55a46ffda869e1660157237cb6ced91d7a51b0ec5d9484f74e19e323b5bd65d"
+      },
+      "tests/test_cs50_c27_release.py": {
+        "bytes": 7381,
+        "mode": 420,
+        "sha256": "8f742e5e86b4f8d62b1588b2175c0219c373b80e20b3462828b6acae88054b26"
+      },
+      "tests/test_cs50_c27_smoke.py": {
+        "bytes": 13511,
+        "mode": 420,
+        "sha256": "d5630febb26afb24520d28a9c625874bd14348779bda1de8cb3b672d11b921f4"
+      },
+      "tests/test_cs50_c27_stage0_candidate.py": {
+        "bytes": 5434,
+        "mode": 420,
+        "sha256": "0c4e742a8b0394bc960c6c39113353082e3c484de917e8fa3f96fa4518afbecd"
+      },
+      "tests/test_cs50_material_quality.py": {
+        "bytes": 24199,
+        "mode": 420,
+        "sha256": "ef33ced8b2074847f6f1665fbd7bb6e949dafa747dd22a0be0caf66006986ab3"
+      },
+      "tests/test_cs50_multiformat.py": {
+        "bytes": 16522,
+        "mode": 420,
+        "sha256": "60eaf588b88fd5fe5e0d0ea5df8180cf71c58a879c2615ea82111ee0f619cfc9"
+      },
+      "tests/test_cs50_server_runtime.py": {
+        "bytes": 4541,
+        "mode": 420,
+        "sha256": "7eb53bc04d6d93ff3a25b5ecd392e0a8a7f52b788d64c01ca9b047f075da5424"
+      },
+      "tests/test_cs50_six_courses.py": {
+        "bytes": 8217,
+        "mode": 420,
+        "sha256": "b0f9ae8e0665c4430f51dbbd373a2062ed2e44925f01a6bf7e1196197a89ddbb"
+      },
+      "tests/test_cs50_week_pilot.py": {
+        "bytes": 15858,
+        "mode": 420,
+        "sha256": "5bdd6fe5c7bcf8eb930db771d1f30832fcd0b5e7b9350cd3a2641ad5331e23b9"
+      },
+      "tests/test_cs50_zip_inventory.py": {
+        "bytes": 5102,
+        "mode": 420,
+        "sha256": "52c49813d705537c5fd3e5e5b10a94a0dc53e6b449b78c3d04320cdbfc974baf"
+      },
+      "tests/test_material_publication.py": {
+        "bytes": 1819,
+        "mode": 420,
+        "sha256": "f9a74a4e3b7b4728860ace81a24c6e11afc5302478712bb8d83393351ee96f08"
+      },
+      "uv.lock": {
+        "bytes": 809821,
+        "mode": 420,
+        "sha256": "63e72cbcf0df19c6f06e8088f1406e7404c2e0fe4b094a9f91f7fce5276cc19c"
+      }
+    },
+    "ignored_new_outputs": [
+      "docs/deployment/cs50-c27-integration/review-v2-20261105/candidate-manifest-v2.json",
+      "docs/deployment/cs50-c27-integration/review-v2-20261105/integrity-results.json"
+    ],
+    "preexisting_regression_source_difference": {
+      "tests/test_cs50_six_courses.py": {
+        "actual_at_entry_and_exit": "b0f9ae8e0665c4430f51dbbd373a2062ed2e44925f01a6bf7e1196197a89ddbb",
+        "historical_expected": "da218f8733419a35a75369b421e79eaa6df8a52d66bfb5c6c73ade27958cf5a2"
+      }
+    },
+    "product_worktree_bytes_equal_index": true,
+    "review_index_diff_matches_v2_patch": true,
+    "review_index_sha256_after": "78fb4420e24a6c91bf2c86b591e6dfd558233d76695e14a0d9c2ce9c802925c8",
+    "review_index_sha256_before": "78fb4420e24a6c91bf2c86b591e6dfd558233d76695e14a0d9c2ce9c802925c8",
+    "ruff_cache_side_effect": "Initial format checks used existing ignored .ruff_cache and generated/updated disposable cache data; retained, no cache-preservation claim. Final Ruff used --no-cache.",
+    "shared_refs_before_and_after_sha256": "f65699155a9c33c62803453d0eedd56c51c60bab23e8085fc7def17e62d107cf",
+    "source_existing_tracked_diff_sha256_before_and_after": "453624977f14e8a179897ae0ea456dfccebd8e698ee58f5b11afa25e80d8f529",
+    "source_index_sha256_before_and_after": "9e194e1e5c787aa3f8fe937cc397721abba129591a2234d26b96d1075d2c3135",
+    "source_tracked_status_before_and_after": " M tests/test_cs50_six_courses.py\n",
+    "staged_product_files_after": [
+      "deployment/cs50p-download-only/runtime/requirements.txt",
+      "src/model_materials/acquisition.py",
+      "src/tools_materials/code_zip.py",
+      "src/tools_materials/source_acquisition.py",
+      "src/tools_materials/storage.py",
+      "src/tools_materials/text_validation.py"
+    ],
+    "status": "PASS",
+    "unstaged_tracked_diff_after": "EMPTY",
+    "worktree_registration_before_and_after_sha256": "4cdf76755b1d2c95432fedfa31ec28c9f4257934ff73dbdc9e1d9cfbc5810b1b"
+  },
+  "review_branch": "review/c27-stage0-20261105",
+  "schema": "c27-stage0-review-v2-integrity-results-v1",
+  "stage1": {
+    "combined_candidate": "/tmp/c27-review-v2-20261105-ap_c1jer/combined-v2",
+    "included_in_product_patch": false,
+    "source_drift": [],
+    "source_hashes": {
+      "artifacts/cs50_c27_mvp/host-preflight-v2/SHA256SUMS": "866b34bc046288ae2aa59cb80d5b19b79306d342b5a76ee4c7c08c82d6641afc",
+      "artifacts/cs50_c27_mvp/host-preflight-v2/build-primary.json": "5d70ebfaf67947b93b265514fc7b8c6c09e780506d824868ec31c23d3a7a6973",
+      "artifacts/cs50_c27_mvp/host-preflight-v2/build-repeat.json": "5d70ebfaf67947b93b265514fc7b8c6c09e780506d824868ec31c23d3a7a6973",
+      "artifacts/cs50_c27_mvp/host-preflight-v2/file-manifest.json": "cd6cb8a22a9d4a2fc6a46222adc67c308534c055571e8d9170e981d69680e3d9",
+      "artifacts/cs50_c27_mvp/host-preflight-v2/package-validation.json": "72ba79f7a87043a760ad0c023d9c84662ac24e4c826d3df3131f91fc514f8f4c",
+      "artifacts/cs50_c27_mvp/host-preflight-v2/tests.xml": "addd2471807cb957f49e82c2c230563d79e01a31f620fed5d0e237dfcc501800",
+      "artifacts/cs50_c27_mvp/host-preflight-v2/validation.json": "4f8816fe36093dbda301ed9ac7467c8ca5ec059a7b6643b89747ead7dcb7b056",
+      "deployment/cs50-c27-integration/package.py": "f380842f1d985fc2570daa9a0ac36c51d494f6ff4c731a22022e802033b789d0",
+      "deployment/cs50-c27-mvp/authorization.json.example": "ed4b7664e319088de1a2d4211a2d10f0d66122a2734b297277b33bb82fc17254",
+      "deployment/cs50-c27-mvp/entry.py": "e0d5243ea695ad07b45bf1b01d5e51d8fb5c90966ad60da6c8cfe82cd48dcb0a",
+      "deployment/cs50-c27-mvp/package.py": "93f2abddef6bf777f6287296d7b93f3cf37e3d6fd907d44780ba8c42c8281018",
+      "deployment/cs50-c27-mvp/run_once.py": "fd8f3c9b78fd34b81dce8bc62204bcbc96f6358f1c99ea6c1cb14012e2e52f57",
+      "deployment/cs50-c27-smoke/docker_command.py": "e30a52073e680d8357c825db2d502ccdce0222b51fd41f92aa93606883767cdb",
+      "deployment/cs50-c27-smoke/entry.py": "736327f907863114cb6ec90bce55b2aade930bf3bea742fb9f99fffe2a00e6ef",
+      "deployment/cs50-c27-smoke/inspect_review.py": "78d90e04456d1feec90216b1c938929fac618b2ceb3699928d58fe8a599bacb3",
+      "deployment/cs50-server-runtime/c27_probe.py": "73f3c349d6eee6c0c3f16b62eff87070e80d23f9a5cb929b5d58e00617af0445",
+      "deployment/cs50-server-runtime/offline_smoke.py": "86187280da6b119206ebcd85c731a9141201b456d503646d44f24968a2fb635f",
+      "deployment/cs50-server-runtime/preflight.py": "a82ed4d9b22f5f6651b824e076525a7c653437ee74f207099932aa2a176b8d25",
+      "deployment/cs50-server-runtime/requirements.py": "d788586a2788d13e5c0f7b401fa4df3744b81d41dd9a5d4a0174e4dd4afa9ea4",
+      "deployment/cs50-server-runtime/runtime/requirements.txt": "fa9ecead78d61a2491eb210873c9b1d5b4089e30426c9be3e96184457458b0b1",
+      "docs/deployment/cs50-c27-integration/blockers-20261105/SHA256SUMS": "325d8fde20263934756e8fa12fc8c8e149d3cdc00e2451ff7dfd502331525f65",
+      "docs/deployment/cs50-c27-integration/blockers-20261105/candidate-manifest.json": "d8da539ac757a1f068142761d04b70de41a3bebe376256219c4627282e056ef4",
+      "docs/deployment/cs50-c27-integration/blockers-20261105/integration-file-matrix.md": "7f438e074eabd52cc5baa2c13cde0c838f566696726f638bea2bc923f6004df4",
+      "docs/deployment/cs50-c27-integration/blockers-20261105/integration-readiness.md": "69ca8de2a8668c960242997a8919fde0aa90e83d79ed2800e0459d7e164ab7d4",
+      "docs/deployment/cs50-c27-integration/blockers-20261105/integration-runbook.md": "3d4ba2c35b8e30ee68701f2457a6fa02b80cc70ca32c5efcf68e3aee747ee150",
+      "docs/deployment/cs50-c27-mvp/assessment.md": "0aa6403d1a0ef6b9b0678ad8bd0d595c86cbc2c9f6585d23d18ae10ad6380417",
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/final-acceptance-20261105.md": "0fa34aa347b028cc4012747775ad4e6a09191e7fa01fe334e7c01c731a2b42ed",
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/plan.md": "0dba1009bfd7271afe50957e870ca8360d725203e0352fb2aee34280a5077d83",
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/preflight.py": "35e73ca5a84d8440de3d48f2a023af232ebf4e0da6a19d39c2e202d00e12c6b6",
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/test_preflight.py": "c2631df7f939973802f03291f4dad51710b4ae01f6c2be4a4f736480ba73d4d0",
+      "docs/deployment/cs50-c27-mvp/host-acceptance-20261105/validation.json": "e5ae0228ab2a979bbb5ea209e846bcd17a0b1c76f8019f2ce0283c990b9eebe3",
+      "docs/deployment/cs50-c27-mvp/operator.md": "7134a36c8bb39a17e25a5e222e287f1a66e88305ef64c575917a85687bdeba12",
+      "docs/deployment/cs50-c27-smoke/assessment.md": "3bdd26b7da6f02a840c47da81093a9985fc07df7c585a3f94a91edc5f5bd1f34",
+      "docs/deployment/cs50-c27-smoke/operator.md": "6f77ecd0fa1d234ee40cb5a1f88d61bc1dd79c9397ca6ee05ab09e5718a5729d",
+      "scripts/c27_reviewed_week.py": "8839c7bcc04309b752c320a32953d7a0e1e0d16d63833eeff82ee521d66dfacf",
+      "src/c27_learning_summary/__init__.py": "aea48f3095160bb712f432786bab3a41a38bdd6b9e824c842f7e729e867f2905",
+      "src/c27_learning_summary/adapter.py": "74b4ef683942245cef113becb3aba95df0bece5a792675a3c2b87c4558a8ea58",
+      "src/c27_learning_summary/engine.py": "71ac1e9c01672c3f44f207189f28d38f7761086ef10841419b70b642a57cdd73",
+      "src/c27_learning_summary/export.py": "928c6d4a258a61d3c1c0e608c6105b35fc8aff68dcd766f2edf1c134eb9796da",
+      "src/c27_learning_summary/export_policy.py": "93703bc6680ee4538e879a9e1f9c0623fec8775c3afd6714ecbeae623bcefb8f",
+      "src/c27_learning_summary/llm.py": "32a26c3421a5573dc4662262407ccbe6432d05bc0cd5506805d08338c7f21463",
+      "src/c27_learning_summary/models.py": "1cf4b1c4e62fd37667cd871b585b002aec0a1bb4acf797a4b8275f002cef6230",
+      "src/c27_learning_summary/public_sources.v1.json": "ad8d97b29fbacb2d2e2d2e393deccb766a013743e207e69baefdbf7b0cb31c1d",
+      "src/c27_learning_summary/reviewed_week.py": "1d6289c0fb1064093ec392c0930480de2a80c1903b6cd50da9514ed892033d76",
+      "src/c27_learning_summary/store.py": "7dc1e40ebe9acf9cb01fb39a5bcc51f9e896889baf74863790fc5314270b45e2",
+      "tests/c27_mvp_fake_docker.py": "228dd3a4e1163720e9f751faaa33966ff07c39240132fe192afd8b66537f9a15",
+      "tests/cs50_c27_smoke_support.py": "f4b5792d1d03dd04e3ba65d9cf91d98a76f0e9763dfe36e287781a18070a41c5",
+      "tests/test_c27_reviewed_week.py": "53bb9ac855f26dacdec773b95b6db4301a3148bdf70c19fd97cf520eee99bc0b",
+      "tests/test_cs50_c27_candidate.py": "5b415e8e99408caf18addf0b06e1a95675b50b71818c2ee9f58bef538414b363",
+      "tests/test_cs50_c27_historical_provenance.py": "e73faa8a75af8ed1aebd7852955a106c8e11987553e33fab877fbbd0c9446a32",
+      "tests/test_cs50_c27_mvp.py": "9fca9ab11330e7f56a8c404c4271303ec80681974b3806820b7505009170cb44",
+      "tests/test_cs50_c27_mvp_preflight.py": "c55a46ffda869e1660157237cb6ced91d7a51b0ec5d9484f74e19e323b5bd65d",
+      "tests/test_cs50_c27_release.py": "8f742e5e86b4f8d62b1588b2175c0219c373b80e20b3462828b6acae88054b26",
+      "tests/test_cs50_c27_smoke.py": "d5630febb26afb24520d28a9c625874bd14348779bda1de8cb3b672d11b921f4",
+      "tests/test_cs50_server_runtime.py": "7eb53bc04d6d93ff3a25b5ecd392e0a8a7f52b788d64c01ca9b047f075da5424"
+    },
+    "source_paths": 55,
+    "status": "PASS",
+    "test_scope": "Hash integrity and negative contract tests only; no new functional Stage-1 suite run."
+  }
+}

@@ -1,0 +1,435 @@
+diff --git a/deployment/cs50p-download-only/runtime/requirements.txt b/deployment/cs50p-download-only/runtime/requirements.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..92b8da3c909582e5c823b489fd7fcf7ef044c453
+--- /dev/null
++++ b/deployment/cs50p-download-only/runtime/requirements.txt
+@@ -0,0 +1,94 @@
++annotated-types==0.8.0 \
++    --hash=sha256:13b2beaad985e05e2d6407ee4c4f35590b11f8d693a258a561055cac8f64cab7 \
++    --hash=sha256:f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0
++    # via pydantic
++anyio==4.14.2 \
++    --hash=sha256:9f505dda5ac9f0c8309b5e8bd445a8c2bf7246f3ce950121e45ea15bc41d1494 \
++    --hash=sha256:cfa139f3ed1a23ee8f88a145ddb5ac7605b8bbfd8592baacd7ce3d8bb4313c7f
++    # via httpx
++beautifulsoup4==4.15.0 \
++    --hash=sha256:288e3ca7d54b06f2ac191970bc275c1939cb46d450b255bf6718b04aa37ab4f7 \
++    --hash=sha256:d6f88de62e1d4e38ecb1077eb9724cd0eff29d2a08ca16a401e9b9e93f117cf9
++    # via cs50p-download-runtime
++certifi==2026.7.22 \
++    --hash=sha256:62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775 \
++    --hash=sha256:741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55
++    # via
++    #   httpcore
++    #   httpx
++h11==0.16.0 \
++    --hash=sha256:4e35b956cf45792e4caa5885e69fba00bdbc6ffafbfa020300e549b208ee5ff1 \
++    --hash=sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86
++    # via httpcore
++httpcore==1.0.9 \
++    --hash=sha256:2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55 \
++    --hash=sha256:6e34463af53fd2ab5d807f399a9b45ea31c3dfa2276f15a2c3f00afff6e176e8
++    # via httpx
++httpx==0.28.1 \
++    --hash=sha256:75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc \
++    --hash=sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad
++    # via cs50p-download-runtime
++idna==3.19 \
++    --hash=sha256:5e0811a4383b21dc5838069f801c4fb62113b7447663d2530d2bd6e77b49bf15 \
++    --hash=sha256:815e7be7a7806d54abb586dc943addc79e8b2ee16915059658cbeff4b1b43bf4
++    # via
++    #   anyio
++    #   httpx
++pydantic==2.13.4 \
++    --hash=sha256:45a282cde31d808236fd7ea9d919b128653c8b38b393d1c4ab335c62924d9aba \
++    --hash=sha256:c40756b57adaa8b1efeeced5c196f3f3b7c435f90e84ea7f443901bec8099ef6
++    # via cs50p-download-runtime
++pydantic-core==2.46.4 \
++    --hash=sha256:00c603d540afdd6b80eb39f078f33ebd46211f02f33e34a32d9f053bba711de0 \
++    --hash=sha256:0186750b482eefa11d7f435892b09c5c606193ef3375bcf94aa00ae6bfb66262 \
++    --hash=sha256:184c081504d17f1c1066e430e117142b2c77d9448a97f7b65c6ac9fd9aee238d \
++    --hash=sha256:1d8ba486450b14f3b1d63bc521d410ec7565e52f887b9fb671791886436a42f7 \
++    --hash=sha256:2412e734dcb48da14d4e4006b82b46b74f2518b8a26ee7e58c6844a6cd6d03c4 \
++    --hash=sha256:3009f12e4e90b7f88b4f9adb1b0c4a3d58fe7820f3238c190047209d148026df \
++    --hash=sha256:3245406455a5d98187ec35530fd772b1d799b26667980872c8d4614991e2c4a2 \
++    --hash=sha256:3a233125ac121aa3ffba9a2b59edfc4a985a76092dc8279586ab4b71390875e7 \
++    --hash=sha256:4fc73cb559bdb54b1134a706a2802a4cddd27a0633f5abb7e53056268751ac6a \
++    --hash=sha256:56cb4851bcaf3d117eddcef4fe66afd750a50274b0da8e22be256d10e5611987 \
++    --hash=sha256:5855698a4856556d86e8e6cd8434bc3ac0314ee8e12089ae0e143f64c6256e4e \
++    --hash=sha256:5b712b53160b79a5850310b912a5ef8e57e56947c8ad690c227f5c9d7e561712 \
++    --hash=sha256:5d5902252db0d3cedf8d4a1bc68f70eeb430f7e4c7104c8c476753519b423008 \
++    --hash=sha256:62f875393d7f270851f20523dd2e29f082bcc82292d66db2b64ea71f64b6e1c1 \
++    --hash=sha256:633147d34cf4550417f12e2b1a0383973bdf5cdfde212cb09e9a581cf10820be \
++    --hash=sha256:6b3ace8194b0e5204818c92802dcdca7fc6d88aabbb799d7c795540d9cd6d292 \
++    --hash=sha256:8233f2947cf85404441fd7e0085f53b10c93e0ee78611099b5c7237e36aacbf7 \
++    --hash=sha256:82cf5301172168103724d49a1444d3378cb20cdee30b116a1bd6031236298a5d \
++    --hash=sha256:8d0820e8192167f80d88d64038e609c31452eeca865b4e1d9950a27a4609b00b \
++    --hash=sha256:926c9541b14b12b1681dca8a0b75feb510b06c6341b70a8e500c2fdcff837cce \
++    --hash=sha256:9401557acd873c3a7f3eb9383edef8ac4968f9510e340f4808d427e75667e7b4 \
++    --hash=sha256:9551187363ffc0de2a00b2e47c25aeaeb1020b69b668762966df15fc5659dd5a \
++    --hash=sha256:962ccbab7b642487b1d8b7df90ef677e03134cf1fd8880bf698649b22a69371f \
++    --hash=sha256:9aa768456404a8bf48a4406685ac2bec8e72b62c69313734fa3b73cf33b3a894 \
++    --hash=sha256:9d56801be94b86a9da183e5f3766e6310752b99ff647e38b09a9500d88e46e76 \
++    --hash=sha256:9fa8ae11da9e2b3126c6426f147e0fba88d96d65921799bb30c6abd1cb2c97fb \
++    --hash=sha256:ad785e92e6dc634c21555edc8bd6b64957ab844541bcb96a1366c202951ae526 \
++    --hash=sha256:b2f69dec1725e79a012d920df1707de5caf7ed5e08f3be4435e25803efc47458 \
++    --hash=sha256:c68fcd102d71ea85c5b2dfac3f4f8476eff42a9e078fd5faefff6d145063536b \
++    --hash=sha256:c94f0688e7b8d0a67abf40e57a7eaaecd17cc9586706a31b76c031f63df052b4 \
++    --hash=sha256:cbaf13819775b7f769bf4a1f066cb6df7a28d4480081a589828ef190226881cd \
++    --hash=sha256:e739fee756ba1010f8bcccb534252e85a35fe45ae92c295a06059ce58b74ccd3 \
++    --hash=sha256:e9c26f834c65f5752f3f06cb08cb86a913ceb7274d0db6e267808a708b46bc89 \
++    --hash=sha256:f027324c56cd5406ca49c124b0db10e56c69064fec039acc571c29020cc87c76 \
++    --hash=sha256:fbdb89b3e1c94a30cc5edfce477c6e6a5dc4d8f84665b455c27582f211a1c72c
++    # via pydantic
++soupsieve==2.9.2 \
++    --hash=sha256:4a55d8cf158a9c2e587fa4922f1bbb91d68ac829e2d6f25403a85747c71daf74 \
++    --hash=sha256:8089a26fd974ca7a1f30276d3d8492ab266ab15af581642dfe8aa162e0c1c823
++    # via beautifulsoup4
++typing-extensions==4.16.0 \
++    --hash=sha256:481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8 \
++    --hash=sha256:dc983d19a509c94dba722ee6abd33940f7c05a89e243c47e907eb4db6f1a43e5
++    # via
++    #   anyio
++    #   beautifulsoup4
++    #   pydantic
++    #   pydantic-core
++    #   typing-inspection
++typing-inspection==0.4.4 \
++    --hash=sha256:547274fa6b0a561ccf549cc9524b999a578e737d015d8709d021f9d0d13bea47 \
++    --hash=sha256:65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147
++    # via pydantic
+diff --git a/src/model_materials/acquisition.py b/src/model_materials/acquisition.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..36cacface6ca3d7f9ebf41198d5326962a52ee7e
+--- /dev/null
++++ b/src/model_materials/acquisition.py
+@@ -0,0 +1,152 @@
++"""Download-only week contracts, additive to the existing material bindings."""
++
++from typing import Literal
++
++from pydantic import Field, model_validator
++
++from src.job_control.models import Contract, Sha
++from src.model_discovery.cs50 import CourseId
++
++MIB = 1024**2
++Status = Literal[
++    "DISCOVERED",
++    "APPROVAL_PENDING",
++    "DOWNLOADED",
++    "VERIFIED",
++    "REFERENCED_ONLY",
++    "FALLBACK_SELECTED",
++    "MANUAL_PENDING",
++    "MANUAL_VERIFIED",
++    "MISSING",
++    "BLOCKED",
++    "FAILED",
++    "NOT_APPLICABLE",
++]
++
++
++class AcquisitionLimits(Contract):
++    code_bytes: int = Field(
++        default=MIB, strict=True, gt=0, le=MIB, exclude_if=lambda v: v == MIB
++    )
++    zip_bytes: int = Field(
++        default=MIB, strict=True, gt=0, le=MIB, exclude_if=lambda v: v == MIB
++    )
++    html_bytes: int = Field(default=MIB, strict=True, gt=0, le=MIB)
++    text_bytes: int = Field(default=MIB, strict=True, gt=0, le=MIB)
++    subtitle_bytes: int = Field(default=2 * MIB, strict=True, gt=0, le=2 * MIB)
++    pdf_bytes: int = Field(default=8 * MIB, strict=True, gt=0, le=8 * MIB)
++    manual_bytes: int = Field(default=8 * MIB, strict=True, gt=0, le=8 * MIB)
++    transfer_bytes: int = Field(default=32 * MIB, strict=True, gt=0, le=32 * MIB)
++    archive_bytes: int = Field(default=64 * MIB, strict=True, ge=MIB, le=64 * MIB)
++    report_bytes: int = Field(default=16 * MIB, strict=True, ge=MIB, le=16 * MIB)
++    reserve_bytes: int = Field(default=5 * 1024**3, strict=True, ge=5 * 1024**3)
++    max_parallel: Literal[1] = 1
++    max_materials: int = Field(default=256, strict=True, gt=0, le=256)
++    wall_seconds: int = Field(default=540, strict=True, gt=0, le=540)
++
++    def ceiling(self, material):
++        if material.material_type == "source_code":
++            if material.manual_action_required:
++                return self.manual_bytes
++            return (
++                self.zip_bytes if material.source_format == "zip" else self.code_bytes
++            )
++        if material.source_format == "pdf":
++            return self.pdf_bytes
++        if material.material_type == "subtitles":
++            return self.subtitle_bytes
++        if material.source_format == "html":
++            return self.html_bytes
++        return self.text_bytes
++
++
++class WeekMaterial(Contract):
++    course_id: CourseId
++    week_id: str = Field(pattern=r"^[A-Za-z0-9_-]{1,40}$")
++    section_id: str
++    material_id: str
++    parent_material_id: str | None = None
++    material_type: Literal[
++        "course",
++        "week",
++        "lecture",
++        "shorts",
++        "short",
++        "problem_set",
++        "task",
++        "page",
++        "transcript",
++        "subtitles",
++        "audio",
++        "video",
++        "slides",
++        "notes",
++        "source_code",
++        "attachment",
++        "reference",
++    ]
++    title: str
++    source_url: str | None = None
++    discovered_from: tuple[str, ...] = ()
++    source_format: str = "html"
++    expected_local_path: str | None = None
++    required: bool = False
++    acquisition_strategy: str = "reference"
++    acquisition_priority: int = 0
++    acquisition_status: Status = "DISCOVERED"
++    review_status: Literal["PENDING", "APPROVED", "NOT_REQUIRED"] = "PENDING"
++    manual_action_required: bool = False
++    file_size: int | None = Field(default=None, strict=True, ge=0)
++    sha256: Sha | None = None
++    receipt_id: str | None = None
++    error_reason: str | None = None
++    alternative_group: str | None = None
++    selected: bool = False
++    discovery_examined: bool = False
++    description: str | None = None
++    metadata: dict = Field(default_factory=dict)
++
++
++class WeekInventory(Contract):
++    schema_version: Literal[1, 2] = 1
++    kind: Literal["c26-week-acquisition"] = "c26-week-acquisition"
++    course_id: CourseId = "cs50_python"
++    week_id: str = Field(default="0", pattern=r"^[A-Za-z0-9_-]{1,40}$")
++    source_origin: Literal["official", "synthetic"] = "official"
++    materials: tuple[WeekMaterial, ...] = Field(min_length=1, max_length=256)
++    # Separate expectation ledger detects deleted rows, including individual tasks.
++    expected_ids: tuple[str, ...] = Field(min_length=1, max_length=256)
++    expected_parents: dict[str, str | None] = Field(default_factory=dict)
++    expected_types: dict[str, str] = Field(default_factory=dict)
++    snapshots: tuple[dict, ...] = ()
++    limits: AcquisitionLimits = Field(default_factory=AcquisitionLimits)
++    processing_enabled: Literal[False] = False
++    c26_status: Literal["HOLD"] = "HOLD"
++
++    @model_validator(mode="after")
++    def graph(self):
++        rows = {m.material_id: m for m in self.materials}
++        courses = [r for r in self.materials if r.material_type == "course"]
++        weeks = [r for r in self.materials if r.material_type == "week"]
++        if (
++            len(courses) != 1
++            or len(weeks) != 1
++            or courses[0].parent_material_id is not None
++            or weeks[0].parent_material_id != courses[0].material_id
++            or not any(r.material_type == "lecture" for r in self.materials)
++        ):
++            raise ValueError("Explicit course/week/lecture scope required")
++        if len(rows) != len(self.materials) or len(self.expected_ids) != len(
++            set(self.expected_ids)
++        ):
++            raise ValueError("Duplicate week identity")
++        for row in self.materials:
++            if (row.course_id, row.week_id) != (self.course_id, self.week_id):
++                raise ValueError("Week/course mismatch")
++            visited, parent = {row.material_id}, row.parent_material_id
++            while parent is not None:
++                if parent not in rows or parent in visited:
++                    raise ValueError("Unknown/cyclic material parent")
++                visited.add(parent)
++                parent = rows[parent].parent_material_id
++        return self
+diff --git a/src/tools_materials/code_zip.py b/src/tools_materials/code_zip.py
+index c7027d2eaa0f3363dac8666eeaf4f7c87f20d122..29ab26f13bdade204a9b49ea7cac0ecce9c59863 100644
+--- a/src/tools_materials/code_zip.py
++++ b/src/tools_materials/code_zip.py
+@@ -1,5 +1,6 @@
+ """Bounded ZIP inspection in memory. Never extract member paths to disk."""
+ 
++import hashlib
+ import io
+ import stat
+ import struct
+@@ -9,9 +10,13 @@ import zipfile
+ import zlib
+ from pathlib import PurePosixPath
+ 
+-from src.tools_materials.batch import sha
+ from src.tools_materials.capacity import MIB
+ 
++
++def sha(raw):
++    return hashlib.sha256(raw).hexdigest()
++
++
+ MAX_MEMBERS = 64
+ MAX_TOTAL = 8 * MIB
+ MAX_RATIO = 100
+diff --git a/src/tools_materials/source_acquisition.py b/src/tools_materials/source_acquisition.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..72bc7985a17a374190f8a82680fc41d92bd66637
+--- /dev/null
++++ b/src/tools_materials/source_acquisition.py
+@@ -0,0 +1,33 @@
++"""Bounded static source validation for reviewed local materials; no transport."""
++
++from src.tools_materials.inventory import CODE, official
++
++SOURCE_FORMATS = CODE | {"zip"}
++
++
++def validate_source(raw, fmt):
++    if fmt not in SOURCE_FORMATS:
++        raise ValueError("Unsupported explicit source-code format")
++    if not raw or len(raw) > 1048576:
++        raise ValueError("Source file exceeds byte limit or is empty")
++    if fmt == "zip":
++        # Shared path, symlink, count, size, ratio, deadline and CRC checks.
++        # All members remain in bounded memory; no filesystem extraction.
++        import zipfile
++
++        from src.tools_materials.code_zip import inspect_zip
++
++        try:
++            return inspect_zip(raw)
++        except (zipfile.BadZipFile, EOFError) as error:
++            raise ValueError("Corrupt ZIP archive or member CRC") from error
++    text = raw.decode("utf-8-sig", errors="strict")
++    if (
++        not text.strip()
++        or "\x00" in text
++        or text.lstrip()
++        .lower()
++        .startswith(("<!doctype html", "<html", "error:", "404 ", "access denied"))
++    ):
++        raise ValueError("Empty, binary or error response masquerading as source")
++    return None
+diff --git a/src/tools_materials/storage.py b/src/tools_materials/storage.py
+index 0bc6d0f811ce2955f936439a4362921f1516dfd2..9463701fde358b78b5be53f6d286e62e33e252c7 100644
+--- a/src/tools_materials/storage.py
++++ b/src/tools_materials/storage.py
+@@ -1,5 +1,7 @@
+ """Reuse the CS50 executor's hash, path, directory sync and receipt primitives."""
+ 
++import ctypes
++import errno
+ import fcntl
+ import os
+ import tempfile
+@@ -44,6 +46,9 @@ def locked(root):
+ 
+ def publish_bytes(path, contents):
+     """Exclusive atomic publication; an existing file is never replaced."""
++    destination = os.fsencode(path)
++    if b"\0" in destination:
++        raise ValueError("Invalid publication path")
+     path.parent.mkdir(parents=True, exist_ok=True)
+     fd, name = tempfile.mkstemp(prefix=".material-", dir=path.parent)
+     try:
+@@ -51,11 +56,38 @@ def publish_bytes(path, contents):
+             stream.write(contents)
+             stream.flush()
+             os.fsync(stream.fileno())
+-        os.link(name, path)
+-        sync_directory(path.parent)
++        publish_file(Path(name), path)
+     finally:
+         Path(name).unlink(missing_ok=True)
+ 
+ 
++def publish_file(temporary, path):
++    """Same-filesystem atomic no-replace move; never adopt unknown leftovers."""
++    destination = os.fsencode(path)
++    if b"\0" in destination or b"\0" in os.fsencode(temporary):
++        raise ValueError("Invalid publication path")
++    # One atomic namespace operation: cancellation after link() previously
++    # left two names for the published inode until the finally block ran.
++    # SIGKILL cannot run finally; stopped-workspace inspection then correctly
++    # rejected that hardlink. Linux C16 requires no-replace rename semantics.
++    rename = getattr(ctypes.CDLL(None, use_errno=True), "renameat2", None)
++    if rename is None:
++        raise OSError(errno.ENOSYS, "Atomic no-replace publication unavailable")
++    rename.argtypes = [
++        ctypes.c_int,
++        ctypes.c_char_p,
++        ctypes.c_int,
++        ctypes.c_char_p,
++        ctypes.c_uint,
++    ]
++    rename.restype = ctypes.c_int
++    if rename(-100, os.fsencode(temporary), -100, destination, 1) != 0:
++        code = ctypes.get_errno()
++        raise OSError(code, "Atomic no-replace publication failed")
++    sync_directory(path.parent)
++    if temporary.parent != path.parent:
++        sync_directory(temporary.parent)
++
++
+ def save_model(path, model):
+     publish_bytes(path, (model.model_dump_json(indent=2) + "\n").encode())
+diff --git a/src/tools_materials/text_validation.py b/src/tools_materials/text_validation.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..4ceaa2739b7945acdcefb1d08fa100b63f52414f
+--- /dev/null
++++ b/src/tools_materials/text_validation.py
+@@ -0,0 +1,43 @@
++"""Content checks around the existing offline transcript importer; no worker."""
++
++from bs4 import BeautifulSoup
++
++from src.tools_lecture.execute_cs50 import validate_order
++from src.tools_transcribe.import_transcript import import_transcript
++
++
++def validate_html_page(path):
++    main = BeautifulSoup(path.read_bytes(), "html.parser").find("main")
++    if main is None or main.find("h1") is None or not main.h1.get_text(strip=True):
++        raise ValueError("HTML material lacks main content/title")
++    title = main.h1.get_text(" ", strip=True).lower()
++    if title.startswith(("404", "403", "error", "access denied", "not found")):
++        raise ValueError("HTML error page is not course material")
++
++
++def validate_text_source(path, binding):
++    text = path.read_text(encoding="utf-8-sig")
++    lowered = text.lstrip().lower()
++    if lowered.startswith(
++        ("error:", "404 ", "403 ", "access denied", "not found", "forbidden")
++    ):
++        raise ValueError("Error response masquerading as transcript")
++    if any(marker in lowered for marker in ("<!doctype html", "<html", "<body")):
++        if binding.format != "html":
++            raise ValueError("HTML response masquerading as transcript")
++    if binding.format == "html":
++        soup = BeautifulSoup(text, "html.parser")
++        main = soup.select_one("main")
++        if main is None or len(main.get_text(" ", strip=True)) < 40:
++            raise ValueError("Empty or unusable HTML transcript")
++        return
++    document = import_transcript(
++        path,
++        language=binding.language or "en",
++        original_url=binding.original_url,
++        format=binding.format,
++    )
++    if len(document.text.strip()) < 20:
++        raise ValueError("Transcript text too short for content validation")
++    if binding.format in {"srt", "vtt"}:
++        validate_order(document)
