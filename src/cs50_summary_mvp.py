@@ -114,16 +114,25 @@ def historical_approval(root, intent, actor):
 
 def read_source(root, source_id, parsed_version_id, subject):
     """Caller holds the existing MVP lock. Only stored JSON and raw bytes are read."""
+    return _read_verified_source(
+        root, source_id, parsed_version_id, subject, phases=("ready",)
+    )
+
+
+def _read_verified_source(
+    root, source_id, parsed_version_id, subject, *, phases, strict_reader=False
+):
+    """Shared integrity/Reader checks; callers supply their own readiness contract."""
     intent, state = mvp.load(root, "intent.json"), mvp.load(root, "state.json")
     actor = mvp.actor_for(intent, subject)
     if (
-        state["phase"] != "ready"
+        state["phase"] not in phases
         or source_id != intent["source_id"]
         or parsed_version_id != state["parsed_version_id"]
         or intent["parser"]["name"] != "html"
         or intent["parser"]["version"] != "2"
     ):
-        raise Hold("explicit ready HTML source/version required")
+        raise Hold("explicit ready HTML source/version required by source contract")
     historical_approval(root, intent, actor)
     store, doc = mvp.verify_persisted(root, intent, state, actor)
     if doc.binding.format != "html" or not doc.binding.lecture_ids:
@@ -174,6 +183,8 @@ def read_source(root, source_id, parsed_version_id, subject):
             if len(seen) >= len(blocks):
                 raise Hold("reader contains unexpected blocks")
             block = blocks[len(seen)]
+            if strict_reader and dto.parsed_version_id != parsed_version_id:
+                raise Hold("reader parsed version conflict")
             if (
                 dto.block_id != block.block_id
                 or dto.order != block.order
@@ -198,6 +209,13 @@ def read_source(root, source_id, parsed_version_id, subject):
                     or window.text_sha256 != block.text_sha256
                 ):
                     raise Hold("incomplete reader text window")
+                if strict_reader and (
+                    window.parsed_version_id != parsed_version_id
+                    or window.block_id != block.block_id
+                    or window.end != start + len(window.text)
+                    or window.end > len(block.text)
+                ):
+                    raise Hold("reader text window identity conflict")
                 text += window.text
                 start = window.end
             if text != block.text:
@@ -205,6 +223,35 @@ def read_source(root, source_id, parsed_version_id, subject):
             structure = reader.block(
                 parsed_version_id, block.block_id, actor, {}, structured=True
             )
+            if strict_reader:
+                from src.content_store.read_views import label
+                from src.content_store.read_views import structure as public_structure
+
+                expected_locators = []
+                for original in block.locators:
+                    expected = original.model_dump(mode="json")
+                    expected["dom"] = label(expected["dom"])
+                    expected["coordinate_system"] = (
+                        label(expected["coordinate_system"]) or "unknown"
+                    )
+                    expected["chapter_path"] = [
+                        p for p in expected["chapter_path"] if label(p) is not None
+                    ]
+                    expected_locators.append(expected)
+                if (
+                    structure.parsed_version_id != parsed_version_id
+                    or structure.block_id != block.block_id
+                    or structure.data != public_structure(block)[0]
+                    or any(
+                        loc.model_dump(mode="json", exclude={"raw_reference"})
+                        != expected
+                        or loc.raw_reference.sha256 != intent["raw_sha256"]
+                        for loc, expected in zip(
+                            structure.locators, expected_locators, strict=True
+                        )
+                    )
+                ):
+                    raise Hold("reader complete structure/locator conflict")
             if len(structure.locators) != len(block.locators) or any(
                 loc.raw_artifact_sha256 != intent["raw_sha256"]
                 or loc.origin_pointer != original.origin_pointer

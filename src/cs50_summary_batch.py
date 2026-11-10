@@ -14,6 +14,7 @@ from pydantic import Field
 
 from scripts import cs50_learning_mvp as mvp
 from src import cs50_summary_mvp as m1
+from src import cs50_summary_readiness as readiness
 from src.c27_learning_summary.adapter import iter_source_slices
 from src.c27_learning_summary.engine import (
     SummaryRunError,
@@ -72,6 +73,25 @@ class BatchApproval(m1.SummaryApproval):
     adapter_version: Literal["one-source-summary-m2a-v1"]
     limits: BatchLimits
     plan: BatchPlan
+
+
+class VerifiedBatchApproval(BatchApproval):
+    schema_version: Literal[3]
+    adapter_version: Literal["verified-lecture-summary-m22a-v1"]
+    source_contract: Literal["verified-lecture-source-v1"]
+    source_verification_sha256: Sha
+
+
+def selected_source(args):
+    if args.source_contract == readiness.CONTRACT:
+        verified = readiness.verify(
+            args.source_root, args.source_id, args.parsed_version_id, args.actor
+        )
+        return verified.identity, verified.blocks, verified.document, verified
+    identity, blocks, doc = m1.read_source(
+        args.source_root, args.source_id, args.parsed_version_id, args.actor
+    )
+    return identity, blocks, doc, None
 
 
 def request_bytes(ref, config):
@@ -268,16 +288,24 @@ def run(args):
     ):
         raise Hold("source, approval and new summary root must be isolated")
     approval_bytes = private_bytes(approval_path, 8 * 1024 * 1024)
-    approval = BatchApproval.model_validate(mvp._json(approval_bytes))
+    approval_type = (
+        VerifiedBatchApproval
+        if args.source_contract == readiness.CONTRACT
+        else BatchApproval
+    )
+    approval = approval_type.model_validate(mvp._json(approval_bytes))
     started = time.monotonic()
     with mvp.output_root(source) as (_, before):
         # Verify the complete stored source once; retain the lock and compare its
         # complete byte inventory afterwards instead of repeating Reader traversal.
-        identity, blocks, doc = m1.read_source(
-            source, args.source_id, args.parsed_version_id, args.actor
-        )
+        identity, blocks, doc, verified = selected_source(args)
         plan = make_plan(identity, blocks, doc, approval.config, approval.limits)
         check_approval(approval, identity, args.actor, plan)
+        if (
+            verified
+            and approval.source_verification_sha256 != verified.verification_sha256
+        ):
+            raise Hold("summary approval does not bind source verification")
         evidence = dict(
             plan=plan.model_dump(mode="json"),
             blocks=[b.model_dump(mode="json") for b in blocks],
@@ -291,6 +319,12 @@ def run(args):
             implementation_revision=approval.implementation_revision,
             implementation_sha256=approval.implementation_sha256,
         )
+        if verified:
+            intent.update(
+                adapter_version=readiness.ADAPTER_VERSION,
+                source_contract=readiness.CONTRACT,
+                source_verification_sha256=verified.verification_sha256,
+            )
         historical = mvp.ProcessingApproval.model_validate(
             mvp.load(source, "approval.json")
         )
@@ -305,6 +339,13 @@ def run(args):
         calls, output_bytes = 0, 0
         total_deadline_exceeded = False
 
+        def verified_current():
+            if verified:
+                verified.recheck()
+                check_approval(approval, identity, args.actor, plan)
+                if private_bytes(approval_path, 8 * 1024 * 1024) != approval_bytes:
+                    raise Hold("summary approval bytes changed during run")
+
         def deadline():
             nonlocal total_deadline_exceeded
             if time.monotonic() - started >= plan.limits.wall_seconds:
@@ -313,6 +354,8 @@ def run(args):
 
         def before_call():
             nonlocal calls
+            deadline()
+            verified_current()
             deadline()
             if min(approval.valid_until, historical.valid_until) <= datetime.now(UTC):
                 raise Hold("approval chain expired during run")
@@ -327,6 +370,8 @@ def run(args):
             if output_bytes > plan.limits.raw_output_bytes:
                 raise Hold("total raw output limit exceeded")
             deadline()
+            verified_current()
+            deadline()
 
         def after_section(section):
             if section.rejected or section.uncertainties or not section.claims:
@@ -337,6 +382,7 @@ def run(args):
 
         def unchanged():
             deadline()
+            verified_current()
             check_approval(approval, identity, args.actor, plan)
             # Revalidate expiry as well as original bytes, without changing the old attestation.
             m1.historical_approval(
@@ -469,6 +515,7 @@ def run(args):
                 publish_bytes(
                     target / "manifest.json", canonical(mvp.inventory(target))
                 )
+                verified_current()
                 # A deadline crossed by the last write invalidates ready via HOLD.
                 # Keep the manifest as evidence; the changed state breaks its binding.
                 deadline()
@@ -523,6 +570,11 @@ def main(argv=None):
     parser.add_argument("--output-root", type=Path)
     parser.add_argument("--config", type=Path)
     parser.add_argument("--limits", type=Path)
+    parser.add_argument(
+        "--source-contract",
+        choices=("legacy-ready", readiness.CONTRACT),
+        default="legacy-ready",
+    )
     args = parser.parse_args(argv)
     previous = os.umask(0o077)
     try:
@@ -545,10 +597,10 @@ def main(argv=None):
             )
             source = checked_path(explicit_root(args.source_root))
             with mvp.output_root(source) as (_, before):
-                identity, blocks, doc = m1.read_source(
-                    source, args.source_id, args.parsed_version_id, args.actor
-                )
+                identity, blocks, doc, verified = selected_source(args)
                 plan = make_plan(identity, blocks, doc, config, limits)
+                if verified:
+                    verified.recheck()
                 if mvp.inventory(source) != before:
                     raise Hold("source changed during planning")
                 revision, digest = mvp.implementation_identity()
@@ -558,6 +610,13 @@ def main(argv=None):
                     implementation_sha256=digest,
                     plan=plan.model_dump(mode="json"),
                 )
+                if verified:
+                    report.update(
+                        approval_schema_version=3,
+                        adapter_version=readiness.ADAPTER_VERSION,
+                        source_contract=readiness.CONTRACT,
+                        source_verification_sha256=verified.verification_sha256,
+                    )
         else:
             if not args.approval or not args.output_root or args.config or args.limits:
                 raise Hold(
