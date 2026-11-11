@@ -1,0 +1,4 @@
+F                                                                        [100%]
+=========================== short test summary info ============================
+FAILED tests/test_cs50_summary_batch_stress.py::test_long_source_run_cache_and_guarded_process_restart[lecture_171]
+1 failed in 2.04s

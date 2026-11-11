@@ -1,0 +1,314 @@
+[
+  {
+    "start": 6339.662525358,
+    "deadline": 6341.662519152,
+    "phases": {
+      "pre_partition": 0.548584916999971,
+      "index_file_load": 0.0014380920001713093,
+      "file_hash_and_partition_dispatch": 0.004747214999952121,
+      "deserialize": 0.0003308300001663156,
+      "schema_integrity": 0.00997223899958044,
+      "backend_metadata": 5.558700013352791e-05,
+      "record_comparison": 0.01931968099961523,
+      "fts_projection": 0.0018500730002415366,
+      "fts_integrity": 0.00877786399996694,
+      "query_only": 2.6050000087707303e-05,
+      "match_bm25": 0.00032612300037726527,
+      "post_partition": 0.0020736899996336433
+    },
+    "boundaries": [
+      {
+        "phase": "pre_partition",
+        "elapsed": 3.3180003811139613e-06,
+        "remaining": 1.9999904759997662
+      },
+      {
+        "phase": "index_file_load",
+        "elapsed": 0.5485882350003521,
+        "remaining": 1.4514055589997952
+      },
+      {
+        "phase": "file_hash_and_partition_dispatch",
+        "elapsed": 0.5500263270005235,
+        "remaining": 1.4499674669996239
+      },
+      {
+        "phase": "deserialize",
+        "elapsed": 0.5547735420004756,
+        "remaining": 1.4452202519996717
+      },
+      {
+        "phase": "schema_integrity",
+        "elapsed": 0.5551043720006419,
+        "remaining": 1.4448894219995054
+      },
+      {
+        "phase": "backend_metadata",
+        "elapsed": 0.5650766110002223,
+        "remaining": 1.434917182999925
+      },
+      {
+        "phase": "record_comparison",
+        "elapsed": 0.5651321980003559,
+        "remaining": 1.4348615959997915
+      },
+      {
+        "phase": "fts_projection",
+        "elapsed": 0.5844518789999711,
+        "remaining": 1.4155419150001762
+      },
+      {
+        "phase": "fts_integrity",
+        "elapsed": 0.5863019520002126,
+        "remaining": 1.4136918419999347
+      },
+      {
+        "phase": "query_only",
+        "elapsed": 0.5950798160001796,
+        "remaining": 1.4049139779999678
+      },
+      {
+        "phase": "match_bm25",
+        "elapsed": 0.5951058660002673,
+        "remaining": 1.40488792799988
+      },
+      {
+        "phase": "post_partition",
+        "elapsed": 0.5954319890006445,
+        "remaining": 1.4045618049995028
+      },
+      {
+        "phase": "end",
+        "elapsed": 0.5975056790002782,
+        "remaining": 1.4024881149998691
+      }
+    ],
+    "kind": "search",
+    "projection_subphases": {
+      "_load": 0.08296923999932915,
+      "_selection": 0.18917719399996713,
+      "_records": 0.24142021299940097
+    },
+    "live_projection_seconds": 0.5291677459999846,
+    "records": 226,
+    "bytes": 1724416,
+    "partition_entry_remaining": 1.4453450880000673,
+    "sqlite_entry_remaining": 1.4453380079994531,
+    "fts_adapter_seconds": 0.040780306999295135,
+    "outcome": "ok",
+    "total": 0.5975112370006173,
+    "remaining": 1.4024818439993396,
+    "public_prepare_seconds": 0.6012658579993513,
+    "public_outcome": "ok",
+    "public_total_seconds": 0.6016928569997617,
+    "search_ordinal": 1
+  },
+  {
+    "start": 6340.264832196,
+    "deadline": 6342.264826932,
+    "phases": {
+      "pre_partition": 0.4598241590001635,
+      "index_file_load": 0.0014211119996616617,
+      "file_hash_and_partition_dispatch": 0.0049585590004426194,
+      "deserialize": 0.0011879589992531692,
+      "schema_integrity": 0.010008950000155892,
+      "backend_metadata": 5.105800028104568e-05,
+      "record_comparison": 0.01649701600035769,
+      "fts_projection": 0.0018382149992248742,
+      "fts_integrity": 0.007942603000628878,
+      "query_only": 2.1039999410277233e-05,
+      "match_bm25": 0.00040098400040733395,
+      "post_partition": 0.001493120999839448
+    },
+    "boundaries": [
+      {
+        "phase": "pre_partition",
+        "elapsed": 3.175000529154204e-06,
+        "remaining": 1.9999915609996606
+      },
+      {
+        "phase": "index_file_load",
+        "elapsed": 0.45982733400069264,
+        "remaining": 1.540167401999497
+      },
+      {
+        "phase": "file_hash_and_partition_dispatch",
+        "elapsed": 0.4612484460003543,
+        "remaining": 1.5387462899998354
+      },
+      {
+        "phase": "deserialize",
+        "elapsed": 0.4662070050007969,
+        "remaining": 1.5337877309993928
+      },
+      {
+        "phase": "schema_integrity",
+        "elapsed": 0.4673949640000501,
+        "remaining": 1.5325997720001396
+      },
+      {
+        "phase": "backend_metadata",
+        "elapsed": 0.477403914000206,
+        "remaining": 1.5225908219999837
+      },
+      {
+        "phase": "record_comparison",
+        "elapsed": 0.47745497200048703,
+        "remaining": 1.5225397639997027
+      },
+      {
+        "phase": "fts_projection",
+        "elapsed": 0.4939519880008447,
+        "remaining": 1.506042747999345
+      },
+      {
+        "phase": "fts_integrity",
+        "elapsed": 0.4957902030000696,
+        "remaining": 1.5042045330001201
+      },
+      {
+        "phase": "query_only",
+        "elapsed": 0.5037328060006985,
+        "remaining": 1.4962619299994913
+      },
+      {
+        "phase": "match_bm25",
+        "elapsed": 0.5037538460001088,
+        "remaining": 1.496240890000081
+      },
+      {
+        "phase": "post_partition",
+        "elapsed": 0.5041548300005161,
+        "remaining": 1.4958399059996736
+      },
+      {
+        "phase": "end",
+        "elapsed": 0.5056479510003555,
+        "remaining": 1.4943467849998342
+      }
+    ],
+    "kind": "search",
+    "projection_subphases": {
+      "_load": 0.06927561500015145,
+      "_selection": 0.12759261799965316,
+      "_records": 0.21840909399998054
+    },
+    "live_projection_seconds": 0.44132490399988455,
+    "records": 226,
+    "bytes": 1724416,
+    "partition_entry_remaining": 1.5339353230001507,
+    "sqlite_entry_remaining": 1.5339276320000863,
+    "fts_adapter_seconds": 0.038091747000180476,
+    "outcome": "ok",
+    "total": 0.5056532610005888,
+    "remaining": 1.4943407009996008,
+    "public_prepare_seconds": 0.5090049969994652,
+    "public_outcome": "ok",
+    "public_total_seconds": 0.5094058449994918,
+    "search_ordinal": 2
+  },
+  {
+    "start": 6340.775542189,
+    "deadline": 6342.775538732,
+    "phases": {
+      "pre_partition": 0.48102752800059534,
+      "index_file_load": 0.0014752409997527138,
+      "file_hash_and_partition_dispatch": 0.004928262000248651,
+      "deserialize": 0.001187468999887642,
+      "schema_integrity": 0.009893245999592182,
+      "backend_metadata": 5.555600000661798e-05,
+      "record_comparison": 0.016741567999815743,
+      "fts_projection": 0.0019309010003780713,
+      "fts_integrity": 0.008021046000067145,
+      "query_only": 2.089000008709263e-05,
+      "match_bm25": 0.0003385559994057985,
+      "post_partition": 0.001728021999952034
+    },
+    "boundaries": [
+      {
+        "phase": "pre_partition",
+        "elapsed": 3.903000106220134e-06,
+        "remaining": 1.999992640000528
+      },
+      {
+        "phase": "index_file_load",
+        "elapsed": 0.48103143100070156,
+        "remaining": 1.5189651119999326
+      },
+      {
+        "phase": "file_hash_and_partition_dispatch",
+        "elapsed": 0.4825066720004543,
+        "remaining": 1.5174898710001798
+      },
+      {
+        "phase": "deserialize",
+        "elapsed": 0.4874349340007029,
+        "remaining": 1.5125616089999312
+      },
+      {
+        "phase": "schema_integrity",
+        "elapsed": 0.48862240300059057,
+        "remaining": 1.5113741400000436
+      },
+      {
+        "phase": "backend_metadata",
+        "elapsed": 0.49851564900018275,
+        "remaining": 1.5014808940004514
+      },
+      {
+        "phase": "record_comparison",
+        "elapsed": 0.49857120500018937,
+        "remaining": 1.5014253380004448
+      },
+      {
+        "phase": "fts_projection",
+        "elapsed": 0.5153127730000051,
+        "remaining": 1.484683770000629
+      },
+      {
+        "phase": "fts_integrity",
+        "elapsed": 0.5172436740003832,
+        "remaining": 1.482752869000251
+      },
+      {
+        "phase": "query_only",
+        "elapsed": 0.5252647200004503,
+        "remaining": 1.4747318230001838
+      },
+      {
+        "phase": "match_bm25",
+        "elapsed": 0.5252856100005374,
+        "remaining": 1.4747109330000967
+      },
+      {
+        "phase": "post_partition",
+        "elapsed": 0.5256241659999432,
+        "remaining": 1.474372377000691
+      },
+      {
+        "phase": "end",
+        "elapsed": 0.5273521879998952,
+        "remaining": 1.4726443550007389
+      }
+    ],
+    "kind": "search",
+    "projection_subphases": {
+      "_load": 0.07078022699988651,
+      "_selection": 0.15256907299954037,
+      "_records": 0.2212458610001704
+    },
+    "live_projection_seconds": 0.46334369299984246,
+    "records": 226,
+    "bytes": 1724416,
+    "partition_entry_remaining": 1.5127032569998846,
+    "sqlite_entry_remaining": 1.512696180000603,
+    "fts_adapter_seconds": 0.03832799299925682,
+    "outcome": "ok",
+    "total": 0.5273569270002554,
+    "remaining": 1.4726391490003152,
+    "public_prepare_seconds": 0.5310687480005072,
+    "public_outcome": "ok",
+    "public_total_seconds": 0.5314881480007898,
+    "search_ordinal": 3
+  }
+]

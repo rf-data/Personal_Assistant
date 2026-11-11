@@ -1,0 +1,50 @@
+[
+  {
+    "mode": "normal",
+    "cwd": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a",
+    "argv": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/bin/python",
+      "-B",
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2/artifacts/handoff/pr174-final-fts-diagnosis/harness/replay_target.py",
+      "normal"
+    ],
+    "exit": 0,
+    "runner_wall_seconds": 2.6584819310000967
+  },
+  {
+    "mode": "single",
+    "cwd": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a",
+    "argv": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/bin/python",
+      "-B",
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2/artifacts/handoff/pr174-final-fts-diagnosis/harness/replay_target.py",
+      "single"
+    ],
+    "exit": 0,
+    "runner_wall_seconds": 2.34738923399982
+  },
+  {
+    "mode": "contention",
+    "cwd": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a",
+    "argv": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/bin/python",
+      "-B",
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2/artifacts/handoff/pr174-final-fts-diagnosis/harness/replay_target.py",
+      "contention"
+    ],
+    "exit": 0,
+    "runner_wall_seconds": 16.778470137999648
+  },
+  {
+    "mode": "recovery",
+    "cwd": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a",
+    "argv": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/bin/python",
+      "-B",
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2/artifacts/handoff/pr174-final-fts-diagnosis/harness/replay_target.py",
+      "recovery"
+    ],
+    "exit": 0,
+    "runner_wall_seconds": 2.5258796019998044
+  }
+]

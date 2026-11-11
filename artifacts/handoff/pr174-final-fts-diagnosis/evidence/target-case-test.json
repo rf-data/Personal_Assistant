@@ -1,0 +1,20 @@
+[
+  {
+    "stage": "setup",
+    "outcome": "passed",
+    "seconds": 0.0020660049995058216,
+    "error": null
+  },
+  {
+    "stage": "call",
+    "outcome": "passed",
+    "seconds": 73.96382335399994,
+    "error": null
+  },
+  {
+    "stage": "teardown",
+    "outcome": "passed",
+    "seconds": 0.0020074130006833,
+    "error": null
+  }
+]

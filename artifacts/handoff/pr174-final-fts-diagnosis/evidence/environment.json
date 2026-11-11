@@ -1,0 +1,20 @@
+{
+  "python": "3.12.12 (main, Oct 31 2025, 23:02:31) [Clang 21.1.4 ]",
+  "executable": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/bin/python",
+  "sqlite": "3.50.4",
+  "pydantic": "2.13.4",
+  "pytest": "9.1.1",
+  "platform": "Linux-6.6.119-09283-g9c138e0af8c3-x86_64-with-glibc2.36",
+  "affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "cpus": 4,
+  "product_root": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a",
+  "query_seconds": 2.0,
+  "instrumentation": "test-only wrappers and AST-verified timing marks; original checks retained",
+  "network": "blocked in parent and Python child",
+  "target_writes": "blocked by Python audit hook; bytecode and pytest cache disabled"
+}

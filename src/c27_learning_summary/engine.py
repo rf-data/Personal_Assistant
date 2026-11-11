@@ -13,6 +13,7 @@ from src.c27_learning_summary.models import (
     Claim,
     SectionResponse,
     SectionResult,
+    SourceRef,
     SummaryConfig,
     SummaryResult,
 )
@@ -32,6 +33,10 @@ class SummaryRunError(RuntimeError):
         super().__init__(
             f"Run {run_id}: {code}; inspect saved state and partial sections"
         )
+
+
+class RunDeadlineExceeded(TimeoutError):
+    """Cooperative wall deadline, distinct from an adapter request timeout."""
 
 
 def messages_for(ref, config):
@@ -165,6 +170,50 @@ def generate(
     inputs = input_snapshot(
         catalog, unit, course_id, week_id, lecture_id, selected, config
     )
+    return generate_refs(
+        store,
+        refs,
+        inputs,
+        config,
+        model,
+        title=unit.title or unit.section_id,
+        warnings=warnings,
+        progress=progress,
+        force=force,
+    )
+
+
+def generate_refs(
+    store,
+    refs,
+    inputs,
+    config,
+    model,
+    *,
+    title,
+    warnings=(),
+    progress=None,
+    force=False,
+    before_call=None,
+    after_reply=None,
+    after_section=None,
+    check_deadline=None,
+):
+    """Execute one bounded envelope using the same M1 claim/store machinery.
+
+    The orchestrator binds prepared references to its verified source and plan.
+    Input identity includes their full bytes; this entry never selects sources.
+    """
+    config = SummaryConfig.model_validate_json(config.model_dump_json())
+    refs = tuple(SourceRef.model_validate_json(r.model_dump_json()) for r in refs)
+    if (
+        not refs
+        or len(refs) > config.max_chunks
+        or len({r.ref_id for r in refs}) != len(refs)
+        or model.model != config.model
+        or model.provider != config.provider
+    ):
+        raise ValueError("Invalid bounded reference envelope")
     key = fingerprint(inputs)
     messages = [messages_for(ref, config) for ref in refs]
     if any(
@@ -179,6 +228,14 @@ def generate(
                 return Outcome(cached, True)
         run_id = store.begin(key, inputs)
         started = time.monotonic()
+
+        def deadline():
+            # Cooperative checks include processing and the final durable write.
+            if check_deadline:
+                check_deadline()
+            if time.monotonic() - started >= config.wall_seconds:
+                raise RunDeadlineExceeded("Local run deadline exceeded")
+
         sections = []
         usage = {
             "input_tokens": 0,
@@ -196,13 +253,17 @@ def generate(
                 for attempt in range(config.retries + 1):
                     remaining = config.wall_seconds - (time.monotonic() - started)
                     if remaining <= 0:
-                        raise TimeoutError("Local run deadline exceeded")
+                        raise RunDeadlineExceeded("Local run deadline exceeded")
                     usage["calls"] += 1
                     usage["usage_missing_calls"] += 1
                     for direction in ("input", "output"):
                         usage[f"{direction}_usage_missing_calls"] += 1
                         usage.pop(f"{direction}_tokens", None)
                     try:
+                        if before_call:
+                            remaining = min(remaining, before_call())
+                            if remaining <= 0:
+                                raise TimeoutError("Orchestrator deadline exceeded")
                         reply = model.complete(
                             request,
                             config=config,
@@ -242,9 +303,10 @@ def generate(
                                 usage[name] = usage[f"known_{name}"]
                         if {"input_tokens", "output_tokens"} <= reported.keys():
                             usage["usage_missing_calls"] -= 1
+                        if after_reply:
+                            after_reply(reply.raw)
                         response = SectionResponse.model_validate_json(reply.raw)
-                        if time.monotonic() - started > config.wall_seconds:
-                            raise TimeoutError("Local run deadline exceeded")
+                        deadline()
                         break
                     except Exception as exc:
                         # Exception strings can contain provider headers/keys; persist only class.
@@ -257,14 +319,20 @@ def generate(
                             raise
                 section = bind_section(response, ref)
                 sections.append(section)
+                deadline()
                 store.write(
                     run_id,
                     f"sections/{index:03}.json",
                     section.model_dump(mode="json"),
                 )
+                deadline()
+                if after_section:
+                    after_section(section)
                 if progress:
                     progress(index + 1, len(refs))
+                deadline()
             claims, issues = consolidate(sections)
+            deadline()
             if not claims:
                 issues.append("No validated claims; output is incomplete")
             cost = None
@@ -280,23 +348,25 @@ def generate(
             result = SummaryResult(
                 run_id=run_id,
                 cache_key=key,
-                title=unit.title or unit.section_id,
+                title=title,
                 config=config,
                 refs=refs,
                 sections=sections,
                 claims=claims,
                 state="needs_attention" if issues else "ready_for_review",
-                warnings=list(dict.fromkeys(warnings + issues)),
+                warnings=list(dict.fromkeys(list(warnings) + issues)),
                 usage=usage,
                 estimated_cost_usd=cost,
             )
             store.write(run_id, "result.json", result.model_dump(mode="json"))
+            deadline()
             store.finish(
                 run_id,
                 "completed",
                 result_sha256=sha256(store.read(run_id, "result.json")),
                 result_state=result.state,
             )
+            deadline()
             return Outcome(result, False)
         except BaseException as exc:
             store.finish(

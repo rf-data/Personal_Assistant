@@ -1,0 +1,14 @@
+[
+  {
+    "mode": "normal",
+    "cwd": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a",
+    "argv": [
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/bin/python",
+      "-B",
+      "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2/artifacts/handoff/pr174-final-fts-diagnosis/harness/replay_target.py",
+      "normal"
+    ],
+    "exit": 1,
+    "runner_wall_seconds": 0.8251482939995185
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "mode": "single",
+  "requested_samples": 3,
+  "contenders": 0,
+  "affinity_before": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "source": "fresh lecture_171 fixture from original target-worktree test",
+  "affinity_during": [
+    0
+  ],
+  "measurement_wall_seconds": 1.6456511809992662,
+  "all_contenders_alive_at_end": true,
+  "children_reaped": true,
+  "affinity_restored": true,
+  "synthetic_root_bytes_unchanged": true,
+  "outcomes": [
+    {
+      "ordinal": 0,
+      "outcome": "ok"
+    },
+    {
+      "ordinal": 1,
+      "outcome": "ok"
+    },
+    {
+      "ordinal": 2,
+      "outcome": "ok"
+    }
+  ]
+}

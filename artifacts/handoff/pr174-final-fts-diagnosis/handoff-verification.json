@@ -1,0 +1,12 @@
+{
+  "patch_path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2/artifacts/handoff/pr174-final-fts-diagnosis/handoff.patch",
+  "patch_sha256": "78ace8ebf6430be53dd1e3eda1f39a6450b5e237c9acd6842e22115d96cf9775",
+  "patch_file_count": 51,
+  "patch_check_exit": 0,
+  "workspace_diff_check_exit": 0,
+  "workspace_status": "?? artifacts/\n?? docs/cs50/one-source-summary-m2-validation.md\n?? docs/cs50/one-source-summary-m2.md\n?? docs/cs50/pr174-fts-final-reliability-diagnosis.md\n",
+  "workspace_head": "ff5e13340b83a86c69bcc38e787fbcdf05513074",
+  "new_commit": null,
+  "git_integration": "not performed; prohibited by task",
+  "report_path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2/docs/cs50/pr174-fts-final-reliability-diagnosis.md"
+}
