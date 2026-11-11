@@ -1,0 +1,417 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-10-24T07:12:14.047953+00:00",
+  "parent_pr157_commit": "f502fed60c4e676a29752f417841d6a62a8fe458",
+  "operator_observed": {
+    "backend_application_uuid": "syboxap8mpf8lgjzpjdsqm0z",
+    "ui_application_uuid": "a8xzljz4fq52vt1yt43nheg5",
+    "both": {
+      "auto_deploy": "Manual deployments only",
+      "preview_deployments_display": "None",
+      "deployment_api_entrypoint_available": true,
+      "deployment_api_relative_pattern": "/api/v1/deploy?uuid=<application_uuid>&force=false"
+    },
+    "preview_feature_enabled": null,
+    "source": "Operator inspected existing Coolify UI, 2026-10-23; Codex did not access Coolify"
+  },
+  "github_actions": {
+    "backend": {
+      "workflows": {
+        "total_count": 1,
+        "workflows": [
+          {
+            "id": 274818592,
+            "name": "Dependency Graph",
+            "path": "dynamic/dependabot/update-graph",
+            "state": "active"
+          }
+        ]
+      },
+      "runs": {
+        "runs": [
+          {
+            "conclusion": "failure",
+            "created_at": "2026-05-11T17:29:27Z",
+            "event": "dynamic",
+            "head_branch": "master",
+            "head_sha": "986da32ca2a0675702a29a673958189731fef2ad",
+            "id": 25686254534,
+            "status": "completed",
+            "updated_at": "2026-05-11T17:30:41Z",
+            "workflow_id": 274818592
+          }
+        ],
+        "total_count": 1
+      }
+    },
+    "ui": {
+      "workflows": {
+        "total_count": 0,
+        "workflows": []
+      },
+      "runs": {
+        "runs": [],
+        "total_count": 0
+      }
+    }
+  },
+  "backend_historical_run_jobs": {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 75410665922,
+        "name": "update-uv-graph",
+        "status": "completed",
+        "conclusion": "failure",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Create job directory",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run Dependabot",
+            "status": "completed",
+            "conclusion": "failure"
+          },
+          {
+            "name": "Post Run Dependabot",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "repository_snapshots": [
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "ref": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "workflow_files": [],
+      "source_files_scanned": 827,
+      "excluded_file_count": 251,
+      "documentation_hit_count": 21,
+      "non_documentation_hits": [
+        {
+          "path": "deployment/coolify.private-https.yaml",
+          "git_blob": "d26017e4c6f1dbfe49f6b34c6675e105d843d4a0",
+          "category": "compose_definition",
+          "matches_at_lines": {
+            "coolify_reference": [
+              2
+            ]
+          }
+        },
+        {
+          "path": "deployment/coolify.ui.compose.yaml",
+          "git_blob": "03752611e469e10f67c0dca2fb1b7d13335abff6",
+          "category": "compose_definition",
+          "matches_at_lines": {
+            "coolify_reference": [
+              2,
+              24
+            ]
+          }
+        },
+        {
+          "path": "frontend/pages/C_p1_ETL_csv_parquet.py",
+          "git_blob": "1cacaa016684f1a4ea72d68ebbc2ccbb685aafda",
+          "category": "source_or_script",
+          "matches_at_lines": {
+            "trigger_config": [
+              17
+            ]
+          }
+        },
+        {
+          "path": "scripts/https_preflight.py",
+          "git_blob": "3af8e5138c443ca4fbb985983fefb48cee258ff7",
+          "category": "source_or_script",
+          "matches_at_lines": {
+            "coolify_reference": [
+              1,
+              174
+            ]
+          }
+        },
+        {
+          "path": "tests/test_https_preflight.py",
+          "git_blob": "c211edb010cfd7e219b81e4adc0cf8dd21b6b2e9",
+          "category": "offline_test",
+          "matches_at_lines": {
+            "coolify_reference": [
+              40,
+              42,
+              54,
+              55,
+              188,
+              199
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "repository": "rf-data/Personal_Assistant",
+      "ref": "f502fed60c4e676a29752f417841d6a62a8fe458",
+      "workflow_files": [],
+      "source_files_scanned": 846,
+      "excluded_file_count": 260,
+      "documentation_hit_count": 32,
+      "non_documentation_hits": [
+        {
+          "path": "deployment/coolify.private-https.yaml",
+          "git_blob": "d26017e4c6f1dbfe49f6b34c6675e105d843d4a0",
+          "category": "compose_definition",
+          "matches_at_lines": {
+            "coolify_reference": [
+              2
+            ]
+          }
+        },
+        {
+          "path": "deployment/coolify.runtime-bootstrap.compose.yaml",
+          "git_blob": "2496018198250f24ecc1295dc60f5bb7e198e001",
+          "category": "compose_definition",
+          "matches_at_lines": {
+            "coolify_reference": [
+              29
+            ]
+          }
+        },
+        {
+          "path": "deployment/coolify.ui.compose.yaml",
+          "git_blob": "03752611e469e10f67c0dca2fb1b7d13335abff6",
+          "category": "compose_definition",
+          "matches_at_lines": {
+            "coolify_reference": [
+              2,
+              24
+            ]
+          }
+        },
+        {
+          "path": "frontend/pages/C_p1_ETL_csv_parquet.py",
+          "git_blob": "1cacaa016684f1a4ea72d68ebbc2ccbb685aafda",
+          "category": "source_or_script",
+          "matches_at_lines": {
+            "trigger_config": [
+              17
+            ]
+          }
+        },
+        {
+          "path": "scripts/https_preflight.py",
+          "git_blob": "3af8e5138c443ca4fbb985983fefb48cee258ff7",
+          "category": "source_or_script",
+          "matches_at_lines": {
+            "coolify_reference": [
+              1,
+              174
+            ]
+          }
+        },
+        {
+          "path": "src/job_control/coolify_readiness.py",
+          "git_blob": "6dbb6b52c4a9e40ed92eadf35c5d0f0aee379f64",
+          "category": "source_or_script",
+          "matches_at_lines": {
+            "coolify_reference": [
+              1,
+              71,
+              121,
+              132
+            ],
+            "trigger_config": [
+              138
+            ]
+          }
+        },
+        {
+          "path": "tests/test_c26_runtime_bootstrap.py",
+          "git_blob": "bdb863c462ae476136c9b57af238eecc8caae9c0",
+          "category": "offline_test",
+          "matches_at_lines": {
+            "coolify_reference": [
+              20,
+              40
+            ]
+          }
+        },
+        {
+          "path": "tests/test_coolify_readiness.py",
+          "git_blob": "cb20c17e4acc8aa6ecc4ed1444441e515d3593df",
+          "category": "offline_test",
+          "matches_at_lines": {
+            "coolify_reference": [
+              1,
+              7,
+              8,
+              44,
+              134,
+              135,
+              167,
+              179,
+              180,
+              253,
+              254,
+              296,
+              304,
+              456,
+              457
+            ],
+            "deployment_api": [
+              418,
+              420
+            ],
+            "trigger_config": [
+              240
+            ]
+          }
+        },
+        {
+          "path": "tests/test_https_preflight.py",
+          "git_blob": "c211edb010cfd7e219b81e4adc0cf8dd21b6b2e9",
+          "category": "offline_test",
+          "matches_at_lines": {
+            "coolify_reference": [
+              40,
+              42,
+              54,
+              55,
+              188,
+              199
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "repository": "rf-data/personal-assistant-ui",
+      "ref": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "workflow_files": [],
+      "source_files_scanned": 91,
+      "excluded_file_count": 20,
+      "documentation_hit_count": 8,
+      "non_documentation_hits": [
+        {
+          "path": "scripts/acceptance/c26_https.py",
+          "git_blob": "feac0ccd6a7f70e641f8328c8a7f8010c7c342ad",
+          "category": "source_or_script",
+          "matches_at_lines": {
+            "coolify_reference": [
+              786
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "repository": "rf-data/personal-assistant-ui",
+      "ref": "6b84e3c09f877309a3fd1c6f9cbcf61bb9f46788",
+      "workflow_files": [],
+      "source_files_scanned": 91,
+      "excluded_file_count": 20,
+      "documentation_hit_count": 8,
+      "non_documentation_hits": [
+        {
+          "path": "scripts/acceptance/c26_https.py",
+          "git_blob": "feac0ccd6a7f70e641f8328c8a7f8010c7c342ad",
+          "category": "source_or_script",
+          "matches_at_lines": {
+            "coolify_reference": [
+              786
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "finding_classification": [
+    {
+      "finding": "Manual deployments only",
+      "configuration": "operator_observed",
+      "permission": "does not enumerate API actors",
+      "actual_execution": "not established"
+    },
+    {
+      "finding": "Preview Deployments None",
+      "configuration": "operator_observed display only; enable flag unverified",
+      "permission": "not established",
+      "actual_execution": "no entries shown in inspected UI; no historical absence inferred"
+    },
+    {
+      "finding": "deployment API entrypoint",
+      "configuration": "operator_observed available entrypoint, no full URL stored",
+      "permission": "unverified actors/abilities",
+      "actual_execution": "unverified; no calls made"
+    },
+    {
+      "finding": "backend Dependency Graph",
+      "configuration": "GitHub API reports active dynamic workflow, not a tracked YAML deployment workflow",
+      "permission": "GitHub job execution metadata does not prove Coolify API permission",
+      "actual_execution": "one completed failed dynamic run, 2026-05-11, update-uv-graph / Run Dependabot; no Coolify deployment linkage established"
+    },
+    {
+      "finding": "UI GitHub Actions",
+      "configuration": "registered workflows total_count0 at read",
+      "permission": "external apps/actors not enumerated",
+      "actual_execution": "workflow runs total_count0 at read; no statement about external trigger history"
+    }
+  ],
+  "manual_hit_review": {
+    "frontend/pages/C_p1_ETL_csv_parquet.py": "commented localhost ETL webhook example; no Coolify deploy",
+    "scripts/https_preflight.py": "local normalized Compose/TLS/label validation, not a Coolify API request",
+    "src/job_control/coolify_readiness.py": "two allowlisted read GET paths only, no deploy method",
+    "tests/test_coolify_readiness.py": "deploy URI literals are refused in negative MockTransport tests",
+    "scripts/acceptance/c26_https.py": "isolated local acceptance harness; Coolify render listed as not_tested",
+    "deployment/*.yaml": "deployment definitions/labels, not automatically executed GitHub workflows"
+  },
+  "limits": [
+    "Default refs and named Draft refs only; other branches not exhaustively audited",
+    "GitHub workflow/run metadata is repository API evidence; no proof of absent external GitHub Apps/hooks or API rights",
+    "Source scan excludes env, credentials, data, databases and archives; no secret/actual runtime environment review",
+    "Actual Coolify repository/branch/path selection remains unverified",
+    "Regex/source inspection is not a dynamic execution trace; arbitrary indirect or externally configured calls not excluded",
+    "GitHub Fetch wrapper did not support workflow collection endpoint; read-only gh api GET fallback succeeded",
+    "Historical failed run is neither a successful deployment nor proof that no side effect ever happened; no logs read"
+  ],
+  "driver_decision": {
+    "additional_triggers_controlled": null,
+    "trigger_policy_approval_generated": false,
+    "production_release": "blocked",
+    "deployment_permitted": false,
+    "reason": "entrypoint availability + Manual only + Preview None do not prove actor control/external intake fence or real execution history"
+  },
+  "verification": {
+    "json_and_document_links": "passed",
+    "regular_hooks": "passed for nine intended documentation/inventory files",
+    "runtime_code_changed": false,
+    "production_calls": 0,
+    "webhook_test_calls": 0,
+    "deployments": 0,
+    "merges": 0,
+    "runtime_tests": "not rerun; no runtime changes; prior 69 offline/277 combined results retained as historical evidence"
+  },
+  "retention": "Review supplement on Draft #157 only; no merge/cleanup. Existing code/tests/artifacts remain unchanged.",
+  "checked_client_date": "2026-10-24",
+  "resumed_actions_metadata_checked_at_utc": "2026-10-24T07:08:48.243955+00:00",
+  "recovery_note": "Prior RAM metadata unavailable after interruption. New clone objects complete, workspace checkout failed at monitoring/grafana with local ENOSPC. Continued with documentation-only RAM sparse worktree; no cleanup or host changes.",
+  "local_filesystem_diagnostics": {
+    "workspace_full_checkout": "failed ENOSPC at monitoring/grafana",
+    "sandbox_setup": "failed ENOSPC at synthetic /tmp/.git mount target",
+    "continued_in": "new own RAM sparse worktree",
+    "production_filesystem_tested": false,
+    "cleanup": false
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "as_of_client_date": "2026-10-24",
+  "production_release": "blocked",
+  "deployment_permitted": false,
+  "github_snapshot": [
+    {
+      "pr": 156,
+      "repository": "rf-data/Personal_Assistant",
+      "head_sha": "c77128b14e60b78a546fd804507ff255d4833759",
+      "base_sha": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "draft": true,
+      "state": "open",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "auto_merge": null,
+      "reviews": [],
+      "check_runs": [],
+      "commit_status": {
+        "state": "pending",
+        "total_count": 0
+      }
+    },
+    {
+      "pr": 149,
+      "repository": "rf-data/Personal_Assistant",
+      "head_sha": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb",
+      "base_sha": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+      "draft": true,
+      "state": "open",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "auto_merge": null,
+      "reviews": [],
+      "check_runs": [],
+      "commit_status": {
+        "state": "pending",
+        "total_count": 0
+      }
+    },
+    {
+      "pr": 148,
+      "repository": "rf-data/Personal_Assistant",
+      "head_sha": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+      "base_sha": "e581e201ef6b3d6c06aca14de845e0687d213b37",
+      "draft": true,
+      "state": "open",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "auto_merge": null,
+      "reviews": [],
+      "check_runs": [],
+      "commit_status": {
+        "state": "pending",
+        "total_count": 0
+      }
+    },
+    {
+      "pr": 157,
+      "repository": "rf-data/Personal_Assistant",
+      "head_sha": "b616e29981870a7365c821106a831f5df8f90b8a",
+      "base_sha": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+      "draft": true,
+      "state": "open",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "auto_merge": null,
+      "reviews": [],
+      "check_runs": [],
+      "commit_status": {
+        "state": "pending",
+        "total_count": 0
+      }
+    },
+    {
+      "pr": 20,
+      "repository": "rf-data/personal-assistant-ui",
+      "head_sha": "6b84e3c09f877309a3fd1c6f9cbcf61bb9f46788",
+      "base_sha": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+      "draft": true,
+      "state": "open",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "auto_merge": null,
+      "reviews": [],
+      "check_runs": [],
+      "commit_status": {
+        "state": "pending",
+        "total_count": 0
+      }
+    }
+  ],
+  "default_branches": {
+    "backend": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+    "ui": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff"
+  },
+  "local_simulation": {
+    "stabilization": "e6490b5a81f236f2af81d86d2c0630807dd97f8f",
+    "html": "a4d4ca6f278646adf9d983e15aa21543e9f61667",
+    "gate": "3d95b04ee3d7bd38e727819df0b5a3dcc91115f3",
+    "runtime_input": "449847aa7313f3a25af1dd4183f1b2416bd6620d",
+    "ui": "4e7928cacf36103728aebb99353ef6e11f9c46ea",
+    "conflicts": [],
+    "history_note": "Inherited shallow history completed by ordinary fetch; no unrelated-history override. Final publication/remerge receipts remain external to avoid commit self-reference."
+  },
+  "runtime": {
+    "environment": {
+      "python": "3.12.12 (main, Oct 31 2025, 23:02:31) [Clang 21.1.4 ]",
+      "sqlite": "3.50.4",
+      "packages": {
+        "pydantic": "2.14.1",
+        "pydantic-settings": null,
+        "httpx": "0.28.1",
+        "beautifulsoup4": "4.15.0",
+        "typer": "0.27.3",
+        "python-dotenv": "1.2.4",
+        "pyyaml": "6.0.3",
+        "returns": null,
+        "tenacity": "9.2.1",
+        "pymupdf": "1.27.2.2",
+        "pytest": "9.1.1",
+        "tiktoken": null
+      }
+    },
+    "frozen_runtime": "not_available: offline uv interpreter-cache rename ENOSPC",
+    "new_packages_or_images_installed": false
+  },
+  "tests": {
+    "runs": [
+      {
+        "name": "stabilization",
+        "source_scope": "master+#156, independent",
+        "tests": 106,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 1,
+        "passed": 105,
+        "skips": [
+          {
+            "name": "test_real_local_pilot",
+            "reason": "Imported original pilot unavailable"
+          }
+        ],
+        "seconds": 814.889,
+        "xml_sha256": "ae2aa77e563691e0690ae5016dbae39307e9d7350370a65077daa269a5b4c669"
+      },
+      {
+        "name": "html",
+        "source_scope": "master+#156+#149, independent",
+        "tests": 163,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 1,
+        "passed": 162,
+        "skips": [
+          {
+            "name": "test_optional_original_python_notes_read_only",
+            "reason": "Optional original notes artifacts are not locally provided"
+          }
+        ],
+        "seconds": 46.755,
+        "xml_sha256": "196b39f9e656e253ba6ed10299889a9df730c60f250f10d7af75209233182663"
+      },
+      {
+        "name": "integration",
+        "source_scope": "all four backend PRs; observer before final credential/settings hardening",
+        "tests": 605,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 1,
+        "passed": 604,
+        "skips": [
+          {
+            "name": "test_real_local_pilot",
+            "reason": "Imported original pilot unavailable"
+          }
+        ],
+        "seconds": 672.139,
+        "xml_sha256": "a2c6dabea5757105da8d4b78bf035fd020189f9d5513789813adc5401e937a0a"
+      },
+      {
+        "name": "observer-settings-final",
+        "source_scope": "integrated product sources, final observer and readclient",
+        "tests": 135,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "passed": 135,
+        "skips": [],
+        "seconds": 1.076,
+        "xml_sha256": "c5581bf3a68ee8f2500988f00b0ee607cc14d49efcca3b9395ec4483c2b3db67"
+      }
+    ],
+    "runs_overlap": true,
+    "do_not_sum": true,
+    "ui": {
+      "https_oidc_passed": 11,
+      "production_guards_passed": 9,
+      "environment": "existing personal-assistant-ui-c26b/.venv",
+      "streamlit": "1.65.0",
+      "authlib": "1.9.1",
+      "containers_started": false
+    },
+    "final_observer_source_sha256": {
+      "src/job_control/coolify_observer.py": "32b8dbf89c2b8182b72dd3856e3cdd37388fddb2a066b146cfdf84a6dab7c573",
+      "tests/test_coolify_observer.py": "ab993b4be9befb59df6a268001cda844f57b354121482a3d55bf860f83a55aae"
+    },
+    "broad_observer_source_sha256": {
+      "src/job_control/coolify_observer.py": "0ca6ce285eb64924e124295bd92f35c2dda5b30a2b1cacd53d6682273efce262",
+      "tests/test_coolify_observer.py": "9a23288fa8245794ac98b85fac8c051c033eba01756ed5bf7ba132a2fe797459"
+    },
+    "final_changes": "Only new observer/test files hardened for credential metadata and per-role settings; final 135 targeted cases passed. Existing product code unchanged.",
+    "launcher_note": "Own sequential launcher intentionally terminated (143); original pytest continued and completed 106-case JUnit/normal summary. No test interrupted or suppressed."
+  },
+  "lint": {
+    "new_observer": "ruff check/format passed",
+    "html": "ruff check passed",
+    "stabilization": "three pre-existing F821; reproduced on unchanged master",
+    "master_findings": [
+      {
+        "file": "src/tools_knowledge/find_knowledge.py",
+        "code": "F821",
+        "message": "Undefined name `_get_extract_knowledge`",
+        "master_row": 178
+      },
+      {
+        "file": "src/utils/path_helper.py",
+        "code": "I001",
+        "message": "Import block is un-sorted or un-formatted",
+        "master_row": 2
+      },
+      {
+        "file": "src/utils/path_helper.py",
+        "code": "F821",
+        "message": "Undefined name `classify_resource_file`",
+        "master_row": 80
+      },
+      {
+        "file": "src/utils/path_helper.py",
+        "code": "F821",
+        "message": "Undefined name `run_name`",
+        "master_row": 310
+      }
+    ]
+  },
+  "contracts": {
+    "scope_version": 1,
+    "operation_version": 2,
+    "collector_version": 1,
+    "canonical": "UTF-8 JSON; sorted keys; compact separators; ensure_ascii false; finite numbers; fixed semantic array ordering",
+    "gate_core_modified": false,
+    "v1_accepts_runtime_scope_sha256": false,
+    "v2_gate_enforcement": "not_implemented",
+    "live_transport": "not_implemented",
+    "mutating_driver": "not_implemented"
+  },
+  "decisions": {
+    "156": "MERGE_CANDIDATE",
+    "149": "MERGE_CANDIDATE",
+    "148": "HOLD",
+    "157": "HOLD",
+    "ui20": "MERGE_CANDIDATE"
+  },
+  "next_step": "offline review; operator decision on independent collector trust/transport and read-only evidence",
+  "retained_artifacts": {
+    "ram_root": "/dev/shm/c26-observer-20261024",
+    "durable_results": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/observer-consolidation-20261024",
+    "reason": "Merge/cleanup prohibited; default-branch integration pending"
+  }
+}

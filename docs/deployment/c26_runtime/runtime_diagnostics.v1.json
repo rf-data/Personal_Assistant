@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "untraced_regression": {
+    "passed": 356,
+    "failed": 1,
+    "failure": "C18 parser resume, quarantine, OperationalError without saved SQLite code"
+  },
+  "deep_diagnostic": [
+    {
+      "role": "adapter",
+      "operation": "adapter.execute",
+      "os_errno": 28,
+      "error_class": "OSError",
+      "sqlite_errorcode": null,
+      "sqlite_errorname": null,
+      "frames": [
+        {
+          "file": "<string>",
+          "function": "traced_execute",
+          "line": 55
+        },
+        {
+          "file": "adapter_worker.py",
+          "function": "execute",
+          "line": 30
+        },
+        {
+          "file": "adapter_worker.py",
+          "function": "execute_scoped",
+          "line": 86
+        },
+        {
+          "file": "engine.py",
+          "function": "run",
+          "line": 358
+        },
+        {
+          "file": "state.py",
+          "function": "save",
+          "line": 56
+        },
+        {
+          "file": "execute_cs50.py",
+          "function": "write_state",
+          "line": 71
+        }
+      ],
+      "scope": "owned synthetic adapter, development filesystem only"
+    }
+  ],
+  "local_fsync_probes": [
+    {
+      "parent": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results",
+      "probe": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/c26-owned-fsync-1792780033858340523",
+      "scope": "own new synthetic file only",
+      "fsync": "passed",
+      "free_bytes": 3703820288,
+      "inodes_total": 0
+    },
+    {
+      "parent": "/tmp",
+      "probe": "/tmp/c26-owned-fsync-1792780033943779674",
+      "scope": "own new synthetic file only",
+      "fsync": "passed",
+      "free_bytes": 3703820288,
+      "inodes_total": 0
+    }
+  ],
+  "production_filesystem_tested": false,
+  "production_capacity_source": "operator_observed ext4 /dev/sda1 ~20GiB free, not a Codex measurement",
+  "original_operational_error_cause": "unverified; new ENOSPC does not identify earlier exception",
+  "cleanup_performed": false,
+  "limits_changed": false,
+  "observed_failing_operation": "write_state line 71: os.replace(temporary, path), not fsync",
+  "bounded_allocation_probes": [
+    {
+      "bytes": 4096,
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/owned-allocation-probe-4096-1792780158213547169",
+      "status": "passed"
+    },
+    {
+      "bytes": 32768,
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/owned-allocation-probe-32768-1792780158278399370",
+      "status": "passed"
+    }
+  ],
+  "atomic_rename_probes": [
+    {
+      "path": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/c26-owned-atomic-probe-1792780229475145173",
+      "status": "failed",
+      "stage": "replace",
+      "os_errno": 28
+    },
+    {
+      "path": "/tmp/c26-owned-atomic-probe-1792780229578891372",
+      "status": "passed"
+    }
+  ],
+  "tmp_adapter_diagnostics": [
+    {
+      "role": "adapter",
+      "operation": "adapter.execute",
+      "os_errno": 28,
+      "error_class": "OSError",
+      "sqlite_errorcode": null,
+      "sqlite_errorname": null,
+      "frames": [
+        {
+          "file": "<string>",
+          "function": "traced_execute",
+          "line": 55
+        },
+        {
+          "file": "adapter_worker.py",
+          "function": "execute",
+          "line": 30
+        },
+        {
+          "file": "adapter_worker.py",
+          "function": "execute_scoped",
+          "line": 86
+        },
+        {
+          "file": "engine.py",
+          "function": "run",
+          "line": 310
+        },
+        {
+          "file": "state.py",
+          "function": "save",
+          "line": 56
+        },
+        {
+          "file": "execute_cs50.py",
+          "function": "write_state",
+          "line": 71
+        }
+      ]
+    }
+  ],
+  "tmp_complete_workaround_proven": false,
+  "same_application_code_tested_outside_sandbox": true,
+  "further_write_heavy_tests_stopped": true,
+  "final_integration": {
+    "recorded_at_utc": "2026-10-23T19:37:14.400063+00:00",
+    "new_runs": [
+      {
+        "id": "c18-tmpfs-critical",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/c18-tmpfs-critical.xml",
+        "junit_sha256": "3e69d1bee9eacd0a1061c48a798e2628e2e6601a2228a602fd92243d6d4a1c97",
+        "log_sha256": "55ffa3a49752212e749f630c3398f35442761c1792663d8784e106a1a4893825",
+        "counts": {
+          "tests": 3,
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "passed": 3
+        },
+        "groups": {
+          "tests.test_cs50_workflows": 3
+        },
+        "skipped_cases": []
+      },
+      {
+        "id": "final-definition",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/final-definition.xml",
+        "junit_sha256": "6c77155a299596fc5b3470b7221b11a42a2efe2bdccab964b4894a7005dc1470",
+        "log_sha256": "b29277ecfd7c8e834ad14a5e7632a13046107e1dc83b5fe60c8862f351428dbd",
+        "counts": {
+          "tests": 6,
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "passed": 6
+        },
+        "groups": {
+          "tests.test_c26_runtime_bootstrap": 6
+        },
+        "skipped_cases": []
+      },
+      {
+        "id": "tmpfs-broad",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/tmpfs-broad.xml",
+        "junit_sha256": "783a371d0043f5f27087c09aee35588e46973917477322a21fef9e2f07a049d6",
+        "log_sha256": "9949e49f91cdfe5a2a1019c7ca2b5c9252f391cb8e77e3767f357ccd76b6f0a2",
+        "counts": {
+          "tests": 392,
+          "errors": 0,
+          "failures": 0,
+          "skipped": 6,
+          "passed": 386
+        },
+        "groups": {
+          "tests.test_job_control": 36,
+          "tests.test_job_executor": 17,
+          "tests.test_deployment_gate": 66,
+          "tests.test_deployment_operations": 23,
+          "tests.test_cs50_workflows": 24,
+          "tests.test_cs50_assignment_integration": 15,
+          "tests.test_cs50_week_materials": 51,
+          "tests.test_cs50_course": 51,
+          "tests.test_cs50_html_projection": 34,
+          "tests.test_job_store_contention": 5,
+          "tests.test_runtime_paths": 34,
+          "tests.test_cs50_knowledge_input": 28,
+          "tests.test_c26_runtime_bootstrap": 6,
+          "tests.test_deployment_transport": 2
+        },
+        "skipped_cases": [
+          {
+            "name": "test_real_export_five_ids_provenance_and_worker_admission",
+            "reason": "Explicit operator original required"
+          },
+          {
+            "name": "test_real_operator_exports_read_only",
+            "reason": "Explicit local real-pilot export root not supplied"
+          },
+          {
+            "name": "test_real_export_child_ids_still_explicitly_blocked",
+            "reason": "Operator originals not explicitly supplied"
+          },
+          {
+            "name": "test_optional_exact_week0_export[material_01-237-34-171-None]",
+            "reason": "Real pilot exports are remote; user prohibits SSH/downloads. Await local copies."
+          },
+          {
+            "name": "test_optional_exact_week0_export[material_02-28-0-16-10]",
+            "reason": "Real pilot exports are remote; user prohibits SSH/downloads. Await local copies."
+          },
+          {
+            "name": "test_real_local_pilot",
+            "reason": "Imported original pilot unavailable"
+          }
+        ]
+      },
+      {
+        "id": "tmpfs-regression",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/tmpfs-regression.xml",
+        "junit_sha256": "d5fc57e911168cc9cdf1602ef4ecbdaa9609e044770aeb21c2fc34674c6807fd",
+        "log_sha256": "8b81356ee0dd897f118bfe0d91d732393268517ff42f01c726112771cbcfc3bd",
+        "counts": {
+          "tests": 54,
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "passed": 54
+        },
+        "groups": {
+          "tests.test_cs50_workflows": 24,
+          "tests.test_job_store_contention": 5,
+          "tests.test_job_executor": 17,
+          "tests.test_c26_runtime_bootstrap": 6,
+          "tests.test_deployment_transport": 2
+        },
+        "skipped_cases": []
+      },
+      {
+        "id": "ui-final",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/ui-final.xml",
+        "junit_sha256": "d2ea61a8506a8919657d750c1ae03002548190faa490f9c8d0a07a72b9fccf4e",
+        "log_sha256": "96392c9b3738778af6dc4dd1651a4214367ecb4ed2b94faf0ddc186d255eae7c",
+        "counts": {
+          "tests": 33,
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "passed": 33
+        },
+        "groups": {
+          "tests.test_https_security.HTTPSBoundaryTests": 9,
+          "tests.test_https_security.OIDCSessionTests": 2,
+          "tests.test_container_runtime.ContainerRuntimeTests": 9,
+          "tests.test_deployment.DeploymentTests": 4
+        },
+        "skipped_cases": []
+      },
+      {
+        "id": "real-exports",
+        "junit": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/final-integration-20261023/real-exports.xml",
+        "junit_sha256": "a217ca17a6e42216dc7fd8c6d63d8fc653975143b07bfd214c001f81f26a9103",
+        "log_sha256": "d2e972f2379cde08822e3c653e93b649f8bf4beed0973ad7c6aa1737dc91e78d",
+        "counts": {
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": 5
+        },
+        "groups": {
+          "tests.test_cs50_assignment_integration": 1,
+          "tests.test_cs50_week_materials": 1,
+          "tests.test_cs50_course": 1,
+          "tests.test_cs50_html_projection": 2
+        },
+        "skipped_cases": []
+      }
+    ],
+    "test_roots": "Unique /dev/shm/c26-runtime-test.S6wlBM/{critical,regression,broad,final-definition,ui}; tmpfs, not earlier Btrfs roots",
+    "tmpfs_scope": {
+      "scope": "owned local tmpfs roots only, all test processes finished",
+      "path": "/dev/shm/c26-runtime-test.S6wlBM",
+      "filesystem": "tmpfs, independently distinct from Btrfs development mounts",
+      "statvfs": {
+        "size_bytes": 3458551808,
+        "free_bytes": 3337474048,
+        "inodes": 844373,
+        "free_inodes": 834523
+      },
+      "regular_file_count": 5149,
+      "logical_bytes": 21452864,
+      "db_count": 214,
+      "expected_fault_fixture_quarantine_markers": 10,
+      "sample_readonly_integrity": [
+        {
+          "path": "/dev/shm/c26-runtime-test.S6wlBM/broad/test_managed_api_worker_restar1/restored/jobs.sqlite3",
+          "quick_check": "ok"
+        },
+        {
+          "path": "/dev/shm/c26-runtime-test.S6wlBM/broad/test_managed_api_worker_restar1/snapshot/workspace/jobs.sqlite3",
+          "quick_check": "ok"
+        },
+        {
+          "path": "/dev/shm/c26-runtime-test.S6wlBM/broad/test_managed_api_worker_restar1/private/jobs.sqlite3",
+          "quick_check": "ok"
+        },
+        {
+          "path": "/dev/shm/c26-runtime-test.S6wlBM/broad/test_managed_api_worker_restar0/restored/jobs.sqlite3",
+          "quick_check": "ok"
+        },
+        {
+          "path": "/dev/shm/c26-runtime-test.S6wlBM/broad/test_managed_api_worker_restar0/snapshot/workspace/jobs.sqlite3",
+          "quick_check": "ok"
+        },
+        {
+          "path": "/dev/shm/c26-runtime-test.S6wlBM/broad/test_managed_api_worker_restar0/private/jobs.sqlite3",
+          "quick_check": "ok"
+        },
+        {
+          "path": "/dev/shm/c26-runtime-test.S6wlBM/broad/test_non_busy_setup_error_is_n0/private/jobs.sqlite3",
+          "quick_check": "ok"
+        },
+        {
+          "path": "/dev/shm/c26-runtime-test.S6wlBM/broad/test_persistent_exclusive_lock0/private/jobs.sqlite3",
+          "quick_check": "ok"
+        }
+      ],
+      "cleanup": false,
+      "production_filesystem_tested": false
+    },
+    "btrfs_metadata_counters": {
+      "disk_used": 1438777344,
+      "bytes_pinned": 0,
+      "bytes_used": 719388672,
+      "disk_total": 1623195648,
+      "total_bytes": 811597824,
+      "bytes_reserved": 0,
+      "bytes_may_use": 85000192
+    },
+    "calculated_metadata_unreserved_bytes": 7208960,
+    "inference": "Counters consistent with local Btrfs metadata pressure despite data-block free space; exact ENOSPC cause not conclusively proved. No balance/resize/cleanup performed.",
+    "original_operational_error_code": "not saved, irrecoverable from original record; do not reclassify as BUSY/FULL/ENOSPC",
+    "deterministic_sqlite_cases": "5 passed: real SQLITE_BUSY=5 setup contention, transaction no replay, persistent lock refusal, non-BUSY SQLITE_ERROR=1 no retry",
+    "fail_closed_contracts": "Existing quarantine, lock, no automatic replay and restart tests unchanged and passed on tmpfs",
+    "production_ext4_tested": false,
+    "app_bug_fix_claimed": false,
+    "old_red_runs_retained": true,
+    "real_export_evidence": {
+      "source": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review",
+      "tests_passed": 5,
+      "test_before_after_byte_assertions_passed": true,
+      "source_sha256_after": {
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_01/original.html": "0e9af3114adec16938b89b511337f5db717ef2e14f1a606af600d6995ce09377",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_01/normalized.v1.json": "4b2b15552da1e800b9ff4aa46b3abe5dc7632ad904d326d3f5042586f256ced4",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_01/quality.v1.json": "86205436b5e260488ff497e31aa68f969e7c7d9ee1b6e1eb27d0b202f2b07e8e",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_02/original.html": "0d06fb2afcfcc01f5e4e7abbc2a09e057e17fda8c11fa60e948f1f9836cb2372",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_02/normalized.v1.json": "5628de2b8f1ed009a66902d81808768e9f50b805c0541265181802a8424e1ae8",
+        "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-realpilot/cs50_quality_review/material_02/quality.v1.json": "939da64f9b81b27c725be58f59e1811ba2ea5cafd85e6da15bd2ea9a38e67df7"
+      },
+      "only_test_outputs_written": "new own tmpfs catalog roots, not original files",
+      "missing_original_transcript_pilot": "still skipped; no substituted invented raw data"
+    }
+  }
+}

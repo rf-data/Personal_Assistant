@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "task": "C26 Coolify Resource Binding & Deployment Driver Readiness",
+  "checked_at_utc": "2026-10-23T21:02:36.721185+00:00",
+  "parent_pr157_commit": "e470d3a9ebaaad5361ed533a7baa2a6dbaf00c28",
+  "coolify_commit": "86c21c0d5babfa8c7d65a9c27e5863c629a89c7c",
+  "github_audit": {
+    "prs": [
+      {
+        "number": 156,
+        "repo": "rf-data/Personal_Assistant",
+        "head": "c77128b14e60b78a546fd804507ff255d4833759",
+        "draft": true,
+        "state": "open",
+        "mergeable": true,
+        "reviews": {
+          "reviews": []
+        },
+        "status": {
+          "statuses": []
+        },
+        "runs": {
+          "workflow_runs": []
+        },
+        "checks": {
+          "total_count": 0,
+          "check_runs": []
+        }
+      },
+      {
+        "number": 149,
+        "repo": "rf-data/Personal_Assistant",
+        "head": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb",
+        "draft": true,
+        "state": "open",
+        "mergeable": true,
+        "reviews": {
+          "reviews": []
+        },
+        "status": {
+          "statuses": []
+        },
+        "runs": {
+          "workflow_runs": []
+        },
+        "checks": {
+          "total_count": 0,
+          "check_runs": []
+        }
+      },
+      {
+        "number": 148,
+        "repo": "rf-data/Personal_Assistant",
+        "head": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+        "draft": true,
+        "state": "open",
+        "mergeable": true,
+        "reviews": {
+          "reviews": []
+        },
+        "status": {
+          "statuses": []
+        },
+        "runs": {
+          "workflow_runs": []
+        },
+        "checks": {
+          "total_count": 0,
+          "check_runs": []
+        }
+      },
+      {
+        "number": 157,
+        "repo": "rf-data/Personal_Assistant",
+        "head": "e470d3a9ebaaad5361ed533a7baa2a6dbaf00c28",
+        "draft": true,
+        "state": "open",
+        "mergeable": true,
+        "reviews": {
+          "reviews": []
+        },
+        "status": {
+          "statuses": []
+        },
+        "runs": {
+          "workflow_runs": []
+        },
+        "checks": {
+          "total_count": 0,
+          "check_runs": []
+        }
+      },
+      {
+        "number": 20,
+        "repo": "rf-data/personal-assistant-ui",
+        "head": "6b84e3c09f877309a3fd1c6f9cbcf61bb9f46788",
+        "draft": true,
+        "state": "open",
+        "mergeable": true,
+        "reviews": {
+          "reviews": []
+        },
+        "status": {
+          "statuses": []
+        },
+        "runs": {
+          "workflow_runs": []
+        },
+        "checks": {
+          "total_count": 0,
+          "check_runs": []
+        }
+      }
+    ],
+    "defaults": [
+      {
+        "repo": "rf-data/Personal_Assistant",
+        "sha": "e502aa915ad0e928dbe7e92eacd44fff0152912b"
+      },
+      {
+        "repo": "rf-data/personal-assistant-ui",
+        "sha": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff"
+      }
+    ]
+  },
+  "sources": "coolify_resource_binding.v1.json repository_artifacts and coolify_version_source",
+  "isolated_checkout": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-resource-binding",
+  "git_metadata": "/dev/shm/c26-binding-git.bKj90H/repository.git",
+  "compatibility_checkout": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-resource-binding-compat",
+  "existing_worktrees_modified": false,
+  "combination": {
+    "existing_product_files_equal": 342,
+    "different": [],
+    "new_module": "src/job_control/coolify_readiness.py",
+    "gate_core_changed": false,
+    "dependency_changes": false
+  },
+  "runs": [
+    {
+      "name": "offline",
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 3.92,
+      "sha256": "2b8c3e9bce6670fb1a4241e9dd0ddcddc129373fc7df911a047347fccb17b77f"
+    },
+    {
+      "name": "regression",
+      "tests": 277,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 231.391,
+      "sha256": "d8ef535e96605f3f3d89ebc8f43d2c9a6ebe584cf57e8f91bf3aeadfebd688e0"
+    },
+    {
+      "name": "final-offline",
+      "tests": 68,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.933,
+      "sha256": "0423ee0f06044d30ae53d98811a3326a343bb7fd6c0cde0ac58f4c783e0025bd"
+    },
+    {
+      "name": "final-drift",
+      "tests": 69,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.681,
+      "sha256": "aba265f6a26e894ccb878a5b9eeeaf0f0e732bbe6e4b0e6fb3c420b657c4ba15"
+    }
+  ],
+  "interpretation": "Overlapping runs, not added together. 277-case combined regression on original 65-case reader. Later scoped tests cover explicit transport refusal, unexpected build pack, compression refusal and namespace drift; final 69-case reader contract green. No change to existing Gate/queue/worker/transport core.",
+  "environment": {
+    "python": "3.12.12",
+    "pytest": "9.1.1",
+    "test_root": "new isolated tmpfs roots under /dev/shm/c26-binding-git.bKj90H",
+    "exact_runtime_lock": false,
+    "prior_dependency_mismatch": "retained in runtime_configuration_validation.v1.json and earlier final-integration evidence",
+    "dependencies_installed": false,
+    "image_build_or_host_acceptance": false
+  },
+  "operator_shell_blocks_syntax_passed": 3,
+  "implementation": {
+    "module": "src/job_control/coolify_readiness.py",
+    "read_endpoints": [
+      "GET /api/v1/applications/{exact_uuid}",
+      "GET /api/v1/deployments/applications/{exact_uuid}?skip=0&take=16"
+    ],
+    "default_transport": false,
+    "credential_loading": false,
+    "production_api_calls": 0,
+    "mutating_client_methods": false,
+    "gate_observation_output": false,
+    "replay_output": "ConsistencyReport, deployment_permitted=false, production_release=blocked",
+    "gate_scope_extension": "documented versioned runtime_scope_sha256 proposal only; boundary tests show unchanged v1 backend plan under gateway digest drift"
+  },
+  "decision": {
+    "review": "GO",
+    "operator_readonly_five_packages": "GO",
+    "same_application_adoption": "conditionally supported in source; requires actual UUID/config/render/rollback evidence",
+    "mutating_driver": "NO-GO",
+    "production_bootstrap": "NO-GO",
+    "merge_ready_auto_merge": "not authorized"
+  },
+  "safety": {
+    "ssh": false,
+    "host_changes": false,
+    "containers_started": false,
+    "jobs_or_productive_queue_changes": false,
+    "downloads_or_zip_imports": false,
+    "existing_pilot_data_changed": false,
+    "existing_worktree_cleanup": false,
+    "sqlite_btrfs_claimed_fixed": false
+  },
+  "retention": "Explicit merge prohibition: retain new checkout, its compatibility worktree, RAM metadata and durable result artifacts. Existing worktrees/branches/data untouched. Reports remain in Draft #157, not default branch.",
+  "evidence_directory": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/resource-binding-20261023",
+  "static_checks": {
+    "regular_pre_commit_hooks": "passed for the 13 intended files",
+    "ruff_check": "passed",
+    "json_and_local_links": "passed",
+    "operator_shell_blocks_syntax_passed": 3
+  },
+  "final_test_source_sha256": {
+    "src/job_control/coolify_readiness.py": "d6a66135346cef2cd0bbb79e761fb4bc94496ddb04b26c3ada2d7dfa37169294",
+    "tests/test_coolify_readiness.py": "712d496cadd2aac7df4d8999b3dba362fb0b83f105f3c9e7ede7524215a3caa0"
+  },
+  "hooks_log_sha256": "548b15955018c125a448ae804e57f6e22511005909700b4efafa2fd9daf7d530"
+}

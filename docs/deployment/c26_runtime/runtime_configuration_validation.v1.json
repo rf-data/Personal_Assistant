@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-10-23T20:28:51.835530+00:00",
+  "task": "C26 Runtime Configuration & Coolify Bootstrap Finalization",
+  "review_pr": 157,
+  "parent_commit": "8cde77313cb55f1e06d3281563dcbb8ee797b369",
+  "backend_master": "e502aa915ad0e928dbe7e92eacd44fff0152912b",
+  "ui_main": "e4be7a2fbf5b20beda0db854462dd2d70c2c93ff",
+  "dependency_prs": [
+    {
+      "number": 156,
+      "repo": "rf-data/Personal_Assistant",
+      "head": "c77128b14e60b78a546fd804507ff255d4833759",
+      "state": "open",
+      "draft": true,
+      "mergeable": true
+    },
+    {
+      "number": 149,
+      "repo": "rf-data/Personal_Assistant",
+      "head": "58aec7da3c2e3c1e9ab2bd1e1761ef8569811edb",
+      "state": "open",
+      "draft": true,
+      "mergeable": true
+    },
+    {
+      "number": 148,
+      "repo": "rf-data/Personal_Assistant",
+      "head": "f98eedd671c8a9d9eb58a3b957eda1a91713844d",
+      "state": "open",
+      "draft": true,
+      "mergeable": true
+    },
+    {
+      "number": 157,
+      "repo": "rf-data/Personal_Assistant",
+      "head": "8cde77313cb55f1e06d3281563dcbb8ee797b369",
+      "state": "open",
+      "draft": true,
+      "mergeable": true
+    },
+    {
+      "number": 20,
+      "repo": "rf-data/personal-assistant-ui",
+      "head": "6b84e3c09f877309a3fd1c6f9cbcf61bb9f46788",
+      "state": "open",
+      "draft": true,
+      "mergeable": true
+    }
+  ],
+  "runtime_approved": false,
+  "proposed_host_runtime_bind": "/srv/personal-assistant/runtime/c26-v1",
+  "proposed_container_mount": "/app/runtime-state",
+  "proposed_root": "/app/runtime-state/c16",
+  "conservative_required_free_bytes": 6123683840,
+  "limits_source": "operator_observed exact values, historical max_materials1/2/3; new cap1",
+  "runs": [
+    {
+      "name": "definitions",
+      "tests": 35,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.949,
+      "sha256": "82ea612de03434b2d72b729a6855a63024a412ce5bc384446be3dfb84d494171"
+    },
+    {
+      "name": "regression",
+      "tests": 346,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 292.554,
+      "sha256": "c42d6a3ba878e9edba774d579c7f631afe2ba021fe36f0dd86f467cd07ea92b7"
+    },
+    {
+      "name": "final-contracts",
+      "tests": 137,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 19.246,
+      "sha256": "50d1f7eaeeb5e78037632b29401ed155b7579d096b1683664ed65172dfb6e56d"
+    },
+    {
+      "name": "final-verified",
+      "tests": 137,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 19.501,
+      "sha256": "6ea88fe425ad00bc6bc9a255233f89fed03a2ef6e4e391b8b7a60123af9ee724"
+    }
+  ],
+  "run_interpretation": "Overlapping runs. Broad run 345 passed plus one new test assertion error (() vs []); next run 136 passed plus expected duplicate worker BlockingIOError not caught by test. Both assertions corrected without production changes; final 137/137 passed, includes added identity-refusal case. Red evidence retained. No claim of a fresh wholly green broad suite.",
+  "environment": {
+    "python": "3.12.12",
+    "pytest": "9.1.1",
+    "sqlite": "3.50.4",
+    "workspace": "existing combined #155+#156+#149+#148 worktree; own new preflight/templates/tests copied in",
+    "filesystem": "new isolated /dev/shm/c26-config-final.fF282N roots, not historical data",
+    "exact_runtime_lock_environment": false,
+    "dependency_differences": "Prior final-integration dependency-comparison evidence retained; image build/import/health acceptance outstanding",
+    "packages_installed": false
+  },
+  "compose": {
+    "schema_version": 1,
+    "compose_version": "5.0.2",
+    "daemon_operations": false,
+    "values": "synthetic only",
+    "missing_values_refused": true,
+    "profiles": [
+      {
+        "profiles": [],
+        "services": []
+      },
+      {
+        "profiles": [
+          "c26-runtime-approved"
+        ],
+        "services": [
+          "api",
+          "api-gateway"
+        ]
+      },
+      {
+        "profiles": [
+          "c26-runtime-approved",
+          "c26-worker-approved"
+        ],
+        "services": [
+          "api",
+          "api-gateway",
+          "capacity-worker"
+        ]
+      }
+    ],
+    "empty_required_paths_refused": [
+      "C26_HOST_RUNTIME",
+      "C26_HOST_DATA",
+      "C26_HOST_CONFIGURATION",
+      "C26_HOST_LOGS",
+      "C26_HOST_CACHE",
+      "C26_CADDYFILE",
+      "C26_TLS_DIRECTORY"
+    ],
+    "host_or_coolify_test": false
+  },
+  "product_equivalence": {
+    "compared_existing_product_files": 341,
+    "different_existing_files": [],
+    "new_product_file": "scripts/c26_runtime_preflight.py",
+    "dependency_changes": false,
+    "queue_gate_executor_transport_changes": false
+  },
+  "dockerfile_compatibility": {
+    "three_way_merge_with_148": "clean",
+    "result_matches_test_combination": true,
+    "default_context_patch_reverse_failed_due_to_148_context_line": true,
+    "image_built": false
+  },
+  "shell_blocks_syntax_passed": 12,
+  "source_safety": {
+    "real_html_export": "existing approved cs50_quality_review, read-only inputs in opted-in tests; no new raw downloads",
+    "historical_pilot_queues_touched": false,
+    "production_queue_opened": false,
+    "host_access": false,
+    "productive_containers_started": false,
+    "merges_or_ready": false,
+    "auto_merge": false,
+    "cleanup": false
+  },
+  "remaining_technical_work": [
+    "review real resource-bound #148 live Driver/coordinator after operator scope evidence",
+    "exact locked image build and role/health smoke",
+    "real Coolify same-Application adoption/rendering and namespace/mount acceptance"
+  ],
+  "remaining_operator_gates": [
+    "full scope/trigger/writer inventory",
+    "backup/isolated restore/sleep rollback",
+    "digest/SHA/build/resource capacity approval",
+    "new root/mount/private policy/queue-held provisioning approval",
+    "gateway/API then separate single worker healthstart approval",
+    "final common settings and individual identities/catalog/source approvals",
+    "fresh live Driver observation and separate resume approval",
+    "one-material one-job pilot approval"
+  ],
+  "decision": {
+    "technical_review": "GO",
+    "read_only_operator_inventory": "GO",
+    "merge": "NO-GO in this task",
+    "production_roles": "NO-GO until separate bootstrap approval and evidence",
+    "activation": "NO-GO without real reviewed Driver and fresh approval",
+    "pilot": "NO-GO"
+  },
+  "evidence_directory": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-c26-runtime-bootstrap-results/runtime-config-20261023",
+  "check_runs": [
+    {
+      "number": 156,
+      "total_count": 0,
+      "check_runs": []
+    },
+    {
+      "number": 149,
+      "total_count": 0,
+      "check_runs": []
+    },
+    {
+      "number": 148,
+      "total_count": 0,
+      "check_runs": []
+    },
+    {
+      "number": 157,
+      "total_count": 0,
+      "check_runs": []
+    },
+    {
+      "number": 20,
+      "total_count": 0,
+      "check_runs": []
+    }
+  ],
+  "regular_pre_commit_hooks": "passed for all 19 intended files",
+  "ruff_check": "passed",
+  "json_and_local_links": "passed"
+}
