@@ -11,6 +11,7 @@ MODULES = (
     "scripts.cs50_worker",
     "scripts.cs50_material_quality",
     "scripts.deployment",
+    "scripts.deployment_gate",
 )
 RUNTIME_SCRIPTS = MODULES + (
     "scripts.cs50_materials",

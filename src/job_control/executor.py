@@ -18,10 +18,19 @@ class Executor:
         if sys.platform != "linux" or not settings.execution_enabled:
             raise Unavailable("Explicitly enabled Linux executor required")
         self.settings = settings
-        self.store = Store(settings.root)
+        if settings.deployment_gate_required:
+            from src.job_control.deployment_gate import require_existing_queue
+
+            require_existing_queue(settings)
+        self.store = Store(
+            settings.root,
+            deployment_gate_required=settings.deployment_gate_required,
+            deployment_gate_protocol=settings.deployment_gate_protocol,
+        )
         if safe_path(settings.root, "quarantine").exists():
             raise Unavailable("Unconfirmed cleanup requires operator review")
         self.children = {}
+        self.deployment_lease = None
         self.lock = os.open(
             safe_path(settings.root, "worker.lock"),
             os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW,
@@ -29,9 +38,14 @@ class Executor:
         )
         try:
             fcntl.flock(self.lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            from src.job_control.deployment_gate import register_worker
+
+            self.deployment_lease = register_worker(settings)
             self.reconcile()
             self.store.heartbeat()
         except BaseException:
+            if self.deployment_lease is not None:
+                os.close(self.deployment_lease)
             os.close(self.lock)
             raise
 
@@ -104,6 +118,12 @@ class Executor:
         active_processes = {
             self.store.get(job_id).process_id for job_id in self.children
         }
+        from src.job_control.deployment_gate import dispatch
+
+        with dispatch(self.settings) as permitted:
+            self._dispatch(active_processes, permitted)
+
+    def _dispatch(self, active_processes, permitted):
         for job in reversed(self.store.all()):
             if job.status == "cancel_requested" and job.job_id not in self.children:
                 self.store.transition(
@@ -114,7 +134,8 @@ class Executor:
                 )
                 continue
             if (
-                job.status != "queued"
+                not permitted
+                or job.status != "queued"
                 or len(self.children) >= self.settings.max_parallel
                 or job.process_id in active_processes
             ):
@@ -208,6 +229,9 @@ class Executor:
         self.children.clear()
         self.store.heartbeat(0)
         os.close(self.lock)
+        if self.deployment_lease is not None:
+            os.close(self.deployment_lease)
+            self.deployment_lease = None
 
     def serve(self):
         stopping = {"value": False}

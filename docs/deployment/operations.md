@@ -1,5 +1,13 @@
 # Betrieb und Recovery
 
+Für die C26-Fortsetzung gelten zusätzlich das
+[workerbewusste Deployment-Gate](deployment_gate.md) und das
+[private HTTPS-Handbuch](https.md). Der Gate-Kern ist offline vorbereitet;
+produktiver Driver/Triggerpfad und Erstbootstrap sind nicht freigegeben. Nach
+Aktivierung schließt Drain die Annahme dauerhaft, lässt bestehende Jobs auslaufen
+und hält auch nach gesundem Containerwechsel bis zu einer separaten Resume-
+Freigabe geschlossen. Kein Ersatz für die folgenden C22-Maintenance-/Backupfences.
+
 Voraussetzungen und offene Gates zuerst in [c22_validation.md](c22_validation.md)
 prüfen. Kein Befehl hier ist während C22 gegen einen produktiven Server gelaufen.
 Der Betreiber verwendet eine private Release-Envdatei und explizite Compose-Datei;

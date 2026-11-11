@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "reserve_bytes": 5368709120,
+  "archive_bytes": 67108864,
+  "catalog_bytes": 134217728,
+  "job_bytes": 536870912,
+  "report_bytes": 16777216,
+  "max_materials": 1
+}

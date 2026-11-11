@@ -21,7 +21,14 @@ from src.job_control.models import TERMINAL, Job, load_settings
 
 MAX_FILES = 20000
 MAX_BYTES = 2 * 1024**3
-OMIT = {".operations.lock", ".bootstrap.lock", "worker.lock"}
+OMIT = {
+    ".operations.lock",
+    ".bootstrap.lock",
+    "worker.lock",
+    ".deployment-admission.lock",
+    ".deployment-owner.lock",
+    ".deployment-worker.lock",
+}
 
 
 def private(path, *, directory=False):
@@ -329,6 +336,13 @@ def restore(snapshot, destination):
         verified_files(entry.model_copy(update={"root": snapshot / "catalog" / key}))
     jobs = quiescent(snapshot / "workspace")
     copy_files(snapshot / "workspace", destination)
+    if any(
+        (destination / name).exists()
+        for name in ("deployment-gate.v1.jsonl", "deployment-gate.v2.jsonl")
+    ):
+        from src.job_control.deployment_gate import hold_restored_root
+
+        hold_restored_root(destination)
     # Copy is not an activation: the original absolute catalog bindings are retained.
     quiescent(destination)
     durable_tree(destination)

@@ -1,0 +1,463 @@
+{
+  "schema_version": 1,
+  "prepared_at": "2026-10-23T18:08:13.368819+00:00",
+  "production_approved": false,
+  "host": {
+    "status": "operator_observed",
+    "value": "ubuntu-4gb-nbg1-2",
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "coolify_version": {
+    "status": "operator_observed",
+    "value": "4.4.7",
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "traefik_version": {
+    "status": "operator_observed",
+    "value": "3.6",
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "capacity": {
+    "production": {
+      "status": "operator_observed",
+      "value": {
+        "device": "/dev/sda1",
+        "filesystem": "ext4",
+        "total_gib_approx": 38,
+        "free_gib_approx": 20,
+        "inodes_free_percent_approx": 91,
+        "material_data_mb_approx": 755,
+        "docker_images_gb_approx": 9.2,
+        "ram_gib_approx": 3.7,
+        "mem_available_gib_approx": 2.2,
+        "swap_gib_approx": 4,
+        "swap_used_mib_approx": 688,
+        "substantial_current_swap_io": false
+      },
+      "observed_date": "2026-10-23",
+      "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+    },
+    "production_fresh_budget": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Fresh target statvfs plus bounded batch, image staging, backup and host RAM/CPU headroom; do not substitute laptop capacity"
+    }
+  },
+  "backend": {
+    "status": "operator_observed",
+    "value": {
+      "container": "syboxap8mpf8lgjzpjdsqm0z-20261022T151524",
+      "image_name": "syboxap8mpf8lgjzpjdsqm0z:3b91d39195e0d13fe0442d4594b28e431b0f4236",
+      "started_at": "2026-10-22T15:15:40Z",
+      "restart_policy": "unless-stopped",
+      "command": [
+        "sleep",
+        "infinity"
+      ],
+      "reported_processes": [
+        "sleep infinity"
+      ],
+      "network": "coolify",
+      "healthcheck_configured": false,
+      "declared_exposed_ports": null,
+      "network_mode": "coolify",
+      "published_ports": {},
+      "coolify_labels": {
+        "coolify.type": "application",
+        "coolify.managed": "true",
+        "coolify.projectName": "personal-assistant",
+        "coolify.environmentName": "production",
+        "coolify.resourceName": "personal-assistantworker-1"
+      },
+      "compose_labels": {
+        "com.docker.compose.project": "syboxap8mpf8lgjzpjdsqm0z",
+        "com.docker.compose.service": "syboxap8mpf8lgjzpjdsqm0z-20261022T151524",
+        "com.docker.compose.project.config_files": "/artifacts/iigfhsmrpfmntn9h7jxyed8z/docker-compose.yaml"
+      },
+      "additional_label_keys_present": [
+        "com.docker.compose.project.working_dir"
+      ],
+      "coolify_settings": {
+        "resource_type": "Application",
+        "auto_deploy": "Manual deployments only",
+        "build_cache": true,
+        "automatic_build_argument_injection": true,
+        "source_commit_availability": "Runtime only (preserves cache)",
+        "build_strategy": "Dockerfile",
+        "builder": "Deployment server",
+        "repository": "rf-data/Personal_Assistant",
+        "branch": "master",
+        "base_directory": "/",
+        "dockerfile_location": "/docker/DockerFile.worker"
+      },
+      "placeholder_intent": "sleep infinity was intentionally selected as a placeholder; not an unintended startup misconfiguration",
+      "application_uuid": "syboxap8mpf8lgjzpjdsqm0z",
+      "trigger_observations": {
+        "application_uuid": {
+          "value": "syboxap8mpf8lgjzpjdsqm0z",
+          "status": "operator_observed",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "observed_date": "2026-10-23"
+        },
+        "auto_deploy": {
+          "value": "Manual deployments only",
+          "status": "operator_observed",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "observed_date": "2026-10-23"
+        },
+        "preview_deployments_display": {
+          "value": "None",
+          "status": "operator_observed",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "observed_date": "2026-10-23"
+        },
+        "preview_feature_enabled": {
+          "value": null,
+          "status": "unverified"
+        },
+        "deployment_api_entrypoint": {
+          "value": {
+            "available": true,
+            "relative_pattern": "/api/v1/deploy?uuid=<application_uuid>&force=false"
+          },
+          "status": "operator_observed",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "observed_date": "2026-10-23"
+        },
+        "authorized_actors": {
+          "value": null,
+          "status": "unverified"
+        },
+        "actual_external_execution": {
+          "value": null,
+          "status": "unverified"
+        }
+      },
+      "image_id": "sha256:671b8e9bbf92afa6e5968d90a5e1d026a6539eb6b31ec3b94f16f1fc1e6c7f36",
+      "image_id_matches_container": true,
+      "runtime_observer_operator_supplement": {
+        "status": "operator_observed",
+        "observed_date": "2026-10-24",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "values": {
+          "repository": "rf-data/Personal_Assistant",
+          "branch": "master",
+          "base_directory": "/",
+          "dockerfile_location": "/docker/DockerFile.worker",
+          "image_id": "sha256:671b8e9bbf92afa6e5968d90a5e1d026a6539eb6b31ec3b94f16f1fc1e6c7f36"
+        },
+        "independent_build_provenance": "unverified",
+        "registry_digest": "unverified"
+      }
+    },
+    "observed_date": "2026-10-23",
+    "source": "operator supplement supplied on 2026-10-23; no independent host, Docker or Coolify query by Codex"
+  },
+  "mounts": {
+    "status": "operator_observed",
+    "value": {
+      "/app/data": "/srv/personal-assistant/data",
+      "/app/configuration": "/srv/personal-assistant/configuration",
+      "/app/logs": "/srv/personal-assistant/logs",
+      "/app/.cache": "/srv/personal-assistant/cache"
+    },
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "ui": {
+    "status": "operator_observed",
+    "value": {
+      "container": "streamlit-a8xzljz4fq52vt1yt43nheg5-20261014T055035",
+      "image_name": "a8xzljz4fq52vt1yt43nheg5_streamlit:b2cf9ca9ba44ee770dab4d834a6ae8285f34776b",
+      "command": "streamlit run app_ui.py --server.address=0.0.0.0 --server.port=8501 --server.headless=true",
+      "network": "a8xzljz4fq52vt1yt43nheg5",
+      "coolify_labels": {
+        "coolify.type": "application",
+        "coolify.managed": "true",
+        "coolify.projectName": "personal-assistant",
+        "coolify.environmentName": "production",
+        "coolify.resourceName": "personal-assistant-uimain-a8xzljz4fq52vt1yt43nheg5"
+      },
+      "compose_labels": {
+        "com.docker.compose.project": "a8xzljz4fq52vt1yt43nheg5",
+        "com.docker.compose.service": "streamlit",
+        "com.docker.compose.project.config_files": "/artifacts/fhz5foowb3446edib5gnftbx/docker/docker-compose.ui.yaml"
+      },
+      "additional_label_keys_present": [
+        "com.docker.compose.project.working_dir"
+      ],
+      "coolify_settings": {
+        "resource_type": "Application",
+        "auto_deploy": "Manual deployments only",
+        "build_cache": true,
+        "automatic_build_argument_injection": true,
+        "source_commit_availability": "Runtime only (preserves cache)",
+        "build_strategy": "Docker Compose",
+        "repository": "rf-data/personal-assistant-ui",
+        "branch": "main",
+        "base_directory": "/",
+        "compose_location": "/docker/docker-compose.ui.yaml"
+      },
+      "shown_compose_content": {
+        "matches_repository_path": "docker/docker-compose.ui.yaml",
+        "exact_coolify_compose_location_setting": null,
+        "JOB_BACKEND": "disabled",
+        "ADMIN_AUTH_MODE": "disabled",
+        "STREAMLIT_SERVER_PORT": 8501,
+        "active_public_host_port_in_shown_service": false
+      },
+      "application_uuid": "a8xzljz4fq52vt1yt43nheg5",
+      "trigger_observations": {
+        "application_uuid": {
+          "value": "a8xzljz4fq52vt1yt43nheg5",
+          "status": "operator_observed",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "observed_date": "2026-10-23"
+        },
+        "auto_deploy": {
+          "value": "Manual deployments only",
+          "status": "operator_observed",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "observed_date": "2026-10-23"
+        },
+        "preview_deployments_display": {
+          "value": "None",
+          "status": "operator_observed",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "observed_date": "2026-10-23"
+        },
+        "preview_feature_enabled": {
+          "value": null,
+          "status": "unverified"
+        },
+        "deployment_api_entrypoint": {
+          "value": {
+            "available": true,
+            "relative_pattern": "/api/v1/deploy?uuid=<application_uuid>&force=false"
+          },
+          "status": "operator_observed",
+          "source": "Direkt in Coolify-Oberfläche geprüfte Betreiberergänzung, 23.10.2026; kein Codex-Coolifyzugriff",
+          "observed_date": "2026-10-23"
+        },
+        "authorized_actors": {
+          "value": null,
+          "status": "unverified"
+        },
+        "actual_external_execution": {
+          "value": null,
+          "status": "unverified"
+        }
+      },
+      "image_id": "sha256:4fd15dc9fc0135a22e85e23a028a018592c35288022f1d4d992ffa70fd9bb237",
+      "image_id_matches_container": true,
+      "runtime_observer_operator_supplement": {
+        "status": "operator_observed",
+        "observed_date": "2026-10-24",
+        "source": "Betreiberauftrag Runtime Observer + Draft Consolidation, bereitgestellt 24.10.2026; keine unabhängige Hostabfrage",
+        "values": {
+          "repository": "rf-data/personal-assistant-ui",
+          "branch": "main",
+          "base_directory": "/",
+          "compose_location": "/docker/docker-compose.ui.yaml",
+          "image_id": "sha256:4fd15dc9fc0135a22e85e23a028a018592c35288022f1d4d992ffa70fd9bb237"
+        },
+        "independent_build_provenance": "unverified",
+        "registry_digest": "unverified"
+      }
+    },
+    "observed_date": "2026-10-23",
+    "source": "operator supplement supplied on 2026-10-23; no independent host, Docker or Coolify query by Codex"
+  },
+  "traefik_networks": {
+    "status": "operator_observed",
+    "value": [
+      "coolify",
+      "a8xzljz4fq52vt1yt43nheg5"
+    ],
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "paths_file_top_level_keys": {
+    "status": "operator_observed",
+    "value": [
+      "repository",
+      "roots",
+      "schema_version"
+    ],
+    "observed_date": "2026-10-23",
+    "source": "operator terminal observations supplied in this task; not independently queried by Codex"
+  },
+  "unverified": {
+    "runtime_configuration": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Historical configs now known; NEW /app/runtime-state/c16 root, its own mount/policy, disabled controller and conservative limits require explicit provisioning approval. No historical queue adoption."
+    },
+    "queue_and_workers": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "All C16/independent pilot roots, live jobs, ownership, unique executor and guardian locks"
+    },
+    "revision_and_digest": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Local backend/UI image IDs now operator_observed and match container references. Registry RepoDigests, independent build provenance and deployed build SHA remain unverified; tags and image IDs are not replacements."
+    },
+    "private_network": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Existing dedicated internal API network and exclusive members; shared coolify network is not accepted as proof"
+    },
+    "tls_dns_vpn": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Exact trusted SAN/name/CA, private DNS, real VPN paths and RemoteAddr negative checks"
+    },
+    "oidc_and_devices": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Exact issuer/callback, individual subject-role-course bindings, approved/revoked users/devices"
+    },
+    "backup_restore_rollback": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Backup scope/freshness, isolated restore proof, pinned prior image and complete state/namespace/role rollback"
+    },
+    "coolify_driver": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Existing Gate.Driver adapter covering exact resource type and single-resource/namespace replacement semantics"
+    },
+    "repository_build_settings": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Repository/branch/base directories, backend /docker/DockerFile.worker and UI /docker/docker-compose.ui.yaml now operator_observed 24.10.2026. Still unverified: effective custom build/start overrides, rendered/adopted runtime and build provenance."
+    },
+    "compose_working_directory": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Backend working_dir label key is reported present, but its value is not supplied; UI working_dir value not supplied either."
+    },
+    "entrypoint_discrepancy": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Intentional sleep placeholder and selected /docker/DockerFile.worker now operator_observed. Exact historical image build provenance and any effective startup overrides remain unverified; UI protected-launcher discrepancy still open."
+    },
+    "application_binding_and_rendering": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Application-UUIDs operator_observed (Backend syboxap8mpf8lgjzpjdsqm0z / UI a8xzljz4fq52vt1yt43nheg5). Weiter offen: Raw/Normalparser, sichere Adoption derselben Backend-Application und tatsächliches Rollen-/Mount-/Labelrendering."
+    },
+    "additional_deployment_triggers": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "Manual only, Previewanzeige None und vorhandene Deployment-APIeinstiege sind operator_observed. Offen: tatsächliches Previewfeatureflag, Webhook/API/Registry/Schedulerakteure und Ausführung; unabhängige Trigger-/Rechteinventur und aktueller exklusiver Kontrollbeleg nötig."
+    },
+    "live_memory_cpu_budget": {
+      "status": "unverified",
+      "value": null,
+      "required_evidence": "RAM 3.7 GiB / available 2.2 GiB / Swap 4 GiB (688 MiB used) operator-observed. Fresh peak, CPU count, effective role limits, residual control-plane memory and build window remain unverified."
+    }
+  },
+  "last_supplement_at": "2026-10-23T21:39:01.713667+00:00",
+  "label_interpretation": {
+    "application_label": {
+      "status": "operator_observed",
+      "value": "Both resources report coolify.type=application and coolify.managed=true",
+      "observed_date": "2026-10-23",
+      "source": "operator supplement supplied on 2026-10-23; no independent host, Docker or Coolify query by Codex"
+    },
+    "limits": "Labels and generated /artifacts compose paths do not prove actual Coolify build pack, selected repository/branch/Dockerfile, driver scope, triggers or running image provenance."
+  },
+  "manual_deployment_policy": {
+    "status": "operator_observed",
+    "value": {
+      "backend": "Manual deployments only",
+      "ui": "Manual deployments only",
+      "interpretation": "Normal Git push/merge is not intended to trigger deployment under this setting; independent API/webhook/preview/manual/scheduled triggers are not ruled out."
+    },
+    "observed_date": "2026-10-23",
+    "source": "Operator confirmation in Final Runtime Integration request; no independent host/Coolify query by Codex"
+  },
+  "historical_runtime_controllers": {
+    "status": "operator_observed",
+    "observed_date": "2026-10-23",
+    "value": [
+      {
+        "host_path": "/srv/personal-assistant/data/cs50_pilot_01/controller.json",
+        "schema_version": 1,
+        "root": "/app/data/cs50_pilot_01/jobs",
+        "execution_enabled": true,
+        "max_jobs": 3,
+        "max_parallel": 1,
+        "max_queued": 1,
+        "worker_ttl": 10.0,
+        "workflows_enabled": true,
+        "pdf_enabled": false,
+        "index_jobs_enabled": false,
+        "import_jobs_enabled": false
+      },
+      {
+        "host_path": "/srv/personal-assistant/data/cs50_pilot_week0_02/controller.json",
+        "schema_version": 1,
+        "root": "/app/data/cs50_pilot_week0_02/jobs",
+        "execution_enabled": true,
+        "max_jobs": 6,
+        "max_parallel": 1,
+        "max_queued": 1,
+        "worker_ttl": 10.0,
+        "workflows_enabled": true,
+        "pdf_enabled": false,
+        "index_jobs_enabled": false,
+        "import_jobs_enabled": false
+      }
+    ],
+    "interpretation": "Historical only, unchanged. Enabled config does not prove an active worker. Never adopt these queues for the new runtime."
+  },
+  "historical_capacity_limits": {
+    "status": "operator_observed",
+    "observed_date": "2026-10-23",
+    "value": {
+      "schema_version": 1,
+      "reserve_bytes": 5368709120,
+      "archive_bytes": 67108864,
+      "catalog_bytes": 134217728,
+      "job_bytes": 536870912,
+      "report_bytes": 16777216,
+      "max_materials": 1
+    },
+    "historical_max_materials": [
+      1,
+      2,
+      3
+    ],
+    "limits_exact_host_path": "unverified",
+    "interpretation": "max_materials=1 is the proposed first batch cap; historical observed values vary."
+  },
+  "resource_binding_review": {
+    "prepared_at_utc": "2026-10-23T20:59:07.805175+00:00",
+    "matrix": "coolify_resource_binding.v1.json",
+    "operator_questions": "operator_binding_check.md",
+    "driver_plan": "coolify_driver_plan.md",
+    "application_uuids_status": "operator_observed",
+    "read_client": "implemented, offline-tested only, no default transport/credentials/CLI",
+    "gate_live_driver": "unverified / not implemented",
+    "gate_scope_extension": "proposed versioned runtime_scope_sha256; no core/schema/journal modification",
+    "production_approved": false,
+    "trigger_supplement": "deployment_trigger_audit.v1.json"
+  },
+  "historical_pilot_roots": {
+    "status": "operator_observed",
+    "observed_date": "2026-10-23",
+    "value": [
+      "/srv/personal-assistant/data/cs50_pilot_01",
+      "/srv/personal-assistant/data/cs50_pilot_week0_01",
+      "/srv/personal-assistant/data/cs50_pilot_week0_02"
+    ],
+    "interpretation": "Keep unchanged; week0_01 root reported, no exact additional controller/queue state inferred."
+  },
+  "latest_operator_supplement_date": "2026-10-24"
+}
