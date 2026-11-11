@@ -1,5 +1,14 @@
 # Betrieb und Recovery
 
+## Aktueller Abnahmestand
+
+24.10.2026: [Konsolidierte C26-Betriebsabnahmevorbereitung](c26_operations_acceptance.md)
+mit getrennten Infrastruktur-/Admin-/Runtime-HOLDs, Backup-/Restoreplan und
+[rein lesenden Betreiberprüfungen](c26_operations_checks.md). Keine dortige
+Prüfanleitung erteilt eine Deploy-/Merge-/Hoständerungsfreigabe. Die folgenden
+C22-Betriebsverfahren bleiben für einen später ausdrücklich genehmigten Betrieb
+erhalten.
+
 Voraussetzungen und offene Gates zuerst in [c22_validation.md](c22_validation.md)
 prüfen. Kein Befehl hier ist während C22 gegen einen produktiven Server gelaufen.
 Der Betreiber verwendet eine private Release-Envdatei und explizite Compose-Datei;

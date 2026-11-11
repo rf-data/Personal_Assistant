@@ -64,11 +64,12 @@ OIDC-`[auth]` enthält `client_id`, `client_secret`, mindestens 32 Zeichen
 `cookie_secret`, HTTPS-`redirect_uri` mit `/oauth2callback` und HTTPS-Metadata-URL.
 Es wird der bestehende einzelne Standardprovider verwendet.
 
-**Offene Dependency:** Das UI-Lockfile und die lokale UI-Umgebung enthalten kein
-Authlib. Der Produktionslauncher verweigert dann den Start. Vor Go-live muss ein
-geprüftes Authlib mit transitiven Dependencies im UI-Lockfile aufgenommen und
-offline/mit ausdrücklicher Downloadfreigabe bereitgestellt werden. C22 installiert
-oder kopiert keine ungeprüften Auth-Pakete aus anderen Umgebungen.
+**Aktualisierung 24.10.2026:** Im geprüften UI-main nach #18/#19/#20 enthält das
+Lockfile Authlib 1.9.1; die vorhandene UI-Testumgebung enthält dieselbe Version.
+Die frühere Aussage einer fehlenden Lockdependency ist damit überholt. Ob das
+laufende Hostimage diesen Stand enthält, bleibt ungeprüft. Der Produktionslauncher
+verweigert weiterhin einen Start ohne Authlib; hier keine Installation oder
+Imageänderung. [Aktuelle Betriebsabnahme und Nachweisgrenzen](c26_operations_acceptance.md).
 
 Manuelle Builds erst nach Freigabe der erforderlichen Images/Wheels und Digests;
 hier wurden sie wegen fehlender Images nicht gestartet:
