@@ -1,5 +1,10 @@
 # C26-B – Abschluss- und Freigabebeleg
 
+Aktueller Folgeauftrag: [Worker-aware Gate und neue Offline-Abnahme](c26_gate_validation.md).
+Die hier dokumentierten C26-B-PRs #137/#147 und UI #18/#19 sind inzwischen
+verifiziert integriert. Die folgenden Lauf-/Fehlversuchs-/Gitbelege bleiben als
+historische Evidenz erhalten und behaupten keinen heutigen Produktivstatus.
+
 ## Fortsetzung 22.10.2026
 
 **Offline vorbereitet und erneut lokal synthetisch verifiziert;

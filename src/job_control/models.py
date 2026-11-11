@@ -93,6 +93,7 @@ class Settings(Contract):
     catalog: dict[Identifier, CatalogEntry] = Field(default_factory=dict, max_length=32)
     identities: tuple[Identity, ...] = ()
     execution_enabled: bool = Field(default=False, strict=True)
+    deployment_gate_required: bool = Field(default=False, strict=True)
     workflows_enabled: bool = Field(default=False, strict=True)
     pdf_enabled: bool = Field(default=False, strict=True)
     index_jobs_enabled: bool = Field(default=False, strict=True)
