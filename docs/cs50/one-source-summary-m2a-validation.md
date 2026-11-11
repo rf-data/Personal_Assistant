@@ -1,5 +1,162 @@
 # M2.1 – Validierung
 
+## Aktueller Stand vom 11.11.2026
+
+Lokaler Zielbranch: `feat/cs50p-summary-batching-m2a`, HEAD
+`ba89a2b775a1ebf58f9354dfee4492a7140390ad`. **PR #174 bleibt laut Auftrag
+Draft und nicht gemergt; allgemeine Releasefreigabe HOLD.** Dieser Auftrag führt
+keine Tests und keinen neuen GitHub-/CI-/Review-Abgleich aus. Die M2.2a-Ergebnisse
+unten sind bereits ausgeführte, vom Auftrag bestätigte Zielworktree-Nachweise.
+
+| Kontext | Ergebnis | Aussagegrenze |
+| --- | --- | --- |
+| Aktuelle M2.2a-Fassung, sechs Dateien bytegenau übernommen | 40/40 M2.2a-Tests bestanden. | Gezielte synthetische Validierung im Zielworktree. |
+| Gezielte Kompatibilitätsprüfung im Zielworktree | 36/36 bestanden. | Teilweise Überlappung mit den 40 M2.2a-Fällen; keine Addition zu 76 unabhängigen Tests oder einer neuen Gesamtsuite. |
+| Historische M2.1-Post-Commit-Gesamtsuite am damaligen HEAD `8190fcc805f4b361f1b91b23805e8941691deab2` | 514 passed / 1 failed / 1 deselected; Exit 1. | Bleibt ein fehlgeschlagener historischer Lauf; gezielte grüne Tests heilen ihn nicht rückwirkend. |
+| Unveränderte FTS-Diagnose vom 08.11.2026 | Normale synthetische Offline-Suchen erfolgreich; unter kontrollierter CPU-Konkurrenz 6/6 Unavailable mit SQLITE_INTERRUPT (9). | Keine bestätigte Korruption; keine allgemeine Retrieval- oder Releaseabnahme. Historische native Exception und damalige CPU-Last bleiben unbekannt. |
+
+Technische Mergefähigkeit, erforderliche CI-Prüfungen, Review/Mergeentscheidung
+und Releaseabnahme sind getrennte Gates. Die gezielten lokalen Nachweise erteilen
+keine dieser Freigaben. Das vorgeschlagene Ressourcen-/Lastprofil ist noch nicht
+verbindlich akzeptiert. **Realmaterial und LiveLLM bleiben HOLD**; bestehende
+Approvalpflichten und die ausstehende fachliche/didaktische Abnahme bleiben bestehen.
+Der Original-Patch-SHA der Recovery fehlt weiterhin; die unabhängige Validierung
+der aktuellen M2.2a-Fassung rekonstruiert diese historische Provenienz nicht.
+
+Der [Statusnachtrag](pr174-m22a-fts-status-20261111.md) verzeichnet das vollständige
+lokale Archiv der unveränderten [FTS-Diagnose](pr174-fts-final-reliability-diagnosis.md).
+Alle 53 Manifesteinträge einschließlich des Diagnoseberichts wurden hier lesend
+per SHA-256 geprüft. Die am 08.11. beschriebene Evidence-Linklücke ist im lokalen
+Worktree geschlossen; eine Veröffentlichung auf GitHub oder Integration in
+`master` wird daraus nicht abgeleitet. Die bestehende
+[M2.2a-Validierung](verified-lecture-source-m22a-validation.md) beschreibt ihren
+eigenen früheren isolierten Lauf und wird nicht als aktueller Gesamtlauf umgedeutet.
+
+Alle folgenden Abschnitte bleiben historisch unverändert. Insbesondere beziehen
+sich dortige Formulierungen wie „aktueller HEAD“, PASS, HOLD, Anwendung ausstehend
+und Evidence-Linklücke auf den jeweiligen damaligen Teilauftrag.
+
+## Aktueller Stand vom 08.11.2026
+
+**PR #174 bleibt Draft / HOLD bis zur Prüfung und dokumentierten Akzeptanz des
+begrenzten Offline-Betriebsprofils.** Der Ziel-HEAD ist
+`8190fcc805f4b361f1b91b23805e8941691deab2` auf
+`feat/cs50p-summary-batching-m2a`. Die Deadline- und Budget-Fixes sind angewendet
+und gepusht. Der lesende Live-Abgleich von
+[PR #174](https://github.com/rf-data/Personal_Assistant/pull/174) bestätigt zwei
+Commits, diesen Head, Basis `master`, offen, Draft und nicht gemergt.
+Lokal sind es ebenfalls zwei Commits seit `ff5e13340b83a86c69bcc38e787fbcdf05513074`:
+`74545e8c30ccfa5da029309b6500155193ee5dc5` und der aktuelle HEAD.
+
+Der aktuelle technische Umfang und das verbindlich begrenzte, noch zu akzeptierende
+[Offline-Betriebsprofil](one-source-summary-m2a.md#begrenztes-offline-betriebsprofil-und-release-gate)
+stehen im Architektur-/Bedienungsdokument. Die
+[finale FTS-Diagnose vom 08.11.2026](pr174-fts-final-reliability-diagnosis.md)
+ergänzt die historischen Nachweise unten. Ihre Messungen wurden in diesem
+Dokumentationsauftrag nicht erneut ausgeführt.
+
+### Getrennte Testkontexte
+
+| Kontext und Nachweis | Ergebnis | Aussagegrenze |
+| --- | --- | --- |
+| Lokaler angewendeter Fixstand; `m2a-release-fix-local.6h7n6y/{pytest.log,results.xml,exit_code.txt}` | 77 bestanden, Exit 0: 71 Batch- und 6 Stressfälle. | Lokaler Batch-/Stressnachweis, keine vollständige Post-Commit-Suite. |
+| Isolierter finaler Fixstand; historischer Abschnitt „PR #174 – Targeted Release Fix“, Suiten `batch`, `stress`, `regression` | 515 bestanden: 71 + 6 + 438, jeweils Exit 0; 1 Realmaterialfall in der Regression abgewählt. | Getrennte isolierte Fixsuiten. Die 27 gezielten Erfolge überlappen; keine zusätzliche Addition. |
+| Post-Commit am aktuellen HEAD; `pr174-postcommit-final.lvS3c7/{commit.txt,pytest.log,results.xml,exit_code.txt}` | 514 bestanden, 1 fehlgeschlagen, 1 abgewählt; Exit 1. | Keine vollständig grüne Suite. JUnit: 515 ausgeführte Fälle, davon 1 Fehlerfall; die Abwahl liegt außerhalb dieser Fälle. |
+| Separate finale FTS-Diagnose am aktuellen HEAD | `lecture_171` einzeln: 1 bestanden in 74,52 s; Lastreihe: 6 von 6 Suchen mit `SQLITE_INTERRUPT (9)` abgewiesen. | Eigenständiger Einzeltest und Diagnosemessungen; keine neue 515-Test-Regression und keine Aufhebung des Post-Commit-Fehlers. |
+
+Die beiden lokalen Logverzeichnisse liegen unter `~/codex-logs/c27cs50/`.
+Log/JUnit/Exitcode des 77-Fälle-Laufs und Log/JUnit/Commitbindung/Exitcode der
+Post-Commit-Suite wurden für diesen Abgleich gelesen; die isolierten 515 Erfolge
+sind dem unverändert erhaltenen Fixbericht unten zugeordnet. Kein Test wurde
+für diesen Dokumentationsauftrag neu gestartet. Überlappende Ausführungen werden
+nicht zu einer neuen Gesamtsuite addiert. Die älteren 489-, 57-, 494- und sonstigen
+Laufzahlen unten behalten ausschließlich ihren jeweiligen historischen Kontext.
+
+Der Post-Commit-Fehler ist
+`tests/test_cs50_summary_batch_stress.py::test_long_source_run_cache_and_guarded_process_restart[lecture_171]`.
+`prepare()` scheitert bei `mvp.main(case.argv)` mit Rückgabe 2 statt 0;
+die Ausgabe lautet HOLD, `code=unavailable`, `reason=Unavailable`.
+Der Fehler liegt in der **vorgelagerten MVP-Vorbereitung**, bevor die
+Batch-Orchestrierung des Falls beginnt. Ein später bestandener Einzeltest
+macht diesen fehlgeschlagenen historischen Lauf nicht rückwirkend grün.
+
+### Implementierung, Retrieval und getrennte Freigaben
+
+| Ebene | Aktueller Befund / Gate |
+| --- | --- |
+| Technische Korrektheit der Batch-Orchestrierung | Deadlineprüfungen reichen jetzt bis nach Konsolidierung und finaler Result-/Status-/Manifest-I/O. Budgettests berechnen limitgebundene Pläne und Batch-IDs neu und verlangen den konkreten Budgetgrund nach bestandener Approvalprüfung. Beide Review-Findings sind im angewendeten Fixstand synthetisch validiert. |
+| Zuverlässigkeit des vorgelagerten Retrievals | FTS-Fehlerpfad bekannt; CPU-abhängige Nichtverfügbarkeit bestätigt. Fail-Closed ist intakt. Allgemeine Zuverlässigkeit oder ausreichender Budgetabstand im künftigen Betriebsprofil sind damit nicht abgenommen. |
+| Realmaterial | HOLD, keine Freigabe. Quellen-/Nutzungsentscheidung, gültige Processing-/Batchfreigaben, aktuelle Implementierungsbindung, vollständige technische und gesonderte fachliche Abnahme bleiben erforderlich. |
+| LiveLLM | HOLD, keine Freigabe. Eigener Auftrag und separate Provider-/Upload-/Modell-/Budgetfreigaben sowie Abnahme erforderlich. |
+
+Die neue kontrollierte CPU-Konkurrenz reproduziert
+`sqlite3.OperationalError: interrupted`, `SQLITE_INTERRUPT (9)`, bei
+`execute(PRAGMA integrity_check)` vor MATCH. Das gemeinsame Suchbudget ist bereits
+vor SQLite verbraucht; der Progresshandler unterbricht die Prüfung. Der öffentliche
+FTS-Fehlerpfad bleibt `Unavailable` / `FTS query/database unavailable`, im MVP
+redigiert auf `reason=Unavailable`. Keine ungeprüften Teilergebnisse, kein
+verspäteter Sucherfolg und keine bestätigte Datenkorruption in dieser Diagnose.
+**Die genaue native SQLite-Exception des historischen Fehlers bleibt unbekannt.**
+Die neue Reproduktion beweist weder dessen damaligen nativen Code noch seine
+CPU-Last. Die frühere Aussage „konkrete Ursache ungeklärt“ ist damit präzisiert:
+reproduzierter FTS-/Deadlinepfad bekannt, historische native Exception unbekannt.
+
+Die Summary-Deadlinekontrolle bleibt kooperativ. Beim letzten Manifest-I/O kann
+eine Manifestdatei erhalten bleiben; der nachfolgende HOLD-Status invalidiert
+deren Inventarbindung. Die frühere allgemeine Beschreibung „kein Manifest“
+beschreibt diesen aktuellen Fixfall nicht vollständig: Entscheidend ist hier
+**kein gültiger Abschluss**. Historische Tests und ihre damals gespeicherten
+Ergebnisse bleiben unverändert.
+
+### Offene Releasebedingungen und Dokumentationsgrenze
+
+1. Das Profil aus dem verlinkten Bedienungsdokument prüfen: FakeLLM, ausschließlich
+   synthetische Quellen, genau ein kontrollierter Verarbeitungsprozess, keine
+   bewusst erzeugte CPU-Konkurrenz, explizite Approvals und HOLD, keine
+   automatischen Retries und unveränderte Integritätsprüfungen/Deadlines/Budgets.
+2. Tatsächliche CPU-/Ressourcenbedingungen und Hintergrundlast festhalten und das
+   Profil einschließlich `lecture_171` mit vorgelagertem Retrieval synthetisch
+   validieren. Belastbaren Abstand zum Suchbudget belegen und CPU-abhängige
+   Nichtverfügbarkeit als verbleibendes Risiko ausdrücklich bewerten.
+3. Review und Akzeptanz mit Profil, Revision, Messnachweisen, Restrisiken und
+   verantwortlichem Reviewer/Operator dokumentieren. Bis dahin **Draft / HOLD**.
+   Diese Dokumentation selbst erteilt keine Akzeptanz, Realmaterial- oder
+   LiveLLM-Freigabe. Fachliche/didaktische Qualität bleibt NOT_EVALUATED.
+4. Die Dokumente später im regulären Reviewprozess nach `master` integrieren.
+   Der Diagnosebericht ist im Zielworktree bereits kopiert, aber untracked.
+   Seine drei relativen Links auf den historischen Vorgängerbericht,
+   `method-notes.md` und `README.md` unter
+   `artifacts/handoff/pr174-final-fts-diagnosis/` sind dort derzeit nicht auflösbar.
+   Vor Integration deren sichere, reviewte Ablage im Zielrepository klären;
+   bis dahin bleibt diese Evidence-Linklücke ausdrücklich offen. Der Link zum
+   dokumentierten FTS-Zeitvertrag ist im Zielrepository vorhanden.
+
+Der Diagnosebericht bleibt unverändert; seine Aussage „Ziel-git status leer“
+beschreibt den Abschluss der damaligen Diagnose vor dem späteren Kopieren.
+Er ist kein Nachweis eines aktuell sauberen Status oder einer Integration in
+`master`. Die neuen Querverweise führen von beiden getrackten Dokumenten zu
+diesem Bericht; dessen bestehende Rückreferenz zum FTS-Zeitvertrag bleibt erhalten.
+Neue absolute maschinenspezifische Pfade sind nicht nötig. Bestehende historische
+Pfad-/Kommandoangaben bleiben zur Zuordnung der damaligen Evidence erhalten;
+die absoluten CLI-Pfade im Bedienungsdokument sind erkennbare Platzhalter.
+Keine privaten Rohdaten oder Secrets werden ergänzt.
+
+Dieser Auftrag ändert ausschließlich Dokumentation. Wegen der Schreibgrenze
+zum Zielworktree wird ausschließlich ein Patch der beiden bereits getrackten
+Dokumente unter `/tmp` geliefert; der untracked Diagnosebericht wird nicht erneut
+als neue Datei aufgenommen. Anwendung und Defaultbranch-Integration bleiben
+ausstehend. Kein Commit, Push, PR-Update, Merge oder Cleanup; die task-spezifische
+Sperre geht dem allgemeinen Lifecycle vor. Keine task-eigenen Gitbranches oder
+registrierten Worktrees angelegt; vorhandene Artefakte bleiben erhalten.
+
+## Historische Evidence bis einschließlich 07.11.2026
+
+Die folgenden ursprünglichen Abschnitte bleiben als historische Nachweise
+erhalten. „Aktueller Stand“, „jetzt“, „final“, PASS/HOLD sowie Patch-, Head-,
+Fingerprint- und Anwendungsangaben beziehen sich jeweils auf den damaligen
+Teilauftrag. Sie ersetzen weder den aktuellen Stand vom 08.11.2026 oben noch
+die gesondert auszuweisende fehlgeschlagene Post-Commit-Suite.
+
 **Aktueller Stand:** Die gezielte Fehlerdiagnose und Fixture-Stabilisierung vom
 07.11.2026 steht im [neuen Diagnoseabschnitt](#gezielte-fehlerdiagnose-und-fixture-stabilisierung-07112026).
 Gesamtentscheidung dieses Folgeauftrags: **HOLD**, weil die historische konkrete

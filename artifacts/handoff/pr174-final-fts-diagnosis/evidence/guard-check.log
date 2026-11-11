@@ -1,0 +1,1 @@
+{"dir_fd_temp_write": "allowed", "target_writes": "denied before syscalls", "network": "denied"}

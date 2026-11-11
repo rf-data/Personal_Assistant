@@ -1,0 +1,17 @@
+[
+  {
+    "stage": "setup",
+    "outcome": "passed",
+    "seconds": 0.002049959000032686
+  },
+  {
+    "stage": "call",
+    "outcome": "failed",
+    "seconds": 1.2644268310004918
+  },
+  {
+    "stage": "teardown",
+    "outcome": "passed",
+    "seconds": 0.0003304880001451238
+  }
+]

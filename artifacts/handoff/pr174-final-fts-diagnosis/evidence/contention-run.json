@@ -1,0 +1,47 @@
+{
+  "mode": "contention",
+  "requested_samples": 6,
+  "contenders": 3,
+  "affinity_before": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "source": "fresh lecture_171 fixture from original target-worktree test",
+  "affinity_during": [
+    0
+  ],
+  "all_contenders_alive_at_start": true,
+  "measurement_wall_seconds": 15.636037021000448,
+  "all_contenders_alive_at_end": true,
+  "children_reaped": true,
+  "affinity_restored": true,
+  "synthetic_root_bytes_unchanged": true,
+  "outcomes": [
+    {
+      "ordinal": 0,
+      "outcome": "Unavailable"
+    },
+    {
+      "ordinal": 1,
+      "outcome": "Unavailable"
+    },
+    {
+      "ordinal": 2,
+      "outcome": "Unavailable"
+    },
+    {
+      "ordinal": 3,
+      "outcome": "Unavailable"
+    },
+    {
+      "ordinal": 4,
+      "outcome": "Unavailable"
+    },
+    {
+      "ordinal": 5,
+      "outcome": "Unavailable"
+    }
+  ]
+}

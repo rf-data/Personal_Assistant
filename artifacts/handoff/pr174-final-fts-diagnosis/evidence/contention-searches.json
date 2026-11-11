@@ -1,0 +1,488 @@
+[
+  {
+    "start": 6342.481296538,
+    "deadline": 6344.481288958,
+    "phases": {
+      "pre_partition": 2.1429568630001086,
+      "index_file_load": 0.0015238579999277135,
+      "file_hash_and_partition_dispatch": 0.022600332999900274,
+      "deserialize": 0.0003277629994045128,
+      "schema_integrity": 0.0012096860000383458,
+      "post_partition": 7.81700055085821e-06
+    },
+    "boundaries": [
+      {
+        "phase": "pre_partition",
+        "elapsed": 4.420000550453551e-06,
+        "remaining": 1.9999879999995755
+      },
+      {
+        "phase": "index_file_load",
+        "elapsed": 2.142961283000659,
+        "remaining": -0.14296886300053302
+      },
+      {
+        "phase": "file_hash_and_partition_dispatch",
+        "elapsed": 2.1444851410005867,
+        "remaining": -0.14449272100046073
+      },
+      {
+        "phase": "deserialize",
+        "elapsed": 2.167085474000487,
+        "remaining": -0.167093054000361
+      },
+      {
+        "phase": "schema_integrity",
+        "elapsed": 2.1674132369998915,
+        "remaining": -0.16742081699976552
+      },
+      {
+        "phase": "post_partition",
+        "elapsed": 2.16862292299993,
+        "remaining": -0.16863050299980387
+      },
+      {
+        "phase": "end",
+        "elapsed": 2.1686307400004807,
+        "remaining": -0.16863832000035472
+      }
+    ],
+    "kind": "search",
+    "projection_subphases": {
+      "_load": 0.2896621720001349,
+      "_selection": 0.6705892640002276,
+      "_records": 1.0310633110002527
+    },
+    "live_projection_seconds": 2.052218069000446,
+    "records": 226,
+    "bytes": 1724416,
+    "partition_entry_remaining": -0.1669540570001118,
+    "sqlite_entry_remaining": -0.16696279600000707,
+    "sqlite_errors": [
+      {
+        "exception_class": "sqlite3.OperationalError",
+        "sqlite_errorcode": 9,
+        "sqlite_errorname": "SQLITE_INTERRUPT",
+        "phase": "schema_integrity",
+        "operation": "pragma_integrity_check",
+        "message": "interrupted",
+        "elapsed": 2.168463220000376,
+        "remaining": -0.16847080000025016
+      }
+    ],
+    "fts_adapter_seconds": 0.0016738710000936408,
+    "outcome": "Unavailable",
+    "total": 2.1686325400005444,
+    "remaining": -0.1686408460000166,
+    "public_outcome": "Unavailable",
+    "public_fts_error_contract_ok": false,
+    "public_native_context_code": 9,
+    "public_total_seconds": 2.2062068110008113,
+    "search_ordinal": 1
+  },
+  {
+    "start": 6344.672831304,
+    "deadline": 6346.672825168,
+    "phases": {
+      "pre_partition": 2.0266578860000664,
+      "index_file_load": 0.001553039000100398,
+      "file_hash_and_partition_dispatch": 0.02367175400013366,
+      "deserialize": 0.00038102899998193607,
+      "schema_integrity": 0.010454016999574378,
+      "post_partition": 9.741999747348018e-06
+    },
+    "boundaries": [
+      {
+        "phase": "pre_partition",
+        "elapsed": 3.541999831213616e-06,
+        "remaining": 1.9999903219995758
+      },
+      {
+        "phase": "index_file_load",
+        "elapsed": 2.0266614279998976,
+        "remaining": -0.02666756400049053
+      },
+      {
+        "phase": "file_hash_and_partition_dispatch",
+        "elapsed": 2.028214466999998,
+        "remaining": -0.028220603000590927
+      },
+      {
+        "phase": "deserialize",
+        "elapsed": 2.0518862210001316,
+        "remaining": -0.05189235700072459
+      },
+      {
+        "phase": "schema_integrity",
+        "elapsed": 2.0522672500001136,
+        "remaining": -0.05227338600070652
+      },
+      {
+        "phase": "post_partition",
+        "elapsed": 2.062721266999688,
+        "remaining": -0.0627274030002809
+      },
+      {
+        "phase": "end",
+        "elapsed": 2.0627310089994353,
+        "remaining": -0.06273714500002825
+      }
+    ],
+    "kind": "search",
+    "projection_subphases": {
+      "_load": 0.264885182999933,
+      "_selection": 0.5056002359997365,
+      "_records": 1.043491645999893
+    },
+    "live_projection_seconds": 1.9329349390000061,
+    "records": 226,
+    "bytes": 1724416,
+    "partition_entry_remaining": -0.05172779800068383,
+    "sqlite_entry_remaining": -0.051736748000621446,
+    "sqlite_errors": [
+      {
+        "exception_class": "sqlite3.OperationalError",
+        "sqlite_errorcode": 9,
+        "sqlite_errorname": "SQLITE_INTERRUPT",
+        "phase": "schema_integrity",
+        "operation": "pragma_integrity_check",
+        "message": "interrupted",
+        "elapsed": 2.0625098659993455,
+        "remaining": -0.06251600199993845
+      }
+    ],
+    "fts_adapter_seconds": 0.010996998999871721,
+    "outcome": "Unavailable",
+    "total": 2.06273342699933,
+    "remaining": -0.06274023100013437,
+    "public_outcome": "Unavailable",
+    "public_fts_error_contract_ok": false,
+    "public_native_context_code": 9,
+    "public_total_seconds": 2.0754678009998315,
+    "search_ordinal": 2
+  },
+  {
+    "start": 6346.759884775,
+    "deadline": 6348.759880124,
+    "phases": {
+      "pre_partition": 2.696778360999815,
+      "index_file_load": 0.009756886999639391,
+      "file_hash_and_partition_dispatch": 0.025676448000012897,
+      "deserialize": 0.00040659600017534103,
+      "schema_integrity": 0.010570407999693998,
+      "post_partition": 1.0308000128134154e-05
+    },
+    "boundaries": [
+      {
+        "phase": "pre_partition",
+        "elapsed": 3.892000677296892e-06,
+        "remaining": 1.999991456999851
+      },
+      {
+        "phase": "index_file_load",
+        "elapsed": 2.6967822530004923,
+        "remaining": -0.6967869039999641
+      },
+      {
+        "phase": "file_hash_and_partition_dispatch",
+        "elapsed": 2.7065391400001317,
+        "remaining": -0.7065437909996035
+      },
+      {
+        "phase": "deserialize",
+        "elapsed": 2.7322155880001446,
+        "remaining": -0.7322202389996164
+      },
+      {
+        "phase": "schema_integrity",
+        "elapsed": 2.73262218400032,
+        "remaining": -0.7326268349997918
+      },
+      {
+        "phase": "post_partition",
+        "elapsed": 2.743192592000014,
+        "remaining": -0.7431972429994858
+      },
+      {
+        "phase": "end",
+        "elapsed": 2.743202900000142,
+        "remaining": -0.7432075509996139
+      }
+    ],
+    "kind": "search",
+    "projection_subphases": {
+      "_load": 0.33408787100051995,
+      "_selection": 0.7836957440003971,
+      "_records": 1.395034594000208
+    },
+    "live_projection_seconds": 2.6088343080000413,
+    "records": 226,
+    "bytes": 1724416,
+    "partition_entry_remaining": -0.7320174699998461,
+    "sqlite_entry_remaining": -0.7320288490000166,
+    "sqlite_errors": [
+      {
+        "exception_class": "sqlite3.OperationalError",
+        "sqlite_errorcode": 9,
+        "sqlite_errorname": "SQLITE_INTERRUPT",
+        "phase": "schema_integrity",
+        "operation": "pragma_integrity_check",
+        "message": "interrupted",
+        "elapsed": 2.74296926200077,
+        "remaining": -0.7429739130002417
+      }
+    ],
+    "fts_adapter_seconds": 0.01117695500033733,
+    "outcome": "Unavailable",
+    "total": 2.743205142000079,
+    "remaining": -0.7432103740002276,
+    "public_outcome": "Unavailable",
+    "public_fts_error_contract_ok": false,
+    "public_native_context_code": 9,
+    "public_total_seconds": 2.7656874029999017,
+    "search_ordinal": 3
+  },
+  {
+    "start": 6349.525177888,
+    "deadline": 6351.525173535,
+    "phases": {
+      "pre_partition": 2.527891851000277,
+      "index_file_load": 0.010678429999643413,
+      "file_hash_and_partition_dispatch": 0.02444780800033186,
+      "deserialize": 0.00037715099915658357,
+      "schema_integrity": 0.010578683000858291,
+      "post_partition": 1.370999962091446e-05
+    },
+    "boundaries": [
+      {
+        "phase": "pre_partition",
+        "elapsed": 4.429000000527594e-06,
+        "remaining": 1.9999912180001047
+      },
+      {
+        "phase": "index_file_load",
+        "elapsed": 2.5278962800002773,
+        "remaining": -0.5279006330001721
+      },
+      {
+        "phase": "file_hash_and_partition_dispatch",
+        "elapsed": 2.5385747099999207,
+        "remaining": -0.5385790629998155
+      },
+      {
+        "phase": "deserialize",
+        "elapsed": 2.5630225180002526,
+        "remaining": -0.5630268710001474
+      },
+      {
+        "phase": "schema_integrity",
+        "elapsed": 2.563399668999409,
+        "remaining": -0.563404021999304
+      },
+      {
+        "phase": "post_partition",
+        "elapsed": 2.5739783520002675,
+        "remaining": -0.5739827050001622
+      },
+      {
+        "phase": "end",
+        "elapsed": 2.5739920619998884,
+        "remaining": -0.5739964149997832
+      }
+    ],
+    "kind": "search",
+    "projection_subphases": {
+      "_load": 0.35740109400012443,
+      "_selection": 0.7309711609996157,
+      "_records": 1.2457567380006367
+    },
+    "live_projection_seconds": 2.4194998540006054,
+    "records": 226,
+    "bytes": 1724416,
+    "partition_entry_remaining": -0.5628487009998935,
+    "sqlite_entry_remaining": -0.562857971000085,
+    "sqlite_errors": [
+      {
+        "exception_class": "sqlite3.OperationalError",
+        "sqlite_errorcode": 9,
+        "sqlite_errorname": "SQLITE_INTERRUPT",
+        "phase": "schema_integrity",
+        "operation": "pragma_integrity_check",
+        "message": "interrupted",
+        "elapsed": 2.564738406000288,
+        "remaining": -0.5647427590001826
+      }
+    ],
+    "fts_adapter_seconds": 0.011131516999739688,
+    "outcome": "Unavailable",
+    "total": 2.5739947029996983,
+    "remaining": -0.5739996949996566,
+    "public_outcome": "Unavailable",
+    "public_fts_error_contract_ok": false,
+    "public_native_context_code": 9,
+    "public_total_seconds": 2.58795140500024,
+    "search_ordinal": 4
+  },
+  {
+    "start": 6352.121108132,
+    "deadline": 6354.121103177,
+    "phases": {
+      "pre_partition": 2.9097084329996505,
+      "index_file_load": 0.09182409700042626,
+      "file_hash_and_partition_dispatch": 0.024530077000235906,
+      "deserialize": 0.0004022940001959796,
+      "schema_integrity": 0.010573542999736674,
+      "post_partition": 1.2880999747721944e-05
+    },
+    "boundaries": [
+      {
+        "phase": "pre_partition",
+        "elapsed": 3.946000106225256e-06,
+        "remaining": 1.999991098999999
+      },
+      {
+        "phase": "index_file_load",
+        "elapsed": 2.9097123789997568,
+        "remaining": -0.9097173339996516
+      },
+      {
+        "phase": "file_hash_and_partition_dispatch",
+        "elapsed": 3.001536476000183,
+        "remaining": -1.0015414310000779
+      },
+      {
+        "phase": "deserialize",
+        "elapsed": 3.026066553000419,
+        "remaining": -1.0260715080003138
+      },
+      {
+        "phase": "schema_integrity",
+        "elapsed": 3.026468847000615,
+        "remaining": -1.0264738020005097
+      },
+      {
+        "phase": "post_partition",
+        "elapsed": 3.0370423900003516,
+        "remaining": -1.0370473450002464
+      },
+      {
+        "phase": "end",
+        "elapsed": 3.0370552710000993,
+        "remaining": -1.0370602259999941
+      }
+    ],
+    "kind": "search",
+    "projection_subphases": {
+      "_load": 0.40610848699998314,
+      "_selection": 0.7701761700000134,
+      "_records": 1.5172986990000936
+    },
+    "live_projection_seconds": 2.785503033000168,
+    "records": 226,
+    "bytes": 1724416,
+    "partition_entry_remaining": -1.0258741039997403,
+    "sqlite_entry_remaining": -1.0258843020001223,
+    "sqlite_errors": [
+      {
+        "exception_class": "sqlite3.OperationalError",
+        "sqlite_errorcode": 9,
+        "sqlite_errorname": "SQLITE_INTERRUPT",
+        "phase": "schema_integrity",
+        "operation": "pragma_integrity_check",
+        "message": "interrupted",
+        "elapsed": 3.0278028239999912,
+        "remaining": -1.027807778999886
+      }
+    ],
+    "fts_adapter_seconds": 0.011171233999448305,
+    "outcome": "Unavailable",
+    "total": 3.0370576800005438,
+    "remaining": -1.0370633570000791,
+    "public_outcome": "Unavailable",
+    "public_fts_error_contract_ok": false,
+    "public_native_context_code": 9,
+    "public_total_seconds": 3.0509171260000585,
+    "search_ordinal": 5
+  },
+  {
+    "start": 6355.222436414,
+    "deadline": 6357.222420936,
+    "phases": {
+      "pre_partition": 2.8169334970007185,
+      "index_file_load": 0.001746690999425482,
+      "file_hash_and_partition_dispatch": 0.024687598000127764,
+      "deserialize": 0.009403115000168327,
+      "schema_integrity": 0.0015543449999313452,
+      "post_partition": 9.170000339508988e-06
+    },
+    "boundaries": [
+      {
+        "phase": "pre_partition",
+        "elapsed": 4.7879993871902116e-06,
+        "remaining": 1.9999797340005898
+      },
+      {
+        "phase": "index_file_load",
+        "elapsed": 2.8169382850001057,
+        "remaining": -0.8169537630001287
+      },
+      {
+        "phase": "file_hash_and_partition_dispatch",
+        "elapsed": 2.818684975999531,
+        "remaining": -0.8187004539995542
+      },
+      {
+        "phase": "deserialize",
+        "elapsed": 2.843372573999659,
+        "remaining": -0.8433880519996819
+      },
+      {
+        "phase": "schema_integrity",
+        "elapsed": 2.8527756889998273,
+        "remaining": -0.8527911669998502
+      },
+      {
+        "phase": "post_partition",
+        "elapsed": 2.8543300339997586,
+        "remaining": -0.8543455119997816
+      },
+      {
+        "phase": "end",
+        "elapsed": 2.854339204000098,
+        "remaining": -0.8543546820001211
+      }
+    ],
+    "kind": "search",
+    "projection_subphases": {
+      "_load": 0.4179005229998438,
+      "_selection": 0.7618289190004361,
+      "_records": 1.4349256200002856
+    },
+    "live_projection_seconds": 2.7002311830001418,
+    "records": 226,
+    "bytes": 1724416,
+    "partition_entry_remaining": -0.8432001849996595,
+    "sqlite_entry_remaining": -0.8432099820001895,
+    "sqlite_errors": [
+      {
+        "exception_class": "sqlite3.OperationalError",
+        "sqlite_errorcode": 9,
+        "sqlite_errorname": "SQLITE_INTERRUPT",
+        "phase": "schema_integrity",
+        "operation": "pragma_integrity_check",
+        "message": "interrupted",
+        "elapsed": 2.8541247309995015,
+        "remaining": -0.8541402089995245
+      }
+    ],
+    "fts_adapter_seconds": 0.01114275199961412,
+    "outcome": "Unavailable",
+    "total": 2.8543414949999715,
+    "remaining": -0.8543577800001003,
+    "public_outcome": "Unavailable",
+    "public_fts_error_contract_ok": false,
+    "public_native_context_code": 9,
+    "public_total_seconds": 2.907499386999916,
+    "search_ordinal": 6
+  }
+]

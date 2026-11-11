@@ -1,0 +1,160 @@
+[
+  {
+    "stage": "setup",
+    "outcome": "passed",
+    "seconds": 0.002290943999469164,
+    "error": null
+  },
+  {
+    "stage": "call",
+    "outcome": "failed",
+    "seconds": 1.4249051409997264,
+    "error": {
+      "exception_class": "AssertionError",
+      "frames": [
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/_pytest/runner.py",
+          "line": 361,
+          "function": "from_call"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/_pytest/runner.py",
+          "line": 250,
+          "function": "<lambda>"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_hooks.py",
+          "line": 512,
+          "function": "__call__"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_manager.py",
+          "line": 120,
+          "function": "_hookexec"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_callers.py",
+          "line": 167,
+          "function": "_multicall"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_callers.py",
+          "line": 139,
+          "function": "_multicall"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/_pytest/logging.py",
+          "line": 865,
+          "function": "pytest_runtest_call"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_callers.py",
+          "line": 139,
+          "function": "_multicall"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/_pytest/capture.py",
+          "line": 900,
+          "function": "pytest_runtest_call"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_callers.py",
+          "line": 139,
+          "function": "_multicall"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/_pytest/skipping.py",
+          "line": 268,
+          "function": "pytest_runtest_call"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_callers.py",
+          "line": 121,
+          "function": "_multicall"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/_pytest/runner.py",
+          "line": 184,
+          "function": "pytest_runtest_call"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/_pytest/python.py",
+          "line": 1707,
+          "function": "runtest"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_hooks.py",
+          "line": 512,
+          "function": "__call__"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_manager.py",
+          "line": 120,
+          "function": "_hookexec"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_callers.py",
+          "line": 167,
+          "function": "_multicall"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/pluggy/_callers.py",
+          "line": 121,
+          "function": "_multicall"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/.venv/lib/python3.12/site-packages/_pytest/python.py",
+          "line": 167,
+          "function": "pytest_pyfunc_call"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/tests/test_cs50_summary_batch_stress.py",
+          "line": 135,
+          "function": "test_long_source_run_cache_and_guarded_process_restart"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/tests/test_cs50_summary_batch.py",
+          "line": 41,
+          "function": "prepare"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/scripts/cs50_learning_mvp.py",
+          "line": 645,
+          "function": "main"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/scripts/cs50_learning_mvp.py",
+          "line": 503,
+          "function": "run"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/src/content_store/store.py",
+          "line": 103,
+          "function": "initialize"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/src/content_store/store.py",
+          "line": 110,
+          "function": "_initialize"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2a/src/content_store/artifacts.py",
+          "line": 262,
+          "function": "create_layout"
+        },
+        {
+          "file": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2/artifacts/handoff/pr174-final-fts-diagnosis/harness/sitecustomize.py",
+          "line": 45,
+          "function": "audit"
+        }
+      ],
+      "known_guard_message": "Diagnostic attempted a forbidden PR-worktree write"
+    }
+  },
+  {
+    "stage": "teardown",
+    "outcome": "passed",
+    "seconds": 0.0004794590004166821,
+    "error": null
+  }
+]

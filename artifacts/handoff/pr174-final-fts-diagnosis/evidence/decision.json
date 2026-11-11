@@ -1,0 +1,14 @@
+{
+  "total_searches": 19,
+  "successful": 13,
+  "contention_failures": 6,
+  "normal_total_median_ms": 542.712647999906,
+  "normal_live_projection_median_ms": 474.70597150004323,
+  "normal_fts_adapter_median_ms": 39.41349649994663,
+  "target_original_test": "passed",
+  "historical_native_error": "unknown",
+  "reproduced_native_code": 9,
+  "contract_violation_observed": false,
+  "release_recommendation": "HOLD pending a validated resource/load profile",
+  "report": "/home/robfra/0_Portfolio_Projekte/Personal_Assistant-cs50-m2/docs/cs50/pr174-fts-final-reliability-diagnosis.md"
+}

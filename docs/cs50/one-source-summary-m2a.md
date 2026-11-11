@@ -1,5 +1,121 @@
 # M2.1 – Bounded Multi-Batch Lecture Summarization
 
+## Aktueller Stand vom 11.11.2026
+
+**PR #174: Draft, nicht gemergt; allgemeine Releasefreigabe HOLD.** Lokaler
+Branch: `feat/cs50p-summary-batching-m2a`, HEAD
+`ba89a2b775a1ebf58f9354dfee4492a7140390ad`. PR-Status und bereits ausgeführte
+M2.2a-Validierung stammen aus dem Auftrag; kein neuer GitHub-/CI-/Review-Abgleich.
+Der [Statusnachtrag zu M2.2a und FTS](pr174-m22a-fts-status-20261111.md)
+ordnet Gates, Provenienz und lokale Evidence zu.
+
+M2.2a wurde mit sechs bytegenau übernommenen Dateien im Zielworktree validiert:
+**40/40 M2.2a-Tests** und **36/36 gezielte Kompatibilitätstests** bestanden.
+Diese Gruppen überlappen teilweise; sie werden weder zu 76 unabhängigen Fällen
+noch zu einer neuen Gesamtsuite addiert. Die historische M2.1-Post-Commit-Suite
+bleibt **514 passed / 1 failed / 1 deselected**, also ein fehlgeschlagener Lauf.
+Spätere gezielte Erfolge machen ihn nicht rückwirkend grün. Einzelheiten stehen
+in der [aktuellen Validierung](one-source-summary-m2a-validation.md#aktueller-stand-vom-11112026)
+und der bestehenden [M2.2a-Dokumentation](verified-lecture-source-m22a.md).
+
+Technische Mergefähigkeit ist ein eigenes Gate und ersetzt weder bestandene
+erforderliche CI-Prüfungen noch Review, Mergeentscheidung oder Releaseabnahme.
+Die unveränderte [FTS-Diagnose](pr174-fts-final-reliability-diagnosis.md) zeigt
+erfolgreiche normale synthetische Offline-Suchen und unter kontrollierter
+CPU-Konkurrenz **6/6 Unavailable mit SQLITE_INTERRUPT (9)**, ohne bestätigte
+Korruption. Ein verbindliches Ressourcen-/Lastprofil ist noch nicht akzeptiert.
+M2.2a erteilt keine FTS-Freigabe; **Realmaterial und LiveLLM bleiben HOLD**,
+fachliche/didaktische Qualität bleibt NOT_EVALUATED. Der fehlende Original-Patch-SHA
+der Recovery bleibt eine Provenienzlücke trotz unabhängig validierter aktueller
+M2.2a-Fassung.
+
+Alle folgenden Abschnitte einschließlich des Stands vom 08.11.2026 bleiben
+historisch unverändert; ihre HEAD-, Test-, Approval-, HOLD- und Ablageaussagen
+gelten für den jeweiligen damaligen Teilauftrag.
+
+## Aktueller Stand vom 08.11.2026
+
+**Release PR #174: Draft / HOLD.** Die Deadline- und Budget-Fixes sind im
+Zielworktree angewendet und gepusht. Der
+[offene Draft-PR #174](https://github.com/rf-data/Personal_Assistant/pull/174)
+enthält zwei Commits: `74545e8c30ccfa5da029309b6500155193ee5dc5` und den aktuellen
+HEAD `8190fcc805f4b361f1b91b23805e8941691deab2`. Die frühere Aussage
+„nur als Patch vorhanden / Anwendung ausstehend“ ist damit historisch.
+Review, dokumentierte Akzeptanz des unten definierten Betriebsprofils und
+Integration in `master` stehen weiter aus.
+
+| Testkontext | Festgestelltes Ergebnis |
+| --- | --- |
+| Lokaler angewendeter Fixstand, Batch- und Stresssuite | 77 bestanden: 71 Batch- und 6 Stressfälle. |
+| Isolierter finaler Fixstand vor Übernahme | 515 bestanden: 71 Batch-, 6 Stress- und 438 Regressionsfälle; 1 Realmaterialfall abgewählt. Getrennte Suiten, kein Post-Commit-Nachweis. |
+| Post-Commit-Suite am aktuellen HEAD | 514 bestanden, 1 fehlgeschlagen, 1 abgewählt. `lecture_171` scheitert in der MVP-Vorbereitung mit `Unavailable`, vor der Batch-Orchestrierung. |
+| Separate FTS-Diagnose am aktuellen HEAD | Originaler `lecture_171`-Einzeltest ohne Zusatzlast bestanden; unter kontrollierter CPU-Konkurrenz 6 von 6 Suchen mit `SQLITE_INTERRUPT (9)` abgewiesen. Keine neue vollständige Regression. |
+
+Diese Ausführungen überlappen und werden nicht addiert. Die Post-Commit-Suite
+ist **nicht vollständig grün**. Details und Nachweiszuordnung stehen in der
+[aktuellen Validierung](one-source-summary-m2a-validation.md#aktueller-stand-vom-08112026)
+und im [FTS-Diagnosebericht](pr174-fts-final-reliability-diagnosis.md).
+
+| Freigabeebene | Stand am 08.11.2026 |
+| --- | --- |
+| Technische Korrektheit der Batch-Orchestrierung | Deadline- und Budget-Findings im angewendeten Fixstand synthetisch validiert; dies ist keine pauschale End-to-End-Zuverlässigkeitszusage. |
+| Zuverlässigkeit des vorgelagerten Retrievals | CPU-abhängige Nichtverfügbarkeit bestätigt. Bekannter FTS-Fehlerpfad, Fail-Closed als `Unavailable` / HOLD; keine ungeprüften Teilergebnisse. Betriebsprofil noch nicht abgenommen. |
+| Realmaterial | HOLD, keine Freigabe und keine Real-Source-Acceptance. Gültige Import-/Verarbeitungs- und Batchfreigaben sowie gesonderte Abnahme erforderlich. |
+| LiveLLM | HOLD, keine Freigabe. Eigener Auftrag mit Provider-, Upload-, Modell- und Budgetfreigaben sowie eigener Abnahme erforderlich. |
+
+Der reproduzierte FTS-Pfad verbraucht unter kontrollierter CPU-Konkurrenz das
+gemeinsame Suchbudget bereits vor SQLite; dessen Progresshandler bricht dann die
+Integritätsprüfung vor MATCH ab. Die **genaue native SQLite-Exception des
+historischen Fehlers bleibt unbekannt**. Die Reproduktion identifiziert diese
+nicht nachträglich und belegt keine damalige CPU-Last. Fail-Closed schützt die
+Integrität, beseitigt aber die CPU-abhängige Nichtverfügbarkeit nicht.
+
+### Begrenztes Offline-Betriebsprofil und Release-Gate
+
+Das folgende Profil ist eine **zur Prüfung vorgeschlagene Betriebsgrenze**;
+seine Definition erteilt noch keine Freigabe:
+
+- Ausschließlich lokaler FakeLLM und selbst verfasste synthetische Quellen;
+  kein Realmaterial und kein LiveLLM.
+- Genau ein kontrollierter Verarbeitungsprozess zur selben Zeit; keine
+  parallelen Verarbeitungsjobs und keine bewusst erzeugte CPU-Konkurrenz.
+- Explizite gültige ProcessingApproval und BatchApproval mit exakter Quellen-,
+  Plan-, Konfigurations-, Budget-, Operator- und aktueller Implementierungsbindung.
+  `approval_required` bleibt eine Aufforderung zur Freigabe; technische Zustände
+  wie `completed` / `ready` ersetzen weder Approval noch menschliche Abnahme.
+- Jeder Retrieval-, Deadline-, Budget-, Approval- oder Integritätsfehler hält
+  den Ablauf an. HOLD-/pending-Roots und Evidence bleiben erhalten; kein
+  automatischer Retry oder Resume. Ein neuer Lauf erfordert eine ausdrückliche
+  neue Entscheidung und einen neuen isolierten Root.
+- Alle bestehenden Integritäts-, ACL-, Quellen-, Locator-, Hash- und
+  Approvalprüfungen sowie Deadlines und Budgets bleiben unverändert.
+
+Vor Akzeptanz sind die tatsächlichen CPU-/Ressourcenbedingungen, Hintergrundlast
+und ein belastbarer Abstand zum unveränderten Suchbudget im vorgesehenen Profil
+zu dokumentieren und synthetisch zu prüfen, einschließlich `lecture_171` und
+seiner vorgelagerten Retrievalprüfungen. „Keine bewusst erzeugte Konkurrenz“
+garantiert allein keine ausreichenden CPU-Ressourcen. Review und ein expliziter
+Akzeptanznachweis müssen Profil, Revision, Messungen, Restrisiken und zuständigen
+Reviewer/Operator benennen. Bis dahin bleibt PR #174 **Draft / HOLD**.
+Eine spätere begrenzte Offline-Akzeptanz erteilt keine Realmaterial- oder
+LiveLLM-Freigabe; fachliche und didaktische Qualität bleiben NOT_EVALUATED.
+
+Die Deadlineprüfung reicht im aktuellen Fixstand durch Konsolidierung und letzte
+Status-/Manifest-I/O. Sie bleibt kooperativ. Wird erst beim Manifest-I/O die
+Deadline überschritten, kann die Manifestdatei als Evidence erhalten bleiben;
+der anschließende HOLD-Status macht ihre Bindung ungültig. Maßgeblich ist das
+Fehlen eines **gültigen** Abschlusses, nicht zwingend das Fehlen der Datei.
+Der Batchpfad benutzt kein FTS-Top-k zur Quellenauswahl; seine MVP-Vorbereitung
+bleibt von den separat bewerteten Retrievalprüfungen abhängig.
+
+## Historischer Dokumentationsstand vom 07.11.2026
+
+Die folgenden ursprünglichen Status-, Test-, Patch- und Ablageangaben bleiben
+historisch erhalten. Architektur und Verträge sind zusammen mit den oben
+genannten Deadline-Fixes zu lesen. Historische Anwendungspendings und
+PASS-Aussagen sind keine aktuelle Releaseentscheidung; maßgeblich sind der
+aktuelle Stand oben und die verlinkte aktuelle Validierung.
+
 Stand: 07.11.2026. Technische Synthetikvalidierung PASS (489 bestandene Tests);
 Anwendung im tatsächlichen Zielworktree und Integration HOLD / pending.
 Technischer Entwicklungsstand und Tests siehe
