@@ -275,6 +275,10 @@ src/prio_list.md
 # MAINT-WT01A local metadata reports, validation logs and handoff patch.
 /artifacts/handoff/maint-wt01a/
 
+# MAINT-WT01B private hosting/inventory evidence and uncommitted handoff.
+/artifacts/maint-wt01b/
+/artifacts/handoff/maint-wt01b.patch
+
 # Reviewed C21 acceptance observations; private run workspaces remain external.
 !/docs/acceptance/c21_report.v1.json
 
