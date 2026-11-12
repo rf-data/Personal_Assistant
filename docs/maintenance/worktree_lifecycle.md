@@ -226,6 +226,11 @@ Proposed future stages, each separately authorized as appropriate:
 This is a proposal only. Version 1 deliberately has no archive, remove, create,
 prune, repair, branch-deletion or synchronization command.
 
+MAINT-WT01B adds a [bounded preservation and independent restore design](worktree_preservation_restore.md),
+[individual candidate assessments and current inventory comparison](../audit/maint-wt01b/README.md),
+and synthetic-only protocol tests. It does not add production archive/restore or
+removal capabilities, and all existing worktrees retain their lifecycle holds.
+
 ## Validation
 
 ```sh
