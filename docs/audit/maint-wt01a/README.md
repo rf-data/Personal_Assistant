@@ -8,7 +8,7 @@ remain `safe_to_remove=false` and `WORKTREE_LIFECYCLE_HOLD`.
 
 ## Scope and policy
 
-The assigned worktree is `/home/robfra/0_Portfolio_Projekte/Personal_Assistant-maint-wt01a`,
+The assigned worktree is `<PROJECT_ROOT>/Personal_Assistant-maint-wt01a`,
 branch `maint/wt01a-inventory-governance`, unchanged HEAD
 `c651e1d83c613de9bfb693380ac9856d72865121`.
 The branch and worktree were already present at entry; this task created no new
@@ -99,7 +99,7 @@ with its owner before acting on any machine candidate label.
 
 External artifact roots were inspected using top-level metadata only:
 
-- `/mnt/chromeos/GoogleDrive/MyDrive/1_Projekte_Datensätze/1_Projekte/00_GMP_Compliance`
+- `<EXTERNAL_ARCHIVE_ROOT>`
   exists as a directory (mode 0750), with no symlink component observed.
 - `/mnt/data` was not present.
 
@@ -109,7 +109,7 @@ Availability does not prove backup completeness, integrity, retention or restora
 ## Proposed candidates for individual review
 
 The 41 entries below passed the automatic observations at the audit timestamp.
-The path prefix is **`/home/robfra/0_Portfolio_Projekte/`**; concatenate the exact
+The path prefix is **`<PROJECT_ROOT>/`**; concatenate the exact
 basename in the first column to obtain each absolute registered path.
 All have zero observed tracked/untracked/ignored changes, complete bounded disk
 metadata without observed symlinks/nested repositories, no matching open PR, and

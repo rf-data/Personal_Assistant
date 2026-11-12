@@ -9,7 +9,7 @@ output option. Report capture is a separate, explicit caller operation.
 
 ## Governance assessment
 
-The parent `/home/robfra/0_Portfolio_Projekte/AGENTS.md` already defines a sufficient
+The parent `<PROJECT_ROOT>/AGENTS.md` already defines a sufficient
 normative lifecycle: reuse before creation, task identity and base recording, one
 persistent `master` checkout and at most four active feature/review worktrees unless
 approved, preservation of unknown data, exact-path operator approval, reproducibility

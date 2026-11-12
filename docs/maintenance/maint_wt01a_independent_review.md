@@ -7,7 +7,7 @@ pending; this document does not claim completion of the repository lifecycle.
 
 ## Policy assessment
 
-The parent `/home/robfra/0_Portfolio_Projekte/AGENTS.md` was read and left unchanged.
+The parent `<PROJECT_ROOT>/AGENTS.md` was read and left unchanged.
 It provides a sufficient governance baseline: inventory before creation, reuse only
 when clean and task-compatible, task identity records, explicit lifecycle reports,
 preservation of ignored/untracked data, reproducibility criteria, exact-path operator
@@ -207,7 +207,7 @@ need identity/retention review. Ten worktrees match known open PRs; their owners
 draft-review context must be preserved.
 
 The eight prunable registrations are listed below for **recovery review only**.
-Each name is relative to `/home/robfra/0_Portfolio_Projekte/`; the full exact path,
+Each name is relative to `<PROJECT_ROOT>/`; the full exact path,
 branch, SHA and observation errors are retained in the private JSON and CSV.
 
 | Registered path name | Registered HEAD prefix | Relevant ambiguity |
